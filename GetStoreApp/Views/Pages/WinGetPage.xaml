@@ -7,7 +7,7 @@
     xmlns:deployment="using:Microsoft.Management.Deployment"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="using:GetStoreApp.Models.Controls.WinGet"
+    xmlns:model="using:GetStoreApp.Models"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:service="using:GetStoreApp.Services.Controls.Settings"
     xmlns:sys="using:System"

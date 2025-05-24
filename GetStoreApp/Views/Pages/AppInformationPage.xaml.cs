@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Classes;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models.Controls.AppManager;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.NotificationTips;

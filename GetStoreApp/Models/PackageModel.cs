@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using Windows.ApplicationModel;
 
-namespace GetStoreApp.Models.Controls.AppManager
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 应用管理数据模型

@@ -1,4 +1,4 @@
-﻿namespace GetStoreApp.Models.Controls.Store
+﻿namespace GetStoreApp.Models
 {
     /// <summary>
     /// 查询链接返回结果的数据模型

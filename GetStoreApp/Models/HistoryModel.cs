@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace GetStoreApp.Models.Controls.Store
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 历史记录数据模型

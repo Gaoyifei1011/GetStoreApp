@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using System.ComponentModel;
 
-namespace GetStoreApp.Models.Dialogs
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 清理选项数据模型

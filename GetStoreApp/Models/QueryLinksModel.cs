@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel;
 
-namespace GetStoreApp.Models.Controls.Download
+namespace GetStoreApp.Models
 {
     /// <summary>
-    /// 未下载完成文件信息数据模型
+    /// 查询链接返回结果的数据模型
     /// </summary>
-    public sealed partial class UnfinishedModel : INotifyPropertyChanged
+    public sealed partial class QueryLinksModel : INotifyPropertyChanged
     {
         /// <summary>
-        /// 在多选模式下，该行历史记录是否被选择的标志
+        /// 在多选模式下，该行信息是否被选择的标志
         /// </summary>
         private bool _isSelected;
 
@@ -46,17 +46,7 @@ namespace GetStoreApp.Models.Controls.Download
         }
 
         /// <summary>
-        /// 任务在下载状态时，获取的GID码。该值唯一
-        /// </summary>
-        public string GID { get; set; }
-
-        /// <summary>
-        /// 下载任务的唯一标识码，该值唯一
-        /// </summary>
-        public string DownloadKey { get; set; }
-
-        /// <summary>
-        /// 下载文件名称
+        /// 文件名称
         /// </summary>
         public string FileName { get; set; }
 
@@ -66,24 +56,19 @@ namespace GetStoreApp.Models.Controls.Download
         public string FileLink { get; set; }
 
         /// <summary>
-        /// 文件下载保存的路径
+        /// 文件下载链接过期时间
         /// </summary>
-        public string FilePath { get; set; }
+        public string FileLinkExpireTime { get; set; }
 
         /// <summary>
-        /// 文件SHA256值，用来校验文件
+        /// 文件SHA256值
         /// </summary>
         public string FileSHA256 { get; set; }
 
         /// <summary>
-        /// 文件下载标志：0为下载失败，1为等待下载，2为暂停下载，3为正在下载，4为成功下载
+        /// 文件大小
         /// </summary>
-        public int DownloadFlag { get; set; }
-
-        /// <summary>
-        /// 下载文件的总大小
-        /// </summary>
-        public double TotalSize { get; set; }
+        public string FileSize { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Management.Deployment;
 
-namespace GetStoreApp.Models.Controls.WinGet
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 搜索应用数据模型

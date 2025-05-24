@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models.Controls.Settings;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
@@ -179,21 +179,21 @@ namespace GetStoreApp.Views.Dialogs
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public WinGetSourceEditDialog(WinGetSourceEditKind winGetSourceEditKind, WinGetSourceModel winGetSourceItem)
+        public WinGetSourceEditDialog(WinGetSourceEditKind winGetSourceEditKind, WinGetSourceModel winGetSource)
         {
             InitializeComponent();
             WinGetSourceEditKind = winGetSourceEditKind;
             SelectedCatalogTrustLevel = CatalogTrustLevelList[0];
             EditTitle = winGetSourceEditKind is WinGetSourceEditKind.Add ? ResourceService.GetLocalized("Dialog/WinGetDataSourceAdd") : ResourceService.GetLocalized("Dialog/WinGetDataSourceEdit");
 
-            if (winGetSourceEditKind is WinGetSourceEditKind.Edit && winGetSourceItem is not null)
+            if (winGetSourceEditKind is WinGetSourceEditKind.Edit && winGetSource is not null)
             {
-                SourceName = winGetSourceItem.Name;
-                SourceUri = winGetSourceItem.Arguments;
+                SourceName = winGetSource.Name;
+                SourceUri = winGetSource.Arguments;
                 CustomHeader = string.Empty;
-                SourceType = winGetSourceItem.Type;
-                Explicit = winGetSourceItem.PackageCatalogInformation.Explicit;
-                SelectedCatalogTrustLevel = CatalogTrustLevelList.Find(item => Equals(item.Key, winGetSourceItem.PackageCatalogInformation.TrustLevel));
+                SourceType = winGetSource.Type;
+                Explicit = winGetSource.PackageCatalogInformation.Explicit;
+                SelectedCatalogTrustLevel = CatalogTrustLevelList.Find(item => Equals(item.Key, winGetSource.PackageCatalogInformation.TrustLevel));
             }
         }
 

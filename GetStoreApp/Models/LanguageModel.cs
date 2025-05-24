@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace GetStoreApp.Models.Controls.Settings
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 语言模型

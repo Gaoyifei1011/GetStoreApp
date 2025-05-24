@@ -1,6 +1,6 @@
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models.Controls.AppUpdate;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;

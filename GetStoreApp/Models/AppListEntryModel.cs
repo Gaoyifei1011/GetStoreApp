@@ -1,6 +1,6 @@
 ﻿using Windows.ApplicationModel.Core;
 
-namespace GetStoreApp.Models.Controls.AppManager
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 应用程序入口数据模型

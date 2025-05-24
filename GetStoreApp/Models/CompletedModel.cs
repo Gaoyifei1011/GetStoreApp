@@ -1,16 +1,31 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Services.Root;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System.ComponentModel;
 
-namespace GetStoreApp.Models.Controls.Download
+namespace GetStoreApp.Models
 {
     /// <summary>
-    /// 正在下载文件信息数据模型
+    /// 已下载完成文件信息数据模型
     /// </summary>
-    public sealed partial class DownloadingModel : INotifyPropertyChanged
+    public sealed partial class CompletedModel : INotifyPropertyChanged
     {
-        /*
-        1.下载的通用信息
-        */
+        public readonly string InstalledValue = ResourceService.GetLocalized("Download/InstalledValue");
+
+        private BitmapImage _iconImage;
+
+        public BitmapImage IconImage
+        {
+            get { return _iconImage; }
+
+            set
+            {
+                if (!Equals(_iconImage, value))
+                {
+                    _iconImage = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IconImage)));
+                }
+            }
+        }
 
         /// <summary>
         /// 在多选模式下，该行历史记录是否被选择的标志
@@ -70,13 +85,9 @@ namespace GetStoreApp.Models.Controls.Download
         }
 
         /// <summary>
-        /// 任务下载时创建下载 ID
+        /// 下载任务的唯一标识码，该值唯一
         /// </summary>
-        public string DownloadID { get; set; }
-
-        /*
-        2.下载文件的基础信息
-        */
+        public string DownloadKey { get; set; }
 
         /// <summary>
         /// 下载文件名称
@@ -84,86 +95,71 @@ namespace GetStoreApp.Models.Controls.Download
         public string FileName { get; set; }
 
         /// <summary>
+        /// 文件下载链接
+        /// </summary>
+        public string FileLink { get; set; }
+
+        /// <summary>
         /// 文件下载保存的路径
         /// </summary>
         public string FilePath { get; set; }
 
-        /*
-        3.下载文件的状态信息
-        */
-
-        /// <summary>
-        /// 文件下载状态
-        /// </summary>
-        private DownloadProgressState _downloadProgressState;
-
-        public DownloadProgressState DownloadProgressState
-        {
-            get { return _downloadProgressState; }
-
-            set
-            {
-                if (!Equals(_downloadProgressState, value))
-                {
-                    _downloadProgressState = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadProgressState)));
-                }
-            }
-        }
-
-        /// <summary>
-        /// 下载文件已完成的进度
-        /// </summary>
-        private double _completedSize;
-
-        public double CompletedSize
-        {
-            get { return _completedSize; }
-
-            set
-            {
-                if (!Equals(_completedSize, value))
-                {
-                    _completedSize = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CompletedSize)));
-                }
-            }
-        }
-
         /// <summary>
         /// 下载文件的总大小
         /// </summary>
-        private double _totalSize;
+        public double TotalSize { get; set; }
 
-        public double TotalSize
+        /// <summary>
+        /// 标志是否处于正在安装状态
+        /// </summary>
+        private bool _isInstalling;
+
+        public bool IsInstalling
         {
-            get { return _totalSize; }
+            get { return _isInstalling; }
 
             set
             {
-                if (!Equals(_totalSize, value))
+                if (!Equals(_isInstalling, value))
                 {
-                    _totalSize = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalSize)));
+                    _isInstalling = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsInstalling)));
                 }
             }
         }
 
         /// <summary>
-        /// 文件下载速度
+        /// 安装文件的进度
         /// </summary>
-        private double _downloadSpeed;
+        private double _installValue;
 
-        public double DownloadSpeed
+        public double InstallValue
         {
-            get { return _downloadSpeed; }
+            get { return _installValue; }
 
             set
             {
-                if (!Equals(_downloadSpeed, value))
+                if (!Equals(_installValue, value))
                 {
-                    _downloadSpeed = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadSpeed)));
+                    _installValue = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallValue)));
+                }
+            }
+        }
+
+        // 标记安装是否出现了异常
+        private bool _installError;
+
+        public bool InstallError
+        {
+            get { return _installError; }
+
+            set
+            {
+                if (!Equals(_installError, value))
+                {
+                    _installError = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallError)));
                 }
             }
         }

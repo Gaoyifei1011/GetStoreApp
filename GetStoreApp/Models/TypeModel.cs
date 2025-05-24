@@ -1,4 +1,4 @@
-﻿namespace GetStoreApp.Models.Controls.Store
+﻿namespace GetStoreApp.Models
 {
     /// <summary>
     /// 应用类型数据模型

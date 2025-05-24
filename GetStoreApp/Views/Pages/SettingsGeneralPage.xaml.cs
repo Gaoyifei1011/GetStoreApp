@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models.Controls.Settings;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
@@ -193,15 +193,15 @@ namespace GetStoreApp.Views.Pages
                 LanguageFlyout.Hide();
             }
 
-            if (args.Parameter is LanguageModel languageItem)
+            if (args.Parameter is LanguageModel language)
             {
-                foreach (LanguageModel item in LanguageCollection)
+                foreach (LanguageModel languageItem in LanguageCollection)
                 {
-                    item.IsChecked = false;
-                    if (Equals(languageItem.LangaugeInfo.Key, item.LangaugeInfo.Key))
+                    languageItem.IsChecked = false;
+                    if (Equals(language.LangaugeInfo.Key, languageItem.LangaugeInfo.Key))
                     {
-                        AppLanguage = item.LangaugeInfo;
-                        item.IsChecked = true;
+                        AppLanguage = languageItem.LangaugeInfo;
+                        languageItem.IsChecked = true;
                     }
                 }
 

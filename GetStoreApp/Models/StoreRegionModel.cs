@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Windows.Globalization;
 
-namespace GetStoreApp.Models.Controls.Settings
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 区域模型

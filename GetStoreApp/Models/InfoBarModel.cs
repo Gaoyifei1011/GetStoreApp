@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-namespace GetStoreApp.Models.Controls.Store
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 应用信息状态栏数据模型

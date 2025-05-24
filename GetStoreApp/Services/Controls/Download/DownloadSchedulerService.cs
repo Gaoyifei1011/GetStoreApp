@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Classes;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models.Controls.Download;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using Microsoft.Windows.AppNotifications;

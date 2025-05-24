@@ -1,6 +1,6 @@
 using GetStoreApp.Helpers.Controls.Store;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models.Controls.Store;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;

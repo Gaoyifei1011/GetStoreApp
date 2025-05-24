@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace GetStoreApp.Models.Controls.Store
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 应用信息数据模型

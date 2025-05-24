@@ -5,8 +5,8 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:GetStoreApp.Models"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:store="using:GetStoreApp.Models.Controls.Store"
     x:Name="QueryLinksRoot"
     Padding="0,0,0,30"
     NavigationCacheMode="Enabled"
@@ -336,7 +336,7 @@
                             </ItemsControl.ItemContainerTransitions>
 
                             <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="store:HistoryModel">
+                                <DataTemplate x:DataType="model:HistoryModel">
                                     <Grid
                                         Height="35"
                                         Padding="6,0,0,0"
@@ -832,7 +832,7 @@
                     </ItemsControl.ItemContainerTransitions>
 
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="store:QueryLinksModel">
+                        <DataTemplate x:DataType="model:QueryLinksModel">
                             <Grid
                                 Height="35"
                                 Padding="6,0,0,0"

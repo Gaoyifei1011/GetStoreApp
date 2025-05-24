@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Models.Controls.Store;
+﻿using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
@@ -59,16 +59,16 @@ namespace GetStoreApp.Services.Controls.History
                     {
                         if (queryLinksContainer.Values.TryGetValue(QueryLinks + index.ToString(), out object value) && value is ApplicationDataCompositeValue compositeValue)
                         {
-                            TypeModel typeItem = ResourceService.TypeList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
-                            ChannelModel channelItem = ResourceService.ChannelList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
+                            TypeModel type = ResourceService.TypeList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
+                            ChannelModel channel = ResourceService.ChannelList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
 
                             queryLinksHistoryList.Add(new HistoryModel()
                             {
                                 CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
                                 HistoryKey = Convert.ToString(compositeValue[HistoryKey]),
                                 HistoryAppName = Convert.ToString(compositeValue[HistoryAppName]),
-                                HistoryType = new KeyValuePair<string, string>(typeItem.InternalName, typeItem.DisplayName),
-                                HistoryChannel = new KeyValuePair<string, string>(channelItem.InternalName, channelItem.DisplayName),
+                                HistoryType = new KeyValuePair<string, string>(type.InternalName, type.DisplayName),
+                                HistoryChannel = new KeyValuePair<string, string>(channel.InternalName, channel.DisplayName),
                                 HistoryLink = Convert.ToString(compositeValue[HistoryLink])
                             });
                         }
@@ -104,7 +104,7 @@ namespace GetStoreApp.Services.Controls.History
                     {
                         if (value is ApplicationDataCompositeValue compositeValue)
                         {
-                            TypeModel typeItem = ResourceService.TypeList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryType"] as string, StringComparison.OrdinalIgnoreCase));
+                            TypeModel type = ResourceService.TypeList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryType"] as string, StringComparison.OrdinalIgnoreCase));
                             ChannelModel channelItem = ResourceService.ChannelList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryChannel"] as string, StringComparison.OrdinalIgnoreCase));
 
                             searchStoreHistoryList.Add(new HistoryModel()

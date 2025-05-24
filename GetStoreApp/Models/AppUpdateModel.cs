@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using Windows.ApplicationModel.Store.Preview.InstallControl;
 
-namespace GetStoreApp.Models.Controls.AppUpdate
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 商店应用更新数据模型

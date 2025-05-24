@@ -1,6 +1,6 @@
 ﻿using Microsoft.Management.Deployment;
 
-namespace GetStoreApp.Models.Controls.WinGet
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 可更新版本的数据模型

@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Models.Controls.AppManager;
+﻿using GetStoreApp.Models;
 using System.Collections.Generic;
 
 namespace GetStoreApp.Extensions.DataType.Classes

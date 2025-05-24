@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:helper="using:GetStoreApp.Helpers.Root"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="using:GetStoreApp.Models.Controls.Settings"
+    xmlns:model="using:GetStoreApp.Models"
     xmlns:root="using:GetStoreApp.Services.Root"
     mc:Ignorable="d">
 

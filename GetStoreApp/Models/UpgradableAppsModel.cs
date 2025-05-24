@@ -1,7 +1,7 @@
 ﻿using Microsoft.Management.Deployment;
 using System.ComponentModel;
 
-namespace GetStoreApp.Models.Controls.WinGet
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 可更新应用数据模型

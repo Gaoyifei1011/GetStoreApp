@@ -8,8 +8,8 @@
     xmlns:deployment="using:Microsoft.Management.Deployment"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:GetStoreApp.Models"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:winget="using:GetStoreApp.Models.Controls.WinGet"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -421,7 +421,7 @@
             </ItemsControl.ItemContainerTransitions>
 
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="winget:InstalledAppsModel">
+                <DataTemplate x:DataType="model:InstalledAppsModel">
                     <Grid
                         Height="60"
                         Margin="0,0,0,2"

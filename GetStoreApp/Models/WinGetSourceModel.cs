@@ -2,7 +2,7 @@
 using Microsoft.Management.Deployment;
 using System.ComponentModel;
 
-namespace GetStoreApp.Models.Controls.Settings
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// WinGet 数据源模型

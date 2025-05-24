@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models.Controls.Store;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using System;
@@ -112,10 +112,10 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// </summary>
         /// <param name="productId">应用的产品 ID</param>
         /// <returns>打包应用：有，非打包应用：无</returns>
-        public static async Task<(bool requestResult, AppInfoModel appInfoModelItem)> GetAppInformationAsync(string productId)
+        public static async Task<(bool requestResult, AppInfoModel appInfo)> GetAppInformationAsync(string productId)
         {
             bool requestResult = false;
-            AppInfoModel appInfoModelItem = new();
+            AppInfoModel appInfo = new();
 
             try
             {
@@ -145,24 +145,24 @@ namespace GetStoreApp.Helpers.Controls.Store
                     {
                         JsonObject payLoadObject = responseStringObject.GetNamedValue("Payload").GetObject();
 
-                        appInfoModelItem.Name = payLoadObject.GetNamedString("Title");
-                        appInfoModelItem.Publisher = payLoadObject.GetNamedString("PublisherName");
-                        appInfoModelItem.Description = payLoadObject.GetNamedString("Description");
-                        appInfoModelItem.CategoryID = string.Empty;
-                        appInfoModelItem.ProductID = productId;
+                        appInfo.Name = payLoadObject.GetNamedString("Title");
+                        appInfo.Publisher = payLoadObject.GetNamedString("PublisherName");
+                        appInfo.Description = payLoadObject.GetNamedString("Description");
+                        appInfo.CategoryID = string.Empty;
+                        appInfo.ProductID = productId;
 
                         JsonArray skusArray = payLoadObject.GetNamedArray("Skus");
 
                         if (skusArray.Count > 0)
                         {
-                            appInfoModelItem.CategoryID = string.Empty;
+                            appInfo.CategoryID = string.Empty;
                             JsonObject jsonObject = skusArray[0].GetObject();
                             if (jsonObject.TryGetValue("FulfillmentData", out IJsonValue jsonValue))
                             {
                                 string fulfillmentData = jsonValue.GetString();
                                 if (JsonObject.TryParse(fulfillmentData, out JsonObject fulfillmentDataObject))
                                 {
-                                    appInfoModelItem.CategoryID = fulfillmentDataObject.GetNamedString("WuCategoryId");
+                                    appInfo.CategoryID = fulfillmentDataObject.GetNamedString("WuCategoryId");
                                 }
                             }
                         }
@@ -182,7 +182,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 LogService.WriteLog(LoggingLevel.Warning, "App Information request unknown exception", e);
             }
 
-            return ValueTuple.Create(requestResult, appInfoModelItem);
+            return ValueTuple.Create(requestResult, appInfo);
         }
 
         /// <summary>

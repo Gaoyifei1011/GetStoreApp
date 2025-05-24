@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models.Controls.Download;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;

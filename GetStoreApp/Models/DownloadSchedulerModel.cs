@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 
-namespace GetStoreApp.Models.Controls.Download
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 下载调度服务数据模型

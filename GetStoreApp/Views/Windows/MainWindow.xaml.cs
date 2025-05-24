@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Extensions.Backdrop;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models.Window;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;

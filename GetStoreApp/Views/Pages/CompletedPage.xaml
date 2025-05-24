@@ -4,10 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:download="using:GetStoreApp.Models.Controls.Download"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:helper="using:GetStoreApp.Helpers.Root"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:GetStoreApp.Models"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
     NavigationCacheMode="Enabled"
@@ -258,7 +258,7 @@
             </ItemsControl.ItemContainerTransitions>
 
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="download:CompletedModel">
+                <DataTemplate x:DataType="model:CompletedModel">
                     <Grid
                         Height="60"
                         Margin="0,0,0,2"

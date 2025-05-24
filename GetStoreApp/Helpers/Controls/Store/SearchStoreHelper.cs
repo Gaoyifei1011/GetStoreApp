@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Models.Controls.Store;
+﻿using GetStoreApp.Models;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using System;

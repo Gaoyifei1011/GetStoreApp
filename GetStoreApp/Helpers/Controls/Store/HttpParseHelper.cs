@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Models.Controls.Store;
+﻿using GetStoreApp.Models;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 

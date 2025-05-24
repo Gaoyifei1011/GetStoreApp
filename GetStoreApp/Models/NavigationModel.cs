@@ -1,7 +1,7 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using System;
 
-namespace GetStoreApp.Models.Window
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 页面导航数据模型

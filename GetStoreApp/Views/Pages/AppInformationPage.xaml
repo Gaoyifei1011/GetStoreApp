@@ -3,10 +3,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
-    xmlns:appManager="using:GetStoreApp.Models.Controls.AppManager"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:GetStoreApp.Models"
     xmlns:root="using:GetStoreApp.Services.Root"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
@@ -490,7 +490,7 @@
                             </ItemsControl.ItemContainerTransitions>
 
                             <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="appManager:AppListEntryModel">
+                                <DataTemplate x:DataType="model:AppListEntryModel">
                                     <Grid
                                         Height="35"
                                         Padding="6,0,0,0"
@@ -817,7 +817,7 @@
                             </ItemsControl.ItemContainerTransitions>
 
                             <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="appManager:PackageModel">
+                                <DataTemplate x:DataType="model:PackageModel">
                                     <Grid
                                         Height="35"
                                         Padding="6,0,0,0"

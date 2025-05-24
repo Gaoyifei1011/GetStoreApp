@@ -3,7 +3,7 @@ using Microsoft.Management.Deployment;
 using System.ComponentModel;
 using Windows.Foundation;
 
-namespace GetStoreApp.Models.Controls.WinGet
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 应用包操作数据模型
