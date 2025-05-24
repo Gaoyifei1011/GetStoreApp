@@ -16,7 +16,6 @@
 > * [MS-Store-API](https://github.com/ThomasPe/MS-Store-API)&emsp;
 > * [MS-Store-Downloader](https://github.com/Caesar008/MS-Store-Downloader)&emsp;
 > * [NetCoreApp](https://github.com/driver1998/NetCoreApp)&emsp;
-> * [Null.ConsoleEx](https://github.com/SlimeNull/Null.ConsoleEx)&emsp;
 > * [P/Invoke](https://github.com/dotnet/pinvoke)&emsp;
 > * [SampleWinGetUWPCaller](https://github.com/wherewhere/SampleWinGetUWPCaller)&emsp;
 > * [Uno](https://github.com/unoplatform/uno)&emsp;

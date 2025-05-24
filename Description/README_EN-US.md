@@ -106,7 +106,6 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 | WinGet package manager                                   | Completed                                                                                                          |
 | Device application management                            | Completed                                                                                                          |
 | Download management                                      | Completed                                                                                                          |
-| Console applications                                     | Completed                                                                                                          |
 | Program performance optimization                         | Completed                                                                                                          |
 | Interface modernization                                  | Completed                                                                                                          |
 | Package management                                       | Completed                                                                                                          |
