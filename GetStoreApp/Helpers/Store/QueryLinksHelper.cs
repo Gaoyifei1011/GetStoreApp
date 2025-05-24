@@ -14,7 +14,7 @@ using Windows.Security.Cryptography;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
-namespace GetStoreApp.Helpers.Controls.Store
+namespace GetStoreApp.Helpers.Store
 {
     /// <summary>
     /// 查询链接辅助类

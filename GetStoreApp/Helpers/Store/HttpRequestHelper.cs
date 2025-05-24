@@ -9,7 +9,7 @@ using Windows.Foundation.Diagnostics;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
-namespace GetStoreApp.Helpers.Controls.Store
+namespace GetStoreApp.Helpers.Store
 {
     /// <summary>
     /// 网页请求辅助类

@@ -10,7 +10,7 @@ using Windows.Foundation.Diagnostics;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
-namespace GetStoreApp.Helpers.Controls.Store
+namespace GetStoreApp.Helpers.Store
 {
     /// <summary>
     /// 搜索应用辅助类

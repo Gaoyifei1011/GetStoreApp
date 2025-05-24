@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace GetStoreApp.Helpers.Controls.Store
+namespace GetStoreApp.Helpers.Store
 {
     /// <summary>
     /// 网页解析辅助类
