@@ -105,7 +105,7 @@ namespace GetStoreApp.Services.Controls.Download
                         downloadJob.SetNotifyFlags(BG_JOB_NOTIFICATION_TYPE.BG_NOTIFY_FILE_RANGES_TRANSFERRED | BG_JOB_NOTIFICATION_TYPE.BG_NOTIFY_JOB_ERROR | BG_JOB_NOTIFICATION_TYPE.BG_NOTIFY_JOB_MODIFICATION);
                         BackgroundCopyCallback backgroundCopyCallback = new()
                         {
-                            DownloadID = downloadID
+                            DownloadID = downloadID.ToString()
                         };
                         backgroundCopyCallback.StatusChanged += OnStatusChanged;
                         downloadJob.SetNotifyInterface(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(new UnknownWrapper(backgroundCopyCallback).WrappedObject, CreateComInterfaceFlags.None));
@@ -116,7 +116,7 @@ namespace GetStoreApp.Services.Controls.Download
 
                         try
                         {
-                            BitsDict.TryAdd(downloadID.ToString(), ValueTuple.Create(saveFilePath, downloadJob, backgroundCopyCallback));
+                            BitsDict.TryAdd(backgroundCopyCallback.DownloadID, ValueTuple.Create(saveFilePath, downloadJob, backgroundCopyCallback));
                         }
                         catch (Exception e)
                         {
@@ -129,7 +129,7 @@ namespace GetStoreApp.Services.Controls.Download
 
                         DownloadProgress?.Invoke(new DownloadProgress()
                         {
-                            DownloadID = downloadID.ToString(),
+                            DownloadID = backgroundCopyCallback.DownloadID,
                             DownloadProgressState = DownloadProgressState.Queued,
                             FileName = Path.GetFileName(saveFilePath),
                             FilePath = saveFilePath,
@@ -283,11 +283,11 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 downloadJob.GetProgress(out BG_JOB_PROGRESS progress);
 
-                if (BitsDict.TryGetValue(callback.DownloadID.ToString(), out (string saveFilePath, IBackgroundCopyJob backgroundCopyJob, BackgroundCopyCallback backgroundCopyCallback) downloadValue))
+                if (BitsDict.TryGetValue(callback.DownloadID, out (string saveFilePath, IBackgroundCopyJob backgroundCopyJob, BackgroundCopyCallback backgroundCopyCallback) downloadValue))
                 {
                     DownloadProgress?.Invoke(new DownloadProgress()
                     {
-                        DownloadID = callback.DownloadID.ToString(),
+                        DownloadID = callback.DownloadID,
                         DownloadProgressState = DownloadProgressState.Downloading,
                         FileName = Path.GetFileName(downloadValue.saveFilePath),
                         FilePath = downloadValue.saveFilePath,
@@ -311,11 +311,11 @@ namespace GetStoreApp.Services.Controls.Download
 
                     try
                     {
-                        if (BitsDict.TryGetValue(callback.DownloadID.ToString(), out (string saveFilePath, IBackgroundCopyJob backgroundCopyJob, BackgroundCopyCallback backgroundCopyCallback) downloadValue))
+                        if (BitsDict.TryGetValue(callback.DownloadID, out (string saveFilePath, IBackgroundCopyJob backgroundCopyJob, BackgroundCopyCallback backgroundCopyCallback) downloadValue))
                         {
                             DownloadProgress?.Invoke(new DownloadProgress()
                             {
-                                DownloadID = callback.DownloadID.ToString(),
+                                DownloadID = callback.DownloadID,
                                 DownloadProgressState = DownloadProgressState.Finished,
                                 FileName = Path.GetFileName(downloadValue.saveFilePath),
                                 FilePath = downloadValue.saveFilePath,
@@ -347,18 +347,17 @@ namespace GetStoreApp.Services.Controls.Download
                 try
                 {
                     callback.StatusChanged -= OnStatusChanged;
-                    downloadJob.Complete();
 
                     bitsLock.Enter();
 
                     try
                     {
-                        if (BitsDict.TryGetValue(callback.DownloadID.ToString(), out (string saveFilePath, IBackgroundCopyJob backgroundCopyJob, BackgroundCopyCallback backgroundCopyCallback) downloadValue))
+                        if (BitsDict.TryGetValue(callback.DownloadID, out (string saveFilePath, IBackgroundCopyJob backgroundCopyJob, BackgroundCopyCallback backgroundCopyCallback) downloadValue))
                         {
                             DownloadProgress?.Invoke(new DownloadProgress()
                             {
-                                DownloadID = callback.DownloadID.ToString(),
-                                DownloadProgressState = DownloadProgressState.Finished,
+                                DownloadID = callback.DownloadID,
+                                DownloadProgressState = DownloadProgressState.Failed,
                                 FileName = Path.GetFileName(downloadValue.saveFilePath),
                                 FilePath = downloadValue.saveFilePath,
                                 DownloadSpeed = 0,
