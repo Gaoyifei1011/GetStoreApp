@@ -19,8 +19,8 @@ using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 using Windows.System;
 
-// 抑制 CS8305，IDE0060 警告
-#pragma warning disable CS8305,IDE0060
+// 抑制 CA1822，CS8305，IDE0060 警告
+#pragma warning disable CA1822,CS8305,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
@@ -75,10 +75,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnDownloadOpenFolderClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                await DownloadOptionsService.OpenFolderAsync(DownloadFolder);
-            });
+            Task.Run(DownloadOptionsService.OpenFolderAsync);
         }
 
         /// <summary>

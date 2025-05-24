@@ -4,6 +4,7 @@ using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
@@ -108,14 +109,21 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 安全访问目录（当目录不存在的时候直接创建目录）
         /// </summary>
-        public static async Task OpenFolderAsync(StorageFolder folder)
+        public static async Task OpenFolderAsync()
         {
-            if (!Directory.Exists(folder.Path))
+            try
             {
-                Directory.CreateDirectory(folder.Path);
-            }
+                if (!Directory.Exists(DownloadFolder.Path))
+                {
+                    Directory.CreateDirectory(DownloadFolder.Path);
+                }
 
-            await Launcher.LaunchFolderAsync(folder);
+                await Launcher.LaunchFolderAsync(DownloadFolder);
+            }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
         }
     }
 }
