@@ -1127,6 +1127,7 @@ namespace GetStoreApp.Views.Windows
             if (isFirstActivate && DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea)
             {
                 RectInt32 workArea = displayArea.WorkArea;
+                AppWindow.Resize(new SizeInt32(1280, 720));
                 AppWindow.Move(new PointInt32((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
             }
 
