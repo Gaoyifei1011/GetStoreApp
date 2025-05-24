@@ -370,7 +370,20 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.GetDownloadSchedulerList())
+                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadSchedulerList)
+                        {
+                            downloadSchedulerList.Add(downloadSchedulerItem);
+                        }
+
+                        if (!DownloadSchedulerService.IsDownloadingPageInitialized)
+                        {
+                            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadFailedList)
+                            {
+                                downloadSchedulerList.Add(downloadSchedulerItem);
+                            }
+                        }
+
+                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
                         {
                             downloadSchedulerList.Add(downloadSchedulerItem);
                         }
@@ -384,31 +397,13 @@ namespace GetStoreApp.Views.Pages
                         DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
                     }
 
-                    DownloadStorageService.DownloadStorageSemaphoreSlim?.Wait();
-
-                    try
-                    {
-                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
-                        {
-                            downloadSchedulerList.Add(downloadSchedulerItem);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, "Query download storage data failed", e);
-                    }
-                    finally
-                    {
-                        DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
-                    }
-
                     bool isExisted = false;
                     string downloadFilePath = Path.Combine(DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
 
                     // 检查下载文件信息是否已存在
                     foreach (DownloadSchedulerModel downloadSchedulerItem in downloadSchedulerList)
                     {
-                        if (string.Equals(queryLinksItem.FileName, downloadSchedulerItem.FileName, StringComparison.OrdinalIgnoreCase) && string.Equals(downloadFilePath, downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
+                        if (string.Equals(downloadFilePath, downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
                         {
                             isExisted = true;
                             break;
@@ -817,7 +812,20 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.GetDownloadSchedulerList())
+                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadSchedulerList)
+                        {
+                            downloadSchedulerList.Add(downloadSchedulerItem);
+                        }
+
+                        if (!DownloadSchedulerService.IsDownloadingPageInitialized)
+                        {
+                            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadFailedList)
+                            {
+                                downloadSchedulerList.Add(downloadSchedulerItem);
+                            }
+                        }
+
+                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
                         {
                             downloadSchedulerList.Add(downloadSchedulerItem);
                         }
@@ -831,33 +839,15 @@ namespace GetStoreApp.Views.Pages
                         DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
                     }
 
-                    DownloadStorageService.DownloadStorageSemaphoreSlim?.Wait();
-
-                    try
-                    {
-                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
-                        {
-                            downloadSchedulerList.Add(downloadSchedulerItem);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, "Query download storage data failed", e);
-                    }
-                    finally
-                    {
-                        DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
-                    }
-
                     foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
                     {
                         bool isExisted = false;
                         string downloadFilePath = Path.Combine(DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
 
-                        // 检查下载文件信息是否已存在
+                        // 检查下载文件是否已存在
                         foreach (DownloadSchedulerModel downloadSchedulerItem in downloadSchedulerList)
                         {
-                            if (string.Equals(queryLinksItem.FileName, downloadSchedulerItem.FileName, StringComparison.OrdinalIgnoreCase) && string.Equals(downloadFilePath, downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
+                            if (string.Equals(downloadFilePath, downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
                             {
                                 isExisted = true;
                                 break;
