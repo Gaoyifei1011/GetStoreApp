@@ -86,8 +86,12 @@ namespace GetStoreApp.Services.Controls.Download
                         doDownload.SetProperty(DODownloadProperty.DODownloadProperty_Uri, urlVariant);
                         ComVariant filePathVariant = ComVariant.Create(saveFilePath);
                         doDownload.SetProperty(DODownloadProperty.DODownloadProperty_LocalPath, filePathVariant);
-
-                        DODownloadStatusCallback doDownloadStatusCallback = new();
+                        doDownload.GetProperty(DODownloadProperty.DODownloadProperty_Id, out ComVariant idVarient);
+                        string downloadID = idVarient.As<string>();
+                        DODownloadStatusCallback doDownloadStatusCallback = new()
+                        {
+                            DownloadID = downloadID
+                        };
                         doDownloadStatusCallback.StatusChanged += OnStatusChanged;
 
                         ComVariant callbackInterfaceVariant = ComVariant.CreateRaw(VarEnum.VT_UNKNOWN, Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(new UnknownWrapper(doDownloadStatusCallback).WrappedObject, CreateComInterfaceFlags.None));
@@ -99,7 +103,7 @@ namespace GetStoreApp.Services.Controls.Download
 
                         try
                         {
-                            DeliveryOptimizationDict.TryAdd(doDownloadStatusCallback.DownloadID.ToString(), ValueTuple.Create(saveFilePath, doDownload, doDownloadStatusCallback));
+                            DeliveryOptimizationDict.TryAdd(downloadID, ValueTuple.Create(saveFilePath, doDownload, doDownloadStatusCallback));
                         }
                         catch (Exception e)
                         {
@@ -112,7 +116,7 @@ namespace GetStoreApp.Services.Controls.Download
 
                         DownloadProgress?.Invoke(new DownloadProgress()
                         {
-                            DownloadID = doDownloadStatusCallback.DownloadID.ToString(),
+                            DownloadID = doDownloadStatusCallback.DownloadID,
                             DownloadProgressState = DownloadProgressState.Queued,
                             FileName = Path.GetFileName(saveFilePath),
                             FilePath = saveFilePath,
@@ -264,11 +268,11 @@ namespace GetStoreApp.Services.Controls.Download
             // 下载文件中
             if (status.State is DODownloadState.DODownloadState_Transferring)
             {
-                if (DeliveryOptimizationDict.TryGetValue(callback.DownloadID.ToString(), out (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
+                if (DeliveryOptimizationDict.TryGetValue(callback.DownloadID, out (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
                 {
                     DownloadProgress?.Invoke(new DownloadProgress()
                     {
-                        DownloadID = callback.DownloadID.ToString(),
+                        DownloadID = callback.DownloadID,
                         DownloadProgressState = DownloadProgressState.Downloading,
                         FileName = Path.GetFileName(downloadValue.saveFilePath),
                         FilePath = downloadValue.saveFilePath,
@@ -290,11 +294,11 @@ namespace GetStoreApp.Services.Controls.Download
 
                     try
                     {
-                        if (DeliveryOptimizationDict.TryGetValue(callback.DownloadID.ToString(), out (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
+                        if (DeliveryOptimizationDict.TryGetValue(callback.DownloadID, out (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
                         {
                             DownloadProgress?.Invoke(new DownloadProgress()
                             {
-                                DownloadID = callback.DownloadID.ToString(),
+                                DownloadID = callback.DownloadID,
                                 DownloadProgressState = DownloadProgressState.Finished,
                                 FileName = Path.GetFileName(downloadValue.saveFilePath),
                                 FilePath = downloadValue.saveFilePath,
@@ -303,7 +307,7 @@ namespace GetStoreApp.Services.Controls.Download
                                 TotalSize = status.BytesTotal,
                             });
 
-                            DeliveryOptimizationDict.Remove(callback.DownloadID.ToString());
+                            DeliveryOptimizationDict.Remove(callback.DownloadID);
                         }
                     }
                     catch (Exception e)
@@ -327,17 +331,16 @@ namespace GetStoreApp.Services.Controls.Download
                 try
                 {
                     callback.StatusChanged -= OnStatusChanged;
-                    doDownload.Finalize();
 
                     deliveryOptimizationLock.Enter();
 
                     try
                     {
-                        if (DeliveryOptimizationDict.TryGetValue(callback.DownloadID.ToString(), out (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
+                        if (DeliveryOptimizationDict.TryGetValue(callback.DownloadID, out (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
                         {
                             DownloadProgress?.Invoke(new DownloadProgress()
                             {
-                                DownloadID = callback.DownloadID.ToString(),
+                                DownloadID = callback.DownloadID,
                                 DownloadProgressState = DownloadProgressState.Failed,
                                 FileName = Path.GetFileName(downloadValue.saveFilePath),
                                 FilePath = downloadValue.saveFilePath,
@@ -346,7 +349,7 @@ namespace GetStoreApp.Services.Controls.Download
                                 TotalSize = status.BytesTotal,
                             });
 
-                            DeliveryOptimizationDict.Remove(callback.DownloadID.ToString());
+                            DeliveryOptimizationDict.Remove(callback.DownloadID);
                         }
                     }
                     catch (Exception e)
