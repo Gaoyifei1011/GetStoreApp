@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices.Marshalling;
-using Windows.Foundation;
 
 namespace GetStoreApp.WindowsAPI.ComTypes
 {
@@ -10,7 +9,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     [GeneratedComClass]
     public partial class BackgroundCopyCallback : IBackgroundCopyCallback
     {
-        public Guid DownloadID { get; set; } = GuidHelper.Empty;
+        public string DownloadID { get; set; }
 
         /// <summary>
         /// 下载状态发生变化时触发的事件
