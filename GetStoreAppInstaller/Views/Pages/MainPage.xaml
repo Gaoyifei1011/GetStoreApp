@@ -6,13 +6,13 @@
     xmlns:converter="using:GetStoreAppInstaller.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="using:GetStoreAppInstaller.Extensions.DataType.Enums"
-    xmlns:language="using:Windows.Globalization"
+    xmlns:globalization="using:Windows.Globalization"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreAppInstaller.Models"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:root="using:GetStoreAppInstaller.Services.Root"
+    xmlns:rootservice="using:GetStoreAppInstaller.Services.Root"
     xmlns:service="using:GetStoreAppInstaller.Services.Controls.Settings"
-    xmlns:sys="using:System"
+    xmlns:system="using:System"
     x:Name="MainPageRoot"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="{x:Bind EnableBackdropMaterial, Mode=OneWay}"
     ActualThemeChanged="{x:Bind OnActualThemeChanged}"
@@ -55,7 +55,7 @@
                     Click="{x:Bind OnRestoreClicked}"
                     FontSize="12"
                     IsEnabled="{x:Bind IsWindowMaximized, Mode=OneWay}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Window/Restore')}">
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Restore')}">
 
                     <MenuFlyoutItem.Icon>
                         <FontIcon Margin="6" Glyph="&#xE923;" />
@@ -69,7 +69,7 @@
                     FontSize="12"
                     IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
                     Tag="{x:Bind TitlebarMenuFlyout}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Window/Move')}" />
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Move')}" />
 
                 <MenuFlyoutItem
                     Height="28"
@@ -78,14 +78,14 @@
                     FontSize="12"
                     IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
                     Tag="{x:Bind TitlebarMenuFlyout}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Window/Size')}" />
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Size')}" />
 
                 <MenuFlyoutItem
                     Height="28"
                     Padding="11,0"
                     Click="{x:Bind OnMinimizeClicked}"
                     FontSize="12"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Window/Minimize')}">
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Minimize')}">
                     <MenuFlyoutItem.Icon>
                         <FontIcon Margin="6" Glyph="&#xE921;" />
                     </MenuFlyoutItem.Icon>
@@ -97,7 +97,7 @@
                     Click="{x:Bind OnMaximizeClicked}"
                     FontSize="12"
                     IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Window/Maximize')}">
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Maximize')}">
 
                     <MenuFlyoutItem.Icon>
                         <FontIcon Margin="6" Glyph="&#xE922;" />
@@ -111,7 +111,7 @@
                     Padding="11,0"
                     Click="{x:Bind OnCloseClicked}"
                     FontSize="12"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Window/Close')}">
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Close')}">
 
                     <MenuFlyoutItem.Icon>
                         <FontIcon Margin="6" Glyph="&#xE8BB;" />
@@ -138,7 +138,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="{x:Bind OnOpenSettingsClicked}"
-            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/Settings')}">
+            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Settings')}">
 
             <muxc:AnimatedIcon>
                 <muxc:AnimatedIcon.Source>
@@ -165,13 +165,13 @@
                 Grid.Row="0"
                 HorizontalAlignment="Center"
                 FontSize="26"
-                Text="{x:Bind root:ResourceService.GetLocalized('Installer/ParseEmpty')}" />
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ParseEmpty')}" />
 
             <Button
                 Grid.Row="1"
                 HorizontalAlignment="Center"
                 Click="{x:Bind OnOpenPackageClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('Installer/OpenPackage')}" />
+                Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenPackage')}" />
         </Grid>
 
         <Grid Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsParseEmpty), Mode=OneWay}">
@@ -195,7 +195,7 @@
                 <TextBlock
                     Grid.Row="1"
                     FontSize="26"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/ParsingApp')}" />
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ParsingApp')}" />
             </Grid>
 
             <Grid Visibility="{x:Bind IsLoadCompleted, Mode=OneWay}">
@@ -265,13 +265,13 @@
                                 x:Name="PublisherText"
                                 Grid.Row="1"
                                 TextTrimming="CharacterEllipsis">
-                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/Publisher')}" />
+                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Publisher')}" />
                                 <Run Text="{x:Bind PublisherDisplayName, Mode=OneWay}" />
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip MaxWidth="9999" Visibility="{Binding ElementName=PublisherText, Path=IsTextTrimmed, Mode=OneWay}">
                                         <TextBlock Grid.Row="1">
-                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/Publisher')}" />
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Publisher')}" />
                                             <Run Text="{x:Bind PublisherDisplayName, Mode=OneWay}" />
                                         </TextBlock>
                                     </ToolTip>
@@ -282,13 +282,13 @@
                                 x:Name="PackageVersionText"
                                 Grid.Row="2"
                                 TextTrimming="CharacterEllipsis">
-                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageVersion')}" />
+                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageVersion')}" />
                                 <Run Text="{x:Bind Version.ToString(), Mode=OneWay}" />
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip MaxWidth="9999" Visibility="{Binding ElementName=PackageVersionText, Path=IsTextTrimmed, Mode=OneWay}">
                                         <TextBlock Grid.Row="1">
-                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageVersion')}" />
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageVersion')}" />
                                             <Run Text="{x:Bind Version.ToString(), Mode=OneWay}" />
                                         </TextBlock>
                                     </ToolTip>
@@ -337,7 +337,7 @@
                                         Margin="0,0,3,0"
                                         Padding="0"
                                         Click="{x:Bind OnOpenPackageClicked}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/OpenPackage')}">
+                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenPackage')}">
 
                                         <FontIcon FontSize="16" Glyph="&#xE8E5;" />
                                     </Button>
@@ -348,7 +348,7 @@
                                         Height="34"
                                         Margin="0,0,3,0"
                                         Padding="0"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/AddDependency')}">
+                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependency')}">
 
                                         <Button.Content>
                                             <FontIcon FontSize="16" Glyph="&#xE710;" />
@@ -398,7 +398,7 @@
                                                             Grid.Column="1"
                                                             VerticalAlignment="Center"
                                                             FontSize="14"
-                                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/AddedDependencyPackage')}" />
+                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddedDependencyPackage')}" />
 
                                                         <Button
                                                             Grid.Column="2"
@@ -406,7 +406,7 @@
                                                             VerticalAlignment="Center"
                                                             Click="{x:Bind OnAddDependencyClicked}"
                                                             Style="{StaticResource AlternateCloseButtonStyle}"
-                                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/AddDependency')}">
+                                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependency')}">
 
                                                             <Button.Content>
                                                                 <FontIcon
@@ -422,9 +422,9 @@
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center"
                                                             Click="{x:Bind OnClearDependencyClicked}"
-                                                            IsEnabled="{x:Bind sys:Convert.ToBoolean(InstallDependencyCollection.Count), Mode=OneWay}"
+                                                            IsEnabled="{x:Bind system:Convert.ToBoolean(InstallDependencyCollection.Count), Mode=OneWay}"
                                                             Style="{StaticResource AlternateCloseButtonStyle}"
-                                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/ClearDependency')}">
+                                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ClearDependency')}">
 
                                                             <Button.Content>
                                                                 <FontIcon
@@ -442,7 +442,7 @@
                                                             Click="{x:Bind OnCloseFlyoutClicked}"
                                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                                             Tag="AddDependencyFlyout"
-                                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/CloseFlyout')}">
+                                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}">
 
                                                             <Button.Content>
                                                                 <FontIcon
@@ -462,7 +462,7 @@
                                                         <TextBlock
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center"
-                                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/AddDependencyListEmpty')}"
+                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependencyListEmpty')}"
                                                             TextAlignment="Center"
                                                             TextWrapping="WrapWholeWords" />
                                                     </Grid>
@@ -572,7 +572,7 @@
                                                                         Command="{StaticResource DeleteDependencyPackageCommand}"
                                                                         CommandParameter="{x:Bind DependencyFullName}"
                                                                         Style="{StaticResource AlternateCloseButtonStyle}"
-                                                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/DeleteDependencyPackage')}">
+                                                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DeleteDependencyPackage')}">
 
                                                                         <Button.Content>
                                                                             <FontIcon
@@ -597,7 +597,7 @@
                                         Padding="0"
                                         Click="{x:Bind OnInstallAppClicked}"
                                         Style="{StaticResource AccentButtonStyle}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/InstallApp')}">
+                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/InstallApp')}">
 
                                         <FontIcon FontSize="16" Glyph="&#xE74B;" />
                                     </Button>
@@ -614,7 +614,7 @@
                                 Click="{x:Bind OnCancelInstallClicked}"
                                 IsEnabled="{x:Bind IsCancelInstall, Mode=OneWay}"
                                 Style="{StaticResource AccentButtonStyle}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/CancelInstall')}"
+                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CancelInstall')}"
                                 Visibility="{x:Bind IsInstalling, Mode=OneWay}">
 
                                 <FontIcon FontSize="16" Glyph="&#xE711;" />
@@ -645,7 +645,7 @@
                                     Width="32"
                                     Height="32"
                                     Padding="0"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/ViewErrorInformation')}"
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ViewErrorInformation')}"
                                     Visibility="{x:Bind IsInstallFailed, Mode=OneWay}">
 
                                     <Button.Content>
@@ -695,7 +695,7 @@
                                                         Grid.Column="1"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
-                                                        Text="{x:Bind root:ResourceService.GetLocalized('Installer/ErrorInformation')}" />
+                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ErrorInformation')}" />
 
                                                     <Button
                                                         Grid.Column="2"
@@ -704,7 +704,7 @@
                                                         Click="{x:Bind OnCopyErrorInformationClicked}"
                                                         IsEnabled="{x:Bind converter:ValueConverterHelper.IsNotEmptyString(InstallFailedInformation), Mode=OneWay}"
                                                         Style="{StaticResource AlternateCloseButtonStyle}"
-                                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/CopyErrorInformation')}">
+                                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CopyErrorInformation')}">
 
                                                         <Button.Content>
                                                             <FontIcon
@@ -722,7 +722,7 @@
                                                         Click="{x:Bind OnCloseFlyoutClicked}"
                                                         Style="{StaticResource AlternateCloseButtonStyle}"
                                                         Tag="ViewErrorInformationFlyout"
-                                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/CloseFlyout')}">
+                                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}">
 
                                                         <Button.Content>
                                                             <FontIcon
@@ -785,7 +785,7 @@
                                             <TextBlock
                                                 Grid.Column="1"
                                                 VerticalAlignment="Center"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/BasicInformation')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/BasicInformation')}" />
 
                                             <HyperlinkButton
                                                 Grid.Column="2"
@@ -795,7 +795,7 @@
 
                                                 <HyperlinkButton.Content>
                                                     <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Installer/Start')}" />
+                                                        <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Start')}" />
 
                                                         <muxc:AnimatedIcon
                                                             Width="12"
@@ -822,7 +822,7 @@
                                                             Height="32"
                                                             Padding="11,0"
                                                             Click="{x:Bind OnStartAppClicked}"
-                                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/StartApp')}">
+                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/StartApp')}">
 
                                                             <MenuFlyoutItem.Icon>
                                                                 <FontIcon Glyph="&#xEB3B;" />
@@ -833,7 +833,7 @@
                                                             Height="32"
                                                             Padding="11,0"
                                                             Click="{x:Bind OnOpenAppInstalledFolderClicked}"
-                                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/OpenAppInstalledFolder')}">
+                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenAppInstalledFolder')}">
 
                                                             <MenuFlyoutItem.Icon>
                                                                 <FontIcon Glyph="&#xE8B7;" />
@@ -844,7 +844,7 @@
                                                             Height="32"
                                                             Padding="11,0"
                                                             Click="{x:Bind OnOpenAppCachedFolderClicked}"
-                                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/OpenAppCachedFolder')}">
+                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenAppCachedFolder')}">
 
                                                             <MenuFlyoutItem.Icon>
                                                                 <FontIcon Glyph="&#xE8B7;" />
@@ -893,7 +893,7 @@
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
                                                     FontSize="14"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageDescription')}" />
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageDescription')}" />
 
                                                 <TextBlock
                                                     Grid.Row="0"
@@ -915,7 +915,7 @@
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
                                                     FontSize="14"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageFamilyName')}" />
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageFamilyName')}" />
 
                                                 <TextBlock
                                                     Grid.Row="1"
@@ -937,7 +937,7 @@
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
                                                     FontSize="14"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageFullName')}" />
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageFullName')}" />
 
                                                 <TextBlock
                                                     Grid.Row="2"
@@ -965,7 +965,7 @@
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
                                                     FontSize="14"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/SupportedArchitecture')}" />
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/SupportedArchitecture')}" />
 
                                                 <TextBlock
                                                     Grid.Row="4"
@@ -987,7 +987,7 @@
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
                                                     FontSize="14"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/IsFramework')}" />
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/IsFramework')}" />
 
                                                 <TextBlock
                                                     Grid.Row="5"
@@ -1009,7 +1009,7 @@
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
                                                     FontSize="14"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/AppInstalledState')}" />
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppInstalledState')}" />
 
                                                 <TextBlock
                                                     Grid.Row="6"
@@ -1050,7 +1050,7 @@
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
                                                     FontSize="14"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/AppInstallerSourceLink')}" />
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppInstallerSourceLink')}" />
 
                                                 <TextBlock
                                                     Grid.Row="0"
@@ -1074,7 +1074,7 @@
                                                         <ToolTip MaxWidth="9999">
                                                             <StackPanel>
                                                                 <TextBlock Text="{x:Bind AppInstallerSourceLink, Mode=OneWay}" />
-                                                                <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Installer/OpenLink')}" />
+                                                                <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenLink')}" />
                                                             </StackPanel>
                                                         </ToolTip>
                                                     </ToolTipService.ToolTip>
@@ -1093,7 +1093,7 @@
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
                                                     FontSize="14"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageSourceLink')}" />
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageSourceLink')}" />
 
                                                 <TextBlock
                                                     Grid.Row="1"
@@ -1117,7 +1117,7 @@
                                                         <ToolTip MaxWidth="9999">
                                                             <StackPanel Orientation="Vertical">
                                                                 <TextBlock Text="{x:Bind PackageSourceLink, Mode=OneWay}" />
-                                                                <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Installer/OpenLink')}" />
+                                                                <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenLink')}" />
                                                             </StackPanel>
                                                         </ToolTip>
                                                     </ToolTipService.ToolTip>
@@ -1136,7 +1136,7 @@
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
                                                     FontSize="14"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageType')}" />
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageType')}" />
 
                                                 <TextBlock
                                                     Grid.Row="2"
@@ -1177,13 +1177,13 @@
                                             <TextBlock
                                                 Grid.Column="1"
                                                 VerticalAlignment="Center"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/UpdateSettings')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/UpdateSettings')}" />
 
                                             <HyperlinkButton
                                                 Grid.Column="2"
                                                 Margin="0,0,-15,0"
                                                 Click="{x:Bind OnLearnUpdateSettingsClicked}"
-                                                Content="{x:Bind root:ResourceService.GetLocalized('Installer/LearnUpdateSettings')}" />
+                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/LearnUpdateSettings')}" />
                                         </Grid>
                                     </muxc:Expander.Header>
 
@@ -1217,7 +1217,7 @@
                                                 Grid.Column="1"
                                                 Margin="0,0,3,3"
                                                 FontSize="14"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/HoursBetweenUpdateChecks')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/HoursBetweenUpdateChecks')}" />
 
                                             <TextBlock
                                                 Grid.Row="0"
@@ -1239,7 +1239,7 @@
                                                 Grid.Column="1"
                                                 Margin="0,0,3,3"
                                                 FontSize="14"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/UpdateBlocksActivation')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/UpdateBlocksActivation')}" />
 
                                             <TextBlock
                                                 Grid.Row="1"
@@ -1261,7 +1261,7 @@
                                                 Grid.Column="1"
                                                 Margin="0,0,3,3"
                                                 FontSize="14"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/ShowPrompt')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ShowPrompt')}" />
 
                                             <TextBlock
                                                 Grid.Row="2"
@@ -1283,7 +1283,7 @@
                                                 Grid.Column="1"
                                                 Margin="0,0,3,3"
                                                 FontSize="14"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/ForceUpdateFromAnyVersion')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ForceUpdateFromAnyVersion')}" />
 
                                             <TextBlock
                                                 Grid.Row="3"
@@ -1305,7 +1305,7 @@
                                                 Grid.Column="1"
                                                 Margin="0,0,3,3"
                                                 FontSize="14"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/AutomaticBackgroundTask')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AutomaticBackgroundTask')}" />
 
                                             <TextBlock
                                                 Grid.Row="4"
@@ -1344,13 +1344,13 @@
                                             <TextBlock
                                                 Grid.Column="1"
                                                 VerticalAlignment="Center"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/TargetDeviceFamily')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/TargetDeviceFamily')}" />
 
                                             <HyperlinkButton
                                                 Grid.Column="2"
                                                 Margin="0,0,-15,0"
                                                 Click="{x:Bind OnLearnTargetDeviceFamilyClicked}"
-                                                Content="{x:Bind root:ResourceService.GetLocalized('Installer/LearnTargetDeviceFamily')}" />
+                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/LearnTargetDeviceFamily')}" />
                                         </Grid>
                                     </muxc:Expander.Header>
 
@@ -1379,7 +1379,7 @@
                                                     Grid.Column="0"
                                                     Margin="6,0,0,0"
                                                     VerticalAlignment="Center"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/TargetDeviceName')}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/TargetDeviceName')}"
                                                     TextAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap">
@@ -1387,7 +1387,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
                                                             MaxWidth="9999"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Installer/TargetDeviceName')}"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/TargetDeviceName')}"
                                                             Visibility="{x:Bind TargetDeviceNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -1397,7 +1397,7 @@
                                                     Grid.Column="1"
                                                     Margin="6,0,0,0"
                                                     VerticalAlignment="Center"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/MinVersion')}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MinVersion')}"
                                                     TextAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap">
@@ -1405,7 +1405,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
                                                             MaxWidth="9999"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Installer/MinVersion')}"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MinVersion')}"
                                                             Visibility="{x:Bind MinVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -1415,7 +1415,7 @@
                                                     Grid.Column="2"
                                                     Margin="6,0,0,0"
                                                     VerticalAlignment="Center"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/MaxVersionTested')}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MaxVersionTested')}"
                                                     TextAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap">
@@ -1423,7 +1423,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
                                                             MaxWidth="9999"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Installer/MaxVersionTested')}"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MaxVersionTested')}"
                                                             Visibility="{x:Bind MaxVersionTestedHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -1553,13 +1553,13 @@
                                             <TextBlock
                                                 Grid.Column="1"
                                                 VerticalAlignment="Center"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageDependency')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageDependency')}" />
 
                                             <HyperlinkButton
                                                 Grid.Column="2"
                                                 Margin="0,0,-15,0"
                                                 Click="{x:Bind OnLearnPackageDependencyClicked}"
-                                                Content="{x:Bind root:ResourceService.GetLocalized('Installer/LearnPackageDependency')}" />
+                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/LearnPackageDependency')}" />
                                         </Grid>
                                     </muxc:Expander.Header>
 
@@ -1590,7 +1590,7 @@
                                                     Grid.Column="0"
                                                     Margin="6,0,0,0"
                                                     VerticalAlignment="Center"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyName')}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}"
                                                     TextAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap">
@@ -1598,7 +1598,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
                                                             MaxWidth="9999"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyName')}"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}"
                                                             Visibility="{x:Bind PackageDependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -1608,7 +1608,7 @@
                                                     Grid.Column="1"
                                                     Margin="6,0,0,0"
                                                     VerticalAlignment="Center"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
                                                     TextAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap">
@@ -1616,7 +1616,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
                                                             MaxWidth="9999"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
                                                             Visibility="{x:Bind PackageDependencyPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -1626,7 +1626,7 @@
                                                     Grid.Column="2"
                                                     Margin="6,0,0,0"
                                                     VerticalAlignment="Center"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyMinVersion')}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyMinVersion')}"
                                                     TextAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap">
@@ -1634,7 +1634,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
                                                             MaxWidth="9999"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyMinVersion')}"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyMinVersion')}"
                                                             Visibility="{x:Bind PackageDependencyMinVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -1758,7 +1758,7 @@
                                                     Grid.Column="0"
                                                     Margin="6,0,0,0"
                                                     VerticalAlignment="Center"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyName')}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}"
                                                     TextAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap">
@@ -1766,7 +1766,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
                                                             MaxWidth="9999"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyName')}"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}"
                                                             Visibility="{x:Bind AppInstallerDependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -1776,7 +1776,7 @@
                                                     Grid.Column="1"
                                                     Margin="6,0,0,0"
                                                     VerticalAlignment="Center"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
                                                     TextAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap">
@@ -1784,7 +1784,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
                                                             MaxWidth="9999"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
                                                             Visibility="{x:Bind AppInstallerDependencyPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -1794,7 +1794,7 @@
                                                     Grid.Column="2"
                                                     Margin="6,0,0,0"
                                                     VerticalAlignment="Center"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyVersion')}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyVersion')}"
                                                     TextAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap">
@@ -1802,7 +1802,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
                                                             MaxWidth="9999"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyVersion')}"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyVersion')}"
                                                             Visibility="{x:Bind AppInstallerDependencyVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -1812,7 +1812,7 @@
                                                     Grid.Column="3"
                                                     Margin="6,0,0,0"
                                                     VerticalAlignment="Center"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyProcessorArchitecture')}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyProcessorArchitecture')}"
                                                     TextAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap">
@@ -1820,7 +1820,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
                                                             MaxWidth="9999"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyProcessorArchitecture')}"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyProcessorArchitecture')}"
                                                             Visibility="{x:Bind AppInstallerDependencyProcessorArchitectureHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -1830,7 +1830,7 @@
                                                     Grid.Column="4"
                                                     Margin="6,0,0,0"
                                                     VerticalAlignment="Center"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyOperation')}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyOperation')}"
                                                     TextAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap">
@@ -1838,7 +1838,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
                                                             MaxWidth="9999"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyOperation')}"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyOperation')}"
                                                             Visibility="{x:Bind AppInstallerDependencyOperationHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -1960,10 +1960,10 @@
                                                                 Grid.Column="4"
                                                                 Margin="6,0,0,0"
                                                                 TextTrimming="CharacterEllipsis"
-                                                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/OpenLink')}">
+                                                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenLink')}">
 
                                                                 <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
-                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/Open')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Open')}" />
                                                                 </Hyperlink>
                                                             </TextBlock>
                                                         </Grid>
@@ -2001,13 +2001,13 @@
                                             <TextBlock
                                                 Grid.Column="1"
                                                 VerticalAlignment="Center"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageCapability')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageCapability')}" />
 
                                             <HyperlinkButton
                                                 Grid.Column="2"
                                                 Margin="0,0,-15,0"
                                                 Click="{x:Bind OnLearnPackageCapabilityClicked}"
-                                                Content="{x:Bind root:ResourceService.GetLocalized('Installer/LearnPackageCapability')}" />
+                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/LearnPackageCapability')}" />
                                         </Grid>
                                     </muxc:Expander.Header>
 
@@ -2094,7 +2094,7 @@
                                             <TextBlock
                                                 Grid.Column="1"
                                                 VerticalAlignment="Center"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageApplication')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageApplication')}" />
                                         </Grid>
                                     </muxc:Expander.Header>
 
@@ -2125,7 +2125,7 @@
                                                     Grid.Column="0"
                                                     Margin="6,0,0,0"
                                                     VerticalAlignment="Center"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/AppID')}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppID')}"
                                                     TextAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap">
@@ -2133,7 +2133,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
                                                             MaxWidth="9999"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Installer/AppID')}"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppID')}"
                                                             Visibility="{x:Bind AppIDHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -2143,7 +2143,7 @@
                                                     Grid.Column="1"
                                                     Margin="6,0,0,0"
                                                     VerticalAlignment="Center"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/AppDescription')}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppDescription')}"
                                                     TextAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap">
@@ -2151,7 +2151,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
                                                             MaxWidth="9999"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Installer/AppDescription')}"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppDescription')}"
                                                             Visibility="{x:Bind AppDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -2161,7 +2161,7 @@
                                                     Grid.Column="2"
                                                     Margin="6,0,0,0"
                                                     VerticalAlignment="Center"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/Executable')}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Executable')}"
                                                     TextAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap">
@@ -2169,7 +2169,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
                                                             MaxWidth="9999"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Installer/Executable')}"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Executable')}"
                                                             Visibility="{x:Bind ExecutableHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -2179,7 +2179,7 @@
                                                     Grid.Column="3"
                                                     Margin="6,0,0,0"
                                                     VerticalAlignment="Center"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/EntryPoint')}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/EntryPoint')}"
                                                     TextAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap">
@@ -2187,7 +2187,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
                                                             MaxWidth="9999"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Installer/EntryPoint')}"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/EntryPoint')}"
                                                             Visibility="{x:Bind EntryPointHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -2197,7 +2197,7 @@
                                                     Grid.Column="4"
                                                     Margin="6,0,0,0"
                                                     VerticalAlignment="Center"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/AppUserModelId')}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppUserModelId')}"
                                                     TextAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap">
@@ -2205,7 +2205,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
                                                             MaxWidth="9999"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Installer/AppUserModelId')}"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppUserModelId')}"
                                                             Visibility="{x:Bind AppUserModelIdHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -2371,7 +2371,7 @@
                                             <TextBlock
                                                 Grid.Column="1"
                                                 VerticalAlignment="Center"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageLanguage')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageLanguage')}" />
                                         </Grid>
                                     </muxc:Expander.Header>
 
@@ -2389,7 +2389,7 @@
                                             </GridView.ItemContainerStyle>
 
                                             <GridView.ItemTemplate>
-                                                <DataTemplate x:DataType="language:Language">
+                                                <DataTemplate x:DataType="globalization:Language">
                                                     <GridViewItem
                                                         Width="230"
                                                         Height="30"
@@ -2452,13 +2452,13 @@
                     <TextBlock
                         Grid.Row="0"
                         FontSize="26"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Installer/ParseFailed')}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ParseFailed')}" />
 
                     <Button
                         Grid.Row="1"
                         HorizontalAlignment="Center"
                         Click="{x:Bind OnOpenOtherPackageClicked}"
-                        Content="{x:Bind root:ResourceService.GetLocalized('Installer/OpenOtherPackage')}" />
+                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenOtherPackage')}" />
                 </Grid>
             </Grid>
         </Grid>

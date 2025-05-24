@@ -4,9 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:helper="using:GetStoreApp.Helpers.Root"
+    xmlns:roothelper="using:GetStoreApp.Helpers.Root"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:text="using:Windows.UI.Text"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
@@ -49,18 +49,18 @@
                     VerticalAlignment="Center"
                     Spacing="5">
 
-                    <TextBlock FontSize="22" Text="{x:Bind root:ResourceService.GetLocalized('About/AppName')}" />
-                    <TextBlock FontSize="15" Text="{x:Bind helper:InfoHelper.AppVersion.ToString()}" />
+                    <TextBlock FontSize="22" Text="{x:Bind rootservice:ResourceService.GetLocalized('About/AppName')}" />
+                    <TextBlock FontSize="15" Text="{x:Bind roothelper:InfoHelper.AppVersion.ToString()}" />
                     <StackPanel Orientation="Horizontal">
 
                         <TextBlock
                             VerticalAlignment="Center"
                             FontSize="15"
-                            Text="{x:Bind root:ResourceService.GetLocalized('About/Developer')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('About/Developer')}" />
 
-                        <TextBlock VerticalAlignment="Center" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/DeveloperNameToolTip')}">
+                        <TextBlock VerticalAlignment="Center" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('About/DeveloperNameToolTip')}">
                             <Hyperlink NavigateUri="https://github.com/Gaoyifei1011" UnderlineStyle="None">
-                                <Run Text="{x:Bind root:ResourceService.GetLocalized('About/DeveloperName')}" />
+                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('About/DeveloperName')}" />
                             </Hyperlink>
                         </TextBlock>
                     </StackPanel>
@@ -100,7 +100,7 @@
                                 VerticalAlignment="Center"
                                 FontSize="16"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('About/ProjectHomePage')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('About/ProjectHomePage')}" />
                         </Grid>
                     </Button>
                 </GridViewItem>
@@ -131,7 +131,7 @@
                                 VerticalAlignment="Center"
                                 FontSize="16"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('About/SendFeedback')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('About/SendFeedback')}" />
                         </Grid>
                     </Button>
                 </GridViewItem>
@@ -160,12 +160,12 @@
 
                             <TextBlock
                                 Grid.Column="1"
-                                Text="{x:Bind root:ResourceService.GetLocalized('About/CheckUpdate')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('About/CheckUpdate')}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsChecking), Mode=OneWay}" />
 
                             <TextBlock
                                 Grid.Column="1"
-                                Text="{x:Bind root:ResourceService.GetLocalized('About/Checking')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('About/Checking')}"
                                 Visibility="{x:Bind IsChecking, Mode=OneWay}" />
                         </Grid>
                     </Button>
@@ -197,7 +197,7 @@
                                 VerticalAlignment="Center"
                                 FontSize="16"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('About/HelpTranslate')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('About/HelpTranslate')}" />
                         </Grid>
                     </Button>
                 </GridViewItem>
@@ -228,7 +228,7 @@
                                 VerticalAlignment="Center"
                                 FontSize="16"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('About/ShowLicense')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('About/ShowLicense')}" />
                         </Grid>
                     </Button>
                 </GridViewItem>
@@ -259,7 +259,7 @@
                                 VerticalAlignment="Center"
                                 FontSize="16"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('About/ShowReleaseNotes')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('About/ShowReleaseNotes')}" />
                         </Grid>
                     </Button>
                 </GridViewItem>
@@ -290,7 +290,7 @@
                                 VerticalAlignment="Center"
                                 FontSize="16"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppInformation')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AppInformation')}" />
                         </Grid>
                     </Button>
                 </GridViewItem>
@@ -321,7 +321,7 @@
                                 VerticalAlignment="Center"
                                 FontSize="16"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/SystemInformation')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/SystemInformation')}" />
                         </Grid>
                     </Button>
                 </GridViewItem>
@@ -341,7 +341,7 @@
                         Padding="15,0,0,0"
                         FontSize="16"
                         FontWeight="Medium"
-                        Text="{x:Bind root:ResourceService.GetLocalized('About/BriefIntroduction')}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('About/BriefIntroduction')}" />
                 </Expander.Header>
 
                 <Expander.Content>
@@ -350,13 +350,13 @@
                             Margin="30,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('About/DevelopPurpose')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('About/DevelopPurpose')}"
                             TextAlignment="Left" />
                         <TextBlock
                             Margin="30,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('About/DevelopPurposeDescription')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('About/DevelopPurposeDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -366,13 +366,13 @@
                             Margin="30,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('About/UpdatePath')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('About/UpdatePath')}"
                             TextAlignment="Left" />
                         <TextBlock
                             Margin="30,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('About/UpdatePathDescription')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('About/UpdatePathDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -382,14 +382,14 @@
                             Margin="30,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('About/PrivacyandSecurity')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('About/PrivacyandSecurity')}"
                             TextAlignment="Left" />
                         <TextBlock
                             Margin="30,0,16,10"
                             Padding="0,0,2,0"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('About/PrivacyandSecurityDescription')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('About/PrivacyandSecurityDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
                     </StackPanel>
@@ -410,7 +410,7 @@
                         Padding="16,0,0,0"
                         FontSize="15"
                         FontWeight="Medium"
-                        Text="{x:Bind root:ResourceService.GetLocalized('About/Reference')}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('About/Reference')}" />
                 </Expander.Header>
 
                 <Expander.Content>
@@ -454,7 +454,7 @@
                                                 <TextBlock>
                                                     <Run Text="{x:Bind DisplayText}" />
                                                     <LineBreak />
-                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ReferenceToolTip')}" />
+                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('About/ReferenceToolTip')}" />
                                                 </TextBlock>
                                             </StackPanel>
                                         </ToolTip>
@@ -479,7 +479,7 @@
                         Padding="15,0,0,0"
                         FontSize="16"
                         FontWeight="Medium"
-                        Text="{x:Bind root:ResourceService.GetLocalized('About/Thanks')}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('About/Thanks')}" />
                 </Expander.Header>
 
                 <Expander.Content>
@@ -488,7 +488,7 @@
                             Margin="30,10,16,5"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('About/ThanksDescription')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('About/ThanksDescription')}"
                             TextAlignment="Left" />
 
                         <MenuFlyoutSeparator />
@@ -533,7 +533,7 @@
                                                     <TextBlock>
                                                         <Run Text="{x:Bind DisplayText}" />
                                                         <LineBreak />
-                                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ThanksToolTip')}" />
+                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('About/ThanksToolTip')}" />
                                                     </TextBlock>
                                                 </StackPanel>
                                             </ToolTip>

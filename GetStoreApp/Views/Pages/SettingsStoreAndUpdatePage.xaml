@@ -4,10 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:helper="using:GetStoreApp.Helpers.Root"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models"
-    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -57,20 +56,20 @@
                     <TextBlock
                         VerticalAlignment="Center"
                         Style="{StaticResource BodyTextBlockStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/QueryLinksMode')}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/QueryLinksMode')}" />
 
                     <TextBlock
                         x:Name="QueryLinksModeDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/QueryLinksModeDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/QueryLinksModeDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/QueryLinksModeDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/QueryLinksModeDescription')}"
                                 Visibility="{x:Bind QueryLinksModeDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -133,20 +132,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/InstallMode')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/InstallMode')}" />
 
                     <TextBlock
                         x:Name="InstallModeDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/InstallModeDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/InstallModeDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/InstallModeDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/InstallModeDescription')}"
                                 Visibility="{x:Bind InstallModeDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -209,20 +208,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/CancelAutoUpdate')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/CancelAutoUpdate')}" />
 
                     <TextBlock
                         x:Name="CancelAutoUpdateDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/CancelAutoUpdateDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/CancelAutoUpdateDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/CancelAutoUpdateDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/CancelAutoUpdateDescription')}"
                                 Visibility="{x:Bind CancelAutoUpdateDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -235,12 +234,12 @@
 
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/CancelAutoUpdateOffContent')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/CancelAutoUpdateOffContent')}"
                         Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(CancelAutoUpdateValue), Mode=OneWay}" />
 
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/CancelAutoUpdateOnContent')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/CancelAutoUpdateOnContent')}"
                         Visibility="{x:Bind CancelAutoUpdateValue, Mode=OneWay}" />
 
                     <ToggleSwitch
@@ -282,20 +281,20 @@
                             VerticalAlignment="Center"
                             Orientation="Vertical">
 
-                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/StoreCountryOrRegion')}" />
+                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/StoreCountryOrRegion')}" />
 
                             <TextBlock
                                 x:Name="StoreCountryOrRegionDescription"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/StoreCountryOrRegionDescription')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/StoreCountryOrRegionDescription')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
-                                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/StoreCountryOrRegionDescription')}"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/StoreCountryOrRegionDescription')}"
                                         Visibility="{x:Bind StoreCountryOrRegionDescription.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
@@ -325,7 +324,7 @@
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/UseSystemRegion')}" />
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/UseSystemRegion')}" />
 
                                 <TextBlock
                                     x:Name="CurrentCountryOrRegionText"
@@ -334,13 +333,13 @@
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap">
 
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/CurrentCountryOrRegion')}" />
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/CurrentCountryOrRegion')}" />
                                     <Run Text="{x:Bind CurrentCountryOrRegion.DisplayName, Mode=OneWay}" />
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip MaxWidth="9999" Visibility="{x:Bind CurrentCountryOrRegionText.IsTextTrimmed, Mode=OneWay}">
                                             <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/CurrentCountryOrRegion')}" />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/CurrentCountryOrRegion')}" />
                                                 <Run Text="{x:Bind CurrentCountryOrRegion.DisplayName, Mode=OneWay}" />
                                             </TextBlock>
                                         </ToolTip>
@@ -353,7 +352,7 @@
                                 Margin="0,0,6,0"
                                 VerticalAlignment="Center"
                                 Click="{x:Bind OnSystemRegionSettingsClicked}"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/SystemRegionSettings')}" />
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/SystemRegionSettings')}" />
 
                             <StackPanel
                                 Grid.Column="2"
@@ -362,12 +361,12 @@
 
                                 <TextBlock
                                     VerticalAlignment="Center"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/UseSystemRegionOffContent')}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/UseSystemRegionOffContent')}"
                                     Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(UseSystemRegionValue), Mode=OneWay}" />
 
                                 <TextBlock
                                     VerticalAlignment="Center"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/UseSystemRegionOnContent')}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/UseSystemRegionOnContent')}"
                                     Visibility="{x:Bind UseSystemRegionValue, Mode=OneWay}" />
 
                                 <ToggleSwitch
@@ -400,19 +399,19 @@
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/StoreRegion')}" />
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/StoreRegion')}" />
                                 <TextBlock
                                     x:Name="StoreRegionDescription"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/StoreRegionDescription')}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/StoreRegionDescription')}"
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
-                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/StoreRegionDescription')}"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/StoreRegionDescription')}"
                                             Visibility="{x:Bind StoreRegionDescription.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
@@ -510,20 +509,20 @@
                             VerticalAlignment="Center"
                             Orientation="Vertical">
 
-                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilter')}" />
+                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LinkFilter')}" />
 
                             <TextBlock
                                 x:Name="LinkFilterDescription"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterDescription')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LinkFilterDescription')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
-                                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterDescription')}"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LinkFilterDescription')}"
                                         Visibility="{x:Bind LinkFilterDescription.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
@@ -552,19 +551,19 @@
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackage')}" />
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/EncryptedPackage')}" />
                                 <TextBlock
                                     x:Name="EncryptedPackageDescription"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageDescription')}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/EncryptedPackageDescription')}"
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
-                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageDescription')}"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/EncryptedPackageDescription')}"
                                             Visibility="{x:Bind EncryptedPackageDescription.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
@@ -577,12 +576,12 @@
 
                                 <TextBlock
                                     VerticalAlignment="Center"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageOffContent')}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/EncryptedPackageOffContent')}"
                                     Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(EncryptedPackageFilterValue), Mode=OneWay}" />
 
                                 <TextBlock
                                     VerticalAlignment="Center"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageOnContent')}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/EncryptedPackageOnContent')}"
                                     Visibility="{x:Bind EncryptedPackageFilterValue, Mode=OneWay}" />
 
                                 <ToggleSwitch
@@ -615,19 +614,19 @@
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMap')}" />
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/BlockMap')}" />
                                 <TextBlock
                                     x:Name="BlockMapDescription"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapDescription')}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/BlockMapDescription')}"
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
-                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapDescription')}"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/BlockMapDescription')}"
                                             Visibility="{x:Bind BlockMapDescription.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
@@ -640,12 +639,12 @@
 
                                 <TextBlock
                                     VerticalAlignment="Center"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOffContent')}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/BlockMapOffContent')}"
                                     Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(BlockMapFilterValue), Mode=OneWay}" />
 
                                 <TextBlock
                                     VerticalAlignment="Center"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOnContent')}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/BlockMapOnContent')}"
                                     Visibility="{x:Bind BlockMapFilterValue, Mode=OneWay}" />
 
                                 <ToggleSwitch

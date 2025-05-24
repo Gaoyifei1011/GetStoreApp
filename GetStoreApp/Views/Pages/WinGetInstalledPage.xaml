@@ -9,7 +9,7 @@
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models"
-    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -55,14 +55,14 @@
             <TextBlock
                 Grid.Column="1"
                 VerticalAlignment="Center"
-                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Operation')}" />
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Operation')}" />
 
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsCountEmpty')}"
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/InstalledAppsCountEmpty')}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(InstalledAppsCollection.Count), Mode=OneWay}" />
 
             <TextBlock
@@ -76,7 +76,7 @@
                 Width="170"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                PlaceholderText="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsPlaceHolderText')}"
+                PlaceholderText="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/InstalledAppsPlaceHolderText')}"
                 QuerySubmitted="{x:Bind OnQuerySubmitted}"
                 Text="{x:Bind SearchText, Mode=OneWay}"
                 TextChanged="{x:Bind OnTextChanged}">
@@ -99,7 +99,7 @@
                 </CommandBar.Resources>
 
                 <CommandBar.PrimaryCommands>
-                    <AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Sort')}" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/SortToolTip')}">
+                    <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Sort')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/SortToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8CB;" />
@@ -110,7 +110,7 @@
                                 <MenuFlyoutSubItem
                                     Height="32"
                                     Padding="11,0,11,0"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortWay')}">
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/SortWay')}">
 
                                     <RadioMenuFlyoutItem
                                         Height="32"
@@ -119,7 +119,7 @@
                                         GroupName="InstalledSortWayRadioGroup"
                                         IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
                                         Tag="True"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortIncrease')}" />
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/SortIncrease')}" />
 
                                     <RadioMenuFlyoutItem
                                         Height="32"
@@ -128,13 +128,13 @@
                                         GroupName="InstalledSortWayRadioGroup"
                                         IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
                                         Tag="False"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortDecrease')}" />
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/SortDecrease')}" />
                                 </MenuFlyoutSubItem>
 
                                 <MenuFlyoutSubItem
                                     Height="32"
                                     Padding="11,0,11,0"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortRule')}">
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/SortRule')}">
 
                                     <RadioMenuFlyoutItem
                                         Height="32"
@@ -143,7 +143,7 @@
                                         GroupName="InstalledSortRuleRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
                                         Tag="{x:Bind enum:AppSortRuleKind.DisplayName}"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByDisplayName')}" />
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/SortByDisplayName')}" />
 
                                     <RadioMenuFlyoutItem
                                         Height="32"
@@ -152,13 +152,13 @@
                                         GroupName="InstalledSortRuleRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
                                         Tag="{x:Bind enum:AppSortRuleKind.PublisherName}"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByPublisher')}" />
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/SortByPublisher')}" />
                                 </MenuFlyoutSubItem>
                             </MenuFlyout>
                         </AppBarButton.Flyout>
                     </AppBarButton>
 
-                    <AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('WinGet/UninstallOptions')}">
+                    <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UninstallOptions')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE700;" />
@@ -191,7 +191,7 @@
                                             Margin="2,0,0,0"
                                             VerticalAlignment="Center"
                                             FontSize="14"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceUninstall')}" />
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ForceUninstall')}" />
 
                                         <StackPanel
                                             Grid.Column="1"
@@ -200,12 +200,12 @@
 
                                             <TextBlock
                                                 VerticalAlignment="Center"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceUninstallOffContent')}"
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ForceUninstallOffContent')}"
                                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(Force), Mode=OneWay}" />
 
                                             <TextBlock
                                                 VerticalAlignment="Center"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceUninstallOnContent')}"
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ForceUninstallOnContent')}"
                                                 Visibility="{x:Bind Force, Mode=OneWay}" />
 
                                             <ToggleSwitch
@@ -223,7 +223,7 @@
                                     <TextBlock
                                         Margin="2,0,0,0"
                                         FontSize="14"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageUninstallScope')}" />
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageUninstallScope')}" />
 
                                     <Grid
                                         HorizontalAlignment="Left"
@@ -240,7 +240,7 @@
                                             Grid.Column="0"
                                             HorizontalAlignment="Stretch"
                                             Click="{x:Bind OnPackageUninstallScopeClicked}"
-                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageUninstallScopeAny')}"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageUninstallScopeAny')}"
                                             IsChecked="{x:Bind x:Object.Equals(SelectedPackageUninstallScope, deployment:PackageUninstallScope.Any), Mode=OneWay}"
                                             Tag="{x:Bind deployment:PackageUninstallScope.Any}" />
 
@@ -248,7 +248,7 @@
                                             Grid.Column="1"
                                             HorizontalAlignment="Stretch"
                                             Click="{x:Bind OnPackageUninstallScopeClicked}"
-                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageUninstallScopeUser')}"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageUninstallScopeUser')}"
                                             IsChecked="{x:Bind x:Object.Equals(SelectedPackageUninstallScope, deployment:PackageUninstallScope.User), Mode=OneWay}"
                                             Tag="{x:Bind deployment:PackageUninstallScope.User}" />
 
@@ -256,7 +256,7 @@
                                             Grid.Column="2"
                                             HorizontalAlignment="Stretch"
                                             Click="{x:Bind OnPackageUninstallScopeClicked}"
-                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageUninstallScopeSystem')}"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageUninstallScopeSystem')}"
                                             IsChecked="{x:Bind x:Object.Equals(SelectedPackageUninstallScope, deployment:PackageUninstallScope.System), Mode=OneWay}"
                                             Tag="{x:Bind deployment:PackageUninstallScope.System}" />
                                     </Grid>
@@ -266,7 +266,7 @@
                                     <TextBlock
                                         Margin="2,0,0,0"
                                         FontSize="14"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageUninstallMode')}" />
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageUninstallMode')}" />
 
                                     <Grid
                                         HorizontalAlignment="Left"
@@ -283,7 +283,7 @@
                                             Grid.Column="0"
                                             HorizontalAlignment="Stretch"
                                             Click="{x:Bind OnPackageUninstallModeClicked}"
-                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageUninstallModeDefault')}"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageUninstallModeDefault')}"
                                             IsChecked="{x:Bind x:Object.Equals(SelectedPackageUninstallMode, deployment:PackageUninstallMode.Default), Mode=OneWay}"
                                             Tag="{x:Bind deployment:PackageUninstallMode.Default}" />
 
@@ -291,7 +291,7 @@
                                             Grid.Column="1"
                                             HorizontalAlignment="Stretch"
                                             Click="{x:Bind OnPackageUninstallModeClicked}"
-                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageUninstallModeInteractive')}"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageUninstallModeInteractive')}"
                                             IsChecked="{x:Bind x:Object.Equals(SelectedPackageUninstallMode, deployment:PackageUninstallMode.Interactive), Mode=OneWay}"
                                             Tag="{x:Bind deployment:PackageUninstallMode.Interactive}" />
 
@@ -299,7 +299,7 @@
                                             Grid.Column="2"
                                             HorizontalAlignment="Stretch"
                                             Click="{x:Bind OnPackageUninstallModeClicked}"
-                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageUninstallModeSilent')}"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageUninstallModeSilent')}"
                                             IsChecked="{x:Bind x:Object.Equals(SelectedPackageUninstallMode, deployment:PackageUninstallMode.Silent), Mode=OneWay}"
                                             Tag="{x:Bind deployment:PackageUninstallMode.Silent}" />
                                     </Grid>
@@ -308,7 +308,7 @@
                         </AppBarButton.Flyout>
                     </AppBarButton>
 
-                    <AppBarButton Click="{x:Bind OnTaskManagerClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/TaskManager')}">
+                    <AppBarButton Click="{x:Bind OnTaskManagerClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/TaskManager')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE71D;" />
@@ -320,8 +320,8 @@
                     <AppBarButton
                         Click="{x:Bind OnRefreshClicked}"
                         IsEnabled="{x:Bind GetIsInstalling(InstalledAppsResultKind), Mode=OneWay}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RefreshToolTip')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Refresh')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RefreshToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE72C;" />
@@ -330,8 +330,8 @@
 
                     <AppBarButton
                         Click="{x:Bind OnControlPanelClicked}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('WinGet/ControlPanel')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ControlPanelToolTip')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ControlPanel')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ControlPanelToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE70A;" />
@@ -340,8 +340,8 @@
 
                     <AppBarButton
                         Click="{x:Bind OnUseInstructionClicked}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('WinGet/UseInstruction')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/UseInstructionToolTip')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UseInstruction')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UseInstructionToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE946;" />
@@ -377,7 +377,7 @@
                     <TextBlock
                         Margin="0,10"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/LoadingInstalledApps')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/LoadingInstalledApps')}"
                         TextAlignment="Center" />
                 </StackPanel>
 
@@ -393,7 +393,7 @@
                 <TextBlock
                     Margin="0,10"
                     VerticalAlignment="Center"
-                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsSearchEmptyDescription')}"
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/InstalledAppsSearchEmptyDescription')}"
                     TextAlignment="Center"
                     Visibility="{x:Bind CheckInstalledAppsState(InstalledAppsResultKind, enum:InstalledAppsResultKind.SearchResult), Mode=OneWay}" />
             </Grid>
@@ -452,7 +452,7 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip MaxWidth="9999">
                                         <TextBlock>
-                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
                                             <Run Text="{x:Bind AppName}" />
                                         </TextBlock>
                                     </ToolTip>
@@ -479,17 +479,17 @@
                                             </Grid.RowDefinitions>
 
                                             <TextBlock Grid.Row="0">
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppPublisherToolTip')}" />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppPublisherToolTip')}" />
                                                 <Run Text="{x:Bind AppPublisher}" />
                                             </TextBlock>
 
                                             <TextBlock Grid.Row="1">
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
                                                 <Run Text="{x:Bind AppVersion}" />
                                             </TextBlock>
 
                                             <TextBlock Grid.Row="2">
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppIDToolTip')}" />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppIDToolTip')}" />
                                                 <Run Text="{x:Bind AppID}" />
                                             </TextBlock>
                                         </Grid>
@@ -520,17 +520,17 @@
                                 BorderThickness="0,0,1,0"
                                 Command="{StaticResource UninstallCommand}"
                                 CommandParameter="{x:Bind}"
-                                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Uninstall')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Uninstall')}"
                                 CornerRadius="0"
                                 IsEnabled="{x:Bind IsUninstalling.Equals(x:False), Mode=OneWay}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/Uninstall')}" />
+                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Uninstall')}" />
 
                             <Button
                                 Width="35"
                                 VerticalAlignment="Stretch"
                                 BorderThickness="0"
                                 CornerRadius="0"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}">
+                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}">
 
                                 <Button.Content>
                                     <AnimatedIcon
@@ -557,7 +557,7 @@
                                             Padding="11,0"
                                             Command="{StaticResource CopyUninstallTextCommand}"
                                             CommandParameter="{x:Bind AppID}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUninstallText')}">
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CopyUninstallText')}">
 
                                             <MenuFlyoutItem.Icon>
                                                 <FontIcon Glyph="&#xE8C8;" />
@@ -569,7 +569,7 @@
                                             Padding="11,0"
                                             Command="{StaticResource UninstallWithCmdCommand}"
                                             CommandParameter="{x:Bind AppID}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UninstallWithCmd')}">
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UninstallWithCmd')}">
 
                                             <MenuFlyoutItem.Icon>
                                                 <FontIcon Glyph="&#xE756;" />

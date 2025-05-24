@@ -7,8 +7,7 @@
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models"
-    xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:sys="using:System"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -30,7 +29,7 @@
             Grid.Row="0"
             Margin="30,10,30,0"
             FontSize="22"
-            Text="{x:Bind root:ResourceService.GetLocalized('AppUpdate/Title')}" />
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/Title')}" />
 
         <!--  应用更新控制栏  -->
         <Grid
@@ -60,14 +59,14 @@
             <TextBlock
                 Grid.Column="1"
                 VerticalAlignment="Center"
-                Text="{x:Bind root:ResourceService.GetLocalized('AppUpdate/Operation')}" />
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/Operation')}" />
 
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind root:ResourceService.GetLocalized('AppUpdate/AppUpdateEmpty')}"
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/AppUpdateEmpty')}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(AppUpdateCollection.Count), Mode=OneWay}" />
 
             <TextBlock
@@ -90,7 +89,7 @@
                     <AppBarButton
                         Click="{x:Bind OnCheckUpdateClicked}"
                         IsEnabled="{x:Bind GetIsCheckingUpdate(AppUpdateResultKind), Mode=OneWay}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('AppUpdate/CheckUpdate')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/CheckUpdate')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8CB;" />
@@ -100,7 +99,7 @@
                     <AppBarButton
                         Click="{x:Bind OnUpdateAllClicked}"
                         IsEnabled="{x:Bind GetIsCheckingUpdate(AppUpdateResultKind), Mode=OneWay}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('AppUpdate/UpdateAll')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/UpdateAll')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE74A;" />
@@ -111,8 +110,8 @@
                 <CommandBar.SecondaryCommands>
                     <AppBarButton
                         Click="{x:Bind OnOpenStoreClicked}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('AppUpdate/OpenStore')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppUpdate/OpenStoreToolTip')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/OpenStore')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/OpenStoreToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE719;" />
@@ -121,8 +120,8 @@
 
                     <AppBarButton
                         Click="{x:Bind OnInsiderProgramClicked}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('AppUpdate/InsiderProgram')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppUpdate/InsiderProgramToolTip')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/InsiderProgram')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/InsiderProgramToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xF1AD;" />
@@ -149,7 +148,7 @@
                 <TextBlock
                     Margin="0,10"
                     VerticalAlignment="Center"
-                    Text="{x:Bind root:ResourceService.GetLocalized('AppUpdate/NotCheckUpdateTip')}"
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/NotCheckUpdateTip')}"
                     TextAlignment="Center"
                     Visibility="{x:Bind CheckAppUpdateState(AppUpdateResultKind, enum:AppUpdateResultKind.NotCheckUpdate), Mode=OneWay}" />
 
@@ -166,7 +165,7 @@
                     <TextBlock
                         Margin="0,10"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('AppUpdate/LoadingUpdate')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/LoadingUpdate')}"
                         TextAlignment="Center" />
                 </StackPanel>
 
@@ -252,7 +251,7 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip MaxWidth="9999">
                                             <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/DisplayNameToolTip')}" />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/DisplayNameToolTip')}" />
                                                 <Run Text="{x:Bind DisplayName}" />
                                             </TextBlock>
                                         </ToolTip>
@@ -269,7 +268,7 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip MaxWidth="9999">
                                             <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PublisherDisplayNameToolTip')}" />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/PublisherDisplayNameToolTip')}" />
                                                 <Run Text="{x:Bind PublisherDisplayName}" />
                                             </TextBlock>
                                         </ToolTip>
@@ -306,7 +305,7 @@
                                 Grid.Column="3"
                                 Command="{StaticResource UpdateCommand}"
                                 CommandParameter="{x:Bind PackageFamilyName}"
-                                Content="{x:Bind root:ResourceService.GetLocalized('AppUpdate/Update')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/Update')}"
                                 IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsUpdating), Mode=OneWay}" />
 
@@ -314,7 +313,7 @@
                                 Grid.Column="3"
                                 Command="{StaticResource CancelCommand}"
                                 CommandParameter="{x:Bind PackageFamilyName}"
-                                Content="{x:Bind root:ResourceService.GetLocalized('AppUpdate/Cancel')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/Cancel')}"
                                 IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
                                 Style="{StaticResource AccentButtonStyle}"
                                 Visibility="{x:Bind IsUpdating, Mode=OneWay}" />

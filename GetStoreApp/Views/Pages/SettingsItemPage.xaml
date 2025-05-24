@@ -4,9 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:helper="using:GetStoreApp.Helpers.Root"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:roothelper="using:GetStoreApp.Helpers.Root"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -56,49 +56,49 @@
                     IsTapEnabled="True"
                     Tag="0"
                     Tapped="{x:Bind OnSelectorBarTapped}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/General')}" />
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/General')}" />
 
                 <SelectorBarItem
                     FontSize="16"
                     IsTapEnabled="True"
                     Tag="1"
                     Tapped="{x:Bind OnSelectorBarTapped}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/StoreAndUpdate')}" />
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/StoreAndUpdate')}" />
 
                 <SelectorBarItem
                     FontSize="16"
                     IsTapEnabled="True"
                     Tag="2"
                     Tapped="{x:Bind OnSelectorBarTapped}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGet')}" />
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGet')}" />
 
                 <SelectorBarItem
                     FontSize="16"
                     IsTapEnabled="True"
                     Tag="3"
                     Tapped="{x:Bind OnSelectorBarTapped}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/Download')}" />
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Download')}" />
 
                 <SelectorBarItem
                     FontSize="16"
                     IsTapEnabled="True"
                     Tag="4"
                     Tapped="{x:Bind OnSelectorBarTapped}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppInstaller')}" />
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AppInstaller')}" />
 
                 <SelectorBarItem
                     FontSize="16"
                     IsTapEnabled="True"
                     Tag="5"
                     Tapped="{x:Bind OnSelectorBarTapped}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/Advanced')}" />
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Advanced')}" />
 
                 <SelectorBarItem
                     FontSize="16"
                     IsTapEnabled="True"
                     Tag="6"
                     Tapped="{x:Bind OnSelectorBarTapped}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/About')}" />
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/About')}" />
             </SelectorBar>
 
             <Button
@@ -106,7 +106,7 @@
                 Height="34"
                 Padding="0"
                 HorizontalAlignment="Right"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/ViewMoreOptions')}">
+                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ViewMoreOptions')}">
 
                 <Button.Content>
                     <FontIcon FontSize="16" Glyph="&#xE712;" />
@@ -116,15 +116,15 @@
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutItem
                             Click="{x:Bind OnRestartAppsClicked}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/RestartApp')}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/RestartAppToolTip')}">
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/RestartApp')}"
+                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Settings/RestartAppToolTip')}">
 
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE895;" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
 
-                        <MenuFlyoutItem Click="{x:Bind OnSettingsInstructionClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/SettingsInstruction')}">
+                        <MenuFlyoutItem Click="{x:Bind OnSettingsInstructionClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/SettingsInstruction')}">
 
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE946;" />
@@ -133,8 +133,8 @@
 
                         <MenuFlyoutItem
                             Click="{x:Bind OnRunAsAdministratorClicked}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/RunAsAdministrator')}"
-                            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(helper:RuntimeHelper.IsElevated)}">
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/RunAsAdministrator')}"
+                            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(roothelper:RuntimeHelper.IsElevated)}">
 
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE7EF;" />
@@ -147,8 +147,8 @@
                             Height="32"
                             Padding="11,0"
                             Click="{x:Bind OnPinToDesktopClicked}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('About/PinToDesktop')}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/PinToDesktopToolTip')}">
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('About/PinToDesktop')}"
+                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('About/PinToDesktopToolTip')}">
 
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE70A;" />
@@ -159,8 +159,8 @@
                             Height="32"
                             Padding="11,0"
                             Click="{x:Bind OnPinToStartScreenClicked}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('About/PinToStartScreen')}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/PinToStartScreenToolTip')}">
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('About/PinToStartScreen')}"
+                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('About/PinToStartScreenToolTip')}">
 
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE8FC;" />
@@ -171,8 +171,8 @@
                             Height="32"
                             Padding="11,0"
                             Click="{x:Bind OnPinToTaskbarClicked}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbar')}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbarToolTip')}">
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('About/PinToTaskbar')}"
+                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('About/PinToTaskbarToolTip')}">
 
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE75B;" />

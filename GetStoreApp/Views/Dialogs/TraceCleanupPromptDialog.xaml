@@ -6,18 +6,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models"
-    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:window="using:GetStoreApp.Views.Windows"
-    Title="{x:Bind root:ResourceService.GetLocalized('Dialog/TraceCleanupTitle')}"
+    Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/TraceCleanupTitle')}"
     DefaultButton="Primary"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
     IsPrimaryButtonEnabled="{x:Bind converter:ValueCheckConverterHelper.IsTraceCleanupButtonEnabled(IsSelected, IsCleaning), Mode=OneWay}"
     IsSecondaryButtonEnabled="{x:Bind IsCleaning.Equals(x:False), Mode=OneWay}"
     PrimaryButtonClick="{x:Bind OnCleanupNowClicked}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
-    PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CleanupNow')}"
+    PrimaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CleanupNow')}"
     RequestedTheme="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).RequestedTheme, Mode=OneWay}"
-    SecondaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
+    SecondaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CloseDialog')}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
@@ -28,7 +28,7 @@
     <StackPanel>
         <TextBlock
             Margin="0,0,0,5"
-            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/TraceCleanupContent')}"
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/TraceCleanupContent')}"
             TextAlignment="Justify"
             TextWrapping="Wrap" />
 
@@ -62,7 +62,7 @@
                                 Margin="0,5,0,0"
                                 VerticalAlignment="Center"
                                 Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CleanFailed')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CleanFailed')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap"
                                 Visibility="{x:Bind IsCleanFailed, Mode=OneWay}">
@@ -88,7 +88,7 @@
             <TextBlock
                 Margin="0,0,8,0"
                 VerticalAlignment="Center"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CleaningNow')}" />
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CleaningNow')}" />
         </StackPanel>
     </StackPanel>
 </ContentDialog>

@@ -5,11 +5,11 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
-    xmlns:helper="using:GetStoreApp.Helpers.Root"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models"
-    xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:sys="using:System"
+    xmlns:roothelper="using:GetStoreApp.Helpers.Root"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
+    xmlns:system="using:System"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -54,14 +54,14 @@
             <TextBlock
                 Grid.Column="1"
                 VerticalAlignment="Center"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/Operation')}" />
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/Operation')}" />
 
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadingEmpty')}"
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/DownloadingEmpty')}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(DownloadingCollection.Count), Mode=OneWay}" />
 
             <TextBlock
@@ -86,9 +86,9 @@
                 <CommandBar.PrimaryCommands>
                     <AppBarButton
                         Click="{x:Bind OnContinueAllClicked}"
-                        IsEnabled="{x:Bind sys:Convert.ToBoolean(DownloadingCollection.Count), Mode=OneWay}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('Download/ContinueAll')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/ContinueAllToolTip')}">
+                        IsEnabled="{x:Bind system:Convert.ToBoolean(DownloadingCollection.Count), Mode=OneWay}"
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Download/ContinueAll')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Download/ContinueAllToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE74B;" />
@@ -97,9 +97,9 @@
 
                     <AppBarButton
                         Click="{x:Bind OnPauseAllClicked}"
-                        IsEnabled="{x:Bind sys:Convert.ToBoolean(DownloadingCollection.Count), Mode=OneWay}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('Download/PauseAll')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/PauseAllToolTip')}">
+                        IsEnabled="{x:Bind system:Convert.ToBoolean(DownloadingCollection.Count), Mode=OneWay}"
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Download/PauseAll')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Download/PauseAllToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE769;" />
@@ -108,9 +108,9 @@
 
                     <AppBarButton
                         Click="{x:Bind OnSelectClicked}"
-                        IsEnabled="{x:Bind sys:Convert.ToBoolean(DownloadingCollection.Count), Mode=OneWay}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('Download/Select')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectToolTip')}">
+                        IsEnabled="{x:Bind system:Convert.ToBoolean(DownloadingCollection.Count), Mode=OneWay}"
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Download/Select')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Download/SelectToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE762;" />
@@ -121,8 +121,8 @@
                 <CommandBar.SecondaryCommands>
                     <AppBarButton
                         Click="{x:Bind OnOpenFolderClicked}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolderToolTip')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Download/OpenFolder')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Download/OpenFolderToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8B7;" />
@@ -131,8 +131,8 @@
 
                     <AppBarButton
                         Click="{x:Bind OnUseInstructionClicked}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('Download/UseInstruction')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/UseInstructionToolTip')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Download/UseInstruction')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Download/UseInstructionToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE946;" />
@@ -155,14 +155,14 @@
                 </CommandBar.Resources>
 
                 <CommandBar.PrimaryCommands>
-                    <AppBarButton Click="{x:Bind OnSelectAllClicked}" Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
+                    <AppBarButton Click="{x:Bind OnSelectAllClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('Download/SelectAll')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8B3;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
 
-                    <AppBarButton Click="{x:Bind OnSelectNoneClicked}" Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
+                    <AppBarButton Click="{x:Bind OnSelectNoneClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('Download/SelectNone')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8E6;" />
@@ -171,8 +171,8 @@
 
                     <AppBarButton
                         Click="{x:Bind OnDeleteSelectedClicked}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedToolTip')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Download/DeleteSelected')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Download/DeleteSelectedToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE74D;" />
@@ -181,8 +181,8 @@
 
                     <AppBarButton
                         Click="{x:Bind OnCancelClicked}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/CancelToolTip')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Download/Cancel')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Download/CancelToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE711;" />
@@ -193,8 +193,8 @@
                 <CommandBar.SecondaryCommands>
                     <AppBarButton
                         Click="{x:Bind OnOpenFolderClicked}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolderToolTip')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Download/OpenFolder')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Download/OpenFolderToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8B7;" />
@@ -203,8 +203,8 @@
 
                     <AppBarButton
                         Click="{x:Bind OnUseInstructionClicked}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('Download/UseInstruction')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/UseInstructionToolTip')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Download/UseInstruction')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Download/UseInstructionToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE946;" />
@@ -229,7 +229,7 @@
             <TextBlock
                 Margin="0,10"
                 VerticalAlignment="Center"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadingEmptyDescription')}"
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/DownloadingEmptyDescription')}"
                 TextAlignment="Center" />
         </Grid>
 
@@ -286,8 +286,8 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip MaxWidth="9999">
                                     <Grid>
-                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectedToolTip')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
-                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/UnSelectedToolTip')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
+                                        <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/SelectedToolTip')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
+                                        <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/UnSelectedToolTip')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
                                     </Grid>
                                 </ToolTip>
                             </ToolTipService.ToolTip>
@@ -368,15 +368,15 @@
                                     Grid.Column="1"
                                     VerticalAlignment="Center"
                                     FontSize="16"
-                                    Text="{x:Bind helper:SpeedHelper.ConvertSpeedToString(DownloadSpeed), Mode=OneWay}"
+                                    Text="{x:Bind roothelper:SpeedHelper.ConvertSpeedToString(DownloadSpeed), Mode=OneWay}"
                                     TextAlignment="Right"
                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip MaxWidth="9999">
                                             <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/CurrentSpeedToolTip')}" />
-                                                <Run Text="{x:Bind helper:SpeedHelper.ConvertSpeedToString(DownloadSpeed), Mode=OneWay}" />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/CurrentSpeedToolTip')}" />
+                                                <Run Text="{x:Bind roothelper:SpeedHelper.ConvertSpeedToString(DownloadSpeed), Mode=OneWay}" />
                                             </TextBlock>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
@@ -395,15 +395,15 @@
                                     Grid.Column="3"
                                     VerticalAlignment="Center"
                                     FontSize="16"
-                                    Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(CompletedSize), Mode=OneWay}"
+                                    Text="{x:Bind roothelper:FileSizeHelper.ConvertFileSizeToString(CompletedSize), Mode=OneWay}"
                                     TextAlignment="Right"
                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip MaxWidth="9999">
                                             <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/FinishedSizeToolTip')}" />
-                                                <Run Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(CompletedSize), Mode=OneWay}" />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/FinishedSizeToolTip')}" />
+                                                <Run Text="{x:Bind roothelper:FileSizeHelper.ConvertFileSizeToString(CompletedSize), Mode=OneWay}" />
                                             </TextBlock>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
@@ -422,14 +422,14 @@
                                     Grid.Column="5"
                                     VerticalAlignment="Center"
                                     FontSize="16"
-                                    Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}"
+                                    Text="{x:Bind roothelper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}"
                                     TextAlignment="Right">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip MaxWidth="9999">
                                             <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/TotalSizeToolTip')}" />
-                                                <Run Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}" />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/TotalSizeToolTip')}" />
+                                                <Run Text="{x:Bind roothelper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}" />
                                             </TextBlock>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
@@ -446,28 +446,28 @@
                                     Grid.Column="0"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadQueued')}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/DownloadQueued')}"
                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Queued), Mode=OneWay}" />
 
                                 <TextBlock
                                     Grid.Column="0"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/Downloading')}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/Downloading')}"
                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}" />
 
                                 <TextBlock
                                     Grid.Column="0"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadPaused')}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/DownloadPaused')}"
                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Paused), Mode=OneWay}" />
 
                                 <TextBlock
                                     Grid.Column="0"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadFailed')}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/DownloadFailed')}"
                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Failed), Mode=OneWay}" />
 
                                 <ProgressBar
@@ -498,7 +498,7 @@
                                     CommandParameter="{x:Bind}"
                                     CornerRadius="{StaticResource ControlCornerRadius}"
                                     IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/ContinueToolTip')}"
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Download/ContinueToolTip')}"
                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Paused), Mode=OneWay}">
 
                                     <Button.Content>
@@ -515,7 +515,7 @@
                                     CommandParameter="{x:Bind}"
                                     CornerRadius="{StaticResource ControlCornerRadius}"
                                     IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/PauseToolTip')}"
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Download/PauseToolTip')}"
                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadingState(DownloadProgressState), Mode=OneWay}">
 
                                     <Button.Content>
@@ -532,7 +532,7 @@
                                     CommandParameter="{x:Bind}"
                                     CornerRadius="{StaticResource ControlCornerRadius}"
                                     IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteDownloadingToolTip')}">
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Download/DeleteDownloadingToolTip')}">
 
                                     <Button.Content>
                                         <FontIcon FontSize="14" Glyph="&#xE711;" />

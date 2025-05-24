@@ -4,22 +4,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:window="using:GetStoreApp.Views.Windows"
-    Title="{x:Bind root:ResourceService.GetLocalized('Dialog/Restart')}"
-    CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/Cancel')}"
+    Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Restart')}"
+    CloseButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Cancel')}"
     DefaultButton="Primary"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
     PrimaryButtonClick="{x:Bind OnRestartAppsClicked}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
-    PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/OK')}"
+    PrimaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/OK')}"
     RequestedTheme="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).RequestedTheme, Mode=OneWay}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
     <TextBlock
         Margin="0,0,0,5"
-        Text="{x:Bind root:ResourceService.GetLocalized('Dialog/RestartContent')}"
+        Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/RestartContent')}"
         TextAlignment="Justify"
         TextWrapping="Wrap" />
 </ContentDialog>

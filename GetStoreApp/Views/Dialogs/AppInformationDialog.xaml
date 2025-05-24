@@ -5,10 +5,10 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:text="using:Windows.UI.Text"
     xmlns:window="using:GetStoreApp.Views.Windows"
-    Title="{x:Bind root:ResourceService.GetLocalized('Dialog/AppInformationTitle')}"
+    Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/AppInformationTitle')}"
     Closing="{x:Bind OnClosing}"
     DefaultButton="Primary"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
@@ -17,9 +17,9 @@
     Loaded="{x:Bind OnLoaded}"
     PrimaryButtonClick="{x:Bind OnCopyAppInformationClicked}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
-    PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyAppInformation')}"
+    PrimaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CopyAppInformation')}"
     RequestedTheme="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).RequestedTheme, Mode=OneWay}"
-    SecondaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
+    SecondaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CloseDialog')}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
@@ -36,7 +36,7 @@
             Spacing="10"
             Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsLoadCompleted), Mode=OneWay}">
             <ProgressRing IsActive="{x:Bind IsLoadCompleted.Equals(x:False), Mode=OneWay}" />
-            <TextBlock VerticalAlignment="Center" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/LoadingAppInformation')}" />
+            <TextBlock VerticalAlignment="Center" Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/LoadingAppInformation')}" />
         </StackPanel>
 
         <ListView

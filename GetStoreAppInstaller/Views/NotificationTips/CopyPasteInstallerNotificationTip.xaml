@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:root="using:GetStoreAppInstaller.Services.Root"
+    xmlns:rootservice="using:GetStoreAppInstaller.Services.Root"
     CloseButtonContent="TeachingTip"
     IsLightDismissEnabled="False"
     PlacementMargin="0,20,0,0"
@@ -26,12 +26,12 @@
     <Grid>
         <TextBlock
             Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Notification/CopyToClipboardSuccessfully')}"
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('Notification/CopyToClipboardSuccessfully')}"
             Visibility="{x:Bind IsSuccessfully, Mode=OneWay}" />
 
         <TextBlock
             Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Notification/CopyToClipboardFailed')}"
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('Notification/CopyToClipboardFailed')}"
             Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSuccessfully), Mode=OneWay}" />
     </Grid>
 </muxc:TeachingTip>

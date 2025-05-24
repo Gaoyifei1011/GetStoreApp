@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -55,7 +55,7 @@
                     Grid.Row="0"
                     Margin="30,10,30,0"
                     FontSize="22"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Store/Title')}" />
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/Title')}" />
 
                 <Grid
                     Grid.Row="1"
@@ -81,7 +81,7 @@
                                 IsTapEnabled="True"
                                 Tag="0"
                                 Tapped="{x:Bind OnSelectorBarTapped}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinks')}">
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryLinks')}">
                                 <SelectorBarItem.Icon>
                                     <FontIcon Glyph="&#xE71B;" />
                                 </SelectorBarItem.Icon>
@@ -92,7 +92,7 @@
                                 IsTapEnabled="True"
                                 Tag="1"
                                 Tapped="{x:Bind OnSelectorBarTapped}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Store/SearchApps')}">
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchApps')}">
                                 <SelectorBarItem.Icon>
                                     <FontIcon Glyph="&#xE721;" />
                                 </SelectorBarItem.Icon>
@@ -105,7 +105,7 @@
                         Height="34"
                         Padding="0"
                         HorizontalAlignment="Right"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/ViewMoreOptions')}">
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/ViewMoreOptions')}">
 
                         <Button.Content>
                             <FontIcon FontSize="16" Glyph="&#xE712;" />
@@ -115,8 +115,8 @@
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnLanguageAndRegionClicked}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Store/LanguageAndRegion')}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/LanguageAndRegionToolTip')}">
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/LanguageAndRegion')}"
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/LanguageAndRegionToolTip')}">
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xF2B7;" />
@@ -125,8 +125,8 @@
 
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnUseInstructionClicked}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Store/UseInstruction')}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/UseInstructionToolTip')}">
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstruction')}"
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstructionToolTip')}">
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xE946;" />
@@ -185,7 +185,7 @@
                         Margin="0,0,0,2"
                         VerticalAlignment="Center"
                         FontSize="14"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Store/UseInstruction')}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstruction')}" />
 
                     <Button
                         Grid.Column="2"
@@ -193,7 +193,7 @@
                         VerticalAlignment="Center"
                         Click="{x:Bind OnCloseClicked}"
                         Style="{StaticResource AlternateCloseButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/Close')}">
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/Close')}">
 
                         <Button.Content>
                             <FontIcon
@@ -244,7 +244,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/BeginnerGuide')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/BeginnerGuide')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -252,7 +252,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinksHelp1')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryLinksHelp1')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -261,7 +261,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinksHelp2')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryLinksHelp2')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -272,7 +272,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/LaunchParameters')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/LaunchParameters')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -280,7 +280,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/LaunchParametersDescription')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/LaunchParametersDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -291,7 +291,7 @@
 
                             <TextBlock>
                                 <Hyperlink Click="{x:Bind OnDesktopLaunchClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Store/DesktopLaunch')}" />
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DesktopLaunch')}" />
                                 </Hyperlink>
                             </TextBlock>
                         </StackPanel>
@@ -303,7 +303,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/RequestFailed')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailed')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -311,7 +311,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/RequestFailedDescription')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailedDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -320,7 +320,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/RequestFailedStep1')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailedStep1')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -329,7 +329,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/RequestFailedStep2')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailedStep2')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -338,7 +338,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/RequestFailedStep3')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailedStep3')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -347,7 +347,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/RequestFailedStep4')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailedStep4')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -358,13 +358,13 @@
 
                             <TextBlock>
                                 <Hyperlink Click="{x:Bind OnCheckNetWorkClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Store/CheckNetwork')}" />
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/CheckNetwork')}" />
                                 </Hyperlink>
                             </TextBlock>
 
                             <TextBlock>
                                 <Hyperlink Click="{x:Bind OnTroubleShootClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Store/TroubleShoot')}" />
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/TroubleShoot')}" />
                                 </Hyperlink>
                             </TextBlock>
                         </StackPanel>
@@ -376,7 +376,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/PaidApps')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/PaidApps')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -384,7 +384,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/PaidAppsDescription')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/PaidAppsDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -395,7 +395,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadFailed')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadFailed')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -403,7 +403,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadFailedDescription')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadFailedDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -412,7 +412,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadFailedStep1')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadFailedStep1')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -421,7 +421,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadFailedStep2')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadFailedStep2')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -432,7 +432,7 @@
 
                             <TextBlock>
                                 <Hyperlink Click="{x:Bind OnDownloadSettingsClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadSettings')}" />
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadSettings')}" />
                                 </Hyperlink>
                             </TextBlock>
                         </StackPanel>

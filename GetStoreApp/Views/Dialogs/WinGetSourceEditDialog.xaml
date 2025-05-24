@@ -5,8 +5,7 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:sys="using:System"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:window="using:GetStoreApp.Views.Windows"
     DefaultButton="Primary"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
@@ -14,9 +13,9 @@
     IsSecondaryButtonEnabled="{x:Bind IsSaving.Equals(x:False), Mode=OneWay}"
     PrimaryButtonClick="{x:Bind OnSaveClicked}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
-    PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/Save')}"
+    PrimaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Save')}"
     RequestedTheme="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).RequestedTheme, Mode=OneWay}"
-    SecondaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/Cancel')}"
+    SecondaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Cancel')}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
@@ -50,7 +49,7 @@
                 VerticalAlignment="Center"
                 FontSize="14"
                 FontWeight="Normal"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WinGetDataSourceSavingContent')}"
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/WinGetDataSourceSavingContent')}"
                 Visibility="{x:Bind IsSaving, Mode=OneWay}" />
         </Grid>
     </ContentDialog.Title>
@@ -86,7 +85,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/SourceName')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SourceName')}" />
 
                         <TextBox
                             Grid.Column="1"
@@ -115,7 +114,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/SourceUri')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SourceUri')}" />
 
                         <TextBox
                             Grid.Column="1"
@@ -144,7 +143,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CustomHeader')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CustomHeader')}" />
 
                         <TextBox
                             Grid.Column="1"
@@ -173,7 +172,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/SourceType')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SourceType')}" />
 
                         <TextBox
                             Grid.Column="1"
@@ -202,7 +201,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/Explicit')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Explicit')}" />
 
                         <StackPanel
                             Grid.Column="1"
@@ -211,12 +210,12 @@
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ExplicitOffContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/ExplicitOffContent')}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(Explicit), Mode=OneWay}" />
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ExplicitOnContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/ExplicitOnContent')}"
                                 Visibility="{x:Bind Explicit, Mode=OneWay}" />
 
                             <ToggleSwitch
@@ -247,7 +246,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CatalogTrustLevel')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CatalogTrustLevel')}" />
 
                         <DropDownButton
                             Grid.Column="1"

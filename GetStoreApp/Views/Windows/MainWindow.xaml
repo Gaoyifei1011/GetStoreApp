@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:service="using:GetStoreApp.Services.Controls.Settings"
     Title="{x:Bind WindowTitle, Mode=OneWay}"
     Activated="{x:Bind OnActivated}"
@@ -52,7 +52,7 @@
                         Click="{x:Bind OnRestoreClicked}"
                         FontSize="12"
                         IsEnabled="{x:Bind IsWindowMaximized, Mode=OneWay}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Restore')}">
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Restore')}">
 
                         <MenuFlyoutItem.Icon>
                             <FontIcon Margin="6" Glyph="&#xE923;" />
@@ -66,7 +66,7 @@
                         FontSize="12"
                         IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
                         Tag="{x:Bind TitlebarMenuFlyout}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Move')}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Move')}" />
 
                     <MenuFlyoutItem
                         Height="28"
@@ -75,14 +75,14 @@
                         FontSize="12"
                         IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
                         Tag="{x:Bind TitlebarMenuFlyout}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Size')}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Size')}" />
 
                     <MenuFlyoutItem
                         Height="28"
                         Padding="11,0"
                         Click="{x:Bind OnMinimizeClicked}"
                         FontSize="12"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Minimize')}">
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Minimize')}">
                         <MenuFlyoutItem.Icon>
                             <FontIcon Margin="6" Glyph="&#xE921;" />
                         </MenuFlyoutItem.Icon>
@@ -94,7 +94,7 @@
                         Click="{x:Bind OnMaximizeClicked}"
                         FontSize="12"
                         IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Maximize')}">
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Maximize')}">
 
                         <MenuFlyoutItem.Icon>
                             <FontIcon Margin="6" Glyph="&#xE922;" />
@@ -108,7 +108,7 @@
                         Padding="11,0"
                         Click="{x:Bind OnCloseClicked}"
                         FontSize="12"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Close')}">
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Close')}">
 
                         <MenuFlyoutItem.Icon>
                             <FontIcon Margin="6" Glyph="&#xE8BB;" />
@@ -156,7 +156,7 @@
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowStoreText"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Store')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Store')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
                         </NavigationViewItem.Content>
@@ -170,7 +170,7 @@
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
                                     Tag="Store"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}">
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToStartScreen')}">
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xE8FC;" />
@@ -182,7 +182,7 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Window/Store')}"
                                 Visibility="{x:Bind WindowStoreText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
@@ -192,7 +192,7 @@
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowAppUpdateText"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/AppUpdate')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/AppUpdate')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
                         </NavigationViewItem.Content>
@@ -206,7 +206,7 @@
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
                                     Tag="AppUpdate"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}">
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToStartScreen')}">
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xE8FC;" />
@@ -218,7 +218,7 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Window/AppUpdate')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Window/AppUpdate')}"
                                 Visibility="{x:Bind WindowAppUpdateText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
@@ -230,7 +230,7 @@
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowWinGetText"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/WinGet')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
                         </NavigationViewItem.Content>
@@ -244,7 +244,7 @@
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
                                     Tag="WinGet"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}">
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToStartScreen')}">
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xE8FC;" />
@@ -256,7 +256,7 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Window/WinGet')}"
                                 Visibility="{x:Bind WindowWinGetText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
@@ -266,7 +266,7 @@
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowAppManagerText"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/AppManager')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/AppManager')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
                         </NavigationViewItem.Content>
@@ -280,7 +280,7 @@
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
                                     Tag="AppManager"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}">
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToStartScreen')}">
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xE8FC;" />
@@ -292,7 +292,7 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Window/AppManager')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Window/AppManager')}"
                                 Visibility="{x:Bind WindowAppManagerText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
@@ -304,7 +304,7 @@
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowDownloadText"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Download')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
                         </NavigationViewItem.Content>
@@ -318,7 +318,7 @@
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
                                     Tag="Download"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}">
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToStartScreen')}">
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xE8FC;" />
@@ -330,7 +330,7 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Window/Download')}"
                                 Visibility="{x:Bind WindowDownloadText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
@@ -340,7 +340,7 @@
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowWebText"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Web')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Web')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
                         </NavigationViewItem.Content>
@@ -354,7 +354,7 @@
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
                                     Tag="Web"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}">
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToStartScreen')}">
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xE8FC;" />
@@ -366,7 +366,7 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Window/Web')}"
                                 Visibility="{x:Bind WindowWebText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
@@ -378,7 +378,7 @@
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowSettingsText"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Settings')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
                         </NavigationViewItem.Content>
@@ -390,7 +390,7 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Window/Settings')}"
                                 Visibility="{x:Bind WindowSettingsText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>

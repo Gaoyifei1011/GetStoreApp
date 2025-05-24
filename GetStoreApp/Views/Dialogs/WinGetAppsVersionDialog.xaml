@@ -5,7 +5,7 @@
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:text="using:Windows.UI.Text"
     xmlns:window="using:GetStoreApp.Views.Windows"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
@@ -73,7 +73,7 @@
                 Click="{x:Bind OnBackClicked}"
                 IsEnabled="{x:Bind GetCanBack(BreadCollection.Count), Mode=OneWay}"
                 Style="{StaticResource AlternateCloseButtonStyle}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Dialog/Back')}">
+                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Back')}">
 
                 <Button.Content>
                     <AnimatedIcon Margin="4">
@@ -113,7 +113,7 @@
                 VerticalAlignment="Center"
                 Click="{x:Bind OnCloseClicked}"
                 Style="{StaticResource AlternateCloseButtonStyle}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Dialog/Close')}">
+                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Close')}">
 
                 <Button.Content>
                     <FontIcon

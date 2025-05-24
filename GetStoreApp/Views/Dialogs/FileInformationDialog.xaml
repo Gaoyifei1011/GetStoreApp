@@ -5,9 +5,9 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:window="using:GetStoreApp.Views.Windows"
-    Title="{x:Bind root:ResourceService.GetLocalized('Dialog/FileInformationTitle')}"
+    Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/FileInformationTitle')}"
     Closing="{x:Bind OnClosing}"
     DefaultButton="Primary"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
@@ -16,9 +16,9 @@
     Loaded="{x:Bind OnLoaded}"
     PrimaryButtonClick="{x:Bind OnCopyFileInformationClicked}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
-    PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyFileInformation')}"
+    PrimaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CopyFileInformation')}"
     RequestedTheme="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).RequestedTheme, Mode=OneWay}"
-    SecondaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
+    SecondaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CloseDialog')}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
@@ -35,7 +35,7 @@
             Spacing="10"
             Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsLoadCompleted), Mode=OneWay}">
             <ProgressRing IsActive="{x:Bind IsLoadCompleted.Equals(x:False), Mode=OneWay}" />
-            <TextBlock VerticalAlignment="Center" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/LoadingFileInformation')}" />
+            <TextBlock VerticalAlignment="Center" Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/LoadingFileInformation')}" />
         </StackPanel>
 
         <Grid Margin="2,0,0,0" Visibility="{x:Bind IsLoadCompleted, Mode=OneWay}">
@@ -54,7 +54,7 @@
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="0"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FileName')}"
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/FileName')}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />
 
@@ -68,7 +68,7 @@
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FilePath')}"
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/FilePath')}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />
 
@@ -82,7 +82,7 @@
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="0"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FileSize')}"
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/FileSize')}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />
 
@@ -96,7 +96,7 @@
             <TextBlock
                 Grid.Row="3"
                 Grid.Column="0"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FileSHA256')}"
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/FileSHA256')}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />
 

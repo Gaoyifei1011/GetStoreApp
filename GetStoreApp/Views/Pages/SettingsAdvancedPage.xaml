@@ -5,7 +5,7 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -53,20 +53,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/Notification')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Notification')}" />
 
                     <TextBlock
                         x:Name="NotificationDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/NotificationDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/NotificationDescription')}"
                                 Visibility="{x:Bind NotificationDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -77,7 +77,7 @@
                     Margin="0,0,6,0"
                     VerticalAlignment="Center"
                     Click="{x:Bind OnSystemNotificationSettingsClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/SystemNotificationSettings')}" />
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/SystemNotificationSettings')}" />
 
                 <StackPanel
                     Grid.Column="3"
@@ -86,12 +86,12 @@
 
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationOffContent')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/NotificationOffContent')}"
                         Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(NotificationValue), Mode=OneWay}" />
 
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationOnContent')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/NotificationOnContent')}"
                         Visibility="{x:Bind NotificationValue, Mode=OneWay}" />
 
                     <ToggleSwitch
@@ -133,20 +133,20 @@
                     <TextBlock
                         VerticalAlignment="Center"
                         Style="{StaticResource BodyTextBlockStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/WebKernel')}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WebKernel')}" />
 
                     <TextBlock
                         x:Name="WebKernelDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/WebKernelDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WebKernelDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/WebKernelDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WebKernelDescription')}"
                                 Visibility="{x:Bind WebKernelDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -156,7 +156,7 @@
                     Grid.Column="2"
                     Margin="0,0,6,0"
                     VerticalAlignment="Center"
-                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadWebView2')}"
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DownloadWebView2')}"
                     NavigateUri="https://developer.microsoft.com/microsoft-edge/webview2" />
 
                 <DropDownButton
@@ -218,20 +218,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/ShellMenu')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ShellMenu')}" />
 
                     <TextBlock
                         x:Name="ShellMenuDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/ShellMenuDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ShellMenuDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/ShellMenuDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ShellMenuDescription')}"
                                 Visibility="{x:Bind ShellMenuDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -246,8 +246,8 @@
 
                     <HyperlinkButton.Content>
                         <Grid>
-                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Settings/RestartExplorer')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsRestarting), Mode=OneWay}" />
-                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Settings/Restarting')}" Visibility="{x:Bind IsRestarting, Mode=OneWay}" />
+                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/RestartExplorer')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsRestarting), Mode=OneWay}" />
+                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Restarting')}" Visibility="{x:Bind IsRestarting, Mode=OneWay}" />
                         </Grid>
                     </HyperlinkButton.Content>
                 </HyperlinkButton>
@@ -259,12 +259,12 @@
 
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/ShellMenuOffContent')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ShellMenuOffContent')}"
                         Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ShellMenuValue), Mode=OneWay}" />
 
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/ShellMenuOnContent')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ShellMenuOnContent')}"
                         Visibility="{x:Bind ShellMenuValue, Mode=OneWay}" />
 
                     <ToggleSwitch
@@ -305,20 +305,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/TraceCleanup')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/TraceCleanup')}" />
 
                     <TextBlock
                         x:Name="TraceCleanupDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/TraceCleanupDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/TraceCleanupDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/TraceCleanupDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/TraceCleanupDescription')}"
                                 Visibility="{x:Bind TraceCleanupDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -328,7 +328,7 @@
                     Grid.Column="2"
                     MinWidth="100"
                     Click="{x:Bind OnTraceCleanupClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/TraceClear')}" />
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/TraceClear')}" />
             </Grid>
 
             <!--  日志记录设置  -->
@@ -360,20 +360,20 @@
                             VerticalAlignment="Center"
                             Orientation="Vertical">
 
-                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/LogRecord')}" />
+                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LogRecord')}" />
 
                             <TextBlock
                                 x:Name="LogRecordDescription"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/LogRecordDescription')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LogRecordDescription')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
-                                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/LogRecordDescription')}"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LogRecordDescription')}"
                                         Visibility="{x:Bind LogRecordDescription.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
@@ -402,20 +402,20 @@
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/LogFolder')}" />
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LogFolder')}" />
 
                                 <TextBlock
                                     x:Name="LogFolderDescription"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/LogFolderDescription')}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LogFolderDescription')}"
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
-                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/LogFolderDescription')}"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LogFolderDescription')}"
                                             Visibility="{x:Bind LogFolderDescription.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
@@ -425,7 +425,7 @@
                                 Grid.Column="1"
                                 VerticalAlignment="Center"
                                 Click="{x:Bind OnOpenLogFolderClicked}"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenLogFolder')}" />
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/OpenLogFolder')}" />
                         </Grid>
 
                         <MenuFlyoutSeparator />
@@ -449,20 +449,20 @@
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/ClearLog')}" />
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ClearLog')}" />
 
                                 <TextBlock
                                     x:Name="ClearLogDescription"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/ClearLogDescription')}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ClearLogDescription')}"
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
-                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/ClearLogDescription')}"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ClearLogDescription')}"
                                             Visibility="{x:Bind ClearLogDescription.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
@@ -472,7 +472,7 @@
                                 Grid.Column="1"
                                 VerticalAlignment="Center"
                                 Click="{x:Bind OnClearClicked}"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/Clear')}" />
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Clear')}" />
                         </Grid>
                     </StackPanel>
                 </Expander.Content>

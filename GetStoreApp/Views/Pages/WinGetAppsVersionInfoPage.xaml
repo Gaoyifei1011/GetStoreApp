@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models"
-    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -32,7 +32,7 @@
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 FontSize="16"
-                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/LoadingInformation')}" />
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/LoadingInformation')}" />
         </Grid>
 
         <Grid Visibility="{x:Bind IsLoadCompleted, Mode=OneWay}">
@@ -61,7 +61,7 @@
                             <TextBlock Grid.Column="0" Text="{x:Bind Version}" />
                             <TextBlock
                                 Grid.Column="1"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DefaultVersion')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DefaultVersion')}"
                                 Visibility="{x:Bind IsDefaultVersion}" />
                         </Grid>
                     </DataTemplate>
@@ -102,7 +102,7 @@
                         </CommandBar.Resources>
 
                         <CommandBar.PrimaryCommands>
-                            <AppBarButton Click="{x:Bind OnCopyInformationClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyInformation')}">
+                            <AppBarButton Click="{x:Bind OnCopyInformationClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CopyInformation')}">
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE8C8;" />
                                 </AppBarButton.Icon>
@@ -110,19 +110,19 @@
                         </CommandBar.PrimaryCommands>
 
                         <CommandBar.SecondaryCommands>
-                            <AppBarButton Click="{x:Bind OnDownloadClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Download')}">
+                            <AppBarButton Click="{x:Bind OnDownloadClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Download')}">
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE896;" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
 
-                            <AppBarButton Click="{x:Bind OnInstallClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}">
+                            <AppBarButton Click="{x:Bind OnInstallClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Install')}">
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE710;" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
 
-                            <AppBarButton Click="{x:Bind OnRepairClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Repair')}">
+                            <AppBarButton Click="{x:Bind OnRepairClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Repair')}">
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE90F;" />
                                 </AppBarButton.Icon>
@@ -144,7 +144,7 @@
                         </CommandBar.Resources>
 
                         <CommandBar.PrimaryCommands>
-                            <AppBarButton Click="{x:Bind OnCopyInformationClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyInformation')}">
+                            <AppBarButton Click="{x:Bind OnCopyInformationClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CopyInformation')}">
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE8C8;" />
                                 </AppBarButton.Icon>
@@ -152,7 +152,7 @@
                         </CommandBar.PrimaryCommands>
 
                         <CommandBar.SecondaryCommands>
-                            <AppBarButton Click="{x:Bind OnUpgradeClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Upgrade')}">
+                            <AppBarButton Click="{x:Bind OnUpgradeClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Upgrade')}">
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE898;" />
                                 </AppBarButton.Icon>
@@ -223,7 +223,7 @@
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="0"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersion')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppVersion')}" />
 
                             <TextBlock
                                 Grid.Row="0"
@@ -234,7 +234,7 @@
                             <TextBlock
                                 Grid.Row="1"
                                 Grid.Column="0"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageLink')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageLink')}" />
 
                             <TextBlock
                                 Grid.Row="1"
@@ -256,7 +256,7 @@
                             <TextBlock
                                 Grid.Row="2"
                                 Grid.Column="0"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Author')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Author')}" />
 
                             <TextBlock
                                 Grid.Row="2"
@@ -267,7 +267,7 @@
                             <TextBlock
                                 Grid.Row="3"
                                 Grid.Column="0"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppPublisher')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppPublisher')}" />
 
                             <TextBlock
                                 Grid.Row="3"
@@ -278,7 +278,7 @@
                             <TextBlock
                                 Grid.Row="4"
                                 Grid.Column="0"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PublisherLink')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PublisherLink')}" />
 
                             <TextBlock
                                 Grid.Row="4"
@@ -300,7 +300,7 @@
                             <TextBlock
                                 Grid.Row="5"
                                 Grid.Column="0"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PublisherSupportLink')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PublisherSupportLink')}" />
 
                             <TextBlock
                                 Grid.Row="5"
@@ -322,7 +322,7 @@
                             <TextBlock
                                 Grid.Row="6"
                                 Grid.Column="0"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Locale')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Locale')}" />
 
                             <TextBlock
                                 Grid.Row="6"
@@ -333,7 +333,7 @@
                             <TextBlock
                                 Grid.Row="7"
                                 Grid.Column="0"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyRight')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CopyRight')}" />
 
                             <TextBlock
                                 Grid.Row="7"
@@ -344,7 +344,7 @@
                             <TextBlock
                                 Grid.Row="8"
                                 Grid.Column="0"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyRightLink')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CopyRightLink')}" />
 
                             <TextBlock
                                 Grid.Row="8"
@@ -366,7 +366,7 @@
                             <TextBlock
                                 Grid.Row="9"
                                 Grid.Column="0"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/License')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/License')}" />
 
                             <TextBlock
                                 Grid.Row="9"
@@ -377,7 +377,7 @@
                             <TextBlock
                                 Grid.Row="10"
                                 Grid.Column="0"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/LicenseLink')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/LicenseLink')}" />
 
                             <TextBlock
                                 Grid.Row="10"
@@ -399,7 +399,7 @@
                             <TextBlock
                                 Grid.Row="11"
                                 Grid.Column="0"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PrivacyLink')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PrivacyLink')}" />
 
                             <TextBlock
                                 Grid.Row="11"
@@ -421,7 +421,7 @@
                             <TextBlock
                                 Grid.Row="12"
                                 Grid.Column="0"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PurchaseLink')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PurchaseLink')}" />
 
                             <TextBlock
                                 Grid.Row="12"
@@ -443,7 +443,7 @@
                             <TextBlock
                                 Grid.Row="13"
                                 Grid.Column="0"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ReleaseNotes')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ReleaseNotes')}" />
 
                             <TextBlock
                                 Grid.Row="13"
@@ -454,7 +454,7 @@
                             <TextBlock
                                 Grid.Row="14"
                                 Grid.Column="0"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ReleaseNotesLink')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ReleaseNotesLink')}" />
 
                             <TextBlock
                                 Grid.Row="14"
@@ -479,7 +479,7 @@
                         <TextBlock
                             Grid.Row="5"
                             Margin="0,0,0,5"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Tag')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Tag')}" />
 
                         <GridView
                             Grid.Row="6"

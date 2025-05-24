@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:text="using:Windows.UI.Text"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
@@ -115,7 +115,7 @@
                         Margin="0,0,0,2"
                         VerticalAlignment="Center"
                         FontSize="14"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/SettingsInstruction')}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/SettingsInstruction')}" />
 
                     <Button
                         Grid.Column="2"
@@ -123,7 +123,7 @@
                         VerticalAlignment="Center"
                         Click="{x:Bind OnCloseClicked}"
                         Style="{StaticResource AlternateCloseButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/Close')}">
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Close')}">
 
                         <Button.Content>
                             <FontIcon
@@ -180,7 +180,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/LanguageInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LanguageInstruction')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -188,7 +188,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/LanguageInstructionDescription')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LanguageInstructionDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -199,7 +199,7 @@
 
                             <TextBlock>
                                 <Hyperlink Click="{x:Bind OnAppSettingsClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppSettings')}" />
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AppSettings')}" />
                                 </Hyperlink>
                             </TextBlock>
                         </StackPanel>
@@ -211,7 +211,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/QueryLinksModeInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/QueryLinksModeInstruction')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -219,7 +219,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/QueryLinksModeInstructionDescription')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/QueryLinksModeInstructionDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -228,7 +228,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/QueryLinksCountryOrRegion')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/QueryLinksCountryOrRegion')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -239,7 +239,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LinkFilterInstruction')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -247,7 +247,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/EncryptedPackageInstruction')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -256,7 +256,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/BlockMapInstruction')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -270,7 +270,7 @@
                                     Click="{x:Bind OnEncryptedPackageClicked}"
                                     NavigateUri="https://github.com/MicrosoftDocs/msix-docs/blob/main/msix-src/package/create-app-package-with-makeappx-tool.md#encrypt-or-decrypt-a-package-or-bundle"
                                     UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageButton')}" />
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/EncryptedPackageButton')}" />
                                 </Hyperlink>
                             </TextBlock>
 
@@ -279,7 +279,7 @@
                                     Click="{x:Bind OnBlockMapClicked}"
                                     NavigateUri="https://docs.microsoft.com/uwp/schemas/blockmapschema/app-package-block-map"
                                     UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapButton')}" />
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/BlockMapButton')}" />
                                 </Hyperlink>
                             </TextBlock>
                         </StackPanel>
@@ -291,7 +291,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetConfigInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetConfigInstruction')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -299,7 +299,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetConfigInstructionDescription')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetConfigInstructionDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -313,7 +313,7 @@
                                     Click="{x:Bind OnLearnWinGetConfigClicked}"
                                     NavigateUri="https://learn.microsoft.com/windows/package-manager/configuration"
                                     UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/LearnWinGetConfig')}" />
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LearnWinGetConfig')}" />
                                 </Hyperlink>
                             </TextBlock>
                         </StackPanel>
@@ -325,7 +325,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DownloadInstruction')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -333,7 +333,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadDescription1')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DownloadDescription1')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -342,7 +342,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadDescription2')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DownloadDescription2')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -351,7 +351,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadDescription3')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DownloadDescription3')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -365,7 +365,7 @@
                                     Click="{x:Bind OnLearnDeliveryOptimizationClicked}"
                                     NavigateUri="https://learn.microsoft.com/windows/deployment/do/waas-delivery-optimization"
                                     UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/LearnDeliveryOptimization')}" />
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LearnDeliveryOptimization')}" />
                                 </Hyperlink>
                             </TextBlock>
 
@@ -374,13 +374,13 @@
                                     Click="{x:Bind OnLearnBitsClicked}"
                                     NavigateUri="https://learn.microsoft.com/windows/win32/bits/background-intelligent-transfer-service-portal"
                                     UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/LearnBits')}" />
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LearnBits')}" />
                                 </Hyperlink>
                             </TextBlock>
 
                             <TextBlock>
                                 <Hyperlink Click="{x:Bind OnTroubleShootClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/TroubleShoot')}" />
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/TroubleShoot')}" />
                                 </Hyperlink>
                             </TextBlock>
                         </StackPanel>
@@ -392,7 +392,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/InstallModeInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/InstallModeInstruction')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -400,7 +400,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/InstallModeDescription1')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/InstallModeDescription1')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -409,7 +409,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/InstallModeDescription2')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/InstallModeDescription2')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -418,7 +418,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/InstallModeDescription3')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/InstallModeDescription3')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -429,7 +429,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/OtherOptionInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/OtherOptionInstruction')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -437,7 +437,7 @@
                             Margin="16,0,16,10"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/OtherOptionInstructionDescription')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/OtherOptionInstructionDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
                     </Grid>

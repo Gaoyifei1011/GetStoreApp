@@ -7,10 +7,9 @@
     xmlns:deployment="using:Microsoft.Management.Deployment"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:sys="using:System"
-    xmlns:system="using:Windows.System"
-    xmlns:winrt="using:Windows.System"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
+    xmlns:system="using:System"
+    xmlns:winrtSystem="using:Windows.System"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -48,7 +47,7 @@
                     </CommandBar.Resources>
 
                     <CommandBar.PrimaryCommands>
-                        <AppBarButton Click="{x:Bind OnDownloadClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Download')}">
+                        <AppBarButton Click="{x:Bind OnDownloadClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Download')}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE896;" />
                             </AppBarButton.Icon>
@@ -56,13 +55,13 @@
                     </CommandBar.PrimaryCommands>
 
                     <CommandBar.SecondaryCommands>
-                        <AppBarButton Click="{x:Bind OnCopyDownloadTextClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyDownloadText')}">
+                        <AppBarButton Click="{x:Bind OnCopyDownloadTextClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CopyDownloadText')}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE8C8;" />
                             </AppBarButton.Icon>
                         </AppBarButton>
 
-                        <AppBarButton Click="{x:Bind OnDownloadWithCmdClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadWithCmd')}">
+                        <AppBarButton Click="{x:Bind OnDownloadWithCmdClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadWithCmd')}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE756;" />
                             </AppBarButton.Icon>
@@ -108,7 +107,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatch')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowHashMismatch')}" />
 
                         <StackPanel
                             Grid.Column="1"
@@ -117,12 +116,12 @@
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatchOffContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowHashMismatchOffContent')}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowHashMismatch), Mode=OneWay}" />
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatchOnContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowHashMismatchOnContent')}"
                                 Visibility="{x:Bind AllowHashMismatch, Mode=OneWay}" />
 
                             <ToggleSwitch
@@ -155,7 +154,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageArchitecture')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageArchitecture')}" />
 
                         <DropDownButton
                             Grid.Column="1"
@@ -224,7 +223,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageInstallScope')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageInstallScope')}" />
 
                         <DropDownButton
                             Grid.Column="1"
@@ -287,7 +286,7 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageDownloadPath')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageDownloadPath')}" />
 
                             <TextBlock
                                 Margin="0,0,5,0"
@@ -303,10 +302,10 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip MaxWidth="9999">
                                         <StackPanel HorizontalAlignment="Stretch">
-                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageDownloadPath')}" />
+                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageDownloadPath')}" />
                                             <TextBlock Text="{x:Bind PackageDownloadPath, Mode=OneWay}" />
                                             <MenuFlyoutSeparator Margin="4,3" />
-                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenFolderToolTip')}" />
+                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/OpenFolderToolTip')}" />
                                         </StackPanel>
                                     </ToolTip>
                                 </ToolTipService.ToolTip>
@@ -316,7 +315,7 @@
                         <DropDownButton
                             Grid.Column="1"
                             Margin="6,0,0,0"
-                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ChangeFolder')}">
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ChangeFolder')}">
 
                             <DropDownButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
@@ -325,7 +324,7 @@
                                         Padding="11,0"
                                         Click="{x:Bind OnChangePackageDownloadPathClicked}"
                                         Tag="AppCache"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppCacheFolder')}">
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppCacheFolder')}">
 
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon Glyph="&#xECAA;" />
@@ -337,7 +336,7 @@
                                         Padding="11,0"
                                         Click="{x:Bind OnChangePackageDownloadPathClicked}"
                                         Tag="Download"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFolder')}">
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadFolder')}">
 
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon Glyph="&#xE896;" />
@@ -349,7 +348,7 @@
                                         Padding="11,0"
                                         Click="{x:Bind OnChangePackageDownloadPathClicked}"
                                         Tag="Desktop"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DesktopFolder')}">
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DesktopFolder')}">
 
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon Glyph="&#xE7F4;" />
@@ -363,7 +362,7 @@
                                         Padding="11,0"
                                         Click="{x:Bind OnChangePackageDownloadPathClicked}"
                                         Tag="Custom"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Custom')}" />
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Custom')}" />
                                 </MenuFlyout>
                             </DropDownButton.Flyout>
                         </DropDownButton>
@@ -405,7 +404,7 @@
                     </CommandBar.Resources>
 
                     <CommandBar.PrimaryCommands>
-                        <AppBarButton Click="{x:Bind OnInstallClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}">
+                        <AppBarButton Click="{x:Bind OnInstallClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Install')}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE710;" />
                             </AppBarButton.Icon>
@@ -413,13 +412,13 @@
                     </CommandBar.PrimaryCommands>
 
                     <CommandBar.SecondaryCommands>
-                        <AppBarButton Click="{x:Bind OnCopyInstallTextClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyInstallText')}">
+                        <AppBarButton Click="{x:Bind OnCopyInstallTextClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CopyInstallText')}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE8C8;" />
                             </AppBarButton.Icon>
                         </AppBarButton>
 
-                        <AppBarButton Click="{x:Bind OnInstallWithCmdClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallWithCmd')}">
+                        <AppBarButton Click="{x:Bind OnInstallWithCmdClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/InstallWithCmd')}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE756;" />
                             </AppBarButton.Icon>
@@ -470,7 +469,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatch')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowHashMismatch')}" />
 
                         <StackPanel
                             Grid.Column="1"
@@ -479,12 +478,12 @@
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatchOffContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowHashMismatchOffContent')}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowHashMismatch), Mode=OneWay}" />
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatchOnContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowHashMismatchOnContent')}"
                                 Visibility="{x:Bind AllowHashMismatch, Mode=OneWay}" />
 
                             <ToggleSwitch
@@ -517,7 +516,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheck')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheck')}" />
 
                         <StackPanel
                             Grid.Column="1"
@@ -526,12 +525,12 @@
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheckOffContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheckOffContent')}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(BypassIsStoreClientBlockedPolicyCheck), Mode=OneWay}" />
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheckOnContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheckOnContent')}"
                                 Visibility="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}" />
 
                             <ToggleSwitch
@@ -564,7 +563,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowUpgradeToUnknownVersion')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowUpgradeToUnknownVersion')}" />
 
                         <StackPanel
                             Grid.Column="1"
@@ -573,12 +572,12 @@
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowUpgradeToUnknownVersionOffContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowUpgradeToUnknownVersionOffContent')}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowUpgradeToUnknownVersion), Mode=OneWay}" />
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowUpgradeToUnknownVersionOnContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowUpgradeToUnknownVersionOnContent')}"
                                 Visibility="{x:Bind AllowUpgradeToUnknownVersion, Mode=OneWay}" />
 
                             <ToggleSwitch
@@ -611,7 +610,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceInstall')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ForceInstall')}" />
 
                         <StackPanel
                             Grid.Column="1"
@@ -620,12 +619,12 @@
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceInstallOffContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ForceInstallOffContent')}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(Force), Mode=OneWay}" />
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceInstallOnContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ForceInstallOnContent')}"
                                 Visibility="{x:Bind Force, Mode=OneWay}" />
 
                             <ToggleSwitch
@@ -658,7 +657,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageInstallScope')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageInstallScope')}" />
 
                         <DropDownButton
                             Grid.Column="1"
@@ -718,7 +717,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageInstallMode')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageInstallMode')}" />
 
                         <DropDownButton
                             Grid.Column="1"
@@ -782,7 +781,7 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageInstallPath')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageInstallPath')}" />
 
                             <TextBlock
                                 Margin="0,0,5,0"
@@ -798,10 +797,10 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip MaxWidth="9999">
                                         <StackPanel HorizontalAlignment="Stretch">
-                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageInstallPath')}" />
+                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageInstallPath')}" />
                                             <TextBlock Text="{x:Bind PackageInstallPath, Mode=OneWay}" />
                                             <MenuFlyoutSeparator Margin="4,3" />
-                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenFolderToolTip')}" />
+                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/OpenFolderToolTip')}" />
                                         </StackPanel>
                                     </ToolTip>
                                 </ToolTipService.ToolTip>
@@ -812,7 +811,7 @@
                             Grid.Column="1"
                             Margin="6,0,0,0"
                             Click="{x:Bind OnChangePackageInstallPathClicked}"
-                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ChangeFolder')}" />
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ChangeFolder')}" />
                     </Grid>
 
                     <!--  允许的处理器架构  -->
@@ -837,30 +836,30 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowedArchitectures')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowedArchitectures')}" />
 
                         <ToggleButton
                             Grid.Column="1"
                             Margin="6,0,2,0"
                             Click="{x:Bind OnProcessorArchitectureClicked}"
-                            Content="{x:Bind sys:Convert.ToString(winrt:ProcessorArchitecture.X86)}"
+                            Content="{x:Bind system:Convert.ToString(winrtSystem:ProcessorArchitecture.X86)}"
                             IsChecked="{x:Bind IsX86ProcessorArchitecture, Mode=OneWay}"
-                            Tag="{x:Bind winrt:ProcessorArchitecture.X86}" />
+                            Tag="{x:Bind winrtSystem:ProcessorArchitecture.X86}" />
 
                         <ToggleButton
                             Grid.Column="2"
                             Margin="0,0,2,0"
                             Click="{x:Bind OnProcessorArchitectureClicked}"
-                            Content="{x:Bind sys:Convert.ToString(winrt:ProcessorArchitecture.X64)}"
+                            Content="{x:Bind system:Convert.ToString(winrtSystem:ProcessorArchitecture.X64)}"
                             IsChecked="{x:Bind IsX64ProcessorArchitecture, Mode=OneWay}"
-                            Tag="{x:Bind winrt:ProcessorArchitecture.X64}" />
+                            Tag="{x:Bind winrtSystem:ProcessorArchitecture.X64}" />
 
                         <ToggleButton
                             Grid.Column="3"
                             Click="{x:Bind OnProcessorArchitectureClicked}"
-                            Content="{x:Bind sys:Convert.ToString(winrt:ProcessorArchitecture.Arm64)}"
+                            Content="{x:Bind system:Convert.ToString(winrtSystem:ProcessorArchitecture.Arm64)}"
                             IsChecked="{x:Bind IsArm64ProcessorArchitecture, Mode=OneWay}"
-                            Tag="{x:Bind winrt:ProcessorArchitecture.Arm64}" />
+                            Tag="{x:Bind winrtSystem:ProcessorArchitecture.Arm64}" />
                     </Grid>
 
                     <!--  额外安装参数  -->
@@ -882,7 +881,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AdditionalInstallerArguments')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AdditionalInstallerArguments')}" />
 
                         <TextBox
                             Grid.Column="1"
@@ -927,7 +926,7 @@
                     </CommandBar.Resources>
 
                     <CommandBar.PrimaryCommands>
-                        <AppBarButton Click="{x:Bind OnRepairClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Repair')}">
+                        <AppBarButton Click="{x:Bind OnRepairClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Repair')}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE90F;" />
                             </AppBarButton.Icon>
@@ -935,13 +934,13 @@
                     </CommandBar.PrimaryCommands>
 
                     <CommandBar.SecondaryCommands>
-                        <AppBarButton Click="{x:Bind OnCopyRepairTextClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyRepairText')}">
+                        <AppBarButton Click="{x:Bind OnCopyRepairTextClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CopyRepairText')}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE8C8;" />
                             </AppBarButton.Icon>
                         </AppBarButton>
 
-                        <AppBarButton Click="{x:Bind OnRepairWithCmdClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/RepairWithCmd')}">
+                        <AppBarButton Click="{x:Bind OnRepairWithCmdClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RepairWithCmd')}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE756;" />
                             </AppBarButton.Icon>
@@ -989,7 +988,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatch')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowHashMismatch')}" />
 
                         <StackPanel
                             Grid.Column="1"
@@ -998,12 +997,12 @@
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatchOffContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowHashMismatchOffContent')}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowHashMismatch), Mode=OneWay}" />
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatchOnContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowHashMismatchOnContent')}"
                                 Visibility="{x:Bind AllowHashMismatch, Mode=OneWay}" />
 
                             <ToggleSwitch
@@ -1036,7 +1035,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheck')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheck')}" />
 
                         <StackPanel
                             Grid.Column="1"
@@ -1045,12 +1044,12 @@
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheckOffContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheckOffContent')}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(BypassIsStoreClientBlockedPolicyCheck), Mode=OneWay}" />
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheckOnContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheckOnContent')}"
                                 Visibility="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}" />
 
                             <ToggleSwitch
@@ -1083,7 +1082,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceRepair')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ForceRepair')}" />
 
                         <StackPanel
                             Grid.Column="1"
@@ -1092,12 +1091,12 @@
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceRepairOffContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ForceRepairOffContent')}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(Force), Mode=OneWay}" />
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceRepairOnContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ForceRepairOnContent')}"
                                 Visibility="{x:Bind Force, Mode=OneWay}" />
 
                             <ToggleSwitch
@@ -1130,7 +1129,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageRepairScope')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageRepairScope')}" />
 
                         <DropDownButton
                             Grid.Column="1"
@@ -1189,7 +1188,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageRepairMode')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageRepairMode')}" />
 
                         <DropDownButton
                             Grid.Column="1"
@@ -1265,7 +1264,7 @@
                     </CommandBar.Resources>
 
                     <CommandBar.PrimaryCommands>
-                        <AppBarButton Click="{x:Bind OnUpgradeClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Upgrade')}">
+                        <AppBarButton Click="{x:Bind OnUpgradeClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Upgrade')}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE898;" />
                             </AppBarButton.Icon>
@@ -1273,13 +1272,13 @@
                     </CommandBar.PrimaryCommands>
 
                     <CommandBar.SecondaryCommands>
-                        <AppBarButton Click="{x:Bind OnCopyUpgradeTextClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUpgradeText')}">
+                        <AppBarButton Click="{x:Bind OnCopyUpgradeTextClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CopyUpgradeText')}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE8C8;" />
                             </AppBarButton.Icon>
                         </AppBarButton>
 
-                        <AppBarButton Click="{x:Bind OnUpgradeWithCmdClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradeWithCmd')}">
+                        <AppBarButton Click="{x:Bind OnUpgradeWithCmdClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UpgradeWithCmd')}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE756;" />
                             </AppBarButton.Icon>
@@ -1330,7 +1329,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatch')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowHashMismatch')}" />
 
                         <StackPanel
                             Grid.Column="1"
@@ -1339,12 +1338,12 @@
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatchOffContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowHashMismatchOffContent')}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowHashMismatch), Mode=OneWay}" />
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatchOnContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowHashMismatchOnContent')}"
                                 Visibility="{x:Bind AllowHashMismatch, Mode=OneWay}" />
 
                             <ToggleSwitch
@@ -1377,7 +1376,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheck')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheck')}" />
 
                         <StackPanel
                             Grid.Column="1"
@@ -1386,12 +1385,12 @@
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheckOffContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheckOffContent')}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(BypassIsStoreClientBlockedPolicyCheck), Mode=OneWay}" />
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheckOnContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheckOnContent')}"
                                 Visibility="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}" />
 
                             <ToggleSwitch
@@ -1424,7 +1423,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowUpgradeToUnknownVersion')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowUpgradeToUnknownVersion')}" />
 
                         <StackPanel
                             Grid.Column="1"
@@ -1433,12 +1432,12 @@
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowUpgradeToUnknownVersionOffContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowUpgradeToUnknownVersionOffContent')}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowUpgradeToUnknownVersion), Mode=OneWay}" />
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowUpgradeToUnknownVersionOnContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowUpgradeToUnknownVersionOnContent')}"
                                 Visibility="{x:Bind AllowUpgradeToUnknownVersion, Mode=OneWay}" />
 
                             <ToggleSwitch
@@ -1471,7 +1470,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceUpgrade')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ForceUpgrade')}" />
 
                         <StackPanel
                             Grid.Column="1"
@@ -1480,12 +1479,12 @@
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceUpgradeOffContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ForceUpgradeOffContent')}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(Force), Mode=OneWay}" />
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceUpgradeOnContent')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ForceUpgradeOnContent')}"
                                 Visibility="{x:Bind Force, Mode=OneWay}" />
 
                             <ToggleSwitch
@@ -1518,7 +1517,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageInstallScope')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageInstallScope')}" />
 
                         <DropDownButton
                             Grid.Column="1"
@@ -1578,7 +1577,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageInstallMode')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageInstallMode')}" />
 
                         <DropDownButton
                             Grid.Column="1"
@@ -1642,7 +1641,7 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageInstallPath')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageInstallPath')}" />
 
                             <TextBlock
                                 Margin="0,0,5,0"
@@ -1658,10 +1657,10 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip MaxWidth="9999">
                                         <StackPanel HorizontalAlignment="Stretch">
-                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageInstallPath')}" />
+                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageInstallPath')}" />
                                             <TextBlock Text="{x:Bind PackageInstallPath, Mode=OneWay}" />
                                             <MenuFlyoutSeparator Margin="4,3" />
-                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenFolderToolTip')}" />
+                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/OpenFolderToolTip')}" />
                                         </StackPanel>
                                     </ToolTip>
                                 </ToolTipService.ToolTip>
@@ -1672,7 +1671,7 @@
                             Grid.Column="1"
                             Margin="6,0,0,0"
                             Click="{x:Bind OnChangePackageInstallPathClicked}"
-                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ChangeFolder')}" />
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ChangeFolder')}" />
                     </Grid>
 
                     <!--  允许的处理器架构  -->
@@ -1697,30 +1696,30 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowedArchitectures')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AllowedArchitectures')}" />
 
                         <ToggleButton
                             Grid.Column="1"
                             Margin="6,0,2,0"
                             Click="{x:Bind OnProcessorArchitectureClicked}"
-                            Content="{x:Bind sys:Convert.ToString(winrt:ProcessorArchitecture.X86)}"
+                            Content="{x:Bind system:Convert.ToString(winrtSystem:ProcessorArchitecture.X86)}"
                             IsChecked="{x:Bind IsX86ProcessorArchitecture, Mode=OneWay}"
-                            Tag="{x:Bind winrt:ProcessorArchitecture.X86}" />
+                            Tag="{x:Bind winrtSystem:ProcessorArchitecture.X86}" />
 
                         <ToggleButton
                             Grid.Column="2"
                             Margin="0,0,2,0"
                             Click="{x:Bind OnProcessorArchitectureClicked}"
-                            Content="{x:Bind sys:Convert.ToString(winrt:ProcessorArchitecture.X64)}"
+                            Content="{x:Bind system:Convert.ToString(winrtSystem:ProcessorArchitecture.X64)}"
                             IsChecked="{x:Bind IsX64ProcessorArchitecture, Mode=OneWay}"
-                            Tag="{x:Bind winrt:ProcessorArchitecture.X64}" />
+                            Tag="{x:Bind winrtSystem:ProcessorArchitecture.X64}" />
 
                         <ToggleButton
                             Grid.Column="3"
                             Click="{x:Bind OnProcessorArchitectureClicked}"
-                            Content="{x:Bind sys:Convert.ToString(winrt:ProcessorArchitecture.Arm64)}"
+                            Content="{x:Bind system:Convert.ToString(winrtSystem:ProcessorArchitecture.Arm64)}"
                             IsChecked="{x:Bind IsArm64ProcessorArchitecture, Mode=OneWay}"
-                            Tag="{x:Bind winrt:ProcessorArchitecture.Arm64}" />
+                            Tag="{x:Bind winrtSystem:ProcessorArchitecture.Arm64}" />
                     </Grid>
 
                     <!--  额外安装参数  -->
@@ -1742,7 +1741,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AdditionalInstallerArguments')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AdditionalInstallerArguments')}" />
 
                         <TextBox
                             Grid.Column="1"

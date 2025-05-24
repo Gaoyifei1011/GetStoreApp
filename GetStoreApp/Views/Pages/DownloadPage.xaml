@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -62,7 +62,7 @@
                         IsTapEnabled="True"
                         Tag="0"
                         Tapped="{x:Bind OnSelectorBarTapped}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Download/Downloading')}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/Downloading')}" />
 
                     <SelectorBarItem
                         Padding="12,5"
@@ -70,7 +70,7 @@
                         IsTapEnabled="True"
                         Tag="1"
                         Tapped="{x:Bind OnSelectorBarTapped}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Download/Completed')}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/Completed')}" />
                 </SelectorBar>
 
                 <!--  WinGet 程序包内容  -->
@@ -115,7 +115,7 @@
                         Grid.Column="1"
                         VerticalAlignment="Center"
                         FontSize="14"
-                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UseInstruction')}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UseInstruction')}" />
 
                     <Button
                         Grid.Column="2"
@@ -123,7 +123,7 @@
                         VerticalAlignment="Center"
                         Click="{x:Bind OnCloseClicked}"
                         Style="{StaticResource AlternateCloseButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/Close')}">
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Close')}">
 
                         <Button.Content>
                             <FontIcon
@@ -155,7 +155,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/DownloadInstruction')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -163,7 +163,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadInstruction1')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/DownloadInstruction1')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -172,7 +172,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadInstruction2')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/DownloadInstruction2')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -181,7 +181,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadInstruction3')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/DownloadInstruction3')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -192,19 +192,19 @@
 
                             <TextBlock>
                                 <Hyperlink Click="{x:Bind OnLearnDownloadMoreClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/LearnDownloadMore')}" />
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/LearnDownloadMore')}" />
                                 </Hyperlink>
                             </TextBlock>
 
                             <TextBlock>
                                 <Hyperlink Click="{x:Bind OnNetworkInternetClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/NetworkAndInternet')}" />
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/NetworkAndInternet')}" />
                                 </Hyperlink>
                             </TextBlock>
 
                             <TextBlock>
                                 <Hyperlink Click="{x:Bind OnOpenDownloadSettingsClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/OpenDownloadSettings')}" />
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/OpenDownloadSettings')}" />
                                 </Hyperlink>
                             </TextBlock>
                         </StackPanel>
