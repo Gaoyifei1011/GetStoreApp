@@ -72,7 +72,7 @@ namespace GetStoreApp.Services.Controls.Download
                     compositeValue[DownloadKey] = downloadSchedulerItem.DownloadKey;
                     compositeValue[FileName] = downloadSchedulerItem.FileName;
                     compositeValue[FilePath] = downloadSchedulerItem.FilePath;
-                    compositeValue[FileSize] = downloadSchedulerItem.TotalSize.ToString();
+                    compositeValue[FileSize] = downloadSchedulerItem.TotalSize;
 
                     if (downloadStorageContainer.Values.TryAdd(downloadSchedulerItem.DownloadKey, compositeValue))
                     {
@@ -133,7 +133,7 @@ namespace GetStoreApp.Services.Controls.Download
                                 DownloadKey = downloadItemKey.Key,
                                 FileName = Convert.ToString(compositeValue[FileName]),
                                 FilePath = Convert.ToString(compositeValue[FilePath]),
-                                TotalSize = Convert.ToInt32(compositeValue[FileSize])
+                                TotalSize = Convert.ToDouble(compositeValue[FileSize])
                             });
                         }
                     }
