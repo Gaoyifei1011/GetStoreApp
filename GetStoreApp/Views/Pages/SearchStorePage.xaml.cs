@@ -1,7 +1,7 @@
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Store;
 using GetStoreApp.Models;
-using GetStoreApp.Services.Controls.History;
+using GetStoreApp.Services.History;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;

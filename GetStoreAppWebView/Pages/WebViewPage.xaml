@@ -2,15 +2,15 @@
     x:Class="GetStoreAppWebView.Pages.WebViewPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:rootservice="using:GetStoreAppWebView.Services.Root"
-    xmlns:service="using:GetStoreAppWebView.Services.Controls.Settings"
+    xmlns:settingsservice="using:GetStoreAppWebView.Services.Settings"
     x:Name="WebViewPageRoot"
-    muxc:BackdropMaterial.ApplyToRootOrPageBackground="{x:Bind EnableBackdropMaterial, Mode=OneWay}"
+    controls:BackdropMaterial.ApplyToRootOrPageBackground="{x:Bind EnableBackdropMaterial, Mode=OneWay}"
     ActualThemeChanged="{x:Bind OnActualThemeChanged}"
-    FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
+    FlowDirection="{x:Bind settingsservice:LanguageService.FlowDirection}"
     RequestedTheme="{x:Bind WindowTheme, Mode=OneWay}"
     mc:Ignorable="d">
 
@@ -124,7 +124,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <muxc:ProgressRing
+                <controls:ProgressRing
                     Grid.Column="0"
                     Width="20"
                     Height="20"
@@ -209,17 +209,17 @@
         <WebView
             x:Name="WebViewBrowser"
             Grid.Row="2"
-            x:Load="{x:Bind x:Object.Equals(service:WebKernelService.WebKernel, service:WebKernelService.WebKernelList[0])}"
+            x:Load="{x:Bind x:Object.Equals(settingsservice:WebKernelService.WebKernel, settingsservice:WebKernelService.WebKernelList[0])}"
             NavigationCompleted="{x:Bind OnNavigationCompleted}"
             NavigationStarting="{x:Bind OnNavigationStarting}"
             NewWindowRequested="{x:Bind OnNewWindowRequested}"
             Source="{x:Bind Source, Mode=OneWay}"
             UnviewableContentIdentified="{x:Bind OnUnviewableContentIdentified}" />
 
-        <muxc:WebView2
+        <controls:WebView2
             x:Name="WebView2Browser"
             Grid.Row="2"
-            x:Load="{x:Bind x:Object.Equals(service:WebKernelService.WebKernel, service:WebKernelService.WebKernelList[1])}"
+            x:Load="{x:Bind x:Object.Equals(settingsservice:WebKernelService.WebKernel, settingsservice:WebKernelService.WebKernelList[1])}"
             CoreProcessFailed="{x:Bind OnCoreProcessFailed}"
             CoreWebView2Initialized="{x:Bind OnCoreWebView2Initialized}"
             FlowDirection="LeftToRight"

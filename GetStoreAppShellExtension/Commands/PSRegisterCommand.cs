@@ -1,6 +1,6 @@
 ﻿using GetStoreAppShellExtension.Helpers.Root;
-using GetStoreAppShellExtension.Services.Controls.Settings;
 using GetStoreAppShellExtension.Services.Root;
+using GetStoreAppShellExtension.Services.Settings;
 using GetStoreAppShellExtension.WindowsAPI.ComTypes;
 using GetStoreAppShellExtension.WindowsAPI.PInvoke.Shell32;
 using System;

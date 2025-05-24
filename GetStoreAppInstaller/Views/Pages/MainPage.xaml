@@ -3,21 +3,21 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:converter="using:GetStoreAppInstaller.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="using:GetStoreAppInstaller.Extensions.DataType.Enums"
     xmlns:globalization="using:Windows.Globalization"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreAppInstaller.Models"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:rootservice="using:GetStoreAppInstaller.Services.Root"
-    xmlns:service="using:GetStoreAppInstaller.Services.Controls.Settings"
+    xmlns:settingsservice="using:GetStoreAppInstaller.Services.Settings"
     xmlns:system="using:System"
     x:Name="MainPageRoot"
-    muxc:BackdropMaterial.ApplyToRootOrPageBackground="{x:Bind EnableBackdropMaterial, Mode=OneWay}"
+    controls:BackdropMaterial.ApplyToRootOrPageBackground="{x:Bind EnableBackdropMaterial, Mode=OneWay}"
     ActualThemeChanged="{x:Bind OnActualThemeChanged}"
     AllowDrop="{x:Bind CanDragFile, Mode=OneWay}"
-    FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
+    FlowDirection="{x:Bind settingsservice:LanguageService.FlowDirection}"
     Loaded="{x:Bind OnLoaded}"
     RequestedTheme="{x:Bind WindowTheme, Mode=OneWay}"
     mc:Ignorable="d">
@@ -140,14 +140,14 @@
             Click="{x:Bind OnOpenSettingsClicked}"
             ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Settings')}">
 
-            <muxc:AnimatedIcon>
-                <muxc:AnimatedIcon.Source>
+            <controls:AnimatedIcon>
+                <controls:AnimatedIcon.Source>
                     <animatedvisuals:AnimatedSettingsVisualSource />
-                </muxc:AnimatedIcon.Source>
-                <muxc:AnimatedIcon.FallbackIconSource>
-                    <muxc:FontIconSource Glyph="&#xE713;" />
-                </muxc:AnimatedIcon.FallbackIconSource>
-            </muxc:AnimatedIcon>
+                </controls:AnimatedIcon.Source>
+                <controls:AnimatedIcon.FallbackIconSource>
+                    <controls:FontIconSource Glyph="&#xE713;" />
+                </controls:AnimatedIcon.FallbackIconSource>
+            </controls:AnimatedIcon>
         </Button>
 
         <Grid
@@ -187,7 +187,7 @@
                     <RowDefinition Height="Auto " />
                 </Grid.RowDefinitions>
 
-                <muxc:ProgressRing
+                <controls:ProgressRing
                     Grid.Row="0"
                     Width="60"
                     Height="60" />
@@ -295,7 +295,7 @@
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
-                            <muxc:ProgressBar
+                            <controls:ProgressBar
                                 Grid.Row="3"
                                 Padding="0,0,4,0"
                                 HorizontalAlignment="Stretch"
@@ -760,7 +760,7 @@
                             <StackPanel Margin="0,0,30,30">
 
                                 <!--  基本信息  -->
-                                <muxc:Expander
+                                <controls:Expander
                                     Margin="0,0,0,2"
                                     Padding="0,6,0,6"
                                     HorizontalAlignment="Stretch"
@@ -768,7 +768,7 @@
                                     Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                                     IsExpanded="True">
 
-                                    <muxc:Expander.Header>
+                                    <controls:Expander.Header>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
@@ -797,7 +797,7 @@
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Start')}" />
 
-                                                        <muxc:AnimatedIcon
+                                                        <controls:AnimatedIcon
                                                             Width="12"
                                                             Height="12"
                                                             Margin="8,0,0,0"
@@ -805,14 +805,14 @@
                                                             VerticalAlignment="Center"
                                                             AutomationProperties.AccessibilityView="Raw">
                                                             <animatedvisuals:AnimatedChevronDownSmallVisualSource />
-                                                            <muxc:AnimatedIcon.FallbackIconSource>
-                                                                <muxc:FontIconSource
+                                                            <controls:AnimatedIcon.FallbackIconSource>
+                                                                <controls:FontIconSource
                                                                     FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                                                     FontSize="8"
                                                                     Glyph="&#xE96E;"
                                                                     IsTextScaleFactorEnabled="False" />
-                                                            </muxc:AnimatedIcon.FallbackIconSource>
-                                                        </muxc:AnimatedIcon>
+                                                            </controls:AnimatedIcon.FallbackIconSource>
+                                                        </controls:AnimatedIcon>
                                                     </StackPanel>
                                                 </HyperlinkButton.Content>
 
@@ -854,9 +854,9 @@
                                                 </FlyoutBase.AttachedFlyout>
                                             </HyperlinkButton>
                                         </Grid>
-                                    </muxc:Expander.Header>
+                                    </controls:Expander.Header>
 
-                                    <muxc:Expander.Content>
+                                    <controls:Expander.Content>
                                         <StackPanel Spacing="3">
                                             <!--  应用包信息  -->
                                             <Grid
@@ -1146,11 +1146,11 @@
                                                     TextWrapping="Wrap" />
                                             </Grid>
                                         </StackPanel>
-                                    </muxc:Expander.Content>
-                                </muxc:Expander>
+                                    </controls:Expander.Content>
+                                </controls:Expander>
 
                                 <!--  更新设置  -->
-                                <muxc:Expander
+                                <controls:Expander
                                     x:Name="UpdateSettingsExpander"
                                     Margin="0,0,0,2"
                                     Padding="0,6,0,6"
@@ -1160,7 +1160,7 @@
                                     Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                                     IsExpanded="True">
 
-                                    <muxc:Expander.Header>
+                                    <controls:Expander.Header>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
@@ -1185,9 +1185,9 @@
                                                 Click="{x:Bind OnLearnUpdateSettingsClicked}"
                                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/LearnUpdateSettings')}" />
                                         </Grid>
-                                    </muxc:Expander.Header>
+                                    </controls:Expander.Header>
 
-                                    <muxc:Expander.Content>
+                                    <controls:Expander.Content>
                                         <Grid Margin="16,0,10,0">
 
                                             <Grid.ColumnDefinitions>
@@ -1314,11 +1314,11 @@
                                                 Text="{x:Bind ForceUpdateFromAnyVersion, Mode=OneWay}"
                                                 TextWrapping="Wrap" />
                                         </Grid>
-                                    </muxc:Expander.Content>
-                                </muxc:Expander>
+                                    </controls:Expander.Content>
+                                </controls:Expander>
 
                                 <!--  目标设备信息  -->
-                                <muxc:Expander
+                                <controls:Expander
                                     Margin="0,0,0,2"
                                     Padding="0"
                                     HorizontalAlignment="Stretch"
@@ -1327,7 +1327,7 @@
                                     IsExpanded="True"
                                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(TargetDeviceFamilyCollection.Count), Mode=OneWay}">
 
-                                    <muxc:Expander.Header>
+                                    <controls:Expander.Header>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
@@ -1352,9 +1352,9 @@
                                                 Click="{x:Bind OnLearnTargetDeviceFamilyClicked}"
                                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/LearnTargetDeviceFamily')}" />
                                         </Grid>
-                                    </muxc:Expander.Header>
+                                    </controls:Expander.Header>
 
-                                    <muxc:Expander.Content>
+                                    <controls:Expander.Content>
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
@@ -1523,11 +1523,11 @@
                                                 </ListView.ItemTemplate>
                                             </ListView>
                                         </Grid>
-                                    </muxc:Expander.Content>
-                                </muxc:Expander>
+                                    </controls:Expander.Content>
+                                </controls:Expander>
 
                                 <!--  依赖项信息  -->
-                                <muxc:Expander
+                                <controls:Expander
                                     Margin="0,0,0,2"
                                     Padding="0"
                                     HorizontalAlignment="Stretch"
@@ -1536,7 +1536,7 @@
                                     IsExpanded="True"
                                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DependencyCollection.Count), Mode=OneWay}">
 
-                                    <muxc:Expander.Header>
+                                    <controls:Expander.Header>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
@@ -1561,9 +1561,9 @@
                                                 Click="{x:Bind OnLearnPackageDependencyClicked}"
                                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/LearnPackageDependency')}" />
                                         </Grid>
-                                    </muxc:Expander.Header>
+                                    </controls:Expander.Header>
 
-                                    <muxc:Expander.Content>
+                                    <controls:Expander.Content>
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
@@ -1971,11 +1971,11 @@
                                                 </ListView.ItemTemplate>
                                             </ListView>
                                         </Grid>
-                                    </muxc:Expander.Content>
-                                </muxc:Expander>
+                                    </controls:Expander.Content>
+                                </controls:Expander>
 
                                 <!--  应用包功能信息  -->
-                                <muxc:Expander
+                                <controls:Expander
                                     Margin="0,0,0,2"
                                     Padding="0"
                                     HorizontalAlignment="Stretch"
@@ -1984,7 +1984,7 @@
                                     IsExpanded="True"
                                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(CapabilitiesCollection.Count), Mode=OneWay}">
 
-                                    <muxc:Expander.Header>
+                                    <controls:Expander.Header>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
@@ -2009,9 +2009,9 @@
                                                 Click="{x:Bind OnLearnPackageCapabilityClicked}"
                                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/LearnPackageCapability')}" />
                                         </Grid>
-                                    </muxc:Expander.Header>
+                                    </controls:Expander.Header>
 
-                                    <muxc:Expander.Content>
+                                    <controls:Expander.Content>
                                         <GridView
                                             Margin="10,4,10,-4"
                                             ItemsSource="{x:Bind CapabilitiesCollection}"
@@ -2065,11 +2065,11 @@
                                                 </DataTemplate>
                                             </GridView.ItemTemplate>
                                         </GridView>
-                                    </muxc:Expander.Content>
-                                </muxc:Expander>
+                                    </controls:Expander.Content>
+                                </controls:Expander>
 
                                 <!--  应用包应用信息  -->
-                                <muxc:Expander
+                                <controls:Expander
                                     Margin="0,0,0,2"
                                     Padding="0"
                                     HorizontalAlignment="Stretch"
@@ -2078,7 +2078,7 @@
                                     IsExpanded="True"
                                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ApplicationCollection.Count), Mode=OneWay}">
 
-                                    <muxc:Expander.Header>
+                                    <controls:Expander.Header>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
@@ -2096,9 +2096,9 @@
                                                 VerticalAlignment="Center"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageApplication')}" />
                                         </Grid>
-                                    </muxc:Expander.Header>
+                                    </controls:Expander.Header>
 
-                                    <muxc:Expander.Content>
+                                    <controls:Expander.Content>
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
@@ -2343,11 +2343,11 @@
                                                 </ListView.ItemTemplate>
                                             </ListView>
                                         </Grid>
-                                    </muxc:Expander.Content>
-                                </muxc:Expander>
+                                    </controls:Expander.Content>
+                                </controls:Expander>
 
                                 <!--  应用包语言信息  -->
-                                <muxc:Expander
+                                <controls:Expander
                                     Padding="0"
                                     HorizontalAlignment="Stretch"
                                     HorizontalContentAlignment="Stretch"
@@ -2355,7 +2355,7 @@
                                     IsExpanded="True"
                                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(LanguageCollection.Count), Mode=OneWay}">
 
-                                    <muxc:Expander.Header>
+                                    <controls:Expander.Header>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
@@ -2373,9 +2373,9 @@
                                                 VerticalAlignment="Center"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageLanguage')}" />
                                         </Grid>
-                                    </muxc:Expander.Header>
+                                    </controls:Expander.Header>
 
-                                    <muxc:Expander.Content>
+                                    <controls:Expander.Content>
                                         <GridView
                                             Margin="16,4,16,-4"
                                             ItemsSource="{x:Bind LanguageCollection}"
@@ -2431,8 +2431,8 @@
                                                 </DataTemplate>
                                             </GridView.ItemTemplate>
                                         </GridView>
-                                    </muxc:Expander.Content>
-                                </muxc:Expander>
+                                    </controls:Expander.Content>
+                                </controls:Expander>
                             </StackPanel>
                         </Border>
                     </ScrollViewer>

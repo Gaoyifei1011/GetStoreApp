@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
-    xmlns:service="using:GetStoreApp.Services.Controls.Settings"
+    xmlns:settingsservice="using:GetStoreApp.Services.Settings"
     xmlns:system="using:System"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
@@ -65,7 +65,7 @@
                     Padding="0"
                     HorizontalAlignment="Left"
                     SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
-                    Visibility="{x:Bind service:WinGetConfigService.IsWinGetInstalled}">
+                    Visibility="{x:Bind settingsservice:WinGetConfigService.IsWinGetInstalled}">
 
                     <SelectorBarItem
                         Padding="12,5"
@@ -98,7 +98,7 @@
                     Grid.Row="1"
                     Navigated="{x:Bind OnNavigated}"
                     NavigationFailed="{x:Bind OnNavigationFailed}"
-                    Visibility="{x:Bind service:WinGetConfigService.IsWinGetInstalled}" />
+                    Visibility="{x:Bind settingsservice:WinGetConfigService.IsWinGetInstalled}" />
 
                 <!--  WinGet 程序包不存在提示内容  -->
                 <Grid
@@ -106,7 +106,7 @@
                     Grid.RowSpan="2"
                     Padding="30,0"
                     HorizontalAlignment="Center"
-                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(service:WinGetConfigService.IsWinGetInstalled)}">
+                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(settingsservice:WinGetConfigService.IsWinGetInstalled)}">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />

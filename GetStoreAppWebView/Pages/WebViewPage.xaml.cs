@@ -1,6 +1,6 @@
 ﻿using GetStoreAppWebView.Helpers.Root;
-using GetStoreAppWebView.Services.Controls.Settings;
 using GetStoreAppWebView.Services.Root;
+using GetStoreAppWebView.Services.Settings;
 using GetStoreAppWebView.UI.Dialogs;
 using GetStoreAppWebView.WindowsAPI.ComTypes;
 using Microsoft.UI.Xaml.Controls;

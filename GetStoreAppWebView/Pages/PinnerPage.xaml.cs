@@ -1,4 +1,4 @@
-﻿using GetStoreAppWebView.Services.Controls.Settings;
+﻿using GetStoreAppWebView.Services.Settings;
 using System;
 using System.ComponentModel;
 using Windows.UI;

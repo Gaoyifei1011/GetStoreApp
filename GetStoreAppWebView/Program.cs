@@ -1,6 +1,6 @@
 using GetStoreAppWebView.Helpers.Root;
-using GetStoreAppWebView.Services.Controls.Settings;
 using GetStoreAppWebView.Services.Root;
+using GetStoreAppWebView.Services.Settings;
 using System;
 using System.Collections.Generic;
 using System.IO;

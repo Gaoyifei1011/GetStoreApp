@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
-    xmlns:service="using:GetStoreApp.Services.Controls.Settings"
+    xmlns:settingsservice="using:GetStoreApp.Services.Settings"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -73,7 +73,7 @@
                     VerticalAlignment="Center"
                     Click="{x:Bind OnConfigurationClicked}"
                     Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Configuration')}"
-                    IsEnabled="{x:Bind service:WinGetConfigService.IsWinGetInstalled}" />
+                    IsEnabled="{x:Bind settingsservice:WinGetConfigService.IsWinGetInstalled}" />
             </Grid>
 
             <!--  WinGet 设置  -->
@@ -134,7 +134,7 @@
                     Grid.Column="3"
                     Click="{x:Bind OnOpenWinGetSettingsClicked}"
                     Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/OpenWinGetSettings')}"
-                    IsEnabled="{x:Bind service:WinGetConfigService.IsWinGetInstalled}"
+                    IsEnabled="{x:Bind settingsservice:WinGetConfigService.IsWinGetInstalled}"
                     ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Settings/OpenWinGetSettingsToolTip')}" />
             </Grid>
         </Grid>

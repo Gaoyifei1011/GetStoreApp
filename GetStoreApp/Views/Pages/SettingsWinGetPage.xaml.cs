@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Services.Controls.Settings;
+﻿using GetStoreApp.Services.Settings;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;

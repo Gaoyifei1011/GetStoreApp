@@ -1,6 +1,6 @@
 ﻿using GetStoreAppShellExtension.Commands;
-using GetStoreAppShellExtension.Services.Controls.Settings;
 using GetStoreAppShellExtension.Services.Root;
+using GetStoreAppShellExtension.Services.Settings;
 using System;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;

@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.Models;
-using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;

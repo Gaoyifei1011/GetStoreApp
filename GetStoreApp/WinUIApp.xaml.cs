@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Services.Controls.Download;
+﻿using GetStoreApp.Services.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.User32;

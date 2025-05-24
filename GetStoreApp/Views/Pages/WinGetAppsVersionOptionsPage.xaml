@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:system="using:System"
-    xmlns:winrtSystem="using:Windows.System"
+    xmlns:winrtsystem="using:Windows.System"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -842,24 +842,24 @@
                             Grid.Column="1"
                             Margin="6,0,2,0"
                             Click="{x:Bind OnProcessorArchitectureClicked}"
-                            Content="{x:Bind system:Convert.ToString(winrtSystem:ProcessorArchitecture.X86)}"
+                            Content="{x:Bind system:Convert.ToString(winrtsystem:ProcessorArchitecture.X86)}"
                             IsChecked="{x:Bind IsX86ProcessorArchitecture, Mode=OneWay}"
-                            Tag="{x:Bind winrtSystem:ProcessorArchitecture.X86}" />
+                            Tag="{x:Bind winrtsystem:ProcessorArchitecture.X86}" />
 
                         <ToggleButton
                             Grid.Column="2"
                             Margin="0,0,2,0"
                             Click="{x:Bind OnProcessorArchitectureClicked}"
-                            Content="{x:Bind system:Convert.ToString(winrtSystem:ProcessorArchitecture.X64)}"
+                            Content="{x:Bind system:Convert.ToString(winrtsystem:ProcessorArchitecture.X64)}"
                             IsChecked="{x:Bind IsX64ProcessorArchitecture, Mode=OneWay}"
-                            Tag="{x:Bind winrtSystem:ProcessorArchitecture.X64}" />
+                            Tag="{x:Bind winrtsystem:ProcessorArchitecture.X64}" />
 
                         <ToggleButton
                             Grid.Column="3"
                             Click="{x:Bind OnProcessorArchitectureClicked}"
-                            Content="{x:Bind system:Convert.ToString(winrtSystem:ProcessorArchitecture.Arm64)}"
+                            Content="{x:Bind system:Convert.ToString(winrtsystem:ProcessorArchitecture.Arm64)}"
                             IsChecked="{x:Bind IsArm64ProcessorArchitecture, Mode=OneWay}"
-                            Tag="{x:Bind winrtSystem:ProcessorArchitecture.Arm64}" />
+                            Tag="{x:Bind winrtsystem:ProcessorArchitecture.Arm64}" />
                     </Grid>
 
                     <!--  额外安装参数  -->
@@ -1702,24 +1702,24 @@
                             Grid.Column="1"
                             Margin="6,0,2,0"
                             Click="{x:Bind OnProcessorArchitectureClicked}"
-                            Content="{x:Bind system:Convert.ToString(winrtSystem:ProcessorArchitecture.X86)}"
+                            Content="{x:Bind system:Convert.ToString(winrtsystem:ProcessorArchitecture.X86)}"
                             IsChecked="{x:Bind IsX86ProcessorArchitecture, Mode=OneWay}"
-                            Tag="{x:Bind winrtSystem:ProcessorArchitecture.X86}" />
+                            Tag="{x:Bind winrtsystem:ProcessorArchitecture.X86}" />
 
                         <ToggleButton
                             Grid.Column="2"
                             Margin="0,0,2,0"
                             Click="{x:Bind OnProcessorArchitectureClicked}"
-                            Content="{x:Bind system:Convert.ToString(winrtSystem:ProcessorArchitecture.X64)}"
+                            Content="{x:Bind system:Convert.ToString(winrtsystem:ProcessorArchitecture.X64)}"
                             IsChecked="{x:Bind IsX64ProcessorArchitecture, Mode=OneWay}"
-                            Tag="{x:Bind winrtSystem:ProcessorArchitecture.X64}" />
+                            Tag="{x:Bind winrtsystem:ProcessorArchitecture.X64}" />
 
                         <ToggleButton
                             Grid.Column="3"
                             Click="{x:Bind OnProcessorArchitectureClicked}"
-                            Content="{x:Bind system:Convert.ToString(winrtSystem:ProcessorArchitecture.Arm64)}"
+                            Content="{x:Bind system:Convert.ToString(winrtsystem:ProcessorArchitecture.Arm64)}"
                             IsChecked="{x:Bind IsArm64ProcessorArchitecture, Mode=OneWay}"
-                            Tag="{x:Bind winrtSystem:ProcessorArchitecture.Arm64}" />
+                            Tag="{x:Bind winrtsystem:ProcessorArchitecture.Arm64}" />
                     </Grid>
 
                     <!--  额外安装参数  -->

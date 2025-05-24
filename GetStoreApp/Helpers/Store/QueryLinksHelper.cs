@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
-using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Settings;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.Marshalling;

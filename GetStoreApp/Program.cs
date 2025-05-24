@@ -1,8 +1,8 @@
 ﻿using GetStoreApp.Helpers.Root;
-using GetStoreApp.Services.Controls.Download;
-using GetStoreApp.Services.Controls.History;
-using GetStoreApp.Services.Controls.Settings;
+using GetStoreApp.Services.Download;
+using GetStoreApp.Services.History;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Settings;
 using GetStoreApp.WindowsAPI.PInvoke.KernelBase;
 using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using Microsoft.UI.Dispatching;
