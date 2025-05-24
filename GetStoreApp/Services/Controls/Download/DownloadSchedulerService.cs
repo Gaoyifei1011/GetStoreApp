@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
-using Windows.Foundation.Diagnostics;
 
 namespace GetStoreApp.Services.Controls.Download
 {
@@ -22,13 +21,15 @@ namespace GetStoreApp.Services.Controls.Download
         private static int badgeCount;
         private static KeyValuePair<string, string> doEngineMode;
 
+        public static bool IsDownloadingPageInitialized { get; set; }
+
         public static SemaphoreSlim DownloadSchedulerSemaphoreSlim { get; private set; } = new(1, 1);
 
         public static List<DownloadSchedulerModel> DownloadSchedulerList { get; } = [];
 
-        public static event Action<DownloadSchedulerModel> DownloadProgress;
+        public static List<DownloadSchedulerModel> DownloadFailedList { get; } = [];
 
-        public static event Action<int, bool> CollectionCountChanged;
+        public static event Action<DownloadSchedulerModel> DownloadProgress;
 
         /// <summary>
         /// 下载状态发生改变时触发的事件
@@ -75,7 +76,7 @@ namespace GetStoreApp.Services.Controls.Download
                     };
 
                     DownloadSchedulerList.Add(downloadScheduler);
-                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count, true);
+                    UpdateBadgeNotification(DownloadSchedulerList.Count, true);
                     DownloadProgress?.Invoke(new DownloadSchedulerModel()
                     {
                         DownloadID = downloadScheduler.DownloadID,
@@ -183,8 +184,33 @@ namespace GetStoreApp.Services.Controls.Download
                             downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
                             downloadSchedulerItem.CompletedSize = 1;
                             downloadProgress.TotalSize = 1;
+                            DownloadProgress?.Invoke(new DownloadSchedulerModel()
+                            {
+                                DownloadID = downloadSchedulerItem.DownloadID,
+                                FileName = downloadSchedulerItem.FileName,
+                                FilePath = downloadSchedulerItem.FilePath,
+                                DownloadProgressState = downloadSchedulerItem.DownloadProgressState,
+                                CompletedSize = downloadSchedulerItem.CompletedSize,
+                                TotalSize = downloadSchedulerItem.TotalSize,
+                                DownloadSpeed = downloadSchedulerItem.DownloadSpeed,
+                            });
+
+                            // 下载页面未初始化前将下载内容存放到下载失败记录列表中
+                            if (!IsDownloadingPageInitialized)
+                            {
+                                DownloadFailedList.Add(new DownloadSchedulerModel()
+                                {
+                                    DownloadID = downloadSchedulerItem.DownloadID,
+                                    FileName = downloadSchedulerItem.FileName,
+                                    FilePath = downloadSchedulerItem.FilePath,
+                                    DownloadProgressState = downloadSchedulerItem.DownloadProgressState,
+                                    CompletedSize = downloadSchedulerItem.CompletedSize,
+                                    TotalSize = downloadSchedulerItem.TotalSize,
+                                    DownloadSpeed = downloadSchedulerItem.DownloadSpeed,
+                                });
+                            }
                             DownloadSchedulerList.Remove(downloadSchedulerItem);
-                            CollectionCountChanged?.Invoke(DownloadSchedulerList.Count, true);
+                            UpdateBadgeNotification(DownloadSchedulerList.Count, true);
                             return;
                         }
                     }
@@ -225,7 +251,7 @@ namespace GetStoreApp.Services.Controls.Download
                             });
                             DownloadStorageService.AddDownloadData(downloadSchedulerItem);
                             DownloadSchedulerList.Remove(downloadSchedulerItem);
-                            CollectionCountChanged?.Invoke(DownloadSchedulerList.Count, true);
+                            UpdateBadgeNotification(DownloadSchedulerList.Count, true);
                             return;
                         }
                     }
@@ -262,7 +288,7 @@ namespace GetStoreApp.Services.Controls.Download
                                 DownloadSpeed = downloadSchedulerItem.DownloadSpeed,
                             });
                             DownloadSchedulerList.Remove(downloadSchedulerItem);
-                            CollectionCountChanged?.Invoke(DownloadSchedulerList.Count, false);
+                            UpdateBadgeNotification(DownloadSchedulerList.Count, false);
                             return;
                         }
                     }
@@ -281,7 +307,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 集合的数量发生变化时修改任务栏徽标下载调度任务数量
         /// </summary>
-        private static void OnCollectionCountChanged(int count, bool needNotification)
+        private static void UpdateBadgeNotification(int count, bool needNotification)
         {
             // 当前下载任务数量发生变化时，更新当前下载任务数量通知
             if (badgeCount != count)
@@ -307,9 +333,8 @@ namespace GetStoreApp.Services.Controls.Download
 
         /// <summary>
         /// 初始化后台下载调度器
-        /// 先检查当前网络状态信息，加载暂停任务信息，然后初始化下载监控任务
         /// </summary>
-        public static void InitializeDownloadScheduler(bool isDesktopProgram)
+        public static void InitializeDownloadScheduler()
         {
             if (!isInitialized)
             {
@@ -320,12 +345,6 @@ namespace GetStoreApp.Services.Controls.Download
 
                 // 更新当前下载任务数量通知
                 BadgeNotificationService.Show(badgeCount);
-
-                // 挂载集合数量发生更改事件
-                if (isDesktopProgram)
-                {
-                    CollectionCountChanged += OnCollectionCountChanged;
-                }
 
                 // 初始化下载服务
                 if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
@@ -349,7 +368,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 关闭下载监控任务
         /// </summary>
-        public static void CloseDownloadScheduler(bool isDesktopProgram)
+        public static void CloseDownloadScheduler()
         {
             if (isInitialized)
             {
@@ -357,12 +376,6 @@ namespace GetStoreApp.Services.Controls.Download
 
                 DownloadSchedulerSemaphoreSlim?.Dispose();
                 DownloadSchedulerSemaphoreSlim = null;
-
-                // 卸载集合数量发生更改事件
-                if (isDesktopProgram)
-                {
-                    CollectionCountChanged -= OnCollectionCountChanged;
-                }
 
                 // 注销下载服务
                 if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
@@ -476,31 +489,6 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 Aria2Service.Release();
             }
-        }
-
-        /// <summary>
-        /// 获取当前下载调度的所有任务列表信息，为保证安全访问，需要手动对访问的锁进行加锁和释放
-        /// </summary>
-        public static List<DownloadSchedulerModel> GetDownloadSchedulerList()
-        {
-            List<DownloadSchedulerModel> downloadSchedulerList = [];
-
-            if (DownloadSchedulerSemaphoreSlim?.CurrentCount is 0)
-            {
-                try
-                {
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
-                    {
-                        downloadSchedulerList.Add(downloadSchedulerItem);
-                    }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "Get download information failed", e);
-                }
-            }
-
-            return downloadSchedulerList;
         }
     }
 }
