@@ -187,6 +187,8 @@
     <MainAppEmbeddedItem Include="Assets\Embed\wu.xml" />
 
     <None Remove="Assets\LICENSE" />
+    <None Remove="Strings\AppInformation.lang-en-us.resjson" />
+    <None Remove="Strings\AppInformation.lang-zh-hans.resjson" />
     <None Remove="Strings\en-us\About.resjson" />
     <None Remove="Strings\en-us\AppInformation.resjson" />
     <None Remove="Strings\en-us\AppManager.resjson" />
@@ -308,8 +310,9 @@
     <Page Update="Views\Windows\MainWindow.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Remove="WinUIApp.xaml" />
 
+    <PRIResource Include="Strings\AppInformation.lang-en-us.resjson" />
+    <PRIResource Include="Strings\AppInformation.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\en-us\About.resjson" />
-    <PRIResource Include="Strings\en-us\AppInformation.resjson" />
     <PRIResource Include="Strings\en-us\AppManager.resjson" />
     <PRIResource Include="Strings\en-us\AppUpdate.resjson" />
     <PRIResource Include="Strings\en-us\Dialog.resjson" />
@@ -323,8 +326,7 @@
     <PRIResource Include="Strings\en-us\WebView.resjson" />
     <PRIResource Include="Strings\en-us\Window.resjson" />
     <PRIResource Include="Strings\en-us\WinGet.resjson" />
-    <PRIResource Include="Strings\zh-hans\About.resjson" />
-    <PRIResource Include="Strings\zh-hans\AppInformation.resjson" />
+    <PRIResource Include="Strings\zh-hans\About.resjson" />   
     <PRIResource Include="Strings\zh-hans\AppManager.resjson" />
     <PRIResource Include="Strings\zh-hans\AppUpdate.resjson" />
     <PRIResource Include="Strings\zh-hans\Dialog.resjson" />
