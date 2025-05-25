@@ -8,7 +8,6 @@ using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
@@ -34,6 +33,25 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AppInformationPage : Page, INotifyPropertyChanged
     {
+        private readonly string AppDisplayNameString = ResourceService.GetLocalized("AppInformation/AppDisplayName");
+        private readonly string PackageFamilyNameString = ResourceService.GetLocalized("AppInformation/PackageFamilyName");
+        private readonly string PackageFullNameString = ResourceService.GetLocalized("AppInformation/PackageFullName");
+        private readonly string AppDescriptionString = ResourceService.GetLocalized("AppInformation/AppDescription");
+        private readonly string PublisherDisplayNameString = ResourceService.GetLocalized("AppInformation/PublisherDisplayName");
+        private readonly string PublisherIdString = ResourceService.GetLocalized("AppInformation/PublisherId");
+        private readonly string VersionString = ResourceService.GetLocalized("AppInformation/Version");
+        private readonly string InstalledDateString = ResourceService.GetLocalized("AppInformation/InstalledDate");
+        private readonly string ArchitectureString = ResourceService.GetLocalized("AppInformation/Architecture");
+        private readonly string SignatureKindString = ResourceService.GetLocalized("AppInformation/SignatureKind");
+        private readonly string ResourceIdString = ResourceService.GetLocalized("AppInformation/ResourceId");
+        private readonly string IsBundleString = ResourceService.GetLocalized("AppInformation/IsBundle");
+        private readonly string IsDevelopmentModeString = ResourceService.GetLocalized("AppInformation/IsDevelopmentMode");
+        private readonly string IsFrameworkString = ResourceService.GetLocalized("AppInformation/IsFramework");
+        private readonly string IsOptionalString = ResourceService.GetLocalized("AppInformation/IsOptional");
+        private readonly string IsResourcePackageString = ResourceService.GetLocalized("AppInformation/IsResourcePackage");
+        private readonly string IsStubString = ResourceService.GetLocalized("AppInformation/IsStub");
+        private readonly string VertifyIsOKString = ResourceService.GetLocalized("AppInformation/VertifyIsOK");
+
         private string _displayName = string.Empty;
 
         public string DisplayName
@@ -50,34 +68,34 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private string _familyName = string.Empty;
+        private string _packageFamilyName = string.Empty;
 
-        public string FamilyName
+        public string PackageFamilyName
         {
-            get { return _familyName; }
+            get { return _packageFamilyName; }
 
             set
             {
-                if (!Equals(_familyName, value))
+                if (!Equals(_packageFamilyName, value))
                 {
-                    _familyName = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FamilyName)));
+                    _packageFamilyName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageFamilyName)));
                 }
             }
         }
 
-        private string _fullName = string.Empty;
+        private string _packageFullName = string.Empty;
 
-        public string FullName
+        public string PackageFullName
         {
-            get { return _fullName; }
+            get { return _packageFullName; }
 
             set
             {
-                if (!Equals(_fullName, value))
+                if (!Equals(_packageFullName, value))
                 {
-                    _fullName = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FullName)));
+                    _packageFullName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageFullName)));
                 }
             }
         }
@@ -345,8 +363,8 @@ namespace GetStoreApp.Views.Pages
             if (args.Parameter is AppInformation appInformation)
             {
                 DisplayName = appInformation.DisplayName;
-                FamilyName = appInformation.PackageFamilyName;
-                FullName = appInformation.PackageFullName;
+                PackageFamilyName = appInformation.PackageFamilyName;
+                PackageFullName = appInformation.PackageFullName;
                 Description = appInformation.Description;
                 PublisherDisplayName = appInformation.PublisherDisplayName;
                 PublisherId = appInformation.PublisherId;
@@ -509,7 +527,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     if (StoreConfiguration.IsPinToDesktopSupported())
                     {
-                        StoreConfiguration.PinToDesktop(FamilyName);
+                        StoreConfiguration.PinToDesktop(PackageFamilyName);
                         isPinnedSuccessfully = true;
                     }
                 }
@@ -575,17 +593,6 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        /// <summary>
-        /// 更多按钮点击时显示菜单
-        /// </summary>
-        private void OnShowMoreExecuteRequested(object sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is HyperlinkButton hyperlinkButton)
-            {
-                FlyoutBase.ShowAttachedFlyout(hyperlinkButton);
-            }
-        }
-
         #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
 
         #region 第二部分：应用信息页面——挂载的事件
@@ -599,24 +606,24 @@ namespace GetStoreApp.Views.Pages
             {
                 List<string> copyStringList = [];
 
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/DisplayName"), DisplayName));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/FamilyName"), FamilyName));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/FullName"), FullName));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/Description"), Description));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/PublisherDisplayName"), PublisherDisplayName));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/PublisherId"), PublisherId));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/Version"), Version));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/InstalledDate"), InstalledDate));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/Architecture"), Architecture));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/SignatureKind"), SignatureKind));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/ResourceId"), ResourceId));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsBundle"), IsBundle));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsDevelopmentMode"), IsDevelopmentMode));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsFramework"), IsFramework));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsOptional"), IsOptional));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsResourcePackage"), IsResourcePackage));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsStub"), IsStub));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/VertifyIsOK"), VertifyIsOK));
+                copyStringList.Add(string.Format("{0}:\t{1}", AppDisplayNameString, DisplayName));
+                copyStringList.Add(string.Format("{0}:\t{1}", PackageFamilyNameString, PackageFamilyName));
+                copyStringList.Add(string.Format("{0}:\t{1}", PackageFullNameString, PackageFullName));
+                copyStringList.Add(string.Format("{0}:\t{1}", AppDescriptionString, Description));
+                copyStringList.Add(string.Format("{0}:\t{1}", PublisherDisplayNameString, PublisherDisplayName));
+                copyStringList.Add(string.Format("{0}:\t{1}", PublisherIdString, PublisherId));
+                copyStringList.Add(string.Format("{0}:\t{1}", VersionString, Version));
+                copyStringList.Add(string.Format("{0}:\t{1}", InstalledDateString, InstalledDate));
+                copyStringList.Add(string.Format("{0}:\t{1}", ArchitectureString, Architecture));
+                copyStringList.Add(string.Format("{0}:\t{1}", SignatureKindString, SignatureKind));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceIdString, ResourceId));
+                copyStringList.Add(string.Format("{0}:\t{1}", IsBundleString, IsBundle));
+                copyStringList.Add(string.Format("{0}:\t{1}", IsDevelopmentModeString, IsDevelopmentMode));
+                copyStringList.Add(string.Format("{0}:\t{1}", IsFrameworkString, IsFramework));
+                copyStringList.Add(string.Format("{0}:\t{1}", IsOptionalString, IsOptional));
+                copyStringList.Add(string.Format("{0}:\t{1}", IsResourcePackageString, IsResourcePackage));
+                copyStringList.Add(string.Format("{0}:\t{1}", IsStubString, IsStub));
+                copyStringList.Add(string.Format("{0}:\t{1}", VertifyIsOKString, VertifyIsOK));
                 return copyStringList;
             });
 

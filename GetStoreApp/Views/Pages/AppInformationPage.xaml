@@ -24,7 +24,6 @@
         <XamlUICommand x:Name="PinToDesktopCommand" ExecuteRequested="{x:Bind OnPinToDesktopExecuteRequested}" />
         <XamlUICommand x:Name="PinToStartScreenCommand" ExecuteRequested="{x:Bind OnPinToStartScreenExecuteRequested}" />
         <XamlUICommand x:Name="PinToTaskbarCommand" ExecuteRequested="{x:Bind OnPinToTaskbarExecuteRequested}" />
-        <XamlUICommand x:Name="ShowMoreCommand" ExecuteRequested="{x:Bind OnShowMoreExecuteRequested}" />
     </Page.Resources>
 
     <ScrollViewer
@@ -41,6 +40,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
+            <!--  应用信息  -->
             <Expander
                 Grid.Row="0"
                 Margin="30,0,30,2"
@@ -65,7 +65,7 @@
                         <TextBlock
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/AppInformation')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/AppInformation')}" />
 
                         <CommandBar Grid.Column="2" DefaultLabelPosition="Right">
 
@@ -75,7 +75,7 @@
                             </CommandBar.Resources>
 
                             <CommandBar.PrimaryCommands>
-                                <AppBarButton Click="{x:Bind OnCopyClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/Copy')}">
+                                <AppBarButton Click="{x:Bind OnCopyClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Copy')}">
 
                                     <AppBarButton.Icon>
                                         <FontIcon Glyph="&#xE8C8;" />
@@ -123,12 +123,12 @@
                             Grid.Column="0"
                             Margin="0,0,25,0"
                             FontSize="17"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/BasicInformation')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/BasicInformation')}" />
 
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/DisplayName')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/AppDisplayName')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
@@ -140,31 +140,31 @@
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/FamilyName')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PackageFamilyName')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="2"
-                            Text="{x:Bind FamilyName, Mode=OneWay}"
+                            Text="{x:Bind PackageFamilyName, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/FullName')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PackageFullName')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="2"
-                            Text="{x:Bind FullName, Mode=OneWay}"
+                            Text="{x:Bind PackageFullName, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="3"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/Description')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/AppDescription')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
@@ -184,12 +184,12 @@
                             Grid.Column="0"
                             Margin="0,0,25,0"
                             FontSize="17"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/PublisherInformation')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PublisherInformation')}" />
 
                         <TextBlock
                             Grid.Row="5"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/PublisherDisplayName')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PublisherDisplayName')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
@@ -201,7 +201,7 @@
                         <TextBlock
                             Grid.Row="6"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/PublisherId')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PublisherId')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
@@ -221,12 +221,12 @@
                             Grid.Column="0"
                             Margin="0,0,25,0"
                             FontSize="17"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/PackageInformation')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PackageInformation')}" />
 
                         <TextBlock
                             Grid.Row="8"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/Version')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Version')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
@@ -238,7 +238,7 @@
                         <TextBlock
                             Grid.Row="9"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/InstalledDate')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/InstalledDate')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
@@ -250,7 +250,7 @@
                         <TextBlock
                             Grid.Row="10"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/Architecture')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Architecture')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
@@ -262,7 +262,7 @@
                         <TextBlock
                             Grid.Row="11"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/SignatureKind')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/SignatureKind')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
@@ -274,7 +274,7 @@
                         <TextBlock
                             Grid.Row="12"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/ResourceId')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/ResourceId')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
@@ -286,7 +286,7 @@
                         <TextBlock
                             Grid.Row="13"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/IsBundle')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsBundle')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
@@ -298,7 +298,7 @@
                         <TextBlock
                             Grid.Row="14"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/IsDevelopmentMode')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsDevelopmentMode')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
@@ -310,7 +310,7 @@
                         <TextBlock
                             Grid.Row="15"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/IsFramework')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsFramework')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
@@ -322,7 +322,7 @@
                         <TextBlock
                             Grid.Row="16"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/IsOptional')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsOptional')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
@@ -334,7 +334,7 @@
                         <TextBlock
                             Grid.Row="17"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/IsResourcePackage')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsResourcePackage')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
@@ -346,7 +346,7 @@
                         <TextBlock
                             Grid.Row="18"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/IsStub')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsStub')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
@@ -358,7 +358,7 @@
                         <TextBlock
                             Grid.Row="19"
                             Grid.Column="1"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/VertifyIsOK')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/VertifyIsOK')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
@@ -370,6 +370,7 @@
                 </Expander.Content>
             </Expander>
 
+            <!--  应用程序入口  -->
             <Expander
                 Grid.Row="1"
                 Margin="30,0,30,2"
@@ -396,307 +397,157 @@
                         <TextBlock
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/AppListEntry')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/AppListEntry')}" />
                     </Grid>
                 </Expander.Header>
 
                 <Expander.Content>
-                    <StackPanel>
-                        <Grid Height="35" Padding="6,0,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="130" />
-                            </Grid.ColumnDefinitions>
+                    <ListView
+                        CornerRadius="0"
+                        ItemsSource="{x:Bind AppListEntryCollection}"
+                        SelectionMode="None">
 
-                            <TextBlock
-                                x:Name="EntryNameHeaderText"
-                                Grid.Column="0"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/EntryName')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
+                        <ListView.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="MinHeight" Value="0" />
+                                <Setter Property="Padding" Value="0" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
 
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/EntryName')}"
-                                        Visibility="{x:Bind EntryNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
+                        <ItemsControl.ItemContainerTransitions>
+                            <TransitionCollection />
+                        </ItemsControl.ItemContainerTransitions>
 
-                            <TextBlock
-                                x:Name="EntryDescriptionHeaderText"
-                                Grid.Column="1"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/EntryDescription')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="model:AppListEntryModel">
+                                <Grid
+                                    Height="60"
+                                    Padding="18,0,12,0"
+                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                    BorderThickness="0,0,0,1"
+                                    CornerRadius="0">
 
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/EntryDescription')}"
-                                        Visibility="{x:Bind EntryDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
 
-                            <TextBlock
-                                x:Name="AUMIDHeaderText"
-                                Grid.Column="2"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/AUMID')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/AUMID')}"
-                                        Visibility="{x:Bind AUMIDHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
-
-                            <TextBlock
-                                Grid.Column="3"
-                                Grid.ColumnSpan="2"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/Options')}"
-                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/OptionsToolTip')}" />
-                        </Grid>
-
-                        <ListView
-                            CornerRadius="0"
-                            ItemsSource="{x:Bind AppListEntryCollection}"
-                            SelectionMode="None">
-
-                            <ListView.ItemContainerStyle>
-                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                    <Setter Property="Background" Value="Transparent" />
-                                    <Setter Property="Margin" Value="0" />
-                                    <Setter Property="MinHeight" Value="0" />
-                                    <Setter Property="Padding" Value="0" />
-                                </Style>
-                            </ListView.ItemContainerStyle>
-
-                            <ItemsControl.ItemContainerTransitions>
-                                <TransitionCollection />
-                            </ItemsControl.ItemContainerTransitions>
-
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="model:AppListEntryModel">
-                                    <Grid
-                                        Height="35"
-                                        Padding="6,0,0,0"
-                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                        BorderThickness="0,1,0,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="2*" />
-                                            <ColumnDefinition Width="2*" />
-                                            <ColumnDefinition Width="55" />
-                                            <ColumnDefinition Width="75" />
-                                        </Grid.ColumnDefinitions>
+                                    <StackPanel
+                                        Grid.Column="0"
+                                        VerticalAlignment="Center"
+                                        Orientation="Vertical">
 
                                         <TextBlock
-                                            x:Name="EntryNameText"
-                                            Grid.Column="0"
-                                            MinWidth="50"
-                                            Margin="10,0,0,0"
-                                            VerticalAlignment="Center"
-                                            FontSize="14"
+                                            Style="{StaticResource BodyTextBlockStyle}"
                                             Text="{x:Bind DisplayName}"
-                                            TextAlignment="Left"
                                             TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Content="{x:Bind DisplayName}"
-                                                    Visibility="{Binding ElementName=EntryNameText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
+                                            TextWrapping="NoWrap" />
 
                                         <TextBlock
-                                            x:Name="EntryDescriptionText"
-                                            Grid.Column="1"
-                                            MinWidth="50"
-                                            Margin="10,0,0,0"
-                                            VerticalAlignment="Center"
-                                            FontSize="14"
-                                            Text="{x:Bind Description}"
-                                            TextAlignment="Left"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            Style="{StaticResource CaptionTextBlockStyle}"
                                             TextTrimming="CharacterEllipsis"
                                             TextWrapping="NoWrap">
 
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Content="{x:Bind Description}"
-                                                    Visibility="{Binding ElementName=EntryDescriptionText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
+                                            <Run Text="{x:Bind Description}" />
+                                            <Run Text=" | " />
+                                            <Run Text="{x:Bind AppUserModelId}" />
                                         </TextBlock>
 
-                                        <TextBlock
-                                            x:Name="AUMIDText"
-                                            Grid.Column="2"
-                                            MinWidth="50"
-                                            Margin="10,0,0,0"
-                                            VerticalAlignment="Center"
-                                            FontSize="14"
-                                            Text="{x:Bind AppUserModelId}"
-                                            TextAlignment="Left"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Content="{x:Bind AppUserModelId}"
-                                                    Visibility="{Binding ElementName=AUMIDText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-
-                                        <HyperlinkButton
-                                            Grid.Column="3"
-                                            Margin="10,0,0,0"
-                                            Padding="0"
-                                            Command="{StaticResource LaunchCommand}"
-                                            CommandParameter="{x:Bind}">
-
-                                            <HyperlinkButton.Content>
-                                                <TextBlock
-                                                    x:Name="LaunchText"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/Launch')}"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
-
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/Launch')}"
-                                                            Visibility="{Binding ElementName=LaunchText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
-                                            </HyperlinkButton.Content>
-                                        </HyperlinkButton>
-
-                                        <HyperlinkButton
-                                            Grid.Column="4"
-                                            Margin="10,0,0,0"
-                                            Padding="0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            Command="{StaticResource ShowMoreCommand}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
-                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/More')}">
-
-                                            <HyperlinkButton.Content>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock
-                                                        x:Name="MoreText"
-                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/More')}"
-                                                        TextTrimming="CharacterEllipsis"
-                                                        TextWrapping="NoWrap">
-
-                                                        <ToolTipService.ToolTip>
-                                                            <ToolTip
-                                                                MaxWidth="9999"
-                                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/More')}"
-                                                                Visibility="{Binding ElementName=MoreText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                        </ToolTipService.ToolTip>
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip MaxWidth="9999">
+                                                <StackPanel>
+                                                    <TextBlock>
+                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/EntryDisplayName')}" />
+                                                        <Run Text="{x:Bind DisplayName}" />
                                                     </TextBlock>
 
-                                                    <AnimatedIcon
-                                                        Width="12"
-                                                        Height="12"
-                                                        Margin="8,0,0,0"
-                                                        HorizontalAlignment="Right"
-                                                        VerticalAlignment="Center"
-                                                        AutomationProperties.AccessibilityView="Raw">
-                                                        <animatedvisuals:AnimatedChevronDownSmallVisualSource />
-                                                        <AnimatedIcon.FallbackIconSource>
-                                                            <FontIconSource
-                                                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                                FontSize="8"
-                                                                Glyph="&#xE96E;"
-                                                                IsTextScaleFactorEnabled="False" />
-                                                        </AnimatedIcon.FallbackIconSource>
-                                                    </AnimatedIcon>
+                                                    <TextBlock>
+                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/EntryDescription')}" />
+                                                        <Run Text="{x:Bind Description}" />
+                                                    </TextBlock>
+
+                                                    <TextBlock>
+                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/EntryAUMID')}" />
+                                                        <Run Text="{x:Bind AppUserModelId}" />
+                                                    </TextBlock>
                                                 </StackPanel>
-                                            </HyperlinkButton.Content>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </StackPanel>
 
-                                            <FlyoutBase.AttachedFlyout>
-                                                <MenuFlyout Placement="Bottom">
-                                                    <MenuFlyoutItem
-                                                        Height="32"
-                                                        Padding="11,0"
-                                                        Command="{StaticResource CopyAUMIDCommand}"
-                                                        CommandParameter="{x:Bind AppUserModelId}"
-                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/CopyAUMID')}">
+                                    <SplitButton
+                                        Grid.Column="1"
+                                        Command="{StaticResource LaunchCommand}"
+                                        CommandParameter="{x:Bind}"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Launch')}">
 
-                                                        <MenuFlyoutItem.Icon>
-                                                            <FontIcon Glyph="&#xE8C8;" />
-                                                        </MenuFlyoutItem.Icon>
-                                                    </MenuFlyoutItem>
+                                        <SplitButton.Flyout>
+                                            <MenuFlyout Placement="Bottom">
+                                                <MenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
+                                                    Command="{StaticResource CopyAUMIDCommand}"
+                                                    CommandParameter="{x:Bind AppUserModelId}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/CopyAUMID')}">
 
-                                                    <MenuFlyoutSeparator />
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE8C8;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
 
-                                                    <MenuFlyoutItem
-                                                        Height="32"
-                                                        Padding="11,0"
-                                                        Command="{StaticResource PinToDesktopCommand}"
-                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/PinToDesktop')}"
-                                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/PinToDesktopToolTip')}">
+                                                <MenuFlyoutSeparator />
 
-                                                        <MenuFlyoutItem.Icon>
-                                                            <FontIcon Glyph="&#xE7F4;" />
-                                                        </MenuFlyoutItem.Icon>
-                                                    </MenuFlyoutItem>
+                                                <MenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
+                                                    Command="{StaticResource PinToDesktopCommand}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToDesktop')}"
+                                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToDesktopToolTip')}">
 
-                                                    <MenuFlyoutItem
-                                                        Height="32"
-                                                        Padding="11,0"
-                                                        Command="{StaticResource PinToStartScreenCommand}"
-                                                        CommandParameter="{x:Bind}"
-                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/PinToStartScreen')}"
-                                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/PinToStartScreenToolTip')}">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE7F4;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
 
-                                                        <MenuFlyoutItem.Icon>
-                                                            <FontIcon Glyph="&#xE8FC;" />
-                                                        </MenuFlyoutItem.Icon>
-                                                    </MenuFlyoutItem>
+                                                <MenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
+                                                    Command="{StaticResource PinToStartScreenCommand}"
+                                                    CommandParameter="{x:Bind}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToStartScreen')}"
+                                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToStartScreenToolTip')}">
 
-                                                    <MenuFlyoutItem
-                                                        Height="32"
-                                                        Padding="11,0"
-                                                        Command="{StaticResource PinToTaskbarCommand}"
-                                                        CommandParameter="{x:Bind}"
-                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/PinToTaskbar')}"
-                                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/PinToTaskbarToolTip')}">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE8FC;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
 
-                                                        <MenuFlyoutItem.Icon>
-                                                            <FontIcon Glyph="&#xE770;" />
-                                                        </MenuFlyoutItem.Icon>
-                                                    </MenuFlyoutItem>
-                                                </MenuFlyout>
-                                            </FlyoutBase.AttachedFlyout>
-                                        </HyperlinkButton>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackPanel>
+                                                <MenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
+                                                    Command="{StaticResource PinToTaskbarCommand}"
+                                                    CommandParameter="{x:Bind}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToTaskbar')}"
+                                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToTaskbarToolTip')}">
+
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE770;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+                                            </MenuFlyout>
+                                        </SplitButton.Flyout>
+                                    </SplitButton>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Expander.Content>
             </Expander>
 
+            <!--  依赖信息  -->
             <Expander
                 Grid.Row="2"
                 Margin="30,0,30,0"
@@ -723,276 +574,157 @@
                         <TextBlock
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/DependencyInformation')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/DependencyInformation')}" />
                     </Grid>
                 </Expander.Header>
 
                 <Expander.Content>
-                    <StackPanel>
-                        <Grid Height="35" Padding="6,0,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="75" />
-                            </Grid.ColumnDefinitions>
+                    <ListView
+                        CornerRadius="0"
+                        ItemsSource="{x:Bind DependenciesCollection}"
+                        SelectionMode="None">
 
-                            <TextBlock
-                                x:Name="DependencyNameHeaderText"
-                                Grid.Column="0"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/DependencyName')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
+                        <ListView.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="MinHeight" Value="0" />
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="CornerRadius" Value="0" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
 
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/DependencyName')}"
-                                        Visibility="{x:Bind DependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
+                        <ItemsControl.ItemContainerTransitions>
+                            <TransitionCollection />
+                        </ItemsControl.ItemContainerTransitions>
 
-                            <TextBlock
-                                x:Name="DependencyDescriptionHeaderText"
-                                Grid.Column="1"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/DependencyPublisher')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="model:PackageModel">
+                                <Grid
+                                    Height="60"
+                                    Padding="18,0,12,0"
+                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                    BorderThickness="0,0,0,1"
+                                    CornerRadius="0">
 
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/DependencyPublisher')}"
-                                        Visibility="{x:Bind DependencyDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
 
-                            <TextBlock
-                                x:Name="DependencyVersionHeaderText"
-                                Grid.Column="2"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/DependencyVersion')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/DependencyVersion')}"
-                                        Visibility="{x:Bind DependencyVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
-
-                            <TextBlock
-                                Grid.Column="3"
-                                Grid.ColumnSpan="2"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/Options')}"
-                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/OptionsToolTip')}" />
-                        </Grid>
-
-                        <ListView
-                            CornerRadius="0"
-                            ItemsSource="{x:Bind DependenciesCollection}"
-                            SelectionMode="None">
-
-                            <ListView.ItemContainerStyle>
-                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                    <Setter Property="Background" Value="Transparent" />
-                                    <Setter Property="Margin" Value="0" />
-                                    <Setter Property="MinHeight" Value="0" />
-                                    <Setter Property="Padding" Value="0" />
-                                </Style>
-                            </ListView.ItemContainerStyle>
-
-                            <ItemsControl.ItemContainerTransitions>
-                                <TransitionCollection />
-                            </ItemsControl.ItemContainerTransitions>
-
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="model:PackageModel">
-                                    <Grid
-                                        Height="35"
-                                        Padding="6,0,0,0"
-                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                        BorderThickness="0,1,0,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="2*" />
-                                            <ColumnDefinition Width="2*" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="75" />
-                                        </Grid.ColumnDefinitions>
+                                    <StackPanel
+                                        Grid.Column="0"
+                                        VerticalAlignment="Center"
+                                        Orientation="Vertical">
 
                                         <TextBlock
-                                            x:Name="DependencyNameText"
-                                            Grid.Column="0"
-                                            MinWidth="50"
-                                            Margin="10,0,0,0"
-                                            VerticalAlignment="Center"
-                                            FontSize="14"
+                                            Style="{StaticResource BodyTextBlockStyle}"
                                             Text="{x:Bind DisplayName}"
-                                            TextAlignment="Left"
                                             TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Content="{x:Bind DisplayName}"
-                                                    Visibility="{Binding ElementName=DependencyNameText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
+                                            TextWrapping="NoWrap" />
 
                                         <TextBlock
-                                            x:Name="DependencyPublisherText"
-                                            Grid.Column="1"
-                                            MinWidth="50"
-                                            Margin="10,0,0,0"
-                                            VerticalAlignment="Center"
-                                            FontSize="14"
-                                            Text="{x:Bind PublisherDisplayName}"
-                                            TextAlignment="Left"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            Style="{StaticResource CaptionTextBlockStyle}"
                                             TextTrimming="CharacterEllipsis"
                                             TextWrapping="NoWrap">
 
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Content="{x:Bind PublisherDisplayName}"
-                                                    Visibility="{Binding ElementName=DependencyPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
+                                            <Run Text="{x:Bind PublisherDisplayName}" />
+                                            <Run Text=" | " />
+                                            <Run Text="{x:Bind Version}" />
                                         </TextBlock>
 
-                                        <TextBlock
-                                            x:Name="DependencyVersionText"
-                                            Grid.Column="2"
-                                            MinWidth="50"
-                                            Margin="10,0,0,0"
-                                            VerticalAlignment="Center"
-                                            FontSize="14"
-                                            Text="{x:Bind Version}"
-                                            TextAlignment="Left"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Content="{x:Bind Version}"
-                                                    Visibility="{Binding ElementName=DependencyVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-
-                                        <HyperlinkButton
-                                            Grid.Column="4"
-                                            Margin="10,0,0,0"
-                                            Padding="0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            Command="{StaticResource ShowMoreCommand}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}">
-
-                                            <HyperlinkButton.Content>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock
-                                                        x:Name="MoreText"
-                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/More')}"
-                                                        TextTrimming="CharacterEllipsis"
-                                                        TextWrapping="NoWrap">
-
-                                                        <ToolTipService.ToolTip>
-                                                            <ToolTip
-                                                                MaxWidth="9999"
-                                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/More')}"
-                                                                Visibility="{Binding ElementName=MoreText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                        </ToolTipService.ToolTip>
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip MaxWidth="9999">
+                                                <StackPanel>
+                                                    <TextBlock>
+                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/DependencyDisplayName')}" />
+                                                        <Run Text="{x:Bind DisplayName}" />
                                                     </TextBlock>
 
-                                                    <AnimatedIcon
-                                                        Width="12"
-                                                        Height="12"
-                                                        Margin="8,0,0,0"
-                                                        HorizontalAlignment="Right"
-                                                        VerticalAlignment="Center"
-                                                        AutomationProperties.AccessibilityView="Raw">
-                                                        <animatedvisuals:AnimatedChevronDownSmallVisualSource />
-                                                        <AnimatedIcon.FallbackIconSource>
-                                                            <FontIconSource
-                                                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                                FontSize="8"
-                                                                Glyph="&#xE96E;"
-                                                                IsTextScaleFactorEnabled="False" />
-                                                        </AnimatedIcon.FallbackIconSource>
-                                                    </AnimatedIcon>
+                                                    <TextBlock>
+                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/DependencyPublisherDisplayName')}" />
+                                                        <Run Text="{x:Bind PublisherDisplayName}" />
+                                                    </TextBlock>
+
+                                                    <TextBlock>
+                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/DependencyVersion')}" />
+                                                        <Run Text="{x:Bind Version}" />
+                                                    </TextBlock>
                                                 </StackPanel>
-                                            </HyperlinkButton.Content>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </StackPanel>
 
-                                            <FlyoutBase.AttachedFlyout>
-                                                <MenuFlyout Placement="Bottom">
-                                                    <MenuFlyoutItem
-                                                        Height="32"
-                                                        Padding="11,0"
-                                                        Command="{StaticResource OpenStoreCommand}"
-                                                        CommandParameter="{x:Bind Package}"
-                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/OpenStore')}">
+                                    <Button
+                                        Grid.Column="1"
+                                        Width="34"
+                                        Height="34"
+                                        Padding="0"
+                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/ViewMore')}">
 
-                                                        <MenuFlyoutItem.Icon>
-                                                            <FontIcon Glyph="&#xE719;" />
-                                                        </MenuFlyoutItem.Icon>
-                                                    </MenuFlyoutItem>
+                                        <Button.Content>
+                                            <FontIcon FontSize="16" Glyph="&#xE712;" />
+                                        </Button.Content>
 
-                                                    <MenuFlyoutItem
-                                                        Height="32"
-                                                        Padding="11,0"
-                                                        Command="{StaticResource OpenFolderCommand}"
-                                                        CommandParameter="{x:Bind Package}"
-                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/OpenFolder')}">
+                                        <Button.Flyout>
+                                            <MenuFlyout Placement="Bottom">
+                                                <MenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
+                                                    Command="{StaticResource OpenStoreCommand}"
+                                                    CommandParameter="{x:Bind Package}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/OpenStore')}">
 
-                                                        <MenuFlyoutItem.Icon>
-                                                            <FontIcon Glyph="&#xE8B7;" />
-                                                        </MenuFlyoutItem.Icon>
-                                                    </MenuFlyoutItem>
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE719;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
 
-                                                    <MenuFlyoutSeparator />
+                                                <MenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
+                                                    Command="{StaticResource OpenFolderCommand}"
+                                                    CommandParameter="{x:Bind Package}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/OpenFolder')}">
 
-                                                    <MenuFlyoutItem
-                                                        Height="32"
-                                                        Padding="11,0"
-                                                        Command="{StaticResource CopyDependencyNameCommand}"
-                                                        CommandParameter="{x:Bind DisplayName}"
-                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/CopyDependencyName')}">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE8B7;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
 
-                                                        <MenuFlyoutItem.Icon>
-                                                            <FontIcon Glyph="&#xE8C8;" />
-                                                        </MenuFlyoutItem.Icon>
-                                                    </MenuFlyoutItem>
+                                                <MenuFlyoutSeparator />
 
-                                                    <MenuFlyoutItem
-                                                        Height="32"
-                                                        Padding="11,0"
-                                                        Command="{StaticResource CopyDependencyInformationCommand}"
-                                                        CommandParameter="{x:Bind Package}"
-                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/CopyDependencyInformation')}">
+                                                <MenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
+                                                    Command="{StaticResource CopyDependencyNameCommand}"
+                                                    CommandParameter="{x:Bind DisplayName}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/CopyDependencyName')}">
 
-                                                        <MenuFlyoutItem.Icon>
-                                                            <FontIcon Glyph="&#xE8C8;" />
-                                                        </MenuFlyoutItem.Icon>
-                                                    </MenuFlyoutItem>
-                                                </MenuFlyout>
-                                            </FlyoutBase.AttachedFlyout>
-                                        </HyperlinkButton>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackPanel>
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE8C8;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+
+                                                <MenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
+                                                    Command="{StaticResource CopyDependencyInformationCommand}"
+                                                    CommandParameter="{x:Bind Package}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/CopyDependencyInformation')}">
+
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE8C8;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+                                            </MenuFlyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Expander.Content>
             </Expander>
         </Grid>
