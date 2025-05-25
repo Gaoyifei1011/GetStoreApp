@@ -60,9 +60,8 @@ namespace GetStoreApp.Helpers.Store
             {
                 MatchCollection resultDataListCollection = PackagedAppRegex.Matches(parseContent);
 
-                for (int index = 0; index < resultDataListCollection.Count; index++)
+                foreach (Match matchItem in resultDataListCollection)
                 {
-                    Match matchItem = resultDataListCollection[index];
                     GroupCollection ResultDataListGroups = matchItem.Groups;
 
                     if (ResultDataListGroups.Count is 6)
@@ -94,9 +93,8 @@ namespace GetStoreApp.Helpers.Store
             {
                 MatchCollection resultDataListCollection = NonPackagedAppRegex.Matches(parseContent);
 
-                for (int index = 0; index < resultDataListCollection.Count; index++)
+                foreach (Match matchItem in resultDataListCollection)
                 {
-                    Match matchItem = resultDataListCollection[index];
                     GroupCollection ResultDataListGroups = matchItem.Groups;
 
                     if (ResultDataListGroups.Count is 4)

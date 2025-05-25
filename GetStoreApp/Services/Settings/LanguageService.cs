@@ -121,7 +121,8 @@ namespace GetStoreApp.Services.Settings
                 CultureInfo savedCultureInfo = CultureInfo.GetCultureInfo(language.ToString());
                 FlowDirection = savedCultureInfo.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
                 User32Library.SetProcessDefaultLayout(Convert.ToUInt32(savedCultureInfo.TextInfo.IsRightToLeft));
-                return LanguageList.Find(item => language.ToString().Contains(item.Key, StringComparison.OrdinalIgnoreCase));
+                KeyValuePair<string, string> languageKeyValue = LanguageList.Find(item => language.ToString().Contains(item.Key, StringComparison.OrdinalIgnoreCase));
+                return string.IsNullOrEmpty(languageKeyValue.Key) ? DefaultAppLanguage : languageKeyValue;
             }
         }
 

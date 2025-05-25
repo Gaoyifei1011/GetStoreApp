@@ -329,11 +329,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnCopyExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is HistoryModel historyItem)
+            if (args.Parameter is HistoryModel history)
             {
                 string copyContent = await Task.Run(() =>
                 {
-                    return string.Join('\t', new string[] { historyItem.HistoryAppName, historyItem.HistoryType.Value, historyItem.HistoryChannel.Value, historyItem.HistoryLink });
+                    return string.Join('\t', new string[] { history.HistoryAppName, history.HistoryType.Value, history.HistoryChannel.Value, history.HistoryLink });
                 });
 
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
@@ -346,11 +346,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnFillinExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is HistoryModel historyItem && MainWindow.Current.GetFrameContent() is StorePage storePage)
+            if (args.Parameter is HistoryModel history && MainWindow.Current.GetFrameContent() is StorePage storePage)
             {
-                SelectedType = TypeList.Find(item => string.Equals(item.InternalName, historyItem.HistoryType.Key, StringComparison.OrdinalIgnoreCase));
-                SelectedChannel = ChannelList.Find(item => string.Equals(item.InternalName, historyItem.HistoryChannel.Key, StringComparison.OrdinalIgnoreCase));
-                LinkText = historyItem.HistoryLink;
+                SelectedType = TypeList.Find(item => string.Equals(item.InternalName, history.HistoryType.Key, StringComparison.OrdinalIgnoreCase));
+                SelectedChannel = ChannelList.Find(item => string.Equals(item.InternalName, history.HistoryChannel.Key, StringComparison.OrdinalIgnoreCase));
+                LinkText = history.HistoryLink;
             }
         }
 
@@ -359,7 +359,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnDownloadExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is QueryLinksModel queryLinksItem)
+            if (args.Parameter is QueryLinksModel queryLinks)
             {
                 bool isDownloadSuccessfully = false;
                 await Task.Run(() =>
@@ -397,7 +397,7 @@ namespace GetStoreApp.Views.Pages
                     }
 
                     bool isExisted = false;
-                    string downloadFilePath = Path.Combine(DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
+                    string downloadFilePath = Path.Combine(DownloadOptionsService.DownloadFolder.Path, queryLinks.FileName);
 
                     // 检查下载文件信息是否已存在
                     foreach (DownloadSchedulerModel downloadSchedulerItem in downloadSchedulerList)
@@ -430,7 +430,7 @@ namespace GetStoreApp.Views.Pages
                             LogService.WriteLog(LoggingLevel.Error, "Delete existed file failed", e);
                         }
 
-                        DownloadSchedulerService.CreateDownload(queryLinksItem.FileLink, downloadFilePath);
+                        DownloadSchedulerService.CreateDownload(queryLinks.FileLink, downloadFilePath);
                         isDownloadSuccessfully = true;
                     }
                 });
@@ -478,11 +478,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnCopyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is QueryLinksModel queryLinksItem)
+            if (args.Parameter is QueryLinksModel queryLinks)
             {
                 string copyInformation = await Task.Run(() =>
                 {
-                    return string.Format("[\n{0}\n{1}\n{2}\n]\n", queryLinksItem.FileName, queryLinksItem.FileLink, queryLinksItem.FileSize);
+                    return string.Format("[\n{0}\n{1}\n{2}\n]\n", queryLinks.FileName, queryLinks.FileLink, queryLinks.FileSize);
                 });
 
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyInformation);
@@ -937,13 +937,13 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnItemClick(object sender, ItemClickEventArgs args)
         {
-            if (args.ClickedItem is QueryLinksModel queryLinksItem)
+            if (args.ClickedItem is QueryLinksModel queryLinks)
             {
                 queryLinksLock.Enter();
 
                 try
                 {
-                    int ClickedIndex = QueryLinksCollection.IndexOf(queryLinksItem);
+                    int ClickedIndex = QueryLinksCollection.IndexOf(queryLinks);
                     QueryLinksCollection[ClickedIndex].IsSelected = !QueryLinksCollection[ClickedIndex].IsSelected;
                 }
                 catch (Exception e)
@@ -992,16 +992,16 @@ namespace GetStoreApp.Views.Pages
                         string cookie = await QueryLinksHelper.GetCookieAsync();
 
                         // 获取应用信息
-                        (bool requestResult, AppInfoModel appInfoItem) appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
+                        (bool requestResult, AppInfoModel appInfo) appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
                         queryLinksResult.requestResult = appInformationResult.requestResult;
-                        queryLinksResult.appInfoItem = appInformationResult.appInfoItem;
+                        queryLinksResult.appInfoItem = appInformationResult.appInfo;
 
                         if (appInformationResult.requestResult)
                         {
                             List<QueryLinksModel> queryLinksList = [];
 
                             // 解析非商店应用数据
-                            if (string.IsNullOrEmpty(appInformationResult.appInfoItem.CategoryID))
+                            if (string.IsNullOrEmpty(appInformationResult.appInfo.CategoryID))
                             {
                                 queryLinksResult.isPackagedApp = false;
                                 List<QueryLinksModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
@@ -1014,7 +1014,7 @@ namespace GetStoreApp.Views.Pages
                             else
                             {
                                 queryLinksResult.isPackagedApp = true;
-                                string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.appInfoItem.CategoryID, ChannelList[channelIndex].InternalName);
+                                string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.appInfo.CategoryID, ChannelList[channelIndex].InternalName);
 
                                 if (!string.IsNullOrEmpty(fileListXml))
                                 {
@@ -1214,9 +1214,9 @@ namespace GetStoreApp.Views.Pages
 
                             if (queryLinksList is not null && queryLinksList.Count > 0)
                             {
-                                foreach (QueryLinksModel resultItem in queryLinksList)
+                                foreach (QueryLinksModel queryLinksItem in queryLinksList)
                                 {
-                                    QueryLinksCollection.Add(resultItem);
+                                    QueryLinksCollection.Add(queryLinksItem);
                                 }
                             }
                         }
@@ -1284,7 +1284,7 @@ namespace GetStoreApp.Views.Pages
                 // 不存在直接添加
                 if (index is -1)
                 {
-                    HistoryModel historyItem = new()
+                    HistoryModel history = new()
                     {
                         CreateTimeStamp = timeStamp,
                         HistoryKey = historyKey,
@@ -1294,7 +1294,7 @@ namespace GetStoreApp.Views.Pages
                         HistoryLink = link
                     };
 
-                    historyList.Insert(0, historyItem);
+                    historyList.Insert(0, history);
                     if (historyList.Count is 4)
                     {
                         historyList.RemoveAt(historyList.Count - 1);
@@ -1308,7 +1308,7 @@ namespace GetStoreApp.Views.Pages
                             HistoryCollection.RemoveAt(HistoryCollection.Count - 1);
                         }
 
-                        HistoryCollection.Insert(0, historyItem);
+                        HistoryCollection.Insert(0, history);
                     });
                 }
                 // 存在则修改原来项的时间戳，并调整顺序

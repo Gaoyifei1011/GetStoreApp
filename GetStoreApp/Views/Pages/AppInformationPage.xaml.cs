@@ -438,17 +438,17 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLaunchExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is AppListEntryModel appListEntryItem)
+            if (args.Parameter is AppListEntryModel appListEntry)
             {
                 Task.Run(async () =>
                 {
                     try
                     {
-                        await appListEntryItem.AppListEntry.LaunchAsync();
+                        await appListEntry.AppListEntry.LaunchAsync();
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, string.Format("Open app {0} failed", appListEntryItem.DisplayName), e);
+                        LogService.WriteLog(LoggingLevel.Error, string.Format("Open app {0} failed", appListEntry.DisplayName), e);
                     }
                 });
             }
@@ -527,7 +527,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnPinToStartScreenExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is AppListEntryModel appListEntryItem)
+            if (args.Parameter is AppListEntryModel appListEntry)
             {
                 bool isPinnedSuccessfully = false;
 
@@ -537,7 +537,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         StartScreenManager startScreenManager = StartScreenManager.GetDefault();
 
-                        isPinnedSuccessfully = await startScreenManager.RequestAddAppListEntryAsync(appListEntryItem.AppListEntry);
+                        isPinnedSuccessfully = await startScreenManager.RequestAddAppListEntryAsync(appListEntry.AppListEntry);
                     }
                     catch (Exception e)
                     {
@@ -554,7 +554,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPinToTaskbarExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is AppListEntryModel appListEntryItem)
+            if (args.Parameter is AppListEntryModel appListEntry)
             {
                 Task.Run(async () =>
                 {
@@ -563,8 +563,8 @@ namespace GetStoreApp.Views.Pages
                         await Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
                         {
                             {"Type", nameof(TaskbarManager) },
-                            { "AppUserModelId", appListEntryItem.AppUserModelId },
-                            { "PackageFullName", appListEntryItem.PackageFullName },
+                            { "AppUserModelId", appListEntry.AppUserModelId },
+                            { "PackageFullName", appListEntry.PackageFullName },
                         });
                     }
                     catch (Exception e)

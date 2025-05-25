@@ -1015,9 +1015,9 @@ namespace GetStoreAppInstaller.Views.Pages
         /// </summary>
         private void OnMoveClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
-                ((MenuFlyout)menuFlyoutItem.Tag).Hide();
+                menuFlyout.Hide();
                 User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MOVE, 0);
             }
         }
@@ -1027,9 +1027,9 @@ namespace GetStoreAppInstaller.Views.Pages
         /// </summary>
         private void OnSizeClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
-                ((MenuFlyout)menuFlyoutItem.Tag).Hide();
+                menuFlyout.Hide();
                 User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_SIZE, 0);
             }
         }
@@ -2296,7 +2296,7 @@ namespace GetStoreAppInstaller.Views.Pages
 
                     description = GetLocalizedString(description, specifiedLanguageResourceDict);
 
-                    ApplicationModel applicationItem = new()
+                    ApplicationModel application = new()
                     {
                         AppDescription = string.IsNullOrEmpty(description) ? Unknown : description,
                         EntryPoint = string.IsNullOrEmpty(entryPoint) ? Unknown : entryPoint,
@@ -2305,7 +2305,7 @@ namespace GetStoreAppInstaller.Views.Pages
                         AppUserModelId = string.IsNullOrEmpty(appUserModelId) ? Unknown : appUserModelId
                     };
 
-                    applicationList.Add(applicationItem);
+                    applicationList.Add(application);
                     appxManifestApplicationsEnumerator.MoveNext(out _);
                 }
             }
@@ -2791,18 +2791,18 @@ namespace GetStoreAppInstaller.Views.Pages
                 while (appxManifestTargetDeviceFamiliesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
                     appxManifestTargetDeviceFamiliesEnumerator.GetCurrent(out IAppxManifestTargetDeviceFamily appxManifestTargetDeviceFamily);
-                    TargetDeviceFamilyModel targetDeviceFamilyItem = new();
+                    TargetDeviceFamilyModel targetDeviceFamily = new();
                     appxManifestTargetDeviceFamily.GetName(out string targetDeviceName);
                     appxManifestTargetDeviceFamily.GetMinVersion(out ulong minVersion);
                     appxManifestTargetDeviceFamily.GetMaxVersionTested(out ulong maxVersionTested);
 
-                    targetDeviceFamilyItem.TargetDeviceName = targetDeviceName;
+                    targetDeviceFamily.TargetDeviceName = targetDeviceName;
                     PackageVersion minPackageVersion = new(minVersion);
-                    targetDeviceFamilyItem.MinVersion = new Version(minPackageVersion.Major, minPackageVersion.Minor, minPackageVersion.Build, minPackageVersion.Revision);
+                    targetDeviceFamily.MinVersion = new Version(minPackageVersion.Major, minPackageVersion.Minor, minPackageVersion.Build, minPackageVersion.Revision);
                     PackageVersion maxPackageVersionTested = new(maxVersionTested);
-                    targetDeviceFamilyItem.MaxVersionTested = new Version(maxPackageVersionTested.Major, maxPackageVersionTested.Minor, maxPackageVersionTested.Build, maxPackageVersionTested.Revision);
+                    targetDeviceFamily.MaxVersionTested = new Version(maxPackageVersionTested.Major, maxPackageVersionTested.Minor, maxPackageVersionTested.Build, maxPackageVersionTested.Revision);
 
-                    targetDeviceFamilyList.Add(targetDeviceFamilyItem);
+                    targetDeviceFamilyList.Add(targetDeviceFamily);
                     appxManifestTargetDeviceFamiliesEnumerator.MoveNext(out _);
                 }
             }

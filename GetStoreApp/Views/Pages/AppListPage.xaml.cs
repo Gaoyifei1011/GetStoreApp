@@ -606,17 +606,17 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnViewInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is PackageModel packageItem)
+            if (args.Parameter is PackageModel package)
             {
                 AppInformation appInformation = new();
 
                 await Task.Run(() =>
                 {
-                    appInformation.DisplayName = packageItem.DisplayName;
+                    appInformation.DisplayName = package.DisplayName;
 
                     try
                     {
-                        appInformation.PackageFamilyName = string.IsNullOrEmpty(packageItem.Package.Id.FamilyName) ? Unknown : packageItem.Package.Id.FamilyName;
+                        appInformation.PackageFamilyName = string.IsNullOrEmpty(package.Package.Id.FamilyName) ? Unknown : package.Package.Id.FamilyName;
                     }
                     catch (Exception e)
                     {
@@ -626,7 +626,7 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        appInformation.PackageFullName = string.IsNullOrEmpty(packageItem.Package.Id.FullName) ? Unknown : packageItem.Package.Id.FullName;
+                        appInformation.PackageFullName = string.IsNullOrEmpty(package.Package.Id.FullName) ? Unknown : package.Package.Id.FullName;
                     }
                     catch (Exception e)
                     {
@@ -636,7 +636,7 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        appInformation.Description = string.IsNullOrEmpty(packageItem.Package.Description) ? Unknown : packageItem.Package.Description;
+                        appInformation.Description = string.IsNullOrEmpty(package.Package.Description) ? Unknown : package.Package.Description;
                     }
                     catch (Exception e)
                     {
@@ -644,11 +644,11 @@ namespace GetStoreApp.Views.Pages
                         appInformation.Description = Unknown;
                     }
 
-                    appInformation.PublisherDisplayName = packageItem.PublisherDisplayName;
+                    appInformation.PublisherDisplayName = package.PublisherDisplayName;
 
                     try
                     {
-                        appInformation.PublisherId = string.IsNullOrEmpty(packageItem.Package.Id.PublisherId) ? Unknown : packageItem.Package.Id.PublisherId;
+                        appInformation.PublisherId = string.IsNullOrEmpty(package.Package.Id.PublisherId) ? Unknown : package.Package.Id.PublisherId;
                     }
                     catch (Exception e)
                     {
@@ -656,12 +656,12 @@ namespace GetStoreApp.Views.Pages
                         appInformation.PublisherId = Unknown;
                     }
 
-                    appInformation.Version = packageItem.Version;
-                    appInformation.InstallDate = packageItem.InstallDate;
+                    appInformation.Version = package.Version;
+                    appInformation.InstallDate = package.InstallDate;
 
                     try
                     {
-                        appInformation.Architecture = string.IsNullOrEmpty(packageItem.Package.Id.Architecture.ToString()) ? Unknown : packageItem.Package.Id.Architecture.ToString();
+                        appInformation.Architecture = string.IsNullOrEmpty(package.Package.Id.Architecture.ToString()) ? Unknown : package.Package.Id.Architecture.ToString();
                     }
                     catch (Exception e)
                     {
@@ -669,11 +669,11 @@ namespace GetStoreApp.Views.Pages
                         appInformation.Architecture = Unknown;
                     }
 
-                    appInformation.SignatureKind = ResourceService.GetLocalized(string.Format("AppManager/Signature{0}", packageItem.SignatureKind.ToString()));
+                    appInformation.SignatureKind = ResourceService.GetLocalized(string.Format("AppManager/Signature{0}", package.SignatureKind.ToString()));
 
                     try
                     {
-                        appInformation.ResourceId = string.IsNullOrEmpty(packageItem.Package.Id.ResourceId) ? Unknown : packageItem.Package.Id.ResourceId;
+                        appInformation.ResourceId = string.IsNullOrEmpty(package.Package.Id.ResourceId) ? Unknown : package.Package.Id.ResourceId;
                     }
                     catch (Exception e)
                     {
@@ -683,7 +683,7 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        appInformation.IsBundle = packageItem.Package.IsBundle ? Yes : No;
+                        appInformation.IsBundle = package.Package.IsBundle ? Yes : No;
                     }
                     catch (Exception e)
                     {
@@ -693,7 +693,7 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        appInformation.IsDevelopmentMode = packageItem.Package.IsDevelopmentMode ? Yes : No;
+                        appInformation.IsDevelopmentMode = package.Package.IsDevelopmentMode ? Yes : No;
                     }
                     catch (Exception e)
                     {
@@ -701,11 +701,11 @@ namespace GetStoreApp.Views.Pages
                         appInformation.IsDevelopmentMode = Unknown;
                     }
 
-                    appInformation.IsFramework = packageItem.IsFramework ? Yes : No;
+                    appInformation.IsFramework = package.IsFramework ? Yes : No;
 
                     try
                     {
-                        appInformation.IsOptional = packageItem.Package.IsOptional ? Yes : No;
+                        appInformation.IsOptional = package.Package.IsOptional ? Yes : No;
                     }
                     catch (Exception e)
                     {
@@ -715,7 +715,7 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        appInformation.IsResourcePackage = packageItem.Package.IsResourcePackage ? Yes : No;
+                        appInformation.IsResourcePackage = package.Package.IsResourcePackage ? Yes : No;
                     }
                     catch (Exception e)
                     {
@@ -725,7 +725,7 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        appInformation.IsStub = packageItem.Package.IsStub ? Yes : No;
+                        appInformation.IsStub = package.Package.IsStub ? Yes : No;
                     }
                     catch (Exception e)
                     {
@@ -735,7 +735,7 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        appInformation.VertifyIsOK = packageItem.Package.Status.VerifyIsOK() ? Yes : No;
+                        appInformation.VertifyIsOK = package.Package.Status.VerifyIsOK() ? Yes : No;
                     }
                     catch (Exception e)
                     {
@@ -745,7 +745,7 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        IReadOnlyList<AppListEntry> appListEntriesList = packageItem.Package.GetAppListEntries();
+                        IReadOnlyList<AppListEntry> appListEntriesList = package.Package.GetAppListEntries();
                         for (int index = 0; index < appListEntriesList.Count; index++)
                         {
                             appInformation.AppListEntryList.Add(new AppListEntryModel()
@@ -754,7 +754,7 @@ namespace GetStoreApp.Views.Pages
                                 Description = appListEntriesList[index].DisplayInfo.Description,
                                 AppUserModelId = appListEntriesList[index].AppUserModelId,
                                 AppListEntry = appListEntriesList[index],
-                                PackageFullName = packageItem.Package.Id.FullName
+                                PackageFullName = package.Package.Id.FullName
                             });
                         }
                     }
@@ -765,7 +765,7 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        IReadOnlyList<Package> dependcies = packageItem.Package.Dependencies;
+                        IReadOnlyList<Package> dependcies = package.Package.Dependencies;
 
                         if (dependcies.Count > 0)
                         {

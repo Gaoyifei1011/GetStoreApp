@@ -69,7 +69,7 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private void OnItemClicked(object sender, BreadcrumbBarItemClickedEventArgs args)
         {
-            if (args.Item is ContentLinkInfo breadItem && BreadCollection.Count is 2 && Equals(breadItem.SecondaryText, BreadCollection[0].SecondaryText))
+            if (args.Item is ContentLinkInfo contentLinkInfo && BreadCollection.Count is 2 && Equals(contentLinkInfo.SecondaryText, BreadCollection[0].SecondaryText))
             {
                 NavigateTo(PageList[0], null, false);
             }

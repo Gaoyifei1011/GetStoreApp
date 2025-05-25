@@ -345,7 +345,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用程序退出时触发的事件
         /// </summary>
-        private void OnApplicationExit(object sender, EventArgs args)
+        private void OnApplicationExit()
         {
             try
             {

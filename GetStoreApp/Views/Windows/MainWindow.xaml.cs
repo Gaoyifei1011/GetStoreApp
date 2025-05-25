@@ -410,9 +410,9 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnMoveClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
-                ((MenuFlyout)menuFlyoutItem.Tag).Hide();
+                menuFlyout.Hide();
                 User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MOVE, 0);
             }
         }
@@ -422,9 +422,9 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnSizeClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
-                ((MenuFlyout)menuFlyoutItem.Tag).Hide();
+                menuFlyout.Hide();
                 User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_SIZE, 0);
             }
         }
@@ -493,9 +493,8 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private async void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is string tag)
             {
-                string tag = Convert.ToString(menuFlyoutItem.Tag);
                 string displayName = string.Empty;
 
                 switch (tag)
@@ -764,13 +763,13 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private async void OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            if (args.SelectedItemContainer is NavigationViewItemBase navigationViewItem && navigationViewItem.Tag is not null)
+            if (args.SelectedItemContainer is NavigationViewItemBase navigationViewItem && navigationViewItem.Tag is string tag)
             {
                 NavigationModel navigationItem = NavigationItemList.Find(item => Equals(item.NavigationTag, PageList[PageList.FindIndex(item => Equals(item.Key, navigationViewItem.Tag))].Key));
 
                 if (SelectedItem != navigationItem.NavigationItem)
                 {
-                    if (PageList[PageList.FindIndex(item => Equals(item.Key, navigationViewItem.Tag))].Key is "Web")
+                    if (PageList[PageList.FindIndex(item => Equals(item.Key, tag))].Key is "Web")
                     {
                         await Launcher.LaunchUriAsync(new Uri("getstoreappwebbrowser:"));
                         sender.SelectedItem = SelectedItem;

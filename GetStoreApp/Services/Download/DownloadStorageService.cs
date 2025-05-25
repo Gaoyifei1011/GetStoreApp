@@ -55,7 +55,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 直接添加已下载完成任务数据
         /// </summary>
-        public static void AddDownloadData(DownloadSchedulerModel downloadSchedulerItem)
+        public static void AddDownloadData(DownloadSchedulerModel downloadScheduler)
         {
             if (downloadStorageContainer is not null)
             {
@@ -65,18 +65,18 @@ namespace GetStoreApp.Services.Download
                 {
                     ApplicationDataCompositeValue compositeValue = [];
 
-                    downloadSchedulerItem.DownloadKey = string.IsNullOrEmpty(downloadSchedulerItem.DownloadKey)
-                        ? HashAlgorithmHelper.GenerateDownloadKey(downloadSchedulerItem.FileName, downloadSchedulerItem.FilePath)
-                        : downloadSchedulerItem.DownloadKey;
+                    downloadScheduler.DownloadKey = string.IsNullOrEmpty(downloadScheduler.DownloadKey)
+                        ? HashAlgorithmHelper.GenerateDownloadKey(downloadScheduler.FileName, downloadScheduler.FilePath)
+                        : downloadScheduler.DownloadKey;
 
-                    compositeValue[DownloadKey] = downloadSchedulerItem.DownloadKey;
-                    compositeValue[FileName] = downloadSchedulerItem.FileName;
-                    compositeValue[FilePath] = downloadSchedulerItem.FilePath;
-                    compositeValue[FileSize] = downloadSchedulerItem.TotalSize;
+                    compositeValue[DownloadKey] = downloadScheduler.DownloadKey;
+                    compositeValue[FileName] = downloadScheduler.FileName;
+                    compositeValue[FilePath] = downloadScheduler.FilePath;
+                    compositeValue[FileSize] = downloadScheduler.TotalSize;
 
-                    if (downloadStorageContainer.Values.TryAdd(downloadSchedulerItem.DownloadKey, compositeValue))
+                    if (downloadStorageContainer.Values.TryAdd(downloadScheduler.DownloadKey, compositeValue))
                     {
-                        StorageDataAdded?.Invoke(downloadSchedulerItem);
+                        StorageDataAdded?.Invoke(downloadScheduler);
                     }
                 }
                 catch (Exception e)
@@ -124,13 +124,13 @@ namespace GetStoreApp.Services.Download
             {
                 try
                 {
-                    foreach (KeyValuePair<string, object> downloadItemKey in downloadStorageContainer.Values)
+                    foreach (KeyValuePair<string, object> downloadStorageItem in downloadStorageContainer.Values)
                     {
-                        if (downloadItemKey.Value is ApplicationDataCompositeValue compositeValue)
+                        if (downloadStorageItem.Value is ApplicationDataCompositeValue compositeValue)
                         {
                             downloadSchedulerList.Add(new DownloadSchedulerModel()
                             {
-                                DownloadKey = downloadItemKey.Key,
+                                DownloadKey = downloadStorageItem.Key,
                                 FileName = Convert.ToString(compositeValue[FileName]),
                                 FilePath = Convert.ToString(compositeValue[FilePath]),
                                 TotalSize = Convert.ToDouble(compositeValue[FileSize])

@@ -653,10 +653,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnItemClick(object sender, ItemClickEventArgs args)
         {
-            if (args.ClickedItem is AvailableVersionModel availableVersionItem && !Equals(SelectedItem, availableVersionItem))
+            if (args.ClickedItem is AvailableVersionModel availableVersion && !Equals(SelectedItem, availableVersion))
             {
-                SelectedItem = availableVersionItem;
-                await InitializeVersionInformationAsync(availableVersionItem);
+                SelectedItem = availableVersion;
+                await InitializeVersionInformationAsync(availableVersion);
             }
         }
 

@@ -53,9 +53,9 @@ namespace GetStoreApp.Services.Root
                     httpRequestSession.AddLoggingChannel(httpRequestChannel);
                     httpRequestFields.AddString("LogLevel", logLevel.ToString());
 
-                    foreach (KeyValuePair<string, string> logInformationKeyValueItem in loggingInformationDict)
+                    foreach (KeyValuePair<string, string> loggingInformationItem in loggingInformationDict)
                     {
-                        httpRequestFields.AddString(logInformationKeyValueItem.Key, logInformationKeyValueItem.Value);
+                        httpRequestFields.AddString(loggingInformationItem.Key, loggingInformationItem.Value);
                     }
 
                     httpRequestChannel.LogEvent(logContent, httpRequestFields, logLevel, httpRequestOptions);

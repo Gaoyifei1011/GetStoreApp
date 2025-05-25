@@ -355,14 +355,14 @@ namespace GetStoreApp.Views.Pages
                 // 不存在直接添加
                 if (index is -1)
                 {
-                    HistoryModel historyItem = new()
+                    HistoryModel history = new()
                     {
                         CreateTimeStamp = timeStamp,
                         HistoryKey = historyKey,
                         HistoryContent = inputContent
                     };
 
-                    historyList.Insert(0, historyItem);
+                    historyList.Insert(0, history);
                     if (historyList.Count is 4)
                     {
                         historyList.RemoveAt(historyList.Count - 1);
@@ -376,7 +376,7 @@ namespace GetStoreApp.Views.Pages
                             HistoryCollection.RemoveAt(HistoryCollection.Count - 1);
                         }
 
-                        HistoryCollection.Insert(0, historyItem);
+                        HistoryCollection.Insert(0, history);
                     });
                 }
                 // 存在则修改原来项的时间戳，并调整顺序

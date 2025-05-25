@@ -164,14 +164,14 @@ namespace GetStoreApp.Views.Pages
         {
             InitializeComponent();
 
-            foreach (GeographicRegion geographicItem in StoreRegionService.StoreRegionList)
+            foreach (GeographicRegion geographicRegionItem in StoreRegionService.StoreRegionList)
             {
-                if (Equals(StoreRegionService.StoreRegion.CodeTwoLetter, geographicItem.CodeTwoLetter))
+                if (Equals(StoreRegionService.StoreRegion.CodeTwoLetter, geographicRegionItem.CodeTwoLetter))
                 {
-                    StoreRegion = geographicItem;
+                    StoreRegion = geographicRegionItem;
                     StoreRegionCollection.Add(new StoreRegionModel()
                     {
-                        StoreRegionInfo = geographicItem,
+                        StoreRegionInfo = geographicRegionItem,
                         IsChecked = true
                     });
                 }
@@ -179,7 +179,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     StoreRegionCollection.Add(new StoreRegionModel()
                     {
-                        StoreRegionInfo = geographicItem,
+                        StoreRegionInfo = geographicRegionItem,
                         IsChecked = false
                     });
                 }
@@ -290,13 +290,13 @@ namespace GetStoreApp.Views.Pages
                     StoreRegion = StoreRegionService.DefaultStoreRegion;
                     StoreRegionService.SetRegion(StoreRegion);
 
-                    foreach (StoreRegionModel item in StoreRegionCollection)
+                    foreach (StoreRegionModel storeRegionItem in StoreRegionCollection)
                     {
-                        item.IsChecked = false;
-                        if (Equals(StoreRegion.CodeTwoLetter, item.StoreRegionInfo.CodeTwoLetter))
+                        storeRegionItem.IsChecked = false;
+                        if (Equals(StoreRegion.CodeTwoLetter, storeRegionItem.StoreRegionInfo.CodeTwoLetter))
                         {
-                            StoreRegion = item.StoreRegionInfo;
-                            item.IsChecked = true;
+                            StoreRegion = storeRegionItem.StoreRegionInfo;
+                            storeRegionItem.IsChecked = true;
                         }
                     }
                 }
@@ -349,7 +349,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用程序退出时触发的事件
         /// </summary>
-        private void OnApplicationExit(object sender, EventArgs args)
+        private void OnApplicationExit()
         {
             try
             {
@@ -380,13 +380,13 @@ namespace GetStoreApp.Views.Pages
                     {
                         StoreRegion = StoreRegionService.DefaultStoreRegion;
 
-                        foreach (StoreRegionModel item in StoreRegionCollection)
+                        foreach (StoreRegionModel storeRegionItem in StoreRegionCollection)
                         {
-                            item.IsChecked = false;
-                            if (Equals(StoreRegion.CodeTwoLetter, item.StoreRegionInfo.CodeTwoLetter))
+                            storeRegionItem.IsChecked = false;
+                            if (Equals(StoreRegion.CodeTwoLetter, storeRegionItem.StoreRegionInfo.CodeTwoLetter))
                             {
-                                StoreRegion = item.StoreRegionInfo;
-                                item.IsChecked = true;
+                                StoreRegion = storeRegionItem.StoreRegionInfo;
+                                storeRegionItem.IsChecked = true;
                             }
                         }
                     }

@@ -246,9 +246,9 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private void OnCatalogTrustLevelClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
-                SelectedCatalogTrustLevel = CatalogTrustLevelList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
+                SelectedCatalogTrustLevel = CatalogTrustLevelList[Convert.ToInt32(tag)];
             }
         }
 

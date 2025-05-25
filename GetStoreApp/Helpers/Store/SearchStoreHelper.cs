@@ -17,7 +17,7 @@ namespace GetStoreApp.Helpers.Store
     /// </summary>
     public static class SearchStoreHelper
     {
-        private static readonly string storeUri = "https://apps.microsoft.com/store/detail/{0}";
+        private static readonly string storeLink = "https://apps.microsoft.com/store/detail/{0}";
         private static readonly Uri manifestSearchUri = new("https://storeedgefd.dsx.mp.microsoft.com/v9.0/manifestSearch");
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace GetStoreApp.Helpers.Store
 
                             searchStoreList.Add(new SearchStoreModel()
                             {
-                                StoreAppLink = string.Format(storeUri, jobject.GetNamedString("PackageIdentifier")),
+                                StoreAppLink = string.Format(storeLink, jobject.GetNamedString("PackageIdentifier")),
                                 StoreAppName = jobject.GetNamedString("PackageName"),
                                 StoreAppPublisher = jobject.GetNamedString("Publisher")
                             });

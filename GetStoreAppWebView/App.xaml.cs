@@ -128,11 +128,11 @@ namespace GetStoreAppWebView
 
                                 if (package is not null)
                                 {
-                                    foreach (AppListEntry applistItem in package.GetAppListEntries())
+                                    foreach (AppListEntry appListEntryItem in package.GetAppListEntries())
                                     {
-                                        if (Equals(applistItem.AppUserModelId, protocolActivatedEventArgs.Data["AppUserModelId"]))
+                                        if (Equals(appListEntryItem.AppUserModelId, protocolActivatedEventArgs.Data["AppUserModelId"]))
                                         {
-                                            isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinAppListEntryAsync(applistItem);
+                                            isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinAppListEntryAsync(appListEntryItem);
                                             break;
                                         }
                                     }

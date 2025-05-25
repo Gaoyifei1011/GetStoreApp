@@ -147,18 +147,18 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is CompletedModel completedItem)
+            if (args.Parameter is CompletedModel completed)
             {
-                if (completedItem.IsInstalling)
+                if (completed.IsInstalling)
                 {
                     await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.InstallingNotify));
                 }
                 else
                 {
-                    completedItem.IsNotOperated = false;
+                    completed.IsNotOperated = false;
                     await Task.Run(() =>
                     {
-                        DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
+                        DownloadStorageService.DeleteDownloadData(completed.DownloadKey);
                     });
                 }
             }
@@ -169,23 +169,23 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnDeleteWithFileExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is CompletedModel completedItem)
+            if (args.Parameter is CompletedModel completed)
             {
-                if (completedItem.IsInstalling)
+                if (completed.IsInstalling)
                 {
                     await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.InstallingNotify));
                 }
                 else
                 {
-                    completedItem.IsNotOperated = false;
+                    completed.IsNotOperated = false;
                     await Task.Run(() =>
                     {
                         // 删除文件
                         try
                         {
-                            if (File.Exists(completedItem.FilePath))
+                            if (File.Exists(completed.FilePath))
                             {
-                                File.Delete(completedItem.FilePath);
+                                File.Delete(completed.FilePath);
                             }
                         }
                         catch (Exception e)
@@ -193,7 +193,7 @@ namespace GetStoreApp.Views.Pages
                             LogService.WriteLog(LoggingLevel.Warning, "Delete completed download file failed.", e);
                         }
 
-                        DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
+                        DownloadStorageService.DeleteDownloadData(completed.DownloadKey);
                     });
                 }
             }
@@ -204,9 +204,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnFileInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is CompletedModel completedItem && File.Exists(completedItem.FilePath))
+            if (args.Parameter is CompletedModel completed && File.Exists(completed.FilePath))
             {
-                await MainWindow.Current.ShowDialogAsync(new FileInformationDialog(completedItem));
+                await MainWindow.Current.ShowDialogAsync(new FileInformationDialog(completed));
             }
             else
             {
@@ -219,14 +219,14 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is CompletedModel completedItem && File.Exists(completedItem.FilePath))
+            if (args.Parameter is CompletedModel completed && File.Exists(completed.FilePath))
             {
                 // 普通应用：直接安装
-                if (completedItem.FilePath.EndsWith(".exe") || completedItem.FileName.EndsWith(".msi"))
+                if (completed.FilePath.EndsWith(".exe") || completed.FileName.EndsWith(".msi"))
                 {
                     await Task.Run(() =>
                     {
-                        Shell32Library.ShellExecute(IntPtr.Zero, "open", completedItem.FilePath, string.Empty, null, WindowShowStyle.SW_SHOWNORMAL);
+                        Shell32Library.ShellExecute(IntPtr.Zero, "open", completed.FilePath, string.Empty, null, WindowShowStyle.SW_SHOWNORMAL);
                     });
                 }
                 // 商店打包应用：使用应用安装程序安装或直接安装
@@ -236,7 +236,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         try
                         {
-                            return await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
+                            return await StorageFile.GetFileFromPathAsync(completed.FilePath);
                         }
                         catch (Exception e)
                         {
@@ -261,7 +261,7 @@ namespace GetStoreApp.Views.Pages
                             else if (Equals(InstallModeService.InstallMode, InstallModeService.InstallModeList[1]))
                             {
                                 // 标记安装状态
-                                completedItem.IsInstalling = true;
+                                completed.IsInstalling = true;
 
                                 (bool result, DeploymentResult deploymentResult, Exception exception) = await Task.Run(async () =>
                                 {
@@ -275,10 +275,10 @@ namespace GetStoreApp.Views.Pages
                                         };
 
                                         // 安装目标应用，并获取安装进度
-                                        IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress = packageManager.AddPackageByUriAsync(new Uri(completedItem.FilePath), addPackageOptions);
+                                        IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress = packageManager.AddPackageByUriAsync(new Uri(completed.FilePath), addPackageOptions);
 
                                         // 更新安装进度
-                                        installPackageWithProgress.Progress = (result, progress) => OnPackageInstallProgress(result, progress, completedItem);
+                                        installPackageWithProgress.Progress = (result, progress) => OnPackageInstallProgress(result, progress, completed);
                                         return ValueTuple.Create<bool, DeploymentResult, Exception>(true, await installPackageWithProgress, null);
                                     }
                                     // 安装失败显示失败信息
@@ -306,7 +306,7 @@ namespace GetStoreApp.Views.Pages
                                     // 安装失败
                                     else
                                     {
-                                        completedItem.InstallError = true;
+                                        completed.InstallError = true;
 
                                         await Task.Run(() =>
                                         {
@@ -321,7 +321,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                                 else
                                 {
-                                    completedItem.InstallError = true;
+                                    completed.InstallError = true;
 
                                     await Task.Run(() =>
                                     {
@@ -336,8 +336,8 @@ namespace GetStoreApp.Views.Pages
 
                                 // 恢复原来的安装信息显示（并延缓当前安装信息显示时间0.5秒）
                                 await Task.Delay(500);
-                                completedItem.IsInstalling = false;
-                                completedItem.InstallError = false;
+                                completed.IsInstalling = false;
+                                completed.InstallError = false;
                             }
                         }
                         catch (Exception e)
@@ -378,7 +378,7 @@ namespace GetStoreApp.Views.Pages
                             }
                             catch (Exception e)
                             {
-                                LogService.WriteLog(LoggingLevel.Warning, "Completed download completedItem folder located failed.", e);
+                                LogService.WriteLog(LoggingLevel.Warning, "Completed download completed folder located failed.", e);
                                 await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
                             }
                         }
@@ -400,7 +400,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnShareFileExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is CompletedModel completedItem && File.Exists(completedItem.FilePath))
+            if (args.Parameter is CompletedModel completed && File.Exists(completed.FilePath))
             {
                 try
                 {
@@ -411,7 +411,7 @@ namespace GetStoreApp.Views.Pages
                         DataRequestDeferral deferral = args.Request.GetDeferral();
 
                         args.Request.Data.Properties.Title = ResourceService.GetLocalized("Download/ShareFileTitle");
-                        args.Request.Data.SetStorageItems(new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completedItem.FilePath) });
+                        args.Request.Data.SetStorageItems(new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completed.FilePath) });
                         deferral.Complete();
                     };
 
@@ -694,9 +694,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnItemClick(object sender, ItemClickEventArgs args)
         {
-            if (args.ClickedItem is CompletedModel completedItem)
+            if (args.ClickedItem is CompletedModel completed)
             {
-                completedItem.IsSelected = !completedItem.IsSelected;
+                completed.IsSelected = !completed.IsSelected;
             }
         }
 
@@ -705,7 +705,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用程序退出时触发的事件
         /// </summary>
-        private void OnApplicationExit(object sender, EventArgs args)
+        private void OnApplicationExit()
         {
             try
             {
@@ -723,17 +723,17 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 添加已下载完成任务
         /// </summary>
-        private void OnStorageDataAdded(DownloadSchedulerModel downloadSchedulerItem)
+        private void OnStorageDataAdded(DownloadSchedulerModel downloadScheduler)
         {
             DispatcherQueue.TryEnqueue(async () =>
             {
                 CompletedCollection.Add(new CompletedModel()
                 {
-                    IconImage = await GetFileIconImageAsync(downloadSchedulerItem.FilePath),
-                    DownloadKey = downloadSchedulerItem.DownloadKey,
-                    FileName = downloadSchedulerItem.FileName,
-                    FilePath = downloadSchedulerItem.FilePath,
-                    TotalSize = downloadSchedulerItem.TotalSize,
+                    IconImage = await GetFileIconImageAsync(downloadScheduler.FilePath),
+                    DownloadKey = downloadScheduler.DownloadKey,
+                    FileName = downloadScheduler.FileName,
+                    FilePath = downloadScheduler.FilePath,
+                    TotalSize = downloadScheduler.TotalSize,
                     IsNotOperated = true,
                     IsSelected = false,
                     IsSelectMode = false
@@ -774,13 +774,13 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用安装状态发生改变时触发的事件
         /// </summary>
-        private void OnPackageInstallProgress(IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> result, DeploymentProgress progress, CompletedModel completedItem)
+        private void OnPackageInstallProgress(IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> result, DeploymentProgress progress, CompletedModel completed)
         {
             DispatcherQueue.TryEnqueue(() =>
             {
                 for (int index = 0; index < CompletedCollection.Count; index++)
                 {
-                    if (Equals(CompletedCollection[index].DownloadKey, completedItem.DownloadKey))
+                    if (Equals(CompletedCollection[index].DownloadKey, completed.DownloadKey))
                     {
                         CompletedCollection[index].InstallValue = progress.percentage;
                         break;

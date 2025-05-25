@@ -34,7 +34,7 @@ namespace GetStoreApp.Helpers.Store
         /// </summary>
         public static async Task<RequestModel> HttpRequestAsync(string content)
         {
-            RequestModel requestItem = new();
+            RequestModel request = new();
 
             try
             {
@@ -53,9 +53,9 @@ namespace GetStoreApp.Helpers.Store
                 // 请求成功
                 if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
                 {
-                    requestItem.RequestId = 0;
-                    requestItem.RequestStatusCode = httpRequestResult.ResponseMessage.StatusCode.ToString();
-                    requestItem.RequestContent = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
+                    request.RequestId = 0;
+                    request.RequestStatusCode = httpRequestResult.ResponseMessage.StatusCode.ToString();
+                    request.RequestContent = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                     Dictionary<string, string> responseDict = new()
                     {
@@ -68,10 +68,10 @@ namespace GetStoreApp.Helpers.Store
                 // 请求失败
                 else
                 {
-                    requestItem.RequestId = 1;
-                    requestItem.RequestStatusCode = string.Empty;
-                    requestItem.RequestExceptionContent = httpRequestResult.ExtendedError.Message;
-                    requestItem.RequestContent = string.Empty;
+                    request.RequestId = 1;
+                    request.RequestStatusCode = string.Empty;
+                    request.RequestExceptionContent = httpRequestResult.ExtendedError.Message;
+                    request.RequestContent = string.Empty;
                     LogService.WriteLog(LoggingLevel.Error, "Http request failed", httpRequestResult.ExtendedError);
                 }
 
@@ -80,14 +80,14 @@ namespace GetStoreApp.Helpers.Store
             // 其他异常
             catch (Exception e)
             {
-                requestItem.RequestId = 2;
-                requestItem.RequestStatusCode = string.Empty;
-                requestItem.RequestExceptionContent = e.Message;
-                requestItem.RequestContent = string.Empty;
+                request.RequestId = 2;
+                request.RequestStatusCode = string.Empty;
+                request.RequestExceptionContent = e.Message;
+                request.RequestContent = string.Empty;
                 LogService.WriteLog(LoggingLevel.Error, "Http request unknown exception", e);
             }
 
-            return requestItem;
+            return request;
         }
 
         /// <summary>

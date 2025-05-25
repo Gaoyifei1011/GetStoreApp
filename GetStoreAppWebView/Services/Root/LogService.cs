@@ -49,9 +49,9 @@ namespace GetStoreAppWebView.Services.Root
                     exceptionSession.AddLoggingChannel(exceptionChannel);
                     exceptionFields.AddString("LogLevel", logLevel.ToString());
 
-                    foreach (KeyValuePair<string, string> logInformationKeyValueItem in loggingInformationDict)
+                    foreach (KeyValuePair<string, string> logInformationItem in loggingInformationDict)
                     {
-                        exceptionFields.AddString(logInformationKeyValueItem.Key, logInformationKeyValueItem.Value);
+                        exceptionFields.AddString(logInformationItem.Key, logInformationItem.Value);
                     }
 
                     exceptionChannel.LogEvent(logContent, exceptionFields, logLevel, exceptionOptions);

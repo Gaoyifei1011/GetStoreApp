@@ -336,9 +336,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnItemClick(object sender, ItemClickEventArgs args)
         {
-            if (args.ClickedItem is DownloadingModel downloadingItem)
+            if (args.ClickedItem is DownloadingModel downloading)
             {
-                downloadingItem.IsSelected = !downloadingItem.IsSelected;
+                downloading.IsSelected = !downloading.IsSelected;
             }
         }
 
@@ -349,7 +349,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用程序退出时触发的事件
         /// </summary>
-        private void OnApplicationExit(object sender, EventArgs args)
+        private void OnApplicationExit()
         {
             try
             {

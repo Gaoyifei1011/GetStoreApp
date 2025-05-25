@@ -62,12 +62,12 @@ namespace GetStoreApp.Views.Dialogs
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public FileInformationDialog(CompletedModel completedItem)
+        public FileInformationDialog(CompletedModel completed)
         {
             InitializeComponent();
-            FileName = completedItem.FileName;
-            FilePath = completedItem.FilePath;
-            FileSize = FileSizeHelper.ConvertFileSizeToString(completedItem.TotalSize);
+            FileName = completed.FileName;
+            FilePath = completed.FilePath;
+            FileSize = FileSizeHelper.ConvertFileSizeToString(completed.TotalSize);
         }
 
         /// <summary>
