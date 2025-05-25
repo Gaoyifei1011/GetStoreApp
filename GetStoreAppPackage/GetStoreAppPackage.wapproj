@@ -36,7 +36,7 @@
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundleAutoResourcePackageQualifiers>DXFeatureLevel</AppxBundleAutoResourcePackageQualifiers>
     <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
-    <AppxDefaultResourceQualifiers>Language=AR;EN-US;HE-IL;ZH-HANS</AppxDefaultResourceQualifiers>
+    <AppxDefaultResourceQualifiers>Language=EN-US;ZH-HANS</AppxDefaultResourceQualifiers>
     <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxPackageSigningTimestampServerUrl>http://timestamp.digicert.com</AppxPackageSigningTimestampServerUrl>
