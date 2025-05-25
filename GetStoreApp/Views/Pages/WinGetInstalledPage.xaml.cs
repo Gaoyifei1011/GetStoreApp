@@ -783,7 +783,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             MatchResult matchItem = findPackagesResult.Matches[index];
 
-                            if (matchItem.CatalogPackage is not null && !matchItem.CatalogPackage.InstalledVersion.Id.StartsWith("MSIX", StringComparison.OrdinalIgnoreCase))
+                            if (matchItem.CatalogPackage is CatalogPackage catalogPackage && !catalogPackage.InstalledVersion.Id.StartsWith("MSIX", StringComparison.OrdinalIgnoreCase))
                             {
                                 bool isUninstalling = false;
                                 WinGetPageInstance.PackageOperationLock.Enter();
@@ -791,7 +791,7 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     foreach (PackageOperationModel packageOperationItem in WinGetPageInstance.PackageOperationCollection)
                                     {
-                                        if (Equals(matchItem.CatalogPackage.InstalledVersion.Id, packageOperationItem.AppID) && Equals(matchItem.CatalogPackage.InstalledVersion.Version, packageOperationItem.AppVersion))
+                                        if (Equals(catalogPackage.InstalledVersion.Id, packageOperationItem.AppID) && Equals(catalogPackage.InstalledVersion.Version, packageOperationItem.AppVersion))
                                         {
                                             isUninstalling = true;
                                             break;

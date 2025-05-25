@@ -89,7 +89,7 @@ namespace GetStoreApp.Views.Dialogs
                                 dependencyInformationList.Add(new ContentLinkInfo()
                                 {
                                     DisplayText = ResourceService.GetLocalized("Dialog/WinUI3Version"),
-                                    SecondaryText = (winUI3FileProperties[fileVersionProperty] is not null ? new Version(winUI3FileProperties[fileVersionProperty].ToString()) : new Version()).ToString()
+                                    SecondaryText = (winUI3FileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()).ToString()
                                 });
                             }
                             catch (Exception e)
@@ -117,7 +117,7 @@ namespace GetStoreApp.Views.Dialogs
                                 dependencyInformationList.Add(new ContentLinkInfo()
                                 {
                                     DisplayText = ResourceService.GetLocalized("Dialog/WinUI2Version"),
-                                    SecondaryText = (winUI2FileProperties[fileVersionProperty] is not null ? new Version(winUI2FileProperties[fileVersionProperty].ToString()) : new Version()).ToString()
+                                    SecondaryText = (winUI2FileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()).ToString()
                                 });
                             }
                             catch (Exception e)
@@ -141,7 +141,7 @@ namespace GetStoreApp.Views.Dialogs
                         dependencyInformationList.Add(new ContentLinkInfo()
                         {
                             DisplayText = ResourceService.GetLocalized("Dialog/WindowsUIVersion"),
-                            SecondaryText = (windowsUIFileProperties[fileVersionProperty] is not null ? new Version(windowsUIFileProperties[fileVersionProperty].ToString()) : new Version()).ToString()
+                            SecondaryText = (windowsUIFileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()).ToString()
                         });
                     }
                     catch (Exception e)
@@ -162,7 +162,7 @@ namespace GetStoreApp.Views.Dialogs
                         dependencyInformationList.Add(new ContentLinkInfo()
                         {
                             DisplayText = ResourceService.GetLocalized("Dialog/WebView2SDKVersion"),
-                            SecondaryText = (webView2CoreFileProperties[fileVersionProperty] is not null ? new Version(webView2CoreFileProperties[fileVersionProperty].ToString()) : new Version()).ToString()
+                            SecondaryText = (webView2CoreFileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()).ToString()
                         });
                     }
                     catch (Exception e)

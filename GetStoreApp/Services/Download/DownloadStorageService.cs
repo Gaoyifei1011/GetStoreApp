@@ -120,7 +120,7 @@ namespace GetStoreApp.Services.Download
         {
             List<DownloadSchedulerModel> downloadSchedulerList = [];
 
-            if (downloadStorageContainer is not null && DownloadStorageSemaphoreSlim?.CurrentCount is 0)
+            if (downloadStorageContainer is not null)
             {
                 try
                 {

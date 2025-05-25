@@ -266,9 +266,9 @@ namespace GetStoreApp.Helpers.Store
 
                 foreach (IXmlNode fileNode in fileList)
                 {
-                    if (fileNode.Attributes.GetNamedItem("InstallerSpecificIdentifier") is not null)
+                    if (fileNode.Attributes.GetNamedItem("InstallerSpecificIdentifier") is IXmlNode installerSpecificIdentifierNode)
                     {
-                        string name = fileNode.Attributes.GetNamedItem("InstallerSpecificIdentifier").InnerText;
+                        string name = installerSpecificIdentifierNode.InnerText;
                         string extension = fileNode.Attributes.GetNamedItem("FileName").InnerText[fileNode.Attributes.GetNamedItem("FileName").InnerText.LastIndexOf('.')..];
                         string size = fileNode.Attributes.GetNamedItem("Size").InnerText;
                         string digest = fileNode.Attributes.GetNamedItem("Digest").InnerText;
@@ -291,9 +291,9 @@ namespace GetStoreApp.Helpers.Store
                     {
                         IXmlNode xmlNode = securedFragmentCloneNode.ParentNode.ParentNode;
 
-                        if (xmlNode.GetElementsByName("ApplicabilityRules").GetElementsByName("Metadata").GetElementsByName("AppxPackageMetadata").GetElementsByName("AppxMetadata").Attributes.GetNamedItem("PackageMoniker") is not null)
+                        if (xmlNode.GetElementsByName("ApplicabilityRules").GetElementsByName("Metadata").GetElementsByName("AppxPackageMetadata").GetElementsByName("AppxMetadata").Attributes.GetNamedItem("PackageMoniker") is IXmlNode packageMonikerNode)
                         {
-                            string name = xmlNode.GetElementsByName("ApplicabilityRules").GetElementsByName("Metadata").GetElementsByName("AppxPackageMetadata").GetElementsByName("AppxMetadata").Attributes.GetNamedItem("PackageMoniker").InnerText;
+                            string name = packageMonikerNode.InnerText;
 
                             if (appxPackagesInfoDict.TryGetValue(name, out (string extension, string size, string digest) value))
                             {

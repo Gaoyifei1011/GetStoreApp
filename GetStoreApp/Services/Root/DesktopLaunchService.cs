@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
+using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 using Windows.System;
@@ -155,7 +156,7 @@ namespace GetStoreApp.Services.Root
                 ProtocolActivatedEventArgs protocolActivatedEventArgs = appActivationArguments.Data as ProtocolActivatedEventArgs;
                 List<string> dataList = [];
 
-                if (protocolActivatedEventArgs.Data is not null && protocolActivatedEventArgs.Data.TryGetValue("Parameter", out object parameterobj))
+                if (protocolActivatedEventArgs.Data is ValueSet dataSet && dataSet.TryGetValue("Parameter", out object parameterobj))
                 {
                     dataList.Add(Convert.ToString(parameterobj));
                 }

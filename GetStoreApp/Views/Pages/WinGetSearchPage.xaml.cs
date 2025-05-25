@@ -552,12 +552,12 @@ namespace GetStoreApp.Views.Pages
                         {
                             MatchResult matchItem = findPackagesResult.Matches[index];
 
-                            if (matchItem.CatalogPackage is not null && matchItem.CatalogPackage.Id is not null)
+                            if (matchItem.CatalogPackage is CatalogPackage catalogPackage && catalogPackage.Id is not null)
                             {
                                 searchAppsList.Add(new SearchAppsModel()
                                 {
-                                    AppID = matchItem.CatalogPackage.Id,
-                                    AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.Name) || string.Equals(matchItem.CatalogPackage.Name, "Unknown", StringComparison.OrdinalIgnoreCase) ? Unknown : matchItem.CatalogPackage.Name,
+                                    AppID = catalogPackage.Id,
+                                    AppName = string.IsNullOrEmpty(catalogPackage.Name) || string.Equals(catalogPackage.Name, "Unknown", StringComparison.OrdinalIgnoreCase) ? Unknown : catalogPackage.Name,
                                     CatalogPackage = matchItem.CatalogPackage,
                                 });
                             }

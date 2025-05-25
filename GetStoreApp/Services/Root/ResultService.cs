@@ -29,7 +29,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static StorageDataKind GetStorageDataKind()
         {
-            return resultContainer.Values[nameof(StorageDataKind)] is not null ? Enum.TryParse(resultContainer.Values[nameof(StorageDataKind)] as string, out StorageDataKind dataKind) ? dataKind : StorageDataKind.None : StorageDataKind.None;
+            return resultContainer.Values.TryGetValue(nameof(StorageDataKind), out object storeageDataValue) && storeageDataValue is StorageDataKind storageDataKind ? storageDataKind : StorageDataKind.None;
         }
 
         /// <summary>

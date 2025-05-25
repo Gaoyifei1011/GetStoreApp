@@ -14,7 +14,7 @@ namespace GetStoreAppShellExtension.Services.Root
         /// </summary>
         public static T ReadSetting<T>(string key)
         {
-            return localSettingsContainer.Values[key] is not null ? (T)localSettingsContainer.Values[key] : default;
+            return localSettingsContainer.Values.TryGetValue(key, out object value) ? (T)value : default;
         }
     }
 }

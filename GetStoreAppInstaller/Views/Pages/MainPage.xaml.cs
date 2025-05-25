@@ -1341,7 +1341,7 @@ namespace GetStoreAppInstaller.Views.Pages
                             InstallDependencyCollection.Add(new InstallDependencyModel()
                             {
                                 DependencyName = Path.GetFileName(pickFileResult.Path),
-                                DependencyVersion = dependencyAppInformation.Version is not null ? dependencyAppInformation.Version : new Version(),
+                                DependencyVersion = dependencyAppInformation.Version is Version version ? version : new Version(),
                                 DependencyPublisher = string.IsNullOrEmpty(dependencyAppInformation.PublisherDisplayName) ? Unknown : dependencyAppInformation.PublisherDisplayName,
                                 DependencyFullName = string.IsNullOrEmpty(dependencyAppInformation.PackageFullName) ? GuidHelper.CreateNewGuid().ToString() : dependencyAppInformation.PackageFullName,
                                 DependencyPath = pickFileResult.Path

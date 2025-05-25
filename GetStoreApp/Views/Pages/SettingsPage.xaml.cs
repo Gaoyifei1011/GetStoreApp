@@ -43,7 +43,7 @@ namespace GetStoreApp.Views.Pages
         {
             base.OnNavigatedTo(args);
             SettingsFrame.ContentTransitions = SuppressNavigationTransitionCollection;
-            settingNavigationArgs = args.Parameter is not null && Enum.TryParse(Convert.ToString(args.Parameter), out AppNaviagtionArgs appNaviagtionArgs) ? appNaviagtionArgs : AppNaviagtionArgs.None;
+            settingNavigationArgs = args.Parameter is string parameter && Enum.TryParse(Convert.ToString(parameter), out AppNaviagtionArgs appNaviagtionArgs) ? appNaviagtionArgs : AppNaviagtionArgs.None;
 
             if (settingNavigationArgs is AppNaviagtionArgs.WinGetDataSource)
             {
