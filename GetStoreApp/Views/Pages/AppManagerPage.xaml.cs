@@ -17,6 +17,10 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AppManagerPage : Page
     {
+        private readonly string AppListString = ResourceService.GetLocalized("AppManager/AppList");
+        private readonly string AppInformationString = ResourceService.GetLocalized("AppManager/AppInformation");
+        private readonly string NavigationFailedString = ResourceService.GetLocalized("AppManager/NavigationFailed");
+
         public List<Type> PageList { get; } = [typeof(AppListPage), typeof(AppInformationPage)];
 
         public ObservableCollection<ContentLinkInfo> BreadCollection { get; } = [];
@@ -67,7 +71,7 @@ namespace GetStoreApp.Views.Pages
             {
                 BreadCollection.Add(new ContentLinkInfo()
                 {
-                    DisplayText = ResourceService.GetLocalized("AppManager/AppList"),
+                    DisplayText = AppListString,
                     SecondaryText = "AppList"
                 });
             }
@@ -75,7 +79,7 @@ namespace GetStoreApp.Views.Pages
             {
                 BreadCollection.Add(new ContentLinkInfo()
                 {
-                    DisplayText = ResourceService.GetLocalized("AppManager/AppInformation"),
+                    DisplayText = AppInformationString,
                     SecondaryText = "AppInformation"
                 });
             }
@@ -91,7 +95,7 @@ namespace GetStoreApp.Views.Pages
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
             args.Handled = true;
-            LogService.WriteLog(LoggingLevel.Warning, string.Format(ResourceService.GetLocalized("AppManager/NavigationFailed"), args.SourcePageType.FullName), args.Exception);
+            LogService.WriteLog(LoggingLevel.Warning, string.Format(NavigationFailedString, args.SourcePageType.FullName), args.Exception);
         }
 
         #endregion 第二部分：应用管理页面——挂载的事件
