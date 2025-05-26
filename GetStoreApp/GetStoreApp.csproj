@@ -265,6 +265,7 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250513003" />
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.10.340" GeneratePathProperty="true" />
+    <PackageReference Include="Microsoft.WindowsPackageManager.InProcCom" Version="1.10.340" GeneratePathProperty="true" IncludeAssets="none" />
     <PackageReference Include="Mile.Aria2" Version="1.0.230" />
 
     <Page Update="Views\Dialogs\AppInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -344,6 +345,9 @@
     <PRIResource Include="Strings\zh-hans\WinGet.resjson" />
     
     <Reference Include="Microsoft.Windows.Storage.Pickers.Projection.dll" />
+    <Content Include="$(PkgMicrosoft_WindowsPackageManager_InProcCom)\runtimes\win-$(Platform)\native\Microsoft.Management.Deployment.InProc.dll" Link="Microsoft.Management.Deployment.dll" CopyToOutputDirectory="Always" />
+    <Content Include="$(PkgMicrosoft_WindowsPackageManager_InProcCom)\runtimes\win-$(Platform)\native\Microsoft.Management.Deployment.winmd" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
+    <Content Include="$(PkgMicrosoft_WindowsPackageManager_InProcCom)\runtimes\win-$(Platform)\native\WindowsPackageManager.dll" Link="WindowsPackageManager.dll" CopyToOutputDirectory="Always" />
   </ItemGroup>
   
   <!-- 测试 AOT 发布后的文件 -->
@@ -369,10 +373,6 @@
       <MyEmbeddedFileList Include="@(MainAppEmbeddedItem)" />
     </ItemGroup>
     <WriteLinesToFile File="$(_EmbedFileResfilePath)" Lines="@(MyEmbeddedFileList)" Overwrite="true" Encoding="Unicode" />
-  </Target>
-
-  <Target Name="CopyFilesToTargetDir" BeforeTargets="BeforeBuild">
-    <Copy SourceFiles="$(PkgMicrosoft_WindowsPackageManager_ComInterop)\lib\uap10.0\Microsoft.Management.Deployment.winmd" DestinationFolder="$(TargetDir)" />
   </Target>
 
   <!--将 resjson 资源文件嵌入到包资源索引中-->
