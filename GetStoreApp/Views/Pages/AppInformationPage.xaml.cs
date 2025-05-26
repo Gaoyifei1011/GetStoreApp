@@ -33,23 +33,23 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AppInformationPage : Page, INotifyPropertyChanged
     {
-        private readonly string AppDisplayNameString = ResourceService.GetLocalized("AppInformation/AppDisplayName");
-        private readonly string PackageFamilyNameString = ResourceService.GetLocalized("AppInformation/PackageFamilyName");
-        private readonly string PackageFullNameString = ResourceService.GetLocalized("AppInformation/PackageFullName");
         private readonly string AppDescriptionString = ResourceService.GetLocalized("AppInformation/AppDescription");
-        private readonly string PublisherDisplayNameString = ResourceService.GetLocalized("AppInformation/PublisherDisplayName");
-        private readonly string PublisherIdString = ResourceService.GetLocalized("AppInformation/PublisherId");
-        private readonly string VersionString = ResourceService.GetLocalized("AppInformation/Version");
-        private readonly string InstalledDateString = ResourceService.GetLocalized("AppInformation/InstalledDate");
+        private readonly string AppDisplayNameString = ResourceService.GetLocalized("AppInformation/AppDisplayName");
         private readonly string ArchitectureString = ResourceService.GetLocalized("AppInformation/Architecture");
-        private readonly string SignatureKindString = ResourceService.GetLocalized("AppInformation/SignatureKind");
-        private readonly string ResourceIdString = ResourceService.GetLocalized("AppInformation/ResourceId");
+        private readonly string InstalledDateString = ResourceService.GetLocalized("AppInformation/InstalledDate");
         private readonly string IsBundleString = ResourceService.GetLocalized("AppInformation/IsBundle");
         private readonly string IsDevelopmentModeString = ResourceService.GetLocalized("AppInformation/IsDevelopmentMode");
         private readonly string IsFrameworkString = ResourceService.GetLocalized("AppInformation/IsFramework");
         private readonly string IsOptionalString = ResourceService.GetLocalized("AppInformation/IsOptional");
         private readonly string IsResourcePackageString = ResourceService.GetLocalized("AppInformation/IsResourcePackage");
         private readonly string IsStubString = ResourceService.GetLocalized("AppInformation/IsStub");
+        private readonly string PackageFamilyNameString = ResourceService.GetLocalized("AppInformation/PackageFamilyName");
+        private readonly string PackageFullNameString = ResourceService.GetLocalized("AppInformation/PackageFullName");
+        private readonly string PublisherDisplayNameString = ResourceService.GetLocalized("AppInformation/PublisherDisplayName");
+        private readonly string PublisherIdString = ResourceService.GetLocalized("AppInformation/PublisherId");
+        private readonly string ResourceIdString = ResourceService.GetLocalized("AppInformation/ResourceId");
+        private readonly string SignatureKindString = ResourceService.GetLocalized("AppInformation/SignatureKind");
+        private readonly string VersionString = ResourceService.GetLocalized("AppInformation/Version");
         private readonly string VertifyIsOKString = ResourceService.GetLocalized("AppInformation/VertifyIsOK");
 
         private string _displayName = string.Empty;
