@@ -34,12 +34,21 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AppListPage : Page, INotifyPropertyChanged
     {
-        private readonly string PackageEmptyDescription = ResourceService.GetLocalized("AppManager/PackageEmptyDescription");
-        private readonly string PackageEmptyWithConditionDescription = ResourceService.GetLocalized("AppManager/PackageEmptyWithConditionDescription");
-        private readonly string Unknown = ResourceService.GetLocalized("AppManager/Unknown");
-        private readonly string Yes = ResourceService.GetLocalized("AppManager/Yes");
-        private readonly string No = ResourceService.GetLocalized("AppManager/No");
-        private readonly string PackageCountInfo = ResourceService.GetLocalized("AppManager/PackageCountInfo");
+        private readonly string SignatureString = "AppList/Signature{0}";
+        private readonly string NoString = ResourceService.GetLocalized("AppList/No");
+        private readonly string OpenSettingsString = ResourceService.GetLocalized("AppList/OpenSettings");
+        private readonly string PackageCountInfoString = ResourceService.GetLocalized("AppList/PackageCountInfo");
+        private readonly string PackageEmptyDescriptionString = ResourceService.GetLocalized("AppList/PackageEmptyDescription");
+        private readonly string PackageEmptyWithConditionDescriptionString = ResourceService.GetLocalized("AppList/PackageEmptyWithConditionDescription");
+        private readonly string UninstallFailed1String = ResourceService.GetLocalized("AppList/UninstallFailed1");
+        private readonly string UninstallFailed2String = ResourceService.GetLocalized("AppList/UninstallFailed2");
+        private readonly string UninstallFailed3String = ResourceService.GetLocalized("AppList/UninstallFailed3");
+        private readonly string UninstallFailed4String = ResourceService.GetLocalized("AppList/UninstallFailed4");
+        private readonly string UninstallFailed5String = ResourceService.GetLocalized("AppList/UninstallFailed5");
+        private readonly string UninstallSuccessfullyString = ResourceService.GetLocalized("AppList/UninstallSuccessfully");
+        private readonly string UnknownString = ResourceService.GetLocalized("AppList/Unknown");
+        private readonly string YesString = ResourceService.GetLocalized("AppList/Yes");
+
         private bool isInitialized;
         private bool needToRefreshData;
         private PackageManager packageManager;
@@ -286,7 +295,7 @@ namespace GetStoreApp.Views.Pages
                 if (AppManagerList.Count is 0)
                 {
                     AppManagerResultKind = AppManagerResultKind.Failed;
-                    AppManagerFailedContent = PackageEmptyDescription;
+                    AppManagerFailedContent = PackageEmptyDescriptionString;
                 }
                 else
                 {
@@ -415,7 +424,7 @@ namespace GetStoreApp.Views.Pages
                     }
 
                     AppManagerResultKind = AppManagerCollection.Count is 0 ? AppManagerResultKind.Failed : AppManagerResultKind.Successfully;
-                    AppManagerFailedContent = AppManagerCollection.Count is 0 ? PackageEmptyWithConditionDescription : string.Empty;
+                    AppManagerFailedContent = AppManagerCollection.Count is 0 ? PackageEmptyWithConditionDescriptionString : string.Empty;
                 }
             }
         }
@@ -559,7 +568,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             AppNotificationBuilder appNotificationBuilder = new();
                             appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/UWPUninstallSuccessfully"), package.Package.DisplayName));
+                            appNotificationBuilder.AddText(string.Format(UninstallSuccessfullyString, package.Package.DisplayName));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                         });
 
@@ -575,16 +584,15 @@ namespace GetStoreApp.Views.Pages
                         {
                             AppNotificationBuilder appNotificationBuilder = new();
                             appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/UWPUninstallFailed1"), package.Package.DisplayName));
-                            appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/UWPUninstallFailed2"));
-
+                            appNotificationBuilder.AddText(string.Format(UninstallFailed1String, package.Package.DisplayName));
+                            appNotificationBuilder.AddText(UninstallFailed2String);
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
-                                    ResourceService.GetLocalized("Notification/UWPUninstallFailed3"),
-                                    string.Format(ResourceService.GetLocalized("Notification/UWPUninstallFailed4"), deploymentResult.ExtendedErrorCode is not null ? deploymentResult.ExtendedErrorCode.HResult : Unknown),
-                                    string.Format(ResourceService.GetLocalized("Notification/UWPUninstallFailed5"), deploymentResult.ErrorText)
+                                UninstallFailed3String,
+                                string.Format(UninstallFailed4String, deploymentResult.ExtendedErrorCode is not null ? deploymentResult.ExtendedErrorCode.HResult : UnknownString),
+                                string.Format(UninstallFailed5String, deploymentResult.ErrorText)
                             }));
-                            AppNotificationButton openSettingsButton = new(ResourceService.GetLocalized("Notification/OpenSettings"));
+                            AppNotificationButton openSettingsButton = new(OpenSettingsString);
                             openSettingsButton.Arguments.Add("action", "OpenSettings");
                             appNotificationBuilder.AddButton(openSettingsButton);
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -616,44 +624,44 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        appInformation.PackageFamilyName = string.IsNullOrEmpty(package.Package.Id.FamilyName) ? Unknown : package.Package.Id.FamilyName;
+                        appInformation.PackageFamilyName = string.IsNullOrEmpty(package.Package.Id.FamilyName) ? UnknownString : package.Package.Id.FamilyName;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.PackageFamilyName = Unknown;
+                        appInformation.PackageFamilyName = UnknownString;
                     }
 
                     try
                     {
-                        appInformation.PackageFullName = string.IsNullOrEmpty(package.Package.Id.FullName) ? Unknown : package.Package.Id.FullName;
+                        appInformation.PackageFullName = string.IsNullOrEmpty(package.Package.Id.FullName) ? UnknownString : package.Package.Id.FullName;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.PackageFullName = Unknown;
+                        appInformation.PackageFullName = UnknownString;
                     }
 
                     try
                     {
-                        appInformation.Description = string.IsNullOrEmpty(package.Package.Description) ? Unknown : package.Package.Description;
+                        appInformation.Description = string.IsNullOrEmpty(package.Package.Description) ? UnknownString : package.Package.Description;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.Description = Unknown;
+                        appInformation.Description = UnknownString;
                     }
 
                     appInformation.PublisherDisplayName = package.PublisherDisplayName;
 
                     try
                     {
-                        appInformation.PublisherId = string.IsNullOrEmpty(package.Package.Id.PublisherId) ? Unknown : package.Package.Id.PublisherId;
+                        appInformation.PublisherId = string.IsNullOrEmpty(package.Package.Id.PublisherId) ? UnknownString : package.Package.Id.PublisherId;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.PublisherId = Unknown;
+                        appInformation.PublisherId = UnknownString;
                     }
 
                     appInformation.Version = package.Version;
@@ -661,86 +669,86 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        appInformation.Architecture = string.IsNullOrEmpty(package.Package.Id.Architecture.ToString()) ? Unknown : package.Package.Id.Architecture.ToString();
+                        appInformation.Architecture = string.IsNullOrEmpty(package.Package.Id.Architecture.ToString()) ? UnknownString : package.Package.Id.Architecture.ToString();
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.Architecture = Unknown;
+                        appInformation.Architecture = UnknownString;
                     }
 
-                    appInformation.SignatureKind = ResourceService.GetLocalized(string.Format("AppManager/Signature{0}", package.SignatureKind.ToString()));
-
-                    try
-                    {
-                        appInformation.ResourceId = string.IsNullOrEmpty(package.Package.Id.ResourceId) ? Unknown : package.Package.Id.ResourceId;
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.ResourceId = Unknown;
-                    }
+                    appInformation.SignatureKind = ResourceService.GetLocalized(string.Format(SignatureString, package.SignatureKind.ToString()));
 
                     try
                     {
-                        appInformation.IsBundle = package.Package.IsBundle ? Yes : No;
+                        appInformation.ResourceId = string.IsNullOrEmpty(package.Package.Id.ResourceId) ? UnknownString : package.Package.Id.ResourceId;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.IsBundle = Unknown;
+                        appInformation.ResourceId = UnknownString;
                     }
 
                     try
                     {
-                        appInformation.IsDevelopmentMode = package.Package.IsDevelopmentMode ? Yes : No;
+                        appInformation.IsBundle = package.Package.IsBundle ? YesString : NoString;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.IsDevelopmentMode = Unknown;
-                    }
-
-                    appInformation.IsFramework = package.IsFramework ? Yes : No;
-
-                    try
-                    {
-                        appInformation.IsOptional = package.Package.IsOptional ? Yes : No;
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.IsOptional = Unknown;
+                        appInformation.IsBundle = UnknownString;
                     }
 
                     try
                     {
-                        appInformation.IsResourcePackage = package.Package.IsResourcePackage ? Yes : No;
+                        appInformation.IsDevelopmentMode = package.Package.IsDevelopmentMode ? YesString : NoString;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.IsResourcePackage = Unknown;
+                        appInformation.IsDevelopmentMode = UnknownString;
+                    }
+
+                    appInformation.IsFramework = package.IsFramework ? YesString : NoString;
+
+                    try
+                    {
+                        appInformation.IsOptional = package.Package.IsOptional ? YesString : NoString;
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                        appInformation.IsOptional = UnknownString;
                     }
 
                     try
                     {
-                        appInformation.IsStub = package.Package.IsStub ? Yes : No;
+                        appInformation.IsResourcePackage = package.Package.IsResourcePackage ? YesString : NoString;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.IsStub = Unknown;
+                        appInformation.IsResourcePackage = UnknownString;
                     }
 
                     try
                     {
-                        appInformation.VertifyIsOK = package.Package.Status.VerifyIsOK() ? Yes : No;
+                        appInformation.IsStub = package.Package.IsStub ? YesString : NoString;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.VertifyIsOK = Unknown;
+                        appInformation.IsStub = UnknownString;
+                    }
+
+                    try
+                    {
+                        appInformation.VertifyIsOK = package.Package.Status.VerifyIsOK() ? YesString : NoString;
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                        appInformation.VertifyIsOK = UnknownString;
                     }
 
                     try
@@ -950,7 +958,7 @@ namespace GetStoreApp.Views.Pages
                 }
 
                 AppManagerResultKind = AppManagerCollection.Count is 0 ? AppManagerResultKind.Failed : AppManagerResultKind.Successfully;
-                AppManagerFailedContent = AppManagerCollection.Count is 0 ? PackageEmptyWithConditionDescription : string.Empty;
+                AppManagerFailedContent = AppManagerCollection.Count is 0 ? PackageEmptyWithConditionDescriptionString : string.Empty;
             }
         }
 
@@ -1092,7 +1100,7 @@ namespace GetStoreApp.Views.Pages
                     }
 
                     AppManagerResultKind = AppManagerCollection.Count is 0 ? AppManagerResultKind.Failed : AppManagerResultKind.Successfully;
-                    AppManagerFailedContent = AppManagerCollection.Count is 0 ? PackageEmptyWithConditionDescription : string.Empty;
+                    AppManagerFailedContent = AppManagerCollection.Count is 0 ? PackageEmptyWithConditionDescriptionString : string.Empty;
                 }
             }
         }
@@ -1236,7 +1244,7 @@ namespace GetStoreApp.Views.Pages
                     }
 
                     AppManagerResultKind = AppManagerCollection.Count is 0 ? AppManagerResultKind.Failed : AppManagerResultKind.Successfully;
-                    AppManagerFailedContent = AppManagerCollection.Count is 0 ? PackageEmptyWithConditionDescription : string.Empty;
+                    AppManagerFailedContent = AppManagerCollection.Count is 0 ? PackageEmptyWithConditionDescriptionString : string.Empty;
                 }
             }
         }
@@ -1380,7 +1388,7 @@ namespace GetStoreApp.Views.Pages
                     }
 
                     AppManagerResultKind = AppManagerCollection.Count is 0 ? AppManagerResultKind.Failed : AppManagerResultKind.Successfully;
-                    AppManagerFailedContent = AppManagerCollection.Count is 0 ? PackageEmptyWithConditionDescription : string.Empty;
+                    AppManagerFailedContent = AppManagerCollection.Count is 0 ? PackageEmptyWithConditionDescriptionString : string.Empty;
                 }
             }
         }
@@ -1474,7 +1482,7 @@ namespace GetStoreApp.Views.Pages
             if (AppManagerList.Count is 0)
             {
                 AppManagerResultKind = AppManagerResultKind.Failed;
-                AppManagerFailedContent = PackageEmptyDescription;
+                AppManagerFailedContent = PackageEmptyDescriptionString;
             }
             else
             {
@@ -1603,7 +1611,7 @@ namespace GetStoreApp.Views.Pages
                 }
 
                 AppManagerResultKind = AppManagerCollection.Count is 0 ? AppManagerResultKind.Failed : AppManagerResultKind.Successfully;
-                AppManagerFailedContent = AppManagerCollection.Count is 0 ? PackageEmptyWithConditionDescription : string.Empty;
+                AppManagerFailedContent = AppManagerCollection.Count is 0 ? PackageEmptyWithConditionDescriptionString : string.Empty;
             }
         }
 
@@ -1742,7 +1750,7 @@ namespace GetStoreApp.Views.Pages
                 }
 
                 AppManagerResultKind = AppManagerCollection.Count is 0 ? AppManagerResultKind.Failed : AppManagerResultKind.Successfully;
-                AppManagerFailedContent = AppManagerCollection.Count is 0 ? PackageEmptyWithConditionDescription : string.Empty;
+                AppManagerFailedContent = AppManagerCollection.Count is 0 ? PackageEmptyWithConditionDescriptionString : string.Empty;
             }
 
             needToRefreshData = false;
@@ -1814,12 +1822,12 @@ namespace GetStoreApp.Views.Pages
         {
             try
             {
-                return string.IsNullOrEmpty(package.DisplayName) ? Unknown : package.DisplayName;
+                return string.IsNullOrEmpty(package.DisplayName) ? UnknownString : package.DisplayName;
             }
             catch (Exception e)
             {
                 ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                return Unknown;
+                return UnknownString;
             }
         }
 
@@ -1830,12 +1838,12 @@ namespace GetStoreApp.Views.Pages
         {
             try
             {
-                return string.IsNullOrEmpty(package.PublisherDisplayName) ? Unknown : package.PublisherDisplayName;
+                return string.IsNullOrEmpty(package.PublisherDisplayName) ? UnknownString : package.PublisherDisplayName;
             }
             catch (Exception e)
             {
                 ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                return Unknown;
+                return UnknownString;
             }
         }
 
