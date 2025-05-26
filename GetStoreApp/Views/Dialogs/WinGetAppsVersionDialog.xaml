@@ -96,13 +96,7 @@
 
                 <BreadcrumbBar.ItemTemplate>
                     <DataTemplate x:DataType="text:ContentLinkInfo">
-                        <BreadcrumbBarItem Content="{Binding}">
-                            <BreadcrumbBarItem.ContentTemplate>
-                                <DataTemplate x:DataType="text:ContentLinkInfo">
-                                    <TextBlock Text="{x:Bind DisplayText}" />
-                                </DataTemplate>
-                            </BreadcrumbBarItem.ContentTemplate>
-                        </BreadcrumbBarItem>
+                        <TextBlock Text="{x:Bind DisplayText}" />
                     </DataTemplate>
                 </BreadcrumbBar.ItemTemplate>
             </BreadcrumbBar>
