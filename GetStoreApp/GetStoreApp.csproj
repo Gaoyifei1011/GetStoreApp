@@ -312,6 +312,8 @@
 
     <PRIResource Include="Strings\AppInformation.lang-en-us.resjson" />
     <PRIResource Include="Strings\AppInformation.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\AppList.lang-en-us.resjson" />
+    <PRIResource Include="Strings\AppList.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\en-us\About.resjson" />
     <PRIResource Include="Strings\en-us\AppManager.resjson" />
     <PRIResource Include="Strings\en-us\AppUpdate.resjson" />
