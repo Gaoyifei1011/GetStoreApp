@@ -64,8 +64,7 @@
                     Margin="20,6,30,3"
                     Padding="0"
                     HorizontalAlignment="Left"
-                    SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
-                    Visibility="{x:Bind settingsservice:WinGetConfigService.IsWinGetInstalled}">
+                    SelectedItem="{x:Bind SelectedItem, Mode=OneWay}">
 
                     <SelectorBarItem
                         Padding="12,5"
@@ -97,114 +96,7 @@
                     x:Name="WinGetFrame"
                     Grid.Row="1"
                     Navigated="{x:Bind OnNavigated}"
-                    NavigationFailed="{x:Bind OnNavigationFailed}"
-                    Visibility="{x:Bind settingsservice:WinGetConfigService.IsWinGetInstalled}" />
-
-                <!--  WinGet 程序包不存在提示内容  -->
-                <Grid
-                    Grid.Row="0"
-                    Grid.RowSpan="2"
-                    Padding="30,0"
-                    HorizontalAlignment="Center"
-                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(settingsservice:WinGetConfigService.IsWinGetInstalled)}">
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="0.8*" />
-                        <RowDefinition Height="1.2*" />
-                    </Grid.RowDefinitions>
-
-                    <Grid Grid.Row="0" VerticalAlignment="Bottom">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <TextBlock
-                            Grid.Row="0"
-                            Margin="0,0,0,5"
-                            HorizontalAlignment="Center"
-                            FontSize="20"
-                            FontWeight="SemiBold"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/InitializeFailedTitle')}"
-                            TextAlignment="Center"
-                            TextWrapping="WrapWholeWords" />
-                        <TextBlock
-                            Grid.Row="1"
-                            Margin="0,0,0,30"
-                            HorizontalAlignment="Center"
-                            FontSize="16"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/InitializeFailedDescription')}"
-                            TextAlignment="Center"
-                            TextWrapping="WrapWholeWords" />
-                    </Grid>
-
-                    <Grid Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <TextBlock
-                            Grid.Row="0"
-                            Margin="0,0,0,8"
-                            HorizontalAlignment="Left"
-                            FontSize="16"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Introduce')}"
-                            TextAlignment="Center"
-                            TextWrapping="WrapWholeWords" />
-                        <TextBlock
-                            Grid.Row="1"
-                            Margin="0,0,0,5"
-                            HorizontalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/IntroduceContent1')}"
-                            TextAlignment="Left"
-                            TextWrapping="WrapWholeWords" />
-                        <TextBlock
-                            Grid.Row="2"
-                            Margin="0,0,0,0"
-                            HorizontalAlignment="Left"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/IntroduceContent2')}"
-                            TextAlignment="Left"
-                            TextWrapping="WrapWholeWords" />
-                    </Grid>
-
-                    <Grid
-                        Grid.Row="2"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Top"
-                        ColumnSpacing="30">
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Button
-                            Grid.Column="0"
-                            HorizontalAlignment="Right"
-                            Click="{x:Bind OnLearnMoreClicked}"
-                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/LearnMore')}"
-                            Style="{StaticResource AccentButtonStyle}"
-                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/LearnMoreToolTip')}" />
-
-                        <Button
-                            Grid.Column="1"
-                            HorizontalAlignment="Center"
-                            Click="{x:Bind OnDownloadFromMicrosoftStoreClicked}"
-                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadFromMicrosoftStore')}"
-                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadFromMicrosoftStoreToolTip')}" />
-
-                        <Button
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            Click="{x:Bind OnDownloadFromGithubClicked}"
-                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadFromGithub')}"
-                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadFromGithubToolTip')}" />
-                    </Grid>
-                </Grid>
+                    NavigationFailed="{x:Bind OnNavigationFailed}" />
             </Grid>
         </SplitView.Content>
 

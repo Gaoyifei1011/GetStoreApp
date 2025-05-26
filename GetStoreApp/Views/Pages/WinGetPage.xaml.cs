@@ -2,7 +2,6 @@ using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Services.Settings;
 using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.Windows;
 using Microsoft.Management.Deployment;
@@ -162,7 +161,7 @@ namespace GetStoreApp.Views.Pages
             WinGetFrame.ContentTransitions = SuppressNavigationTransitionCollection;
 
             // 第一次导航
-            if (WinGetConfigService.IsWinGetInstalled && GetCurrentPageType() is null)
+            if (GetCurrentPageType() is null)
             {
                 NavigateTo(PageList[0], this, null);
             }
@@ -338,60 +337,6 @@ namespace GetStoreApp.Views.Pages
             {
                 WinGetSplitView.IsPaneOpen = false;
             }
-        }
-
-        /// <summary>
-        /// 了解更多有关 WinGet 程序包的描述信息
-        /// </summary>
-        private void OnLearnMoreClicked(object sender, RoutedEventArgs args)
-        {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new Uri(@"https://learn.microsoft.com/windows/package-manager"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
-        }
-
-        /// <summary>
-        /// 从微软商店中下载 WinGet 程序包管理器
-        /// </summary>
-        private void OnDownloadFromMicrosoftStoreClicked(object sender, RoutedEventArgs args)
-        {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new Uri("ms-windows-store://pdp/ProductId=9NBLGGH4NNS1"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
-        }
-
-        /// <summary>
-        /// 从Github中下载 WinGet 程序包管理器
-        /// </summary>
-        private void OnDownloadFromGithubClicked(object sender, RoutedEventArgs args)
-        {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new Uri("https://github.com/microsoft/winget-cli/releases"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
         }
 
         /// <summary>
