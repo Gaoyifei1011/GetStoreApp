@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Services.Settings;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -47,7 +46,7 @@ namespace GetStoreApp.Views.Dialogs
             WinGetAppsVersionFrame.ContentTransitions = SuppressNavigationTransitionCollection;
 
             // 第一次导航
-            if (WinGetConfigService.IsWinGetInstalled && GetCurrentPageType() is null)
+            if (GetCurrentPageType() is null)
             {
                 NavigateTo(PageList[0], new List<object>() { WinGetPage, this, WinGetApps }, null);
             }

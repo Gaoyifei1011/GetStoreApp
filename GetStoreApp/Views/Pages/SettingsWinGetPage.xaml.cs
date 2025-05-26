@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Services.Settings;
-using GetStoreApp.Views.Windows;
+﻿using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -30,7 +29,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnConfigurationClicked(object sender, RoutedEventArgs args)
         {
-            if (WinGetConfigService.IsWinGetInstalled && MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
+            if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
             {
                 settingsPage.NavigateTo(settingsPage.PageList[1], null, true);
             }

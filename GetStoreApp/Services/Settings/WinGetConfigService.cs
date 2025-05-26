@@ -2,10 +2,8 @@
 using Microsoft.Management.Deployment;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 
@@ -21,8 +19,6 @@ namespace GetStoreApp.Services.Settings
         private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
         private static ApplicationDataContainer wingetDataSourceContainer;
 
-        public static bool IsWinGetInstalled { get; private set; }
-
         public static StorageFolder DefaultDownloadFolder { get; private set; }
 
         public static List<KeyValuePair<string, PredefinedPackageCatalog>> PredefinedPackageCatalogList { get; } = [];
@@ -34,73 +30,69 @@ namespace GetStoreApp.Services.Settings
         {
             wingetDataSourceContainer = localSettingsContainer.CreateContainer(WinetDataSource, ApplicationDataCreateDisposition.Always);
             DefaultDownloadFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("WinGet", CreationCollisionOption.OpenIfExists);
-            IsWinGetInstalled = GetWinGetInstalledState();
 
             // 每次获取时读取已经添加的安装源，并去除掉已经被删除的值
             await Task.Run(() =>
             {
-                if (IsWinGetInstalled)
+                PackageManager packageManager = new();
+                wingetDataSourceLock.Enter();
+
+                try
                 {
-                    PackageManager packageManager = new();
-                    wingetDataSourceLock.Enter();
-
-                    try
+                    if (wingetDataSourceContainer.Values.TryGetValue(WinetDataSource, out object value) && value is ApplicationDataCompositeValue compositeValue)
                     {
-                        if (wingetDataSourceContainer.Values.TryGetValue(WinetDataSource, out object value) && value is ApplicationDataCompositeValue compositeValue)
+                        KeyValuePair<string, bool> winGetDataSourceName = KeyValuePair.Create(Convert.ToString(compositeValue["Name"]), Convert.ToBoolean(compositeValue["IsInternal"]));
+                        wingetDataSourceContainer.Values.Clear();
+                        bool isModified = false;
+
+                        // 检查内置数据源
+
+                        foreach (PredefinedPackageCatalog predefinedPackageCatalog in Enum.GetValues<PredefinedPackageCatalog>())
                         {
-                            KeyValuePair<string, bool> winGetDataSourceName = KeyValuePair.Create(Convert.ToString(compositeValue["Name"]), Convert.ToBoolean(compositeValue["IsInternal"]));
-                            wingetDataSourceContainer.Values.Clear();
-                            bool isModified = false;
+                            PackageCatalogReference packageCatalogReference = packageManager.GetPredefinedPackageCatalog(predefinedPackageCatalog);
+                            PredefinedPackageCatalogList.Add(KeyValuePair.Create(packageCatalogReference.Info.Name, predefinedPackageCatalog));
+                        }
 
-                            // 检查内置数据源
-
-                            foreach (PredefinedPackageCatalog predefinedPackageCatalog in Enum.GetValues<PredefinedPackageCatalog>())
+                        // 保存检查完成后的数据
+                        foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalogReferenceName in PredefinedPackageCatalogList)
+                        {
+                            if (string.Equals(winGetDataSourceName.Key, predefinedPackageCatalogReferenceName.Key) && winGetDataSourceName.Value)
                             {
-                                PackageCatalogReference packageCatalogReference = packageManager.GetPredefinedPackageCatalog(predefinedPackageCatalog);
-                                PredefinedPackageCatalogList.Add(KeyValuePair.Create(packageCatalogReference.Info.Name, predefinedPackageCatalog));
+                                wingetDataSourceContainer.Values[WinetDataSource] = compositeValue;
+                                isModified = true;
+                                break;
+                            }
+                        }
+
+                        if (!isModified)
+                        {
+                            // 检查自定义数据源
+                            IReadOnlyList<PackageCatalogReference> packageCatalogReferenceList = packageManager.GetPackageCatalogs();
+                            List<string> packageCatalogReferenceNameList = [];
+                            for (int index = 0; index < packageCatalogReferenceList.Count; index++)
+                            {
+                                packageCatalogReferenceNameList.Add(packageCatalogReferenceList[index].Info.Name);
                             }
 
                             // 保存检查完成后的数据
-                            foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalogReferenceName in PredefinedPackageCatalogList)
+                            foreach (string packageCatalogReferenceName in packageCatalogReferenceNameList)
                             {
-                                if (string.Equals(winGetDataSourceName.Key, predefinedPackageCatalogReferenceName.Key) && winGetDataSourceName.Value)
+                                if (string.Equals(winGetDataSourceName.Key, packageCatalogReferenceName) && !winGetDataSourceName.Value)
                                 {
                                     wingetDataSourceContainer.Values[WinetDataSource] = compositeValue;
-                                    isModified = true;
                                     break;
-                                }
-                            }
-
-                            if (!isModified)
-                            {
-                                // 检查自定义数据源
-                                IReadOnlyList<PackageCatalogReference> packageCatalogReferenceList = packageManager.GetPackageCatalogs();
-                                List<string> packageCatalogReferenceNameList = [];
-                                for (int index = 0; index < packageCatalogReferenceList.Count; index++)
-                                {
-                                    packageCatalogReferenceNameList.Add(packageCatalogReferenceList[index].Info.Name);
-                                }
-
-                                // 保存检查完成后的数据
-                                foreach (string packageCatalogReferenceName in packageCatalogReferenceNameList)
-                                {
-                                    if (string.Equals(winGetDataSourceName.Key, packageCatalogReferenceName) && !winGetDataSourceName.Value)
-                                    {
-                                        wingetDataSourceContainer.Values[WinetDataSource] = compositeValue;
-                                        break;
-                                    }
                                 }
                             }
                         }
                     }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, "Initialize winget data source settings data failed", e);
-                    }
-                    finally
-                    {
-                        wingetDataSourceLock.Exit();
-                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Initialize winget data source settings data failed", e);
+                }
+                finally
+                {
+                    wingetDataSourceLock.Exit();
                 }
             });
         }
@@ -181,23 +173,6 @@ namespace GetStoreApp.Services.Settings
             {
                 wingetDataSourceLock.Exit();
             }
-        }
-
-        /// <summary>
-        /// 获取 WinGet 的安装状态
-        /// </summary>
-        private static bool GetWinGetInstalledState()
-        {
-            Windows.Management.Deployment.PackageManager packageManager = new();
-            foreach (Package package in packageManager.FindPackagesForUser(string.Empty))
-            {
-                if (package.Id.FullName.Contains("Microsoft.DesktopAppInstaller") && File.Exists(Path.Combine(package.InstalledPath, "WinGet.exe")))
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 }
