@@ -55,7 +55,7 @@
                     Grid.Row="0"
                     Margin="30,10,30,0"
                     FontSize="22"
-                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/Title')}" />
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/MicrosoftStore')}" />
 
                 <Grid
                     Grid.Row="1"
@@ -105,7 +105,7 @@
                         Height="34"
                         Padding="0"
                         HorizontalAlignment="Right"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/ViewMoreOptions')}">
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/ViewMore')}">
 
                         <Button.Content>
                             <FontIcon FontSize="16" Glyph="&#xE712;" />
