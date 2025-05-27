@@ -201,6 +201,8 @@
     <None Remove="Strings\Download.lang-zh-hans.resjson" />
     <None Remove="Strings\Downloading.lang-en-us.resjson" />
     <None Remove="Strings\Downloading.lang-zh-hans.resjson" />
+    <None Remove="Strings\QueryLinks.lang-en-us.resjson" />
+    <None Remove="Strings\QueryLinks.lang-zh-hans.resjson" />
     <None Remove="Strings\en-us\About.resjson" /> 
     <None Remove="Strings\en-us\Dialog.resjson" />
     <None Remove="Strings\en-us\Installer.resjson" />
@@ -329,6 +331,8 @@
     <PRIResource Include="Strings\Download.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\Downloading.lang-en-us.resjson" />
     <PRIResource Include="Strings\Downloading.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\QueryLinks.lang-en-us.resjson" />
+    <PRIResource Include="Strings\QueryLinks.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\en-us\About.resjson" />
     <PRIResource Include="Strings\en-us\Dialog.resjson" />
     <PRIResource Include="Strings\en-us\Installer.resjson" />
