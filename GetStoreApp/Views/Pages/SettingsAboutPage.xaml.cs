@@ -127,25 +127,55 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 帮助翻译应用
         /// </summary>
-        private async void OnHelpTranslateClicked(object sender, RoutedEventArgs args)
+        private void OnHelpTranslateClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/pulls"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/pulls"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>
         /// 项目主页
         /// </summary>
-        private async void OnProjectDescriptionClicked(object sender, RoutedEventArgs args)
+        private void OnProjectDescriptionClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>
         /// 发送反馈
         /// </summary>
-        private async void OnSendFeedbackClicked(object sender, RoutedEventArgs args)
+        private void OnSendFeedbackClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/issues"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/issues"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>
