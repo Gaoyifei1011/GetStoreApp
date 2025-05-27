@@ -189,9 +189,15 @@
     <None Remove="Assets\LICENSE" />
     <None Remove="Strings\AppInformation.lang-en-us.resjson" />
     <None Remove="Strings\AppInformation.lang-zh-hans.resjson" />
-    <None Remove="Strings\en-us\About.resjson" />
-    <None Remove="Strings\en-us\AppInformation.resjson" />
-    <None Remove="Strings\en-us\AppManager.resjson" />    
+    <None Remove="Strings\AppList.lang-en-us.resjson" />
+    <None Remove="Strings\AppList.lang-zh-hans.resjson" />
+    <None Remove="Strings\AppManager.lang-en-us.resjson" />
+    <None Remove="Strings\AppManager.lang-zh-hans.resjson" />
+    <None Remove="Strings\AppUpdate.lang-en-us.resjson" />
+    <None Remove="Strings\AppUpdate.lang-zh-hans.resjson" />
+    <None Remove="Strings\Completed.lang-en-us.resjson" />
+    <None Remove="Strings\Completed.lang-zh-hans.resjson" />
+    <None Remove="Strings\en-us\About.resjson" /> 
     <None Remove="Strings\en-us\Dialog.resjson" />
     <None Remove="Strings\en-us\Download.resjson" />
     <None Remove="Strings\en-us\Installer.resjson" />
@@ -204,8 +210,6 @@
     <None Remove="Strings\en-us\Window.resjson" />
     <None Remove="Strings\en-us\WinGet.resjson" />
     <None Remove="Strings\zh-hans\About.resjson" />
-    <None Remove="Strings\zh-hans\AppInformation.resjson" />
-    <None Remove="Strings\zh-hans\AppManager.resjson" />  
     <None Remove="Strings\zh-hans\Dialog.resjson" />
     <None Remove="Strings\zh-hans\Download.resjson" />
     <None Remove="Strings\zh-hans\Installer.resjson" />
@@ -317,6 +321,8 @@
     <PRIResource Include="Strings\AppManager.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\AppUpdate.lang-en-us.resjson" />
     <PRIResource Include="Strings\AppUpdate.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\Completed.lang-en-us.resjson" />
+    <PRIResource Include="Strings\Completed.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\en-us\About.resjson" />
     <PRIResource Include="Strings\en-us\Dialog.resjson" />
     <PRIResource Include="Strings\en-us\Download.resjson" />
