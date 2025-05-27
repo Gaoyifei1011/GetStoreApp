@@ -408,7 +408,7 @@
                                     x:Load="{x:Bind InstallFailed.Equals(x:False), Mode=OneWay}"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind x:String.Format(InstalledValue, InstallValue), Mode=OneWay}"
+                                    Text="{x:Bind x:String.Format(InstalledValueString, InstallValue), Mode=OneWay}"
                                     TextAlignment="Left" />
 
                                 <TextBlock
