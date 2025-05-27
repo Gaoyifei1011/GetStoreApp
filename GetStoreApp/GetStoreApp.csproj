@@ -205,6 +205,8 @@
     <None Remove="Strings\QueryLinks.lang-zh-hans.resjson" />
     <None Remove="Strings\SearchStore.lang-en-us.resjson" />
     <None Remove="Strings\SearchStore.lang-zh-hans.resjson" />
+    <None Remove="Strings\SettingsAbout.lang-en-us.resjson" />
+    <None Remove="Strings\SettingsAbout.lang-zh-hans.resjson" />
     <None Remove="Strings\Store.lang-en-us.resjson" />
     <None Remove="Strings\Store.lang-zh-hans.resjson" />
     <None Remove="Strings\en-us\About.resjson" /> 
@@ -337,6 +339,8 @@
     <PRIResource Include="Strings\QueryLinks.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\SearchStore.lang-en-us.resjson" />
     <PRIResource Include="Strings\SearchStore.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\SettingsAbout.lang-en-us.resjson" />
+    <PRIResource Include="Strings\SettingsAbout.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\Store.lang-en-us.resjson" />
     <PRIResource Include="Strings\Store.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\en-us\About.resjson" />
