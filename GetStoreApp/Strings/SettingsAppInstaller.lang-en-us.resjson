@@ -1,0 +1,15 @@
+﻿{
+  "AllowUnsignedPackage": "Unsigned package",
+  "AllowUnsignedPackageDescription": "Allows unsigned installation packages to be installed",
+  "AllowUnsignedPackageOffContent": "No",
+  "AllowUnsignedPackageOnContent": "Yes",
+  "DeveloperOptions": "Developer options",
+  "ForceAppShutdown": "Force app shutdown",
+  "ForceAppShutdownDescription": "Forcibly terminate process associated with the package during app installing",
+  "ForceAppShutdownOffContent": "No",
+  "ForceAppShutdownOnContent": "Yes",
+  "ForceTargetAppShutdown": "Force target app shutdown",
+  "ForceTargetAppShutdownDescription": "Forcibly terminate process associated with the package during app installing",
+  "ForceTargetAppShutdownOffContent": "No",
+  "ForceTargetAppShutdownOnContent": "Yes"
+}
