@@ -39,7 +39,11 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class CompletedPage : Page, INotifyPropertyChanged
     {
-        private readonly string CompletedCountInfo = ResourceService.GetLocalized("Download/CompletedCountInfo");
+        private readonly string CompletedCountInfoString = ResourceService.GetLocalized("Completed/CompletedCountInfo");
+        private readonly string FileShareString = ResourceService.GetLocalized("Completed/FileShare");
+        private readonly string InstallFailed1String = ResourceService.GetLocalized("Completed/InstallFailed1");
+        private readonly string InstallFailed2String = ResourceService.GetLocalized("Completed/InstallFailed2");
+        private readonly string InstallSuccessfullyString = ResourceService.GetLocalized("Completed/InstallSuccessfully");
         private bool isInitialized;
         private PackageManager packageManager;
 
@@ -299,37 +303,37 @@ namespace GetStoreApp.Views.Pages
                                             // 显示安装成功通知
                                             AppNotificationBuilder appNotificationBuilder = new();
                                             appNotificationBuilder.AddArgument("action", "OpenApp");
-                                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallSuccessfully"), completedFile.Name));
+                                            appNotificationBuilder.AddText(string.Format(InstallSuccessfullyString, completedFile.Name));
                                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                                         });
                                     }
                                     // 安装失败
                                     else
                                     {
-                                        completed.InstallError = true;
+                                        completed.InstallFailed = true;
 
                                         await Task.Run(() =>
                                         {
                                             // 显示安装失败通知
                                             AppNotificationBuilder appNotificationBuilder = new();
                                             appNotificationBuilder.AddArgument("action", "OpenApp");
-                                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallFailed1"), completedFile.Name));
-                                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallFailed2"), deploymentResult.ExtendedErrorCode.Message));
+                                            appNotificationBuilder.AddText(string.Format(InstallFailed1String, completedFile.Name));
+                                            appNotificationBuilder.AddText(string.Format(InstallFailed2String, deploymentResult.ExtendedErrorCode.Message));
                                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                                         });
                                     }
                                 }
                                 else
                                 {
-                                    completed.InstallError = true;
+                                    completed.InstallFailed = true;
 
                                     await Task.Run(() =>
                                     {
                                         // 显示安装失败通知
                                         AppNotificationBuilder appNotificationBuilder = new();
                                         appNotificationBuilder.AddArgument("action", "OpenApp");
-                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallFailed1"), completedFile.Name));
-                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallFailed2"), exception.Message));
+                                        appNotificationBuilder.AddText(string.Format(InstallFailed1String, completedFile.Name));
+                                        appNotificationBuilder.AddText(string.Format(InstallFailed2String, exception.Message));
                                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                                     });
                                 }
@@ -337,7 +341,7 @@ namespace GetStoreApp.Views.Pages
                                 // 恢复原来的安装信息显示（并延缓当前安装信息显示时间0.5秒）
                                 await Task.Delay(500);
                                 completed.IsInstalling = false;
-                                completed.InstallError = false;
+                                completed.InstallFailed = false;
                             }
                         }
                         catch (Exception e)
@@ -410,7 +414,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         DataRequestDeferral deferral = args.Request.GetDeferral();
 
-                        args.Request.Data.Properties.Title = ResourceService.GetLocalized("Download/ShareFileTitle");
+                        args.Request.Data.Properties.Title = FileShareString;
                         args.Request.Data.SetStorageItems(new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completed.FilePath) });
                         deferral.Complete();
                     };
@@ -645,7 +649,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         DataRequestDeferral deferral = args.Request.GetDeferral();
 
-                        args.Request.Data.Properties.Title = ResourceService.GetLocalized("Download/ShareFileTitle");
+                        args.Request.Data.Properties.Title = FileShareString;
 
                         List<StorageFile> selectedFileList = [];
                         foreach (CompletedModel completedItem in selectedCompletedDataList)
