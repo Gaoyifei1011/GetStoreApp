@@ -147,19 +147,21 @@ namespace GetStoreApp.Models
             }
         }
 
-        // 标记安装是否出现了异常
-        private bool _installError;
+        /// <summary>
+        /// 安装是否失败
+        /// </summary>
+        private bool _installFailed;
 
-        public bool InstallError
+        public bool InstallFailed
         {
-            get { return _installError; }
+            get { return _installFailed; }
 
             set
             {
-                if (!Equals(_installError, value))
+                if (!Equals(_installFailed, value))
                 {
-                    _installError = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallError)));
+                    _installFailed = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallFailed)));
                 }
             }
         }
