@@ -35,8 +35,6 @@ namespace GetStoreApp.Services.Root
 
         public static List<KeyValuePair<string, string>> BackdropList { get; } = [];
 
-        public static List<KeyValuePair<string, string>> WebKernelList { get; } = [];
-
         public static List<KeyValuePair<string, string>> QueryLinksModeList { get; } = [];
 
         public static List<KeyValuePair<string, string>> InstallModeList { get; } = [];
@@ -77,7 +75,6 @@ namespace GetStoreApp.Services.Root
             InitializeQueryLinksInfoList();
             InitializeSearchStoreInfoList();
             InitializeBackdropList();
-            InitializeWebKernelList();
             InitializeQueryLinksModeList();
             InitializeInstallModeList();
             InitializeThemeList();
@@ -220,15 +217,6 @@ namespace GetStoreApp.Services.Root
             BackdropList.Add(KeyValuePair.Create(nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default), GetLocalized("Settings/BackdropAcrylic")));
             BackdropList.Add(KeyValuePair.Create(nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base), GetLocalized("Settings/BackdropAcrylicBase")));
             BackdropList.Add(KeyValuePair.Create(nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin), GetLocalized("Settings/BackdropAcrylicThin")));
-        }
-
-        /// <summary>
-        /// 初始化网页浏览器内核信息列表
-        /// </summary>
-        private static void InitializeWebKernelList()
-        {
-            WebKernelList.Add(KeyValuePair.Create("WebView", GetLocalized("Settings/WebKernelWebView")));
-            WebKernelList.Add(KeyValuePair.Create("WebView2", GetLocalized("Settings/WebKernelWebView2")));
         }
 
         /// <summary>
