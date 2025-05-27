@@ -9,7 +9,7 @@ namespace GetStoreApp.Models
     /// </summary>
     public sealed partial class CompletedModel : INotifyPropertyChanged
     {
-        public readonly string InstalledValue = ResourceService.GetLocalized("Completed/InstalledValue");
+        public readonly string InstalledValueString = ResourceService.GetLocalized("Completed/InstalledValue");
 
         private BitmapImage _iconImage;
 
