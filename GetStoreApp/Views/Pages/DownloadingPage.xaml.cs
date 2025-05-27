@@ -28,7 +28,7 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class DownloadingPage : Page, INotifyPropertyChanged
     {
-        private readonly string DownloadingCountInfo = ResourceService.GetLocalized("Download/DownloadingCountInfo");
+        private readonly string DownloadingCountInfoString = ResourceService.GetLocalized("Downloading/DownloadingCountInfo");
         private bool isInitialized;
 
         private bool _isSelectMode;
