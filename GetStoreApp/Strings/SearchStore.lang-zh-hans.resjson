@@ -1,0 +1,19 @@
+﻿{
+  "FillIn": "填入",
+  "HistoryContent": "输入的内容",
+  "HistoryEmpty": "历史记录空空如也",
+  "Options": "选项",
+  "OptionsToolTip": "选择您要使用的选项",
+  "QueryLinks": "查询链接",
+  "QueryLinksToolTip": "查询当前应用及其依赖的下载链接",
+  "Recent": "最近使用的项目",
+  "SearchPlaceHolderText": "例如：Microsoft Corporation",
+  "SearchResult": "搜索结果",
+  "SearchStore": "搜索应用",
+  "SearchStoreCountInfo": "从微软商店中搜索到{0}条结果",
+  "SearchStoreEmpty": "没有搜索到任何结果，请检查您输入的内容后重试",
+  "StoreAppLink": "应用链接",
+  "StoreAppName": "应用名称",
+  "StoreAppPublisher": "发布者",
+  "Welcome": "欢迎使用获取商店应用"
+}

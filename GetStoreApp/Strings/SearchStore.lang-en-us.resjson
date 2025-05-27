@@ -1,0 +1,19 @@
+﻿{
+  "FillIn": "Fill in",
+  "HistoryContent": "Input content",
+  "HistoryEmpty": "The history is empty",
+  "Options": "Options",
+  "OptionsToolTip": "Select the options you want to use",
+  "QueryLinks": "Query links",
+  "QueryLinksToolTip": "Query the download links for the current app and its dependencies",
+  "Recent": "Recently used items",
+  "SearchPlaceHolderText": "For example: Microsoft Corporation",
+  "SearchResult": "Search Result",
+  "SearchStore": "Search apps",
+  "SearchStoreCountInfo": "{0} results were searched from the Microsoft Store",
+  "SearchStoreEmpty": "No results have been searched, please check the content you entered and try again",
+  "StoreAppLink": "App link",
+  "StoreAppName": "App name",
+  "StoreAppPublisher": "App publisher",
+  "Welcome": "Welcome to use GetStoreApp"
+}
