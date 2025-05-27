@@ -1,0 +1,14 @@
+﻿{
+  "Close": "Close",
+  "Completed": "Completed",
+  "Downloading": "Downloading",
+  "DownloadInstruction": "Download instructions",
+  "DownloadInstruction1": "The download link is time-sensitive, and the app does not currently support resuming downloads for apps that fail to download.",
+  "DownloadInstruction2": "Some download services may be affected by \"metered network connections\", so please be careful to adjust the appropriate system settings",
+  "DownloadInstruction3": "If you encounter a download service that quits because of an exception, we recommend restarting the app before trying to download.",
+  "LearnMore": "Learn more",
+  "NavigationFailed": "Page {0} navigation failed",
+  "NetworkAndInternet": "Network & Internet",
+  "OpenSettings": "Open Download Settings",
+  "UseInstruction": "Use instruction"
+}
