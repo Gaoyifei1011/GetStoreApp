@@ -9,6 +9,7 @@ using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.Rstrtmgr;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +31,11 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsAdvancedPage : Page, INotifyPropertyChanged
     {
+        private readonly string WebKernelWebViewString = ResourceService.GetLocalized("SettingsAdvanced/WebKernelWebView");
+        private readonly string WebKernelWebView2String = ResourceService.GetLocalized("SettingsAdvanced/WebKernelWebView2");
+
+        private bool isInitialized;
+
         private bool _notificationValue = NotificationService.AppNotification;
 
         public bool NotificationValue
@@ -62,7 +68,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private KeyValuePair<string, string> _webKernel = WebKernelService.WebKernel;
+        private KeyValuePair<string, string> _webKernel;
 
         public KeyValuePair<string, string> WebKernel
         {
@@ -110,7 +116,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<KeyValuePair<string, string>> WebKernelList { get; } = WebKernelService.WebKernelList;
+        private List<KeyValuePair<string, string>> WebKernelList { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -121,7 +127,27 @@ namespace GetStoreApp.Views.Pages
             GlobalNotificationService.ApplicationExit += OnApplicationExit;
         }
 
-        #region 第一部分：设置高级页面——挂载的事件
+        #region 第一部分：重载父类事件
+
+        /// <summary>
+        /// 导航到该页面触发的事件
+        /// </summary>
+        protected override void OnNavigatedTo(NavigationEventArgs args)
+        {
+            base.OnNavigatedTo(args);
+
+            if (!isInitialized)
+            {
+                isInitialized = true;
+                WebKernelList.Add(KeyValuePair.Create(WebKernelService.WebKernelList[0], WebKernelWebViewString));
+                WebKernelList.Add(KeyValuePair.Create(WebKernelService.WebKernelList[1], WebKernelWebView2String));
+                WebKernel = WebKernelList.Find(item => Equals(item.Key, WebKernelService.WebKernel));
+            }
+        }
+
+        #endregion 第一部分：重载父类事件
+
+        #region 第二部分：设置高级页面——挂载的事件
 
         /// <summary>
         /// 打开系统通知设置
@@ -149,7 +175,7 @@ namespace GetStoreApp.Views.Pages
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
                 WebKernel = WebKernelList[Convert.ToInt32(tag)];
-                WebKernelService.SetWebKernel(WebKernel);
+                WebKernelService.SetWebKernel(WebKernel.Key);
             }
         }
 
@@ -270,7 +296,7 @@ namespace GetStoreApp.Views.Pages
             await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.LogClean, result));
         }
 
-        #endregion 第一部分：设置高级页面——挂载的事件
+        #endregion 第二部分：设置高级页面——挂载的事件
 
         #region 第二部分：设置高级页面——自定义事件
 
