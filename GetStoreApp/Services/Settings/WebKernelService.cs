@@ -12,28 +12,25 @@ namespace GetStoreApp.Services.Settings
     {
         private static readonly string webKernelSettingsKey = ConfigKey.WebKernelKey;
 
-        private static KeyValuePair<string, string> defaultWebKernel;
+        private static string defaultWebKernel;
 
-        public static KeyValuePair<string, string> WebKernel { get; set; }
+        public static string WebKernel { get; set; }
 
-        public static List<KeyValuePair<string, string>> WebKernelList { get; private set; }
+        public static List<string> WebKernelList { get; } = ["WebView", "WebView2"];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的网页浏览器内核选择值
         /// </summary>
         public static void InitializeWebKernel()
         {
-            WebKernelList = ResourceService.WebKernelList;
-
-            defaultWebKernel = WebKernelList.Find(item => item.Key is "WebView2");
-
+            defaultWebKernel = WebKernelList.Find(item => item is "WebView2");
             WebKernel = GetWebKernel();
         }
 
         /// <summary>
         /// 获取设置存储的网页浏览器内核选择值，如果设置没有存储，使用默认值
         /// </summary>
-        private static KeyValuePair<string, string> GetWebKernel()
+        private static string GetWebKernel()
         {
             string webKernel = LocalSettingsService.ReadSetting<string>(webKernelSettingsKey);
 
@@ -43,19 +40,19 @@ namespace GetStoreApp.Services.Settings
                 return defaultWebKernel;
             }
 
-            KeyValuePair<string, string> selectedWebKernel = WebKernelList.Find(item => string.Equals(item.Key, webKernel, StringComparison.OrdinalIgnoreCase));
+            string selectedWebKernel = WebKernelList.Find(item => string.Equals(item, webKernel, StringComparison.OrdinalIgnoreCase));
 
-            return string.IsNullOrEmpty(selectedWebKernel.Key) ? defaultWebKernel : selectedWebKernel;
+            return string.IsNullOrEmpty(selectedWebKernel) ? defaultWebKernel : selectedWebKernel;
         }
 
         /// <summary>
         /// 网页浏览器内核发生修改时修改设置存储的网页浏览器内核值
         /// </summary>
-        public static void SetWebKernel(KeyValuePair<string, string> webKernel)
+        public static void SetWebKernel(string webKernel)
         {
             WebKernel = webKernel;
 
-            LocalSettingsService.SaveSetting(webKernelSettingsKey, webKernel.Key);
+            LocalSettingsService.SaveSetting(webKernelSettingsKey, webKernel);
         }
     }
 }
