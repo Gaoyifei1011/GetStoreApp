@@ -136,7 +136,6 @@
             Grid.Row="2"
             Height="60"
             Margin="30,0,30,0"
-            Padding="16,12"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
@@ -163,7 +162,6 @@
                     <ProgressRing IsActive="True" IsEnabled="True" />
 
                     <TextBlock
-                        Margin="0,10"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/LoadingAppUpdate')}"
                         TextAlignment="Center" />
@@ -205,7 +203,7 @@
                     <Grid Margin="0,0,0,2">
                         <Grid
                             Height="60"
-                            Padding="16,12"
+                            Padding="16,0"
                             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                             BorderThickness="1"
@@ -215,7 +213,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="40" />
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
@@ -238,7 +236,6 @@
 
                             <StackPanel
                                 Grid.Column="1"
-                                Margin="0,12"
                                 VerticalAlignment="Center"
                                 Orientation="Vertical">
 
@@ -278,7 +275,8 @@
 
                             <StackPanel
                                 Grid.Column="2"
-                                HorizontalAlignment="Left"
+                                Margin="0,0,16,0"
+                                HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Spacing="2">
 

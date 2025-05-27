@@ -15,7 +15,7 @@
   "InsiderProgramToolTip": "Click to modify the insider program for the current user",
   "Installing": "Installing,{0}% completed",
   "InstallingSubInformation": "App size {0}, {1} downloaded",
-  "LoadingUpdate": "Checking all apps for the current user, please wait...",
+  "LoadingAppUpdate": "Checking all apps for the current user, please wait...",
   "NotCheckUpdate": "Click Check for Updates to see the status of the current user application",
   "OpenStore": "Open store",
   "OpenStoreToolTip": "Click to open Microsoft Store",
