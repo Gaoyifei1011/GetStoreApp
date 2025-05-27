@@ -26,7 +26,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SearchStorePage : Page, INotifyPropertyChanged
     {
-        private readonly string SearchStoreCountInfo = ResourceService.GetLocalized("Store/SearchStoreCountInfo");
+        private readonly string SearchStoreCountInfo = ResourceService.GetLocalized("SearchStore/SearchStoreCountInfo");
+        private readonly string WelcomeString = ResourceService.GetLocalized("SearchStore/Welcome");
 
         private string _searchText;
 
@@ -60,7 +61,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private string _stateInfoText = ResourceService.GetLocalized("Store/Welcome");
+        private string _stateInfoText;
 
         public string StateInfoText
         {
@@ -151,7 +152,7 @@ namespace GetStoreApp.Views.Pages
         public SearchStorePage()
         {
             InitializeComponent();
-
+            StateInfoText = WelcomeString;
             HistoryStorageService.SearchStoreCleared += () =>
             {
                 DispatcherQueue.TryEnqueue(HistoryCollection.Clear);
