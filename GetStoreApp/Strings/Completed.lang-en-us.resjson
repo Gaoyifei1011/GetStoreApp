@@ -19,6 +19,7 @@
   "FileShare": "File share",
   "FileSize": "File size:",
   "Install": "Install app",
+  "InstalledValue": "{0}% Installed",
   "InstallFailed": "Install failed",
   "InstallFailed1": "File {0} installation failed",
   "InstallFailed2": "Error message: {0}",
