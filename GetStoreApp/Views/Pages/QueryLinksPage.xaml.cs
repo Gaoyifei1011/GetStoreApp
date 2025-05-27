@@ -35,9 +35,9 @@ namespace GetStoreApp.Views.Pages
 
     public sealed partial class QueryLinksPage : Page, INotifyPropertyChanged
     {
+        private readonly string QueryedAppDescriptionString = ResourceService.GetLocalized("QueryLinks/QueryedAppDescription");
         private readonly string QueryedAppNameString = ResourceService.GetLocalized("QueryLinks/QueryedAppName");
         private readonly string QueryedAppPublisherString = ResourceService.GetLocalized("QueryLinks/QueryedAppPublisher");
-        private readonly string QueryedAppDescriptionString = ResourceService.GetLocalized("QueryLinks/QueryedAppDescription");
         private readonly string QueryLinksCountInfoString = ResourceService.GetLocalized("QueryLinks/QueryLinksCountInfo");
         private readonly string SampleTitleString = ResourceService.GetLocalized("QueryLinks/SampleTitle");
         private readonly string WelcomeString = ResourceService.GetLocalized("QueryLinks/Welcome");
