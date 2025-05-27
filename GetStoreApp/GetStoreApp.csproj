@@ -197,6 +197,8 @@
     <None Remove="Strings\AppUpdate.lang-zh-hans.resjson" />
     <None Remove="Strings\Completed.lang-en-us.resjson" />
     <None Remove="Strings\Completed.lang-zh-hans.resjson" />
+    <None Remove="Strings\Downloading.lang-en-us.resjson" />
+    <None Remove="Strings\Downloading.lang-zh-hans.resjson" />
     <None Remove="Strings\en-us\About.resjson" /> 
     <None Remove="Strings\en-us\Dialog.resjson" />
     <None Remove="Strings\en-us\Download.resjson" />
@@ -323,6 +325,8 @@
     <PRIResource Include="Strings\AppUpdate.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\Completed.lang-en-us.resjson" />
     <PRIResource Include="Strings\Completed.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\Downloading.lang-en-us.resjson" />
+    <PRIResource Include="Strings\Downloading.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\en-us\About.resjson" />
     <PRIResource Include="Strings\en-us\Dialog.resjson" />
     <PRIResource Include="Strings\en-us\Download.resjson" />
