@@ -115,7 +115,7 @@
                         Grid.Column="1"
                         VerticalAlignment="Center"
                         FontSize="14"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UseInstruction')}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/UseInstruction')}" />
 
                     <Button
                         Grid.Column="2"
@@ -123,7 +123,7 @@
                         VerticalAlignment="Center"
                         Click="{x:Bind OnCloseClicked}"
                         Style="{StaticResource AlternateCloseButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Close')}">
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Download/Close')}">
 
                         <Button.Content>
                             <FontIcon
@@ -191,8 +191,8 @@
                             Spacing="5">
 
                             <TextBlock>
-                                <Hyperlink Click="{x:Bind OnLearnDownloadMoreClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/LearnDownloadMore')}" />
+                                <Hyperlink Click="{x:Bind OnLearnMoreClicked}" UnderlineStyle="None">
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/LearnMore')}" />
                                 </Hyperlink>
                             </TextBlock>
 
@@ -203,8 +203,8 @@
                             </TextBlock>
 
                             <TextBlock>
-                                <Hyperlink Click="{x:Bind OnOpenDownloadSettingsClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/OpenDownloadSettings')}" />
+                                <Hyperlink Click="{x:Bind OnOpenSettingsClicked}" UnderlineStyle="None">
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/OpenSettings')}" />
                                 </Hyperlink>
                             </TextBlock>
                         </StackPanel>

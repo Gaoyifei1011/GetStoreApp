@@ -23,6 +23,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class DownloadPage : Page, INotifyPropertyChanged
     {
+        private readonly string NavigationFailedString = ResourceService.GetLocalized("Download/NavigationFailed");
+
         private SelectorBarItem _selectedItem;
 
         public SelectorBarItem SelectedItem
@@ -116,7 +118,7 @@ namespace GetStoreApp.Views.Pages
                 SelectedItem = DownloadSelctorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
             }
 
-            LogService.WriteLog(LoggingLevel.Warning, string.Format(ResourceService.GetLocalized("Store/NavigationFailed"), args.SourcePageType.FullName), args.Exception);
+            LogService.WriteLog(LoggingLevel.Warning, string.Format(NavigationFailedString, args.SourcePageType.FullName), args.Exception);
         }
 
         /// <summary>
@@ -133,7 +135,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 了解更多下载管理说明
         /// </summary>
-        private async void OnLearnDownloadMoreClicked(object sender, RoutedEventArgs args)
+        private async void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
             DownloadSplitView.IsPaneOpen = false;
             await Task.Delay(300);
@@ -166,7 +168,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开应用“下载设置”
         /// </summary>
-        private async void OnOpenDownloadSettingsClicked(object sender, RoutedEventArgs args)
+        private async void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
         {
             DownloadSplitView.IsPaneOpen = false;
             await Task.Delay(300);
@@ -194,7 +196,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, string.Format(ResourceService.GetLocalized("Store/NavigationFailed"), navigationPageType.FullName), e);
+                LogService.WriteLog(LoggingLevel.Error, string.Format(NavigationFailedString, navigationPageType.FullName), e);
             }
         }
 
