@@ -51,20 +51,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AllowUnsignedPackage')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/AllowUnsignedPackage')}" />
 
                     <TextBlock
                         x:Name="AllowUnsignedPackageDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AllowUnsignedPackageDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/AllowUnsignedPackageDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AllowUnsignedPackageDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/AllowUnsignedPackageDescription')}"
                                 Visibility="{x:Bind AllowUnsignedPackageDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -75,8 +75,7 @@
                     Margin="0,0,5,0"
                     VerticalAlignment="Center"
                     Click="{x:Bind OnOpenDevelopersClicked}"
-                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DeveloperOptions')}"
-                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DeveloperOptionsToolTip')}" />
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/DeveloperOptions')}" />
 
                 <StackPanel
                     Grid.Column="3"
@@ -85,12 +84,12 @@
 
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AllowUnsignedPackageOffContent')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/AllowUnsignedPackageOffContent')}"
                         Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowUnsignedPackageValue), Mode=OneWay}" />
 
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AllowUnsignedPackageOnContent')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/AllowUnsignedPackageOnContent')}"
                         Visibility="{x:Bind AllowUnsignedPackageValue, Mode=OneWay}" />
 
                     <ToggleSwitch
@@ -131,20 +130,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ForceAppShutdown')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceAppShutdown')}" />
 
                     <TextBlock
                         x:Name="ForceAppShutdownDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ForceAppShutdownDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceAppShutdownDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ForceAppShutdownDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceAppShutdownDescription')}"
                                 Visibility="{x:Bind ForceAppShutdownDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -157,21 +156,21 @@
 
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ForceTargetAppShutdownOffContent')}"
-                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ForceTargetAppShutdownValue), Mode=OneWay}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceAppShutdownOffContent')}"
+                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ForceAppShutdownValue), Mode=OneWay}" />
 
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ForceTargetAppShutdownOnContent')}"
-                        Visibility="{x:Bind ForceTargetAppShutdownValue, Mode=OneWay}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceAppShutdownOnContent')}"
+                        Visibility="{x:Bind ForceAppShutdownValue, Mode=OneWay}" />
 
                     <ToggleSwitch
                         MinWidth="0"
                         Margin="10,-2,-2,0"
-                        IsOn="{x:Bind ForceTargetAppShutdownValue, Mode=OneWay}"
+                        IsOn="{x:Bind ForceAppShutdownValue, Mode=OneWay}"
                         OffContent=""
                         OnContent=""
-                        Toggled="{x:Bind OnForceTargetAppShutdownToggled}" />
+                        Toggled="{x:Bind OnForceAppShutdownToggled}" />
                 </StackPanel>
             </Grid>
 
@@ -203,20 +202,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ForceTargetAppShutdown')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceTargetAppShutdown')}" />
 
                     <TextBlock
                         x:Name="ForceTargetAppShutdownDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ForceTargetAppShutdownDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceTargetAppShutdownDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ForceTargetAppShutdownDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceTargetAppShutdownDescription')}"
                                 Visibility="{x:Bind ForceTargetAppShutdownDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -229,12 +228,12 @@
 
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ForceTargetAppShutdownOffContent')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceTargetAppShutdownOffContent')}"
                         Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ForceTargetAppShutdownValue), Mode=OneWay}" />
 
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ForceTargetAppShutdownOnContent')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceTargetAppShutdownOnContent')}"
                         Visibility="{x:Bind ForceTargetAppShutdownValue, Mode=OneWay}" />
 
                     <ToggleSwitch
