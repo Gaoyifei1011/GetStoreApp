@@ -205,6 +205,8 @@
     <None Remove="Strings\QueryLinks.lang-zh-hans.resjson" />
     <None Remove="Strings\SearchStore.lang-en-us.resjson" />
     <None Remove="Strings\SearchStore.lang-zh-hans.resjson" />
+    <None Remove="Strings\Store.lang-en-us.resjson" />
+    <None Remove="Strings\Store.lang-zh-hans.resjson" />
     <None Remove="Strings\en-us\About.resjson" /> 
     <None Remove="Strings\en-us\Dialog.resjson" />
     <None Remove="Strings\en-us\Installer.resjson" />
@@ -212,7 +214,6 @@
     <None Remove="Strings\en-us\Resources.resjson" />
     <None Remove="Strings\en-us\Settings.resjson" />
     <None Remove="Strings\en-us\ShellMenu.resjson" />
-    <None Remove="Strings\en-us\Store.resjson" />
     <None Remove="Strings\en-us\WebView.resjson" />
     <None Remove="Strings\en-us\Window.resjson" />
     <None Remove="Strings\en-us\WinGet.resjson" />
@@ -223,7 +224,6 @@
     <None Remove="Strings\zh-hans\Resources.resjson" />
     <None Remove="Strings\zh-hans\Settings.resjson" />
     <None Remove="Strings\zh-hans\ShellMenu.resjson" />
-    <None Remove="Strings\zh-hans\Store.resjson" />
     <None Remove="Strings\zh-hans\WebView.resjson" />
     <None Remove="Strings\zh-hans\Window.resjson" />
     <None Remove="Strings\zh-hans\WinGet.resjson" />
@@ -337,6 +337,8 @@
     <PRIResource Include="Strings\QueryLinks.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\SearchStore.lang-en-us.resjson" />
     <PRIResource Include="Strings\SearchStore.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\Store.lang-en-us.resjson" />
+    <PRIResource Include="Strings\Store.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\en-us\About.resjson" />
     <PRIResource Include="Strings\en-us\Dialog.resjson" />
     <PRIResource Include="Strings\en-us\Installer.resjson" />
@@ -344,7 +346,6 @@
     <PRIResource Include="Strings\en-us\Resources.resjson" />
     <PRIResource Include="Strings\en-us\Settings.resjson" />
     <PRIResource Include="Strings\en-us\ShellMenu.resjson" />
-    <PRIResource Include="Strings\en-us\Store.resjson" />
     <PRIResource Include="Strings\en-us\WebView.resjson" />
     <PRIResource Include="Strings\en-us\Window.resjson" />
     <PRIResource Include="Strings\en-us\WinGet.resjson" />
@@ -355,7 +356,6 @@
     <PRIResource Include="Strings\zh-hans\Resources.resjson" />
     <PRIResource Include="Strings\zh-hans\Settings.resjson" />
     <PRIResource Include="Strings\zh-hans\ShellMenu.resjson" />
-    <PRIResource Include="Strings\zh-hans\Store.resjson" />
     <PRIResource Include="Strings\zh-hans\WebView.resjson" />
     <PRIResource Include="Strings\zh-hans\Window.resjson" />
     <PRIResource Include="Strings\zh-hans\WinGet.resjson" />
