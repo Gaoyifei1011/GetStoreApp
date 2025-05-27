@@ -35,8 +35,12 @@ namespace GetStoreApp.Views.Pages
 
     public sealed partial class QueryLinksPage : Page, INotifyPropertyChanged
     {
-        private readonly string QueryLinksCountInfo = ResourceService.GetLocalized("Store/QueryLinksCountInfo");
-        private readonly string SampleTitle = ResourceService.GetLocalized("Store/SampleTitle");
+        private readonly string QueryedAppNameString = ResourceService.GetLocalized("QueryLinks/QueryedAppName");
+        private readonly string QueryedAppPublisherString = ResourceService.GetLocalized("QueryLinks/QueryedAppPublisher");
+        private readonly string QueryedAppDescriptionString = ResourceService.GetLocalized("QueryLinks/QueryedAppDescription");
+        private readonly string QueryLinksCountInfoString = ResourceService.GetLocalized("QueryLinks/QueryLinksCountInfo");
+        private readonly string SampleTitleString = ResourceService.GetLocalized("QueryLinks/SampleTitle");
+        private readonly string WelcomeString = ResourceService.GetLocalized("QueryLinks/Welcome");
         private readonly Lock queryLinksLock = new();
 
         private bool isInitialized;
@@ -154,7 +158,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private string _stateInfoText = ResourceService.GetLocalized("Store/Welcome");
+        private string _stateInfoText;
 
         public string StateInfoText
         {
@@ -267,7 +271,7 @@ namespace GetStoreApp.Views.Pages
         public QueryLinksPage()
         {
             InitializeComponent();
-
+            StateInfoText = WelcomeString;
             SelectedType = TypeList[0];
             SelectedChannel = ChannelList[3];
             LinkText = string.Empty;
@@ -297,7 +301,7 @@ namespace GetStoreApp.Views.Pages
             {
                 isInitialized = true;
                 sampleLink = SampleLinkList[0];
-                LinkPlaceHolderText = SampleTitle + sampleLink;
+                LinkPlaceHolderText = SampleTitleString + sampleLink;
 
                 HistoryStorageService.QueryLinksCleared += () =>
                 {
@@ -511,7 +515,7 @@ namespace GetStoreApp.Views.Pages
             {
                 SelectedType = TypeList[Convert.ToInt32(tag)];
                 sampleLink = SampleLinkList[TypeList.FindIndex(item => Equals(item.InternalName, SelectedType.InternalName))];
-                LinkPlaceHolderText = SampleTitle + sampleLink;
+                LinkPlaceHolderText = SampleTitleString + sampleLink;
                 LinkText = string.Empty;
             }
         }
@@ -543,9 +547,9 @@ namespace GetStoreApp.Views.Pages
             string appInformationCopyString = await Task.Run(() =>
             {
                 List<string> appInformationCopyStringList = [];
-                appInformationCopyStringList.Add(ResourceService.GetLocalized("Store/QueryedAppName") + AppInfo.Name);
-                appInformationCopyStringList.Add(ResourceService.GetLocalized("Store/QueryedAppPublisher") + AppInfo.Publisher);
-                appInformationCopyStringList.Add(ResourceService.GetLocalized("Store/QueryedAppDescription"));
+                appInformationCopyStringList.Add(QueryedAppNameString + AppInfo.Name);
+                appInformationCopyStringList.Add(QueryedAppPublisherString + AppInfo.Publisher);
+                appInformationCopyStringList.Add(QueryedAppDescriptionString);
                 appInformationCopyStringList.Add(AppInfo.Description);
 
                 return string.Join(Environment.NewLine, appInformationCopyStringList);

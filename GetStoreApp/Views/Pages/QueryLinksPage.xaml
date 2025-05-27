@@ -140,7 +140,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
                     Click="{x:Bind OnQueryLinksClicked}"
-                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryLinks')}"
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryLinks')}"
                     IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}"
                     Style="{StaticResource AccentButtonStyle}" />
             </Grid>
@@ -213,7 +213,7 @@
                         <TextBlock
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/Recent')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Recent')}" />
                     </Grid>
                 </Expander.Header>
 
@@ -222,7 +222,7 @@
                         <TextBlock
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/HistoryEmpty')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryEmpty')}"
                             TextAlignment="Center"
                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(HistoryCollection.Count), Mode=OneWay}" />
 
@@ -243,14 +243,14 @@
                                 Grid.Column="0"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/HistoryAppName')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryAppName')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/HistoryAppName')}"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryAppName')}"
                                         Visibility="{x:Bind HistoryAppNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
@@ -260,14 +260,14 @@
                                 Grid.Column="1"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/HistoryType')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryType')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/HistoryType')}"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryType')}"
                                         Visibility="{x:Bind HistoryTypeHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
@@ -277,14 +277,14 @@
                                 Grid.Column="2"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/HistoryChannel')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryChannel')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/HistoryChannel')}"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryChannel')}"
                                         Visibility="{x:Bind HistoryChannelHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
@@ -294,14 +294,14 @@
                                 Grid.Column="3"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/HistoryLink')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryLink')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/HistoryLink')}"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryLink')}"
                                         Visibility="{x:Bind HistoryLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
@@ -312,8 +312,8 @@
                                 Margin="10,0,0,0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/Options')}"
-                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/OptionsToolTip')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Options')}"
+                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OptionsToolTip')}" />
                         </Grid>
 
                         <ListView
@@ -437,7 +437,7 @@
                                             Padding="0"
                                             Command="{StaticResource FillinCommand}"
                                             CommandParameter="{x:Bind}"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/Fillin')}"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Fillin')}"
                                             IsEnabled="{x:Bind IsQuerying.Equals(x:False), Mode=OneWay}" />
 
                                         <HyperlinkButton
@@ -445,8 +445,7 @@
                                             Padding="0"
                                             Command="{StaticResource CopyCommand}"
                                             CommandParameter="{x:Bind}"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/Copy')}"
-                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/CopyToolTip')}" />
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Copy')}" />
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
@@ -496,7 +495,7 @@
                                 Grid.Column="1"
                                 Margin="0,0,0,2"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryedAppInfo')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryedAppInfo')}" />
 
                             <CommandBar
                                 Grid.Column="2"
@@ -511,13 +510,13 @@
                                 </CommandBar.Resources>
 
                                 <CommandBar.PrimaryCommands>
-                                    <AppBarButton Click="{x:Bind OnCopyQueryedAppInfoClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('Store/CopyQueryedAppInfo')}">
+                                    <AppBarButton Click="{x:Bind OnCopyQueryedAppInfoClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyQueryedAppInfo')}">
                                         <AppBarButton.Icon>
                                             <FontIcon Glyph="&#xE8C8;" />
                                         </AppBarButton.Icon>
                                     </AppBarButton>
 
-                                    <AppBarButton Click="{x:Bind OnLearnMoreClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('Store/LearnMore')}">
+                                    <AppBarButton Click="{x:Bind OnLearnMoreClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/LearnMore')}">
                                         <AppBarButton.Icon>
                                             <FontIcon Glyph="&#xE890;" />
                                         </AppBarButton.Icon>
@@ -544,7 +543,7 @@
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryedAppName')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryedAppName')}" />
 
                             <TextBlock
                                 Grid.Row="0"
@@ -556,7 +555,7 @@
                             <TextBlock
                                 Grid.Row="1"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryedAppPublisher')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryedAppPublisher')}" />
 
                             <TextBlock
                                 Grid.Row="1"
@@ -568,7 +567,7 @@
                             <TextBlock
                                 Grid.Row="2"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryedAppDescription')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryedAppDescription')}" />
 
                             <TextBlock
                                 Grid.Row="2"
@@ -607,7 +606,7 @@
                     <TextBlock
                         Grid.Column="1"
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryResult')}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryResult')}" />
 
                     <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
@@ -622,26 +621,26 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryedAppType')}" />
+                            <TextBlock Grid.Column="0" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryedAppType')}" />
 
                             <TextBlock
                                 Grid.Column="1"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/NonPackagedApp')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/NonPackagedApp')}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPackagedApp), Mode=OneWay}" />
 
                             <TextBlock
                                 Grid.Column="1"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/PackagedApp')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/PackagedApp')}"
                                 Visibility="{x:Bind IsPackagedApp, Mode=OneWay}" />
                         </Grid>
 
-                        <TextBlock Text="{x:Bind x:String.Format(QueryLinksCountInfo, QueryLinksCollection.Count), Mode=OneWay}" />
+                        <TextBlock Text="{x:Bind x:String.Format(QueryLinksCountInfoString, QueryLinksCollection.Count), Mode=OneWay}" />
                     </StackPanel>
 
                     <TextBlock
                         Grid.Column="4"
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryLinksEmpty')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryLinksEmpty')}"
                         Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(QueryLinksCollection.Count), Mode=OneWay}" />
 
                     <CommandBar
@@ -661,8 +660,8 @@
                         <CommandBar.PrimaryCommands>
                             <AppBarButton
                                 Click="{x:Bind OnSelectClicked}"
-                                Label="{x:Bind rootservice:ResourceService.GetLocalized('Store/Select')}"
-                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/SelectToolTip')}">
+                                Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Select')}"
+                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/SelectToolTip')}">
 
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE762;" />
@@ -686,7 +685,7 @@
                         </CommandBar.Resources>
 
                         <CommandBar.PrimaryCommands>
-                            <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('Store/CopyOptions')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/CopyOptionsToolTip')}">
+                            <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyOptions')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyOptionsToolTip')}">
 
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE8C8;" />
@@ -698,20 +697,20 @@
                                             Height="32"
                                             Padding="11,0"
                                             Click="{x:Bind OnCopySelectedLinkClicked}"
-                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/CopySelectedLink')}"
-                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/CopySelectedLinkToolTip')}" />
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopySelectedLink')}"
+                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopySelectedLinkToolTip')}" />
 
                                         <MenuFlyoutItem
                                             Height="32"
                                             Padding="11,0"
                                             Click="{x:Bind OnCopySelectedClicked}"
-                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/CopySelectedContent')}"
-                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/CopySelectedContentToolTip')}" />
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopySelectedContent')}"
+                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopySelectedContentToolTip')}" />
                                     </MenuFlyout>
                                 </AppBarButton.Flyout>
                             </AppBarButton>
 
-                            <AppBarButton Click="{x:Bind OnDownloadSelectedClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadSelected')}">
+                            <AppBarButton Click="{x:Bind OnDownloadSelectedClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/DownloadSelected')}">
 
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE74B;" />
@@ -720,8 +719,8 @@
 
                             <AppBarButton
                                 Click="{x:Bind OnCancelClicked}"
-                                Label="{x:Bind rootservice:ResourceService.GetLocalized('Store/Cancel')}"
-                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/CancelToolTip')}">
+                                Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Cancel')}"
+                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CancelToolTip')}">
 
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE711;" />
@@ -758,10 +757,10 @@
                         VerticalAlignment="Center"
                         IsTapEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
                         Tapped="{x:Bind OnSelectTapped}"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/Select')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Select')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/SelectTip')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/SelectHeader')}"
                         Visibility="{x:Bind IsSelectMode, Mode=OneWay}" />
 
                     <TextBlock
@@ -769,14 +768,14 @@
                         Grid.Column="1"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/FileName')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileName')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/FileName')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileName')}"
                                 Visibility="{x:Bind FileNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -786,14 +785,14 @@
                         Grid.Column="2"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/FileSize')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileSize')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/FileSize')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileSize')}"
                                 Visibility="{x:Bind FileSizeHeaderText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -804,8 +803,8 @@
                         Margin="0,0,10,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/Options')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/OptionsToolTip')}" />
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Options')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OptionsToolTip')}" />
                 </Grid>
 
                 <!--  查询链接结果列表  -->
@@ -862,8 +861,8 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip MaxWidth="9999">
                                             <Grid>
-                                                <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SelectedToolTip')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
-                                                <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/UnSelectedToolTip')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
+                                                <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Selected')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
+                                                <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/UnSelected')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
                                             </Grid>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
@@ -922,9 +921,9 @@
                                     VerticalAlignment="Center"
                                     Command="{StaticResource OpenLinkCommand}"
                                     CommandParameter="{x:Bind FileLink}"
-                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/OpenLink')}"
+                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OpenLink')}"
                                     IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/OpenLinkToolTip')}" />
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OpenLinkToolTip')}" />
 
                                 <HyperlinkButton
                                     Grid.Column="4"
@@ -933,9 +932,9 @@
                                     VerticalAlignment="Center"
                                     Command="{StaticResource CopyLinkCommand}"
                                     CommandParameter="{x:Bind FileLink}"
-                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/CopyLink')}"
+                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyLink')}"
                                     IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/CopyLinkToolTip')}" />
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyLinkToolTip')}" />
 
                                 <HyperlinkButton
                                     Grid.Column="5"
@@ -943,9 +942,9 @@
                                     VerticalAlignment="Center"
                                     Command="{StaticResource CopyInformationCommand}"
                                     CommandParameter="{x:Bind}"
-                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/CopyInformation')}"
+                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyInformation')}"
                                     IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/CopyInformationToolTip')}" />
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyInformationToolTip')}" />
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
