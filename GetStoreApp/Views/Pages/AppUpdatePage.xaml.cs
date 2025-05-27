@@ -31,26 +31,25 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AppUpdatePage : Page, INotifyPropertyChanged
     {
-        private bool _isInitialized;
+        private bool isInitialized;
 
-        private readonly string AcquiringLicense = ResourceService.GetLocalized("AppUpdate/AcquiringLicense");
-        private readonly string Canceled = ResourceService.GetLocalized("AppUpdate/Canceled");
-        private readonly string Completed = ResourceService.GetLocalized("AppUpdate/Completed");
-        private readonly string Downloading = ResourceService.GetLocalized("AppUpdate/Downloading");
-        private readonly string Error = ResourceService.GetLocalized("AppUpdate/Error");
-        private readonly string Installing = ResourceService.GetLocalized("AppUpdate/Installing");
-        private readonly string InstallingSubInformation = ResourceService.GetLocalized("AppUpdate/InstallingSubInformation");
-        private readonly string Paused = ResourceService.GetLocalized("AppUpdate/Paused");
-        private readonly string Pending = ResourceService.GetLocalized("AppUpdate/Pending");
-        private readonly string ReadyToDownload = ResourceService.GetLocalized("AppUpdate/ReadyToDownload");
-        private readonly string RestoringData = ResourceService.GetLocalized("AppUpdate/RestoringData");
-        private readonly string Starting = ResourceService.GetLocalized("AppUpdate/Starting");
-        private readonly string AppUpdateCountInfo = ResourceService.GetLocalized("AppUpdate/AppUpdateCountInfo");
-        private readonly string AppUpdateEmpty = ResourceService.GetLocalized("AppUpdate/AppUpdateEmpty");
-        private readonly string AppUpdateSuccessfully = ResourceService.GetLocalized("Notification/AppUpdateSuccessfully");
+        private readonly string AcquiringLicenseString = ResourceService.GetLocalized("AppUpdate/AcquiringLicense");
+        private readonly string AppUpdateCountInfoString = ResourceService.GetLocalized("AppUpdate/AppUpdateCountInfo");
+        private readonly string AppUpdateEmptyString = ResourceService.GetLocalized("AppUpdate/AppUpdateEmpty");
+        private readonly string AppUpdateSuccessfullyString = ResourceService.GetLocalized("AppUpdate/AppUpdateSuccessfully");
+        private readonly string CanceledString = ResourceService.GetLocalized("AppUpdate/Canceled");
+        private readonly string CompletedString = ResourceService.GetLocalized("AppUpdate/Completed");
+        private readonly string DownloadingString = ResourceService.GetLocalized("AppUpdate/Downloading");
+        private readonly string ErrorString = ResourceService.GetLocalized("AppUpdate/Error");
+        private readonly string InstallingString = ResourceService.GetLocalized("AppUpdate/Installing");
+        private readonly string InstallingSubInformationString = ResourceService.GetLocalized("AppUpdate/InstallingSubInformation");
+        private readonly string PausedString = ResourceService.GetLocalized("AppUpdate/Paused");
+        private readonly string PendingString = ResourceService.GetLocalized("AppUpdate/Pending");
+        private readonly string ReadyToDownloadString = ResourceService.GetLocalized("AppUpdate/ReadyToDownload");
+        private readonly string RestoringDataString = ResourceService.GetLocalized("AppUpdate/RestoringData");
+        private readonly string StartingString = ResourceService.GetLocalized("AppUpdate/Starting");
 
         private readonly Lock AppUpdateLock = new();
-
         private AppInstallManager appInstallManager;
         private PackageManager packageManager;
 
@@ -106,9 +105,9 @@ namespace GetStoreApp.Views.Pages
         {
             base.OnNavigatedTo(args);
 
-            if (!_isInitialized)
+            if (!isInitialized)
             {
-                _isInitialized = true;
+                isInitialized = true;
                 appInstallManager = new();
                 packageManager = new();
 
@@ -156,7 +155,7 @@ namespace GetStoreApp.Views.Pages
                                 appUpdateItem.IsOperating = false;
                                 appUpdateItem.AppInstallState = AppInstallState.Pending;
                                 appUpdateItem.IsUpdating = true;
-                                appUpdateItem.InstallInformation = Pending;
+                                appUpdateItem.InstallInformation = PendingString;
                                 appUpdateItem.PercentComplete = 0;
                             }
                             // 安装更新添加失败
@@ -165,7 +164,7 @@ namespace GetStoreApp.Views.Pages
                                 appUpdateItem.IsOperating = false;
                                 appUpdateItem.AppInstallState = AppInstallState.Error;
                                 appUpdateItem.IsUpdating = false;
-                                appUpdateItem.InstallInformation = Error;
+                                appUpdateItem.InstallInformation = ErrorString;
                             }
 
                             break;
@@ -321,7 +320,7 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     AppInstallStatus appInstallStatus = upgradableAppItem.GetCurrentStatus();
                                     string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
-                                    string installSubInformation = string.Format(InstallingSubInformation, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
+                                    string installSubInformation = string.Format(InstallingSubInformationString, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
 
                                     appUpdateList.Add(new AppUpdateModel()
                                     {
@@ -388,7 +387,7 @@ namespace GetStoreApp.Views.Pages
             else
             {
                 AppUpdateResultKind = AppUpdateResultKind.Failed;
-                AppUpdateFailedContent = AppUpdateEmpty;
+                AppUpdateFailedContent = AppUpdateEmptyString;
             }
         }
 
@@ -430,7 +429,7 @@ namespace GetStoreApp.Views.Pages
                         appUpdateItem.IsOperating = false;
                         appUpdateItem.AppInstallState = AppInstallState.Pending;
                         appUpdateItem.IsUpdating = true;
-                        appUpdateItem.InstallInformation = Pending;
+                        appUpdateItem.InstallInformation = PendingString;
                         appUpdateItem.PercentComplete = 0;
                     }
                     // 安装更新添加失败
@@ -439,7 +438,7 @@ namespace GetStoreApp.Views.Pages
                         appUpdateItem.IsOperating = false;
                         appUpdateItem.AppInstallState = AppInstallState.Error;
                         appUpdateItem.IsUpdating = false;
-                        appUpdateItem.InstallInformation = Error;
+                        appUpdateItem.InstallInformation = ErrorString;
                     }
                 }
             }
@@ -468,7 +467,7 @@ namespace GetStoreApp.Views.Pages
             if (appInstallStatus is not null)
             {
                 string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
-                string installSubInformation = string.Format(InstallingSubInformation, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
+                string installSubInformation = string.Format(InstallingSubInformationString, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
@@ -503,7 +502,7 @@ namespace GetStoreApp.Views.Pages
                                     {
                                         AppNotificationBuilder appNotificationBuilder = new();
                                         appNotificationBuilder.AddArgument("action", "OpenApp");
-                                        appNotificationBuilder.AddText(string.Format(AppUpdateSuccessfully, appUpdateItem.DisplayName));
+                                        appNotificationBuilder.AddText(string.Format(AppUpdateSuccessfullyString, appUpdateItem.DisplayName));
                                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                                     });
 
@@ -511,7 +510,7 @@ namespace GetStoreApp.Views.Pages
                                     AppUpdateCollection.Remove(appUpdateItem);
 
                                     AppUpdateResultKind = AppUpdateResultKind.Failed;
-                                    AppUpdateFailedContent = AppUpdateEmpty;
+                                    AppUpdateFailedContent = AppUpdateEmptyString;
                                 }
                                 break;
                             }
@@ -536,20 +535,20 @@ namespace GetStoreApp.Views.Pages
         {
             return appInstallState switch
             {
-                AppInstallState.AcquiringLicense => AcquiringLicense,
-                AppInstallState.Canceled => Canceled,
-                AppInstallState.Completed => Completed,
-                AppInstallState.Downloading => string.Format(Downloading, appInstallStatus.PercentComplete),
-                AppInstallState.Error => string.Format(Error, appInstallStatus.ErrorCode.HResult),
-                AppInstallState.Installing => string.Format(Installing, appInstallStatus.PercentComplete),
-                AppInstallState.Paused => Paused,
-                AppInstallState.PausedLowBattery => Paused,
-                AppInstallState.PausedWiFiRecommended => Paused,
-                AppInstallState.PausedWiFiRequired => Paused,
-                AppInstallState.Pending => Pending,
-                AppInstallState.ReadyToDownload => ReadyToDownload,
-                AppInstallState.RestoringData => RestoringData,
-                AppInstallState.Starting => Starting,
+                AppInstallState.AcquiringLicense => AcquiringLicenseString,
+                AppInstallState.Canceled => CanceledString,
+                AppInstallState.Completed => CompletedString,
+                AppInstallState.Downloading => string.Format(DownloadingString, appInstallStatus.PercentComplete),
+                AppInstallState.Error => string.Format(ErrorString, appInstallStatus.ErrorCode.HResult),
+                AppInstallState.Installing => string.Format(InstallingString, appInstallStatus.PercentComplete),
+                AppInstallState.Paused => PausedString,
+                AppInstallState.PausedLowBattery => PausedString,
+                AppInstallState.PausedWiFiRecommended => PausedString,
+                AppInstallState.PausedWiFiRequired => PausedString,
+                AppInstallState.Pending => PendingString,
+                AppInstallState.ReadyToDownload => ReadyToDownloadString,
+                AppInstallState.RestoringData => RestoringDataString,
+                AppInstallState.Starting => StartingString,
                 _ => string.Empty,
             };
         }

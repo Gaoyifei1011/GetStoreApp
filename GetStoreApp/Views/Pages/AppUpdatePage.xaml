@@ -29,7 +29,7 @@
             Grid.Row="0"
             Margin="30,10,30,0"
             FontSize="22"
-            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/Title')}" />
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/AppUpdate')}" />
 
         <!--  应用更新控制栏  -->
         <Grid
@@ -72,7 +72,7 @@
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind x:String.Format(AppUpdateCountInfo, AppUpdateCollection.Count), Mode=OneWay}"
+                Text="{x:Bind x:String.Format(AppUpdateCountInfoString, AppUpdateCollection.Count), Mode=OneWay}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppUpdateCollection.Count), Mode=OneWay}" />
 
             <CommandBar
@@ -148,7 +148,7 @@
                 <TextBlock
                     Margin="0,10"
                     VerticalAlignment="Center"
-                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/NotCheckUpdateTip')}"
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/NotCheckUpdate')}"
                     TextAlignment="Center"
                     Visibility="{x:Bind CheckAppUpdateState(AppUpdateResultKind, enum:AppUpdateResultKind.NotCheckUpdate), Mode=OneWay}" />
 
@@ -165,7 +165,7 @@
                     <TextBlock
                         Margin="0,10"
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/LoadingUpdate')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/LoadingAppUpdate')}"
                         TextAlignment="Center" />
                 </StackPanel>
 
@@ -251,7 +251,7 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip MaxWidth="9999">
                                             <TextBlock>
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/DisplayNameToolTip')}" />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/DisplayName')}" />
                                                 <Run Text="{x:Bind DisplayName}" />
                                             </TextBlock>
                                         </ToolTip>
@@ -268,7 +268,7 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip MaxWidth="9999">
                                             <TextBlock>
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppManager/PublisherDisplayNameToolTip')}" />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/PublisherDisplayName')}" />
                                                 <Run Text="{x:Bind PublisherDisplayName}" />
                                             </TextBlock>
                                         </ToolTip>

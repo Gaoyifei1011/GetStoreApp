@@ -1,11 +1,14 @@
-{
+﻿{
   "AcquiringLicense": "Acquiring license",
+  "AppUpdate": "App update",
   "AppUpdateCountInfo": "There are {0} upgradable apps",
   "AppUpdateEmpty": "There is no upgradable apps",
+  "AppUpdateSuccessfully": "App {0} update successfully",
   "Cancel": "Cancel",
   "Canceled": "Canceled",
   "CheckUpdate": "Check update",
   "Completed": "Completed",
+  "DisplayName": "Display name: ",
   "Downloading": "Downloading,{0}% completed",
   "Error": "Failed, Error code: {0}",
   "InsiderProgram": "Insider program",
@@ -13,17 +16,16 @@
   "Installing": "Installing,{0}% completed",
   "InstallingSubInformation": "App size {0}, {1} downloaded",
   "LoadingUpdate": "Checking all apps for the current user, please wait...",
-  "NotCheckUpdateTip": "Click Check for Updates to see the status of the current user application",
+  "NotCheckUpdate": "Click Check for Updates to see the status of the current user application",
   "OpenStore": "Open store",
   "OpenStoreToolTip": "Click to open Microsoft Store",
   "Operation": "Operation",
   "Paused": "Paused",
   "Pending": "Waiting",
+  "PublisherDisplayName": "Publisher name: ",
   "ReadyToDownload": "Ready to update",
   "RestoringData": "Restoring data",
   "Starting": "Starting",
-  "Title": "App update",
   "Update": "Update",
-  "UpdateAll": "Update all",
-  "UpdateEmptyDescription": "All apps are up to date"
+  "UpdateAll": "Update all"
 }
