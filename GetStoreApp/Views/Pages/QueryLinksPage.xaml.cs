@@ -39,6 +39,10 @@ namespace GetStoreApp.Views.Pages
         private readonly string QueryedAppNameString = ResourceService.GetLocalized("QueryLinks/QueryedAppName");
         private readonly string QueryedAppPublisherString = ResourceService.GetLocalized("QueryLinks/QueryedAppPublisher");
         private readonly string QueryLinksCountInfoString = ResourceService.GetLocalized("QueryLinks/QueryLinksCountInfo");
+        private readonly string InfoBarErrorString = ResourceService.GetLocalized("QueryLinks/InfoBarError");
+        private readonly string InfoBarGettingString = ResourceService.GetLocalized("QueryLinks/InfoBarGetting");
+        private readonly string InfoBarSuccessString = ResourceService.GetLocalized("QueryLinks/InfoBarSuccess");
+        private readonly string InfoBarWarningString = ResourceService.GetLocalized("QueryLinks/InfoBarWarning");
         private readonly string SampleTitleString = ResourceService.GetLocalized("QueryLinks/SampleTitle");
         private readonly string WelcomeString = ResourceService.GetLocalized("QueryLinks/Welcome");
         private readonly Lock queryLinksLock = new();
@@ -256,7 +260,7 @@ namespace GetStoreApp.Views.Pages
 
         private List<string> SampleLinkList { get; } = ["https://apps.microsoft.com/store/detail/9WZDNCRFJBMP", "9WZDNCRFJBMP",];
 
-        private List<InfoBarModel> QueryLinksInfoList { get; } = ResourceService.QueryLinksInfoList;
+        private List<InfoBarModel> InfoBarList { get; } = [];
 
         public List<TypeModel> TypeList { get; } = ResourceService.TypeList;
 
@@ -275,6 +279,35 @@ namespace GetStoreApp.Views.Pages
             SelectedType = TypeList[0];
             SelectedChannel = ChannelList[3];
             LinkText = string.Empty;
+
+            InfoBarList.Add(new InfoBarModel
+            {
+                Severity = InfoBarSeverity.Informational,
+                Message = InfoBarGettingString,
+                PrRingActValue = true,
+                PrRingVisValue = true
+            });
+            InfoBarList.Add(new InfoBarModel
+            {
+                Severity = InfoBarSeverity.Success,
+                Message = InfoBarSuccessString,
+                PrRingActValue = false,
+                PrRingVisValue = false
+            });
+            InfoBarList.Add(new InfoBarModel
+            {
+                Severity = InfoBarSeverity.Warning,
+                Message = InfoBarWarningString,
+                PrRingActValue = false,
+                PrRingVisValue = false
+            });
+            InfoBarList.Add(new InfoBarModel
+            {
+                Severity = InfoBarSeverity.Error,
+                Message = InfoBarErrorString,
+                PrRingActValue = false,
+                PrRingVisValue = false
+            });
         }
 
         /// <summary>
@@ -289,6 +322,8 @@ namespace GetStoreApp.Views.Pages
                 await QueryLinksAsync();
             }
         }
+
+        #region 第一部分：重载父类事件
 
         /// <summary>
         /// 导航到该页面触发的事件
@@ -326,7 +361,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #region 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第一部分：重载父类事件
+
+        #region 第二部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
         /// 复制到剪贴板
@@ -494,9 +531,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第二部分：XamlUICommand 命令调用时挂载的事件
 
-        #region 第二部分：查找链接控件——挂载的事件
+        #region 第三部分：查找链接控件——挂载的事件
 
         /// <summary>
         /// 输入文本框内容发生改变时响应的事件
@@ -961,7 +998,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第二部分：查找链接控件——挂载的事件
+        #endregion 第三部分：查找链接控件——挂载的事件
 
         /// <summary>
         /// 获取链接
@@ -1266,9 +1303,9 @@ namespace GetStoreApp.Views.Pages
         {
             int state = Convert.ToInt32(severity);
 
-            ResultSeverity = QueryLinksInfoList[state].Severity;
-            StateInfoText = QueryLinksInfoList[state].Message;
-            IsRingActive = QueryLinksInfoList[state].PrRingActValue;
+            ResultSeverity = InfoBarList[state].Severity;
+            StateInfoText = InfoBarList[state].Message;
+            IsRingActive = InfoBarList[state].PrRingActValue;
         }
 
         /// <summary>
