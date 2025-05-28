@@ -243,34 +243,30 @@
                                     Style="{StaticResource BodyTextBlockStyle}"
                                     Text="{x:Bind DisplayName}"
                                     TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip MaxWidth="9999">
-                                            <TextBlock>
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/DisplayName')}" />
-                                                <Run Text="{x:Bind DisplayName}" />
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                    TextWrapping="NoWrap" />
 
                                 <TextBlock
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     Text="{x:Bind PublisherDisplayName}"
                                     TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                                    TextWrapping="NoWrap" />
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip MaxWidth="9999">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip MaxWidth="9999">
+                                        <StackPanel>
+                                            <TextBlock>
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/DisplayName')}" />
+                                                <Run Text="{x:Bind DisplayName}" />
+                                            </TextBlock>
+
                                             <TextBlock>
                                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/PublisherDisplayName')}" />
                                                 <Run Text="{x:Bind PublisherDisplayName}" />
                                             </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                        </StackPanel>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
                             </StackPanel>
 
                             <StackPanel

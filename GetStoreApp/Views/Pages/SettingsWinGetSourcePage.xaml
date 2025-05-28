@@ -255,34 +255,30 @@
                                                     Style="{StaticResource BodyTextBlockStyle}"
                                                     Text="{x:Bind Name}"
                                                     TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
-
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
-                                                            <TextBlock>
-                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Name')}" />
-                                                                <Run Text="{x:Bind Name}" />
-                                                            </TextBlock>
-                                                        </ToolTip>
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                    TextWrapping="NoWrap" />
 
                                                 <TextBlock
                                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                                     Style="{StaticResource CaptionTextBlockStyle}"
                                                     Text="{x:Bind Arguments}"
                                                     TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
+                                                    TextWrapping="NoWrap" />
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip MaxWidth="9999">
+                                                        <StackPanel>
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Name')}" />
+                                                                <Run Text="{x:Bind Name}" />
+                                                            </TextBlock>
+
                                                             <TextBlock>
                                                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Arguments')}" />
                                                                 <Run Text="{x:Bind Arguments}" />
                                                             </TextBlock>
-                                                        </ToolTip>
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                        </StackPanel>
+                                                    </ToolTip>
+                                                </ToolTipService.ToolTip>
                                             </StackPanel>
                                         </Grid>
                                     </Expander.Header>
@@ -565,34 +561,30 @@
                                                     Style="{StaticResource BodyTextBlockStyle}"
                                                     Text="{x:Bind Name}"
                                                     TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
-
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
-                                                            <TextBlock>
-                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Name')}" />
-                                                                <Run Text="{x:Bind Name}" />
-                                                            </TextBlock>
-                                                        </ToolTip>
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                    TextWrapping="NoWrap" />
 
                                                 <TextBlock
                                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                                     Style="{StaticResource CaptionTextBlockStyle}"
                                                     Text="{x:Bind Arguments}"
                                                     TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
+                                                    TextWrapping="NoWrap" />
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip MaxWidth="9999">
+                                                        <StackPanel>
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Name')}" />
+                                                                <Run Text="{x:Bind Name}" />
+                                                            </TextBlock>
+
                                                             <TextBlock>
                                                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Arguments')}" />
                                                                 <Run Text="{x:Bind Arguments}" />
                                                             </TextBlock>
-                                                        </ToolTip>
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                        </StackPanel>
+                                                    </ToolTip>
+                                                </ToolTipService.ToolTip>
                                             </StackPanel>
 
                                             <ProgressRing
@@ -600,86 +592,45 @@
                                                 IsActive="{x:Bind IsOperating, Mode=OneWay}"
                                                 Visibility="{x:Bind IsOperating, Mode=OneWay}" />
 
-                                            <ContentControl
+                                            <SplitButton
                                                 Grid.Column="3"
                                                 Margin="15,0,0,0"
-                                                VerticalAlignment="Center"
-                                                IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}">
+                                                Command="{StaticResource EditCommand}"
+                                                CommandParameter="{x:Bind}"
+                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Edit')}"
+                                                IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/EditToolTip')}">
 
-                                                <StackPanel
-                                                    Height="30"
-                                                    BorderBrush="{ThemeResource ButtonBorderBrush}"
-                                                    BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
-                                                    CornerRadius="{ThemeResource ControlCornerRadius}"
-                                                    Orientation="Horizontal">
+                                                <SplitButton.Flyout>
+                                                    <MenuFlyout Placement="Bottom">
+                                                        <MenuFlyoutItem
+                                                            Height="32"
+                                                            Padding="11,0"
+                                                            Command="{StaticResource RemoveDataSourceCommand}"
+                                                            CommandParameter="{x:Bind}"
+                                                            IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/RemoveDataSource')}">
 
-                                                    <Button
-                                                        VerticalAlignment="Stretch"
-                                                        VerticalContentAlignment="Center"
-                                                        BorderThickness="0,0,1,0"
-                                                        Command="{StaticResource EditCommand}"
-                                                        CommandParameter="{x:Bind}"
-                                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Edit')}"
-                                                        CornerRadius="0"
-                                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/EditToolTip')}" />
+                                                            <MenuFlyoutItem.Icon>
+                                                                <FontIcon Glyph="&#xE74D;" />
+                                                            </MenuFlyoutItem.Icon>
+                                                        </MenuFlyoutItem>
 
-                                                    <Button
-                                                        Width="35"
-                                                        VerticalAlignment="Stretch"
-                                                        BorderThickness="0"
-                                                        CornerRadius="0"
-                                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/ViewMore')}">
+                                                        <MenuFlyoutItem
+                                                            Height="32"
+                                                            Padding="11,0"
+                                                            Command="{StaticResource RemoveDataSourcePreserveDataCommand}"
+                                                            CommandParameter="{x:Bind}"
+                                                            IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/RemoveDataSourcePreserveData')}">
 
-                                                        <Button.Content>
-                                                            <AnimatedIcon
-                                                                Width="12"
-                                                                Height="12"
-                                                                HorizontalAlignment="Right"
-                                                                VerticalAlignment="Center"
-                                                                AutomationProperties.AccessibilityView="Raw">
-                                                                <animatedvisuals:AnimatedChevronDownSmallVisualSource />
-                                                                <AnimatedIcon.FallbackIconSource>
-                                                                    <FontIconSource
-                                                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                                        FontSize="8"
-                                                                        Glyph="&#xE96E;"
-                                                                        IsTextScaleFactorEnabled="False" />
-                                                                </AnimatedIcon.FallbackIconSource>
-                                                            </AnimatedIcon>
-                                                        </Button.Content>
-
-                                                        <Button.Flyout>
-                                                            <MenuFlyout Placement="Bottom">
-                                                                <MenuFlyoutItem
-                                                                    Height="32"
-                                                                    Padding="11,0"
-                                                                    Command="{StaticResource RemoveDataSourceCommand}"
-                                                                    CommandParameter="{x:Bind}"
-                                                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/RemoveDataSource')}">
-
-                                                                    <MenuFlyoutItem.Icon>
-                                                                        <FontIcon Glyph="&#xE74D;" />
-                                                                    </MenuFlyoutItem.Icon>
-                                                                </MenuFlyoutItem>
-
-                                                                <MenuFlyoutItem
-                                                                    Height="32"
-                                                                    Padding="11,0"
-                                                                    Command="{StaticResource RemoveDataSourcePreserveDataCommand}"
-                                                                    CommandParameter="{x:Bind}"
-                                                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/RemoveDataSourcePreserveData')}">
-
-                                                                    <MenuFlyoutItem.Icon>
-                                                                        <FontIcon Glyph="&#xE74D;" />
-                                                                    </MenuFlyoutItem.Icon>
-                                                                </MenuFlyoutItem>
-                                                            </MenuFlyout>
-                                                        </Button.Flyout>
-                                                    </Button>
-                                                </StackPanel>
-                                            </ContentControl>
+                                                            <MenuFlyoutItem.Icon>
+                                                                <FontIcon Glyph="&#xE74D;" />
+                                                            </MenuFlyoutItem.Icon>
+                                                        </MenuFlyoutItem>
+                                                    </MenuFlyout>
+                                                </SplitButton.Flyout>
+                                            </SplitButton>
                                         </Grid>
                                     </Expander.Header>
 
