@@ -32,7 +32,7 @@ namespace GetStoreApp.Services.Settings
             }
         }
 
-        public static List<string> ThemeList { get; private set; } = [nameof(ElementTheme.Default), nameof(ElementTheme.Light), nameof(ElementTheme.Dark)];
+        public static List<string> ThemeList { get; } = [nameof(ElementTheme.Default), nameof(ElementTheme.Light), nameof(ElementTheme.Dark)];
 
         public static event PropertyChangedEventHandler PropertyChanged;
 

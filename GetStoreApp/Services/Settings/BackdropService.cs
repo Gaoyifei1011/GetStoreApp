@@ -31,7 +31,7 @@ namespace GetStoreApp.Services.Settings
             }
         }
 
-        public static List<string> BackdropList { get; private set; } = [nameof(SystemBackdropTheme.Default), nameof(MicaKind) + nameof(MicaKind.Base), nameof(MicaKind) + nameof(MicaKind.BaseAlt), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin)];
+        public static List<string> BackdropList { get; } = [nameof(SystemBackdropTheme.Default), nameof(MicaKind) + nameof(MicaKind.Base), nameof(MicaKind) + nameof(MicaKind.BaseAlt), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin)];
 
         public static event PropertyChangedEventHandler PropertyChanged;
 
