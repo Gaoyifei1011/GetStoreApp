@@ -1,4 +1,5 @@
 ﻿{
+  "Configuration": "Configuration",
   "LearnConfig": "Learn config",
   "Open": "Open",
   "OpenConfigurationFile": "Open the WinGet package configuration file",
