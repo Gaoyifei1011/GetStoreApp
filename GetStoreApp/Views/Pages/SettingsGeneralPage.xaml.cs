@@ -33,6 +33,8 @@ namespace GetStoreApp.Views.Pages
         private readonly string BackdropDefaultString = ResourceService.GetLocalized("SettingsGeneral/BackdropDefault");
         private readonly string BackdropMicaString = ResourceService.GetLocalized("SettingsGeneral/BackdropMica");
         private readonly string BackdropMicaAltString = ResourceService.GetLocalized("SettingsGeneral/BackdropMicaAlt");
+        private readonly string DesktopAcrylicString = ResourceService.GetLocalized("SettingsGeneral/DesktopAcrylic");
+        private readonly string MicaString = ResourceService.GetLocalized("SettingsGeneral/Mica");
         private readonly string ThemeDarkString = ResourceService.GetLocalized("SettingsGeneral/ThemeDark");
         private readonly string ThemeDefaultString = ResourceService.GetLocalized("SettingsGeneral/ThemeDefault");
         private readonly string ThemeLightAltString = ResourceService.GetLocalized("SettingsGeneral/ThemeLight");
@@ -403,11 +405,11 @@ namespace GetStoreApp.Views.Pages
             }
             else if (index is 1 or 2)
             {
-                return string.Join(' ', ResourceService.GetLocalized("Settings/Mica"), selectedBackdrop.Value);
+                return string.Join(' ', MicaString, selectedBackdrop.Value);
             }
             else if (index is 3 or 4 or 5)
             {
-                return string.Join(' ', ResourceService.GetLocalized("Settings/DesktopAcrylic"), selectedBackdrop.Value);
+                return string.Join(' ', DesktopAcrylicString, selectedBackdrop.Value);
             }
             else
             {
