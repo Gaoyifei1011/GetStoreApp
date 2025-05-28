@@ -51,7 +51,7 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/FileStoragePath')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/FileStoragePath')}" />
 
                     <TextBlock TextTrimming="CharacterEllipsis" TextWrapping="NoWrap">
 
@@ -62,10 +62,10 @@
                         <ToolTipService.ToolTip>
                             <ToolTip MaxWidth="9999">
                                 <StackPanel HorizontalAlignment="Stretch">
-                                    <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/FileStoragePath')}" />
+                                    <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/FileStoragePath')}" />
                                     <TextBlock Text="{x:Bind DownloadFolder.Path, Mode=OneWay}" />
                                     <MenuFlyoutSeparator Margin="4,3" />
-                                    <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/OpenFolderToolTip')}" />
+                                    <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/OpenFolder')}" />
                                 </StackPanel>
                             </ToolTip>
                         </ToolTipService.ToolTip>
@@ -75,7 +75,7 @@
                 <DropDownButton
                     Grid.Column="2"
                     Margin="6,0,0,0"
-                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ChangeFolder')}">
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/ChangeFolder')}">
 
                     <DropDownButton.Flyout>
                         <MenuFlyout Placement="Bottom">
@@ -84,7 +84,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnDownloadChangeFolderClicked}"
                                 Tag="AppCache"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AppCacheFolder')}">
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/AppCacheFolder')}">
 
                                 <MenuFlyoutItem.Icon>
                                     <FontIcon Glyph="&#xECAA;" />
@@ -96,7 +96,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnDownloadChangeFolderClicked}"
                                 Tag="Download"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DownloadFolder')}">
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DownloadFolder')}">
 
                                 <MenuFlyoutItem.Icon>
                                     <FontIcon Glyph="&#xE896;" />
@@ -108,7 +108,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnDownloadChangeFolderClicked}"
                                 Tag="Desktop"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DesktopFolder')}">
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DesktopFolder')}">
 
                                 <MenuFlyoutItem.Icon>
                                     <FontIcon Glyph="&#xE7F4;" />
@@ -122,7 +122,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnDownloadChangeFolderClicked}"
                                 Tag="Custom"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Custom')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/Custom')}" />
                         </MenuFlyout>
                     </DropDownButton.Flyout>
                 </DropDownButton>
@@ -157,20 +157,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DoEngineMode')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DoEngineMode')}" />
 
                     <TextBlock
                         x:Name="DoEngineModeDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DoEngineModeDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DoEngineModeDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DoEngineModeDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DoEngineModeDescription')}"
                                 Visibility="{x:Bind DoEngineModeDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -181,7 +181,7 @@
                     Margin="0,0,6,0"
                     VerticalAlignment="Center"
                     Click="{x:Bind OnLearnDoEngineClicked}"
-                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LearnDoEngine')}" />
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/LearnDoEngine')}" />
 
                 <DropDownButton
                     Grid.Column="3"
@@ -250,20 +250,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DeliveryOptimization')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DeliveryOptimization')}" />
 
                     <TextBlock
                         x:Name="DeliveryOptimizationDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DeliveryOptimizationDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DeliveryOptimizationDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DeliveryOptimizationDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DeliveryOptimizationDescription')}"
                                 Visibility="{x:Bind DeliveryOptimizationDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -273,7 +273,7 @@
                     Grid.Column="2"
                     VerticalAlignment="Center"
                     Click="{x:Bind OnOpenDeliveryOptimizationClicked}"
-                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/OpenDeliveryOptimzationSettings')}" />
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/Open')}" />
             </Grid>
 
             <!--  Aria2 下载文件配置  -->
@@ -304,20 +304,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Aria2Configuration')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/Aria2Configuration')}" />
 
                     <TextBlock
                         x:Name="Aria2ConfigurationDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Aria2ConfigurationDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/Aria2ConfigurationDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Aria2ConfigurationDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/Aria2ConfigurationDescription')}"
                                 Visibility="{x:Bind Aria2ConfigurationDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -327,7 +327,7 @@
                     Grid.Column="2"
                     VerticalAlignment="Center"
                     Click="{x:Bind OnConfigurationClicked}"
-                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Configuration')}" />
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/Configuration')}" />
             </Grid>
         </Grid>
     </ScrollViewer>

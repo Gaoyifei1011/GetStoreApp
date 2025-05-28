@@ -8,6 +8,7 @@ using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
+using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.Storage.Pickers;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,11 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsDownloadPage : Page, INotifyPropertyChanged
     {
+        private readonly string DoEngineAria2String = ResourceService.GetLocalized("SettingsDownload/DoEngineAria2");
+        private readonly string DoEngineBitsString = ResourceService.GetLocalized("SettingsDownload/DoEngineBits");
+        private readonly string DoEngineDoString = ResourceService.GetLocalized("SettingsDownload/DoEngineDo");
+        private bool isInitialized;
+
         private StorageFolder _downloadFolder = DownloadOptionsService.DownloadFolder;
 
         public StorageFolder DownloadFolder
@@ -45,7 +51,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private KeyValuePair<string, string> _doEngineMode = DownloadOptionsService.DoEngineMode;
+        private KeyValuePair<string, string> _doEngineMode;
 
         public KeyValuePair<string, string> DoEngineMode
         {
@@ -61,7 +67,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<KeyValuePair<string, string>> DoEngineModeList { get; } = DownloadOptionsService.DoEngineModeList;
+        private List<KeyValuePair<string, string>> DoEngineModeList { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -69,6 +75,29 @@ namespace GetStoreApp.Views.Pages
         {
             InitializeComponent();
         }
+
+        #region 第一部分：重载父类事件
+
+        /// <summary>
+        /// 导航到该页面触发的事件
+        /// </summary>
+        protected override void OnNavigatedTo(NavigationEventArgs args)
+        {
+            base.OnNavigatedTo(args);
+
+            if (!isInitialized)
+            {
+                isInitialized = true;
+                DoEngineModeList.Add(KeyValuePair.Create(DownloadOptionsService.DoEngineModeList[0], DoEngineAria2String));
+                DoEngineModeList.Add(KeyValuePair.Create(DownloadOptionsService.DoEngineModeList[1], DoEngineBitsString));
+                DoEngineModeList.Add(KeyValuePair.Create(DownloadOptionsService.DoEngineModeList[2], DoEngineDoString));
+                DoEngineMode = DoEngineModeList.Find(item => string.Equals(item.Key, DownloadOptionsService.DoEngineMode, StringComparison.OrdinalIgnoreCase));
+            }
+        }
+
+        #endregion 第一部分：重载父类事件
+
+        #region 第二部分：设置下载管理页面——挂载的事件
 
         /// <summary>
         /// 打开下载文件存放目录
@@ -170,7 +199,7 @@ namespace GetStoreApp.Views.Pages
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
                 DoEngineMode = DoEngineModeList[Convert.ToInt32(tag)];
-                DownloadOptionsService.SetDoEngineMode(DoEngineMode);
+                DownloadOptionsService.SetDoEngineMode(DoEngineMode.Key);
             }
         }
 
@@ -196,5 +225,7 @@ namespace GetStoreApp.Views.Pages
                 }
             });
         }
+
+        #endregion 第二部分：设置下载管理页面——挂载的事件
     }
 }
