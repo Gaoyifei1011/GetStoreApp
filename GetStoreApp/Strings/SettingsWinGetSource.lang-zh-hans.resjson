@@ -35,7 +35,6 @@
   "Unknown": "[未知]",
   "UnSelected": "未选择",
   "User": "用户",
-  "ViewMore": "查看更多",
   "WinGetDataSourceCountInfo": "共有{0}个已添加的 WinGet 数据源",
   "WinGetDataSourceRemoveAccessDenied": "拒绝访问",
   "WinGetDataSourceRemoveCatalogError": "数据源错误",

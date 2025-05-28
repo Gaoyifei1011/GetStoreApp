@@ -35,7 +35,6 @@
   "Unknown": "[Unknown]",
   "UnSelected": "Not selected",
   "User": "User",
-  "ViewMore": "View more",
   "WinGetDataSourceCountInfo": "There are {0} added WinGet data sources",
   "WinGetDataSourceRemoveAccessDenied": "Access denied",
   "WinGetDataSourceRemoveCatalogError": "Catalog error",
