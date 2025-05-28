@@ -20,13 +20,13 @@
         <TextBlock
             HorizontalAlignment="Center"
             FontSize="20"
-            Text="{x:Bind rootservice:ResourceService.GetLocalized('WebView/PinningApp')}"
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('Pinner/PinningApp')}"
             TextWrapping="Wrap" />
 
         <TextBlock
             HorizontalAlignment="Center"
             FontSize="16"
-            Text="{x:Bind rootservice:ResourceService.GetLocalized('WebView/PinningTip')}"
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('Pinner/PinningTip')}"
             TextWrapping="Wrap" />
     </StackPanel>
 </Page>
