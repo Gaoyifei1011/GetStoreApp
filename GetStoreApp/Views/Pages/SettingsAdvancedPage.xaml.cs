@@ -141,7 +141,7 @@ namespace GetStoreApp.Views.Pages
                 isInitialized = true;
                 WebKernelList.Add(KeyValuePair.Create(WebKernelService.WebKernelList[0], WebKernelWebViewString));
                 WebKernelList.Add(KeyValuePair.Create(WebKernelService.WebKernelList[1], WebKernelWebView2String));
-                WebKernel = WebKernelList.Find(item => Equals(item.Key, WebKernelService.WebKernel));
+                WebKernel = WebKernelList.Find(item => string.Equals(item.Key, WebKernelService.WebKernel, StringComparison.OrdinalIgnoreCase));
             }
         }
 

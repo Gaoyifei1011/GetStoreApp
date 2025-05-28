@@ -23,7 +23,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         public static void InitializeWebKernel()
         {
-            defaultWebKernel = WebKernelList.Find(item => item is "WebView2");
+            defaultWebKernel = WebKernelList.Find(item => string.Equals(item, "WebView2", StringComparison.OrdinalIgnoreCase));
             WebKernel = GetWebKernel();
         }
 
@@ -41,7 +41,6 @@ namespace GetStoreApp.Services.Settings
             }
 
             string selectedWebKernel = WebKernelList.Find(item => string.Equals(item, webKernel, StringComparison.OrdinalIgnoreCase));
-
             return string.IsNullOrEmpty(selectedWebKernel) ? defaultWebKernel : selectedWebKernel;
         }
 
@@ -51,7 +50,6 @@ namespace GetStoreApp.Services.Settings
         public static void SetWebKernel(string webKernel)
         {
             WebKernel = webKernel;
-
             LocalSettingsService.SaveSetting(webKernelSettingsKey, webKernel);
         }
     }
