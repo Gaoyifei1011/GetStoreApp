@@ -14,8 +14,8 @@
     <Page.Resources>
         <XamlUICommand x:Name="CheckBoxClickCommand" ExecuteRequested="{x:Bind OnCheckBoxClickExecuteRequested}" />
         <XamlUICommand x:Name="EditCommand" ExecuteRequested="{x:Bind OnEditExecuteRequested}" />
-        <XamlUICommand x:Name="RemoveCommand" ExecuteRequested="{x:Bind OnRemoveExecuteRequested}" />
-        <XamlUICommand x:Name="RemovePreserveDataCommand" ExecuteRequested="{x:Bind OnRemovePreserveDataExecuteRequested}" />
+        <XamlUICommand x:Name="RemoveDataSourceCommand" ExecuteRequested="{x:Bind OnRemoveDataSourceExecuteRequested}" />
+        <XamlUICommand x:Name="RemoveDataSourcePreserveDataCommand" ExecuteRequested="{x:Bind OnRemoveDataSourcePreserveDataExecuteRequested}" />
     </Page.Resources>
 
     <Grid>
@@ -52,20 +52,20 @@
             <TextBlock
                 Grid.Column="1"
                 VerticalAlignment="Center"
-                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Operation')}" />
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Operation')}" />
 
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetSourceCountEmpty')}"
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/WinGetSourceCountEmpty')}"
                 Visibility="{x:Bind GetCountVisibility(WinGetSourceInternalCollection.Count, WinGetSourceCustomCollection.Count, x:True), Mode=OneWay}" />
 
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind GetLocalizedWinGetSourceCountInfo(WinGetSourceInternalCollection.Count, WinGetSourceCustomCollection.Count), Mode=OneWay}"
+                Text="{x:Bind GetLocalizedWinGetDataSourceCountInfo(WinGetSourceInternalCollection.Count, WinGetSourceCustomCollection.Count), Mode=OneWay}"
                 Visibility="{x:Bind GetCountVisibility(WinGetSourceInternalCollection.Count, WinGetSourceCustomCollection.Count, x:False), Mode=OneWay}" />
 
             <CommandBar
@@ -84,7 +84,7 @@
                     <AppBarButton
                         Click="{x:Bind OnAddNewSourceClicked}"
                         IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AddNewSource')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AddNewSource')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE710;" />
@@ -94,7 +94,7 @@
                     <AppBarButton
                         Click="{x:Bind OnRefreshClicked}"
                         IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Refresh')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Refresh')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE72C;" />
@@ -138,7 +138,7 @@
                         <TextBlock
                             Margin="0,10"
                             VerticalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LoadingWinGetSource')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/LoadingWinGetSource')}"
                             TextAlignment="Center" />
                     </StackPanel>
                 </Grid>
@@ -170,7 +170,7 @@
                             VerticalAlignment="Center"
                             FontSize="16"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetDataSourceInternal')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/InternalDataSource')}" />
                     </StackPanel>
 
                     <Grid
@@ -186,7 +186,7 @@
                         <TextBlock
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetDataSourceInternalEmpty')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/InternalDataSourceEmpty')}"
                             TextAlignment="Center" />
                     </Grid>
 
@@ -238,8 +238,8 @@
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip MaxWidth="9999">
                                                         <Grid>
-                                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/SelectedToolTip')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
-                                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/UnSelectedToolTip')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
+                                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Selected')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
+                                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/UnSelected')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
                                                         </Grid>
                                                     </ToolTip>
                                                 </ToolTipService.ToolTip>
@@ -260,7 +260,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip MaxWidth="9999">
                                                             <TextBlock>
-                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetSourceName')}" />
+                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Name')}" />
                                                                 <Run Text="{x:Bind Name}" />
                                                             </TextBlock>
                                                         </ToolTip>
@@ -277,7 +277,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip MaxWidth="9999">
                                                             <TextBlock>
-                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetSourceArguments')}" />
+                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Arguments')}" />
                                                                 <Run Text="{x:Bind Arguments}" />
                                                             </TextBlock>
                                                         </ToolTip>
@@ -315,20 +315,20 @@
                                                 Grid.Row="0"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Id')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/SourceId')}" />
 
                                             <TextBlock
                                                 Grid.Row="0"
                                                 Grid.Column="1"
                                                 FontSize="14"
-                                                Text="{x:Bind Id}"
+                                                Text="{x:Bind SourceId}"
                                                 TextWrapping="Wrap" />
 
                                             <TextBlock
                                                 Grid.Row="1"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Explicit')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Explicit')}" />
 
                                             <TextBlock
                                                 Grid.Row="1"
@@ -341,7 +341,7 @@
                                                 Grid.Row="2"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/TrustLevel')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/TrustLevel')}" />
 
                                             <TextBlock
                                                 Grid.Row="2"
@@ -354,7 +354,7 @@
                                                 Grid.Row="3"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LastUpdateTime')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/LastUpdateTime')}" />
 
                                             <TextBlock
                                                 Grid.Row="3"
@@ -367,7 +367,7 @@
                                                 Grid.Row="4"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Origin')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Origin')}" />
 
                                             <TextBlock
                                                 Grid.Row="4"
@@ -380,7 +380,7 @@
                                                 Grid.Row="5"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Type')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Type')}" />
 
                                             <TextBlock
                                                 Grid.Row="5"
@@ -393,7 +393,7 @@
                                                 Grid.Row="6"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AcceptSourceAgreements')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AcceptSourceAgreements')}" />
 
                                             <TextBlock
                                                 Grid.Row="6"
@@ -406,7 +406,7 @@
                                                 Grid.Row="7"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AdditionalPackageCatalogArguments')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AdditionalPackageCatalogArguments')}" />
 
                                             <TextBlock
                                                 Grid.Row="7"
@@ -419,7 +419,7 @@
                                                 Grid.Row="8"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AuthenticationType')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AuthenticationType')}" />
 
                                             <TextBlock
                                                 Grid.Row="8"
@@ -432,7 +432,7 @@
                                                 Grid.Row="9"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AuthenticationAccount')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AuthenticationAccount')}" />
 
                                             <TextBlock
                                                 Grid.Row="9"
@@ -445,7 +445,7 @@
                                                 Grid.Row="10"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/PackageCatalogBackgroundUpdateInterval')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/PackageCatalogBackgroundUpdateInterval')}" />
 
                                             <TextBlock
                                                 Grid.Row="10"
@@ -478,7 +478,7 @@
                             VerticalAlignment="Center"
                             FontSize="16"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetDataSourceCustom')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/CustomDataSource')}" />
                     </StackPanel>
 
                     <Grid
@@ -494,7 +494,7 @@
                         <TextBlock
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetDataSourceCustomEmpty')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/CustomDataSourceEmpty')}"
                             TextAlignment="Center" />
                     </Grid>
 
@@ -548,8 +548,8 @@
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip MaxWidth="9999">
                                                         <Grid>
-                                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/SelectedToolTip')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
-                                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/UnSelectedToolTip')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
+                                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Selected')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
+                                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/UnSelected')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
                                                         </Grid>
                                                     </ToolTip>
                                                 </ToolTipService.ToolTip>
@@ -570,7 +570,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip MaxWidth="9999">
                                                             <TextBlock>
-                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetSourceName')}" />
+                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Name')}" />
                                                                 <Run Text="{x:Bind Name}" />
                                                             </TextBlock>
                                                         </ToolTip>
@@ -587,7 +587,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip MaxWidth="9999">
                                                             <TextBlock>
-                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetSourceArguments')}" />
+                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Arguments')}" />
                                                                 <Run Text="{x:Bind Arguments}" />
                                                             </TextBlock>
                                                         </ToolTip>
@@ -619,16 +619,16 @@
                                                         BorderThickness="0,0,1,0"
                                                         Command="{StaticResource EditCommand}"
                                                         CommandParameter="{x:Bind}"
-                                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Edit')}"
+                                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Edit')}"
                                                         CornerRadius="0"
-                                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Settings/EditToolTip')}" />
+                                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/EditToolTip')}" />
 
                                                     <Button
                                                         Width="35"
                                                         VerticalAlignment="Stretch"
                                                         BorderThickness="0"
                                                         CornerRadius="0"
-                                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ViewMoreOptions')}">
+                                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/ViewMore')}">
 
                                                         <Button.Content>
                                                             <AnimatedIcon
@@ -653,10 +653,10 @@
                                                                 <MenuFlyoutItem
                                                                     Height="32"
                                                                     Padding="11,0"
-                                                                    Command="{StaticResource RemoveCommand}"
+                                                                    Command="{StaticResource RemoveDataSourceCommand}"
                                                                     CommandParameter="{x:Bind}"
                                                                     IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Remove')}">
+                                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/RemoveDataSource')}">
 
                                                                     <MenuFlyoutItem.Icon>
                                                                         <FontIcon Glyph="&#xE74D;" />
@@ -666,10 +666,10 @@
                                                                 <MenuFlyoutItem
                                                                     Height="32"
                                                                     Padding="11,0"
-                                                                    Command="{StaticResource RemovePreserveDataCommand}"
+                                                                    Command="{StaticResource RemoveDataSourcePreserveDataCommand}"
                                                                     CommandParameter="{x:Bind}"
                                                                     IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/RemovePreserveData')}">
+                                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/RemoveDataSourcePreserveData')}">
 
                                                                     <MenuFlyoutItem.Icon>
                                                                         <FontIcon Glyph="&#xE74D;" />
@@ -711,20 +711,20 @@
                                                 Grid.Row="0"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Id')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/SourceId')}" />
 
                                             <TextBlock
                                                 Grid.Row="0"
                                                 Grid.Column="1"
                                                 FontSize="14"
-                                                Text="{x:Bind Id}"
+                                                Text="{x:Bind SourceId}"
                                                 TextWrapping="Wrap" />
 
                                             <TextBlock
                                                 Grid.Row="1"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Explicit')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Explicit')}" />
 
                                             <TextBlock
                                                 Grid.Row="1"
@@ -737,7 +737,7 @@
                                                 Grid.Row="2"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/TrustLevel')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/TrustLevel')}" />
 
                                             <TextBlock
                                                 Grid.Row="2"
@@ -750,7 +750,7 @@
                                                 Grid.Row="3"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LastUpdateTime')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/LastUpdateTime')}" />
 
                                             <TextBlock
                                                 Grid.Row="3"
@@ -763,7 +763,7 @@
                                                 Grid.Row="4"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Origin')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Origin')}" />
 
                                             <TextBlock
                                                 Grid.Row="4"
@@ -776,7 +776,7 @@
                                                 Grid.Row="5"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Type')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Type')}" />
 
                                             <TextBlock
                                                 Grid.Row="5"
@@ -789,7 +789,7 @@
                                                 Grid.Row="6"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AcceptSourceAgreements')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AcceptSourceAgreements')}" />
 
                                             <TextBlock
                                                 Grid.Row="6"
@@ -802,7 +802,7 @@
                                                 Grid.Row="7"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AdditionalPackageCatalogArguments')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AdditionalPackageCatalogArguments')}" />
 
                                             <TextBlock
                                                 Grid.Row="7"
@@ -815,7 +815,7 @@
                                                 Grid.Row="8"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AuthenticationType')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AuthenticationType')}" />
 
                                             <TextBlock
                                                 Grid.Row="8"
@@ -828,7 +828,7 @@
                                                 Grid.Row="9"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AuthenticationAccount')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AuthenticationAccount')}" />
 
                                             <TextBlock
                                                 Grid.Row="9"
@@ -841,7 +841,7 @@
                                                 Grid.Row="10"
                                                 Grid.Column="0"
                                                 FontSize="14"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/PackageCatalogBackgroundUpdateInterval')}" />
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/PackageCatalogBackgroundUpdateInterval')}" />
 
                                             <TextBlock
                                                 Grid.Row="10"

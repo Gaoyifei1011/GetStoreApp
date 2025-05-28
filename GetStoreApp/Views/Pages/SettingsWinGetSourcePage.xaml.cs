@@ -28,24 +28,24 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsWinGetSourcePage : Page, INotifyPropertyChanged
     {
-        private readonly string NoneString = ResourceService.GetLocalized("Settings/None");
-        private readonly string YesString = ResourceService.GetLocalized("Settings/Yes");
-        private readonly string NoString = ResourceService.GetLocalized("Settings/No");
-        private readonly string TrustedString = ResourceService.GetLocalized("Settings/Trusted");
-        private readonly string DistrustedString = ResourceService.GetLocalized("Settings/Distrusted");
-        private readonly string PredefinedString = ResourceService.GetLocalized("Settings/Predefined");
-        private readonly string UserString = ResourceService.GetLocalized("Settings/User");
-        private readonly string UnknownString = ResourceService.GetLocalized("Settings/Unknown");
-        private readonly string MicrosoftEntraIdString = ResourceService.GetLocalized("Settings/MicrosoftEntraId");
-        private readonly string MicrosoftEntraIdForAzureBlobStorageString = ResourceService.GetLocalized("Settings/MicrosoftEntraIdForAzureBlobStorage");
-        private readonly string WinGetDataSourceRemoveFailedString = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveFailed");
-        private readonly string WinGetDataSourceRemoveGroupPolicyErrorString = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveGroupPolicyError");
-        private readonly string WinGetDataSourceRemoveCatalogErrorString = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveCatalogError");
-        private readonly string WinGetDataSourceRemoveInternalErrorString = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveInternalError");
-        private readonly string WinGetDataSourceRemoveInvalidOptionsString = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveInvalidOptions");
-        private readonly string WinGetDataSourceRemoveAccessDeniedString = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveAccessDenied");
-        private readonly string WinGetDataSourceRemoveSuccessString = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveSuccess");
-        private readonly string WinGetSourceCountInfoString = ResourceService.GetLocalized("Settings/WinGetSourceCountInfo");
+        private readonly string DistrustedString = ResourceService.GetLocalized("SettingsWinGetSource/Distrusted");
+        private readonly string MicrosoftEntraIdString = ResourceService.GetLocalized("SettingsWinGetSource/MicrosoftEntraId");
+        private readonly string MicrosoftEntraIdForAzureBlobStorageString = ResourceService.GetLocalized("SettingsWinGetSource/MicrosoftEntraIdForAzureBlobStorage");
+        private readonly string NoString = ResourceService.GetLocalized("SettingsWinGetSource/No");
+        private readonly string NoneString = ResourceService.GetLocalized("SettingsWinGetSource/None");
+        private readonly string PredefinedString = ResourceService.GetLocalized("SettingsWinGetSource/Predefined");
+        private readonly string TrustedString = ResourceService.GetLocalized("SettingsWinGetSource/Trusted");
+        private readonly string UnknownString = ResourceService.GetLocalized("SettingsWinGetSource/Unknown");
+        private readonly string UserString = ResourceService.GetLocalized("SettingsWinGetSource/User");
+        private readonly string WinGetDataSourceCountInfoString = ResourceService.GetLocalized("SettingsWinGetSource/WinGetDataSourceCountInfo");
+        private readonly string WinGetDataSourceRemoveAccessDeniedString = ResourceService.GetLocalized("SettingsWinGetSource/WinGetDataSourceRemoveAccessDenied");
+        private readonly string WinGetDataSourceRemoveCatalogErrorString = ResourceService.GetLocalized("SettingsWinGetSource/WinGetDataSourceRemoveCatalogError");
+        private readonly string WinGetDataSourceRemoveFailedString = ResourceService.GetLocalized("SettingsWinGetSource/WinGetDataSourceRemoveFailed");
+        private readonly string WinGetDataSourceRemoveGroupPolicyErrorString = ResourceService.GetLocalized("SettingsWinGetSource/WinGetDataSourceRemoveGroupPolicyError");
+        private readonly string WinGetDataSourceRemoveInternalErrorString = ResourceService.GetLocalized("SettingsWinGetSource/WinGetDataSourceRemoveInternalError");
+        private readonly string WinGetDataSourceRemoveInvalidOptionsString = ResourceService.GetLocalized("SettingsWinGetSource/WinGetDataSourceRemoveInvalidOptions");
+        private readonly string WinGetDataSourceRemoveSuccessString = ResourceService.GetLocalized("SettingsWinGetSource/WinGetDataSourceRemoveSuccess");
+        private readonly string YesString = ResourceService.GetLocalized("SettingsWinGetSource/Yes");
         private bool isInitialized;
 
         private bool _isLoadedCompleted;
@@ -157,7 +157,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 移除数据源
         /// </summary>
-        private async void OnRemoveExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnRemoveDataSourceExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (RuntimeHelper.IsElevated && args.Parameter is WinGetSourceModel winGetSource)
             {
@@ -284,7 +284,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 移除数据源
         /// </summary>
-        private async void OnRemovePreserveDataExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnRemoveDataSourcePreserveDataExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (RuntimeHelper.IsElevated && args.Parameter is WinGetSourceModel winGetSource)
             {
@@ -492,7 +492,7 @@ namespace GetStoreApp.Views.Pages
                         Arguments = string.IsNullOrEmpty(packageCatalogInformation.Arguments) ? NoneString : packageCatalogReference.Info.Argument,
                         Explicit = packageCatalogInformation.Explicit ? YesString : NoString,
                         TrustLevel = packageCatalogInformation.TrustLevel is PackageCatalogTrustLevel.Trusted ? TrustedString : DistrustedString,
-                        Id = packageCatalogInformation.Id,
+                        SourceId = packageCatalogInformation.Id,
                         LastUpdateTime = packageCatalogInformation.LastUpdateTime.ToString("yyyy/MM/dd HH:mm"),
                         Origin = packageCatalogInformation.Origin is PackageCatalogOrigin.Predefined ? PredefinedString : UserString,
                         Type = packageCatalogInformation.Type,
@@ -556,7 +556,7 @@ namespace GetStoreApp.Views.Pages
                         Arguments = string.IsNullOrEmpty(packageCatalogInformation.Arguments) ? NoneString : packageCatalogReference.Info.Argument,
                         Explicit = packageCatalogInformation.Explicit ? YesString : NoString,
                         TrustLevel = packageCatalogInformation.TrustLevel is PackageCatalogTrustLevel.Trusted ? TrustedString : DistrustedString,
-                        Id = packageCatalogInformation.Id,
+                        SourceId = packageCatalogInformation.Id,
                         LastUpdateTime = packageCatalogInformation.LastUpdateTime.ToString("yyyy/MM/dd HH:mm"),
                         Origin = packageCatalogInformation.Origin is PackageCatalogOrigin.Predefined ? PredefinedString : UserString,
                         Type = packageCatalogInformation.Type,
@@ -597,9 +597,9 @@ namespace GetStoreApp.Views.Pages
             return isReverse ? (winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount) > 0 ? Visibility.Collapsed : Visibility.Visible : (winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount) > 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private string GetLocalizedWinGetSourceCountInfo(int winGetSourceInternalCollectionCount, int winGetSourceCustomCollectionCount)
+        private string GetLocalizedWinGetDataSourceCountInfo(int winGetSourceInternalCollectionCount, int winGetSourceCustomCollectionCount)
         {
-            return string.Format(WinGetSourceCountInfoString, winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount);
+            return string.Format(WinGetDataSourceCountInfoString, winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount);
         }
     }
 }
