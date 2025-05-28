@@ -174,7 +174,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LanguageInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Language')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -182,7 +182,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LanguageInstructionDescription')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LanguageDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -205,7 +205,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/QueryLinksModeInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/QueryLinksMode')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -213,7 +213,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/QueryLinksModeInstructionDescription')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/QueryLinksModeDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -233,7 +233,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LinkFilterInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LinkFilter')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -241,7 +241,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/EncryptedPackageInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/EncryptedPackage')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -250,7 +250,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/BlockMapInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/BlockMap')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -261,19 +261,19 @@
 
                             <TextBlock>
                                 <Hyperlink
-                                    Click="{x:Bind OnEncryptedPackageClicked}"
+                                    Click="{x:Bind OnLearnEncryptedPackageClicked}"
                                     NavigateUri="https://github.com/MicrosoftDocs/msix-docs/blob/main/msix-src/package/create-app-package-with-makeappx-tool.md#encrypt-or-decrypt-a-package-or-bundle"
                                     UnderlineStyle="None">
-                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/EncryptedPackageButton')}" />
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LearnEncryptedPackage')}" />
                                 </Hyperlink>
                             </TextBlock>
 
                             <TextBlock>
                                 <Hyperlink
-                                    Click="{x:Bind OnBlockMapClicked}"
+                                    Click="{x:Bind OnLearnBlockMapClicked}"
                                     NavigateUri="https://docs.microsoft.com/uwp/schemas/blockmapschema/app-package-block-map"
                                     UnderlineStyle="None">
-                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/BlockMapButton')}" />
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LearnBlockMap')}" />
                                 </Hyperlink>
                             </TextBlock>
                         </StackPanel>
@@ -285,7 +285,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetConfigInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetConfig')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -293,7 +293,7 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetConfigInstructionDescription')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetConfigDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
@@ -319,7 +319,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DownloadInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Download')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -386,7 +386,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/InstallModeInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/InstallMode')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -423,7 +423,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/OtherOptionInstruction')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/OtherOption')}"
                             TextAlignment="Left" />
 
                         <TextBlock
@@ -431,7 +431,7 @@
                             Margin="16,0,16,10"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/OtherOptionInstructionDescription')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/OtherOptionDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
                     </Grid>

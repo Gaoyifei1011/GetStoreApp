@@ -23,6 +23,9 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
+        private readonly string SettingsString = ResourceService.GetLocalized("Settings/Settings");
+        private readonly string NavigationFailedString = ResourceService.GetLocalized("Settings/NavigationFailed");
+        private readonly string WinGetSourceConfigurationString = ResourceService.GetLocalized("Settings/WinGetSourceConfiguration");
         private AppNaviagtionArgs settingNavigationArgs = AppNaviagtionArgs.None;
 
         public List<Type> PageList { get; } = [typeof(SettingsItemPage), typeof(SettingsWinGetSourcePage)];
@@ -93,7 +96,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     BreadCollection.Add(new ContentLinkInfo()
                     {
-                        DisplayText = ResourceService.GetLocalized("Settings/Title"),
+                        DisplayText = SettingsString,
                         SecondaryText = "Settings"
                     });
                 }
@@ -101,12 +104,12 @@ namespace GetStoreApp.Views.Pages
                 {
                     BreadCollection.Add(new ContentLinkInfo()
                     {
-                        DisplayText = ResourceService.GetLocalized("Settings/Title"),
+                        DisplayText = SettingsString,
                         SecondaryText = "Settings"
                     });
                     BreadCollection.Add(new ContentLinkInfo()
                     {
-                        DisplayText = ResourceService.GetLocalized("Settings/WinGetSourceConfiguration"),
+                        DisplayText = WinGetSourceConfigurationString,
                         SecondaryText = "WinGetSourceConfiguration"
                     });
                 }
@@ -116,7 +119,7 @@ namespace GetStoreApp.Views.Pages
             {
                 BreadCollection.Add(new ContentLinkInfo()
                 {
-                    DisplayText = ResourceService.GetLocalized("Settings/WinGetSourceConfiguration"),
+                    DisplayText = WinGetSourceConfigurationString,
                     SecondaryText = "WinGetSourceConfiguration"
                 });
             }
@@ -132,7 +135,7 @@ namespace GetStoreApp.Views.Pages
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
             args.Handled = true;
-            LogService.WriteLog(LoggingLevel.Warning, string.Format(ResourceService.GetLocalized("Settings/NavigationFailed"), args.SourcePageType.FullName), args.Exception);
+            LogService.WriteLog(LoggingLevel.Warning, string.Format(NavigationFailedString, args.SourcePageType.FullName), args.Exception);
         }
 
         /// <summary>
@@ -168,7 +171,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 了解加密包
         /// </summary>
-        private void OnEncryptedPackageClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        private void OnLearnEncryptedPackageClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             SettingsSplitView.IsPaneOpen = false;
         }
@@ -176,7 +179,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 了解包块映射文件
         /// </summary>
-        private void OnBlockMapClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        private void OnLearnBlockMapClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             SettingsSplitView.IsPaneOpen = false;
         }
@@ -245,7 +248,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, string.Format(ResourceService.GetLocalized("Settings/NavigationFailed"), navigationPageType.FullName), e);
+                LogService.WriteLog(LoggingLevel.Error, string.Format(NavigationFailedString, navigationPageType.FullName), e);
             }
         }
 
