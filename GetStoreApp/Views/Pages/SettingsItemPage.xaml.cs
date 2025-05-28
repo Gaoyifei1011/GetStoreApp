@@ -33,6 +33,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsItemPage : Page, INotifyPropertyChanged
     {
+        private readonly string NavigationFailedString = ResourceService.GetLocalized("SettingsItem/NavigationFailed");
+
         private SelectorBarItem _selectedItem;
 
         public SelectorBarItem SelectedItem
@@ -146,7 +148,7 @@ namespace GetStoreApp.Views.Pages
                 SelectedItem = SettingsItemSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
             }
 
-            LogService.WriteLog(LoggingLevel.Warning, string.Format(ResourceService.GetLocalized("Store/NavigationFailed"), args.SourcePageType.FullName), args.Exception);
+            LogService.WriteLog(LoggingLevel.Warning, string.Format(NavigationFailedString, args.SourcePageType.FullName), args.Exception);
         }
 
         /// <summary>
@@ -314,7 +316,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, string.Format(ResourceService.GetLocalized("Settings/NavigationFailed"), navigationPageType.FullName), e);
+                LogService.WriteLog(LoggingLevel.Error, string.Format(NavigationFailedString, navigationPageType.FullName), e);
             }
         }
 
