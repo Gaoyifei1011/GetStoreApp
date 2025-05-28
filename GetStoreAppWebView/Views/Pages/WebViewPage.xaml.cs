@@ -36,6 +36,7 @@ namespace GetStoreAppWebView.Views.Pages
     /// </summary>
     public sealed partial class WebViewPage : Page, INotifyPropertyChanged
     {
+        private readonly string WebBrowserString = ResourceService.GetLocalized("WebView/WebBrowser");
         private readonly ApplicationView applicationView = ApplicationView.GetForCurrentView();
         private readonly CoreApplicationView coreApplicationView = CoreApplication.GetCurrentView();
         private readonly IInternalCoreWindow2 internalCoreWindow2 = Window.Current.CoreWindow.As<IInternalCoreWindow2>();
@@ -396,7 +397,7 @@ namespace GetStoreAppWebView.Views.Pages
         private void OnNavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
         {
             IsLoading = false;
-            applicationView.Title = string.Format("{0} - {1}", sender.DocumentTitle, ResourceService.GetLocalized("WebView/Title"));
+            applicationView.Title = string.Format("{0} - {1}", sender.DocumentTitle, WebBrowserString);
             if (sender.CanGoBack)
             {
                 sender.GoBack();
@@ -477,7 +478,7 @@ namespace GetStoreAppWebView.Views.Pages
         private void OnWebView2NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
         {
             IsLoading = false;
-            applicationView.Title = string.Format("{0} - {1}", WebView2Browser.CoreWebView2.DocumentTitle, ResourceService.GetLocalized("WebView/Title"));
+            applicationView.Title = string.Format("{0} - {1}", WebView2Browser.CoreWebView2.DocumentTitle, WebBrowserString);
         }
 
         /// <summary>
