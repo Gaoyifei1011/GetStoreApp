@@ -13,11 +13,11 @@ namespace GetStoreApp.Services.Settings
     public static class BackdropService
     {
         private static readonly string settingsKey = ConfigKey.BackdropKey;
-        private static KeyValuePair<string, string> defaultAppBackdrop;
+        private static string defaultAppBackdrop;
 
-        private static KeyValuePair<string, string> _appBackdrop;
+        private static string _appBackdrop;
 
-        public static KeyValuePair<string, string> AppBackdrop
+        public static string AppBackdrop
         {
             get { return _appBackdrop; }
 
@@ -31,7 +31,7 @@ namespace GetStoreApp.Services.Settings
             }
         }
 
-        public static List<KeyValuePair<string, string>> BackdropList { get; private set; }
+        public static List<string> BackdropList { get; private set; } = [nameof(SystemBackdropTheme.Default), nameof(MicaKind) + nameof(MicaKind.Base), nameof(MicaKind) + nameof(MicaKind.BaseAlt), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin)];
 
         public static event PropertyChangedEventHandler PropertyChanged;
 
@@ -40,15 +40,14 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         public static void InitializeBackdrop()
         {
-            BackdropList = ResourceService.BackdropList;
-            defaultAppBackdrop = BackdropList.Find(item => string.Equals(item.Key, nameof(SystemBackdropTheme.Default), StringComparison.OrdinalIgnoreCase));
+            defaultAppBackdrop = BackdropList.Find(item => string.Equals(item, nameof(SystemBackdropTheme.Default), StringComparison.OrdinalIgnoreCase));
             AppBackdrop = GetBackdrop();
         }
 
         /// <summary>
         /// 获取设置存储的背景色值，如果设置没有存储，使用默认值
         /// </summary>
-        private static KeyValuePair<string, string> GetBackdrop()
+        private static string GetBackdrop()
         {
             string backdrop = LocalSettingsService.ReadSetting<string>(settingsKey);
 
@@ -58,19 +57,17 @@ namespace GetStoreApp.Services.Settings
                 return defaultAppBackdrop;
             }
 
-            KeyValuePair<string, string> selectedBackdrop = BackdropList.Find(item => string.Equals(item.Key, backdrop, StringComparison.OrdinalIgnoreCase));
-
-            return string.IsNullOrEmpty(selectedBackdrop.Key) ? defaultAppBackdrop : selectedBackdrop;
+            string selectedBackdrop = BackdropList.Find(item => string.Equals(item, backdrop, StringComparison.OrdinalIgnoreCase));
+            return string.IsNullOrEmpty(selectedBackdrop) ? defaultAppBackdrop : selectedBackdrop;
         }
 
         /// <summary>
         /// 应用背景色发生修改时修改设置存储的背景色值
         /// </summary>
-        public static void SetBackdrop(KeyValuePair<string, string> backdrop)
+        public static void SetBackdrop(string backdrop)
         {
             AppBackdrop = backdrop;
-
-            LocalSettingsService.SaveSetting(settingsKey, backdrop.Key);
+            LocalSettingsService.SaveSetting(settingsKey, backdrop);
         }
     }
 }
