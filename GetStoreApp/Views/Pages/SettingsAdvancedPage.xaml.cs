@@ -123,31 +123,14 @@ namespace GetStoreApp.Views.Pages
         public SettingsAdvancedPage()
         {
             InitializeComponent();
+            WebKernelList.Add(KeyValuePair.Create(WebKernelService.WebKernelList[0], WebKernelWebViewString));
+            WebKernelList.Add(KeyValuePair.Create(WebKernelService.WebKernelList[1], WebKernelWebView2String));
+            WebKernel = WebKernelList.Find(item => string.Equals(item.Key, WebKernelService.WebKernel, StringComparison.OrdinalIgnoreCase));
             NotificationService.PropertyChanged += OnServicePropertyChanged;
             GlobalNotificationService.ApplicationExit += OnApplicationExit;
         }
 
-        #region 第一部分：重载父类事件
-
-        /// <summary>
-        /// 导航到该页面触发的事件
-        /// </summary>
-        protected override void OnNavigatedTo(NavigationEventArgs args)
-        {
-            base.OnNavigatedTo(args);
-
-            if (!isInitialized)
-            {
-                isInitialized = true;
-                WebKernelList.Add(KeyValuePair.Create(WebKernelService.WebKernelList[0], WebKernelWebViewString));
-                WebKernelList.Add(KeyValuePair.Create(WebKernelService.WebKernelList[1], WebKernelWebView2String));
-                WebKernel = WebKernelList.Find(item => string.Equals(item.Key, WebKernelService.WebKernel, StringComparison.OrdinalIgnoreCase));
-            }
-        }
-
-        #endregion 第一部分：重载父类事件
-
-        #region 第二部分：设置高级页面——挂载的事件
+        #region 第一部分：设置高级页面——挂载的事件
 
         /// <summary>
         /// 打开系统通知设置
@@ -296,7 +279,7 @@ namespace GetStoreApp.Views.Pages
             await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.LogClean, result));
         }
 
-        #endregion 第二部分：设置高级页面——挂载的事件
+        #endregion 第一部分：设置高级页面——挂载的事件
 
         #region 第二部分：设置高级页面——自定义事件
 

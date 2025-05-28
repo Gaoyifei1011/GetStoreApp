@@ -1020,9 +1020,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void SetWindowTheme()
         {
-            WindowTheme = Equals(ThemeService.AppTheme, ThemeService.ThemeList[0])
-                ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark
-                : Enum.TryParse(ThemeService.AppTheme.Key, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
+            WindowTheme = Equals(ThemeService.AppTheme, ThemeService.ThemeList[0]) ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark : Enum.TryParse(ThemeService.AppTheme, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
         }
 
         /// <summary>

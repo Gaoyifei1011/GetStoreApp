@@ -74,30 +74,13 @@ namespace GetStoreApp.Views.Pages
         public SettingsDownloadPage()
         {
             InitializeComponent();
+            DoEngineModeList.Add(KeyValuePair.Create(DownloadOptionsService.DoEngineModeList[0], DoEngineAria2String));
+            DoEngineModeList.Add(KeyValuePair.Create(DownloadOptionsService.DoEngineModeList[1], DoEngineBitsString));
+            DoEngineModeList.Add(KeyValuePair.Create(DownloadOptionsService.DoEngineModeList[2], DoEngineDoString));
+            DoEngineMode = DoEngineModeList.Find(item => string.Equals(item.Key, DownloadOptionsService.DoEngineMode, StringComparison.OrdinalIgnoreCase));
         }
 
-        #region 第一部分：重载父类事件
-
-        /// <summary>
-        /// 导航到该页面触发的事件
-        /// </summary>
-        protected override void OnNavigatedTo(NavigationEventArgs args)
-        {
-            base.OnNavigatedTo(args);
-
-            if (!isInitialized)
-            {
-                isInitialized = true;
-                DoEngineModeList.Add(KeyValuePair.Create(DownloadOptionsService.DoEngineModeList[0], DoEngineAria2String));
-                DoEngineModeList.Add(KeyValuePair.Create(DownloadOptionsService.DoEngineModeList[1], DoEngineBitsString));
-                DoEngineModeList.Add(KeyValuePair.Create(DownloadOptionsService.DoEngineModeList[2], DoEngineDoString));
-                DoEngineMode = DoEngineModeList.Find(item => string.Equals(item.Key, DownloadOptionsService.DoEngineMode, StringComparison.OrdinalIgnoreCase));
-            }
-        }
-
-        #endregion 第一部分：重载父类事件
-
-        #region 第二部分：设置下载管理页面——挂载的事件
+        #region 第一部分：设置下载管理页面——挂载的事件
 
         /// <summary>
         /// 打开下载文件存放目录
@@ -226,6 +209,6 @@ namespace GetStoreApp.Views.Pages
             });
         }
 
-        #endregion 第二部分：设置下载管理页面——挂载的事件
+        #endregion 第一部分：设置下载管理页面——挂载的事件
     }
 }
