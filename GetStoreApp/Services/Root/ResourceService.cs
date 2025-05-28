@@ -33,8 +33,6 @@ namespace GetStoreApp.Services.Root
 
         public static List<InfoBarModel> SearchStoreInfoList { get; } = [];
 
-        public static List<KeyValuePair<string, string>> BackdropList { get; } = [];
-
         public static List<KeyValuePair<string, string>> QueryLinksModeList { get; } = [];
 
         public static List<KeyValuePair<string, string>> InstallModeList { get; } = [];
@@ -72,10 +70,8 @@ namespace GetStoreApp.Services.Root
             InitializeChannelList();
             InitializeQueryLinksInfoList();
             InitializeSearchStoreInfoList();
-            InitializeBackdropList();
             InitializeQueryLinksModeList();
             InitializeInstallModeList();
-            InitializeThemeList();
             InitializeTraceCleanupList();
         }
 
@@ -204,19 +200,6 @@ namespace GetStoreApp.Services.Root
         }
 
         /// <summary>
-        /// 初始化应用背景色信息列表
-        /// </summary>
-        private static void InitializeBackdropList()
-        {
-            BackdropList.Add(KeyValuePair.Create(nameof(SystemBackdropTheme.Default), GetLocalized("Settings/BackdropDefault")));
-            BackdropList.Add(KeyValuePair.Create(nameof(MicaKind) + nameof(MicaKind.Base), GetLocalized("Settings/BackdropMica")));
-            BackdropList.Add(KeyValuePair.Create(nameof(MicaKind) + nameof(MicaKind.BaseAlt), GetLocalized("Settings/BackdropMicaAlt")));
-            BackdropList.Add(KeyValuePair.Create(nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default), GetLocalized("Settings/BackdropAcrylic")));
-            BackdropList.Add(KeyValuePair.Create(nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base), GetLocalized("Settings/BackdropAcrylicBase")));
-            BackdropList.Add(KeyValuePair.Create(nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin), GetLocalized("Settings/BackdropAcrylicThin")));
-        }
-
-        /// <summary>
         /// 初始化查询链接方式信息列表
         /// </summary>
         private static void InitializeQueryLinksModeList()
@@ -232,16 +215,6 @@ namespace GetStoreApp.Services.Root
         {
             InstallModeList.Add(KeyValuePair.Create("AppInstall", GetLocalized("Settings/AppInstall")));
             InstallModeList.Add(KeyValuePair.Create("CodeInstall", GetLocalized("Settings/CodeInstall")));
-        }
-
-        /// <summary>
-        /// 初始化应用主题信息列表
-        /// </summary>
-        private static void InitializeThemeList()
-        {
-            ThemeList.Add(KeyValuePair.Create(nameof(ElementTheme.Default), GetLocalized("Settings/ThemeDefault")));
-            ThemeList.Add(KeyValuePair.Create(nameof(ElementTheme.Light), GetLocalized("Settings/ThemeLight")));
-            ThemeList.Add(KeyValuePair.Create(nameof(ElementTheme.Dark), GetLocalized("Settings/ThemeDark")));
         }
 
         /// <summary>
