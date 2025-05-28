@@ -28,24 +28,24 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsWinGetSourcePage : Page, INotifyPropertyChanged
     {
-        private readonly string None = ResourceService.GetLocalized("Settings/None");
-        private readonly string Yes = ResourceService.GetLocalized("Settings/Yes");
-        private readonly string No = ResourceService.GetLocalized("Settings/No");
-        private readonly string Trusted = ResourceService.GetLocalized("Settings/Trusted");
-        private readonly string Distrusted = ResourceService.GetLocalized("Settings/Distrusted");
-        private readonly string Predefined = ResourceService.GetLocalized("Settings/Predefined");
-        private readonly string User = ResourceService.GetLocalized("Settings/User");
-        private readonly string Unknown = ResourceService.GetLocalized("Settings/Unknown");
-        private readonly string MicrosoftEntraId = ResourceService.GetLocalized("Settings/MicrosoftEntraId");
-        private readonly string MicrosoftEntraIdForAzureBlobStorage = ResourceService.GetLocalized("Settings/MicrosoftEntraIdForAzureBlobStorage");
-        private readonly string WinGetDataSourceRemoveFailed = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveFailed");
-        private readonly string WinGetDataSourceRemoveGroupPolicyError = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveGroupPolicyError");
-        private readonly string WinGetDataSourceRemoveCatalogError = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveCatalogError");
-        private readonly string WinGetDataSourceRemoveInternalError = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveInternalError");
-        private readonly string WinGetDataSourceRemoveInvalidOptions = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveInvalidOptions");
-        private readonly string WinGetDataSourceRemoveAccessDenied = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveAccessDenied");
-        private readonly string WinGetDataSourceRemoveSuccess = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveSuccess");
-        private readonly string WinGetSourceCountInfo = ResourceService.GetLocalized("Settings/WinGetSourceCountInfo");
+        private readonly string NoneString = ResourceService.GetLocalized("Settings/None");
+        private readonly string YesString = ResourceService.GetLocalized("Settings/Yes");
+        private readonly string NoString = ResourceService.GetLocalized("Settings/No");
+        private readonly string TrustedString = ResourceService.GetLocalized("Settings/Trusted");
+        private readonly string DistrustedString = ResourceService.GetLocalized("Settings/Distrusted");
+        private readonly string PredefinedString = ResourceService.GetLocalized("Settings/Predefined");
+        private readonly string UserString = ResourceService.GetLocalized("Settings/User");
+        private readonly string UnknownString = ResourceService.GetLocalized("Settings/Unknown");
+        private readonly string MicrosoftEntraIdString = ResourceService.GetLocalized("Settings/MicrosoftEntraId");
+        private readonly string MicrosoftEntraIdForAzureBlobStorageString = ResourceService.GetLocalized("Settings/MicrosoftEntraIdForAzureBlobStorage");
+        private readonly string WinGetDataSourceRemoveFailedString = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveFailed");
+        private readonly string WinGetDataSourceRemoveGroupPolicyErrorString = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveGroupPolicyError");
+        private readonly string WinGetDataSourceRemoveCatalogErrorString = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveCatalogError");
+        private readonly string WinGetDataSourceRemoveInternalErrorString = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveInternalError");
+        private readonly string WinGetDataSourceRemoveInvalidOptionsString = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveInvalidOptions");
+        private readonly string WinGetDataSourceRemoveAccessDeniedString = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveAccessDenied");
+        private readonly string WinGetDataSourceRemoveSuccessString = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveSuccess");
+        private readonly string WinGetSourceCountInfoString = ResourceService.GetLocalized("Settings/WinGetSourceCountInfo");
         private bool isInitialized;
 
         private bool _isLoadedCompleted;
@@ -200,7 +200,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, true, WinGetDataSourceRemoveSuccess));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, true, WinGetDataSourceRemoveSuccessString));
                             break;
                         }
                     case RemovePackageCatalogStatus.GroupPolicyError:
@@ -214,7 +214,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveGroupPolicyError, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : UnknownString)));
                             break;
                         }
                     case RemovePackageCatalogStatus.CatalogError:
@@ -228,7 +228,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveCatalogError, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveCatalogErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : UnknownString)));
                             break;
                         }
                     case RemovePackageCatalogStatus.InternalError:
@@ -242,7 +242,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveInternalError, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveInternalErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : UnknownString)));
                             break;
                         }
                     case RemovePackageCatalogStatus.InvalidOptions:
@@ -256,7 +256,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveInvalidOptions, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveInvalidOptionsString, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : UnknownString)));
                             break;
                         }
                     case RemovePackageCatalogStatus.AccessDenied:
@@ -270,7 +270,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveAccessDenied, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveAccessDeniedString, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : UnknownString)));
                             break;
                         }
                 }
@@ -327,7 +327,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, true, WinGetDataSourceRemoveSuccess));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, true, WinGetDataSourceRemoveSuccessString));
                             break;
                         }
                     case RemovePackageCatalogStatus.GroupPolicyError:
@@ -341,7 +341,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveGroupPolicyError, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : UnknownString)));
                             break;
                         }
                     case RemovePackageCatalogStatus.CatalogError:
@@ -355,7 +355,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveGroupPolicyError, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : UnknownString)));
                             break;
                         }
                     case RemovePackageCatalogStatus.InternalError:
@@ -369,7 +369,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveGroupPolicyError, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : UnknownString)));
                             break;
                         }
                     case RemovePackageCatalogStatus.InvalidOptions:
@@ -383,7 +383,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveGroupPolicyError, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : UnknownString)));
                             break;
                         }
                     case RemovePackageCatalogStatus.AccessDenied:
@@ -397,7 +397,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveGroupPolicyError, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : UnknownString)));
                             break;
                         }
                 }
@@ -489,24 +489,24 @@ namespace GetStoreApp.Views.Pages
                         IsSelected = Equals(winGetDataSourceName, KeyValuePair.Create(packageCatalogInformation.Name, true)),
                         PackageCatalogInformation = packageCatalogInformation,
                         Name = packageCatalogInformation.Name,
-                        Arguments = string.IsNullOrEmpty(packageCatalogInformation.Arguments) ? None : packageCatalogReference.Info.Argument,
-                        Explicit = packageCatalogInformation.Explicit ? Yes : No,
-                        TrustLevel = packageCatalogInformation.TrustLevel is PackageCatalogTrustLevel.Trusted ? Trusted : Distrusted,
+                        Arguments = string.IsNullOrEmpty(packageCatalogInformation.Arguments) ? NoneString : packageCatalogReference.Info.Argument,
+                        Explicit = packageCatalogInformation.Explicit ? YesString : NoString,
+                        TrustLevel = packageCatalogInformation.TrustLevel is PackageCatalogTrustLevel.Trusted ? TrustedString : DistrustedString,
                         Id = packageCatalogInformation.Id,
                         LastUpdateTime = packageCatalogInformation.LastUpdateTime.ToString("yyyy/MM/dd HH:mm"),
-                        Origin = packageCatalogInformation.Origin is PackageCatalogOrigin.Predefined ? Predefined : User,
+                        Origin = packageCatalogInformation.Origin is PackageCatalogOrigin.Predefined ? PredefinedString : UserString,
                         Type = packageCatalogInformation.Type,
-                        AcceptSourceAgreements = packageCatalogInformation.AcceptSourceAgreements ? Yes : No,
+                        AcceptSourceAgreements = packageCatalogInformation.AcceptSourceAgreements ? YesString : NoString,
                         AuthenticationType = packageCatalogInformation.AuthenticationType switch
                         {
-                            AuthenticationType.None => None,
-                            AuthenticationType.Unknown => Unknown,
-                            AuthenticationType.MicrosoftEntraId => MicrosoftEntraId,
-                            AuthenticationType.MicrosoftEntraIdForAzureBlobStorage => MicrosoftEntraIdForAzureBlobStorage,
-                            _ => Unknown
+                            AuthenticationType.None => NoneString,
+                            AuthenticationType.Unknown => UnknownString,
+                            AuthenticationType.MicrosoftEntraId => MicrosoftEntraIdString,
+                            AuthenticationType.MicrosoftEntraIdForAzureBlobStorage => MicrosoftEntraIdForAzureBlobStorageString,
+                            _ => UnknownString
                         },
-                        AdditionalPackageCatalogArguments = string.IsNullOrEmpty(packageCatalogInformation.AdditionalPackageCatalogArguments) ? None : packageCatalogInformation.AdditionalPackageCatalogArguments,
-                        AuthenticationAccount = string.IsNullOrEmpty(packageCatalogInformation.AuthenticationAccount) ? None : packageCatalogInformation.AuthenticationAccount,
+                        AdditionalPackageCatalogArguments = string.IsNullOrEmpty(packageCatalogInformation.AdditionalPackageCatalogArguments) ? NoneString : packageCatalogInformation.AdditionalPackageCatalogArguments,
+                        AuthenticationAccount = string.IsNullOrEmpty(packageCatalogInformation.AuthenticationAccount) ? NoneString : packageCatalogInformation.AuthenticationAccount,
                         PackageCatalogBackgroundUpdateInterval = packageCatalogInformation.PackageCatalogBackgroundUpdateInterval.ToString(),
                         IsInternal = true,
                         PredefinedPackageCatalog = predefinedPackageCatalog
@@ -553,24 +553,24 @@ namespace GetStoreApp.Views.Pages
                         IsSelected = Equals(winGetDataSourceName, KeyValuePair.Create(packageCatalogInformation.Name, false)),
                         PackageCatalogInformation = packageCatalogInformation,
                         Name = packageCatalogInformation.Name,
-                        Arguments = string.IsNullOrEmpty(packageCatalogInformation.Arguments) ? None : packageCatalogReference.Info.Argument,
-                        Explicit = packageCatalogInformation.Explicit ? Yes : No,
-                        TrustLevel = packageCatalogInformation.TrustLevel is PackageCatalogTrustLevel.Trusted ? Trusted : Distrusted,
+                        Arguments = string.IsNullOrEmpty(packageCatalogInformation.Arguments) ? NoneString : packageCatalogReference.Info.Argument,
+                        Explicit = packageCatalogInformation.Explicit ? YesString : NoString,
+                        TrustLevel = packageCatalogInformation.TrustLevel is PackageCatalogTrustLevel.Trusted ? TrustedString : DistrustedString,
                         Id = packageCatalogInformation.Id,
                         LastUpdateTime = packageCatalogInformation.LastUpdateTime.ToString("yyyy/MM/dd HH:mm"),
-                        Origin = packageCatalogInformation.Origin is PackageCatalogOrigin.Predefined ? Predefined : User,
+                        Origin = packageCatalogInformation.Origin is PackageCatalogOrigin.Predefined ? PredefinedString : UserString,
                         Type = packageCatalogInformation.Type,
-                        AcceptSourceAgreements = packageCatalogInformation.AcceptSourceAgreements ? Yes : No,
+                        AcceptSourceAgreements = packageCatalogInformation.AcceptSourceAgreements ? YesString : NoString,
                         AuthenticationType = packageCatalogInformation.AuthenticationType switch
                         {
-                            AuthenticationType.None => None,
-                            AuthenticationType.Unknown => Unknown,
-                            AuthenticationType.MicrosoftEntraId => MicrosoftEntraId,
-                            AuthenticationType.MicrosoftEntraIdForAzureBlobStorage => MicrosoftEntraIdForAzureBlobStorage,
-                            _ => Unknown
+                            AuthenticationType.None => NoneString,
+                            AuthenticationType.Unknown => UnknownString,
+                            AuthenticationType.MicrosoftEntraId => MicrosoftEntraIdString,
+                            AuthenticationType.MicrosoftEntraIdForAzureBlobStorage => MicrosoftEntraIdForAzureBlobStorageString,
+                            _ => UnknownString
                         },
-                        AdditionalPackageCatalogArguments = string.IsNullOrEmpty(packageCatalogInformation.AdditionalPackageCatalogArguments) ? None : packageCatalogInformation.AdditionalPackageCatalogArguments,
-                        AuthenticationAccount = string.IsNullOrEmpty(packageCatalogInformation.AuthenticationAccount) ? None : packageCatalogInformation.AuthenticationAccount,
+                        AdditionalPackageCatalogArguments = string.IsNullOrEmpty(packageCatalogInformation.AdditionalPackageCatalogArguments) ? NoneString : packageCatalogInformation.AdditionalPackageCatalogArguments,
+                        AuthenticationAccount = string.IsNullOrEmpty(packageCatalogInformation.AuthenticationAccount) ? NoneString : packageCatalogInformation.AuthenticationAccount,
                         PackageCatalogBackgroundUpdateInterval = packageCatalogInformation.PackageCatalogBackgroundUpdateInterval.ToString(),
                         IsInternal = false
                     };
@@ -599,7 +599,7 @@ namespace GetStoreApp.Views.Pages
 
         private string GetLocalizedWinGetSourceCountInfo(int winGetSourceInternalCollectionCount, int winGetSourceCustomCollectionCount)
         {
-            return string.Format(WinGetSourceCountInfo, winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount);
+            return string.Format(WinGetSourceCountInfoString, winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount);
         }
     }
 }

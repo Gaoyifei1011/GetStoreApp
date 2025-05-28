@@ -49,20 +49,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetSourceConfiguration')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceConfiguration')}" />
 
                     <TextBlock
                         x:Name="WinGetSourceConfigurationDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetSourceConfigurationDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceConfigurationDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetSourceConfigurationDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceConfigurationDescription')}"
                                 Visibility="{x:Bind WinGetSourceConfigurationDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -72,7 +72,7 @@
                     Grid.Column="2"
                     VerticalAlignment="Center"
                     Click="{x:Bind OnConfigurationClicked}"
-                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Configuration')}" />
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/Configuration')}" />
             </Grid>
 
             <!--  WinGet 设置  -->
@@ -104,20 +104,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetSettings')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSettings')}" />
 
                     <TextBlock
                         x:Name="WinGetSettingsDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetSettingsDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSettingsDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetSettingsDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSettingsDescription')}"
                                 Visibility="{x:Bind WinGetSettingsDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -126,14 +126,14 @@
                 <HyperlinkButton
                     Grid.Column="2"
                     Margin="0,0,6,0"
-                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LearnConfig')}"
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/LearnConfig')}"
                     NavigateUri="https://learn.microsoft.com/windows/package-manager/winget/settings" />
 
                 <Button
                     Grid.Column="3"
                     Click="{x:Bind OnOpenWinGetSettingsClicked}"
-                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/OpenWinGetSettings')}"
-                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Settings/OpenWinGetSettingsToolTip')}" />
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/Open')}"
+                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/OpenConfigurationFile')}" />
             </Grid>
         </Grid>
     </ScrollViewer>
