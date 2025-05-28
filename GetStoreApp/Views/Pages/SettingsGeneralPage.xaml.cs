@@ -33,9 +33,9 @@ namespace GetStoreApp.Views.Pages
         private readonly string BackdropDefaultString = ResourceService.GetLocalized("SettingsGeneral/BackdropDefault");
         private readonly string BackdropMicaString = ResourceService.GetLocalized("SettingsGeneral/BackdropMica");
         private readonly string BackdropMicaAltString = ResourceService.GetLocalized("SettingsGeneral/BackdropMicaAlt");
+        private readonly string ThemeDarkString = ResourceService.GetLocalized("SettingsGeneral/ThemeDark");
         private readonly string ThemeDefaultString = ResourceService.GetLocalized("SettingsGeneral/ThemeDefault");
         private readonly string ThemeLightAltString = ResourceService.GetLocalized("SettingsGeneral/ThemeLight");
-        private readonly string ThemeDarkString = ResourceService.GetLocalized("SettingsGeneral/ThemeDark");
         private readonly UISettings uiSettings = new();
 
         private KeyValuePair<string, string> _theme;
