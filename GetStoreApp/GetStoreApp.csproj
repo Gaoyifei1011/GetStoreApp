@@ -221,6 +221,8 @@
     <None Remove="Strings\SettingsStoreAndUpdate.lang-zh-hans.resjson" />
     <None Remove="Strings\SettingsWinGet.lang-en-us.resjson" />
     <None Remove="Strings\SettingsWinGet.lang-zh-hans.resjson" />
+    <None Remove="Strings\SettingsWinGetSource.lang-en-us.resjson" />
+    <None Remove="Strings\SettingsWinGetSource.lang-zh-hans.resjson" />
     <None Remove="Strings\Store.lang-en-us.resjson" />
     <None Remove="Strings\Store.lang-zh-hans.resjson" />
     <None Remove="Strings\en-us\About.resjson" /> 
@@ -369,6 +371,8 @@
     <PRIResource Include="Strings\SettingsStoreAndUpdate.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\SettingsWinGet.lang-en-us.resjson" />
     <PRIResource Include="Strings\SettingsWinGet.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\SettingsWinGetSource.lang-en-us.resjson" />
+    <PRIResource Include="Strings\SettingsWinGetSource.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\Store.lang-en-us.resjson" />
     <PRIResource Include="Strings\Store.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\en-us\About.resjson" />
