@@ -13,11 +13,11 @@ namespace GetStoreApp.Services.Settings
     {
         private static readonly string queryLinksModeSettingsKey = ConfigKey.QueryLinksModeKey;
 
-        private static KeyValuePair<string, string> defaultQueryLinksMode;
+        private static string defaultQueryLinksMode;
 
-        private static KeyValuePair<string, string> _queryLinksMode;
+        private static string _queryLinksMode;
 
-        public static KeyValuePair<string, string> QueryLinksMode
+        public static string QueryLinksMode
         {
             get { return _queryLinksMode; }
 
@@ -31,7 +31,7 @@ namespace GetStoreApp.Services.Settings
             }
         }
 
-        public static List<KeyValuePair<string, string>> QueryLinksModeList { get; private set; }
+        public static List<string> QueryLinksModeList { get; } = ["Official", "ThirdParty"];
 
         public static event PropertyChangedEventHandler PropertyChanged;
 
@@ -40,17 +40,14 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         public static void InitializeQueryLinksMode()
         {
-            QueryLinksModeList = ResourceService.QueryLinksModeList;
-
-            defaultQueryLinksMode = QueryLinksModeList.Find(item => item.Key is "Official");
-
+            defaultQueryLinksMode = QueryLinksModeList.Find(item => item is "Official");
             QueryLinksMode = GetQueryLinksMode();
         }
 
         /// <summary>
         /// 获取设置存储的查询链接方式选择值，如果设置没有存储，使用默认值
         /// </summary>
-        private static KeyValuePair<string, string> GetQueryLinksMode()
+        private static string GetQueryLinksMode()
         {
             string queryLinksModeValue = LocalSettingsService.ReadSetting<string>(queryLinksModeSettingsKey);
 
@@ -60,19 +57,17 @@ namespace GetStoreApp.Services.Settings
                 return defaultQueryLinksMode;
             }
 
-            KeyValuePair<string, string> selectedQueryLinksMode = QueryLinksModeList.Find(item => string.Equals(item.Key, queryLinksModeValue, StringComparison.OrdinalIgnoreCase));
-
-            return selectedQueryLinksMode.Key is null ? defaultQueryLinksMode : selectedQueryLinksMode;
+            string selectedQueryLinksMode = QueryLinksModeList.Find(item => string.Equals(item, queryLinksModeValue, StringComparison.OrdinalIgnoreCase));
+            return selectedQueryLinksMode is null ? defaultQueryLinksMode : selectedQueryLinksMode;
         }
 
         /// <summary>
         /// 查询链接方式发生修改时修改设置存储的查询链接方式值
         /// </summary>
-        public static void SetQueryLinksMode(KeyValuePair<string, string> queryLinksMode)
+        public static void SetQueryLinksMode(string queryLinksMode)
         {
             QueryLinksMode = queryLinksMode;
-
-            LocalSettingsService.SaveSetting(queryLinksModeSettingsKey, queryLinksMode.Key);
+            LocalSettingsService.SaveSetting(queryLinksModeSettingsKey, queryLinksMode);
         }
     }
 }
