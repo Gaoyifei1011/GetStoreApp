@@ -29,8 +29,25 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class WinGetAppsVersionInfoPage : Page, INotifyPropertyChanged
     {
-        private readonly string WinGetAppsVersion = ResourceService.GetLocalized("WinGet/WinGetAppsVersion");
-        private readonly string Unknown = ResourceService.GetLocalized("WinGet/Unknown");
+        private readonly string AuthorString = ResourceService.GetLocalized("WinGetAppsVersionInfo/Author");
+        private readonly string CopyRightLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/CopyRightLink");
+        private readonly string CopyRightString = ResourceService.GetLocalized("WinGetAppsVersionInfo/CopyRight");
+        private readonly string DescriptionString = ResourceService.GetLocalized("WinGetAppsVersionInfo/Description");
+        private readonly string DisplayNameString = ResourceService.GetLocalized("WinGetAppsVersionInfo/DisplayName");
+        private readonly string LicenseLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/LicenseLink");
+        private readonly string LicenseString = ResourceService.GetLocalized("WinGetAppsVersionInfo/License");
+        private readonly string LocaleString = ResourceService.GetLocalized("WinGetAppsVersionInfo/Locale");
+        private readonly string PackageLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/PackageLink");
+        private readonly string PrivacyLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/PrivacyLink");
+        private readonly string PublisherLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/PublisherLink");
+        private readonly string PublisherString = ResourceService.GetLocalized("WinGetAppsVersionInfo/Publisher");
+        private readonly string PublisherSupportLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/PublisherSupportLink");
+        private readonly string PurchaseLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/PurchaseLink");
+        private readonly string ReleaseNotesLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/ReleaseNotesLink");
+        private readonly string ReleaseNotesString = ResourceService.GetLocalized("WinGetAppsVersionInfo/ReleaseNotes");
+        private readonly string UnknownString = ResourceService.GetLocalized("WinGetAppsVersionInfo/Unknown");
+        private readonly string VersionString = ResourceService.GetLocalized("WinGetAppsVersionInfo/Version");
+        private readonly string WinGetAppsVersionCountInfoString = ResourceService.GetLocalized("WinGetAppsVersionInfo/WinGetAppsVersionCountInfo");
 
         private WinGetPage WinGetPage { get; set; }
 
@@ -508,29 +525,29 @@ namespace GetStoreApp.Views.Pages
                     UpgradableApps = upgradableApps;
                 }
 
-                DisplayName = Unknown;
-                Description = Unknown;
-                Version = Unknown;
+                DisplayName = UnknownString;
+                Description = UnknownString;
+                Version = UnknownString;
                 PackageLink = null;
                 IsPackageLinkExisted = false;
-                Author = Unknown;
-                Publisher = Unknown;
+                Author = UnknownString;
+                Publisher = UnknownString;
                 PublisherLink = null;
                 IsPublisherLinkExisted = false;
                 PublisherSupportLink = null;
                 IsPublisherLinkExisted = false;
-                Locale = Unknown;
-                CopyRight = Unknown;
+                Locale = UnknownString;
+                CopyRight = UnknownString;
                 CopyRightLink = null;
                 IsCopyRightLinkExisted = false;
-                License = Unknown;
+                License = UnknownString;
                 LicenseLink = null;
                 IsLicenseLinkExisted = false;
                 PrivacyLink = null;
                 IsPrivacyLinkExisted = false;
                 PurchaseLink = null;
                 IsPrivacyLinkExisted = false;
-                ReleaseNotes = Unknown;
+                ReleaseNotes = UnknownString;
                 ReleaseNotesLink = null;
                 IsReleaseNotesLinkExisted = false;
 
@@ -670,23 +687,23 @@ namespace GetStoreApp.Views.Pages
             {
                 List<string> copyInformationList = [];
 
-                copyInformationList.Add(string.Format("{0}\t{1}", ResourceService.GetLocalized("WinGet/AppName"), DisplayName));
-                copyInformationList.Add(string.Format("{0}\t{1}", ResourceService.GetLocalized("WinGet/Description"), Description));
-                copyInformationList.Add(string.Format("{0}\t{1}", ResourceService.GetLocalized("WinGet/AppVersion"), Version));
-                copyInformationList.Add(string.Format("{0}\t{1}", ResourceService.GetLocalized("WinGet/PackageLink"), PackageLink));
-                copyInformationList.Add(string.Format("{0}\t{1}", ResourceService.GetLocalized("WinGet/Author"), Author));
-                copyInformationList.Add(string.Format("{0}\t{1}", ResourceService.GetLocalized("WinGet/AppPublisher"), Publisher));
-                copyInformationList.Add(string.Format("{0}\t{1}", ResourceService.GetLocalized("WinGet/PublisherLink"), PublisherLink));
-                copyInformationList.Add(string.Format("{0}\t{1}", ResourceService.GetLocalized("WinGet/PublisherSupportLink"), PublisherSupportLink));
-                copyInformationList.Add(string.Format("{0}\t{1}", ResourceService.GetLocalized("WinGet/Locale"), Locale));
-                copyInformationList.Add(string.Format("{0}\t{1}", ResourceService.GetLocalized("WinGet/CopyRight"), CopyRight));
-                copyInformationList.Add(string.Format("{0}\t{1}", ResourceService.GetLocalized("WinGet/CopyRightLink"), CopyRightLink));
-                copyInformationList.Add(string.Format("{0}\t{1}", ResourceService.GetLocalized("WinGet/License"), License));
-                copyInformationList.Add(string.Format("{0}\t{1}", ResourceService.GetLocalized("WinGet/LicenseLink"), LicenseLink));
-                copyInformationList.Add(string.Format("{0}\t{1}", ResourceService.GetLocalized("WinGet/PrivacyLink"), PrivacyLink));
-                copyInformationList.Add(string.Format("{0}\t{1}", ResourceService.GetLocalized("WinGet/PurchaseLink"), PurchaseLink));
-                copyInformationList.Add(string.Format("{0}\t{1}", ResourceService.GetLocalized("WinGet/ReleaseNotes"), ReleaseNotes));
-                copyInformationList.Add(string.Format("{0}\t{1}", ResourceService.GetLocalized("WinGet/ReleaseNotesLink"), ReleaseNotesLink));
+                copyInformationList.Add(string.Format("{0}\t{1}", DisplayNameString, DisplayName));
+                copyInformationList.Add(string.Format("{0}\t{1}", DescriptionString, Description));
+                copyInformationList.Add(string.Format("{0}\t{1}", VersionString, Version));
+                copyInformationList.Add(string.Format("{0}\t{1}", PackageLinkString, PackageLink));
+                copyInformationList.Add(string.Format("{0}\t{1}", AuthorString, Author));
+                copyInformationList.Add(string.Format("{0}\t{1}", PublisherString, Publisher));
+                copyInformationList.Add(string.Format("{0}\t{1}", PublisherLinkString, PublisherLink));
+                copyInformationList.Add(string.Format("{0}\t{1}", PublisherSupportLinkString, PublisherSupportLink));
+                copyInformationList.Add(string.Format("{0}\t{1}", LocaleString, Locale));
+                copyInformationList.Add(string.Format("{0}\t{1}", CopyRightString, CopyRight));
+                copyInformationList.Add(string.Format("{0}\t{1}", CopyRightLinkString, CopyRightLink));
+                copyInformationList.Add(string.Format("{0}\t{1}", LicenseString, License));
+                copyInformationList.Add(string.Format("{0}\t{1}", LicenseLinkString, LicenseLink));
+                copyInformationList.Add(string.Format("{0}\t{1}", PrivacyLinkString, PrivacyLink));
+                copyInformationList.Add(string.Format("{0}\t{1}", PurchaseLinkString, PurchaseLink));
+                copyInformationList.Add(string.Format("{0}\t{1}", ReleaseNotesString, ReleaseNotes));
+                copyInformationList.Add(string.Format("{0}\t{1}", ReleaseNotesLinkString, ReleaseNotesLink));
 
                 return copyInformationList;
             });
@@ -823,9 +840,9 @@ namespace GetStoreApp.Views.Pages
 
             if (packageVersionInfo is not null && catalogPackageMetadata is not null)
             {
-                DisplayName = string.IsNullOrEmpty(catalogPackageMetadata.PackageName) ? Unknown : catalogPackageMetadata.PackageName;
-                Description = string.IsNullOrEmpty(catalogPackageMetadata.Description) ? Unknown : catalogPackageMetadata.Description;
-                Version = string.IsNullOrEmpty(packageVersionInfo.Version) ? Unknown : packageVersionInfo.Version;
+                DisplayName = string.IsNullOrEmpty(catalogPackageMetadata.PackageName) ? UnknownString : catalogPackageMetadata.PackageName;
+                Description = string.IsNullOrEmpty(catalogPackageMetadata.Description) ? UnknownString : catalogPackageMetadata.Description;
+                Version = string.IsNullOrEmpty(packageVersionInfo.Version) ? UnknownString : packageVersionInfo.Version;
                 if (Uri.TryCreate(catalogPackageMetadata.PackageUrl, new UriCreationOptions(), out Uri packageLinkUri))
                 {
                     IsPackageLinkExisted = true;
@@ -836,8 +853,8 @@ namespace GetStoreApp.Views.Pages
                     IsPackageLinkExisted = false;
                     PackageLink = null;
                 }
-                Author = string.IsNullOrEmpty(catalogPackageMetadata.Author) ? Unknown : catalogPackageMetadata.Author;
-                Publisher = string.IsNullOrEmpty(catalogPackageMetadata.Publisher) ? Unknown : packageVersionInfo.Publisher;
+                Author = string.IsNullOrEmpty(catalogPackageMetadata.Author) ? UnknownString : catalogPackageMetadata.Author;
+                Publisher = string.IsNullOrEmpty(catalogPackageMetadata.Publisher) ? UnknownString : packageVersionInfo.Publisher;
                 if (Uri.TryCreate(catalogPackageMetadata.PublisherUrl, new UriCreationOptions(), out Uri publisherLinkUri))
                 {
                     IsPublisherLinkExisted = true;
@@ -860,7 +877,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 if (string.IsNullOrEmpty(catalogPackageMetadata.Locale))
                 {
-                    Locale = Unknown;
+                    Locale = UnknownString;
                 }
                 else
                 {
@@ -870,11 +887,11 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        Locale = Unknown;
+                        Locale = UnknownString;
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                     }
                 }
-                CopyRight = string.IsNullOrEmpty(catalogPackageMetadata.Copyright) ? Unknown : catalogPackageMetadata.Copyright;
+                CopyRight = string.IsNullOrEmpty(catalogPackageMetadata.Copyright) ? UnknownString : catalogPackageMetadata.Copyright;
                 if (Uri.TryCreate(catalogPackageMetadata.CopyrightUrl, new UriCreationOptions(), out Uri copyRightLinkUri))
                 {
                     IsCopyRightLinkExisted = true;
@@ -885,7 +902,7 @@ namespace GetStoreApp.Views.Pages
                     IsCopyRightLinkExisted = false;
                     CopyRightLink = null;
                 }
-                License = string.IsNullOrEmpty(catalogPackageMetadata.License) ? Unknown : catalogPackageMetadata.License;
+                License = string.IsNullOrEmpty(catalogPackageMetadata.License) ? UnknownString : catalogPackageMetadata.License;
                 if (Uri.TryCreate(catalogPackageMetadata.LicenseUrl, new UriCreationOptions(), out Uri licenseLinkUri))
                 {
                     IsLicenseLinkExisted = true;
@@ -916,7 +933,7 @@ namespace GetStoreApp.Views.Pages
                     IsPurchaseLinkExisted = false;
                     PurchaseLink = null;
                 }
-                ReleaseNotes = string.IsNullOrEmpty(catalogPackageMetadata.ReleaseNotes) ? Unknown : catalogPackageMetadata.ReleaseNotes;
+                ReleaseNotes = string.IsNullOrEmpty(catalogPackageMetadata.ReleaseNotes) ? UnknownString : catalogPackageMetadata.ReleaseNotes;
                 if (Uri.TryCreate(catalogPackageMetadata.ReleaseNotesUrl, new UriCreationOptions(), out Uri releaseNotesLinkUri))
                 {
                     IsReleaseNotesLinkExisted = true;

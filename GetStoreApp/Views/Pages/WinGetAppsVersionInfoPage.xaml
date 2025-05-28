@@ -32,7 +32,7 @@
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 FontSize="16"
-                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/LoadingInformation')}" />
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/LoadingInformation')}" />
         </Grid>
 
         <Grid Visibility="{x:Bind IsLoadCompleted, Mode=OneWay}">
@@ -61,7 +61,7 @@
                             <TextBlock Grid.Column="0" Text="{x:Bind Version}" />
                             <TextBlock
                                 Grid.Column="1"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DefaultVersion')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/DefaultVersion')}"
                                 Visibility="{x:Bind IsDefaultVersion}" />
                         </Grid>
                     </DataTemplate>
@@ -86,7 +86,7 @@
                     <TextBlock
                         Grid.Column="0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind x:String.Format(WinGetAppsVersion, WinGetAppsVersionCollection.Count), Mode=OneWay}" />
+                        Text="{x:Bind x:String.Format(WinGetAppsVersionCountInfoString, WinGetAppsVersionCollection.Count), Mode=OneWay}" />
 
                     <CommandBar
                         Grid.Column="1"
@@ -102,7 +102,7 @@
                         </CommandBar.Resources>
 
                         <CommandBar.PrimaryCommands>
-                            <AppBarButton Click="{x:Bind OnCopyInformationClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CopyInformation')}">
+                            <AppBarButton Click="{x:Bind OnCopyInformationClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/CopyInformation')}">
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE8C8;" />
                                 </AppBarButton.Icon>
@@ -110,19 +110,19 @@
                         </CommandBar.PrimaryCommands>
 
                         <CommandBar.SecondaryCommands>
-                            <AppBarButton Click="{x:Bind OnDownloadClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Download')}">
+                            <AppBarButton Click="{x:Bind OnDownloadClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Download')}">
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE896;" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
 
-                            <AppBarButton Click="{x:Bind OnInstallClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Install')}">
+                            <AppBarButton Click="{x:Bind OnInstallClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Install')}">
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE710;" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
 
-                            <AppBarButton Click="{x:Bind OnRepairClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Repair')}">
+                            <AppBarButton Click="{x:Bind OnRepairClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Repair')}">
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE90F;" />
                                 </AppBarButton.Icon>
@@ -144,7 +144,7 @@
                         </CommandBar.Resources>
 
                         <CommandBar.PrimaryCommands>
-                            <AppBarButton Click="{x:Bind OnCopyInformationClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CopyInformation')}">
+                            <AppBarButton Click="{x:Bind OnCopyInformationClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/CopyInformation')}">
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE8C8;" />
                                 </AppBarButton.Icon>
@@ -152,7 +152,7 @@
                         </CommandBar.PrimaryCommands>
 
                         <CommandBar.SecondaryCommands>
-                            <AppBarButton Click="{x:Bind OnUpgradeClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Upgrade')}">
+                            <AppBarButton Click="{x:Bind OnUpgradeClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Upgrade')}">
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE898;" />
                                 </AppBarButton.Icon>
@@ -223,7 +223,7 @@
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppVersion')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/AppVersion')}" />
 
                             <TextBlock
                                 Grid.Row="0"
@@ -234,7 +234,7 @@
                             <TextBlock
                                 Grid.Row="1"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageLink')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/PackageLink')}" />
 
                             <TextBlock
                                 Grid.Row="1"
@@ -249,14 +249,14 @@
                             <TextBlock
                                 Grid.Row="1"
                                 Grid.Column="1"
-                                Text="{x:Bind Unknown}"
+                                Text="{x:Bind UnknownString}"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPackageLinkExisted), Mode=OneWay}" />
 
                             <TextBlock
                                 Grid.Row="2"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Author')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Author')}" />
 
                             <TextBlock
                                 Grid.Row="2"
@@ -267,7 +267,7 @@
                             <TextBlock
                                 Grid.Row="3"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppPublisher')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/AppPublisher')}" />
 
                             <TextBlock
                                 Grid.Row="3"
@@ -278,7 +278,7 @@
                             <TextBlock
                                 Grid.Row="4"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PublisherLink')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/PublisherLink')}" />
 
                             <TextBlock
                                 Grid.Row="4"
@@ -293,14 +293,14 @@
                             <TextBlock
                                 Grid.Row="4"
                                 Grid.Column="1"
-                                Text="{x:Bind Unknown}"
+                                Text="{x:Bind UnknownString}"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPublisherLinkExisted), Mode=OneWay}" />
 
                             <TextBlock
                                 Grid.Row="5"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PublisherSupportLink')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/PublisherSupportLink')}" />
 
                             <TextBlock
                                 Grid.Row="5"
@@ -315,14 +315,14 @@
                             <TextBlock
                                 Grid.Row="5"
                                 Grid.Column="1"
-                                Text="{x:Bind Unknown}"
+                                Text="{x:Bind UnknownString}"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPublisherSupportLinkExisted), Mode=OneWay}" />
 
                             <TextBlock
                                 Grid.Row="6"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Locale')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Locale')}" />
 
                             <TextBlock
                                 Grid.Row="6"
@@ -333,7 +333,7 @@
                             <TextBlock
                                 Grid.Row="7"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CopyRight')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/CopyRight')}" />
 
                             <TextBlock
                                 Grid.Row="7"
@@ -344,7 +344,7 @@
                             <TextBlock
                                 Grid.Row="8"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CopyRightLink')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/CopyRightLink')}" />
 
                             <TextBlock
                                 Grid.Row="8"
@@ -359,14 +359,14 @@
                             <TextBlock
                                 Grid.Row="8"
                                 Grid.Column="1"
-                                Text="{x:Bind Unknown}"
+                                Text="{x:Bind UnknownString}"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsCopyRightLinkExisted), Mode=OneWay}" />
 
                             <TextBlock
                                 Grid.Row="9"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/License')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/License')}" />
 
                             <TextBlock
                                 Grid.Row="9"
@@ -377,7 +377,7 @@
                             <TextBlock
                                 Grid.Row="10"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/LicenseLink')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/LicenseLink')}" />
 
                             <TextBlock
                                 Grid.Row="10"
@@ -392,14 +392,14 @@
                             <TextBlock
                                 Grid.Row="10"
                                 Grid.Column="1"
-                                Text="{x:Bind Unknown}"
+                                Text="{x:Bind UnknownString}"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsLicenseLinkExisted), Mode=OneWay}" />
 
                             <TextBlock
                                 Grid.Row="11"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PrivacyLink')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/PrivacyLink')}" />
 
                             <TextBlock
                                 Grid.Row="11"
@@ -414,14 +414,14 @@
                             <TextBlock
                                 Grid.Row="11"
                                 Grid.Column="1"
-                                Text="{x:Bind Unknown}"
+                                Text="{x:Bind UnknownString}"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPrivacyLinkExisted), Mode=OneWay}" />
 
                             <TextBlock
                                 Grid.Row="12"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PurchaseLink')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/PurchaseLink')}" />
 
                             <TextBlock
                                 Grid.Row="12"
@@ -436,14 +436,14 @@
                             <TextBlock
                                 Grid.Row="12"
                                 Grid.Column="1"
-                                Text="{x:Bind Unknown}"
+                                Text="{x:Bind UnknownString}"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPurchaseLinkExisted), Mode=OneWay}" />
 
                             <TextBlock
                                 Grid.Row="13"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ReleaseNotes')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/ReleaseNotes')}" />
 
                             <TextBlock
                                 Grid.Row="13"
@@ -454,7 +454,7 @@
                             <TextBlock
                                 Grid.Row="14"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ReleaseNotesLink')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/ReleaseNotesLink')}" />
 
                             <TextBlock
                                 Grid.Row="14"
@@ -469,7 +469,7 @@
                             <TextBlock
                                 Grid.Row="14"
                                 Grid.Column="1"
-                                Text="{x:Bind Unknown}"
+                                Text="{x:Bind UnknownString}"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsReleaseNotesLinkExisted), Mode=OneWay}" />
                         </Grid>
@@ -479,7 +479,7 @@
                         <TextBlock
                             Grid.Row="5"
                             Margin="0,0,0,5"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Tag')}" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Tag')}" />
 
                         <GridView
                             Grid.Row="6"
