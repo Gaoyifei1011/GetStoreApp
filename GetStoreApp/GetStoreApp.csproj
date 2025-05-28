@@ -201,6 +201,8 @@
     <None Remove="Strings\Download.lang-zh-hans.resjson" />
     <None Remove="Strings\Downloading.lang-en-us.resjson" />
     <None Remove="Strings\Downloading.lang-zh-hans.resjson" />
+    <None Remove="Strings\Pinner.lang-en-us.resjson" />
+    <None Remove="Strings\Pinner.lang-zh-hans.resjson" />
     <None Remove="Strings\QueryLinks.lang-en-us.resjson" />
     <None Remove="Strings\QueryLinks.lang-zh-hans.resjson" />
     <None Remove="Strings\SearchStore.lang-en-us.resjson" />
@@ -227,6 +229,8 @@
     <None Remove="Strings\SettingsWinGetSource.lang-zh-hans.resjson" />
     <None Remove="Strings\Store.lang-en-us.resjson" />
     <None Remove="Strings\Store.lang-zh-hans.resjson" />
+    <None Remove="Strings\WebView.lang-en-us.resjson" />
+    <None Remove="Strings\WebView.lang-zh-hans.resjson" />
     <None Remove="Strings\WinGetAppsVersionInfo.lang-en-us.resjson" />
     <None Remove="Strings\WinGetAppsVersionInfo.lang-zh-hans.resjson" />
     <None Remove="Strings\WinGetAppsVersionOptions.lang-en-us.resjson" />
@@ -353,6 +357,8 @@
     <PRIResource Include="Strings\Download.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\Downloading.lang-en-us.resjson" />
     <PRIResource Include="Strings\Downloading.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\Pinner.lang-en-us.resjson" />
+    <PRIResource Include="Strings\Pinner.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\QueryLinks.lang-en-us.resjson" />
     <PRIResource Include="Strings\QueryLinks.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\SearchStore.lang-en-us.resjson" />
@@ -379,6 +385,8 @@
     <PRIResource Include="Strings\SettingsWinGetSource.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\Store.lang-en-us.resjson" />
     <PRIResource Include="Strings\Store.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\WebView.lang-en-us.resjson" />
+    <PRIResource Include="Strings\WebView.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\WinGetAppsVersionInfo.lang-en-us.resjson" />
     <PRIResource Include="Strings\WinGetAppsVersionInfo.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\WinGetAppsVersionOptions.lang-en-us.resjson" />
@@ -388,7 +396,6 @@
     <PRIResource Include="Strings\en-us\Notification.resjson" />
     <PRIResource Include="Strings\en-us\Resources.resjson" />
     <PRIResource Include="Strings\en-us\ShellMenu.resjson" />
-    <PRIResource Include="Strings\en-us\WebView.resjson" />
     <PRIResource Include="Strings\en-us\Window.resjson" />
     <PRIResource Include="Strings\en-us\WinGet.resjson" />   
     <PRIResource Include="Strings\zh-hans\Dialog.resjson" />
@@ -396,7 +403,6 @@
     <PRIResource Include="Strings\zh-hans\Notification.resjson" />
     <PRIResource Include="Strings\zh-hans\Resources.resjson" />
     <PRIResource Include="Strings\zh-hans\ShellMenu.resjson" />
-    <PRIResource Include="Strings\zh-hans\WebView.resjson" />
     <PRIResource Include="Strings\zh-hans\Window.resjson" />
     <PRIResource Include="Strings\zh-hans\WinGet.resjson" />
     
