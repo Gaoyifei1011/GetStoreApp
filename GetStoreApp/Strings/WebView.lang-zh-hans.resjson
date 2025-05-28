@@ -1,0 +1,18 @@
+{
+  "Back": "返回",
+  "ClearWebCache": "清理网页缓存",
+  "Download": "下载",
+  "DownloadWebView2Runtime": "下载并安装 WebView2 运行时",
+  "Forward": "继续",
+  "Loading": "（正在加载中）",
+  "OpenCacheFolder": "打开缓存文件夹",
+  "OpenWithBrowser": "使用浏览器打开",
+  "Refresh": "刷新",
+  "Settings": "设置",
+  "WarningSuitableWebView2NotFound": "未检测到合适版本的 Microsoft Edge WebView2 运行时。",
+  "WebBrowser": "网页浏览器",
+  "WebTitle": "网页接口",
+  "WebView2Closed": "不能为关闭的 WebView2 元素创建 CoreWebView2。",
+  "WebView2NotPresent": "失败，因为不存在有效的 CoreWebView2。确保已创建一个，例如通过调用 EnsureCoreWebView2Async() API。",
+  "WebView2NotPresentClosed": "失败，因为不存在有效的 CoreWebView2。一个存在，但已经关闭。"
+}
