@@ -1,0 +1,21 @@
+﻿{
+  "About": "关于",
+  "Advanced": "高级",
+  "AppInstaller": "应用安装器",
+  "Download": "下载管理",
+  "General": "通用",
+  "NavigationFailed": "页面{0}导航失败",
+  "PinToDesktop": "固定到桌面",
+  "PinToDesktopToolTip": "将应用固定到桌面",
+  "PinToStartScreen": "固定到”开始“屏幕",
+  "PinToStartScreenToolTip": "将应用固定到“开始”屏幕",
+  "PinToTaskbar": "固定到任务栏",
+  "PinToTaskbarToolTip": "将应用固定到任务栏",
+  "RestartApp": "重启应用",
+  "RestartAppToolTip": "应用设置发生修改后，部分选项需要重启后生效",
+  "RunAsAdministrator": "以管理员身份运行",
+  "SettingsInstruction": "设置说明",
+  "StoreAndUpdate": "商店与更新",
+  "ViewMore": "查看更多",
+  "WinGet": "WinGet 程序包"
+}

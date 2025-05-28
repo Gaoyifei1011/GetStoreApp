@@ -1,0 +1,21 @@
+﻿{
+  "About": "About",
+  "Advanced": "Advanced",
+  "AppInstaller": "App installer",
+  "Download": "Download management",
+  "General": "General",
+  "NavigationFailed": "Page {0} navigation failed",
+  "PinToDesktop": "Pin to desktop",
+  "PinToDesktopToolTip": "Pin the app to desktop",
+  "PinToStartScreen": "Pin to start screen",
+  "PinToStartScreenToolTip": "Pin the app to Start screen",
+  "PinToTaskbar": "Pin to taskbar",
+  "PinToTaskbarToolTip": "Pin the app to taskbar",
+  "RestartApp": "Application restart",
+  "RestartAppToolTip": "After the app settings are modified, some options need to be restarted to take effect",
+  "RunAsAdministrator": "Run as administrator",
+  "SettingsInstruction": "Settings instruction",
+  "StoreAndUpdate": "Store & update",
+  "ViewMore": "View more",
+  "WinGet": "WinGet program package"
+}
