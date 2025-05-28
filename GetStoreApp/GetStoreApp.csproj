@@ -226,7 +226,9 @@
     <None Remove="Strings\SettingsWinGetSource.lang-en-us.resjson" />
     <None Remove="Strings\SettingsWinGetSource.lang-zh-hans.resjson" />
     <None Remove="Strings\Store.lang-en-us.resjson" />
-    <None Remove="Strings\Store.lang-zh-hans.resjson" /> 
+    <None Remove="Strings\Store.lang-zh-hans.resjson" />
+    <None Remove="Strings\WinGetAppsVersionInfo.lang-en-us.resjson" />
+    <None Remove="Strings\WinGetAppsVersionInfo.lang-zh-hans.resjson" />
     <None Remove="Strings\en-us\Dialog.resjson" />
     <None Remove="Strings\en-us\Installer.resjson" />
     <None Remove="Strings\en-us\Notification.resjson" />
@@ -375,6 +377,8 @@
     <PRIResource Include="Strings\SettingsWinGetSource.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\Store.lang-en-us.resjson" />
     <PRIResource Include="Strings\Store.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\WinGetAppsVersionInfo.lang-en-us.resjson" />
+    <PRIResource Include="Strings\WinGetAppsVersionInfo.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\en-us\Dialog.resjson" />
     <PRIResource Include="Strings\en-us\Installer.resjson" />
     <PRIResource Include="Strings\en-us\Notification.resjson" />
