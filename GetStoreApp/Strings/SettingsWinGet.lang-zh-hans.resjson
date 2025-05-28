@@ -1,0 +1,9 @@
+﻿{
+  "LearnConfig": "了解配置",
+  "Open": "打开",
+  "OpenConfigurationFile": "打开 WinGet 程序包配置文件",
+  "WinGetSettings": "WinGet 设置",
+  "WinGetSettingsDescription": "自定义 WinGet 程序包的功能",
+  "WinGetSourceConfiguration": "WinGet 数据源配置",
+  "WinGetSourceConfigurationDescription": "配置 WinGet 数据获取源，需要管理员模式"
+}

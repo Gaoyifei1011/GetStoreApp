@@ -1,0 +1,9 @@
+﻿{
+  "LearnConfig": "Learn config",
+  "Open": "Open",
+  "OpenConfigurationFile": "Open the WinGet package configuration file",
+  "WinGetSettings": "WinGet settings",
+  "WinGetSettingsDescription": "Customizing the WinGet package's function",
+  "WinGetSourceConfiguration": "WinGet data source configuration",
+  "WinGetSourceConfigurationDescription": "Configure winget data source, administrator mode is required"
+}
