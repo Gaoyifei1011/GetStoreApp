@@ -1,7 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models;
-using Microsoft.UI.Composition.SystemBackdrops;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.ApplicationModel.Resources;
 using System;
