@@ -35,6 +35,22 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class WinGetAppsVersionOptionsPage : Page, INotifyPropertyChanged
     {
+        private readonly string PackageInstallModeDefaultString = ResourceService.GetLocalized("WinGetAppsVersionOptions/PackageInstallModeDefault");
+        private readonly string PackageInstallModeInteractiveString = ResourceService.GetLocalized("WinGetAppsVersionOptions/PackageInstallModeInteractive");
+        private readonly string PackageInstallModeSilentString = ResourceService.GetLocalized("WinGetAppsVersionOptions/PackageInstallModeSilent");
+        private readonly string PackageInstallScopeAnyString = ResourceService.GetLocalized("WinGetAppsVersionOptions/PackageInstallScopeAny");
+        private readonly string PackageInstallScopeUserString = ResourceService.GetLocalized("WinGetAppsVersionOptions/PackageInstallScopeUser");
+        private readonly string PackageInstallScopeSystemString = ResourceService.GetLocalized("WinGetAppsVersionOptions/PackageInstallScopeSystem");
+        private readonly string PackageRepairModeDefaultString = ResourceService.GetLocalized("WinGetAppsVersionOptions/PackageRepairModeDefault");
+        private readonly string PackageRepairModeInteractiveString = ResourceService.GetLocalized("WinGetAppsVersionOptions/PackageRepairModeInteractive");
+        private readonly string PackageRepairModeSilentString = ResourceService.GetLocalized("WinGetAppsVersionOptions/PackageRepairModeSilent");
+        private readonly string PackageRepairScopeAnyString = ResourceService.GetLocalized("WinGetAppsVersionOptions/PackageRepairScopeAny");
+        private readonly string PackageRepairScopeUserString = ResourceService.GetLocalized("WinGetAppsVersionOptions/PackageRepairScopeUser");
+        private readonly string PackageRepairScopeSystemString = ResourceService.GetLocalized("WinGetAppsVersionOptions/PackageRepairScopeSystem");
+        private readonly string ProcessorArchitectureArm64String = ResourceService.GetLocalized("WinGetAppsVersionOptions/ProcessorArchitectureArm64");
+        private readonly string ProcessorArchitectureDefaultString = ResourceService.GetLocalized("WinGetAppsVersionOptions/ProcessorArchitectureDefault");
+        private readonly string ProcessorArchitectureX64String = ResourceService.GetLocalized("WinGetAppsVersionOptions/ProcessorArchitectureX64");
+        private readonly string ProcessorArchitectureX86String = ResourceService.GetLocalized("WinGetAppsVersionOptions/ProcessorArchitectureX86");
         private readonly ProcessorArchitecture currentProcessorArchitecture = Package.Current.Id.Architecture;
 
         private WinGetPage WinGetPage { get; set; }
@@ -315,47 +331,38 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<KeyValuePair<ProcessorArchitecture, string>> PackageArchitectureList { get; } =
-        [
-            KeyValuePair.Create(ProcessorArchitecture.Unknown, ResourceService.GetLocalized("WinGet/ProcessorArchitectureDefault")),
-            KeyValuePair.Create(ProcessorArchitecture.X86, ResourceService.GetLocalized("WinGet/ProcessorArchitectureX86")),
-            KeyValuePair.Create(ProcessorArchitecture.X64, ResourceService.GetLocalized("WinGet/ProcessorArchitectureX64")),
-            KeyValuePair.Create(ProcessorArchitecture.Arm64, ResourceService.GetLocalized("WinGet/ProcessorArchitectureArm64")),
-        ];
+        private List<KeyValuePair<ProcessorArchitecture, string>> PackageArchitectureList { get; } = [];
 
-        private List<KeyValuePair<PackageInstallScope, string>> PackageInstallScopeList { get; } =
-        [
-            KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallScope.Any, ResourceService.GetLocalized("WinGet/PackageInstallScopeAny")),
-            KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallScope.User, ResourceService.GetLocalized("WinGet/PackageInstallScopeUser")),
-            KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallScope.System, ResourceService.GetLocalized("WinGet/PackageInstallScopeSystem")),
-        ];
+        private List<KeyValuePair<PackageInstallScope, string>> PackageInstallScopeList { get; } = [];
 
-        private List<KeyValuePair<PackageInstallMode, string>> PackageInstallModeList { get; } =
-        [
-            KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallMode.Default, ResourceService.GetLocalized("WinGet/PackageInstallModeDefault")),
-            KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallMode.Interactive, ResourceService.GetLocalized("WinGet/PackageInstallModeInteractive")),
-            KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallMode.Silent, ResourceService.GetLocalized("WinGet/PackageInstallModeSilent")),
-        ];
+        private List<KeyValuePair<PackageInstallMode, string>> PackageInstallModeList { get; } = [];
 
-        private List<KeyValuePair<PackageRepairScope, string>> PackageRepairScopeList { get; } =
-        [
-            KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairScope.Any, ResourceService.GetLocalized("WinGet/PackageRepairScopeAny")),
-            KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairScope.User, ResourceService.GetLocalized("WinGet/PackageRepairScopeUser")),
-            KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairScope.System, ResourceService.GetLocalized("WinGet/PackageRepairScopeSystem")),
-        ];
+        private List<KeyValuePair<PackageRepairScope, string>> PackageRepairScopeList { get; } = [];
 
-        private List<KeyValuePair<PackageRepairMode, string>> PackageRepairModeList { get; } =
-        [
-            KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairMode.Default, ResourceService.GetLocalized("WinGet/PackageRepairModeDefault")),
-            KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairMode.Interactive, ResourceService.GetLocalized("WinGet/PackageRepairModeInteractive")),
-            KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairMode.Silent, ResourceService.GetLocalized("WinGet/PackageRepairModeSilent")),
-        ];
+        private List<KeyValuePair<PackageRepairMode, string>> PackageRepairModeList { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public WinGetAppsVersionOptionsPage()
         {
             InitializeComponent();
+
+            PackageArchitectureList.Add(KeyValuePair.Create(ProcessorArchitecture.Unknown, ProcessorArchitectureDefaultString));
+            PackageArchitectureList.Add(KeyValuePair.Create(ProcessorArchitecture.X86, ProcessorArchitectureX86String));
+            PackageArchitectureList.Add(KeyValuePair.Create(ProcessorArchitecture.X64, ProcessorArchitectureX64String));
+            PackageArchitectureList.Add(KeyValuePair.Create(ProcessorArchitecture.Arm64, ProcessorArchitectureArm64String));
+            PackageInstallScopeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallScope.Any, PackageInstallScopeAnyString));
+            PackageInstallScopeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallScope.User, PackageInstallScopeUserString));
+            PackageInstallScopeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallScope.System, PackageInstallScopeSystemString));
+            PackageInstallModeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallMode.Default, PackageInstallModeDefaultString));
+            PackageInstallModeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallMode.Interactive, PackageInstallModeInteractiveString));
+            PackageInstallModeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallMode.Silent, PackageInstallModeSilentString));
+            PackageRepairScopeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairScope.Any, PackageRepairScopeAnyString));
+            PackageRepairScopeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairScope.User, PackageRepairScopeUserString));
+            PackageRepairScopeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairScope.System, PackageRepairScopeSystemString));
+            PackageRepairModeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairMode.Default, PackageRepairModeDefaultString));
+            PackageRepairModeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairMode.Interactive, PackageRepairModeInteractiveString));
+            PackageRepairModeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairMode.Silent, PackageRepairModeSilentString));
         }
 
         #region 第一部分：重写父类事件
