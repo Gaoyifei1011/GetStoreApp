@@ -24,7 +24,12 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsStoreAndUpdatePage : Page, INotifyPropertyChanged
     {
-        private KeyValuePair<string, string> _queryLinksMode = QueryLinksModeService.QueryLinksMode;
+        private readonly string QueryLinksModeOfficialString = ResourceService.GetLocalized("SettingsStoreAndUpdate/QueryLinksModeOfficial");
+        private readonly string QueryLinksModeThirdPartyString = ResourceService.GetLocalized("SettingsStoreAndUpdate/QueryLinksModeThirdParty");
+        private readonly string InstallModeAppInstallString = ResourceService.GetLocalized("SettingsStoreAndUpdate/InstallModeAppInstall");
+        private readonly string InstallModeCodeInstallString = ResourceService.GetLocalized("SettingsStoreAndUpdate/InstallModeCodeInstall");
+
+        private KeyValuePair<string, string> _queryLinksMode;
 
         public KeyValuePair<string, string> QueryLinksMode
         {
@@ -40,7 +45,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private KeyValuePair<string, string> _installMode = InstallModeService.InstallMode;
+        private KeyValuePair<string, string> _installMode;
 
         public KeyValuePair<string, string> InstallMode
         {
@@ -152,9 +157,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<KeyValuePair<string, string>> QueryLinksModeList { get; } = QueryLinksModeService.QueryLinksModeList;
+        private List<KeyValuePair<string, string>> QueryLinksModeList { get; } = [];
 
-        private List<KeyValuePair<string, string>> InstallModeList { get; } = InstallModeService.InstallModeList;
+        private List<KeyValuePair<string, string>> InstallModeList { get; } = [];
 
         private ObservableCollection<StoreRegionModel> StoreRegionCollection { get; } = [];
 
@@ -163,6 +168,13 @@ namespace GetStoreApp.Views.Pages
         public SettingsStoreAndUpdatePage()
         {
             InitializeComponent();
+            QueryLinksModeList.Add(KeyValuePair.Create(QueryLinksModeService.QueryLinksModeList[0], QueryLinksModeOfficialString));
+            QueryLinksModeList.Add(KeyValuePair.Create(QueryLinksModeService.QueryLinksModeList[1], QueryLinksModeThirdPartyString));
+            QueryLinksMode = QueryLinksModeList.Find(item => string.Equals(item.Key, QueryLinksModeService.QueryLinksMode, StringComparison.OrdinalIgnoreCase));
+
+            InstallModeList.Add(KeyValuePair.Create(InstallModeService.InstallModeList[0], InstallModeAppInstallString));
+            InstallModeList.Add(KeyValuePair.Create(InstallModeService.InstallModeList[1], InstallModeCodeInstallString));
+            InstallMode = InstallModeList.Find(item => string.Equals(item.Key, InstallModeService.InstallMode, StringComparison.OrdinalIgnoreCase));
 
             foreach (GeographicRegion geographicRegionItem in StoreRegionService.StoreRegionList)
             {
@@ -229,7 +241,7 @@ namespace GetStoreApp.Views.Pages
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
                 QueryLinksMode = QueryLinksModeList[Convert.ToInt32(tag)];
-                QueryLinksModeService.SetQueryLinksMode(QueryLinksMode);
+                QueryLinksModeService.SetQueryLinksMode(QueryLinksMode.Key);
             }
         }
 
@@ -241,7 +253,7 @@ namespace GetStoreApp.Views.Pages
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
                 InstallMode = InstallModeList[Convert.ToInt32(tag)];
-                InstallModeService.SetInstallMode(InstallMode);
+                InstallModeService.SetInstallMode(InstallMode.Key);
             }
         }
 
