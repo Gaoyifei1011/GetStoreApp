@@ -12,48 +12,45 @@ namespace GetStoreApp.Services.Settings
     {
         private static readonly string settingsKey = ConfigKey.InstallModeKey;
 
-        private static KeyValuePair<string, string> defaultInstallMode;
+        private static string defaultInstallMode;
 
-        public static KeyValuePair<string, string> InstallMode { get; private set; }
+        public static string InstallMode { get; private set; }
 
-        public static List<KeyValuePair<string, string>> InstallModeList { get; private set; }
+        public static List<string> InstallModeList { get; } = ["AppInstall", "CodeInstall"];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的应用安装方式值
         /// </summary>
         public static void InitializeInstallMode()
         {
-            InstallModeList = ResourceService.InstallModeList;
-            defaultInstallMode = InstallModeList.Find(item => string.Equals(item.Key, "AppInstall", StringComparison.OrdinalIgnoreCase));
+            defaultInstallMode = InstallModeList.Find(item => string.Equals(item, "AppInstall", StringComparison.OrdinalIgnoreCase));
             InstallMode = GetInstallMode();
         }
 
         /// <summary>
         /// 获取设置存储的应用安装方式值，如果设置没有存储，使用默认值
         /// </summary>
-        private static KeyValuePair<string, string> GetInstallMode()
+        private static string GetInstallMode()
         {
             string installMode = LocalSettingsService.ReadSetting<string>(settingsKey);
 
             if (string.IsNullOrEmpty(installMode))
             {
                 SetInstallMode(defaultInstallMode);
-                return InstallModeList.Find(item => string.Equals(item.Key, defaultInstallMode.Key, StringComparison.OrdinalIgnoreCase));
+                return InstallModeList.Find(item => string.Equals(item, defaultInstallMode, StringComparison.OrdinalIgnoreCase));
             }
 
-            KeyValuePair<string, string> selectedInstallMode = InstallModeList.Find(item => string.Equals(item.Key, installMode, StringComparison.OrdinalIgnoreCase));
-
-            return string.IsNullOrEmpty(selectedInstallMode.Key) ? defaultInstallMode : selectedInstallMode;
+            string selectedInstallMode = InstallModeList.Find(item => string.Equals(item, installMode, StringComparison.OrdinalIgnoreCase));
+            return string.IsNullOrEmpty(selectedInstallMode) ? defaultInstallMode : selectedInstallMode;
         }
 
         /// <summary>
         /// 应用安装方式发生修改时修改设置存储的应用安装方式值
         /// </summary>
-        public static void SetInstallMode(KeyValuePair<string, string> installMode)
+        public static void SetInstallMode(string installMode)
         {
             InstallMode = installMode;
-
-            LocalSettingsService.SaveSetting(settingsKey, installMode.Key);
+            LocalSettingsService.SaveSetting(settingsKey, installMode);
         }
     }
 }
