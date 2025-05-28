@@ -33,7 +33,6 @@ namespace GetStoreApp.Views.Pages
         private readonly string DoEngineAria2String = ResourceService.GetLocalized("SettingsDownload/DoEngineAria2");
         private readonly string DoEngineBitsString = ResourceService.GetLocalized("SettingsDownload/DoEngineBits");
         private readonly string DoEngineDoString = ResourceService.GetLocalized("SettingsDownload/DoEngineDo");
-        private bool isInitialized;
 
         private StorageFolder _downloadFolder = DownloadOptionsService.DownloadFolder;
 

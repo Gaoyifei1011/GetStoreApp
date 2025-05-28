@@ -36,8 +36,6 @@ namespace GetStoreApp.Views.Pages
         private readonly string ThemeDefaultString = ResourceService.GetLocalized("SettingsGeneral/ThemeDefault");
         private readonly string ThemeLightAltString = ResourceService.GetLocalized("SettingsGeneral/ThemeLight");
         private readonly string ThemeDarkString = ResourceService.GetLocalized("SettingsGeneral/ThemeDark");
-
-        private bool isInitialized;
         private readonly UISettings uiSettings = new();
 
         private KeyValuePair<string, string> _theme;

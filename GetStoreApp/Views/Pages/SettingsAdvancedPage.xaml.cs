@@ -34,8 +34,6 @@ namespace GetStoreApp.Views.Pages
         private readonly string WebKernelWebViewString = ResourceService.GetLocalized("SettingsAdvanced/WebKernelWebView");
         private readonly string WebKernelWebView2String = ResourceService.GetLocalized("SettingsAdvanced/WebKernelWebView2");
 
-        private bool isInitialized;
-
         private bool _notificationValue = NotificationService.AppNotification;
 
         public bool NotificationValue
