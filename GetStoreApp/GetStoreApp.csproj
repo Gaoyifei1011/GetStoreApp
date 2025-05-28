@@ -217,6 +217,8 @@
     <None Remove="Strings\SettingsGeneral.lang-zh-hans.resjson" />
     <None Remove="Strings\SettingsItem.lang-en-us.resjson" />
     <None Remove="Strings\SettingsItem.lang-zh-hans.resjson" />
+    <None Remove="Strings\SettingsStoreAndUpdate.lang-en-us.resjson" />
+    <None Remove="Strings\SettingsStoreAndUpdate.lang-zh-hans.resjson" />
     <None Remove="Strings\Store.lang-en-us.resjson" />
     <None Remove="Strings\Store.lang-zh-hans.resjson" />
     <None Remove="Strings\en-us\About.resjson" /> 
@@ -361,6 +363,8 @@
     <PRIResource Include="Strings\SettingsGeneral.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\SettingsItem.lang-en-us.resjson" />
     <PRIResource Include="Strings\SettingsItem.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\SettingsStoreAndUpdate.lang-en-us.resjson" />
+    <PRIResource Include="Strings\SettingsStoreAndUpdate.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\Store.lang-en-us.resjson" />
     <PRIResource Include="Strings\Store.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\en-us\About.resjson" />
