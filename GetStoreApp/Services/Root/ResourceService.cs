@@ -27,10 +27,6 @@ namespace GetStoreApp.Services.Root
 
         public static List<ChannelModel> ChannelList { get; } = [];
 
-        public static List<InfoBarModel> QueryLinksInfoList { get; } = [];
-
-        public static List<InfoBarModel> SearchStoreInfoList { get; } = [];
-
         public static List<TraceCleanupModel> TraceCleanupList { get; } = [];
 
         /// <summary>
@@ -60,8 +56,6 @@ namespace GetStoreApp.Services.Root
         {
             InitializeTypeList();
             InitializeChannelList();
-            InitializeQueryLinksInfoList();
-            InitializeSearchStoreInfoList();
             InitializeTraceCleanupList();
         }
 
@@ -116,76 +110,6 @@ namespace GetStoreApp.Services.Root
                 DisplayName = GetLocalized("Resources/Retail"),
                 InternalName = "Retail",
                 ShortName = "rt"
-            });
-        }
-
-        /// <summary>
-        /// 初始化查询链接信息状态栏信息列表
-        /// </summary>
-        private static void InitializeQueryLinksInfoList()
-        {
-            QueryLinksInfoList.Add(new InfoBarModel
-            {
-                Severity = InfoBarSeverity.Informational,
-                Message = GetLocalized("Store/QueryLinksInfoGetting"),
-                PrRingActValue = true,
-                PrRingVisValue = true
-            });
-            QueryLinksInfoList.Add(new InfoBarModel
-            {
-                Severity = InfoBarSeverity.Success,
-                Message = GetLocalized("Store/QueryLinksInfoSuccess"),
-                PrRingActValue = false,
-                PrRingVisValue = false
-            });
-            QueryLinksInfoList.Add(new InfoBarModel
-            {
-                Severity = InfoBarSeverity.Warning,
-                Message = GetLocalized("Store/QueryLinksInfoWarning"),
-                PrRingActValue = false,
-                PrRingVisValue = false
-            });
-            QueryLinksInfoList.Add(new InfoBarModel
-            {
-                Severity = InfoBarSeverity.Error,
-                Message = GetLocalized("Store/QueryLinksInfoError"),
-                PrRingActValue = false,
-                PrRingVisValue = false
-            });
-        }
-
-        /// <summary>
-        /// 初始化查询链接信息状态栏信息列表
-        /// </summary>
-        private static void InitializeSearchStoreInfoList()
-        {
-            SearchStoreInfoList.Add(new InfoBarModel
-            {
-                Severity = InfoBarSeverity.Informational,
-                Message = GetLocalized("Store/SearchStoreInfoGetting"),
-                PrRingActValue = true,
-                PrRingVisValue = true
-            });
-            SearchStoreInfoList.Add(new InfoBarModel
-            {
-                Severity = InfoBarSeverity.Success,
-                Message = GetLocalized("Store/SearchStoreInfoSuccess"),
-                PrRingActValue = false,
-                PrRingVisValue = false
-            });
-            SearchStoreInfoList.Add(new InfoBarModel
-            {
-                Severity = InfoBarSeverity.Warning,
-                Message = GetLocalized("Store/SearchStoreInfoWarning"),
-                PrRingActValue = false,
-                PrRingVisValue = false
-            });
-            SearchStoreInfoList.Add(new InfoBarModel
-            {
-                Severity = InfoBarSeverity.Error,
-                Message = GetLocalized("Store/SearchStoreInfoError"),
-                PrRingActValue = false,
-                PrRingVisValue = false
             });
         }
 
