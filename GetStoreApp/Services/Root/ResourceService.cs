@@ -31,8 +31,6 @@ namespace GetStoreApp.Services.Root
 
         public static List<InfoBarModel> SearchStoreInfoList { get; } = [];
 
-        public static List<KeyValuePair<string, string>> QueryLinksModeList { get; } = [];
-
         public static List<TraceCleanupModel> TraceCleanupList { get; } = [];
 
         /// <summary>
@@ -64,7 +62,6 @@ namespace GetStoreApp.Services.Root
             InitializeChannelList();
             InitializeQueryLinksInfoList();
             InitializeSearchStoreInfoList();
-            InitializeQueryLinksModeList();
             InitializeTraceCleanupList();
         }
 
@@ -190,15 +187,6 @@ namespace GetStoreApp.Services.Root
                 PrRingActValue = false,
                 PrRingVisValue = false
             });
-        }
-
-        /// <summary>
-        /// 初始化查询链接方式信息列表
-        /// </summary>
-        private static void InitializeQueryLinksModeList()
-        {
-            QueryLinksModeList.Add(KeyValuePair.Create("Official", GetLocalized("Settings/QueryLinksModeOfficial")));
-            QueryLinksModeList.Add(KeyValuePair.Create("ThirdParty", GetLocalized("Settings/QueryLinksModeThirdParty")));
         }
 
         /// <summary>
