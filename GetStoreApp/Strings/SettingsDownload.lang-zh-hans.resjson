@@ -1,0 +1,21 @@
+﻿{
+  "AppCacheFolder": "应用缓存",
+  "Aria2Configuration": "Aria2 下载配置",
+  "Aria2ConfigurationDescription": "通过配置文件自定义 Aria2 下载方式",
+  "ChangeFolder": "更改目录",
+  "Configuration": "配置",
+  "Custom": "自定义",
+  "DeliveryOptimization": "传递优化设置",
+  "DeliveryOptimizationDescription": "打开系统的传递优化设置",
+  "DesktopFolder": "桌面",
+  "DoEngineAria2": "Aria2",
+  "DoEngineBits": "后台智能传输服务",
+  "DoEngineDo": "传递优化",
+  "DoEngineMode": "下载引擎方式",
+  "DoEngineModeDescription": "设置下载文件时使用的下载引擎，重启后生效",
+  "DownloadFolder": "下载",
+  "FileStoragePath": "文件存放路径",
+  "LearnDoEngine": "下载引擎说明",
+  "Open": "打开",
+  "OpenFolder": "单击访问该文件夹"
+}

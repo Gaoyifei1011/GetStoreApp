@@ -1,0 +1,21 @@
+﻿{
+  "AppCacheFolder": "App cache",
+  "Aria2Configuration": "Aria2 download configuration",
+  "Aria2ConfigurationDescription": "Customize how Aria2 is downloaded via the configuration file",
+  "ChangeFolder": "Change folder",
+  "Configuration": "Configure",
+  "Custom": "Custom",
+  "DeliveryOptimization": "Delivery optimization settings",
+  "DeliveryOptimizationDescription": "Open the system's delivery optimization Settings",
+  "DesktopFolder": "Desktop",
+  "DoEngineAria2": "Aria2",
+  "DoEngineBits": "BITS",
+  "DoEngineDo": "Delivery optimization",
+  "DoEngineMode": "Download engine mode",
+  "DoEngineModeDescription": "Set the download engine to use when downloading files,this parameter takes effect after a restart",
+  "DownloadFolder": "Downloads",
+  "FileStoragePath": "File storage path",
+  "LearnDoEngine": "Download engine instruction",
+  "Open": "Open",
+  "OpenFolder": "Click to access the folder"
+}
