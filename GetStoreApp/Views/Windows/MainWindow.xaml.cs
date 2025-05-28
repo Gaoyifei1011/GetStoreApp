@@ -1312,7 +1312,8 @@ namespace GetStoreApp.Views.Windows
             try
             {
                 ConnectionProfile connectionProfile = NetworkInformation.GetInternetConnectionProfile();
-                bool isConnected = connectionProfile is not null && connectionProfile.GetNetworkConnectivityLevel() is NetworkConnectivityLevel.InternetAccess;
+                NetworkConnectivityLevel networkConnectivityLevel = connectionProfile.GetNetworkConnectivityLevel();
+                bool isConnected = networkConnectivityLevel is NetworkConnectivityLevel.LocalAccess || networkConnectivityLevel is NetworkConnectivityLevel.ConstrainedInternetAccess || networkConnectivityLevel is NetworkConnectivityLevel.InternetAccess;
 
                 if (!isConnected)
                 {
