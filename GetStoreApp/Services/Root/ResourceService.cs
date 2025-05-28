@@ -33,10 +33,6 @@ namespace GetStoreApp.Services.Root
 
         public static List<KeyValuePair<string, string>> QueryLinksModeList { get; } = [];
 
-        public static List<KeyValuePair<string, string>> InstallModeList { get; } = [];
-
-        public static List<KeyValuePair<string, string>> ThemeList { get; } = [];
-
         public static List<TraceCleanupModel> TraceCleanupList { get; } = [];
 
         /// <summary>
@@ -69,7 +65,6 @@ namespace GetStoreApp.Services.Root
             InitializeQueryLinksInfoList();
             InitializeSearchStoreInfoList();
             InitializeQueryLinksModeList();
-            InitializeInstallModeList();
             InitializeTraceCleanupList();
         }
 
@@ -204,15 +199,6 @@ namespace GetStoreApp.Services.Root
         {
             QueryLinksModeList.Add(KeyValuePair.Create("Official", GetLocalized("Settings/QueryLinksModeOfficial")));
             QueryLinksModeList.Add(KeyValuePair.Create("ThirdParty", GetLocalized("Settings/QueryLinksModeThirdParty")));
-        }
-
-        /// <summary>
-        /// 初始化安装模式信息列表
-        /// </summary>
-        private static void InitializeInstallModeList()
-        {
-            InstallModeList.Add(KeyValuePair.Create("AppInstall", GetLocalized("Settings/AppInstall")));
-            InstallModeList.Add(KeyValuePair.Create("CodeInstall", GetLocalized("Settings/CodeInstall")));
         }
 
         /// <summary>
