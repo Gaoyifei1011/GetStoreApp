@@ -20,15 +20,15 @@ namespace GetStoreApp.Services.Settings
         private static readonly string downloadFolderKey = ConfigKey.DownloadFolderKey;
         private static readonly string doEngineModeKey = ConfigKey.DoEngineModeKey;
 
-        private static KeyValuePair<string, string> defaultDoEngineMode;
+        private static string defaultDoEngineMode;
 
         public static StorageFolder DefaultDownloadFolder { get; private set; }
 
         public static StorageFolder DownloadFolder { get; private set; }
 
-        public static KeyValuePair<string, string> DoEngineMode { get; private set; }
+        public static string DoEngineMode { get; private set; }
 
-        public static List<KeyValuePair<string, string>> DoEngineModeList { get; } = ResourceService.DoEngineModeList;
+        public static List<string> DoEngineModeList { get; } = ["DeliveryOptimization", "Bits", "Aria2"];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的下载相关内容设置值，并创建默认下载目录
@@ -71,19 +71,18 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 获取设置存储的下载引擎方式值，如果设置没有存储，使用默认值
         /// </summary>
-        private static KeyValuePair<string, string> GetDoEngineMode()
+        private static string GetDoEngineMode()
         {
             string doEngineMode = LocalSettingsService.ReadSetting<string>(doEngineModeKey);
 
             if (string.IsNullOrEmpty(doEngineMode))
             {
                 SetDoEngineMode(defaultDoEngineMode);
-                return DoEngineModeList.Find(item => Equals(item.Key, defaultDoEngineMode.Key));
+                return DoEngineModeList.Find(item => string.Equals(item, defaultDoEngineMode, StringComparison.OrdinalIgnoreCase));
             }
 
-            KeyValuePair<string, string> selectedDoEngine = DoEngineModeList.Find(item => string.Equals(item.Key, doEngineMode, StringComparison.OrdinalIgnoreCase));
-
-            return string.IsNullOrEmpty(selectedDoEngine.Key) ? defaultDoEngineMode : selectedDoEngine;
+            string selectedDoEngine = DoEngineModeList.Find(item => string.Equals(item, doEngineMode, StringComparison.OrdinalIgnoreCase));
+            return string.IsNullOrEmpty(selectedDoEngine) ? defaultDoEngineMode : selectedDoEngine;
         }
 
         /// <summary>
@@ -92,18 +91,16 @@ namespace GetStoreApp.Services.Settings
         public static void SetFolder(StorageFolder downloadFolder)
         {
             DownloadFolder = downloadFolder;
-
             LocalSettingsService.SaveSetting(downloadFolderKey, downloadFolder.Path);
         }
 
         /// <summary>
         /// 应用下载引擎发生修改时修改设置存储的下载引擎方式值
         /// </summary>
-        public static void SetDoEngineMode(KeyValuePair<string, string> doEngineMode)
+        public static void SetDoEngineMode(string doEngineMode)
         {
             DoEngineMode = doEngineMode;
-
-            LocalSettingsService.SaveSetting(doEngineModeKey, doEngineMode.Key);
+            LocalSettingsService.SaveSetting(doEngineModeKey, doEngineMode);
         }
 
         /// <summary>

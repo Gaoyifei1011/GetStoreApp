@@ -19,7 +19,7 @@ namespace GetStoreApp.Services.Download
     {
         private static bool isInitialized;
         private static int badgeCount;
-        private static KeyValuePair<string, string> doEngineMode;
+        private static string doEngineMode;
 
         public static bool IsDownloadingPageInitialized { get; set; }
 
