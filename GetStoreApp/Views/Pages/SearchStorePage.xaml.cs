@@ -26,6 +26,10 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SearchStorePage : Page, INotifyPropertyChanged
     {
+        private readonly string InfoBarErrorString = ResourceService.GetLocalized("SearchStore/InfoBarError");
+        private readonly string InfoBarGettingString = ResourceService.GetLocalized("SearchStore/InfoBarGetting");
+        private readonly string InfoBarSuccessString = ResourceService.GetLocalized("SearchStore/InfoBarSuccess");
+        private readonly string InfoBarWarningString = ResourceService.GetLocalized("SearchStore/InfoBarWarning");
         private readonly string SearchStoreCountInfo = ResourceService.GetLocalized("SearchStore/SearchStoreCountInfo");
         private readonly string WelcomeString = ResourceService.GetLocalized("SearchStore/Welcome");
 
@@ -141,7 +145,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<InfoBarModel> SearchStoreInfoList { get; } = ResourceService.SearchStoreInfoList;
+        private List<InfoBarModel> SearchStoreInfoList { get; } = [];
 
         private ObservableCollection<HistoryModel> HistoryCollection { get; } = [];
 
@@ -153,6 +157,36 @@ namespace GetStoreApp.Views.Pages
         {
             InitializeComponent();
             StateInfoText = WelcomeString;
+
+            SearchStoreInfoList.Add(new InfoBarModel
+            {
+                Severity = InfoBarSeverity.Informational,
+                Message = InfoBarGettingString,
+                PrRingActValue = true,
+                PrRingVisValue = true
+            });
+            SearchStoreInfoList.Add(new InfoBarModel
+            {
+                Severity = InfoBarSeverity.Success,
+                Message = InfoBarSuccessString,
+                PrRingActValue = false,
+                PrRingVisValue = false
+            });
+            SearchStoreInfoList.Add(new InfoBarModel
+            {
+                Severity = InfoBarSeverity.Warning,
+                Message = InfoBarWarningString,
+                PrRingActValue = false,
+                PrRingVisValue = false
+            });
+            SearchStoreInfoList.Add(new InfoBarModel
+            {
+                Severity = InfoBarSeverity.Error,
+                Message = InfoBarErrorString,
+                PrRingActValue = false,
+                PrRingVisValue = false
+            });
+
             HistoryStorageService.SearchStoreCleared += () =>
             {
                 DispatcherQueue.TryEnqueue(HistoryCollection.Clear);
