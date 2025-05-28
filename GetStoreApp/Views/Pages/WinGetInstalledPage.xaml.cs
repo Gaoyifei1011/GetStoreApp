@@ -33,13 +33,13 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class WinGetInstalledPage : Page, INotifyPropertyChanged
     {
-        private readonly string InstalledAppsCountInfo = ResourceService.GetLocalized("WinGet/InstalledAppsCountInfo");
-        private readonly string Unknown = ResourceService.GetLocalized("WinGet/Unknown");
-        private readonly string InstalledAppsEmptyDescription = ResourceService.GetLocalized("WinGet/InstalledAppsEmptyDescription");
-        private readonly string InstalledAppsFailed = ResourceService.GetLocalized("WinGet/InstalledAppsFailed");
-        private readonly string InstalledFindAppsFailed = ResourceService.GetLocalized("WinGet/InstalledFindAppsFailed");
-        private readonly string InstalledCatalogReferenceFailed = ResourceService.GetLocalized("WinGet/InstalledCatalogReferenceFailed");
-        private readonly string InstalledNotSelectSource = ResourceService.GetLocalized("WinGet/InstalledNotSelectSource");
+        private readonly string InstalledAppsCountInfoString = ResourceService.GetLocalized("WinGetInstalled/InstalledAppsCountInfo");
+        private readonly string InstalledAppsEmptyDescriptionString = ResourceService.GetLocalized("WinGetInstalled/InstalledAppsEmptyDescription");
+        private readonly string InstalledAppsFailedString = ResourceService.GetLocalized("WinGetInstalled/InstalledAppsFailed");
+        private readonly string InstalledCatalogReferenceFailedString = ResourceService.GetLocalized("WinGetInstalled/InstalledCatalogReferenceFailed");
+        private readonly string InstalledFindAppsFailedString = ResourceService.GetLocalized("WinGetInstalled/InstalledFindAppsFailed");
+        private readonly string InstalledNotSelectSourceString = ResourceService.GetLocalized("WinGetInstalled/InstalledNotSelectSource");
+        private readonly string Unknown = ResourceService.GetLocalized("WinGetInstalled/Unknown");
         private readonly Guid CLSID_OpenControlPanel = new("06622D85-6856-4460-8DE1-A81921B41C4B");
         private readonly Lock InstalledAppsLock = new();
         private IOpenControlPanel openControlPanel;
@@ -634,7 +634,7 @@ namespace GetStoreApp.Views.Pages
                         if (upgradableAppsList.Count is 0)
                         {
                             InstalledAppsResultKind = InstalledAppsResultKind.Failed;
-                            InstalledFailedContent = InstalledAppsEmptyDescription;
+                            InstalledFailedContent = InstalledAppsEmptyDescriptionString;
                         }
                         else
                         {
@@ -679,19 +679,19 @@ namespace GetStoreApp.Views.Pages
                     else
                     {
                         InstalledAppsResultKind = InstalledAppsResultKind.Failed;
-                        InstalledFailedContent = string.Format(InstalledAppsFailed, InstalledFindAppsFailed, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : Unknown);
+                        InstalledFailedContent = string.Format(InstalledAppsFailedString, InstalledFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : Unknown);
                     }
                 }
                 else
                 {
                     InstalledAppsResultKind = InstalledAppsResultKind.Failed;
-                    InstalledFailedContent = string.Format(InstalledAppsFailed, InstalledCatalogReferenceFailed, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : Unknown);
+                    InstalledFailedContent = string.Format(InstalledAppsFailedString, InstalledCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : Unknown);
                 }
             }
             else
             {
                 InstalledAppsResultKind = InstalledAppsResultKind.Failed;
-                InstalledFailedContent = InstalledNotSelectSource;
+                InstalledFailedContent = InstalledNotSelectSourceString;
             }
         }
 
