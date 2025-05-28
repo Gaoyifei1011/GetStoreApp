@@ -43,8 +43,6 @@ namespace GetStoreApp.Services.Root
 
         public static List<TraceCleanupModel> TraceCleanupList { get; } = [];
 
-        public static List<KeyValuePair<string, string>> DoEngineModeList { get; } = [];
-
         /// <summary>
         /// 初始化应用本地化资源
         /// </summary>
@@ -79,7 +77,6 @@ namespace GetStoreApp.Services.Root
             InitializeInstallModeList();
             InitializeThemeList();
             InitializeTraceCleanupList();
-            InitializeDoEngineModeList();
         }
 
         /// <summary>
@@ -276,16 +273,6 @@ namespace GetStoreApp.Services.Root
                 InternalName = CleanKind.LocalFile,
                 CleanFailedText = GetLocalized("Dialog/LocalFileCleanError")
             });
-        }
-
-        /// <summary>
-        /// 初始化下载引擎方式信息列表
-        /// </summary>
-        private static void InitializeDoEngineModeList()
-        {
-            DoEngineModeList.Add(KeyValuePair.Create("DeliveryOptimization", GetLocalized("Settings/DoEngineDo")));
-            DoEngineModeList.Add(KeyValuePair.Create("BITS", GetLocalized("Settings/DoEngineBits")));
-            DoEngineModeList.Add(KeyValuePair.Create("Aria2", GetLocalized("Settings/DoEngineAria2")));
         }
 
         /// <summary>
