@@ -27,9 +27,20 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsGeneralPage : Page, INotifyPropertyChanged
     {
+        private readonly string BackdropAcrylicString = ResourceService.GetLocalized("SettingsGeneral/BackdropAcrylic");
+        private readonly string BackdropAcrylicBaseString = ResourceService.GetLocalized("SettingsGeneral/BackdropAcrylicBase");
+        private readonly string BackdropAcrylicThinString = ResourceService.GetLocalized("SettingsGeneral/BackdropAcrylicThin");
+        private readonly string BackdropDefaultString = ResourceService.GetLocalized("SettingsGeneral/BackdropDefault");
+        private readonly string BackdropMicaString = ResourceService.GetLocalized("SettingsGeneral/BackdropMica");
+        private readonly string BackdropMicaAltString = ResourceService.GetLocalized("SettingsGeneral/BackdropMicaAlt");
+        private readonly string ThemeDefaultString = ResourceService.GetLocalized("SettingsGeneral/ThemeDefault");
+        private readonly string ThemeLightAltString = ResourceService.GetLocalized("SettingsGeneral/ThemeLight");
+        private readonly string ThemeDarkString = ResourceService.GetLocalized("SettingsGeneral/ThemeDark");
+
+        private bool isInitialized;
         private readonly UISettings uiSettings = new();
 
-        private KeyValuePair<string, string> _theme = ThemeService.AppTheme;
+        private KeyValuePair<string, string> _theme;
 
         public KeyValuePair<string, string> Theme
         {
@@ -45,7 +56,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private KeyValuePair<string, string> _backdrop = BackdropService.AppBackdrop;
+        private KeyValuePair<string, string> _backdrop;
 
         public KeyValuePair<string, string> Backdrop
         {
@@ -141,9 +152,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<KeyValuePair<string, string>> ThemeList { get; } = ThemeService.ThemeList;
+        private List<KeyValuePair<string, string>> ThemeList { get; } = [];
 
-        private List<KeyValuePair<string, string>> BackdropList { get; } = BackdropService.BackdropList;
+        private List<KeyValuePair<string, string>> BackdropList { get; } = [];
 
         private ObservableCollection<LanguageModel> LanguageCollection { get; } = [];
 
@@ -154,6 +165,18 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
 
             AdvancedEffectsEnabled = uiSettings.AdvancedEffectsEnabled;
+            ThemeList.Add(KeyValuePair.Create(ThemeService.ThemeList[0], ThemeDefaultString));
+            ThemeList.Add(KeyValuePair.Create(ThemeService.ThemeList[1], ThemeLightAltString));
+            ThemeList.Add(KeyValuePair.Create(ThemeService.ThemeList[2], ThemeDarkString));
+            Theme = ThemeList.Find(item => string.Equals(item.Key, ThemeService.AppTheme, StringComparison.OrdinalIgnoreCase));
+
+            BackdropList.Add(KeyValuePair.Create(BackdropService.BackdropList[0], BackdropDefaultString));
+            BackdropList.Add(KeyValuePair.Create(BackdropService.BackdropList[1], BackdropMicaString));
+            BackdropList.Add(KeyValuePair.Create(BackdropService.BackdropList[2], BackdropMicaAltString));
+            BackdropList.Add(KeyValuePair.Create(BackdropService.BackdropList[3], BackdropAcrylicString));
+            BackdropList.Add(KeyValuePair.Create(BackdropService.BackdropList[4], BackdropAcrylicBaseString));
+            BackdropList.Add(KeyValuePair.Create(BackdropService.BackdropList[5], BackdropAcrylicThinString));
+            Backdrop = BackdropList.Find(item => string.Equals(item.Key, BackdropService.AppBackdrop, StringComparison.OrdinalIgnoreCase));
 
             foreach (KeyValuePair<string, string> languageItem in LanguageService.LanguageList)
             {
@@ -240,7 +263,7 @@ namespace GetStoreApp.Views.Pages
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
                 Theme = ThemeList[Convert.ToInt32(tag)];
-                ThemeService.SetTheme(Theme);
+                ThemeService.SetTheme(Theme.Key);
             }
         }
 
@@ -252,7 +275,7 @@ namespace GetStoreApp.Views.Pages
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
                 Backdrop = BackdropList[Convert.ToInt32(tag)];
-                BackdropService.SetBackdrop(Backdrop);
+                BackdropService.SetBackdrop(Backdrop.Key);
                 AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !Equals(Backdrop.Key, BackdropList[0].Key);
 
                 if (Equals(Backdrop, BackdropList[0]))

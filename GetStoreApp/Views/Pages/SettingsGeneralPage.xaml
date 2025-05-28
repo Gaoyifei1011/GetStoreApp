@@ -60,20 +60,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Theme')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/Theme')}" />
 
                     <TextBlock
                         x:Name="ThemeDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ThemeDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/ThemeDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/ThemeDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/ThemeDescription')}"
                                 Visibility="{x:Bind ThemeDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -84,7 +84,7 @@
                     Margin="0,0,6,0"
                     VerticalAlignment="Center"
                     Click="{x:Bind OnSystemThemeSettingsClicked}"
-                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/SystemThemeSettings')}" />
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/SystemThemeSettings')}" />
 
                 <DropDownButton
                     Grid.Column="3"
@@ -153,20 +153,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Backdrop')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/Backdrop')}" />
 
                     <TextBlock
                         x:Name="BackdropDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/BackdropDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/BackdropDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/BackdropDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/BackdropDescription')}"
                                 Visibility="{x:Bind BackdropDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -177,7 +177,7 @@
                     Margin="0,0,6,0"
                     VerticalAlignment="Center"
                     Click="{x:Bind OnSystemBackdropSettingsClicked}"
-                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/SystemBackdropSettings')}" />
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/SystemBackdropSettings')}" />
 
                 <DropDownButton
                     Grid.Column="3"
@@ -201,7 +201,7 @@
                                 Height="32"
                                 Padding="11,0,11,0"
                                 x:Load="{x:Bind systembackdrop:MicaController.IsSupported()}"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Mica')}">
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/Mica')}">
 
                                 <RadioMenuFlyoutItem
                                     Height="32"
@@ -227,7 +227,7 @@
                                 Height="32"
                                 Padding="11,0,11,0"
                                 x:Load="{x:Bind systembackdrop:DesktopAcrylicController.IsSupported()}"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DesktopAcrylic')}">
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/DesktopAcrylic')}">
 
                                 <RadioMenuFlyoutItem
                                     Height="32"
@@ -289,20 +289,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AlwaysShowBackdrop')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/AlwaysShowBackdrop')}" />
 
                     <TextBlock
                         x:Name="AlwaysShowBackdropDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AlwaysShowBackdropDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/AlwaysShowBackdropDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AlwaysShowBackdropDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/AlwaysShowBackdropDescription')}"
                                 Visibility="{x:Bind AlwaysShowBackdropDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -315,12 +315,12 @@
 
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AlwaysShowBackdropOffContent')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/AlwaysShowBackdropOffContent')}"
                         Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AlwaysShowBackdropValue), Mode=OneWay}" />
 
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AlwaysShowBackdropOnContent')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/AlwaysShowBackdropOnContent')}"
                         Visibility="{x:Bind AlwaysShowBackdropValue, Mode=OneWay}" />
 
                     <ToggleSwitch
@@ -363,20 +363,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/Language')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/Language')}" />
 
                     <TextBlock
                         x:Name="LanguageDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LanguageDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/LanguageDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LanguageDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/LanguageDescription')}"
                                 Visibility="{x:Bind LanguageDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -387,7 +387,7 @@
                     Margin="0,0,6,0"
                     VerticalAlignment="Center"
                     Click="{x:Bind OnSystemLanguageSettingsClicked}"
-                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/SystemLanguageSettings')}" />
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/SystemLanguageSettings')}" />
 
                 <DropDownButton
                     Grid.Column="3"
@@ -475,20 +475,20 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/TopMost')}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/TopMost')}" />
 
                     <TextBlock
                         x:Name="TopMostDescription"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/TopMostDescription')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/TopMostDescription')}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Settings/TopMostDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/TopMostDescription')}"
                                 Visibility="{x:Bind TopMostDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -501,12 +501,12 @@
 
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/TopMostOffContent')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/TopMostOffContent')}"
                         Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(TopMostValue), Mode=OneWay}" />
 
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/TopMostOnContent')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/TopMostOnContent')}"
                         Visibility="{x:Bind TopMostValue, Mode=OneWay}" />
 
                     <ToggleSwitch
