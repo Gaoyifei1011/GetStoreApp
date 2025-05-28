@@ -205,6 +205,8 @@
     <None Remove="Strings\QueryLinks.lang-zh-hans.resjson" />
     <None Remove="Strings\SearchStore.lang-en-us.resjson" />
     <None Remove="Strings\SearchStore.lang-zh-hans.resjson" />
+    <None Remove="Strings\Settings.lang-en-us.resjson" />
+    <None Remove="Strings\Settings.lang-zh-hans.resjson" />
     <None Remove="Strings\SettingsAbout.lang-en-us.resjson" />
     <None Remove="Strings\SettingsAbout.lang-zh-hans.resjson" />
     <None Remove="Strings\SettingsAdvanced.lang-en-us.resjson" />
@@ -230,7 +232,6 @@
     <None Remove="Strings\en-us\Installer.resjson" />
     <None Remove="Strings\en-us\Notification.resjson" />
     <None Remove="Strings\en-us\Resources.resjson" />
-    <None Remove="Strings\en-us\Settings.resjson" />
     <None Remove="Strings\en-us\ShellMenu.resjson" />
     <None Remove="Strings\en-us\WebView.resjson" />
     <None Remove="Strings\en-us\Window.resjson" />
@@ -240,7 +241,6 @@
     <None Remove="Strings\zh-hans\Installer.resjson" />
     <None Remove="Strings\zh-hans\Notification.resjson" />
     <None Remove="Strings\zh-hans\Resources.resjson" />
-    <None Remove="Strings\zh-hans\Settings.resjson" />
     <None Remove="Strings\zh-hans\ShellMenu.resjson" />
     <None Remove="Strings\zh-hans\WebView.resjson" />
     <None Remove="Strings\zh-hans\Window.resjson" />
@@ -355,6 +355,8 @@
     <PRIResource Include="Strings\QueryLinks.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\SearchStore.lang-en-us.resjson" />
     <PRIResource Include="Strings\SearchStore.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\Settings.lang-en-us.resjson" />
+    <PRIResource Include="Strings\Settings.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\SettingsAbout.lang-en-us.resjson" />
     <PRIResource Include="Strings\SettingsAbout.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\SettingsAdvanced.lang-en-us.resjson" />
@@ -380,7 +382,6 @@
     <PRIResource Include="Strings\en-us\Installer.resjson" />
     <PRIResource Include="Strings\en-us\Notification.resjson" />
     <PRIResource Include="Strings\en-us\Resources.resjson" />
-    <PRIResource Include="Strings\en-us\Settings.resjson" />
     <PRIResource Include="Strings\en-us\ShellMenu.resjson" />
     <PRIResource Include="Strings\en-us\WebView.resjson" />
     <PRIResource Include="Strings\en-us\Window.resjson" />
@@ -390,7 +391,6 @@
     <PRIResource Include="Strings\zh-hans\Installer.resjson" />
     <PRIResource Include="Strings\zh-hans\Notification.resjson" />
     <PRIResource Include="Strings\zh-hans\Resources.resjson" />
-    <PRIResource Include="Strings\zh-hans\Settings.resjson" />
     <PRIResource Include="Strings\zh-hans\ShellMenu.resjson" />
     <PRIResource Include="Strings\zh-hans\WebView.resjson" />
     <PRIResource Include="Strings\zh-hans\Window.resjson" />
