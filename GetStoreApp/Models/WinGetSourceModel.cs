@@ -69,7 +69,7 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 数据源 ID
         /// </summary>
-        public string Id { get; set; }
+        public string SourceId { get; set; }
 
         /// <summary>
         /// 数据源最后一次更新时间
