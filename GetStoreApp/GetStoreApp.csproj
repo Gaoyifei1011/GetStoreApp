@@ -201,6 +201,8 @@
     <None Remove="Strings\Download.lang-zh-hans.resjson" />
     <None Remove="Strings\Downloading.lang-en-us.resjson" />
     <None Remove="Strings\Downloading.lang-zh-hans.resjson" />
+    <None Remove="Strings\Installer.lang-en-us.resjson" />
+    <None Remove="Strings\Installer.lang-zh-hans.resjson" />
     <None Remove="Strings\Pinner.lang-en-us.resjson" />
     <None Remove="Strings\Pinner.lang-zh-hans.resjson" />
     <None Remove="Strings\QueryLinks.lang-en-us.resjson" />
@@ -246,12 +248,10 @@
     <None Remove="Strings\WinGetUpgrade.lang-en-us.resjson" />
     <None Remove="Strings\WinGetUpgrade.lang-zh-hans.resjson" />
     <None Remove="Strings\en-us\Dialog.resjson" />
-    <None Remove="Strings\en-us\Installer.resjson" />
     <None Remove="Strings\en-us\Notification.resjson" />
     <None Remove="Strings\en-us\Resources.resjson" />
     <None Remove="Strings\en-us\Window.resjson" />
     <None Remove="Strings\zh-hans\Dialog.resjson" />
-    <None Remove="Strings\zh-hans\Installer.resjson" />
     <None Remove="Strings\zh-hans\Notification.resjson" />
     <None Remove="Strings\zh-hans\Resources.resjson" />
     <None Remove="Strings\zh-hans\Window.resjson" />
@@ -361,6 +361,8 @@
     <PRIResource Include="Strings\Download.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\Downloading.lang-en-us.resjson" />
     <PRIResource Include="Strings\Downloading.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\Installer.lang-en-us.resjson" />
+    <PRIResource Include="Strings\Installer.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\Pinner.lang-en-us.resjson" />
     <PRIResource Include="Strings\Pinner.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\QueryLinks.lang-en-us.resjson" />
@@ -406,12 +408,10 @@
     <PRIResource Include="Strings\WinGetUpgrade.lang-en-us.resjson" />
     <PRIResource Include="Strings\WinGetUpgrade.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\en-us\Dialog.resjson" />
-    <PRIResource Include="Strings\en-us\Installer.resjson" />
     <PRIResource Include="Strings\en-us\Notification.resjson" />
     <PRIResource Include="Strings\en-us\Resources.resjson" />
     <PRIResource Include="Strings\en-us\Window.resjson" />   
     <PRIResource Include="Strings\zh-hans\Dialog.resjson" />
-    <PRIResource Include="Strings\zh-hans\Installer.resjson" />
     <PRIResource Include="Strings\zh-hans\Notification.resjson" />
     <PRIResource Include="Strings\zh-hans\Resources.resjson" />
     <PRIResource Include="Strings\zh-hans\Window.resjson" />
