@@ -52,20 +52,20 @@
             <TextBlock
                 Grid.Column="1"
                 VerticalAlignment="Center"
-                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Operation')}" />
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/Operation')}" />
 
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UpgradableAppsCountEmpty')}"
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/UpgradableAppsCountEmpty')}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(UpgradableAppsCollection.Count), Mode=OneWay}" />
 
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind x:String.Format(UpgradableAppsCountInfo, UpgradableAppsCollection.Count), Mode=OneWay}"
+                Text="{x:Bind x:String.Format(UpgradableAppsCountInfoString, UpgradableAppsCollection.Count), Mode=OneWay}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UpgradableAppsCollection.Count), Mode=OneWay}" />
 
             <CommandBar
@@ -81,7 +81,7 @@
                 </CommandBar.Resources>
 
                 <CommandBar.PrimaryCommands>
-                    <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Sort')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/SortToolTip')}">
+                    <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/Sort')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8CB;" />
@@ -91,8 +91,8 @@
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutSubItem
                                     Height="32"
-                                    Padding="11,0,11,0"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/SortWay')}">
+                                    Padding="11,0"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortWay')}">
 
                                     <RadioMenuFlyoutItem
                                         Height="32"
@@ -101,7 +101,7 @@
                                         GroupName="UpgradeSortWayRadioGroup"
                                         IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
                                         Tag="True"
-                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/SortIncrease')}" />
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortIncrease')}" />
 
                                     <RadioMenuFlyoutItem
                                         Height="32"
@@ -110,13 +110,13 @@
                                         GroupName="UpgradeSortWayRadioGroup"
                                         IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
                                         Tag="False"
-                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/SortDecrease')}" />
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortDecrease')}" />
                                 </MenuFlyoutSubItem>
 
                                 <MenuFlyoutSubItem
                                     Height="32"
-                                    Padding="11,0,11,0"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/SortRule')}">
+                                    Padding="11,0"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortRule')}">
 
                                     <RadioMenuFlyoutItem
                                         Height="32"
@@ -125,7 +125,7 @@
                                         GroupName="UpgradeSortRuleRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
                                         Tag="{x:Bind enum:AppSortRuleKind.DisplayName}"
-                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/SortByDisplayName')}" />
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortByDisplayName')}" />
 
                                     <RadioMenuFlyoutItem
                                         Height="32"
@@ -134,7 +134,7 @@
                                         GroupName="UpgradeSortRuleRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
                                         Tag="{x:Bind enum:AppSortRuleKind.PublisherName}"
-                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/SortByPublisher')}" />
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortByPublisher')}" />
                                 </MenuFlyoutSubItem>
                             </MenuFlyout>
                         </AppBarButton.Flyout>
@@ -143,14 +143,14 @@
                     <AppBarButton
                         Click="{x:Bind OnCheckUpdateClicked}"
                         IsEnabled="{x:Bind GetIsCheckingUpdate(UpgradableAppsResultKind), Mode=OneWay}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CheckUpdate')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/CheckUpdate')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE895;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
 
-                    <AppBarButton Click="{x:Bind OnTaskManagerClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/TaskManager')}">
+                    <AppBarButton Click="{x:Bind OnTaskManagerClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/TaskManager')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE71D;" />
@@ -161,8 +161,8 @@
                 <CommandBar.SecondaryCommands>
                     <AppBarButton
                         Click="{x:Bind OnOpenTempFolderClicked}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/OpenTempFolder')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/OpenTempFolderToolTip')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/OpenTempFolder')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/OpenTempFolderToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8B7;" />
@@ -171,8 +171,8 @@
 
                     <AppBarButton
                         Click="{x:Bind OnUseInstructionClicked}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UseInstruction')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UseInstructionToolTip')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/UseInstruction')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/UseInstructionToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE946;" />
@@ -181,8 +181,8 @@
 
                     <AppBarButton
                         Click="{x:Bind OnDataSourceSettingsClicked}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DataSourceSettings')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DataSourceSettingsToolTip')}">
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/DataSourceSettings')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/DataSourceSettingsToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE713;" />
@@ -197,7 +197,7 @@
             Grid.Row="1"
             Height="60"
             Margin="30,0,30,0"
-            Padding="16,12"
+            Padding="16,0"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
@@ -207,11 +207,10 @@
             <Grid>
                 <!--  未检查更新  -->
                 <TextBlock
-                    Margin="0,10"
                     VerticalAlignment="Center"
-                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/NotCheckUpdateTip')}"
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/NotCheckUpdate')}"
                     TextAlignment="Center"
-                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/NotCheckUpdateTip')}"
+                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/NotCheckUpdate')}"
                     Visibility="{x:Bind CheckUpgradableAppsState(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.NotCheckUpdate), Mode=OneWay}" />
 
                 <!--  正在检查更新中  -->
@@ -225,15 +224,13 @@
                     <ProgressRing IsActive="True" IsEnabled="True" />
 
                     <TextBlock
-                        Margin="0,10"
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/LoadingUpgradableApps')}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/LoadingUpgradableApps')}"
                         TextAlignment="Center" />
                 </StackPanel>
 
                 <!--  搜索失败  -->
                 <TextBlock
-                    Margin="0,10"
                     VerticalAlignment="Center"
                     Text="{x:Bind UpgradableFailedContent, Mode=OneWay}"
                     TextAlignment="Center"
@@ -294,7 +291,7 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip MaxWidth="9999">
                                         <TextBlock>
-                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppName')}" />
                                             <Run Text="{x:Bind AppName}" />
                                         </TextBlock>
                                     </ToolTip>
@@ -342,22 +339,22 @@
                                             </Grid.RowDefinitions>
 
                                             <TextBlock Grid.Row="0">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppPublisherToolTip')}" />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppPublisher')}" />
                                                 <Run Text="{x:Bind AppPublisher}" />
                                             </TextBlock>
 
                                             <TextBlock Grid.Row="1">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppCurrentVersionToolTip')}" />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppCurrentVersion')}" />
                                                 <Run Text="{x:Bind AppCurrentVersion}" />
                                             </TextBlock>
 
                                             <TextBlock Grid.Row="2">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppNewestVersionToolTip')}" />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppNewestVersion')}" />
                                                 <Run Text="{x:Bind AppNewestVersion}" />
                                             </TextBlock>
 
                                             <TextBlock Grid.Row="3">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppIDToolTip')}" />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppID')}" />
                                                 <Run Text="{x:Bind AppID}" />
                                             </TextBlock>
                                         </Grid>
@@ -374,67 +371,28 @@
                             IsIndeterminate="True"
                             Visibility="{x:Bind IsUpgrading, Mode=OneWay}" />
 
-                        <StackPanel
+                        <SplitButton
                             Grid.Column="2"
-                            Height="30"
-                            BorderBrush="{ThemeResource ButtonBorderBrush}"
-                            BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
-                            CornerRadius="{ThemeResource ControlCornerRadius}"
-                            Orientation="Horizontal">
+                            Command="{StaticResource UpgradeCommand}"
+                            CommandParameter="{x:Bind}"
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/Upgrade')}">
 
-                            <Button
-                                VerticalAlignment="Stretch"
-                                VerticalContentAlignment="Center"
-                                BorderThickness="0,0,1,0"
-                                Command="{StaticResource UpgradeCommand}"
-                                CommandParameter="{x:Bind}"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Upgrade')}"
-                                CornerRadius="0"
-                                IsEnabled="{x:Bind IsUpgrading.Equals(x:False), Mode=OneWay}"
-                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Upgrade')}" />
+                            <SplitButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <MenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Command="{StaticResource ViewVersionInfoCommand}"
+                                        CommandParameter="{x:Bind}"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/ViewVersionInfo')}">
 
-                            <Button
-                                Width="35"
-                                VerticalAlignment="Stretch"
-                                BorderThickness="0"
-                                CornerRadius="0"
-                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}">
-
-                                <Button.Content>
-                                    <AnimatedIcon
-                                        Width="12"
-                                        Height="12"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Center"
-                                        AutomationProperties.AccessibilityView="Raw">
-                                        <animatedvisuals:AnimatedChevronDownSmallVisualSource />
-                                        <AnimatedIcon.FallbackIconSource>
-                                            <FontIconSource
-                                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                FontSize="8"
-                                                Glyph="&#xE96E;"
-                                                IsTextScaleFactorEnabled="False" />
-                                        </AnimatedIcon.FallbackIconSource>
-                                    </AnimatedIcon>
-                                </Button.Content>
-
-                                <Button.Flyout>
-                                    <MenuFlyout Placement="Bottom">
-                                        <MenuFlyoutItem
-                                            Height="32"
-                                            Padding="11,0"
-                                            Command="{StaticResource ViewVersionInfoCommand}"
-                                            CommandParameter="{x:Bind}"
-                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/ViewVersionInfo')}">
-
-                                            <MenuFlyoutItem.Icon>
-                                                <FontIcon Glyph="&#xE946;" />
-                                            </MenuFlyoutItem.Icon>
-                                        </MenuFlyoutItem>
-                                    </MenuFlyout>
-                                </Button.Flyout>
-                            </Button>
-                        </StackPanel>
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE946;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </SplitButton.Flyout>
+                        </SplitButton>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -31,13 +31,13 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class WinGetUpgradePage : Page, INotifyPropertyChanged
     {
-        private readonly string Unknown = ResourceService.GetLocalized("WinGet/Unknown");
-        private readonly string UpgradableAppsCountInfo = ResourceService.GetLocalized("WinGet/UpgradableAppsCountInfo");
-        private readonly string UpgradableAppsEmptyDescription = ResourceService.GetLocalized("WinGet/UpgradableAppsEmptyDescription");
-        private readonly string UpgradableAppsFailed = ResourceService.GetLocalized("WinGet/UpgradableAppsFailed");
-        private readonly string UpgradableFindAppsFailed = ResourceService.GetLocalized("WinGet/UpgradableFindAppsFailed");
-        private readonly string UpgradableCatalogReferenceFailed = ResourceService.GetLocalized("WinGet/UpgradableCatalogReferenceFailed");
-        private readonly string UpgradableNotSelectSource = ResourceService.GetLocalized("WinGet/UpgradableNotSelectSource");
+        private readonly string UpgradableAppsCountInfoString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableAppsCountInfo");
+        private readonly string UpgradableAppsEmptyDescriptionString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableAppsEmptyDescription");
+        private readonly string UpgradableAppsFailedString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableAppsFailed");
+        private readonly string UpgradableCatalogReferenceFailedString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableCatalogReferenceFailed");
+        private readonly string UpgradableFindAppsFailedString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableFindAppsFailed");
+        private readonly string UpgradableNotSelectSourceString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableNotSelectSource");
+        private readonly string UnknownString = ResourceService.GetLocalized("WinGetUpgrade/Unknown");
         private readonly Lock UpgradableAppsLock = new();
         private WinGetPage WinGetPageInstance;
 
@@ -422,7 +422,7 @@ namespace GetStoreApp.Views.Pages
                         if (upgradableAppsList.Count is 0)
                         {
                             UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
-                            UpgradableFailedContent = UpgradableAppsEmptyDescription;
+                            UpgradableFailedContent = UpgradableAppsEmptyDescriptionString;
                         }
                         else
                         {
@@ -437,19 +437,19 @@ namespace GetStoreApp.Views.Pages
                     else
                     {
                         UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
-                        UpgradableFailedContent = string.Format(UpgradableAppsFailed, UpgradableFindAppsFailed, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : Unknown);
+                        UpgradableFailedContent = string.Format(UpgradableAppsFailedString, UpgradableFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : UnknownString);
                     }
                 }
                 else
                 {
                     UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
-                    UpgradableFailedContent = string.Format(UpgradableAppsFailed, UpgradableCatalogReferenceFailed, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : Unknown);
+                    UpgradableFailedContent = string.Format(UpgradableAppsFailedString, UpgradableCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : UnknownString);
                 }
             }
             else
             {
                 UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
-                UpgradableFailedContent = UpgradableNotSelectSource;
+                UpgradableFailedContent = UpgradableNotSelectSourceString;
             }
         }
 
@@ -544,10 +544,10 @@ namespace GetStoreApp.Views.Pages
                                 upgradableAppsList.Add(new UpgradableAppsModel()
                                 {
                                     AppID = matchItem.CatalogPackage.DefaultInstallVersion.Id,
-                                    AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) ? Unknown : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
-                                    AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Publisher) ? Unknown : matchItem.CatalogPackage.DefaultInstallVersion.Publisher,
-                                    AppCurrentVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? Unknown : matchItem.CatalogPackage.InstalledVersion.Version,
-                                    AppNewestVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) ? Unknown : matchItem.CatalogPackage.DefaultInstallVersion.Version,
+                                    AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) ? UnknownString : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
+                                    AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Publisher) ? UnknownString : matchItem.CatalogPackage.DefaultInstallVersion.Publisher,
+                                    AppCurrentVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? UnknownString : matchItem.CatalogPackage.InstalledVersion.Version,
+                                    AppNewestVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) ? UnknownString : matchItem.CatalogPackage.DefaultInstallVersion.Version,
                                     IsUpgrading = isUpgrading,
                                     CatalogPackage = matchItem.CatalogPackage,
                                 });
