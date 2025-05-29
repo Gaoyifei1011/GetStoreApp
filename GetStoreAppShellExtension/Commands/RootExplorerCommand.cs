@@ -15,12 +15,14 @@ namespace GetStoreAppShellExtension.Commands
     [GeneratedComClass, Guid("C098FAB9-A297-5829-B47E-07EBB207E64A")]
     public partial class RootExplorerCommand : IExplorerCommand
     {
+        private readonly string RootMenuString = ResourceService.GetLocalized("ShellMenu/RootMenu");
+
         /// <summary>
         /// 根菜单标题
         /// </summary>
         public int GetTitle(IShellItemArray psiItemArray, out string ppszName)
         {
-            ppszName = ResourceService.GetLocalized("ShellMenu/RootMenu");
+            ppszName = RootMenuString;
             return 0;
         }
 

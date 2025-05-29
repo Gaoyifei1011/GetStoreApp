@@ -15,12 +15,14 @@ namespace GetStoreAppShellExtension.Commands
     [GeneratedComClass]
     public partial class PSInstallAdminCommand : IExplorerCommand
     {
+        private readonly string PSInstallAdminString = ResourceService.GetLocalized("ShellMenu/PSInstallAdmin");
+
         /// <summary>
         /// 根菜单标题
         /// </summary>
         public int GetTitle(IShellItemArray psiItemArray, out string ppszName)
         {
-            ppszName = ResourceService.GetLocalized("ShellMenu/PSInstallAdmin");
+            ppszName = PSInstallAdminString;
             return 0;
         }
 

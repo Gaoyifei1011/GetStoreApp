@@ -15,12 +15,14 @@ namespace GetStoreAppShellExtension.Commands
     [GeneratedComClass]
     public partial class PSRegisterCommand : IExplorerCommand
     {
+        private readonly string PSRegisterString = ResourceService.GetLocalized("ShellMenu/PSRegister");
+
         /// <summary>
         /// 根菜单标题
         /// </summary>
         public int GetTitle(IShellItemArray psiItemArray, out string ppszName)
         {
-            ppszName = ResourceService.GetLocalized("ShellMenu/PSRegister");
+            ppszName = PSRegisterString;
             return 0;
         }
 
