@@ -25,12 +25,12 @@
     <Grid>
         <TextBlock
             Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-            Text="{x:Bind rootservice:ResourceService.GetLocalized('Notification/CopyToClipboardSuccessfully')}"
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('NotificationTip/CopyToClipboardSuccessfully')}"
             Visibility="{x:Bind IsSuccessfully, Mode=OneWay}" />
 
         <TextBlock
             Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-            Text="{x:Bind rootservice:ResourceService.GetLocalized('Notification/CopyToClipboardFailed')}"
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('NotificationTip/CopyToClipboardFailed')}"
             Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSuccessfully), Mode=OneWay}" />
     </Grid>
 </TeachingTip>

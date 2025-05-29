@@ -51,42 +51,42 @@ namespace GetStoreApp.UI.TeachingTips
             if (operationKind is OperationKind.FileLost)
             {
                 IsSuccessOperation = false;
-                OperationContent = ResourceService.GetLocalized("Notification/FileLost");
+                OperationContent = ResourceService.GetLocalized("NotificationTip/FileLost");
             }
             else if (operationKind is OperationKind.FolderPicker)
             {
                 IsSuccessOperation = false;
-                OperationContent = ResourceService.GetLocalized("Notification/FolderPickerFailed");
+                OperationContent = ResourceService.GetLocalized("NotificationTip/FolderPickerFailed");
             }
             else if (operationKind is OperationKind.InstallingNotify)
             {
                 IsSuccessOperation = false;
-                OperationContent = ResourceService.GetLocalized("Notification/InstallingNotify");
+                OperationContent = ResourceService.GetLocalized("NotificationTip/InstallingNotify");
             }
             else if (operationKind is OperationKind.LanguageChange)
             {
                 IsSuccessOperation = true;
-                OperationContent = ResourceService.GetLocalized("Notification/LanguageChange");
+                OperationContent = ResourceService.GetLocalized("NotificationTip/LanguageChange");
             }
             else if (operationKind is OperationKind.NotElevated)
             {
                 IsSuccessOperation = false;
-                OperationContent = ResourceService.GetLocalized("Notification/NotElevated");
+                OperationContent = ResourceService.GetLocalized("NotificationTip/NotElevated");
             }
             else if (operationKind is OperationKind.SelectEmpty)
             {
                 IsSuccessOperation = false;
-                OperationContent = ResourceService.GetLocalized("Notification/SelectEmpty");
+                OperationContent = ResourceService.GetLocalized("NotificationTip/SelectEmpty");
             }
             else if (operationKind is OperationKind.SourceNameEmpty)
             {
                 IsSuccessOperation = false;
-                OperationContent = ResourceService.GetLocalized("Notification/SourceNameEmpty");
+                OperationContent = ResourceService.GetLocalized("NotificationTip/SourceNameEmpty");
             }
             else if (operationKind is OperationKind.SourceUriEmpty)
             {
                 IsSuccessOperation = false;
-                OperationContent = ResourceService.GetLocalized("Notification/SourceUriEmpty");
+                OperationContent = ResourceService.GetLocalized("NotificationTip/SourceUriEmpty");
             }
         }
 
@@ -99,12 +99,12 @@ namespace GetStoreApp.UI.TeachingTips
                 if (operationResult)
                 {
                     IsSuccessOperation = true;
-                    OperationContent = ResourceService.GetLocalized("Notification/NewestVersion");
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/NewestVersion");
                 }
                 else
                 {
                     IsSuccessOperation = false;
-                    OperationContent = ResourceService.GetLocalized("Notification/NotNewestVersion");
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/NotNewestVersion");
                 }
             }
             else if (operationKind is OperationKind.DownloadCreate)
@@ -112,12 +112,12 @@ namespace GetStoreApp.UI.TeachingTips
                 if (operationResult)
                 {
                     IsSuccessOperation = true;
-                    OperationContent = ResourceService.GetLocalized("Notification/DownloadCreateSuccessfully");
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/DownloadCreateSuccessfully");
                 }
                 else
                 {
                     IsSuccessOperation = false;
-                    OperationContent = ResourceService.GetLocalized("Notification/DownloadCreateFailed");
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/DownloadCreateFailed");
                 }
             }
             else if (operationKind is OperationKind.LogClean)
@@ -125,12 +125,12 @@ namespace GetStoreApp.UI.TeachingTips
                 if (operationResult)
                 {
                     IsSuccessOperation = true;
-                    OperationContent = ResourceService.GetLocalized("Notification/LogCleanSuccessfully");
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/LogCleanSuccessfully");
                 }
                 else
                 {
                     IsSuccessOperation = false;
-                    OperationContent = ResourceService.GetLocalized("Notification/LogCleanFailed");
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/LogCleanFailed");
                 }
             }
             else if (operationKind is OperationKind.TerminateProcess)
@@ -138,12 +138,12 @@ namespace GetStoreApp.UI.TeachingTips
                 if (operationResult)
                 {
                     IsSuccessOperation = true;
-                    OperationContent = ResourceService.GetLocalized("Notification/TerminateSuccess");
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/TerminateSuccess");
                 }
                 else
                 {
                     IsSuccessOperation = false;
-                    OperationContent = ResourceService.GetLocalized("Notification/TerminateFailed");
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/TerminateFailed");
                 }
             }
             else if (operationKind is OperationKind.Desktop)
@@ -151,12 +151,12 @@ namespace GetStoreApp.UI.TeachingTips
                 if (operationResult)
                 {
                     IsSuccessOperation = true;
-                    OperationContent = ResourceService.GetLocalized("Notification/DesktopShortcutSuccessfully");
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/DesktopShortcutSuccessfully");
                 }
                 else
                 {
                     IsSuccessOperation = false;
-                    OperationContent = ResourceService.GetLocalized("Notification/DesktopShortFailed");
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/DesktopShortcutFailed");
                 }
             }
             else if (operationKind is OperationKind.StartScreen)
@@ -164,12 +164,12 @@ namespace GetStoreApp.UI.TeachingTips
                 if (operationResult)
                 {
                     IsSuccessOperation = true;
-                    OperationContent = ResourceService.GetLocalized("Notification/StartScreenSuccessfully");
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/StartScreenSuccessfully");
                 }
                 else
                 {
                     IsSuccessOperation = false;
-                    OperationContent = ResourceService.GetLocalized("Notification/StartScreenFailed");
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/StartScreenFailed");
                 }
             }
             else if (operationKind is OperationKind.Taskbar)
@@ -177,12 +177,12 @@ namespace GetStoreApp.UI.TeachingTips
                 if (operationResult)
                 {
                     IsSuccessOperation = true;
-                    OperationContent = ResourceService.GetLocalized("Notification/TaskbarSuccessfully");
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/TaskbarSuccessfully");
                 }
                 else
                 {
                     IsSuccessOperation = false;
-                    OperationContent = ResourceService.GetLocalized("Notification/TaskbarFailed");
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/TaskbarFailed");
                 }
             }
         }
@@ -196,12 +196,12 @@ namespace GetStoreApp.UI.TeachingTips
                 if (isMultiSelected)
                 {
                     IsSuccessOperation = false;
-                    OperationContent = string.Format(ResourceService.GetLocalized("Notification/ShareSelectedFailed"), count);
+                    OperationContent = string.Format(ResourceService.GetLocalized("NotificationTip/ShareSelectedFailed"), count);
                 }
                 else
                 {
                     IsSuccessOperation = false;
-                    OperationContent = ResourceService.GetLocalized("Notification/ShareFailed");
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/ShareFailed");
                 }
             }
         }
