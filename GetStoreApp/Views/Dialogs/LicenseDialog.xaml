@@ -7,7 +7,7 @@
     xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:window="using:GetStoreApp.Views.Windows"
     Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/License')}"
-    CloseButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CloseDialog')}"
+    CloseButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Close')}"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
     RequestedTheme="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).RequestedTheme, Mode=OneWay}"
     Style="{StaticResource DefaultContentDialogStyle}"

@@ -20,7 +20,10 @@ namespace GetStoreApp.Views.Dialogs
     /// </summary>
     public sealed partial class FileInformationDialog : ContentDialog, INotifyPropertyChanged
     {
-        private bool isInitialized;
+        private readonly string FileNameString = ResourceService.GetLocalized("Dialog/FileName");
+        private readonly string FilePathString = ResourceService.GetLocalized("Dialog/FilePath");
+        private readonly string FileSHA256String = ResourceService.GetLocalized("Dialog/FileSHA256");
+        private readonly string FileSizeString = ResourceService.GetLocalized("Dialog/FileSize");
 
         private string FileName { get; set; }
 
@@ -75,18 +78,13 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
-            if (!isInitialized)
+            string fileShA256 = await Task.Run(async () =>
             {
-                isInitialized = true;
+                return await IOHelper.GetFileSHA256Async(FilePath);
+            });
 
-                string fileShA256 = await Task.Run(async () =>
-                {
-                    return await IOHelper.GetFileSHA256Async(FilePath);
-                });
-
-                FileSHA256 = fileShA256;
-                IsLoadCompleted = true;
-            }
+            FileSHA256 = fileShA256;
+            IsLoadCompleted = true;
         }
 
         /// <summary>
@@ -110,10 +108,10 @@ namespace GetStoreApp.Views.Dialogs
 
             await Task.Run(() =>
             {
-                copyFileInformationCopyStringList.Add(ResourceService.GetLocalized("Dialog/FileName") + FileName);
-                copyFileInformationCopyStringList.Add(ResourceService.GetLocalized("Dialog/FilePath") + FilePath);
-                copyFileInformationCopyStringList.Add(ResourceService.GetLocalized("Dialog/FileSize") + FileSize);
-                copyFileInformationCopyStringList.Add(ResourceService.GetLocalized("Dialog/FileSHA256") + FileSHA256);
+                copyFileInformationCopyStringList.Add(FileNameString + FileName);
+                copyFileInformationCopyStringList.Add(FilePathString + FilePath);
+                copyFileInformationCopyStringList.Add(FileSizeString + FileSize);
+                copyFileInformationCopyStringList.Add(FileSHA256String + FileSHA256);
             });
 
             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyFileInformationCopyStringList));

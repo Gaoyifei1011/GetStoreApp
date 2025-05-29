@@ -26,6 +26,12 @@ namespace GetStoreApp.Views.Dialogs
     /// </summary>
     public sealed partial class AppInformationDialog : ContentDialog, INotifyPropertyChanged
     {
+        private readonly string DoNetVersionString = ResourceService.GetLocalized("Dialog/DoNetVersion");
+        private readonly string WebView2SDKVersionString = ResourceService.GetLocalized("Dialog/WebView2SDKVersion");
+        private readonly string WindowsAppSDKVersionString = ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion");
+        private readonly string WindowsUIVersionString = ResourceService.GetLocalized("Dialog/WindowsUIVersion");
+        private readonly string WinUI2VersionString = ResourceService.GetLocalized("Dialog/WinUI2Version");
+        private readonly string WinUI3VersionString = ResourceService.GetLocalized("Dialog/WinUI3Version");
         private bool isInitialized;
         private readonly string fileVersionProperty = "System.FileVersion";
 
@@ -73,7 +79,7 @@ namespace GetStoreApp.Views.Dialogs
                     // Windows 应用 SDK 版本信息
                     dependencyInformationList.Add(new ContentLinkInfo()
                     {
-                        DisplayText = ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion"),
+                        DisplayText = WindowsAppSDKVersionString,
                         SecondaryText = RuntimeInfo.AsString
                     });
 
@@ -88,7 +94,7 @@ namespace GetStoreApp.Views.Dialogs
                                 IDictionary<string, object> winUI3FileProperties = await winUI3File.Properties.RetrievePropertiesAsync(PropertyNamesList);
                                 dependencyInformationList.Add(new ContentLinkInfo()
                                 {
-                                    DisplayText = ResourceService.GetLocalized("Dialog/WinUI3Version"),
+                                    DisplayText = WinUI3VersionString,
                                     SecondaryText = (winUI3FileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()).ToString()
                                 });
                             }
@@ -97,7 +103,7 @@ namespace GetStoreApp.Views.Dialogs
                                 LogService.WriteLog(LoggingLevel.Warning, "Get WinUI 3 version failed.", e);
                                 dependencyInformationList.Add(new ContentLinkInfo()
                                 {
-                                    DisplayText = ResourceService.GetLocalized("Dialog/WinUI3Version"),
+                                    DisplayText = WinUI3VersionString,
                                     SecondaryText = new Version().ToString()
                                 });
                             }
@@ -116,7 +122,7 @@ namespace GetStoreApp.Views.Dialogs
                                 IDictionary<string, object> winUI2FileProperties = await winUI2File.Properties.RetrievePropertiesAsync(PropertyNamesList);
                                 dependencyInformationList.Add(new ContentLinkInfo()
                                 {
-                                    DisplayText = ResourceService.GetLocalized("Dialog/WinUI2Version"),
+                                    DisplayText = WinUI2VersionString,
                                     SecondaryText = (winUI2FileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()).ToString()
                                 });
                             }
@@ -125,7 +131,7 @@ namespace GetStoreApp.Views.Dialogs
                                 LogService.WriteLog(LoggingLevel.Warning, "Get WinUI 2 version failed.", e);
                                 dependencyInformationList.Add(new ContentLinkInfo()
                                 {
-                                    DisplayText = ResourceService.GetLocalized("Dialog/WinUI2Version"),
+                                    DisplayText = WinUI2VersionString,
                                     SecondaryText = new Version().ToString()
                                 });
                             }
@@ -140,7 +146,7 @@ namespace GetStoreApp.Views.Dialogs
                         IDictionary<string, object> windowsUIFileProperties = await windowsUIFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
                         dependencyInformationList.Add(new ContentLinkInfo()
                         {
-                            DisplayText = ResourceService.GetLocalized("Dialog/WindowsUIVersion"),
+                            DisplayText = WindowsUIVersionString,
                             SecondaryText = (windowsUIFileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()).ToString()
                         });
                     }
@@ -149,7 +155,7 @@ namespace GetStoreApp.Views.Dialogs
                         LogService.WriteLog(LoggingLevel.Warning, "Get Windows UI version failed.", e);
                         dependencyInformationList.Add(new ContentLinkInfo()
                         {
-                            DisplayText = ResourceService.GetLocalized("Dialog/WindowsUIVersion"),
+                            DisplayText = WindowsUIVersionString,
                             SecondaryText = new Version().ToString()
                         });
                     }
@@ -161,7 +167,7 @@ namespace GetStoreApp.Views.Dialogs
                         IDictionary<string, object> webView2CoreFileProperties = await webView2CoreFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
                         dependencyInformationList.Add(new ContentLinkInfo()
                         {
-                            DisplayText = ResourceService.GetLocalized("Dialog/WebView2SDKVersion"),
+                            DisplayText = WebView2SDKVersionString,
                             SecondaryText = (webView2CoreFileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()).ToString()
                         });
                     }
@@ -170,7 +176,7 @@ namespace GetStoreApp.Views.Dialogs
                         LogService.WriteLog(LoggingLevel.Warning, "Get WebView2 SDK version failed.", e);
                         dependencyInformationList.Add(new ContentLinkInfo()
                         {
-                            DisplayText = ResourceService.GetLocalized("Dialog/WebView2SDKVersion"),
+                            DisplayText = WebView2SDKVersionString,
                             SecondaryText = new Version().ToString()
                         });
                     }
@@ -178,7 +184,7 @@ namespace GetStoreApp.Views.Dialogs
                     // .NET 版本信息
                     dependencyInformationList.Add(new ContentLinkInfo()
                     {
-                        DisplayText = ResourceService.GetLocalized("Dialog/DoNetVersion"),
+                        DisplayText = DoNetVersionString,
                         SecondaryText = Environment.Version.ToString()
                     });
 

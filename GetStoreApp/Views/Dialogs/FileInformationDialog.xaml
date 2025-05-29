@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:window="using:GetStoreApp.Views.Windows"
-    Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/FileInformationTitle')}"
+    Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/FileInformation')}"
     Closing="{x:Bind OnClosing}"
     DefaultButton="Primary"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
@@ -18,7 +18,7 @@
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
     PrimaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CopyFileInformation')}"
     RequestedTheme="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).RequestedTheme, Mode=OneWay}"
-    SecondaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CloseDialog')}"
+    SecondaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Close')}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 

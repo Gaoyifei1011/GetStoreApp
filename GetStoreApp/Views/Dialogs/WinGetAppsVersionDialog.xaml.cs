@@ -21,6 +21,13 @@ namespace GetStoreApp.Views.Dialogs
     /// </summary>
     public sealed partial class WinGetAppsVersionDialog : ContentDialog
     {
+        private readonly string AppVersionInformationString = ResourceService.GetLocalized("Dialog/AppVersionInformation");
+        private readonly string WinGetAppsDownloadOptionString = ResourceService.GetLocalized("Dialog/WinGetAppsDownloadOption");
+        private readonly string WinGetAppsInstallOptionString = ResourceService.GetLocalized("Dialog/WinGetAppsInstallOption");
+        private readonly string WinGetAppsRepairOptionString = ResourceService.GetLocalized("Dialog/WinGetAppsRepairOption");
+        private readonly string WinGetAppsUpgradeOptionString = ResourceService.GetLocalized("Dialog/WinGetAppsUpgradeOption");
+        private readonly string NavigationFailedString = ResourceService.GetLocalized("Dialog/NavigationFailed");
+
         private WinGetPage WinGetPage { get; }
 
         private object WinGetApps { get; }
@@ -83,7 +90,7 @@ namespace GetStoreApp.Views.Dialogs
             {
                 BreadCollection.Add(new ContentLinkInfo()
                 {
-                    DisplayText = ResourceService.GetLocalized("Dialog/AppVersionInformation"),
+                    DisplayText = AppVersionInformationString,
                     SecondaryText = "AppVersionInformation"
                 });
             }
@@ -97,7 +104,7 @@ namespace GetStoreApp.Views.Dialogs
                             {
                                 BreadCollection.Add(new ContentLinkInfo()
                                 {
-                                    DisplayText = ResourceService.GetLocalized("Dialog/WinGetAppsDownloadOption"),
+                                    DisplayText = WinGetAppsDownloadOptionString,
                                     SecondaryText = "DownloadOption"
                                 });
                                 break;
@@ -106,7 +113,7 @@ namespace GetStoreApp.Views.Dialogs
                             {
                                 BreadCollection.Add(new ContentLinkInfo()
                                 {
-                                    DisplayText = ResourceService.GetLocalized("Dialog/WinGetAppsInstallOption"),
+                                    DisplayText = WinGetAppsInstallOptionString,
                                     SecondaryText = "InstallOption"
                                 });
                                 break;
@@ -115,7 +122,7 @@ namespace GetStoreApp.Views.Dialogs
                             {
                                 BreadCollection.Add(new ContentLinkInfo()
                                 {
-                                    DisplayText = ResourceService.GetLocalized("Dialog/WinGetAppsRepairOption"),
+                                    DisplayText = WinGetAppsRepairOptionString,
                                     SecondaryText = "RepairOption"
                                 });
                                 break;
@@ -124,7 +131,7 @@ namespace GetStoreApp.Views.Dialogs
                             {
                                 BreadCollection.Add(new ContentLinkInfo()
                                 {
-                                    DisplayText = ResourceService.GetLocalized("Dialog/WinGetAppsUpgradeOption"),
+                                    DisplayText = WinGetAppsUpgradeOptionString,
                                     SecondaryText = "UpgradeOption"
                                 });
                                 break;
@@ -144,7 +151,7 @@ namespace GetStoreApp.Views.Dialogs
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
             args.Handled = true;
-            LogService.WriteLog(LoggingLevel.Warning, string.Format(ResourceService.GetLocalized("Dialog/NavigationFailed"), args.SourcePageType.FullName), args.Exception);
+            LogService.WriteLog(LoggingLevel.Warning, string.Format(NavigationFailedString, args.SourcePageType.FullName), args.Exception);
         }
 
         /// <summary>
@@ -174,7 +181,7 @@ namespace GetStoreApp.Views.Dialogs
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, string.Format(ResourceService.GetLocalized("Window/NavigationFailed"), navigationPageType.FullName), e);
+                LogService.WriteLog(LoggingLevel.Error, string.Format(NavigationFailedString, navigationPageType.FullName), e);
             }
         }
 

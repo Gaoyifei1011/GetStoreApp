@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:window="using:GetStoreApp.Views.Windows"
-    Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/ClosingWindowTitle')}"
+    Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/ClosingWindow')}"
     CloseButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Cancel')}"
     Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/ClosingWindowContent')}"
     DefaultButton="Primary"

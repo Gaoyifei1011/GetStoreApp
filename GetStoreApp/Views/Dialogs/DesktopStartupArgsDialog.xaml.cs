@@ -10,34 +10,40 @@ namespace GetStoreApp.Views.Dialogs
     /// </summary>
     public sealed partial class DesktopStartupArgsDialog : ContentDialog
     {
-        private List<StartupArgsModel> DesktopStartupArgsList { get; } =
-        [
-            new StartupArgsModel()
-            {
-                ArgumentName = ResourceService.GetLocalized("Dialog/Type") ,
-                Argument = "-t; --type",
-                IsRequired = ResourceService.GetLocalized("Dialog/No"),
-                ArgumentContent = @"""url"",""pid"""
-            },
-            new StartupArgsModel()
-            {
-                ArgumentName = ResourceService.GetLocalized("Dialog/Channel"),
-                Argument = "-c; --channel",
-                IsRequired = ResourceService.GetLocalized("Dialog/No"),
-                ArgumentContent = @"""wif"",""wis"",""rp"",""rt"""
-            },
-            new StartupArgsModel()
-            {
-                ArgumentName = ResourceService.GetLocalized("Dialog/Link"),
-                Argument = "-l; --link",
-                IsRequired = ResourceService.GetLocalized("Dialog/Yes"),
-                ArgumentContent = ResourceService.GetLocalized("Dialog/LinkContent")
-            }
-        ];
+        private readonly string ChannelString = ResourceService.GetLocalized("Dialog/Channel");
+        private readonly string LinkContentString = ResourceService.GetLocalized("Dialog/LinkContent");
+        private readonly string LinkString = ResourceService.GetLocalized("Dialog/Link");
+        private readonly string NoString = ResourceService.GetLocalized("Dialog/No");
+        private readonly string TypeString = ResourceService.GetLocalized("Dialog/Type");
+        private readonly string YesString = ResourceService.GetLocalized("Dialog/Yes");
+
+        private List<StartupArgsModel> DesktopStartupArgsList { get; } = [];
 
         public DesktopStartupArgsDialog()
         {
             InitializeComponent();
+
+            DesktopStartupArgsList.Add(new StartupArgsModel()
+            {
+                ArgumentName = TypeString,
+                Argument = "-t; --type",
+                IsRequired = NoString,
+                ArgumentContent = @"""url"",""pid"""
+            });
+            DesktopStartupArgsList.Add(new StartupArgsModel()
+            {
+                ArgumentName = ChannelString,
+                Argument = "-c; --channel",
+                IsRequired = NoString,
+                ArgumentContent = @"""wif"",""wis"",""rp"",""rt"""
+            });
+            DesktopStartupArgsList.Add(new StartupArgsModel()
+            {
+                ArgumentName = LinkString,
+                Argument = "-l; --link",
+                IsRequired = YesString,
+                ArgumentContent = LinkContentString
+            });
         }
     }
 }

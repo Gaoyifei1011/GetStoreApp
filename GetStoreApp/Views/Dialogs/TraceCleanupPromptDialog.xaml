@@ -8,7 +8,7 @@
     xmlns:model="using:GetStoreApp.Models"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:window="using:GetStoreApp.Views.Windows"
-    Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/TraceCleanupTitle')}"
+    Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/TraceCleanup')}"
     DefaultButton="Primary"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
     IsPrimaryButtonEnabled="{x:Bind converter:ValueCheckConverterHelper.IsTraceCleanupButtonEnabled(IsSelected, IsCleaning), Mode=OneWay}"
@@ -17,7 +17,7 @@
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
     PrimaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CleanupNow')}"
     RequestedTheme="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).RequestedTheme, Mode=OneWay}"
-    SecondaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CloseDialog')}"
+    SecondaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Close')}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 

@@ -31,7 +31,6 @@ namespace GetStoreApp.Views.Dialogs
         public LicenseDialog()
         {
             InitializeComponent();
-
             LicenseText = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, CryptographicBuffer.CreateFromByteArray(ResourceService.GetEmbeddedData("Files/Assets/Embed/LICENSE")));
         }
     }

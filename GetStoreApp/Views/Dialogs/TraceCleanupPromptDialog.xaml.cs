@@ -19,6 +19,15 @@ namespace GetStoreApp.Views.Dialogs
     /// </summary>
     public sealed partial class TraceCleanupPromptDialog : ContentDialog, INotifyPropertyChanged
     {
+        private readonly string ActionCenterErrorString = ResourceService.GetLocalized("Dialog/ActionCenterError");
+        private readonly string ActionCenterString = ResourceService.GetLocalized("Dialog/ActionCenter");
+        private readonly string DownloadCleanErrorString = ResourceService.GetLocalized("Dialog/DownloadCleanError");
+        private readonly string DownloadRecordString = ResourceService.GetLocalized("Dialog/DownloadRecord");
+        private readonly string HistoryCleanErrorString = ResourceService.GetLocalized("Dialog/HistoryCleanError");
+        private readonly string HistoryRecordString = ResourceService.GetLocalized("Dialog/HistoryRecord");
+        private readonly string LocalFileString = ResourceService.GetLocalized("Dialog/LocalFile");
+        private readonly string LocalFileCleanErrorString = ResourceService.GetLocalized("Dialog/LocalFileCleanError");
+
         private bool _isSelected;
 
         public bool IsSelected
@@ -59,12 +68,38 @@ namespace GetStoreApp.Views.Dialogs
         {
             InitializeComponent();
 
-            foreach (TraceCleanupModel traceCleanupItem in ResourceService.TraceCleanupList)
+            TraceCleanupList.Add(new TraceCleanupModel
             {
-                traceCleanupItem.IsSelected = false;
-                traceCleanupItem.IsCleanFailed = false;
-                TraceCleanupList.Add(traceCleanupItem);
-            }
+                IsSelected = false,
+                IsCleanFailed = false,
+                DisplayName = HistoryRecordString,
+                InternalName = CleanKind.History,
+                CleanFailedText = HistoryCleanErrorString
+            });
+            TraceCleanupList.Add(new TraceCleanupModel
+            {
+                IsSelected = false,
+                IsCleanFailed = false,
+                DisplayName = ActionCenterString,
+                InternalName = CleanKind.ActionCenter,
+                CleanFailedText = ActionCenterErrorString
+            });
+            TraceCleanupList.Add(new TraceCleanupModel
+            {
+                IsSelected = false,
+                IsCleanFailed = false,
+                DisplayName = DownloadRecordString,
+                InternalName = CleanKind.Download,
+                CleanFailedText = DownloadCleanErrorString
+            });
+            TraceCleanupList.Add(new TraceCleanupModel
+            {
+                IsSelected = false,
+                IsCleanFailed = false,
+                DisplayName = LocalFileString,
+                InternalName = CleanKind.LocalFile,
+                CleanFailedText = LocalFileCleanErrorString
+            });
 
             IsSelected = TraceCleanupList.Exists(item => item.IsSelected);
         }

@@ -9,24 +9,28 @@ namespace GetStoreApp.Views.Dialogs
     /// </summary>
     public sealed partial class RebootDialog : ContentDialog
     {
-        public RebootDialog(WinGetOperationKind options, string appName)
+        private readonly string InstallNeedRebootString = ResourceService.GetLocalized("Dialog/InstallNeedReboot");
+        private readonly string UninstallNeedRebootString = ResourceService.GetLocalized("Dialog/UninstallNeedReboot");
+        private readonly string UpgradeNeedRebootString = ResourceService.GetLocalized("Dialog/UpgradeNeedReboot");
+
+        public RebootDialog(WinGetOperationKind winGetOperationKind, string appName)
         {
             InitializeComponent();
-            switch (options)
+            switch (winGetOperationKind)
             {
                 case WinGetOperationKind.SearchInstall:
                     {
-                        Content = string.Format(ResourceService.GetLocalized("Dialog/InstallNeedReboot"), appName);
+                        Content = string.Format(InstallNeedRebootString, appName);
                         break;
                     }
                 case WinGetOperationKind.Uninstall:
                     {
-                        Content = string.Format(ResourceService.GetLocalized("Dialog/UninstallNeedReboot"), appName);
+                        Content = string.Format(UninstallNeedRebootString, appName);
                         break;
                     }
                 case WinGetOperationKind.Upgrade:
                     {
-                        Content = string.Format(ResourceService.GetLocalized("Dialog/UpgradeNeedReboot"), appName);
+                        Content = string.Format(UpgradeNeedRebootString, appName);
                         break;
                     }
             }
