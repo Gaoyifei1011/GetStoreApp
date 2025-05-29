@@ -253,6 +253,6 @@
   "VersionInformation": "Version information",
   "ViewErrorInformation": "Viewing error information",
   "WaitInstall": "Waiting for installing",
-  "WindowTitle": "Package installer",
+  "Title": "Package installer",
   "Yes": "Yes"
 }

@@ -46,6 +46,8 @@ namespace GetStoreAppInstaller
     /// </summary>
     public class Program
     {
+        private static string TitleString;
+        private static string RunAsAdministratorString;
         private static readonly Guid CLSID_ApplicationActivationManager = new("45BA127D-10A8-46EA-8AB7-56EA9078943C");
         private static SUBCLASSPROC mainWindowSubClassProc;
         private static InputNonClientPointerSource inputNonClientPointerSource;
@@ -121,10 +123,12 @@ namespace GetStoreAppInstaller
             }
 
             InitializeResources();
+            TitleString = ResourceService.GetLocalized("Installer/Title");
+            RunAsAdministratorString = ResourceService.GetLocalized("Installer/RunningAdministrator");
 
             // 应用主窗口
             MainAppWindow = AppWindow.Create();
-            MainAppWindow.Title = RuntimeHelper.IsElevated ? ResourceService.GetLocalized("Installer/WindowTitle") + ResourceService.GetLocalized("Installer/RunningAdministrator") : ResourceService.GetLocalized("Installer/WindowTitle");
+            MainAppWindow.Title = RuntimeHelper.IsElevated ? TitleString + RunAsAdministratorString : TitleString;
             MainAppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
             MainAppWindow.Changed += OnAppWindowChanged;
             MainAppWindow.Closing += OnAppWindowClosing;

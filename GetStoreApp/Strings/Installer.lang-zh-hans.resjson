@@ -253,6 +253,6 @@
   "VersionInformation": "版本信息",
   "ViewErrorInformation": "查看错误信息",
   "WaitInstall": "等待安装中...",
-  "WindowTitle": "应用安装器",
+  "Title": "应用安装器",
   "Yes": "是"
 }

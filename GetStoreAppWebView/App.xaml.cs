@@ -27,6 +27,7 @@ namespace GetStoreAppWebView
     public partial class App : Application, IDisposable
     {
         private bool isDisposed;
+        private readonly string PinningAppString = ResourceService.GetLocalized("Pinner/PinningApp");
         private readonly Dictionary<UIContext, AppWindow> appWindowList = [];
 
         public App()
@@ -69,7 +70,7 @@ namespace GetStoreAppWebView
                     appWindowList.Add(appWindow.UIContext, appWindow);
                     appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
                     ElementCompositionPreview.SetAppWindowContent(appWindow, new PinnerPage(appWindow));
-                    appWindow.Title = ResourceService.GetLocalized("WebView/PinningApp");
+                    appWindow.Title = PinningAppString;
                     await appWindow.TryShowAsync();
 
                     if (Window.Current.Content is not Page)

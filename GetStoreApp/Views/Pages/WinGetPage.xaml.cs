@@ -33,6 +33,7 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class WinGetPage : Page, INotifyPropertyChanged
     {
+        private readonly string NavigationFailedString = ResourceService.GetLocalized("WinGet/NavigationFailed");
         private readonly string PackageDownloadFailedContent1String = ResourceService.GetLocalized("WinGet/PackageDownloadFailedContent1");
         private readonly string PackageDownloadFailedContent2String = ResourceService.GetLocalized("WinGet/PackageDownloadFailedContent2");
         private readonly string PackageDownloadFailedContent3String = ResourceService.GetLocalized("WinGet/PackageDownloadFailedContent3");
@@ -53,6 +54,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string PackageUpgradeFailedContent2String = ResourceService.GetLocalized("WinGet/PackageUpgradeFailedContent2");
         private readonly string PackageUpgradeFailedContent3String = ResourceService.GetLocalized("WinGet/PackageUpgradeFailedContent3");
         private readonly string PackageUpgradeFailedContent4String = ResourceService.GetLocalized("WinGet/PackageUpgradeFailedContent4");
+        private readonly string RestartPCString = ResourceService.GetLocalized("WinGet/RestartPC");
         private readonly string UnknownString = ResourceService.GetLocalized("WinGet/Unknown");
         private readonly string WinGetPackageDownloadAgreementsNotAcceptedString = ResourceService.GetLocalized("WinGet/WinGetPackageDownloadAgreementsNotAccepted");
         private readonly string WinGetPackageDownloadBlockedByPolicyString = ResourceService.GetLocalized("WinGet/WinGetPackageDownloadBlockedByPolicy");
@@ -390,7 +392,7 @@ namespace GetStoreApp.Views.Pages
                 SelectedItem = WinGetSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
             }
 
-            LogService.WriteLog(LoggingLevel.Warning, string.Format(ResourceService.GetLocalized("WinGet/NavigationFailed"), args.SourcePageType.FullName), args.Exception);
+            LogService.WriteLog(LoggingLevel.Warning, string.Format(NavigationFailedString, args.SourcePageType.FullName), args.Exception);
         }
 
         #endregion 第三部分：WinGet 程序包页面——挂载的事件
@@ -1200,7 +1202,7 @@ namespace GetStoreApp.Views.Pages
                                                     {
                                                         await Task.Run(() =>
                                                         {
-                                                            ShutdownHelper.Restart(ResourceService.GetLocalized("WinGet/RestartPC"), TimeSpan.FromSeconds(120));
+                                                            ShutdownHelper.Restart(RestartPCString, TimeSpan.FromSeconds(120));
                                                         });
                                                     }
                                                 }
@@ -1615,7 +1617,7 @@ namespace GetStoreApp.Views.Pages
                                                     {
                                                         await Task.Run(() =>
                                                         {
-                                                            ShutdownHelper.Restart(ResourceService.GetLocalized("WinGet/RestartPC"), TimeSpan.FromSeconds(120));
+                                                            ShutdownHelper.Restart(RestartPCString, TimeSpan.FromSeconds(120));
                                                         });
                                                     }
                                                 }
@@ -1923,7 +1925,7 @@ namespace GetStoreApp.Views.Pages
                                                     {
                                                         await Task.Run(() =>
                                                         {
-                                                            ShutdownHelper.Restart(ResourceService.GetLocalized("WinGet/RestartPC"), TimeSpan.FromSeconds(120));
+                                                            ShutdownHelper.Restart(RestartPCString, TimeSpan.FromSeconds(120));
                                                         });
                                                     }
                                                 }
@@ -2295,7 +2297,7 @@ namespace GetStoreApp.Views.Pages
                                                     {
                                                         await Task.Run(() =>
                                                         {
-                                                            ShutdownHelper.Restart(ResourceService.GetLocalized("WinGet/RestartPC"), TimeSpan.FromSeconds(120));
+                                                            ShutdownHelper.Restart(RestartPCString, TimeSpan.FromSeconds(120));
                                                         });
                                                     }
                                                 }
@@ -2689,7 +2691,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, string.Format(ResourceService.GetLocalized("WinGet/NavigationFailed"), navigationPageType.FullName), e);
+                LogService.WriteLog(LoggingLevel.Error, string.Format(NavigationFailedString, navigationPageType.FullName), e);
             }
         }
 

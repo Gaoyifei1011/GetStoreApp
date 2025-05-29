@@ -12,6 +12,7 @@
   "InstalledApps": "Installed apps",
   "InstallFailed": "Install failed",
   "InstallFinished": "Install finished",
+  "NavigationFailed": "Page {0} navigation failed",
   "Installing": "Installing",
   "InstallPostInstall": "Install completing",
   "InstallQueued": "Install waiting",
