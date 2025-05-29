@@ -203,6 +203,8 @@
     <None Remove="Strings\Downloading.lang-zh-hans.resjson" />
     <None Remove="Strings\Installer.lang-en-us.resjson" />
     <None Remove="Strings\Installer.lang-zh-hans.resjson" />
+    <None Remove="Strings\NotificationTip.lang-en-us.resjson" />
+    <None Remove="Strings\NotificationTip.lang-zh-hans.resjson" />
     <None Remove="Strings\Pinner.lang-en-us.resjson" />
     <None Remove="Strings\Pinner.lang-zh-hans.resjson" />
     <None Remove="Strings\QueryLinks.lang-en-us.resjson" />
@@ -363,6 +365,8 @@
     <PRIResource Include="Strings\Downloading.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\Installer.lang-en-us.resjson" />
     <PRIResource Include="Strings\Installer.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\NotificationTip.lang-en-us.resjson" />
+    <PRIResource Include="Strings\NotificationTip.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\Pinner.lang-en-us.resjson" />
     <PRIResource Include="Strings\Pinner.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\QueryLinks.lang-en-us.resjson" />
