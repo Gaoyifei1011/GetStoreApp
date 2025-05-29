@@ -54,6 +54,12 @@ namespace GetStoreApp.Views.Windows
     /// </summary>
     public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
+        private readonly string CheckNetWorkConnectionString = ResourceService.GetLocalized("Window/CheckNetWorkConnection");
+        private readonly string NavigationFailedString = ResourceService.GetLocalized("Window/NavigationFailed");
+        private readonly string NetworkError1String = ResourceService.GetLocalized("Window/NetworkError1");
+        private readonly string NetworkError2String = ResourceService.GetLocalized("Window/NetworkError2");
+        private readonly string RunningAdministratorString = ResourceService.GetLocalized("Window/RunningAdministrator");
+        private readonly string TitleString = ResourceService.GetLocalized("Window/Title");
         private readonly ContentCoordinateConverter contentCoordinateConverter;
         private readonly OverlappedPresenter overlappedPresenter;
         private readonly SUBCLASSPROC mainWindowSubClassProc;
@@ -181,7 +187,7 @@ namespace GetStoreApp.Views.Windows
             InitializeComponent();
 
             // 窗口部分初始化
-            WindowTitle = RuntimeHelper.IsElevated ? ResourceService.GetLocalized("Window/WindowTitle") + ResourceService.GetLocalized("Window/RunningAdministrator") : ResourceService.GetLocalized("Window/WindowTitle");
+            WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
             overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
@@ -797,7 +803,7 @@ namespace GetStoreApp.Views.Windows
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
             args.Handled = true;
-            LogService.WriteLog(LoggingLevel.Warning, string.Format(ResourceService.GetLocalized("Window/NavigationFailed"), args.SourcePageType.FullName), args.Exception);
+            LogService.WriteLog(LoggingLevel.Warning, string.Format(NavigationFailedString, args.SourcePageType.FullName), args.Exception);
             (Application.Current as WinUIApp).Dispose();
         }
 
@@ -1322,9 +1328,9 @@ namespace GetStoreApp.Views.Windows
                         // 显示网络连接异常通知
                         AppNotificationBuilder appNotificationBuilder = new();
                         appNotificationBuilder.AddArgument("action", "OpenApp");
-                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/NetworkError1")));
-                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/NetworkError2")));
-                        AppNotificationButton checkNetWorkConnectionButton = new(ResourceService.GetLocalized("Notification/CheckNetWorkConnection"));
+                        appNotificationBuilder.AddText(NetworkError1String);
+                        appNotificationBuilder.AddText(NetworkError2String);
+                        AppNotificationButton checkNetWorkConnectionButton = new(CheckNetWorkConnectionString);
                         checkNetWorkConnectionButton.Arguments.Add("action", "CheckNetWorkConnection");
                         appNotificationBuilder.AddButton(checkNetWorkConnectionButton);
                         AppNotification appNotification = appNotificationBuilder.BuildNotification();
