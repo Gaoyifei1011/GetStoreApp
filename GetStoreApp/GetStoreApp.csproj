@@ -235,6 +235,8 @@
     <None Remove="Strings\Store.lang-zh-hans.resjson" />
     <None Remove="Strings\WebView.lang-en-us.resjson" />
     <None Remove="Strings\WebView.lang-zh-hans.resjson" />
+    <None Remove="Strings\Window.lang-en-us.resjson" />
+    <None Remove="Strings\Window.lang-zh-hans.resjson" />
     <None Remove="Strings\WinGet.lang-en-us.resjson" />
     <None Remove="Strings\WinGet.lang-zh-hans.resjson" />
     <None Remove="Strings\WinGetAppsVersionInfo.lang-en-us.resjson" />
@@ -250,11 +252,9 @@
     <None Remove="Strings\en-us\Dialog.resjson" />
     <None Remove="Strings\en-us\Notification.resjson" />
     <None Remove="Strings\en-us\Resources.resjson" />
-    <None Remove="Strings\en-us\Window.resjson" />
     <None Remove="Strings\zh-hans\Dialog.resjson" />
     <None Remove="Strings\zh-hans\Notification.resjson" />
     <None Remove="Strings\zh-hans\Resources.resjson" />
-    <None Remove="Strings\zh-hans\Window.resjson" />
     <None Remove="Views\Dialogs\AppInformationDialog.xaml" />
     <None Remove="Views\Dialogs\AppRunningDialog.xaml" />
     <None Remove="Views\Dialogs\ClosingWindowDialog.xaml" />
@@ -395,6 +395,8 @@
     <PRIResource Include="Strings\Store.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\WebView.lang-en-us.resjson" />
     <PRIResource Include="Strings\WebView.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\Window.lang-en-us.resjson" />
+    <PRIResource Include="Strings\Window.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\WinGet.lang-en-us.resjson" />
     <PRIResource Include="Strings\WinGet.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\WinGetAppsVersionInfo.lang-en-us.resjson" />
@@ -409,12 +411,10 @@
     <PRIResource Include="Strings\WinGetUpgrade.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\en-us\Dialog.resjson" />
     <PRIResource Include="Strings\en-us\Notification.resjson" />
-    <PRIResource Include="Strings\en-us\Resources.resjson" />
-    <PRIResource Include="Strings\en-us\Window.resjson" />   
+    <PRIResource Include="Strings\en-us\Resources.resjson" />   
     <PRIResource Include="Strings\zh-hans\Dialog.resjson" />
     <PRIResource Include="Strings\zh-hans\Notification.resjson" />
     <PRIResource Include="Strings\zh-hans\Resources.resjson" />
-    <PRIResource Include="Strings\zh-hans\Window.resjson" />
     
     <Reference Include="Microsoft.Windows.Storage.Pickers.Projection.dll" />
     <Content Include="$(PkgMicrosoft_WindowsPackageManager_InProcCom)\runtimes\win-$(Platform)\native\Microsoft.Management.Deployment.InProc.dll" Link="Microsoft.Management.Deployment.dll" CopyToOutputDirectory="Always" />
