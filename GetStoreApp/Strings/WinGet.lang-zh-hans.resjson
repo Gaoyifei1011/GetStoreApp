@@ -47,7 +47,7 @@
   "Repairing": "卸载中",
   "RepairPostRepair": "完成修复中",
   "RepairQueued": "修复等待中",
-  "RepairVersionToolTip": "修复版本：",
+  "RepairVersion": "修复版本：",
   "SearchApps": "查找应用",
   "TaskManager": "任务管理",
   "TotalFileSize": "总大小：",
