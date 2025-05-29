@@ -1,0 +1,22 @@
+﻿{
+  "AppManager": "App Manager",
+  "AppUpdate": "App Update",
+  "CheckNetWorkConnection": "Check the network connection",
+  "Close": "Close",
+  "Download": "Download Management",
+  "Maximize": "Maximize",
+  "Minimize": "Minimize",
+  "Move": "Move",
+  "NavigationFailed": "Page {0} navigation failed",
+  "NetworkError1": "The network connection is abnormal",
+  "NetworkError2": "The network connection is abnormal, please check your network connection.",
+  "PinToStartScreen": "Pin to start screen",
+  "Restore": "Restore",
+  "RunningAdministrator": "(Administrator)",
+  "Settings": "Settings",
+  "Size": "Size",
+  "Store": "Microsoft Store",
+  "Title": "GetStoreApp",
+  "Web": "Open Browser",
+  "WinGet": "WinGet Package"
+}

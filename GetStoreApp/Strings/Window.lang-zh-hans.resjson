@@ -1,0 +1,22 @@
+﻿{
+  "AppManager": "应用管理",
+  "AppUpdate": "应用更新",
+  "CheckNetWorkConnection": "检查网络连接",
+  "Close": "关闭",
+  "Download": "下载管理",
+  "Maximize": "最大化",
+  "Minimize": "最小化",
+  "Move": "移动",
+  "NavigationFailed": "页面{0}导航失败",
+  "NetworkError1": "应用处于离线模式",
+  "NetworkError2": "网络连接异常，应用处于离线模式，请检查您的网络连接",
+  "PinToStartScreen": "固定到“开始”屏幕",
+  "Restore": "还原",
+  "RunningAdministrator": "（管理员）",
+  "Settings": "设置",
+  "Size": "大小",
+  "Store": "微软商店",
+  "Title": "获取商店应用",
+  "Web": "打开网页",
+  "WinGet": "WinGet 程序包"
+}
