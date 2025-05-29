@@ -55,7 +55,7 @@
                     Click="{x:Bind OnRestoreClicked}"
                     FontSize="12"
                     IsEnabled="{x:Bind IsWindowMaximized, Mode=OneWay}"
-                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Restore')}">
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Restore')}">
 
                     <MenuFlyoutItem.Icon>
                         <FontIcon Margin="6" Glyph="&#xE923;" />
@@ -69,7 +69,7 @@
                     FontSize="12"
                     IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
                     Tag="{x:Bind TitlebarMenuFlyout}"
-                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Move')}" />
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Move')}" />
 
                 <MenuFlyoutItem
                     Height="28"
@@ -78,14 +78,14 @@
                     FontSize="12"
                     IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
                     Tag="{x:Bind TitlebarMenuFlyout}"
-                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Size')}" />
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Size')}" />
 
                 <MenuFlyoutItem
                     Height="28"
                     Padding="11,0"
                     Click="{x:Bind OnMinimizeClicked}"
                     FontSize="12"
-                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Minimize')}">
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Minimize')}">
                     <MenuFlyoutItem.Icon>
                         <FontIcon Margin="6" Glyph="&#xE921;" />
                     </MenuFlyoutItem.Icon>
@@ -97,7 +97,7 @@
                     Click="{x:Bind OnMaximizeClicked}"
                     FontSize="12"
                     IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
-                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Maximize')}">
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Maximize')}">
 
                     <MenuFlyoutItem.Icon>
                         <FontIcon Margin="6" Glyph="&#xE922;" />
@@ -111,7 +111,7 @@
                     Padding="11,0"
                     Click="{x:Bind OnCloseClicked}"
                     FontSize="12"
-                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Close')}">
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Close')}">
 
                     <MenuFlyoutItem.Icon>
                         <FontIcon Margin="6" Glyph="&#xE8BB;" />
