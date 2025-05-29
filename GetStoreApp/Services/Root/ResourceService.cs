@@ -1,7 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.Windows.ApplicationModel.Resources;
+﻿using Microsoft.Windows.ApplicationModel.Resources;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation.Diagnostics;
@@ -23,10 +20,6 @@ namespace GetStoreApp.Services.Root
         private static ResourceContext currentResourceContext;
         private static ResourceMap resourceMap;
 
-        public static List<TypeModel> TypeList { get; } = [];
-
-        public static List<ChannelModel> ChannelList { get; } = [];
-
         /// <summary>
         /// 初始化应用本地化资源
         /// </summary>
@@ -45,69 +38,6 @@ namespace GetStoreApp.Services.Root
             currentResourceContext.QualifierValues["Language"] = _currentAppLanguage.Key.ToString();
 
             isInitialized = true;
-        }
-
-        /// <summary>
-        /// 初始化应用本地化信息
-        /// </summary>
-        public static void LocalizeReosurce()
-        {
-            InitializeTypeList();
-            InitializeChannelList();
-        }
-
-        /// <summary>
-        /// 初始化类型列表
-        /// </summary>
-        private static void InitializeTypeList()
-        {
-            TypeList.Add(new TypeModel
-            {
-                DisplayName = GetLocalized("Resources/URL"),
-                InternalName = "url",
-                ShortName = "url"
-            });
-
-            TypeList.Add(new TypeModel
-            {
-                DisplayName = GetLocalized("Resources/ProductID"),
-                InternalName = "ProductId",
-                ShortName = "pid"
-            });
-        }
-
-        /// <summary>
-        /// 初始化通道信息列表
-        /// </summary>
-        private static void InitializeChannelList()
-        {
-            ChannelList.Add(new ChannelModel
-            {
-                DisplayName = GetLocalized("Resources/Fast"),
-                InternalName = "WIF",
-                ShortName = "wif"
-            });
-
-            ChannelList.Add(new ChannelModel
-            {
-                DisplayName = GetLocalized("Resources/Slow"),
-                InternalName = "WIS",
-                ShortName = "wis"
-            });
-
-            ChannelList.Add(new ChannelModel
-            {
-                DisplayName = GetLocalized("Resources/RP"),
-                InternalName = "RP",
-                ShortName = "rp"
-            });
-
-            ChannelList.Add(new ChannelModel
-            {
-                DisplayName = GetLocalized("Resources/Retail"),
-                InternalName = "Retail",
-                ShortName = "rt"
-            });
         }
 
         /// <summary>
