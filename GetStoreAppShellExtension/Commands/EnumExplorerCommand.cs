@@ -9,7 +9,7 @@ namespace GetStoreAppShellExtension.Commands
     [GeneratedComClass]
     public partial class EnumExplorerCommand(IExplorerCommand[] explorerCommands) : IEnumExplorerCommand
     {
-        private readonly IExplorerCommand[] subExplorerCommandArray = explorerCommands is null ? ([]) : explorerCommands;
+        private readonly IExplorerCommand[] subExplorerCommandArray = explorerCommands is null ? [] : explorerCommands;
         private int index;
 
         /// <summary>
