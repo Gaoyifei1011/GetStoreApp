@@ -36,7 +36,7 @@
                 Grid.Row="0"
                 Height="60"
                 Margin="0,0,0,2"
-                Padding="16,12"
+                Padding="16,0"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
@@ -129,7 +129,7 @@
                 Grid.Row="1"
                 Height="60"
                 Margin="0,0,0,2"
-                Padding="16,12"
+                Padding="16,0"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
@@ -199,7 +199,7 @@
                             <MenuFlyoutSubItem
                                 x:Name="MicaFlyoutItem"
                                 Height="32"
-                                Padding="11,0,11,0"
+                                Padding="11,0"
                                 x:Load="{x:Bind systembackdrop:MicaController.IsSupported()}"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/Mica')}">
 
@@ -225,7 +225,7 @@
                             <MenuFlyoutSubItem
                                 x:Name="DesktopAcrylicFlyoutItem"
                                 Height="32"
-                                Padding="11,0,11,0"
+                                Padding="11,0"
                                 x:Load="{x:Bind systembackdrop:DesktopAcrylicController.IsSupported()}"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/DesktopAcrylic')}">
 
@@ -266,7 +266,7 @@
                 Grid.Row="2"
                 Height="60"
                 Margin="0,0,0,2"
-                Padding="16,12"
+                Padding="16,0"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
@@ -339,7 +339,7 @@
                 Grid.Row="3"
                 Height="60"
                 Margin="0,0,0,2"
-                Padding="16,12"
+                Padding="16,0"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
@@ -452,7 +452,7 @@
             <Grid
                 Grid.Row="4"
                 Height="60"
-                Padding="16,12"
+                Padding="16,0"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"

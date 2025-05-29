@@ -34,7 +34,7 @@
                 Grid.Row="0"
                 Height="60"
                 Margin="0,0,0,2"
-                Padding="16,12"
+                Padding="16,0"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
@@ -109,7 +109,7 @@
                 Grid.Row="1"
                 Height="60"
                 Margin="0,0,0,2"
-                Padding="16,12"
+                Padding="16,0"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
@@ -185,7 +185,7 @@
                 Grid.Row="2"
                 Height="60"
                 Margin="0,0,0,2"
-                Padding="16,12"
+                Padding="16,0"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
@@ -505,7 +505,6 @@
 
                         <StackPanel
                             Grid.Column="1"
-                            Margin="0,12"
                             VerticalAlignment="Center"
                             Orientation="Vertical">
 

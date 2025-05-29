@@ -200,7 +200,7 @@
             Grid.Row="1"
             Height="60"
             Margin="30,0,30,0"
-            Padding="16,12"
+            Padding="16,0"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
@@ -219,7 +219,6 @@
                     <ProgressRing IsActive="True" IsEnabled="True" />
 
                     <TextBlock
-                        Margin="0,10"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/LoadingFile')}"
                         TextAlignment="Center" />
@@ -227,7 +226,6 @@
 
                 <!--  下载已完成列表为空  -->
                 <TextBlock
-                    Margin="0,10"
                     VerticalAlignment="Center"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/CompletedEmptyDescription')}"
                     TextAlignment="Center"

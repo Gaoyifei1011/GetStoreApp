@@ -192,7 +192,7 @@
             Grid.Row="1"
             Height="60"
             Margin="30,0,30,0"
-            Padding="16,12"
+            Padding="16,0"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
@@ -200,7 +200,6 @@
             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(DownloadingCollection.Count), Mode=OneWay}">
 
             <TextBlock
-                Margin="0,10"
                 VerticalAlignment="Center"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DownloadingEmptyDescription')}"
                 TextAlignment="Center" />

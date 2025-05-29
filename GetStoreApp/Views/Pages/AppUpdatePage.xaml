@@ -145,7 +145,6 @@
             <Grid>
                 <!--  未检查更新  -->
                 <TextBlock
-                    Margin="0,10"
                     VerticalAlignment="Center"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/NotCheckUpdate')}"
                     TextAlignment="Center"
@@ -169,7 +168,6 @@
 
                 <!--  检查更新失败  -->
                 <TextBlock
-                    Margin="0,10"
                     VerticalAlignment="Center"
                     Text="{x:Bind AppUpdateFailedContent, Mode=OneWay}"
                     TextAlignment="Center"

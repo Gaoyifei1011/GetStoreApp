@@ -120,7 +120,7 @@
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutSubItem
                                     Height="32"
-                                    Padding="11,0,11,0"
+                                    Padding="11,0"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortWay')}">
 
                                     <RadioMenuFlyoutItem
@@ -144,7 +144,7 @@
 
                                 <MenuFlyoutSubItem
                                     Height="32"
-                                    Padding="11,0,11,0"
+                                    Padding="11,0"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortRule')}">
 
                                     <RadioMenuFlyoutItem
@@ -327,7 +327,6 @@
                     <ProgressRing IsActive="True" IsEnabled="True" />
 
                     <TextBlock
-                        Margin="0,10"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/LoadingApps')}"
                         TextAlignment="Center" />
@@ -335,7 +334,6 @@
 
                 <!--  加载失败（包含搜索结果为空）  -->
                 <TextBlock
-                    Margin="0,10"
                     VerticalAlignment="Center"
                     Text="{x:Bind AppManagerFailedContent, Mode=OneWay}"
                     TextAlignment="Center"

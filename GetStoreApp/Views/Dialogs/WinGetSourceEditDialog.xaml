@@ -70,7 +70,7 @@
                 <StackPanel Spacing="3">
                     <Grid
                         Height="60"
-                        Padding="16,12"
+                        Padding="16,0"
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                         BorderThickness="1"
@@ -99,7 +99,7 @@
 
                     <Grid
                         Height="60"
-                        Padding="16,12"
+                        Padding="16,0"
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                         BorderThickness="1"
@@ -128,7 +128,7 @@
 
                     <Grid
                         Height="60"
-                        Padding="16,12"
+                        Padding="16,0"
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                         BorderThickness="1"
@@ -157,7 +157,7 @@
 
                     <Grid
                         Height="60"
-                        Padding="16,12"
+                        Padding="16,0"
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                         BorderThickness="1"
@@ -186,7 +186,7 @@
 
                     <Grid
                         Height="60"
-                        Padding="16,12"
+                        Padding="16,0"
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                         BorderThickness="1"
@@ -231,7 +231,7 @@
 
                     <Grid
                         Height="60"
-                        Padding="16,12"
+                        Padding="16,0"
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                         BorderThickness="1"

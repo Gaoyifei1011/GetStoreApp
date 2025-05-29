@@ -109,7 +109,7 @@
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutSubItem
                                     Height="32"
-                                    Padding="11,0,11,0"
+                                    Padding="11,0"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortWay')}">
 
                                     <RadioMenuFlyoutItem
@@ -133,7 +133,7 @@
 
                                 <MenuFlyoutSubItem
                                     Height="32"
-                                    Padding="11,0,11,0"
+                                    Padding="11,0"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortRule')}">
 
                                     <RadioMenuFlyoutItem
@@ -352,7 +352,7 @@
             Grid.Row="1"
             Height="60"
             Margin="30,0,30,0"
-            Padding="16,12"
+            Padding="16,0"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
@@ -371,7 +371,6 @@
                     <ProgressRing IsActive="True" IsEnabled="True" />
 
                     <TextBlock
-                        Margin="0,10"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/LoadingInstalledApps')}"
                         TextAlignment="Center" />
@@ -379,7 +378,6 @@
 
                 <!--  搜索失败  -->
                 <TextBlock
-                    Margin="0,10"
                     VerticalAlignment="Center"
                     Text="{x:Bind InstalledFailedContent, Mode=OneWay}"
                     TextAlignment="Center"
@@ -387,7 +385,6 @@
 
                 <!--  搜索结果为空  -->
                 <TextBlock
-                    Margin="0,10"
                     VerticalAlignment="Center"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/InstalledAppsSearchEmptyDescription')}"
                     TextAlignment="Center"
