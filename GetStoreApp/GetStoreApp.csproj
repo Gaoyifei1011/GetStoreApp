@@ -239,6 +239,8 @@
     <None Remove="Strings\WinGetInstalled.lang-zh-hans.resjson" />
     <None Remove="Strings\WinGetSearch.lang-en-us.resjson" />
     <None Remove="Strings\WinGetSearch.lang-zh-hans.resjson" />
+    <None Remove="Strings\WinGetUpgrade.lang-en-us.resjson" />
+    <None Remove="Strings\WinGetUpgrade.lang-zh-hans.resjson" />
     <None Remove="Strings\en-us\Dialog.resjson" />
     <None Remove="Strings\en-us\Installer.resjson" />
     <None Remove="Strings\en-us\Notification.resjson" />
@@ -399,6 +401,8 @@
     <PRIResource Include="Strings\WinGetInstalled.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\WinGetSearch.lang-en-us.resjson" />
     <PRIResource Include="Strings\WinGetSearch.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\WinGetUpgrade.lang-en-us.resjson" />
+    <PRIResource Include="Strings\WinGetUpgrade.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\en-us\Dialog.resjson" />
     <PRIResource Include="Strings\en-us\Installer.resjson" />
     <PRIResource Include="Strings\en-us\Notification.resjson" />
