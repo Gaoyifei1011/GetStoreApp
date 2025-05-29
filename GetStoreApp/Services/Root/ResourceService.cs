@@ -27,8 +27,6 @@ namespace GetStoreApp.Services.Root
 
         public static List<ChannelModel> ChannelList { get; } = [];
 
-        public static List<TraceCleanupModel> TraceCleanupList { get; } = [];
-
         /// <summary>
         /// 初始化应用本地化资源
         /// </summary>
@@ -56,7 +54,6 @@ namespace GetStoreApp.Services.Root
         {
             InitializeTypeList();
             InitializeChannelList();
-            InitializeTraceCleanupList();
         }
 
         /// <summary>
@@ -110,37 +107,6 @@ namespace GetStoreApp.Services.Root
                 DisplayName = GetLocalized("Resources/Retail"),
                 InternalName = "Retail",
                 ShortName = "rt"
-            });
-        }
-
-        /// <summary>
-        /// 初始化痕迹清理列表
-        /// </summary>
-        private static void InitializeTraceCleanupList()
-        {
-            TraceCleanupList.Add(new TraceCleanupModel
-            {
-                DisplayName = GetLocalized("Dialog/HistoryRecord"),
-                InternalName = CleanKind.History,
-                CleanFailedText = GetLocalized("Dialog/HistoryCleanError")
-            });
-            TraceCleanupList.Add(new TraceCleanupModel
-            {
-                DisplayName = GetLocalized("Dialog/ActionCenter"),
-                InternalName = CleanKind.ActionCenter,
-                CleanFailedText = GetLocalized("Dialog/ActionCenterError")
-            });
-            TraceCleanupList.Add(new TraceCleanupModel
-            {
-                DisplayName = GetLocalized("Dialog/DownloadRecord"),
-                InternalName = CleanKind.Download,
-                CleanFailedText = GetLocalized("Dialog/DownloadCleanError")
-            });
-            TraceCleanupList.Add(new TraceCleanupModel
-            {
-                DisplayName = GetLocalized("Dialog/LocalFile"),
-                InternalName = CleanKind.LocalFile,
-                CleanFailedText = GetLocalized("Dialog/LocalFileCleanError")
             });
         }
 
