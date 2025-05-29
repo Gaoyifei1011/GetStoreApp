@@ -413,12 +413,12 @@
                                                                 </Grid.RowDefinitions>
 
                                                                 <TextBlock Grid.Row="0">
-                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppName')}" />
                                                                     <Run Text="{x:Bind AppName}" />
                                                                 </TextBlock>
 
                                                                 <TextBlock Grid.Row="1">
-                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadVersionToolTip')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadVersion')}" />
                                                                     <Run Text="{x:Bind AppVersion}" />
                                                                 </TextBlock>
                                                             </Grid>
@@ -445,7 +445,7 @@
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip MaxWidth="9999">
                                                                 <TextBlock>
-                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageOperationProgressToolTip')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageOperationProgress')}" />
                                                                     <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
                                                                 </TextBlock>
                                                             </ToolTip>
@@ -472,7 +472,7 @@
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip MaxWidth="9999">
                                                                 <TextBlock>
-                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadedFileSizeToolTip')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadedFileSize')}" />
                                                                     <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
                                                                 </TextBlock>
                                                             </ToolTip>
@@ -497,7 +497,7 @@
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip MaxWidth="9999">
                                                                 <TextBlock>
-                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/TotalFileSizeToolTip')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/TotalFileSize')}" />
                                                                     <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
                                                                 </TextBlock>
                                                             </ToolTip>
@@ -668,12 +668,12 @@
                                                                 </Grid.RowDefinitions>
 
                                                                 <TextBlock Grid.Row="0">
-                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppName')}" />
                                                                     <Run Text="{x:Bind AppName}" />
                                                                 </TextBlock>
 
                                                                 <TextBlock Grid.Row="1">
-                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/InstallVersionToolTip')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/InstallVersion')}" />
                                                                     <Run Text="{x:Bind AppVersion}" />
                                                                 </TextBlock>
                                                             </Grid>
@@ -700,7 +700,7 @@
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip MaxWidth="9999">
                                                                 <TextBlock>
-                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageOperationProgressToolTip')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageOperationProgress')}" />
                                                                     <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
                                                                 </TextBlock>
                                                             </ToolTip>
@@ -726,7 +726,7 @@
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip MaxWidth="9999">
                                                                 <TextBlock>
-                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadedFileSizeToolTip')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadedFileSize')}" />
                                                                     <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
                                                                 </TextBlock>
                                                             </ToolTip>
@@ -752,7 +752,7 @@
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip MaxWidth="9999">
                                                                 <TextBlock>
-                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/TotalFileSizeToolTip')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/TotalFileSize')}" />
                                                                     <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
                                                                 </TextBlock>
                                                             </ToolTip>
@@ -911,12 +911,12 @@
                                                             </Grid.RowDefinitions>
 
                                                             <TextBlock Grid.Row="0">
-                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppName')}" />
                                                                 <Run Text="{x:Bind AppName}" />
                                                             </TextBlock>
 
                                                             <TextBlock Grid.Row="1">
-                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UninstallVersionToolTip')}" />
+                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UninstallVersion')}" />
                                                                 <Run Text="{x:Bind AppVersion}" />
                                                             </TextBlock>
                                                         </Grid>
@@ -1091,12 +1091,12 @@
                                                                 </Grid.RowDefinitions>
 
                                                                 <TextBlock Grid.Row="0">
-                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppName')}" />
                                                                     <Run Text="{x:Bind AppName}" />
                                                                 </TextBlock>
 
                                                                 <TextBlock Grid.Row="1">
-                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RepairVersionToolTip')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RepairVersion')}" />
                                                                     <Run Text="{x:Bind AppVersion}" />
                                                                 </TextBlock>
                                                             </Grid>
@@ -1115,7 +1115,7 @@
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip MaxWidth="9999">
                                                             <TextBlock>
-                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageOperationProgressToolTip')}" />
+                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageOperationProgress')}" />
                                                                 <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
                                                             </TextBlock>
                                                         </ToolTip>
@@ -1290,12 +1290,12 @@
                                                                 </Grid.RowDefinitions>
 
                                                                 <TextBlock Grid.Row="0">
-                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/AppName')}" />
                                                                     <Run Text="{x:Bind AppName}" />
                                                                 </TextBlock>
 
                                                                 <TextBlock Grid.Row="1">
-                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UpgradeVersionToolTip')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UpgradeVersion')}" />
                                                                     <Run Text="{x:Bind AppVersion}" />
                                                                 </TextBlock>
                                                             </Grid>
@@ -1322,7 +1322,7 @@
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip MaxWidth="9999">
                                                                 <TextBlock>
-                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageOperationProgressToolTip')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageOperationProgress')}" />
                                                                     <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
                                                                 </TextBlock>
                                                             </ToolTip>
@@ -1349,7 +1349,7 @@
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip MaxWidth="9999">
                                                                 <TextBlock>
-                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadedFileSizeToolTip')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadedFileSize')}" />
                                                                     <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
                                                                 </TextBlock>
                                                             </ToolTip>
@@ -1374,7 +1374,7 @@
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip MaxWidth="9999">
                                                                 <TextBlock>
-                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/TotalFileSizeToolTip')}" />
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/TotalFileSize')}" />
                                                                     <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
                                                                 </TextBlock>
                                                             </ToolTip>
