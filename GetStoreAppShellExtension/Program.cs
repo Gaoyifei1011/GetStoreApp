@@ -15,14 +15,6 @@ namespace GetStoreAppShellExtension
     {
         public static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
 
-        static Program()
-        {
-            ComWrappersSupport.InitializeComWrappers();
-            AppInstallService.InitializeAppInstall();
-            LanguageService.InitializeLanguage();
-            ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
-        }
-
         /// <summary>
         /// 从 DLL 对象处理程序或对象应用程序中检索类对象。
         /// </summary>
@@ -33,6 +25,11 @@ namespace GetStoreAppShellExtension
         [UnmanagedCallersOnly(EntryPoint = "DllGetClassObject")]
         public static unsafe int DllGetClassObject(Guid clsid, Guid riid, IntPtr* ppv)
         {
+            ComWrappersSupport.InitializeComWrappers();
+            AppInstallService.InitializeAppInstall();
+            LanguageService.InitializeLanguage();
+            ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
+
             if (Equals(clsid, typeof(RootExplorerCommand).GUID))
             {
                 ShellMenuClassFactory classFactory = new();

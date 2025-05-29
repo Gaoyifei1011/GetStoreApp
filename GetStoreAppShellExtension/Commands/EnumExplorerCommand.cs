@@ -44,8 +44,7 @@ namespace GetStoreAppShellExtension.Commands
                 index++;
             }
             pceltFetched = (uint)(index - start);
-
-            return Equals(index - start, celt) ? 0 : 1;
+            return celt == index - start ? 0 : 1;
         }
 
         /// <summary>
