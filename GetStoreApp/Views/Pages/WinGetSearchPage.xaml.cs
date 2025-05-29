@@ -29,13 +29,13 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class WinGetSearchPage : Page, INotifyPropertyChanged
     {
-        private readonly string SearchedAppsCountInfo = ResourceService.GetLocalized("WinGet/SearchedAppsCountInfo");
-        private readonly string Unknown = ResourceService.GetLocalized("WinGet/Unknown");
-        private readonly string SearchAppsEmptyDescription = ResourceService.GetLocalized("WinGet/SearchAppsEmptyDescription");
-        private readonly string SearchAppsFailed = ResourceService.GetLocalized("WinGet/SearchAppsFailed");
-        private readonly string SearchFindAppsFailed = ResourceService.GetLocalized("WinGet/SearchFindAppsFailed");
-        private readonly string SearchCatalogReferenceFailed = ResourceService.GetLocalized("WinGet/SearchCatalogReferenceFailed");
-        private readonly string SearchNotSelectSource = ResourceService.GetLocalized("WinGet/SearchNotSelectSource");
+        private readonly string SearchAppsEmptyDescriptionString = ResourceService.GetLocalized("WinGetSearch/SearchAppsEmptyDescription");
+        private readonly string SearchAppsFailedString = ResourceService.GetLocalized("WinGetSearch/SearchAppsFailed");
+        private readonly string SearchCatalogReferenceFailedString = ResourceService.GetLocalized("WinGetSearch/SearchCatalogReferenceFailed");
+        private readonly string SearchedAppsCountInfoString = ResourceService.GetLocalized("WinGetSearch/SearchedAppsCountInfo");
+        private readonly string SearchFindAppsFailedString = ResourceService.GetLocalized("WinGetSearch/SearchFindAppsFailed");
+        private readonly string SearchNotSelectSourceString = ResourceService.GetLocalized("WinGetSearch/SearchNotSelectSource");
+        private readonly string UnknownString = ResourceService.GetLocalized("WinGetSearch/Unknown");
         private string cachedSearchText;
         private WinGetPage WinGetPageInstance;
 
@@ -369,7 +369,7 @@ namespace GetStoreApp.Views.Pages
             if (string.IsNullOrEmpty(cachedSearchText))
             {
                 SearchAppsResultKind = SearchAppsResultKind.Failed;
-                SearchFailedContent = SearchAppsEmptyDescription;
+                SearchFailedContent = SearchAppsEmptyDescriptionString;
             }
             else
             {
@@ -484,7 +484,7 @@ namespace GetStoreApp.Views.Pages
                         if (searchAppsList.Count is 0)
                         {
                             SearchAppsResultKind = SearchAppsResultKind.Failed;
-                            SearchFailedContent = SearchAppsEmptyDescription;
+                            SearchFailedContent = SearchAppsEmptyDescriptionString;
                         }
                         else
                         {
@@ -499,19 +499,19 @@ namespace GetStoreApp.Views.Pages
                     else
                     {
                         SearchAppsResultKind = SearchAppsResultKind.Failed;
-                        SearchFailedContent = string.Format(SearchAppsFailed, SearchFindAppsFailed, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : Unknown);
+                        SearchFailedContent = string.Format(SearchAppsFailedString, SearchFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : UnknownString);
                     }
                 }
                 else
                 {
                     SearchAppsResultKind = SearchAppsResultKind.Failed;
-                    SearchFailedContent = string.Format(SearchAppsFailed, SearchCatalogReferenceFailed, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : Unknown);
+                    SearchFailedContent = string.Format(SearchAppsFailedString, SearchCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : UnknownString);
                 }
             }
             else
             {
                 SearchAppsResultKind = SearchAppsResultKind.Failed;
-                SearchFailedContent = SearchNotSelectSource;
+                SearchFailedContent = SearchNotSelectSourceString;
             }
         }
 
@@ -557,7 +557,7 @@ namespace GetStoreApp.Views.Pages
                                 searchAppsList.Add(new SearchAppsModel()
                                 {
                                     AppID = catalogPackage.Id,
-                                    AppName = string.IsNullOrEmpty(catalogPackage.Name) || string.Equals(catalogPackage.Name, "Unknown", StringComparison.OrdinalIgnoreCase) ? Unknown : catalogPackage.Name,
+                                    AppName = string.IsNullOrEmpty(catalogPackage.Name) || string.Equals(catalogPackage.Name, "Unknown", StringComparison.OrdinalIgnoreCase) ? UnknownString : catalogPackage.Name,
                                     CatalogPackage = matchItem.CatalogPackage,
                                 });
                             }
