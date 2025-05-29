@@ -73,7 +73,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string WinGetPackageInstallManifestErrorString = ResourceService.GetLocalized("WinGet/WinGetPackageInstallManifestError");
         private readonly string WinGetPackageInstallNoApplicableInstallersString = ResourceService.GetLocalized("WinGet/WinGetPackageInstallNoApplicableInstallers");
         private readonly string WinGetPackageInstallOtherErrorString = ResourceService.GetLocalized("WinGet/WinGetPackageInstallOtherError");
-        private readonly string WinGetPackageOperationCompletedString = ResourceService.GetLocalized("Notification/WinGetPackageOperationCompleted");
+        private readonly string WinGetPackageOperationCompletedString = ResourceService.GetLocalized("WinGet/WinGetPackageOperationCompleted");
         private readonly string WinGetPackageRepairAgreementsNotAcceptedString = ResourceService.GetLocalized("WinGet/WinGetPackageRepairAgreementsNotAccepted");
         private readonly string WinGetPackageRepairBlockedByPolicyString = ResourceService.GetLocalized("WinGet/WinGetPackageRepairBlockedByPolicy");
         private readonly string WinGetPackageRepairCatalogErrorString = ResourceService.GetLocalized("WinGet/WinGetPackageRepairCatalogError");

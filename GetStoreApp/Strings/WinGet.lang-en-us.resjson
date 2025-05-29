@@ -90,6 +90,7 @@
   "WinGetPackageInstallManifestError": "Manifest error",
   "WinGetPackageInstallNoApplicableInstallers": "no suitable app install package",
   "WinGetPackageInstallOtherError": "Other error",
+  "WinGetPackageOperationCompleted": "WinGet tasks have all been completed",
   "WinGetPackageRepairAgreementsNotAccepted": "The license agreement was not accepted",
   "WinGetPackageRepairBlockedByPolicy": "App repair is blocked by the policy",
   "WinGetPackageRepairCatalogError": "Data source error",

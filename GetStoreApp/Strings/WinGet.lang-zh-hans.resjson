@@ -90,6 +90,7 @@
   "WinGetPackageInstallManifestError": "清单错误",
   "WinGetPackageInstallNoApplicableInstallers": "没有合适的应用安装包",
   "WinGetPackageInstallOtherError": "其他错误",
+  "WinGetPackageOperationCompleted": "WinGet 任务都已完成",
   "WinGetPackageRepairAgreementsNotAccepted": "未接受许可协议",
   "WinGetPackageRepairBlockedByPolicy": "应用修复被策略阻止",
   "WinGetPackageRepairCatalogError": "数据源错误",
