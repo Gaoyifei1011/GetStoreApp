@@ -211,6 +211,8 @@
     <None Remove="Strings\Pinner.lang-zh-hans.resjson" />
     <None Remove="Strings\QueryLinks.lang-en-us.resjson" />
     <None Remove="Strings\QueryLinks.lang-zh-hans.resjson" />
+    <None Remove="Strings\Resources.lang-en-us.resjson" />
+    <None Remove="Strings\Resources.lang-zh-hans.resjson" />
     <None Remove="Strings\SearchStore.lang-en-us.resjson" />
     <None Remove="Strings\SearchStore.lang-zh-hans.resjson" />
     <None Remove="Strings\Settings.lang-en-us.resjson" />
@@ -254,9 +256,7 @@
     <None Remove="Strings\WinGetUpgrade.lang-en-us.resjson" />
     <None Remove="Strings\WinGetUpgrade.lang-zh-hans.resjson" />
     <None Remove="Strings\en-us\Notification.resjson" />
-    <None Remove="Strings\en-us\Resources.resjson" />
     <None Remove="Strings\zh-hans\Notification.resjson" />
-    <None Remove="Strings\zh-hans\Resources.resjson" />
     <None Remove="Views\Dialogs\AppInformationDialog.xaml" />
     <None Remove="Views\Dialogs\AppRunningDialog.xaml" />
     <None Remove="Views\Dialogs\ClosingWindowDialog.xaml" />
@@ -373,6 +373,8 @@
     <PRIResource Include="Strings\Pinner.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\QueryLinks.lang-en-us.resjson" />
     <PRIResource Include="Strings\QueryLinks.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\Resources.lang-en-us.resjson" />
+    <PRIResource Include="Strings\Resources.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\SearchStore.lang-en-us.resjson" />
     <PRIResource Include="Strings\SearchStore.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\Settings.lang-en-us.resjson" />
@@ -416,9 +418,7 @@
     <PRIResource Include="Strings\WinGetUpgrade.lang-en-us.resjson" />
     <PRIResource Include="Strings\WinGetUpgrade.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\en-us\Notification.resjson" />
-    <PRIResource Include="Strings\en-us\Resources.resjson" />
     <PRIResource Include="Strings\zh-hans\Notification.resjson" />
-    <PRIResource Include="Strings\zh-hans\Resources.resjson" />
     
     <Reference Include="Microsoft.Windows.Storage.Pickers.Projection.dll" />
     <Content Include="$(PkgMicrosoft_WindowsPackageManager_InProcCom)\runtimes\win-$(Platform)\native\Microsoft.Management.Deployment.InProc.dll" Link="Microsoft.Management.Deployment.dll" CopyToOutputDirectory="Always" />
