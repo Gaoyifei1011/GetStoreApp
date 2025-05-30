@@ -27,7 +27,7 @@ namespace GetStoreAppWebView
     public partial class App : Application, IDisposable
     {
         private bool isDisposed;
-        private readonly string PinningAppString = ResourceService.GetLocalized("Pinner/PinningApp");
+        private readonly string PinningAppString = ResourceService.GetLocalized("Application/PinningApp");
         private readonly Dictionary<UIContext, AppWindow> appWindowList = [];
 
         public App()

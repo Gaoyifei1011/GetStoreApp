@@ -20,6 +20,9 @@ namespace GetStoreApp.Services.Download
         private static bool isInitialized;
         private static int badgeCount;
         private static string doEngineMode;
+        private static string DownloadCompleted1String;
+        private static string DownloadCompleted2String;
+        private static string ViewDownloadPageString;
 
         public static bool IsDownloadingPageInitialized { get; set; }
 
@@ -321,9 +324,9 @@ namespace GetStoreApp.Services.Download
                 // 显示下载文件完成通知
                 AppNotificationBuilder appNotificationBuilder = new();
                 appNotificationBuilder.AddArgument("action", "OpenApp");
-                appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/DownloadCompleted1"));
-                appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/DownloadCompleted2"));
-                AppNotificationButton viewDownloadPageButton = new(ResourceService.GetLocalized("Notification/ViewDownloadPage"));
+                appNotificationBuilder.AddText(DownloadCompleted1String);
+                appNotificationBuilder.AddText(DownloadCompleted2String);
+                AppNotificationButton viewDownloadPageButton = new(ViewDownloadPageString);
                 viewDownloadPageButton.Arguments.Add("action", "ViewDownloadPage");
                 appNotificationBuilder.AddButton(viewDownloadPageButton);
                 AppNotification appNotification = appNotificationBuilder.BuildNotification();
@@ -339,6 +342,9 @@ namespace GetStoreApp.Services.Download
             if (!isInitialized)
             {
                 isInitialized = true;
+                DownloadCompleted1String = ResourceService.GetLocalized("Application/DownloadCompleted1");
+                DownloadCompleted2String = ResourceService.GetLocalized("Application/DownloadCompleted2");
+                ViewDownloadPageString = ResourceService.GetLocalized("Application/ViewDownloadPage");
 
                 // 获取当前下载引擎
                 doEngineMode = DownloadOptionsService.DoEngineMode;
