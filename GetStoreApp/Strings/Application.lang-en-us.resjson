@@ -1,0 +1,12 @@
+﻿{
+  "AppManager": "App Manager",
+  "AppUpdate": "App Update",
+  "Download": "Download Management",
+  "DownloadCompleted1": "Download completed",
+  "DownloadCompleted2": "All tasks has downloaded completed",
+  "PinningApp": "Pin app tip",
+  "Store": "Microsoft Store",
+  "ViewDownloadPage": "View download page",
+  "Web": "Open Browser",
+  "WinGet": "WinGet Package"
+}
