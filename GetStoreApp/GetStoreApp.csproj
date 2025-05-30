@@ -189,6 +189,8 @@
     <None Remove="Assets\LICENSE" />
     <None Remove="Strings\AppInformation.lang-en-us.resjson" />
     <None Remove="Strings\AppInformation.lang-zh-hans.resjson" />
+    <None Remove="Strings\Application.lang-en-us.resjson" />
+    <None Remove="Strings\Application.lang-zh-hans.resjson" />
     <None Remove="Strings\AppList.lang-en-us.resjson" />
     <None Remove="Strings\AppList.lang-zh-hans.resjson" />
     <None Remove="Strings\AppManager.lang-en-us.resjson" />
@@ -255,8 +257,6 @@
     <None Remove="Strings\WinGetSearch.lang-zh-hans.resjson" />
     <None Remove="Strings\WinGetUpgrade.lang-en-us.resjson" />
     <None Remove="Strings\WinGetUpgrade.lang-zh-hans.resjson" />
-    <None Remove="Strings\en-us\Notification.resjson" />
-    <None Remove="Strings\zh-hans\Notification.resjson" />
     <None Remove="Views\Dialogs\AppInformationDialog.xaml" />
     <None Remove="Views\Dialogs\AppRunningDialog.xaml" />
     <None Remove="Views\Dialogs\ClosingWindowDialog.xaml" />
@@ -351,6 +351,8 @@
 
     <PRIResource Include="Strings\AppInformation.lang-en-us.resjson" />
     <PRIResource Include="Strings\AppInformation.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\Application.lang-en-us.resjson" />
+    <PRIResource Include="Strings\Application.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\AppList.lang-en-us.resjson" />
     <PRIResource Include="Strings\AppList.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\AppManager.lang-en-us.resjson" />
@@ -417,8 +419,6 @@
     <PRIResource Include="Strings\WinGetSearch.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\WinGetUpgrade.lang-en-us.resjson" />
     <PRIResource Include="Strings\WinGetUpgrade.lang-zh-hans.resjson" />
-    <PRIResource Include="Strings\en-us\Notification.resjson" />
-    <PRIResource Include="Strings\zh-hans\Notification.resjson" />
     
     <Reference Include="Microsoft.Windows.Storage.Pickers.Projection.dll" />
     <Content Include="$(PkgMicrosoft_WindowsPackageManager_InProcCom)\runtimes\win-$(Platform)\native\Microsoft.Management.Deployment.InProc.dll" Link="Microsoft.Management.Deployment.dll" CopyToOutputDirectory="Always" />
