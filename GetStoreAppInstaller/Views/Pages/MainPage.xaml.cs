@@ -947,7 +947,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Update drag enter information failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnDragEnter), 1, e);
             }
             finally
             {
@@ -977,7 +977,7 @@ namespace GetStoreAppInstaller.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, string.Format("Read file {0} information failed", dragItemsList[0].Path), e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnDrop), 1, e);
                     }
                 }
             }
@@ -1247,7 +1247,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Open fileOpenPicker failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnOpenPackageClicked), 1, e);
             }
 
             if (hasSelectFile)
@@ -1292,7 +1292,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Open fileOpenPicker failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnOpenOtherPackageClicked), 1, e);
             }
 
             if (hasSelectFile)
@@ -1352,7 +1352,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Open fileOpenPicker failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnAddDependencyClicked), 1, e);
             }
         }
 
@@ -1454,7 +1454,7 @@ namespace GetStoreAppInstaller.Views.Pages
                         // 安装失败显示失败信息
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnInstallAppClicked), 1, e);
                             return ValueTuple.Create<bool, DeploymentResult, Exception>(true, null, e);
                         }
                     }
@@ -1472,7 +1472,7 @@ namespace GetStoreAppInstaller.Views.Pages
                         // 安装失败显示失败信息
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnInstallAppClicked), 2, e);
                             return ValueTuple.Create<bool, DeploymentResult, Exception>(true, null, e);
                         }
                     }
@@ -1618,7 +1618,7 @@ namespace GetStoreAppInstaller.Views.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Warning, string.Format("{0} app installed folder open failed", package.DisplayName), e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnOpenAppInstalledFolderClicked), 1, e);
                         }
                     }
                 }
@@ -1643,7 +1643,7 @@ namespace GetStoreAppInstaller.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Information, "Open app cache folder failed.", e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnOpenAppCachedFolderClicked), 1, e);
                     }
                 }
             });
@@ -2201,7 +2201,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, string.Format("Parse package {0} failed", filePath), e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(ParsePackagedAppAsync), 1, e);
             }
 
             return ValueTuple.Create(parseResult, packageInformation);
@@ -2270,7 +2270,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, string.Format("Parse package {0} failed", filePath), e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(ParseDependencyAppAsync), 1, e);
             }
 
             return ValueTuple.Create(parseResult, dependencyAppInformation);
@@ -2448,7 +2448,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Parse package manifest failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(ParsePackageManifest), 1, e);
             }
 
             return manifestInformation;
@@ -2773,7 +2773,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Parse package resources failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(ParsePackageResources), 1, e);
             }
 
             return resourceDict;
@@ -2836,7 +2836,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Parse package manifest failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(ParseDependencyPackageManifest), 1, e);
             }
 
             return dependencyAppInformation;
@@ -2867,7 +2867,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Parse package manifest failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(ParseDependencyPackageBundleManifest), 1, e);
             }
 
             return dependencyAppInformation;
@@ -3624,7 +3624,7 @@ namespace GetStoreAppInstaller.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Display package app icon failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(UpdateResultAsync), 1, e);
                 }
             }
 

@@ -53,21 +53,21 @@ namespace GetStoreApp.Services.Root
                 }
                 catch (Exception currentResourceException)
                 {
-                    LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with langauge {0} failed.", _currentAppLanguage.Key), currentResourceException);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(ResourceService), nameof(GetLocalized), 1, currentResourceException);
                     try
                     {
                         return resourceMap.GetValue(resource, defaultResourceContext).ValueAsString;
                     }
                     catch (Exception defaultResourceException)
                     {
-                        LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context string with langauge {0} failed.", _defaultAppLanguage.Key), defaultResourceException);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(ResourceService), nameof(GetLocalized), 2, defaultResourceException);
                         return resource;
                     }
                 }
             }
             else
             {
-                LogService.WriteLog(LoggingLevel.Warning, "Have you forgot to initialize app's resources?", new NullReferenceException());
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(ResourceService), nameof(GetLocalized), 3, new Exception());
                 return resource;
             }
         }
@@ -83,7 +83,7 @@ namespace GetStoreApp.Services.Root
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Warning, "Get resource embedData failed.", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(ResourceService), nameof(GetEmbeddedData), 1, e);
                 return default;
             }
         }

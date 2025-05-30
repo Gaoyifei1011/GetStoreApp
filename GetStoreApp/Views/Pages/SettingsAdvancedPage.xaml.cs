@@ -199,29 +199,13 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     dwRmStatus = RstrtmgrLibrary.RmEndSession(dwSessionHandle);
                                 }
-                                else
-                                {
-                                    LogService.WriteLog(LoggingLevel.Error, "Restart explorer restart failed", new Exception());
-                                }
-                            }
-                            else
-                            {
-                                LogService.WriteLog(LoggingLevel.Error, "Restart explorer shutdown failed", new Exception());
                             }
                         }
-                        else
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, "Restart explorer register resources failed", new Exception());
-                        }
-                    }
-                    else
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, "Restart explorer start session failed", new Exception());
                     }
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Restart explorer failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAdvancedPage), nameof(OnRestartExplorerClicked), 1, e);
                 }
             });
 
@@ -293,7 +277,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Unregister application exit event failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAdvancedPage), nameof(OnApplicationExit), 1, e);
             }
         }
 

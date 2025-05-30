@@ -62,7 +62,7 @@ namespace GetStoreApp.Services.Settings
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Warning, "Get download saved folder failed.", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadOptionsService), nameof(GetFolderAsync), 1, e);
                 SetFolder(DefaultDownloadFolder);
                 return DefaultDownloadFolder;
             }

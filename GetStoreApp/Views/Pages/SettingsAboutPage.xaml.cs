@@ -213,7 +213,7 @@ namespace GetStoreApp.Views.Pages
                         // 请求失败
                         else
                         {
-                            LogService.WriteLog(LoggingLevel.Error, "Check update request failed", httpRequestResult.ExtendedError);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(OnCheckUpdateClicked), 1, httpRequestResult.ExtendedError);
                         }
 
                         httpRequestResult.Dispose();
@@ -221,7 +221,7 @@ namespace GetStoreApp.Views.Pages
                     // 其他异常
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "Check update request unknown exception", e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(OnCheckUpdateClicked), 2, e);
                     }
 
                     return null;

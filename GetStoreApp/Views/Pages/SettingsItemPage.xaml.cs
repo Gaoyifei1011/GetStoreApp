@@ -33,8 +33,6 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsItemPage : Page, INotifyPropertyChanged
     {
-        private readonly string NavigationFailedString = ResourceService.GetLocalized("SettingsItem/NavigationFailed");
-
         private SelectorBarItem _selectedItem;
 
         public SelectorBarItem SelectedItem
@@ -148,7 +146,7 @@ namespace GetStoreApp.Views.Pages
                 SelectedItem = SettingsItemSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
             }
 
-            LogService.WriteLog(LoggingLevel.Warning, string.Format(NavigationFailedString, args.SourcePageType.FullName), args.Exception);
+            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsItemPage), nameof(OnNavigationFailed), 1, args.Exception);
         }
 
         /// <summary>
@@ -206,7 +204,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Create desktop shortcut failed.", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsItemPage), nameof(OnPinToDesktopClicked), 1, e);
                 }
             });
 
@@ -235,7 +233,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Pin app to startscreen failed.", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsItemPage), nameof(OnPinToStartScreenClicked), 1, e);
                 }
             });
 
@@ -272,7 +270,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "Use TaskbarManager api to pin app to taskbar failed.", e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsItemPage), nameof(OnPinToTaskbarClicked), 1, e);
                     }
                 }
 
@@ -316,7 +314,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, string.Format(NavigationFailedString, navigationPageType.FullName), e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsItemPage), nameof(NavigateTo), 1, e);
             }
         }
 

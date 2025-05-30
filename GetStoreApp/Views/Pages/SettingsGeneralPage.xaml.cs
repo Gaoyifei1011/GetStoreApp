@@ -377,7 +377,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Unregister application exit event failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsGeneralPage), nameof(OnApplicationExit), 1, e);
             }
         }
 

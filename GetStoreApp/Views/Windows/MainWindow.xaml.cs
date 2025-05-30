@@ -316,7 +316,7 @@ namespace GetStoreApp.Views.Windows
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Query download scheduler list failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(OnAppWindowClosing), 1, e);
             }
             finally
             {
@@ -547,7 +547,7 @@ namespace GetStoreApp.Views.Windows
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "Use SecondaryTile api to pin app to startscreen failed.", e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(OnPinToStartScreenClicked), 1, e);
                     }
                     finally
                     {
@@ -803,7 +803,7 @@ namespace GetStoreApp.Views.Windows
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
             args.Handled = true;
-            LogService.WriteLog(LoggingLevel.Warning, string.Format(NavigationFailedString, args.SourcePageType.FullName), args.Exception);
+            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(OnNavigationFailed), 1, args.Exception);
             (Application.Current as WinUIApp).Dispose();
         }
 
@@ -1340,7 +1340,7 @@ namespace GetStoreApp.Views.Windows
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Warning, "Network state check failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(CheckNetwork), 1, e);
             }
         }
     }

@@ -59,7 +59,7 @@ namespace GetStoreApp.Services.Download
             //  发生异常时，使用默认的参数
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Aria2 config fileStream save failed.", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(Aria2Service), nameof(InitializeAria2Conf), 1, e);
                 aria2Arguments = string.Format(defaultAria2Arguments, Environment.ProcessId);
             }
         }
@@ -128,7 +128,7 @@ namespace GetStoreApp.Services.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Get Aria2 state failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(Aria2Service), nameof(IsAria2ExistedAsync), 1, e);
                 return false;
             }
         }
@@ -206,7 +206,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Warning, "Create download failed.", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(Aria2Service), nameof(CreateDownload), 1, e);
                 }
             });
         }
@@ -280,7 +280,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Warning, "Continue download failed.", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(Aria2Service), nameof(ContinueDownload), 1, e);
                 }
             });
         }
@@ -341,7 +341,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Warning, "Pause download failed.", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(Aria2Service), nameof(PauseDownload), 1, e);
                 }
             });
         }
@@ -418,7 +418,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Warning, "Delete download failed.", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(Aria2Service), nameof(DeleteDownload), 1, e);
                 }
             });
         }
@@ -503,7 +503,7 @@ namespace GetStoreApp.Services.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Warning, "Get download state failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(Aria2Service), nameof(TellStatusAsync), 1, e);
             }
 
             return ValueTuple.Create(isTellStatusSuccessfully, downloadProgressState, completedSize, totalSize, downloadSpeed);
@@ -592,7 +592,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Warning, "Delete download failed.", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(Aria2Service), nameof(RemoveResultAsync), 1, e);
                 }
             });
         }

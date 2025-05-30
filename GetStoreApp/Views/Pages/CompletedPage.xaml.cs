@@ -194,7 +194,7 @@ namespace GetStoreApp.Views.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Warning, "Delete completed download file failed.", e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnDeleteWithFileExecuteRequested), 1, e);
                         }
 
                         DownloadStorageService.DeleteDownloadData(completed.DownloadKey);
@@ -244,7 +244,7 @@ namespace GetStoreApp.Views.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Error, "Get File from path failed", e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnInstallExecuteRequested), 1, e);
                             return null;
                         }
                     });
@@ -288,7 +288,7 @@ namespace GetStoreApp.Views.Pages
                                     // 安装失败显示失败信息
                                     catch (Exception e)
                                     {
-                                        LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
+                                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnInstallExecuteRequested), 2, e);
                                         return ValueTuple.Create<bool, DeploymentResult, Exception>(false, null, e);
                                     }
                                 });
@@ -346,7 +346,7 @@ namespace GetStoreApp.Views.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnInstallExecuteRequested), 3, e);
                             return;
                         }
                     }
@@ -382,7 +382,7 @@ namespace GetStoreApp.Views.Pages
                             }
                             catch (Exception e)
                             {
-                                LogService.WriteLog(LoggingLevel.Warning, "Completed download completed folder located failed.", e);
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnOpenItemFolderExecuteRequested), 1, e);
                                 await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
                             }
                         }
@@ -424,7 +424,7 @@ namespace GetStoreApp.Views.Pages
                 catch (Exception e)
                 {
                     await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.ShareFailed, false, 1));
-                    LogService.WriteLog(LoggingLevel.Warning, "Share file failed.", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShareFileExecuteRequested), 1, e);
                 }
             }
             else
@@ -606,7 +606,7 @@ namespace GetStoreApp.Views.Pages
                             }
                             catch (Exception e)
                             {
-                                LogService.WriteLog(LoggingLevel.Warning, "Delete completed download file failed.", e);
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnDeleteSelectedWithFileClicked), 1, e);
                             }
 
                             DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
@@ -663,7 +663,7 @@ namespace GetStoreApp.Views.Pages
                             }
                             catch (Exception e)
                             {
-                                LogService.WriteLog(LoggingLevel.Warning, string.Format("Read file {0} failed", completedItem.FilePath), e);
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShareSelectedFileClicked), 1, e);
                                 continue;
                             }
                         }
@@ -676,7 +676,7 @@ namespace GetStoreApp.Views.Pages
                 catch (Exception e)
                 {
                     await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.ShareFailed, true, selectedCompletedDataList.Count));
-                    LogService.WriteLog(LoggingLevel.Warning, "Share selected files failed.", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShareSelectedFileClicked), 2, e);
                 }
             }
         }
@@ -721,7 +721,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Unregister download storage event failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnApplicationExit), 1, e);
             }
         }
 

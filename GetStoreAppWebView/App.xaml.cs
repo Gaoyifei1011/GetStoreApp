@@ -108,7 +108,7 @@ namespace GetStoreAppWebView
                             }
                             catch (Exception e)
                             {
-                                LogService.WriteLog(LoggingLevel.Error, "Use SecondaryTile api to pin app to taskbar failed.", e);
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppWebView), nameof(App), nameof(OnActivated), 1, e);
                             }
                             finally
                             {
@@ -141,7 +141,7 @@ namespace GetStoreAppWebView
                             }
                             catch (Exception e)
                             {
-                                LogService.WriteLog(LoggingLevel.Error, "Use TaskbarManager api to pin app to taskbar failed.", e);
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppWebView), nameof(App), nameof(OnActivated), 2, e);
                             }
                             finally
                             {
@@ -188,7 +188,7 @@ namespace GetStoreAppWebView
         private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs args)
         {
             args.Handled = true;
-            LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.Exception);
+            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppWebView), nameof(App), nameof(OnUnhandledException), 1, args.Exception);
         }
 
         /// <summary>

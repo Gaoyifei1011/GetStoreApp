@@ -69,21 +69,21 @@ namespace GetStoreAppInstaller.Services.Root
                 }
                 catch (Exception currentResourceException)
                 {
-                    LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with langauge {0} failed.", _currentAppLanguage), currentResourceException);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(ResourceService), nameof(GetLocalized), 1, currentResourceException);
                     try
                     {
                         return resourceMap.GetValue(resource, defaultResourceContext).ValueAsString;
                     }
                     catch (Exception defaultResourceException)
                     {
-                        LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context string with langauge {0} failed.", _defaultAppLanguage), defaultResourceException);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(ResourceService), nameof(GetLocalized), 2, defaultResourceException);
                         return resource;
                     }
                 }
             }
             else
             {
-                LogService.WriteLog(LoggingLevel.Warning, "Have you forgot to initialize app's resources?", new NullReferenceException());
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(ResourceService), nameof(GetLocalized), 3, new Exception());
                 return resource;
             }
         }

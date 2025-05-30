@@ -97,8 +97,7 @@ namespace GetStoreApp.Helpers.Store
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : httpRequestResult.ResponseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, "Search store apps request successfully.", responseDict);
-
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(SerachStoreAppsAsync), 1, responseDict);
                     string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                     if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
@@ -120,7 +119,7 @@ namespace GetStoreApp.Helpers.Store
                 // 请求失败
                 else
                 {
-                    LogService.WriteLog(LoggingLevel.Information, "Search store apps request failed", httpRequestResult.ExtendedError);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(SerachStoreAppsAsync), 2, httpRequestResult.ExtendedError);
                 }
 
                 httpRequestResult.Dispose();
@@ -128,7 +127,7 @@ namespace GetStoreApp.Helpers.Store
             // 其他异常
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Warning, "Search store apps request unknown exception", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(SerachStoreAppsAsync), 3, e);
             }
 
             return ValueTuple.Create(requestResult, searchStoreList);

@@ -42,7 +42,7 @@ namespace GetStoreApp.Helpers.Root
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Folder delete failed.", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(IOHelper), nameof(CleanFolder), 1, e);
                 return false;
             }
         }
@@ -85,7 +85,7 @@ namespace GetStoreApp.Helpers.Root
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Warning, "File SHA256 verify failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, nameof(GetStoreApp), nameof(IOHelper), nameof(GetFileSHA256Async), 1, e);
                 return string.Empty;
             }
         }

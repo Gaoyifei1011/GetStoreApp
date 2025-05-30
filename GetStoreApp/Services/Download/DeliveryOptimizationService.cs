@@ -47,7 +47,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Terminate all task failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DeliveryOptimizationService), nameof(TerminateDownload), 1, e);
                 }
                 finally
                 {
@@ -130,7 +130,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Create delivery optimization download failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DeliveryOptimizationService), nameof(CreateDownload), 1, e);
                 }
             }, null, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
         }
@@ -167,7 +167,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Continue delivery optimization download failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DeliveryOptimizationService), nameof(ContinueDownload), 1, e);
                 }
                 finally
                 {
@@ -208,7 +208,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Pause delivery optimization download failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DeliveryOptimizationService), nameof(PauseDownload), 1, e);
                 }
                 finally
                 {
@@ -251,7 +251,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Delete delivery optimization download failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DeliveryOptimizationService), nameof(DeleteDownload), 1, e);
                 }
                 finally
                 {
@@ -321,7 +321,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Warning, "Finalize delivery optimization download task failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DeliveryOptimizationService), nameof(OnStatusChanged), 1, e);
                 }
             }
 
@@ -363,7 +363,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Warning, "Remove delivery optimization download failed task failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DeliveryOptimizationService), nameof(OnStatusChanged), 2, e);
                 }
             }
         }

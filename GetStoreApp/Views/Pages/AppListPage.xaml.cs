@@ -284,7 +284,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "Find current user packages failed", e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnNavigatedTo), 1, e);
                     }
 
                     return packageList;
@@ -412,7 +412,7 @@ namespace GetStoreApp.Views.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Error, "Filter and sort package list failed", e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnNavigatedTo), 2, e);
                         }
 
                         return filterSortPackageList;
@@ -448,7 +448,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, string.Format("Open app {0} failed", package.DisplayName), e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnOpenAppExecuteRequested), 1, e);
                     }
                 });
             }
@@ -472,7 +472,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Information, "Open app cache folder failed.", e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnOpenCacheFolderExecuteRequested), 1, e);
                     }
                 });
             }
@@ -493,7 +493,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Warning, string.Format("{0} app installed folder open failed", package.DisplayName), e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnOpenInstalledFolderExecuteRequested), 1, e);
                     }
                 });
             }
@@ -517,7 +517,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, string.Format("{0}'s AppxManifest.xml file open failed", package.DisplayName), e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnOpenManifestExecuteRequested), 1, e);
                     }
                 });
             }
@@ -538,7 +538,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, string.Format("Open microsoft store {0} failed", package.DisplayName), e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnOpenStoreExecuteRequested), 1, e);
                     }
                 });
             }
@@ -596,7 +596,7 @@ namespace GetStoreApp.Views.Pages
                             openSettingsButton.Arguments.Add("action", "OpenSettings");
                             appNotificationBuilder.AddButton(openSettingsButton);
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            LogService.WriteLog(LoggingLevel.Information, string.Format("Uninstall app {0} failed", package.Package.DisplayName), deploymentResult.ExtendedErrorCode is not null ? deploymentResult.ExtendedErrorCode : new Exception());
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnUninstallExecuteRequested), 1, deploymentResult.ExtendedErrorCode is not null ? deploymentResult.ExtendedErrorCode : new Exception());
                         });
 
                         package.IsUninstalling = false;
@@ -604,7 +604,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Information, string.Format("Uninstall app {0} failed", package.Package.Id.FullName), e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnUninstallExecuteRequested), 2, e);
                 }
             }
         }
@@ -946,7 +946,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "Filter and sort package list failed", e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnQuerySubmitted), 1, e);
                     }
 
                     return filterSortPackageList;
@@ -1088,7 +1088,7 @@ namespace GetStoreApp.Views.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Error, "Filter and sort package list failed", e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnTextChanged), 1, e);
                         }
 
                         return filterSortPackageList;
@@ -1232,7 +1232,7 @@ namespace GetStoreApp.Views.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Error, "Filter and sort package list failed", e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnSortWayClicked), 1, e);
                         }
 
                         return filterSortPackageList;
@@ -1376,7 +1376,7 @@ namespace GetStoreApp.Views.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Error, "Filter and sort package list failed", e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnSortRuleClicked), 1, e);
                         }
 
                         return filterSortPackageList;
@@ -1471,7 +1471,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Find current user packages failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnRefreshClicked), 1, e);
                 }
 
                 return packageList;
@@ -1599,7 +1599,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "Filter and sort package list failed", e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnRefreshClicked), 2, e);
                     }
 
                     return filterSortPackageList;
@@ -1738,7 +1738,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "Filter and sort package list failed", e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnClosed), 2, e);
                     }
 
                     return filterSortPackageList;

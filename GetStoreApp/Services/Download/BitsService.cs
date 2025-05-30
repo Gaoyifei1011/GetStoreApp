@@ -49,7 +49,7 @@ namespace GetStoreApp.Services.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "Initialize background intelligent transfer service failed", e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(BitsService), nameof(Initialize), 1, e);
                     }
                 }, null, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
             }
@@ -62,29 +62,22 @@ namespace GetStoreApp.Services.Download
         {
             Task.Factory.StartNew((param) =>
             {
+                bitsLock.Enter();
+
                 try
                 {
-                    bitsLock.Enter();
-
-                    try
+                    foreach (KeyValuePair<string, (string saveFilePath, IBackgroundCopyJob backgroundCopyJob, BackgroundCopyCallback backgroundCopyCallback)> bits in BitsDict)
                     {
-                        foreach (KeyValuePair<string, (string saveFilePath, IBackgroundCopyJob backgroundCopyJob, BackgroundCopyCallback backgroundCopyCallback)> bits in BitsDict)
-                        {
-                            bits.Value.backgroundCopyJob.Cancel();
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, "Terminate all task failed", e);
-                    }
-                    finally
-                    {
-                        bitsLock.Exit();
+                        bits.Value.backgroundCopyJob.Cancel();
                     }
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Terminate background transfer intelligent service download all task failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(BitsService), nameof(TerminateDownload), 1, e);
+                }
+                finally
+                {
+                    bitsLock.Exit();
                 }
             }, null, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
         }
@@ -143,7 +136,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Create background intelligent transfer service download failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(BitsService), nameof(CreateDownload), 1, e);
                 }
             }, null, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
         }
@@ -180,7 +173,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Continue background intelligent transfer service download failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(BitsService), nameof(ContinueDownload), 1, e);
                 }
                 finally
                 {
@@ -221,7 +214,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Pause background intelligent transfer service download failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(BitsService), nameof(PauseDownload), 1, e);
                 }
                 finally
                 {
@@ -264,7 +257,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Delete background intelligent transfer service download failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(BitsService), nameof(DeleteDownload), 1, e);
                 }
                 finally
                 {
@@ -336,7 +329,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Warning, "Finalize background intelligent transfer service download task failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(BitsService), nameof(OnStatusChanged), 1, e);
                 }
             }
             // 下载错误
@@ -377,7 +370,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Warning, "Remove background intelligent transfer service failed download task failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(BitsService), nameof(OnStatusChanged), 2, e);
                 }
             }
         }

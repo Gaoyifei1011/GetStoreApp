@@ -63,7 +63,7 @@ namespace GetStoreApp.Helpers.Store
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : WhiteSpaceRegex.Replace(httpRequestResult.ResponseMessage.RequestMessage.ToString(), string.Empty) }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, "Http request successfully.", responseDict);
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(HtmlRequestHelper), nameof(HttpRequestAsync), 1, responseDict);
                 }
                 // 请求失败
                 else
@@ -72,7 +72,7 @@ namespace GetStoreApp.Helpers.Store
                     request.RequestStatusCode = string.Empty;
                     request.RequestExceptionContent = httpRequestResult.ExtendedError.Message;
                     request.RequestContent = string.Empty;
-                    LogService.WriteLog(LoggingLevel.Error, "Http request failed", httpRequestResult.ExtendedError);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(HtmlRequestHelper), nameof(HttpRequestAsync), 2, httpRequestResult.ExtendedError);
                 }
 
                 httpRequestResult.Dispose();
@@ -84,7 +84,7 @@ namespace GetStoreApp.Helpers.Store
                 request.RequestStatusCode = string.Empty;
                 request.RequestExceptionContent = e.Message;
                 request.RequestContent = string.Empty;
-                LogService.WriteLog(LoggingLevel.Error, "Http request unknown exception", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(HtmlRequestHelper), nameof(HttpRequestAsync), 3, e);
             }
 
             return request;

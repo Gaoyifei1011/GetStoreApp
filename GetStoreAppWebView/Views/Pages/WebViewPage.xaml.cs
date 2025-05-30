@@ -443,8 +443,7 @@ namespace GetStoreAppWebView.Views.Pages
                 { "Process description", args.ProcessDescription },
             };
 
-            LogService.WriteLog(LoggingLevel.Error, "WebView2 process failed", logInformationDict);
-
+            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppWebView), nameof(WebViewPage), nameof(OnCoreProcessFailed), 3, logInformationDict);
             await ShowDialogAsync(new ProcessFailedDialog());
             (Application.Current as App).Dispose();
         }

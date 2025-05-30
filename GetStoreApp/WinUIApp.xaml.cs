@@ -89,7 +89,7 @@ namespace GetStoreApp
         private void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
         {
             args.Handled = true;
-            LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.Exception);
+            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinUIApp), nameof(OnUnhandledException), 1, args.Exception);
         }
 
         /// <summary>

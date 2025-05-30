@@ -385,7 +385,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Get package catalog reference failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetUpgradePage), nameof(GetPackageCatalogReference), 1, e);
                 return packageCatalogReference;
             }
         }
@@ -583,7 +583,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Update winget app failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetUpgradePage), nameof(UpgradableAppsAsync), 1, e);
             }
 
             return upgradableAppsResult;

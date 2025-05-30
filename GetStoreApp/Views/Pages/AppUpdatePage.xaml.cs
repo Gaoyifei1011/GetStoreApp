@@ -144,7 +144,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                                 catch (Exception e)
                                 {
-                                    LogService.WriteLog(LoggingLevel.Error, string.Format("Update app failed: package family name {0}", appUpdateItem.PackageFamilyName), e);
+                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppUpdatePage), nameof(OnUpdateExecuteRequested), 1, e);
                                     return null;
                                 }
                             });
@@ -349,7 +349,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Check store update status failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppUpdatePage), nameof(OnCheckUpdateClicked), 1, e);
                 }
 
                 return appUpdateList;
@@ -418,7 +418,7 @@ namespace GetStoreApp.Views.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Error, string.Format("Update app failed: package family name {0}", appUpdateItem.PackageFamilyName), e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppUpdatePage), nameof(OnUpdateAllClicked), 1, e);
                             return null;
                         }
                     });

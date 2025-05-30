@@ -209,7 +209,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Cancel winget download task failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(OnCancelTaskExecuteRequested), 1, e);
                 }
                 finally
                 {
@@ -232,7 +232,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Remove winget task failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(OnRemoveTaskExecuteRequested), 1, e);
                 }
                 finally
                 {
@@ -392,7 +392,7 @@ namespace GetStoreApp.Views.Pages
                 SelectedItem = WinGetSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
             }
 
-            LogService.WriteLog(LoggingLevel.Warning, string.Format(NavigationFailedString, args.SourcePageType.FullName), args.Exception);
+            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(OnNavigationFailed), 1, args.Exception);
         }
 
         #endregion 第三部分：WinGet 程序包页面——挂载的事件
@@ -796,7 +796,7 @@ namespace GetStoreApp.Views.Pages
                                 // 其他异常
                                 catch (Exception e)
                                 {
-                                    LogService.WriteLog(LoggingLevel.Error, "App download failed.", e);
+                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(AddTaskAsync), 1, e);
                                     return ValueTuple.Create<bool, bool, DownloadResult, Exception>(false, false, null, e);
                                 }
                             });
@@ -1163,7 +1163,7 @@ namespace GetStoreApp.Views.Pages
                                 // 其他异常
                                 catch (Exception e)
                                 {
-                                    LogService.WriteLog(LoggingLevel.Error, "App install failed.", e);
+                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(AddTaskAsync), 2, e);
                                     return ValueTuple.Create<bool, bool, InstallResult, Exception>(false, false, null, e);
                                 }
                             });
@@ -1575,7 +1575,7 @@ namespace GetStoreApp.Views.Pages
                                 // 其他异常
                                 catch (Exception e)
                                 {
-                                    LogService.WriteLog(LoggingLevel.Error, "App uninstall failed.", e);
+                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(AddTaskAsync), 3, e);
                                     return ValueTuple.Create<bool, bool, UninstallResult, Exception>(false, false, null, e);
                                 }
                             });
@@ -1885,7 +1885,7 @@ namespace GetStoreApp.Views.Pages
                                 // 其他异常
                                 catch (Exception e)
                                 {
-                                    LogService.WriteLog(LoggingLevel.Error, "App repair failed.", e);
+                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(AddTaskAsync), 4, e);
                                     return ValueTuple.Create<bool, bool, RepairResult, Exception>(false, false, null, e);
                                 }
                             });
@@ -2256,7 +2256,7 @@ namespace GetStoreApp.Views.Pages
                                 // 其他异常
                                 catch (Exception e)
                                 {
-                                    LogService.WriteLog(LoggingLevel.Error, "App upgrade failed.", e);
+                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(AddTaskAsync), 5, e);
                                     return ValueTuple.Create<bool, bool, InstallResult, Exception>(false, false, null, e);
                                 }
                             });
@@ -2691,7 +2691,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, string.Format(NavigationFailedString, navigationPageType.FullName), e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(NavigateTo), 1, e);
             }
         }
 

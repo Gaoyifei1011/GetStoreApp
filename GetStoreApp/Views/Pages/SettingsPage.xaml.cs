@@ -135,7 +135,7 @@ namespace GetStoreApp.Views.Pages
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
             args.Handled = true;
-            LogService.WriteLog(LoggingLevel.Warning, string.Format(NavigationFailedString, args.SourcePageType.FullName), args.Exception);
+            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPage), nameof(OnNavigationFailed), 1, args.Exception);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, string.Format(NavigationFailedString, navigationPageType.FullName), e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPage), nameof(NavigateTo), 1, e);
             }
         }
 

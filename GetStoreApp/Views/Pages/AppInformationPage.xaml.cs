@@ -4,6 +4,7 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
+using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
@@ -430,7 +431,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "App information copy failed", e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OnCopyDependencyInformationExecuteRequested), 1, e);
                     }
                 });
 
@@ -466,7 +467,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, string.Format("Open app {0} failed", appListEntry.DisplayName), e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OnLaunchExecuteRequested), 1, e);
                     }
                 });
             }
@@ -487,7 +488,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Warning, string.Format("{0} app installed folder open failed", package.DisplayName), e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OnOpenFolderExecuteRequested), 1, e);
                     }
                 });
             }
@@ -508,7 +509,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, string.Format("Open microsoft store {0} failed", package.DisplayName), e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OnOpenStoreExecuteRequested), 1, e);
                     }
                 });
             }
@@ -533,7 +534,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Create desktop shortcut failed.", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OnPinToDesktopExecuteRequested), 1, e);
                 }
             });
 
@@ -559,7 +560,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "Pin app to startscreen failed.", e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OnPinToStartScreenExecuteRequested), 1, e);
                     }
                 });
 
@@ -587,7 +588,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "Use TaskbarManager api to pin app to taskbar failed.", e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OnPinToTaskbarExecuteRequested), 1, e);
                     }
                 });
             }

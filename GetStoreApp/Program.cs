@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Helpers.Root;
+using GetStoreApp.Helpers.Store;
 using GetStoreApp.Services.Download;
 using GetStoreApp.Services.History;
 using GetStoreApp.Services.Root;
@@ -171,7 +172,7 @@ namespace GetStoreApp
         /// </summary>
         private static void OnUnhandledException(object sender, System.UnhandledExceptionEventArgs args)
         {
-            LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.ExceptionObject as Exception);
+            LogService.WriteLog(LoggingLevel.Warning, nameof(GetStoreApp), nameof(Program), nameof(OnUnhandledException), 1, args.ExceptionObject as Exception);
             Environment.Exit(Environment.ExitCode);
         }
 

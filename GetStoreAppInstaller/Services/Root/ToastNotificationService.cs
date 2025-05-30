@@ -27,7 +27,7 @@ namespace GetStoreAppInstaller.Services.Root
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Show notification failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(ToastNotificationService), nameof(Show), 1, e);
             }
         }
     }

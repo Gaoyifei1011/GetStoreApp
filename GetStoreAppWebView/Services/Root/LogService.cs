@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace GetStoreAppWebView.Services.Root
         /// <summary>
         /// 写入日志
         /// </summary>
-        public static void WriteLog(LoggingLevel logLevel, string logContent, Dictionary<string, string> loggingInformationDict)
+        public static void WriteLog(LoggingLevel logLevel, string nameSpaceName, string className, string methodName, int index, Dictionary<string, string> loggingInformationDict)
         {
             Task.Run(async () =>
             {
@@ -54,8 +55,9 @@ namespace GetStoreAppWebView.Services.Root
                         exceptionFields.AddString(logInformationItem.Key, logInformationItem.Value);
                     }
 
-                    exceptionChannel.LogEvent(logContent, exceptionFields, logLevel, exceptionOptions);
-                    await exceptionSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), string.Format("Logs {0} {1}.etl", DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss"), exceptionGuid.ToString().ToUpper()));
+                    string logFileName = string.Format("Logs-{0}-{1}-{2}-{3:D2}-{4}.etl", nameSpaceName, className, methodName, index, DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss.fff"));
+                    exceptionChannel.LogEvent(logFileName, exceptionFields, logLevel, exceptionOptions);
+                    await exceptionSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), logFileName);
                     exceptionSession.Dispose();
                 }
                 catch (Exception e)
@@ -73,7 +75,7 @@ namespace GetStoreAppWebView.Services.Root
         /// <summary>
         /// 写入日志
         /// </summary>
-        public static void WriteLog(LoggingLevel logLevel, string logContent, Exception exception)
+        public static void WriteLog(LoggingLevel logLevel, string nameSpaceName, string className, string methodName, int index, Exception exception)
         {
             Task.Run(async () =>
             {
@@ -104,8 +106,9 @@ namespace GetStoreAppWebView.Services.Root
                     exceptionFields.AddString("Source", string.IsNullOrEmpty(exception.Source) ? unknown : exception.Source.Replace('\r', ' ').Replace('\n', ' '));
                     exceptionFields.AddString("StackTrace", string.IsNullOrEmpty(exception.StackTrace) ? unknown : exception.StackTrace.Replace('\r', ' ').Replace('\n', ' '));
 
-                    exceptionChannel.LogEvent(logContent, exceptionFields, logLevel, exceptionOptions);
-                    await exceptionSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), string.Format("Logs {0} {1}.etl", DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss"), exceptionGuid.ToString().ToUpperInvariant()));
+                    string logFileName = string.Format("Logs-{0}-{1}-{2}-{3:D2}-{4}.etl", nameSpaceName, className, methodName, index, DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss.fff"));
+                    exceptionChannel.LogEvent(logFileName, exceptionFields, logLevel, exceptionOptions);
+                    await exceptionSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), logFileName);
                     exceptionSession.Dispose();
                 }
                 catch (Exception e)

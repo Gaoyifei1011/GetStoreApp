@@ -88,7 +88,7 @@ namespace GetStoreApp.Services.Settings
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Initialize winget data source settings data failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetConfigService), nameof(InitializeWinGetConfigAsync), 1, e);
                 }
                 finally
                 {
@@ -114,7 +114,7 @@ namespace GetStoreApp.Services.Settings
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Get winget data source settings data failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetConfigService), nameof(GetWinGetDataSourceName), 1, e);
             }
             finally
             {
@@ -143,7 +143,7 @@ namespace GetStoreApp.Services.Settings
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Set winget data source settings data failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetConfigService), nameof(SetWinGetDataSourceName), 1, e);
             }
             finally
             {
@@ -167,7 +167,7 @@ namespace GetStoreApp.Services.Settings
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Set winget data source settings data failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetConfigService), nameof(RemoveWinGetDataSourceName), 1, e);
             }
             finally
             {

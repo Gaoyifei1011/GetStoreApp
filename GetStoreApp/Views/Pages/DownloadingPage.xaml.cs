@@ -359,7 +359,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Unregister Download scheduler service event failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadingPage), nameof(OnApplicationExit), 1, e);
             }
         }
 

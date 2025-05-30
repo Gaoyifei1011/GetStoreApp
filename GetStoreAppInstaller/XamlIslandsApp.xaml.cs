@@ -1,4 +1,5 @@
 ﻿using GetStoreAppInstaller.Services.Root;
+using GetStoreAppInstaller.Views.Pages;
 using System;
 using Windows.Foundation.Diagnostics;
 using Windows.UI.Xaml;
@@ -20,7 +21,8 @@ namespace GetStoreAppInstaller
         /// </summary>
         private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs args)
         {
-            LogService.WriteLog(LoggingLevel.Warning, "Xaml islands UI Exception", args.Exception);
+            args.Handled = true;
+            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(XamlIslandsApp), nameof(OnUnhandledException), 1, args.Exception);
         }
 
         /// <summary>

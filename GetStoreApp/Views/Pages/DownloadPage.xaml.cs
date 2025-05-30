@@ -23,8 +23,6 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class DownloadPage : Page, INotifyPropertyChanged
     {
-        private readonly string NavigationFailedString = ResourceService.GetLocalized("Download/NavigationFailed");
-
         private SelectorBarItem _selectedItem;
 
         public SelectorBarItem SelectedItem
@@ -118,7 +116,7 @@ namespace GetStoreApp.Views.Pages
                 SelectedItem = DownloadSelctorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
             }
 
-            LogService.WriteLog(LoggingLevel.Warning, string.Format(NavigationFailedString, args.SourcePageType.FullName), args.Exception);
+            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadPage), nameof(OnNavigationFailed), 1, args.Exception);
         }
 
         /// <summary>
@@ -196,7 +194,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, string.Format(NavigationFailedString, navigationPageType.FullName), e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadPage), nameof(NavigateTo), 1, e);
             }
         }
 

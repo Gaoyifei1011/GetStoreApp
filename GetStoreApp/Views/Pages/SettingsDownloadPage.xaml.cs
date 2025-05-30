@@ -133,7 +133,7 @@ namespace GetStoreApp.Views.Pages
                             }
                             catch (Exception e)
                             {
-                                LogService.WriteLog(LoggingLevel.Error, "Open folderPicker failed", e);
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsDownloadPage), nameof(OnDownloadChangeFolderClicked), 1, e);
                                 await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.FolderPicker));
                             }
 

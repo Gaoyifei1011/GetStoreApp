@@ -27,7 +27,7 @@ namespace GetStoreAppInstaller.Helpers.Root
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Copy text to clipboard failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(CopyPasteHelper), nameof(CopyTextToClipBoard), 1, e);
                 return false;
             }
         }

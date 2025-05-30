@@ -848,7 +848,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Uninstall winget app failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetInstalledPage), nameof(InstalledAppsAsync), 1, e);
             }
 
             return installedAppsResult;

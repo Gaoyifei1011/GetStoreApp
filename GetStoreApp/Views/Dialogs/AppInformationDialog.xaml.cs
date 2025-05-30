@@ -1,5 +1,6 @@
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Settings;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
@@ -100,7 +101,7 @@ namespace GetStoreApp.Views.Dialogs
                             }
                             catch (Exception e)
                             {
-                                LogService.WriteLog(LoggingLevel.Warning, "Get WinUI 3 version failed.", e);
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(OnLoaded), 1, e);
                                 dependencyInformationList.Add(new ContentLinkInfo()
                                 {
                                     DisplayText = WinUI3VersionString,
@@ -128,7 +129,7 @@ namespace GetStoreApp.Views.Dialogs
                             }
                             catch (Exception e)
                             {
-                                LogService.WriteLog(LoggingLevel.Warning, "Get WinUI 2 version failed.", e);
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(OnLoaded), 2, e);
                                 dependencyInformationList.Add(new ContentLinkInfo()
                                 {
                                     DisplayText = WinUI2VersionString,
@@ -152,7 +153,7 @@ namespace GetStoreApp.Views.Dialogs
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Warning, "Get Windows UI version failed.", e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(OnLoaded), 3, e);
                         dependencyInformationList.Add(new ContentLinkInfo()
                         {
                             DisplayText = WindowsUIVersionString,
@@ -173,7 +174,7 @@ namespace GetStoreApp.Views.Dialogs
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Warning, "Get WebView2 SDK version failed.", e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(OnLoaded), 4, e);
                         dependencyInformationList.Add(new ContentLinkInfo()
                         {
                             DisplayText = WebView2SDKVersionString,

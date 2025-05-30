@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Extensions.Backdrop;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
@@ -74,8 +75,7 @@ namespace GetStoreApp.Helpers.Store
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : httpRequestResult.ResponseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, "Cookie request successfully.", responseDict);
-
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetCookieAsync), 1, responseDict);
                     string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                     if (!string.IsNullOrEmpty(responseString))
@@ -93,7 +93,7 @@ namespace GetStoreApp.Helpers.Store
                 // 请求失败
                 else
                 {
-                    LogService.WriteLog(LoggingLevel.Information, "Cookie request failed", httpRequestResult.ExtendedError);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetCookieAsync), 2, httpRequestResult.ExtendedError);
                 }
 
                 httpRequestResult.Dispose();
@@ -101,7 +101,7 @@ namespace GetStoreApp.Helpers.Store
             // 其他异常
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Warning, "Cookie request unknown exception", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetCookieAsync), 3, e);
             }
 
             return cookieResult;
@@ -137,8 +137,7 @@ namespace GetStoreApp.Helpers.Store
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : httpRequestResult.ResponseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, "App Information request successfully.", responseDict);
-
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppInformationAsync), 1, responseDict);
                     string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                     if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
@@ -171,7 +170,7 @@ namespace GetStoreApp.Helpers.Store
                 // 请求失败
                 else
                 {
-                    LogService.WriteLog(LoggingLevel.Information, "App Information request failed", httpRequestResult.ExtendedError);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppInformationAsync), 2, httpRequestResult.ExtendedError);
                 }
 
                 httpRequestResult.Dispose();
@@ -179,7 +178,7 @@ namespace GetStoreApp.Helpers.Store
             // 其他异常
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Warning, "App Information request unknown exception", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppInformationAsync), 3, e);
             }
 
             return ValueTuple.Create(requestResult, appInfo);
@@ -223,16 +222,14 @@ namespace GetStoreApp.Helpers.Store
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : httpRequestResult.ResponseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, "FileListXml request successfully.", responseDict);
-
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetFileListXmlAsync), 1, responseDict);
                     string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
-
                     fileListXmlResult = responseString.Replace("&lt;", "<").Replace("&gt;", ">");
                 }
                 // 请求失败
                 else
                 {
-                    LogService.WriteLog(LoggingLevel.Information, "FileListXml request failed", httpRequestResult.ExtendedError);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetFileListXmlAsync), 2, httpRequestResult.ExtendedError);
                 }
 
                 httpRequestResult.Dispose();
@@ -240,7 +237,7 @@ namespace GetStoreApp.Helpers.Store
             // 其他异常
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Warning, "FileListXml request unknown exception", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetFileListXmlAsync), 3, e);
             }
 
             return fileListXmlResult;
@@ -335,7 +332,7 @@ namespace GetStoreApp.Helpers.Store
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Information, "FileListXml parse failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxPackagesAsync), 1, e);
             }
 
             return appxPackagesList;
@@ -376,8 +373,7 @@ namespace GetStoreApp.Helpers.Store
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : httpRequestResult.ResponseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, "Appx Url request successfully.", responseDict);
-
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxUrlAsync), 1, responseDict);
                     string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                     if (!string.IsNullOrEmpty(responseString))
@@ -400,7 +396,7 @@ namespace GetStoreApp.Helpers.Store
                 // 请求失败
                 else
                 {
-                    LogService.WriteLog(LoggingLevel.Information, "Appx Url request failed", httpRequestResult.ExtendedError);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxUrlAsync), 2, httpRequestResult.ExtendedError);
                 }
 
                 httpRequestResult.Dispose();
@@ -408,7 +404,7 @@ namespace GetStoreApp.Helpers.Store
             // 其他异常
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Warning, "Appx Url request unknown exception", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxUrlAsync), 3, e);
             }
 
             return urlResult;
@@ -442,8 +438,7 @@ namespace GetStoreApp.Helpers.Store
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : httpRequestResult.ResponseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, "Non Appx Url request successfully.", responseDict);
-
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 1, responseDict);
                     string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                     if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
@@ -525,7 +520,7 @@ namespace GetStoreApp.Helpers.Store
                 // 请求失败
                 else
                 {
-                    LogService.WriteLog(LoggingLevel.Information, "Non Appx Url request failed", httpRequestResult.ExtendedError);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 2, httpRequestResult.ExtendedError);
                 }
 
                 httpRequestResult.Dispose();
@@ -533,7 +528,7 @@ namespace GetStoreApp.Helpers.Store
             // 其他异常
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Warning, "Non Appx Url request unknown exception", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 3, e);
             }
 
             return nonAppxPackagesList;
@@ -564,14 +559,13 @@ namespace GetStoreApp.Helpers.Store
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : httpRequestResult.ResponseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, "Non appx package file size request successfully.", responseDict);
-
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackageFileSizeAsync), 1, responseDict);
                     fileSizeResult = Convert.ToString(httpRequestResult.ResponseMessage.Content.Headers.ContentLength);
                 }
                 // 请求失败
                 else
                 {
-                    LogService.WriteLog(LoggingLevel.Information, "Non appx package file size request failed", httpRequestResult.ExtendedError);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackageFileSizeAsync), 2, httpRequestResult.ExtendedError);
                 }
 
                 httpRequestResult.Dispose();
@@ -580,7 +574,7 @@ namespace GetStoreApp.Helpers.Store
             // 其他异常
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Warning, "Non appx package file size request unknown exception", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackageFileSizeAsync), 3, e);
             }
 
             return fileSizeResult;

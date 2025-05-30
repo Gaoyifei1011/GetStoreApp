@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models;
+using GetStoreApp.Services.Download;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
@@ -210,7 +211,7 @@ namespace GetStoreApp.Services.Root
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Warning, "Redirect to main instance failed", e);
+                    LogService.WriteLog(LoggingLevel.Warning, nameof(GetStoreApp), nameof(DesktopLaunchService), nameof(InitializeLaunchAsync), 1, e);
                 }
                 finally
                 {

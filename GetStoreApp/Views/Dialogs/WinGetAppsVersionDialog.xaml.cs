@@ -26,7 +26,6 @@ namespace GetStoreApp.Views.Dialogs
         private readonly string WinGetAppsInstallOptionString = ResourceService.GetLocalized("Dialog/WinGetAppsInstallOption");
         private readonly string WinGetAppsRepairOptionString = ResourceService.GetLocalized("Dialog/WinGetAppsRepairOption");
         private readonly string WinGetAppsUpgradeOptionString = ResourceService.GetLocalized("Dialog/WinGetAppsUpgradeOption");
-        private readonly string NavigationFailedString = ResourceService.GetLocalized("Dialog/NavigationFailed");
 
         private WinGetPage WinGetPage { get; }
 
@@ -151,7 +150,7 @@ namespace GetStoreApp.Views.Dialogs
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
             args.Handled = true;
-            LogService.WriteLog(LoggingLevel.Warning, string.Format(NavigationFailedString, args.SourcePageType.FullName), args.Exception);
+            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetAppsVersionDialog), nameof(OnNavigated), 1, args.Exception);
         }
 
         /// <summary>
@@ -181,7 +180,7 @@ namespace GetStoreApp.Views.Dialogs
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, string.Format(NavigationFailedString, navigationPageType.FullName), e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetAppsVersionDialog), nameof(NavigateTo), 1, e);
             }
         }
 

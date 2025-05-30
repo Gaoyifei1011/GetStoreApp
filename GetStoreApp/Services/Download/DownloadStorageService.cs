@@ -46,7 +46,7 @@ namespace GetStoreApp.Services.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Initialize download storage container failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(Initialize), 1, e);
             }
 
             DownloadStorageSemaphoreSlim?.Release();
@@ -81,7 +81,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Add download storage container data failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(AddDownloadData), 1, e);
                 }
 
                 DownloadStorageSemaphoreSlim?.Release();
@@ -106,7 +106,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Delete download storage container data failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(DeleteDownloadData), 1, e);
                 }
 
                 DownloadStorageSemaphoreSlim?.Release();
@@ -140,7 +140,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Get download storage container data with status failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(GetDownloadData), 1, e);
                 }
             }
 
@@ -166,7 +166,7 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Clear download storage container data failed", e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(ClearDownloadData), 1, e);
                 }
 
                 DownloadStorageSemaphoreSlim?.Release();
