@@ -245,6 +245,7 @@
   "SupportedArchitecture": "支持的架构：",
   "TargetDeviceFamily": "应用包设备系列信息",
   "TargetDeviceName": "目标设备名称",
+  "Title": "应用安装器",
   "Unknown": "[未知]",
   "UnsupportedFileType": "不支持所选的文件类型",
   "UnsupportedMultiFiles": "不支持拖入多个文件",
@@ -253,6 +254,5 @@
   "VersionInformation": "版本信息",
   "ViewErrorInformation": "查看错误信息",
   "WaitInstall": "等待安装中...",
-  "Title": "应用安装器",
   "Yes": "是"
 }

@@ -245,6 +245,7 @@
   "SupportedArchitecture": "Supported architecture: ",
   "TargetDeviceFamily": "Package device family information",
   "TargetDeviceName": "Target device name",
+  "Title": "Package installer",
   "Unknown": "[Unknown]",
   "UnsupportedFileType": "The selected file type is not supported",
   "UnsupportedMultiFiles": "Dragging multiple files is not supported",
@@ -253,6 +254,5 @@
   "VersionInformation": "Version information",
   "ViewErrorInformation": "Viewing error information",
   "WaitInstall": "Waiting for installing",
-  "Title": "Package installer",
   "Yes": "Yes"
 }
