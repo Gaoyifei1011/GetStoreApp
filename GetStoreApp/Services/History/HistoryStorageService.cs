@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Models;
+using GetStoreApp.Services.Download;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
@@ -80,8 +81,8 @@ namespace GetStoreApp.Services.History
                                 CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
                                 HistoryKey = Convert.ToString(compositeValue[HistoryKey]),
                                 HistoryAppName = Convert.ToString(compositeValue[HistoryAppName]),
-                                HistoryType = new KeyValuePair<string, string>(type.InternalName, type.DisplayName),
-                                HistoryChannel = new KeyValuePair<string, string>(channel.InternalName, channel.DisplayName),
+                                HistoryType = type.InternalName,
+                                HistoryChannel = channel.InternalName,
                                 HistoryLink = Convert.ToString(compositeValue[HistoryLink])
                             });
                         }
@@ -90,7 +91,7 @@ namespace GetStoreApp.Services.History
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Get query links history data failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(GetQueryLinksData), 1, e);
             }
             finally
             {
@@ -132,7 +133,7 @@ namespace GetStoreApp.Services.History
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Get query links history data failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(GetSearchStoreData), 1, e);
             }
             finally
             {
@@ -160,8 +161,8 @@ namespace GetStoreApp.Services.History
                         [CreateTimeStamp] = queryLinksHistoryList[index - 1].CreateTimeStamp,
                         [HistoryKey] = queryLinksHistoryList[index - 1].HistoryKey,
                         [HistoryAppName] = queryLinksHistoryList[index - 1].HistoryAppName,
-                        [HistoryType] = queryLinksHistoryList[index - 1].HistoryType.Key,
-                        [HistoryChannel] = queryLinksHistoryList[index - 1].HistoryChannel.Key,
+                        [HistoryType] = queryLinksHistoryList[index - 1].HistoryType,
+                        [HistoryChannel] = queryLinksHistoryList[index - 1].HistoryChannel,
                         [HistoryLink] = queryLinksHistoryList[index - 1].HistoryLink
                     };
 
@@ -171,7 +172,7 @@ namespace GetStoreApp.Services.History
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Save query links history data failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(SaveQueryLinksData), 1, e);
             }
             finally
             {
@@ -205,7 +206,7 @@ namespace GetStoreApp.Services.History
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Save search store history data failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(SaveSearchStoreData), 1, e);
             }
             finally
             {
@@ -230,7 +231,7 @@ namespace GetStoreApp.Services.History
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, "Clear history record failed", e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(ClearData), 1, e);
                 return false;
             }
             finally

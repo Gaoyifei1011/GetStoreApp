@@ -394,6 +394,8 @@ namespace GetStoreApp.Views.Pages
 
                 foreach (HistoryModel historyItem in queryLinksHistoryList)
                 {
+                    historyItem.HistoryTypeName = TypeList.Find(item => string.Equals(item.InternalName, historyItem.HistoryType, StringComparison.OrdinalIgnoreCase)) is TypeModel typeItem ? typeItem.DisplayName : string.Empty;
+                    historyItem.HistoryChannelName = ChannelList.Find(item => string.Equals(item.InternalName, historyItem.HistoryChannel, StringComparison.OrdinalIgnoreCase)) is ChannelModel channelItem ? channelItem.DisplayName : string.Empty;
                     HistoryCollection.Add(historyItem);
                 }
             }
@@ -419,7 +421,7 @@ namespace GetStoreApp.Views.Pages
             {
                 string copyContent = await Task.Run(() =>
                 {
-                    return string.Join('\t', new string[] { history.HistoryAppName, history.HistoryType.Value, history.HistoryChannel.Value, history.HistoryLink });
+                    return string.Join('\t', new string[] { history.HistoryAppName, history.HistoryTypeName, history.HistoryChannelName, history.HistoryLink });
                 });
 
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
@@ -434,8 +436,8 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is HistoryModel history && MainWindow.Current.GetFrameContent() is StorePage storePage)
             {
-                SelectedType = TypeList.Find(item => string.Equals(item.InternalName, history.HistoryType.Key, StringComparison.OrdinalIgnoreCase));
-                SelectedChannel = ChannelList.Find(item => string.Equals(item.InternalName, history.HistoryChannel.Key, StringComparison.OrdinalIgnoreCase));
+                SelectedType = TypeList.Find(item => string.Equals(item.InternalName, history.HistoryType, StringComparison.OrdinalIgnoreCase));
+                SelectedChannel = ChannelList.Find(item => string.Equals(item.InternalName, history.HistoryChannel, StringComparison.OrdinalIgnoreCase));
                 LinkText = history.HistoryLink;
             }
         }
@@ -475,7 +477,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "Query download scheduler list failed", e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadExecuteRequested), 1, e);
                     }
                     finally
                     {
@@ -513,7 +515,7 @@ namespace GetStoreApp.Views.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Error, "Delete existed file failed", e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadExecuteRequested), 2, e);
                         }
 
                         DownloadSchedulerService.CreateDownload(queryLinks.FileLink, downloadFilePath);
@@ -917,7 +919,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "Query download scheduler list failed", e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadSelectedClicked), 1, e);
                     }
                     finally
                     {
@@ -957,7 +959,7 @@ namespace GetStoreApp.Views.Pages
                             }
                             catch (Exception e)
                             {
-                                LogService.WriteLog(LoggingLevel.Error, "Delete existed file failed", e);
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadSelectedClicked), 2, e);
                                 continue;
                             }
 
@@ -1375,8 +1377,10 @@ namespace GetStoreApp.Views.Pages
                         CreateTimeStamp = timeStamp,
                         HistoryKey = historyKey,
                         HistoryAppName = appName,
-                        HistoryType = new KeyValuePair<string, string>(TypeList[selectedType].InternalName, TypeList[selectedType].DisplayName),
-                        HistoryChannel = new KeyValuePair<string, string>(ChannelList[selectedChannel].InternalName, ChannelList[selectedChannel].DisplayName),
+                        HistoryType = TypeList[selectedType].InternalName,
+                        HistoryTypeName = TypeList[selectedType].DisplayName,
+                        HistoryChannel = ChannelList[selectedChannel].InternalName,
+                        HistoryChannelName = ChannelList[selectedChannel].DisplayName,
                         HistoryLink = link
                     };
 

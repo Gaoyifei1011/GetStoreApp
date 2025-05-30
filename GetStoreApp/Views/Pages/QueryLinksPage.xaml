@@ -378,7 +378,7 @@
                                             Margin="10,0,0,0"
                                             VerticalAlignment="Center"
                                             FontSize="14"
-                                            Text="{x:Bind HistoryType.Value}"
+                                            Text="{x:Bind HistoryTypeName}"
                                             TextAlignment="Left"
                                             TextTrimming="CharacterEllipsis"
                                             TextWrapping="NoWrap">
@@ -386,7 +386,7 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     MaxWidth="9999"
-                                                    Content="{x:Bind HistoryType.Value}"
+                                                    Content="{x:Bind HistoryTypeName}"
                                                     Visibility="{Binding ElementName=HistoryTypeText, Path=IsTextTrimmed, Mode=OneWay}" />
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
@@ -398,7 +398,7 @@
                                             Margin="10,0,0,0"
                                             VerticalAlignment="Center"
                                             FontSize="14"
-                                            Text="{x:Bind HistoryChannel.Value}"
+                                            Text="{x:Bind HistoryChannelName}"
                                             TextAlignment="Left"
                                             TextTrimming="CharacterEllipsis"
                                             TextWrapping="NoWrap">
@@ -406,7 +406,7 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     MaxWidth="9999"
-                                                    Content="{x:Bind HistoryChannel.Value}"
+                                                    Content="{x:Bind HistoryChannelName}"
                                                     Visibility="{Binding ElementName=HistoryChannelText, Path=IsTextTrimmed, Mode=OneWay}" />
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
