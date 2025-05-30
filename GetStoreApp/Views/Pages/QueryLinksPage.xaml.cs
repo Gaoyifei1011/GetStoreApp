@@ -35,6 +35,7 @@ namespace GetStoreApp.Views.Pages
 
     public sealed partial class QueryLinksPage : Page, INotifyPropertyChanged
     {
+        private readonly string FastString = ResourceService.GetLocalized("QueryLinks/Fast");
         private readonly string QueryedAppDescriptionString = ResourceService.GetLocalized("QueryLinks/QueryedAppDescription");
         private readonly string QueryedAppNameString = ResourceService.GetLocalized("QueryLinks/QueryedAppName");
         private readonly string QueryedAppPublisherString = ResourceService.GetLocalized("QueryLinks/QueryedAppPublisher");
@@ -43,7 +44,12 @@ namespace GetStoreApp.Views.Pages
         private readonly string InfoBarGettingString = ResourceService.GetLocalized("QueryLinks/InfoBarGetting");
         private readonly string InfoBarSuccessString = ResourceService.GetLocalized("QueryLinks/InfoBarSuccess");
         private readonly string InfoBarWarningString = ResourceService.GetLocalized("QueryLinks/InfoBarWarning");
+        private readonly string ProductIDString = ResourceService.GetLocalized("QueryLinks/ProductID");
+        private readonly string RetailString = ResourceService.GetLocalized("QueryLinks/Retail");
+        private readonly string RPString = ResourceService.GetLocalized("QueryLinks/RP");
         private readonly string SampleTitleString = ResourceService.GetLocalized("QueryLinks/SampleTitle");
+        private readonly string SlowString = ResourceService.GetLocalized("QueryLinks/Slow");
+        private readonly string URLString = ResourceService.GetLocalized("QueryLinks/URL");
         private readonly string WelcomeString = ResourceService.GetLocalized("QueryLinks/Welcome");
         private readonly Lock queryLinksLock = new();
 
@@ -260,11 +266,11 @@ namespace GetStoreApp.Views.Pages
 
         private List<string> SampleLinkList { get; } = ["https://apps.microsoft.com/store/detail/9WZDNCRFJBMP", "9WZDNCRFJBMP",];
 
+        public List<TypeModel> TypeList { get; } = [];
+
+        public List<ChannelModel> ChannelList { get; } = [];
+
         private List<InfoBarModel> InfoBarList { get; } = [];
-
-        public List<TypeModel> TypeList { get; } = ResourceService.TypeList;
-
-        public List<ChannelModel> ChannelList { get; } = ResourceService.ChannelList;
 
         private ObservableCollection<HistoryModel> HistoryCollection { get; } = [];
 
@@ -276,6 +282,45 @@ namespace GetStoreApp.Views.Pages
         {
             InitializeComponent();
             StateInfoText = WelcomeString;
+
+            TypeList.Add(new TypeModel
+            {
+                DisplayName = URLString,
+                InternalName = "url",
+                ShortName = "url"
+            });
+            TypeList.Add(new TypeModel
+            {
+                DisplayName = ProductIDString,
+                InternalName = "ProductId",
+                ShortName = "pid"
+            });
+
+            ChannelList.Add(new ChannelModel
+            {
+                DisplayName = FastString,
+                InternalName = "WIF",
+                ShortName = "wif"
+            });
+            ChannelList.Add(new ChannelModel
+            {
+                DisplayName = SlowString,
+                InternalName = "WIS",
+                ShortName = "wis"
+            });
+            ChannelList.Add(new ChannelModel
+            {
+                DisplayName = RPString,
+                InternalName = "RP",
+                ShortName = "rp"
+            });
+            ChannelList.Add(new ChannelModel
+            {
+                DisplayName = RetailString,
+                InternalName = "Retail",
+                ShortName = "rt"
+            });
+
             SelectedType = TypeList[0];
             SelectedChannel = ChannelList[3];
             LinkText = string.Empty;

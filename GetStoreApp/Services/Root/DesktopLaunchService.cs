@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Models;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,20 @@ namespace GetStoreApp.Services.Root
     {
         private static bool isLaunched = false;
         private static AppInstance currentInstance;
+
+        private static List<TypeModel> TypeList { get; } =
+        [
+            new TypeModel { InternalName = "url", ShortName = "url" },
+            new TypeModel { InternalName = "ProductId", ShortName = "pid" }
+        ];
+
+        private static List<ChannelModel> ChannelList { get; } =
+        [
+            new ChannelModel { InternalName = "WIF", ShortName = "wif" },
+            new ChannelModel { InternalName = "WIS", ShortName = "wis" },
+            new ChannelModel { InternalName = "RP", ShortName = "rp" },
+            new ChannelModel { InternalName = "Retail", ShortName = "rt" }
+        ];
 
         /// <summary>
         /// 处理桌面应用启动的方式
@@ -113,8 +128,8 @@ namespace GetStoreApp.Services.Root
                         int channelNameParameterIndex = argumentsList.FindIndex(item => string.Equals(item, "-c", StringComparison.OrdinalIgnoreCase) || string.Equals(item, "--channel", StringComparison.OrdinalIgnoreCase));
                         int linkParameterIndex = argumentsList.FindIndex(item => string.Equals(item, "-l", StringComparison.OrdinalIgnoreCase) || string.Equals(item, "--link", StringComparison.OrdinalIgnoreCase));
 
-                        int typeNameIndex = typeNameParameterIndex is -1 ? -1 : ResourceService.TypeList.FindIndex(item => string.Equals(item.ShortName, argumentsList[typeNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
-                        int channelNameIndex = channelNameParameterIndex is -1 ? -1 : ResourceService.ChannelList.FindIndex(item => string.Equals(item.ShortName, argumentsList[channelNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
+                        int typeNameIndex = typeNameParameterIndex is -1 ? -1 : TypeList.FindIndex(item => string.Equals(item.ShortName, argumentsList[typeNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
+                        int channelNameIndex = channelNameParameterIndex is -1 ? -1 : ChannelList.FindIndex(item => string.Equals(item.ShortName, argumentsList[channelNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
                         string link = linkParameterIndex is -1 ? null : argumentsList[linkParameterIndex + 1];
 
                         dataList.Add("Console");
