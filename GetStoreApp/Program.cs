@@ -184,7 +184,6 @@ namespace GetStoreApp
             LanguageService.InitializeLanguage();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
             ResultService.Initialize();
-            ResourceService.LocalizeReosurce();
             StoreRegionService.InitializeStoreRegion();
             LinkFilterService.InitializeLinkFilter();
             QueryLinksModeService.InitializeQueryLinksMode();
