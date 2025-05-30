@@ -1,6 +1,5 @@
-{
+﻿{
   "AppInstaller": "App installer file",
-  "Fast": "Fast",
   "InstallerAppDescription": "App installer",
   "InstallerAppDisplayName": "App installer",
   "InstallerAppShortDisplayName": "App installer",
@@ -12,11 +11,6 @@
   "PackageBundle": "Windows app package bundle",
   "PackageDisplayName": "GetStoreApp",
   "PinnerProtocolName": "Pinner auxiliary program",
-  "ProductID": "ProductID",
-  "Retail": "Retail",
-  "RP": "Release Preview",
-  "Slow": "Slow",
-  "SystemBackdropControllerInitializeFailed": "The app's sytstem backdrop controller failed to initialize",
-  "URL": "URL(Link)",
+  "PublisherDisplayName": "高怡飞",
   "WebBrowserProtocolName": "Web Browser"
 }

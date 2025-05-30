@@ -17,7 +17,7 @@
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
-    <PublisherDisplayName>高怡飞</PublisherDisplayName>
+    <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

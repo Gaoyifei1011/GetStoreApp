@@ -1,6 +1,5 @@
 {
   "AppInstaller": "应用安装程序文件",
-  "Fast": "快速",
   "InstallerAppDescription": "应用安装器",
   "InstallerAppDisplayName": "应用安装器",
   "InstallerAppShortDisplayName": "应用安装器",
@@ -12,11 +11,6 @@
   "PackageBundle": "Windows 应用捆绑包",
   "PackageDisplayName": "获取商店应用",
   "PinnerProtocolName": "固定辅助程序",
-  "ProductID": "产品 ID",
-  "Retail": "正式版",
-  "RP": "发布预览",
-  "Slow": "慢速",
-  "SystemBackdropControllerInitializeFailed": "应用的背景色控制器初始化失败",
-  "URL": "URL（链接）",
+  "PublisherDisplayName": "高怡飞",
   "WebBrowserProtocolName": "网页浏览器"
 }
