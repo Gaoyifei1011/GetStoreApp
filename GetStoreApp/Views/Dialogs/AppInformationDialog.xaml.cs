@@ -95,7 +95,7 @@ namespace GetStoreApp.Views.Dialogs
                                 dependencyInformationList.Add(new ContentLinkInfo()
                                 {
                                     DisplayText = WinUI3VersionString,
-                                    SecondaryText = (winUI3FileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()).ToString()
+                                    SecondaryText = Convert.ToString((winUI3FileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()))
                                 });
                             }
                             catch (Exception e)
@@ -104,7 +104,7 @@ namespace GetStoreApp.Views.Dialogs
                                 dependencyInformationList.Add(new ContentLinkInfo()
                                 {
                                     DisplayText = WinUI3VersionString,
-                                    SecondaryText = new Version().ToString()
+                                    SecondaryText = Convert.ToString(new Version())
                                 });
                             }
                             break;
@@ -123,7 +123,7 @@ namespace GetStoreApp.Views.Dialogs
                                 dependencyInformationList.Add(new ContentLinkInfo()
                                 {
                                     DisplayText = WinUI2VersionString,
-                                    SecondaryText = (winUI2FileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()).ToString()
+                                    SecondaryText = Convert.ToString((winUI2FileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()))
                                 });
                             }
                             catch (Exception e)
@@ -132,7 +132,7 @@ namespace GetStoreApp.Views.Dialogs
                                 dependencyInformationList.Add(new ContentLinkInfo()
                                 {
                                     DisplayText = WinUI2VersionString,
-                                    SecondaryText = new Version().ToString()
+                                    SecondaryText = Convert.ToString(new Version())
                                 });
                             }
                             break;
@@ -147,7 +147,7 @@ namespace GetStoreApp.Views.Dialogs
                         dependencyInformationList.Add(new ContentLinkInfo()
                         {
                             DisplayText = WindowsUIVersionString,
-                            SecondaryText = (windowsUIFileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()).ToString()
+                            SecondaryText = Convert.ToString((windowsUIFileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()))
                         });
                     }
                     catch (Exception e)
@@ -156,7 +156,7 @@ namespace GetStoreApp.Views.Dialogs
                         dependencyInformationList.Add(new ContentLinkInfo()
                         {
                             DisplayText = WindowsUIVersionString,
-                            SecondaryText = new Version().ToString()
+                            SecondaryText = Convert.ToString(new Version())
                         });
                     }
 
@@ -168,7 +168,7 @@ namespace GetStoreApp.Views.Dialogs
                         dependencyInformationList.Add(new ContentLinkInfo()
                         {
                             DisplayText = WebView2SDKVersionString,
-                            SecondaryText = (webView2CoreFileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()).ToString()
+                            SecondaryText = Convert.ToString((webView2CoreFileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()))
                         });
                     }
                     catch (Exception e)
@@ -177,7 +177,7 @@ namespace GetStoreApp.Views.Dialogs
                         dependencyInformationList.Add(new ContentLinkInfo()
                         {
                             DisplayText = WebView2SDKVersionString,
-                            SecondaryText = new Version().ToString()
+                            SecondaryText = Convert.ToString(new Version())
                         });
                     }
 
@@ -185,7 +185,7 @@ namespace GetStoreApp.Views.Dialogs
                     dependencyInformationList.Add(new ContentLinkInfo()
                     {
                         DisplayText = DoNetVersionString,
-                        SecondaryText = Environment.Version.ToString()
+                        SecondaryText = Convert.ToString(Environment.Version)
                     });
 
                     return dependencyInformationList;

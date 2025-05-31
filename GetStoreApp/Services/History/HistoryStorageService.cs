@@ -71,7 +71,7 @@ namespace GetStoreApp.Services.History
                 {
                     for (int index = 1; index <= 3; index++)
                     {
-                        if (queryLinksContainer.Values.TryGetValue(QueryLinks + index.ToString(), out object value) && value is ApplicationDataCompositeValue compositeValue)
+                        if (queryLinksContainer.Values.TryGetValue(QueryLinks + Convert.ToString(index), out object value) && value is ApplicationDataCompositeValue compositeValue)
                         {
                             TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
                             ChannelModel channel = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
@@ -114,7 +114,7 @@ namespace GetStoreApp.Services.History
             {
                 for (int index = 1; index <= 3; index++)
                 {
-                    if (searchStoreContainer.Values.TryGetValue(SearchStore + index.ToString(), out object value))
+                    if (searchStoreContainer.Values.TryGetValue(SearchStore + Convert.ToString(index), out object value))
                     {
                         if (value is ApplicationDataCompositeValue compositeValue)
                         {
@@ -166,7 +166,7 @@ namespace GetStoreApp.Services.History
                         [HistoryLink] = queryLinksHistoryList[index - 1].HistoryLink
                     };
 
-                    string queryLinksKey = QueryLinks + index.ToString();
+                    string queryLinksKey = QueryLinks + Convert.ToString(index);
                     queryLinksContainer.Values[queryLinksKey] = compositeValue;
                 }
             }
@@ -200,7 +200,7 @@ namespace GetStoreApp.Services.History
                         [HistoryContent] = searchStoreHistoryList[index - 1].HistoryContent
                     };
 
-                    string searchStoreKey = SearchStore + index.ToString();
+                    string searchStoreKey = SearchStore + Convert.ToString(index);
                     searchStoreContainer.Values[searchStoreKey] = compositeValue;
                 }
             }

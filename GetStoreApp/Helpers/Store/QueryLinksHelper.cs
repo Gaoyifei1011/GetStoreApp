@@ -69,9 +69,9 @@ namespace GetStoreApp.Helpers.Store
                 {
                     Dictionary<string, string> responseDict = new()
                     {
-                        { "Status code", httpRequestResult.ResponseMessage.StatusCode.ToString() },
-                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : httpRequestResult.ResponseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : httpRequestResult.ResponseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                        { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
+                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
+                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
                     LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetCookieAsync), 1, responseDict);
@@ -131,9 +131,9 @@ namespace GetStoreApp.Helpers.Store
                     requestResult = true;
                     Dictionary<string, string> responseDict = new()
                     {
-                        { "Status code", httpRequestResult.ResponseMessage.StatusCode.ToString() },
-                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : httpRequestResult.ResponseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : httpRequestResult.ResponseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                        { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
+                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
+                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
                     LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppInformationAsync), 1, responseDict);
@@ -216,9 +216,9 @@ namespace GetStoreApp.Helpers.Store
                 {
                     Dictionary<string, string> responseDict = new()
                     {
-                        { "Status code", httpRequestResult.ResponseMessage.StatusCode.ToString() },
-                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : httpRequestResult.ResponseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : httpRequestResult.ResponseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                        { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
+                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
+                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
                     LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetFileListXmlAsync), 1, responseDict);
@@ -367,9 +367,9 @@ namespace GetStoreApp.Helpers.Store
                 {
                     Dictionary<string, string> responseDict = new()
                     {
-                        { "Status code", httpRequestResult.ResponseMessage.StatusCode.ToString() },
-                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : httpRequestResult.ResponseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : httpRequestResult.ResponseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                        { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
+                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
+                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
                     LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxUrlAsync), 1, responseDict);
@@ -432,9 +432,9 @@ namespace GetStoreApp.Helpers.Store
                 {
                     Dictionary<string, string> responseDict = new()
                     {
-                        { "Status code", httpRequestResult.ResponseMessage.StatusCode.ToString() },
-                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : httpRequestResult.ResponseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : httpRequestResult.ResponseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                        { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
+                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
+                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
                     LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 1, responseDict);
@@ -553,9 +553,9 @@ namespace GetStoreApp.Helpers.Store
                 {
                     Dictionary<string, string> responseDict = new()
                     {
-                        { "Status code", httpRequestResult.ResponseMessage.StatusCode.ToString() },
-                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : httpRequestResult.ResponseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : httpRequestResult.ResponseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                        { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
+                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
+                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
                     LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackageFileSizeAsync), 1, responseDict);

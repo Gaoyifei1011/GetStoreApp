@@ -1343,7 +1343,7 @@ namespace GetStoreAppInstaller.Views.Pages
                                 DependencyName = Path.GetFileName(pickFileResult.Path),
                                 DependencyVersion = dependencyAppInformation.Version is Version version ? version : new Version(),
                                 DependencyPublisher = string.IsNullOrEmpty(dependencyAppInformation.PublisherDisplayName) ? UnknownString : dependencyAppInformation.PublisherDisplayName,
-                                DependencyFullName = string.IsNullOrEmpty(dependencyAppInformation.PackageFullName) ? GuidHelper.CreateNewGuid().ToString() : dependencyAppInformation.PackageFullName,
+                                DependencyFullName = string.IsNullOrEmpty(dependencyAppInformation.PackageFullName) ? Convert.ToString(GuidHelper.CreateNewGuid()) : dependencyAppInformation.PackageFullName,
                                 DependencyPath = pickFileResult.Path
                             });
                         }
@@ -2401,7 +2401,7 @@ namespace GetStoreAppInstaller.Views.Pages
 
                         if (!isBundle)
                         {
-                            manifestInformation.ProcessorArchitecture = architecture.ToString();
+                            manifestInformation.ProcessorArchitecture = Convert.ToString(architecture);
                         }
 
                         manifestInformation.PackageFamilyName = packageFamilyName;
@@ -2882,7 +2882,7 @@ namespace GetStoreAppInstaller.Views.Pages
 
             if (applicationDict.ContainsKey(ProcessorArchitecture.X86))
             {
-                architecture = ProcessorArchitecture.X86.ToString();
+                architecture = Convert.ToString(ProcessorArchitecture.X86);
             }
 
             if (applicationDict.ContainsKey(ProcessorArchitecture.X64))
@@ -2892,7 +2892,7 @@ namespace GetStoreAppInstaller.Views.Pages
                     architecture += " | ";
                 }
 
-                architecture += ProcessorArchitecture.X64.ToString();
+                architecture += Convert.ToString(ProcessorArchitecture.X64);
             }
 
             if (applicationDict.ContainsKey(ProcessorArchitecture.Arm))
@@ -2902,7 +2902,7 @@ namespace GetStoreAppInstaller.Views.Pages
                     architecture += " | ";
                 }
 
-                architecture += ProcessorArchitecture.Arm.ToString();
+                architecture += Convert.ToString(ProcessorArchitecture.Arm);
             }
 
             if (applicationDict.ContainsKey(ProcessorArchitecture.Arm64))
@@ -2912,7 +2912,7 @@ namespace GetStoreAppInstaller.Views.Pages
                     architecture += " | ";
                 }
 
-                architecture += ProcessorArchitecture.Arm64.ToString();
+                architecture += Convert.ToString(ProcessorArchitecture.Arm64);
             }
 
             if (applicationDict.ContainsKey(ProcessorArchitecture.Neutral))
@@ -2922,7 +2922,7 @@ namespace GetStoreAppInstaller.Views.Pages
                     architecture += " | ";
                 }
 
-                architecture += ProcessorArchitecture.Neutral.ToString();
+                architecture += Convert.ToString(ProcessorArchitecture.Neutral);
             }
 
             if (string.IsNullOrEmpty(architecture))

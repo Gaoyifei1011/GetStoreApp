@@ -170,7 +170,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    int dwRmStatus = RstrtmgrLibrary.RmStartSession(out uint dwSessionHandle, 0, GuidHelper.Empty.ToString());
+                    int dwRmStatus = RstrtmgrLibrary.RmStartSession(out uint dwSessionHandle, 0, Convert.ToString(GuidHelper.Empty));
 
                     if (dwRmStatus is 0)
                     {

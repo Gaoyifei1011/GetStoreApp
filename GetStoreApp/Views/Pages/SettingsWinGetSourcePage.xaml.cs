@@ -507,7 +507,7 @@ namespace GetStoreApp.Views.Pages
                         },
                         AdditionalPackageCatalogArguments = string.IsNullOrEmpty(packageCatalogInformation.AdditionalPackageCatalogArguments) ? NoneString : packageCatalogInformation.AdditionalPackageCatalogArguments,
                         AuthenticationAccount = string.IsNullOrEmpty(packageCatalogInformation.AuthenticationAccount) ? NoneString : packageCatalogInformation.AuthenticationAccount,
-                        PackageCatalogBackgroundUpdateInterval = packageCatalogInformation.PackageCatalogBackgroundUpdateInterval.ToString(),
+                        PackageCatalogBackgroundUpdateInterval = Convert.ToString(packageCatalogInformation.PackageCatalogBackgroundUpdateInterval),
                         IsInternal = true,
                         PredefinedPackageCatalog = predefinedPackageCatalog
                     };
@@ -571,7 +571,7 @@ namespace GetStoreApp.Views.Pages
                         },
                         AdditionalPackageCatalogArguments = string.IsNullOrEmpty(packageCatalogInformation.AdditionalPackageCatalogArguments) ? NoneString : packageCatalogInformation.AdditionalPackageCatalogArguments,
                         AuthenticationAccount = string.IsNullOrEmpty(packageCatalogInformation.AuthenticationAccount) ? NoneString : packageCatalogInformation.AuthenticationAccount,
-                        PackageCatalogBackgroundUpdateInterval = packageCatalogInformation.PackageCatalogBackgroundUpdateInterval.ToString(),
+                        PackageCatalogBackgroundUpdateInterval = Convert.ToString(packageCatalogInformation.PackageCatalogBackgroundUpdateInterval),
                         IsInternal = false
                     };
 

@@ -669,7 +669,7 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        appInformation.Architecture = string.IsNullOrEmpty(package.Package.Id.Architecture.ToString()) ? UnknownString : package.Package.Id.Architecture.ToString();
+                        appInformation.Architecture = string.IsNullOrEmpty(Convert.ToString(package.Package.Id.Architecture)) ? UnknownString : Convert.ToString(package.Package.Id.Architecture);
                     }
                     catch (Exception e)
                     {
@@ -677,7 +677,7 @@ namespace GetStoreApp.Views.Pages
                         appInformation.Architecture = UnknownString;
                     }
 
-                    appInformation.SignatureKind = ResourceService.GetLocalized(string.Format(SignatureString, package.SignatureKind.ToString()));
+                    appInformation.SignatureKind = ResourceService.GetLocalized(string.Format(SignatureString, Convert.ToString(package.SignatureKind)));
 
                     try
                     {
@@ -785,7 +785,7 @@ namespace GetStoreApp.Views.Pages
                                     {
                                         DisplayName = dependcies[index].DisplayName,
                                         PublisherDisplayName = dependcies[index].PublisherDisplayName,
-                                        Version = new Version(dependcies[index].Id.Version.Major, dependcies[index].Id.Version.Minor, dependcies[index].Id.Version.Build, dependcies[index].Id.Version.Revision).ToString(),
+                                        Version = Convert.ToString(new Version(dependcies[index].Id.Version.Major, dependcies[index].Id.Version.Minor, dependcies[index].Id.Version.Build, dependcies[index].Id.Version.Revision)),
                                         Package = dependcies[index]
                                     });
                                 }
@@ -1854,12 +1854,12 @@ namespace GetStoreApp.Views.Pages
         {
             try
             {
-                return new Version(package.Id.Version.Major, package.Id.Version.Minor, package.Id.Version.Build, package.Id.Version.Revision).ToString();
+                return Convert.ToString(new Version(package.Id.Version.Major, package.Id.Version.Minor, package.Id.Version.Build, package.Id.Version.Revision));
             }
             catch (Exception e)
             {
                 ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                return new Version().ToString();
+                return Convert.ToString(new Version());
             }
         }
 

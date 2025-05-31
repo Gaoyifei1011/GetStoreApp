@@ -47,7 +47,7 @@ namespace GetStoreAppInstaller.Services.Root
                     };
 
                     exceptionSession.AddLoggingChannel(exceptionChannel);
-                    exceptionFields.AddString("LogLevel", logLevel.ToString());
+                    exceptionFields.AddString("LogLevel", Convert.ToString(logLevel));
 
                     foreach (KeyValuePair<string, string> logInformationItem in loggingInformationDict)
                     {
@@ -98,7 +98,7 @@ namespace GetStoreAppInstaller.Services.Root
                     };
 
                     exceptionSession.AddLoggingChannel(exceptionChannel);
-                    exceptionFields.AddString("LogLevel", logLevel.ToString());
+                    exceptionFields.AddString("LogLevel", Convert.ToString(logLevel));
                     exceptionFields.AddString("HelpLink", string.IsNullOrEmpty(exception.HelpLink) ? unknown : exception.HelpLink.Replace('\r', ' ').Replace('\n', ' '));
                     exceptionFields.AddString("Message", string.IsNullOrEmpty(exception.Message) ? unknown : exception.Message.Replace('\r', ' ').Replace('\n', ' '));
                     exceptionFields.AddString("HResult", Convert.ToString(exception.HResult));

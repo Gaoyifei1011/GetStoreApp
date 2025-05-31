@@ -118,10 +118,10 @@ namespace GetStoreApp.Services.Settings
             }
             else
             {
-                CultureInfo savedCultureInfo = CultureInfo.GetCultureInfo(language.ToString());
+                CultureInfo savedCultureInfo = CultureInfo.GetCultureInfo(Convert.ToString(language));
                 FlowDirection = savedCultureInfo.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
                 User32Library.SetProcessDefaultLayout(Convert.ToUInt32(savedCultureInfo.TextInfo.IsRightToLeft));
-                KeyValuePair<string, string> languageKeyValue = LanguageList.Find(item => language.ToString().Contains(item.Key, StringComparison.OrdinalIgnoreCase));
+                KeyValuePair<string, string> languageKeyValue = LanguageList.Find(item => Convert.ToString(language).Contains(item.Key, StringComparison.OrdinalIgnoreCase));
                 return string.IsNullOrEmpty(languageKeyValue.Key) ? DefaultAppLanguage : languageKeyValue;
             }
         }

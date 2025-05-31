@@ -54,13 +54,13 @@ namespace GetStoreApp.Helpers.Store
                 if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
                 {
                     request.RequestId = 0;
-                    request.RequestStatusCode = httpRequestResult.ResponseMessage.StatusCode.ToString();
+                    request.RequestStatusCode = Convert.ToString(httpRequestResult.ResponseMessage.StatusCode);
                     request.RequestContent = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                     Dictionary<string, string> responseDict = new()
                     {
-                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : WhiteSpaceRegex.Replace(httpRequestResult.ResponseMessage.Headers.ToString(), string.Empty) },
-                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : WhiteSpaceRegex.Replace(httpRequestResult.ResponseMessage.RequestMessage.ToString(), string.Empty) }
+                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : WhiteSpaceRegex.Replace(Convert.ToString(httpRequestResult.ResponseMessage.Headers), string.Empty) },
+                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : WhiteSpaceRegex.Replace(Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage), string.Empty) }
                     };
 
                     LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(HtmlRequestHelper), nameof(HttpRequestAsync), 1, responseDict);

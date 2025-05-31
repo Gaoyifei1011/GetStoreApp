@@ -39,7 +39,7 @@ namespace GetStoreApp.Services.Root
         {
             List<string> resultList = [];
 
-            if (Equals(resultContainer.Values[nameof(StorageDataKind)], dataKind.ToString()) && resultContainer.Containers.TryGetValue(parameter, out ApplicationDataContainer parameterContainer))
+            if (Equals(resultContainer.Values[nameof(StorageDataKind)], Convert.ToString(dataKind)) && resultContainer.Containers.TryGetValue(parameter, out ApplicationDataContainer parameterContainer))
             {
                 for (int index = 0; index < parameterContainer.Values.Count; index++)
                 {
@@ -58,7 +58,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static void SaveResult(StorageDataKind dataKind, List<string> dataList)
         {
-            resultContainer.Values[nameof(StorageDataKind)] = dataKind.ToString();
+            resultContainer.Values[nameof(StorageDataKind)] = Convert.ToString(dataKind);
 
             if (dataKind is StorageDataKind.None)
             {

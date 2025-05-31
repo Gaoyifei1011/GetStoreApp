@@ -283,13 +283,13 @@
                                 Grid.Row="2"
                                 TextTrimming="CharacterEllipsis">
                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageVersion')}" />
-                                <Run Text="{x:Bind Version.ToString(), Mode=OneWay}" />
+                                <Run Text="{x:Bind system:Convert.ToString(Version), Mode=OneWay}" />
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip MaxWidth="9999" Visibility="{Binding ElementName=PackageVersionText, Path=IsTextTrimmed, Mode=OneWay}">
                                         <TextBlock Grid.Row="1">
                                             <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageVersion')}" />
-                                            <Run Text="{x:Bind Version.ToString(), Mode=OneWay}" />
+                                            <Run Text="{x:Bind system:Convert.ToString(Version), Mode=OneWay}" />
                                         </TextBlock>
                                     </ToolTip>
                                 </ToolTipService.ToolTip>
@@ -1488,7 +1488,7 @@
                                                                 Grid.Column="1"
                                                                 Margin="6,0,0,0"
                                                                 VerticalAlignment="Center"
-                                                                Text="{x:Bind MinVersion.ToString()}"
+                                                                Text="{x:Bind system:Convert.ToString(MinVersion)}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
                                                                 TextWrapping="NoWrap">
@@ -1496,7 +1496,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
-                                                                        Content="{x:Bind MinVersion.ToString()}"
+                                                                        Content="{x:Bind system:Convert.ToString(MinVersion)}"
                                                                         Visibility="{Binding ElementName=MinVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>
@@ -1506,7 +1506,7 @@
                                                                 Grid.Column="2"
                                                                 Margin="6,0,0,0"
                                                                 VerticalAlignment="Center"
-                                                                Text="{x:Bind MaxVersionTested.ToString()}"
+                                                                Text="{x:Bind system:Convert.ToString(MaxVersionTested)}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
                                                                 TextWrapping="NoWrap">
@@ -1514,7 +1514,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
-                                                                        Content="{x:Bind MaxVersionTested.ToString()}"
+                                                                        Content="{x:Bind system:Convert.ToString(MaxVersionTested)}"
                                                                         Visibility="{Binding ElementName=MaxVersionTestedText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>
@@ -1719,7 +1719,7 @@
                                                                 Grid.Column="2"
                                                                 Margin="6,0,0,0"
                                                                 VerticalAlignment="Center"
-                                                                Text="{x:Bind DependencyMinVersion.ToString()}"
+                                                                Text="{x:Bind system:Convert.ToString(DependencyMinVersion)}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
                                                                 TextWrapping="NoWrap">
@@ -1727,7 +1727,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
-                                                                        Content="{x:Bind DependencyMinVersion.ToString()}"
+                                                                        Content="{x:Bind system:Convert.ToString(DependencyMinVersion)}"
                                                                         Visibility="{Binding ElementName=PackageDependencyMinVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>
@@ -1925,7 +1925,7 @@
                                                                 Grid.Column="2"
                                                                 Margin="6,0,0,0"
                                                                 VerticalAlignment="Center"
-                                                                Text="{x:Bind DependencyVersion.ToString()}"
+                                                                Text="{x:Bind system:Convert.ToString(DependencyVersion)}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
                                                                 TextWrapping="NoWrap">
@@ -1933,7 +1933,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
-                                                                        Content="{x:Bind DependencyMinVersion.ToString()}"
+                                                                        Content="{x:Bind system:Convert.ToString(DependencyVersion)}"
                                                                         Visibility="{Binding ElementName=AppInstallerDependencyVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>

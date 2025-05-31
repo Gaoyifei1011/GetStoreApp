@@ -98,7 +98,7 @@ namespace GetStoreApp.Services.Download
                         downloadJob.SetNotifyFlags(BG_JOB_NOTIFICATION_TYPE.BG_NOTIFY_FILE_RANGES_TRANSFERRED | BG_JOB_NOTIFICATION_TYPE.BG_NOTIFY_JOB_ERROR | BG_JOB_NOTIFICATION_TYPE.BG_NOTIFY_JOB_MODIFICATION);
                         BackgroundCopyCallback backgroundCopyCallback = new()
                         {
-                            DownloadID = downloadID.ToString()
+                            DownloadID = Convert.ToString(downloadID)
                         };
                         backgroundCopyCallback.StatusChanged += OnStatusChanged;
                         downloadJob.SetNotifyInterface(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(new UnknownWrapper(backgroundCopyCallback).WrappedObject, CreateComInterfaceFlags.None));

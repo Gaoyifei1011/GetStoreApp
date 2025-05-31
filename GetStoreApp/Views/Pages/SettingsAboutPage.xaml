@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:roothelper="using:GetStoreApp.Helpers.Root"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
+    xmlns:system="using:System"
     xmlns:text="using:Windows.UI.Text"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
@@ -50,7 +51,7 @@
                     Spacing="5">
 
                     <TextBlock FontSize="22" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/AppName')}" />
-                    <TextBlock FontSize="15" Text="{x:Bind roothelper:InfoHelper.AppVersion.ToString()}" />
+                    <TextBlock FontSize="15" Text="{x:Bind system:Convert.ToString(roothelper:InfoHelper.AppVersion)}" />
                     <StackPanel Orientation="Horizontal">
 
                         <TextBlock

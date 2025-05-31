@@ -1,4 +1,5 @@
 ﻿using GetStoreAppWebView.Extensions.DataType.Enums;
+using System;
 using System.Collections.Generic;
 using Windows.Storage;
 
@@ -28,7 +29,7 @@ namespace GetStoreAppWebView.Services.Root
         /// </summary>
         public static void SaveResult(StorageDataKind dataKind, List<string> dataList)
         {
-            resultContainer.Values[nameof(StorageDataKind)] = dataKind.ToString();
+            resultContainer.Values[nameof(StorageDataKind)] = Convert.ToString(dataKind);
 
             if (dataKind is StorageDataKind.None)
             {

@@ -437,9 +437,9 @@ namespace GetStoreAppWebView.Views.Pages
         {
             Dictionary<string, string> logInformationDict = new()
             {
-                { "Process failed kind", args.ProcessFailedKind.ToString() },
-                { "Reason", args.Reason.ToString() },
-                { "Exit code", args.ExitCode.ToString() },
+                { "Process failed kind", Convert.ToString(args.ProcessFailedKind) },
+                { "Reason", Convert.ToString(args.Reason) },
+                { "Exit code", Convert.ToString(args.ExitCode) },
                 { "Process description", args.ProcessDescription },
             };
 

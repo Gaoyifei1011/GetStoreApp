@@ -34,8 +34,8 @@ namespace GetStoreApp.Services.Root
             currentResourceContext = resourceManager.CreateResourceContext();
             resourceMap = resourceManager.MainResourceMap;
 
-            defaultResourceContext.QualifierValues["Language"] = _defaultAppLanguage.Key.ToString();
-            currentResourceContext.QualifierValues["Language"] = _currentAppLanguage.Key.ToString();
+            defaultResourceContext.QualifierValues["Language"] = Convert.ToString(_defaultAppLanguage.Key);
+            currentResourceContext.QualifierValues["Language"] = Convert.ToString(_currentAppLanguage.Key);
 
             isInitialized = true;
         }
