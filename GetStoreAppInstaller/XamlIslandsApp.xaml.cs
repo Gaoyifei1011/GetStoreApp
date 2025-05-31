@@ -1,5 +1,4 @@
 ﻿using GetStoreAppInstaller.Services.Root;
-using GetStoreAppInstaller.Views.Pages;
 using System;
 using Windows.Foundation.Diagnostics;
 using Windows.UI.Xaml;

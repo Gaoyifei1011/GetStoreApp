@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Extensions.Backdrop;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;

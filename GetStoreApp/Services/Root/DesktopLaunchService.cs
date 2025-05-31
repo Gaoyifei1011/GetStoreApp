@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models;
-using GetStoreApp.Services.Download;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
