@@ -33,7 +33,6 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class WinGetPage : Page, INotifyPropertyChanged
     {
-        private readonly string NavigationFailedString = ResourceService.GetLocalized("WinGet/NavigationFailed");
         private readonly string PackageDownloadFailedContent1String = ResourceService.GetLocalized("WinGet/PackageDownloadFailedContent1");
         private readonly string PackageDownloadFailedContent2String = ResourceService.GetLocalized("WinGet/PackageDownloadFailedContent2");
         private readonly string PackageDownloadFailedContent3String = ResourceService.GetLocalized("WinGet/PackageDownloadFailedContent3");

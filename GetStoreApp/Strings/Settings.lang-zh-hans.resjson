@@ -29,6 +29,5 @@
   "Settings": "设置",
   "OtherOption": "其他选项说明",
   "OtherOptionDescription": "部分选项的功能启用与相应的系统设置选项有关，请确保对应的选项处于正常启用状态",
-  "WinGetSourceConfiguration": "WinGet 数据源配置",
-  "NavigationFailed": "页面{0}导航失败"
+  "WinGetSourceConfiguration": "WinGet 数据源配置"
 }

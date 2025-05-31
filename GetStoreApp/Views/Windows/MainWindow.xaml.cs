@@ -55,7 +55,6 @@ namespace GetStoreApp.Views.Windows
     public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
         private readonly string CheckNetWorkConnectionString = ResourceService.GetLocalized("Window/CheckNetWorkConnection");
-        private readonly string NavigationFailedString = ResourceService.GetLocalized("Window/NavigationFailed");
         private readonly string NetworkError1String = ResourceService.GetLocalized("Window/NetworkError1");
         private readonly string NetworkError2String = ResourceService.GetLocalized("Window/NetworkError2");
         private readonly string RunningAdministratorString = ResourceService.GetLocalized("Window/RunningAdministrator");

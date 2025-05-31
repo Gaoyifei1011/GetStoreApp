@@ -24,7 +24,6 @@ namespace GetStoreApp.Views.Pages
     public sealed partial class SettingsPage : Page
     {
         private readonly string SettingsString = ResourceService.GetLocalized("Settings/Settings");
-        private readonly string NavigationFailedString = ResourceService.GetLocalized("Settings/NavigationFailed");
         private readonly string WinGetSourceConfigurationString = ResourceService.GetLocalized("Settings/WinGetSourceConfiguration");
         private AppNaviagtionArgs settingNavigationArgs = AppNaviagtionArgs.None;
 

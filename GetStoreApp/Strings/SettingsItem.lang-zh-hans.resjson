@@ -4,7 +4,6 @@
   "AppInstaller": "应用安装器",
   "Download": "下载管理",
   "General": "通用",
-  "NavigationFailed": "页面{0}导航失败",
   "PinToDesktop": "固定到桌面",
   "PinToDesktopToolTip": "将应用固定到桌面",
   "PinToStartScreen": "固定到”开始“屏幕",

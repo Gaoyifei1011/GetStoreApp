@@ -3,6 +3,9 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
 
+// 抑制 CA1822 警告
+#pragma warning disable CA1822
+
 namespace GetStoreApp.Views.Dialogs
 {
     /// <summary>

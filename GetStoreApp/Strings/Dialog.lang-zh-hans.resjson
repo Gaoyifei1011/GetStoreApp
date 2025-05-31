@@ -51,7 +51,6 @@
   "LoadingFileInformation": "正在加载文件信息中，请稍候...",
   "LocalFile": "本地创建的文件",
   "LocalFileCleanError": "本地创建的文件在清理的过程中发生了错误，请检查本地创建的文件的访问权限。",
-  "NavigationFailed": "页面{0}导航失败",
   "No": "否",
   "OK": "确定",
   "OpenDownloadPage": "打开下载页面",

@@ -13,7 +13,6 @@
   "LaunchParameters": "启动参数",
   "LaunchParametersDescription": "桌面应用程序现在已经开始支持参数运行了，具体的使用方法请点击下方的参数说明",
   "MicrosoftStore": "微软商店",
-  "NavigationFailed": "页面{0}导航失败",
   "PaidApps": "付费应用",
   "PaidAppsDescription": "微软在 Windows 系统中对付费应用的运行进行了限制，没有购买的付费应用是不能通过离线安装包安装后正常运行的。如果您有已经购买的付费应用，请从 Microsoft Store 中下载。",
   "QueryLinks": "查询链接",

@@ -17,7 +17,6 @@
   "InstallQueued": "Install waiting",
   "InstallVersion": "Install version: ",
   "LearnWinGet": "Learn WinGet package",
-  "NavigationFailed": "Page {0} navigation failed",
   "OpenPackageFolder": "Open package folder",
   "PackageDownloadFailedContent1": "App download failed.",
   "PackageDownloadFailedContent2": "Error reason: {0}",

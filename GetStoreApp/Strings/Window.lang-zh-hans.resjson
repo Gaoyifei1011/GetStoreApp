@@ -7,7 +7,6 @@
   "Maximize": "最大化",
   "Minimize": "最小化",
   "Move": "移动",
-  "NavigationFailed": "页面{0}导航失败",
   "NetworkError1": "应用处于离线模式",
   "NetworkError2": "网络连接异常，应用处于离线模式，请检查您的网络连接",
   "PinToStartScreen": "固定到“开始”屏幕",

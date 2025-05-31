@@ -13,7 +13,6 @@
   "LaunchParameters": "Launch parameters",
   "LaunchParametersDescription": "The desktop application now supports parameter operation, please click the parameter description below for specific usage",
   "MicrosoftStore": "Microsoft Store",
-  "NavigationFailed": "Page {0} navigation failed",
   "PaidApps": "Paid apps",
   "PaidAppsDescription": "Microsoft has restricted the operation of paid apps in Windows systems, and paid apps that have not been purchased cannot function properly after installation through offline installation packages. If you have a paid app that you've already purchased, download it from the Microsoft Store.",
   "QueryLinks": "Query links",

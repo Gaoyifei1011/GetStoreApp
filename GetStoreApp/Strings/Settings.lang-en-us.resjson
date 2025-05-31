@@ -29,6 +29,5 @@
   "Settings": "Settings",
   "OtherOption": "Other options instruction",
   "OtherOptionDescription": "Some options are enabled in relation to the corresponding system settings options, so please make sure that the corresponding options are properly enabled",
-  "WinGetSourceConfiguration": "WinGet data source configuration",
-  "NavigationFailed": "Page {0} navigation failed"
+  "WinGetSourceConfiguration": "WinGet data source configuration"
 }

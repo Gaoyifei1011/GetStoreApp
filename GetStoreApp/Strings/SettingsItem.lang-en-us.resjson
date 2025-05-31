@@ -4,7 +4,6 @@
   "AppInstaller": "App installer",
   "Download": "Download management",
   "General": "General",
-  "NavigationFailed": "Page {0} navigation failed",
   "PinToDesktop": "Pin to desktop",
   "PinToDesktopToolTip": "Pin the app to desktop",
   "PinToStartScreen": "Pin to start screen",

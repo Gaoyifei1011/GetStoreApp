@@ -51,7 +51,6 @@
   "LoadingFileInformation": "Loading file information, please wait...",
   "LocalFile": "Locally created files",
   "LocalFileCleanError": "An error occurred during the clearing of the locally created file. Check the access permission of the locally created file.",
-  "NavigationFailed": "Page {0} navigation failed",
   "No": "No",
   "OK": "OK",
   "OpenDownloadPage": "Open download page",

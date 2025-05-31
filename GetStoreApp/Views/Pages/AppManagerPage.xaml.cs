@@ -19,7 +19,6 @@ namespace GetStoreApp.Views.Pages
     {
         private readonly string AppListString = ResourceService.GetLocalized("AppManager/AppList");
         private readonly string AppInformationString = ResourceService.GetLocalized("AppManager/AppInformation");
-        private readonly string NavigationFailedString = ResourceService.GetLocalized("AppManager/NavigationFailed");
 
         public List<Type> PageList { get; } = [typeof(AppListPage), typeof(AppInformationPage)];
 

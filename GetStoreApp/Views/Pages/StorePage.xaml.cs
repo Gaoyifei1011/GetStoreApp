@@ -25,8 +25,6 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class StorePage : Page, INotifyPropertyChanged
     {
-        private readonly string NavigationFailedString = ResourceService.GetLocalized("Store/NavigationFailed");
-
         private SelectorBarItem _selectedItem;
 
         public SelectorBarItem SelectedItem

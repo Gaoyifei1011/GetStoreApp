@@ -7,7 +7,6 @@
   "Maximize": "Maximize",
   "Minimize": "Minimize",
   "Move": "Move",
-  "NavigationFailed": "Page {0} navigation failed",
   "NetworkError1": "The network connection is abnormal",
   "NetworkError2": "The network connection is abnormal, please check your network connection.",
   "PinToStartScreen": "Pin to start screen",

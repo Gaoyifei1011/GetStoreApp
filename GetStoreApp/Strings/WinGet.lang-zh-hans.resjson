@@ -17,7 +17,6 @@
   "InstallQueued": "安装等待中",
   "InstallVersion": "安装版本：",
   "LearnWinGet": "了解 WinGet 程序包",
-  "NavigationFailed": "页面{0}导航失败",
   "OpenPackageFolder": "打开应用包目录",
   "PackageDownloadFailedContent1": "应用下载失败。",
   "PackageDownloadFailedContent2": "错误原因：{0}",
