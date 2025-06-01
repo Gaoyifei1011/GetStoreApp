@@ -1,7 +1,6 @@
 ﻿{
   "Cancel": "取消",
   "CancelToolTip": "退出多选模式",
-  "Copy": "复制",
   "CopyInformation": "复制信息",
   "CopyInformationToolTip": "复制信息到剪贴板",
   "CopyLink": "复制链接",

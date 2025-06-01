@@ -31,5 +31,6 @@
   "UpgradableNotSelectSource": "No data source is selected, please select a data source in the settings",
   "Upgrade": "Upgrade",
   "UseInstruction": "Use instruction",
-  "UseInstructionToolTip": "Click to learn how to use the WinGet package"
+  "UseInstructionToolTip": "Click to learn how to use the WinGet package",
+  "ViewVersionInfo": "View version information"
 }

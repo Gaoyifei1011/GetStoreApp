@@ -31,5 +31,6 @@
   "UpgradableNotSelectSource": "未选择数据源，请在设置中选择一个数据源",
   "Upgrade": "更新",
   "UseInstruction": "使用说明",
-  "UseInstructionToolTip": "点击了解WinGet 程序包的具体使用方法"
+  "UseInstructionToolTip": "点击了解WinGet 程序包的具体使用方法",
+  "ViewVersionInfo": "查看版本信息"
 }

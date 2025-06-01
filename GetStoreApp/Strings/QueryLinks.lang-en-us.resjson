@@ -1,7 +1,6 @@
 ﻿{
   "Cancel": "Cancel",
   "CancelToolTip": "Exit multi-select mode",
-  "Copy": "Copy",
   "CopyInformation": "Copy info",
   "CopyInformationToolTip": "Copy the information to the clipboard",
   "CopyLink": "Copy link",

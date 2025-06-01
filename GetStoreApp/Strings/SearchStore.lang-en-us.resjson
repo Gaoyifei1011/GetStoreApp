@@ -1,4 +1,6 @@
 ﻿{
+  "CopyLink": "Copy link",
+  "CopyLinkToolTip": "Copy the app link to the clipboard",
   "FillIn": "Fill in",
   "HistoryContent": "Input content",
   "HistoryEmpty": "The history is empty",

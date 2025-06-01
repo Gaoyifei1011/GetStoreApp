@@ -1,4 +1,6 @@
 ﻿{
+  "CopyLink": "复制链接",
+  "CopyLinkToolTip": "复制应用链接到剪贴板",
   "FillIn": "填入",
   "HistoryContent": "输入的内容",
   "HistoryEmpty": "历史记录空空如也",
