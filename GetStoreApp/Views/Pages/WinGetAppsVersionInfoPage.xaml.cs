@@ -18,6 +18,7 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
+using Windows.UI.Text;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -493,6 +494,8 @@ namespace GetStoreApp.Views.Pages
 
         private ObservableCollection<string> TagCollection { get; } = [];
 
+        private ObservableCollection<ContentLinkInfo> DocumentionCollection { get; } = [];
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public WinGetAppsVersionInfoPage()
@@ -842,6 +845,7 @@ namespace GetStoreApp.Views.Pages
             {
                 DisplayName = string.IsNullOrEmpty(catalogPackageMetadata.PackageName) ? UnknownString : catalogPackageMetadata.PackageName;
                 Description = string.IsNullOrEmpty(catalogPackageMetadata.Description) ? UnknownString : catalogPackageMetadata.Description;
+
                 Version = string.IsNullOrEmpty(packageVersionInfo.Version) ? UnknownString : packageVersionInfo.Version;
                 if (Uri.TryCreate(catalogPackageMetadata.PackageUrl, new UriCreationOptions(), out Uri packageLinkUri))
                 {
@@ -949,6 +953,16 @@ namespace GetStoreApp.Views.Pages
                 foreach (string tag in catalogPackageMetadata.Tags)
                 {
                     TagCollection.Add(tag);
+                }
+
+                DocumentionCollection.Clear();
+                for (int index = 0; index < catalogPackageMetadata.Documentations.Count; index++)
+                {
+                    Documentation documentation = catalogPackageMetadata.Documentations[index];
+                    if (Uri.TryCreate(documentation.DocumentUrl, new UriCreationOptions(), out Uri documentUrlUri))
+                    {
+                        DocumentionCollection.Add(new ContentLinkInfo() { DisplayText = documentation.DocumentLabel, Uri = documentUrlUri });
+                    }
                 }
             }
         }

@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
+    xmlns:text="using:Windows.UI.Text"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -167,6 +168,9 @@
                     <Grid Margin="10,5,10,30">
 
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -542,6 +546,53 @@
                                                 Visibility="{Binding ElementName=TagText, Path=IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </Grid>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+
+                        <MenuFlyoutSeparator
+                            Grid.Row="7"
+                            Margin="2,10"
+                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DocumentionCollection.Count), Mode=OneWay}" />
+
+                        <TextBlock
+                            Grid.Row="8"
+                            Margin="0,0,0,5"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Documention')}"
+                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DocumentionCollection.Count), Mode=OneWay}" />
+
+                        <GridView
+                            Grid.Row="9"
+                            ItemsSource="{x:Bind DocumentionCollection}"
+                            SelectionMode="None"
+                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DocumentionCollection.Count), Mode=OneWay}">
+
+                            <GridView.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Margin" Value="0" />
+                                    <Setter Property="MinHeight" Value="0" />
+                                    <Setter Property="Padding" Value="0" />
+                                </Style>
+                            </GridView.ItemContainerStyle>
+
+                            <ItemsControl.ItemContainerTransitions>
+                                <TransitionCollection />
+                            </ItemsControl.ItemContainerTransitions>
+
+                            <GridView.ItemTemplate>
+                                <DataTemplate x:DataType="text:ContentLinkInfo">
+                                    <TextBlock
+                                        Margin="0,0,10,0"
+                                        Padding="0,8"
+                                        HorizontalAlignment="Center"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
+                                            <Run Text="{x:Bind DisplayText}" />
+                                        </Hyperlink>
+                                    </TextBlock>
                                 </DataTemplate>
                             </GridView.ItemTemplate>
                         </GridView>
