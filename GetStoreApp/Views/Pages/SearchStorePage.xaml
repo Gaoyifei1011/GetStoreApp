@@ -19,6 +19,7 @@
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="Transparent" />
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="Transparent" />
 
+        <XamlUICommand x:Name="CopyLinkCommand" ExecuteRequested="{x:Bind OnCopyLinkExecuteRequested}" />
         <XamlUICommand x:Name="FillinCommand" ExecuteRequested="{x:Bind OnFillinExecuteRequested}" />
         <XamlUICommand x:Name="OpenLinkCommand" ExecuteRequested="{x:Bind OnOpenLinkExecuteRequested}" />
         <XamlUICommand x:Name="QueryLinksCommand" ExecuteRequested="{x:Bind OnQueryLinksExecuteRequested}" />
@@ -131,6 +132,7 @@
 
                         <TextBlock
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/Recent')}" />
                     </Grid>
@@ -139,7 +141,7 @@
                 <Expander.Content>
                     <StackPanel>
                         <TextBlock
-                            HorizontalAlignment="Stretch"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/HistoryEmpty')}"
                             TextAlignment="Center"
@@ -152,13 +154,14 @@
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="85" />
+                                <ColumnDefinition Width="80" />
                             </Grid.ColumnDefinitions>
 
                             <TextBlock
                                 x:Name="HistoryContentHeaderText"
                                 Grid.Column="0"
                                 Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/HistoryContent')}"
                                 TextTrimming="CharacterEllipsis"
@@ -176,7 +179,7 @@
                                 Grid.Column="1"
                                 Grid.ColumnSpan="2"
                                 Margin="10,0,0,0"
-                                HorizontalAlignment="Stretch"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/Options')}"
                                 ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/OptionsToolTip')}" />
@@ -210,7 +213,7 @@
                                         BorderThickness="0,1,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="85" />
+                                            <ColumnDefinition Width="80" />
                                         </Grid.ColumnDefinitions>
 
                                         <TextBlock
@@ -218,8 +221,10 @@
                                             Grid.Column="0"
                                             MinWidth="50"
                                             Margin="10,0,0,0"
+                                            HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
                                             FontSize="14"
+                                            IsTextSelectionEnabled="True"
                                             Text="{x:Bind HistoryContent}"
                                             TextAlignment="Left"
                                             TextTrimming="CharacterEllipsis"
@@ -284,6 +289,7 @@
 
                     <TextBlock
                         Grid.Column="1"
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/SearchResult')}" />
 
@@ -291,12 +297,14 @@
 
                     <TextBlock
                         Grid.Column="3"
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind x:String.Format(SearchStoreCountInfo, SearchStoreCollection.Count), Mode=OneWay}"
                         Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(SearchStoreCollection.Count), Mode=OneWay}" />
 
                     <TextBlock
                         Grid.Column="3"
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/SearchStoreEmpty')}"
                         Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(SearchStoreCollection.Count), Mode=OneWay}" />
@@ -322,6 +330,7 @@
                         x:Name="StoreAppNameHeaderText"
                         Grid.Column="0"
                         Margin="10,0,0,0"
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppName')}"
                         TextTrimming="CharacterEllipsis"
@@ -339,6 +348,7 @@
                         x:Name="StoreAppPublisherHeaderText"
                         Grid.Column="1"
                         Margin="10,0,0,0"
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppPublisher')}"
                         TextTrimming="CharacterEllipsis"
@@ -356,6 +366,7 @@
                         x:Name="StoreAppLinkHeaderText"
                         Grid.Column="2"
                         Margin="10,0,0,0"
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppLink')}"
                         TextTrimming="CharacterEllipsis"
@@ -373,7 +384,7 @@
                         Grid.Column="3"
                         Grid.ColumnSpan="3"
                         Margin="0,0,10,0"
-                        HorizontalAlignment="Stretch"
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/Options')}"
                         ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/OptionsToolTip')}" />
@@ -418,8 +429,10 @@
                                     Grid.Column="0"
                                     MinWidth="50"
                                     Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="14"
+                                    IsTextSelectionEnabled="True"
                                     Text="{x:Bind StoreAppName}"
                                     TextAlignment="Left"
                                     TextTrimming="CharacterEllipsis"
@@ -438,8 +451,10 @@
                                     Grid.Column="1"
                                     MinWidth="50"
                                     Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="14"
+                                    IsTextSelectionEnabled="True"
                                     Text="{x:Bind StoreAppPublisher}"
                                     TextAlignment="Left"
                                     TextTrimming="CharacterEllipsis"
@@ -475,6 +490,21 @@
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
                                     </HyperlinkButton.Content>
+
+                                    <HyperlinkButton.ContextFlyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem
+                                                Command="{StaticResource CopyLinkCommand}"
+                                                CommandParameter="{x:Bind StoreAppLink}"
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/CopyLink')}"
+                                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/CopyLinkToolTip')}">
+
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE8C8;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </HyperlinkButton.ContextFlyout>
                                 </HyperlinkButton>
 
                                 <HyperlinkButton

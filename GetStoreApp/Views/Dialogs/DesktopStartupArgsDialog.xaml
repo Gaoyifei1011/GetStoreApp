@@ -243,12 +243,16 @@
 
         <TextBlock
             Margin="0"
+            HorizontalAlignment="Left"
+            IsTextSelectionEnabled="True"
             Text="GetStoreApp.exe &quot;https://apps.microsoft.com/store/detail/9WZDNCRFJBMP&quot;"
             TextAlignment="Left"
             TextWrapping="Wrap" />
 
         <TextBlock
             Margin="0"
+            HorizontalAlignment="Left"
+            IsTextSelectionEnabled="True"
             Text="GetStoreApp.exe -t &quot;pid&quot; -c &quot;rt&quot; -l &quot;9WZDNCRFJBMP&quot;"
             TextAlignment="Justify"
             TextWrapping="Wrap" />

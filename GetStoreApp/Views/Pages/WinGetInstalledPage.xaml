@@ -54,6 +54,7 @@
 
             <TextBlock
                 Grid.Column="1"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/Operation')}" />
 
@@ -61,12 +62,14 @@
 
             <TextBlock
                 Grid.Column="3"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/InstalledAppsCountEmpty')}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(InstalledAppsCollection.Count), Mode=OneWay}" />
 
             <TextBlock
                 Grid.Column="3"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind x:String.Format(InstalledAppsCountInfoString, InstalledAppsCollection.Count), Mode=OneWay}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(InstalledAppsCollection.Count), Mode=OneWay}" />
@@ -371,6 +374,7 @@
                     <ProgressRing IsActive="True" IsEnabled="True" />
 
                     <TextBlock
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/LoadingInstalledApps')}"
                         TextAlignment="Center" />
@@ -378,6 +382,7 @@
 
                 <!--  搜索失败  -->
                 <TextBlock
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Text="{x:Bind InstalledFailedContent, Mode=OneWay}"
                     TextAlignment="Center"
@@ -385,6 +390,7 @@
 
                 <!--  搜索结果为空  -->
                 <TextBlock
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/InstalledAppsSearchEmptyDescription')}"
                     TextAlignment="Center"
@@ -433,27 +439,22 @@
 
                         <StackPanel
                             Grid.Column="0"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Orientation="Vertical">
 
                             <TextBlock
+                                HorizontalAlignment="Left"
+                                IsTextSelectionEnabled="True"
                                 Style="{StaticResource BodyTextBlockStyle}"
                                 Text="{x:Bind AppName}"
                                 TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip MaxWidth="9999">
-                                        <TextBlock>
-                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/AppName')}" />
-                                            <Run Text="{x:Bind AppName}" />
-                                        </TextBlock>
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
+                                TextWrapping="NoWrap" />
 
                             <TextBlock
+                                HorizontalAlignment="Left"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                IsTextSelectionEnabled="True"
                                 Style="{StaticResource CaptionTextBlockStyle}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap">
@@ -461,34 +462,40 @@
                                 <Run Text="{x:Bind AppPublisher}" />
                                 <Run Text=" | " />
                                 <Run Text="{x:Bind AppVersion}" />
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip MaxWidth="9999">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
-
-                                            <TextBlock Grid.Row="0">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/AppPublisher')}" />
-                                                <Run Text="{x:Bind AppPublisher}" />
-                                            </TextBlock>
-
-                                            <TextBlock Grid.Row="1">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/AppVersion')}" />
-                                                <Run Text="{x:Bind AppVersion}" />
-                                            </TextBlock>
-
-                                            <TextBlock Grid.Row="2">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/AppID')}" />
-                                                <Run Text="{x:Bind AppID}" />
-                                            </TextBlock>
-                                        </Grid>
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
                             </TextBlock>
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip MaxWidth="9999">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0">
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/AppName')}" />
+                                            <Run Text="{x:Bind AppName}" />
+                                        </TextBlock>
+
+                                        <TextBlock Grid.Row="1">
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/AppPublisher')}" />
+                                            <Run Text="{x:Bind AppPublisher}" />
+                                        </TextBlock>
+
+                                        <TextBlock Grid.Row="2">
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/AppVersion')}" />
+                                            <Run Text="{x:Bind AppVersion}" />
+                                        </TextBlock>
+
+                                        <TextBlock Grid.Row="3">
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/AppID')}" />
+                                            <Run Text="{x:Bind AppID}" />
+                                        </TextBlock>
+                                    </Grid>
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
                         </StackPanel>
 
                         <ProgressRing

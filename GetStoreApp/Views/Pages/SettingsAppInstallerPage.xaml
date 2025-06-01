@@ -51,10 +51,14 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/AllowUnsignedPackage')}" />
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/AllowUnsignedPackage')}" />
 
                     <TextBlock
                         x:Name="AllowUnsignedPackageDescription"
+                        HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/AllowUnsignedPackageDescription')}"
@@ -130,10 +134,14 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceAppShutdown')}" />
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceAppShutdown')}" />
 
                     <TextBlock
                         x:Name="ForceAppShutdownDescription"
+                        HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceAppShutdownDescription')}"
@@ -202,10 +210,14 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceTargetAppShutdown')}" />
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceTargetAppShutdown')}" />
 
                     <TextBlock
                         x:Name="ForceTargetAppShutdownDescription"
+                        HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceTargetAppShutdownDescription')}"
@@ -227,11 +239,13 @@
                     Orientation="Horizontal">
 
                     <TextBlock
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceTargetAppShutdownOffContent')}"
                         Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ForceTargetAppShutdownValue), Mode=OneWay}" />
 
                     <TextBlock
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstaller/ForceTargetAppShutdownOnContent')}"
                         Visibility="{x:Bind ForceTargetAppShutdownValue, Mode=OneWay}" />

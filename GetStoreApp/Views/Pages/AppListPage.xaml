@@ -62,18 +62,21 @@
 
             <TextBlock
                 Grid.Column="1"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/Operation')}" />
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
             <TextBlock
                 Grid.Column="3"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/PackageEmpty')}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(AppManagerCollection.Count), Mode=OneWay}" />
 
             <TextBlock
                 Grid.Column="3"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind x:String.Format(PackageCountInfoString, AppManagerCollection.Count), Mode=OneWay}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppManagerCollection.Count), Mode=OneWay}" />
@@ -327,6 +330,7 @@
                     <ProgressRing IsActive="True" IsEnabled="True" />
 
                     <TextBlock
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/LoadingApps')}"
                         TextAlignment="Center" />
@@ -334,6 +338,7 @@
 
                 <!--  加载失败（包含搜索结果为空）  -->
                 <TextBlock
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Text="{x:Bind AppManagerFailedContent, Mode=OneWay}"
                     TextAlignment="Center"
@@ -403,13 +408,17 @@
                                 Orientation="Vertical">
 
                                 <TextBlock
+                                    HorizontalAlignment="Left"
+                                    IsTextSelectionEnabled="True"
                                     Style="{StaticResource BodyTextBlockStyle}"
                                     Text="{x:Bind DisplayName}"
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap" />
 
                                 <TextBlock
+                                    HorizontalAlignment="Left"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    IsTextSelectionEnabled="True"
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap">

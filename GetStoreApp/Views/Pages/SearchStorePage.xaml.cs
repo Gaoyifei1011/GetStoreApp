@@ -3,6 +3,7 @@ using GetStoreApp.Helpers.Store;
 using GetStoreApp.Models;
 using GetStoreApp.Services.History;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -225,6 +226,18 @@ namespace GetStoreApp.Views.Pages
         #endregion 第一部分：重写父类事件
 
         #region 第二部分：XamlUICommand 命令调用时挂载的事件
+
+        /// <summary>
+        /// 复制指定应用的链接
+        /// </summary>
+        private async void OnCopyLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is string storeAppLink && !string.IsNullOrEmpty(storeAppLink))
+            {
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(storeAppLink);
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+            }
+        }
 
         /// <summary>
         /// 填入到文本框

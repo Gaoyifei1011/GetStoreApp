@@ -55,6 +55,7 @@
 
             <TextBlock
                 Grid.Column="1"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/Operation')}" />
 
@@ -62,12 +63,14 @@
 
             <TextBlock
                 Grid.Column="3"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/SearchedAppsCountEmpty')}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(SearchAppsCollection.Count), Mode=OneWay}" />
 
             <TextBlock
                 Grid.Column="3"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind x:String.Format(SearchedAppsCountInfoString, SearchAppsCollection.Count), Mode=OneWay}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(SearchAppsCollection.Count), Mode=OneWay}" />
@@ -319,6 +322,7 @@
             <Grid>
                 <!--  未搜索  -->
                 <TextBlock
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/NotSearch')}"
                     TextAlignment="Center"
@@ -336,6 +340,7 @@
                     <ProgressRing IsActive="True" IsEnabled="True" />
 
                     <TextBlock
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/SearchingApps')}"
                         TextAlignment="Center" />
@@ -343,6 +348,7 @@
 
                 <!--  搜索失败  -->
                 <TextBlock
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Text="{x:Bind SearchFailedContent, Mode=OneWay}"
                     TextAlignment="Center"
@@ -390,41 +396,47 @@
 
                         <StackPanel
                             Grid.Column="0"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Orientation="Vertical">
 
                             <TextBlock
+                                HorizontalAlignment="Left"
+                                IsTextSelectionEnabled="True"
                                 Style="{StaticResource BodyTextBlockStyle}"
                                 Text="{x:Bind AppName}"
                                 TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip MaxWidth="9999">
-                                        <TextBlock>
-                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/AppName')}" />
-                                            <Run Text="{x:Bind AppName}" />
-                                        </TextBlock>
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
+                                TextWrapping="NoWrap" />
 
                             <TextBlock
+                                HorizontalAlignment="Left"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                IsTextSelectionEnabled="True"
                                 Style="{StaticResource CaptionTextBlockStyle}"
                                 Text="{x:Bind AppID}"
                                 TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
+                                TextWrapping="NoWrap" />
 
-                                <ToolTipService.ToolTip>
-                                    <ToolTip MaxWidth="9999">
-                                        <TextBlock>
+                            <ToolTipService.ToolTip>
+                                <ToolTip MaxWidth="9999">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0">
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/AppName')}" />
+                                            <Run Text="{x:Bind AppName}" />
+                                        </TextBlock>
+
+                                        <TextBlock Grid.Row="1">
                                             <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/AppID')}" />
                                             <Run Text="{x:Bind AppID}" />
                                         </TextBlock>
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
+                                    </Grid>
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
                         </StackPanel>
 
                         <SplitButton

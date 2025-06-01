@@ -49,10 +49,14 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceConfiguration')}" />
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceConfiguration')}" />
 
                     <TextBlock
                         x:Name="WinGetSourceConfigurationDescription"
+                        HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceConfigurationDescription')}"
@@ -104,10 +108,14 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSettings')}" />
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSettings')}" />
 
                     <TextBlock
                         x:Name="WinGetSettingsDescription"
+                        HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSettingsDescription')}"

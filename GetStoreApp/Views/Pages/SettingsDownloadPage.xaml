@@ -51,9 +51,15 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/FileStoragePath')}" />
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/FileStoragePath')}" />
 
-                    <TextBlock TextTrimming="CharacterEllipsis" TextWrapping="NoWrap">
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
 
                         <Hyperlink Click="{x:Bind OnDownloadOpenFolderClicked}" UnderlineStyle="None">
                             <Run Text="{x:Bind DownloadFolder.Path, Mode=OneWay}" />
@@ -157,10 +163,14 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DoEngineMode')}" />
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DoEngineMode')}" />
 
                     <TextBlock
                         x:Name="DoEngineModeDescription"
+                        HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DoEngineModeDescription')}"
@@ -250,10 +260,14 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DeliveryOptimization')}" />
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DeliveryOptimization')}" />
 
                     <TextBlock
                         x:Name="DeliveryOptimizationDescription"
+                        HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DeliveryOptimizationDescription')}"
@@ -304,10 +318,14 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/Aria2Configuration')}" />
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/Aria2Configuration')}" />
 
                     <TextBlock
                         x:Name="Aria2ConfigurationDescription"
+                        HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/Aria2ConfigurationDescription')}"

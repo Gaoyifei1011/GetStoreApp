@@ -395,6 +395,7 @@
                                                     Grid.Column="0"
                                                     MinWidth="50"
                                                     Margin="0,0,5,0"
+                                                    HorizontalAlignment="Left"
                                                     VerticalAlignment="Center"
                                                     FontSize="14"
                                                     TextAlignment="Left"
@@ -437,6 +438,7 @@
 
                                                     <TextBlock
                                                         Grid.Column="0"
+                                                        HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
                                                         Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}"
@@ -455,6 +457,7 @@
                                                     <TextBlock
                                                         Grid.Column="1"
                                                         Margin="2,0,2,0"
+                                                        HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
                                                         Text="|"
@@ -463,6 +466,7 @@
 
                                                     <TextBlock
                                                         Grid.Column="2"
+                                                        HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
                                                         Text="{x:Bind DownloadedFileSize, Mode=OneWay}"
@@ -482,6 +486,7 @@
                                                     <TextBlock
                                                         Grid.Column="3"
                                                         Margin="2,0,2,0"
+                                                        HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
                                                         Text="|"
@@ -489,6 +494,7 @@
 
                                                     <TextBlock
                                                         Grid.Column="4"
+                                                        HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
                                                         Text="{x:Bind TotalFileSize, Mode=OneWay}"
@@ -514,16 +520,19 @@
 
                                                 <Grid Grid.Column="0" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}">
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadQueued')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Queued, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Downloading')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Downloading, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadFinished')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Finished, x:False), Mode=OneWay}" />
@@ -531,12 +540,14 @@
 
                                                 <TextBlock
                                                     Grid.Column="0"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Canceling')}"
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Cancel), Mode=OneWay}" />
 
                                                 <TextBlock
                                                     Grid.Column="0"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadFailed')}"
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}">
@@ -650,6 +661,7 @@
                                                     Grid.Column="0"
                                                     MinWidth="50"
                                                     Margin="0,0,5,0"
+                                                    HorizontalAlignment="Left"
                                                     VerticalAlignment="Center"
                                                     FontSize="14"
                                                     TextAlignment="Left"
@@ -692,6 +704,7 @@
 
                                                     <TextBlock
                                                         Grid.Column="0"
+                                                        HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
                                                         Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}"
@@ -710,6 +723,7 @@
                                                     <TextBlock
                                                         Grid.Column="1"
                                                         Margin="2,0,2,0"
+                                                        HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
                                                         Text="|"
@@ -717,6 +731,7 @@
 
                                                     <TextBlock
                                                         Grid.Column="2"
+                                                        HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
                                                         Text="{x:Bind DownloadedFileSize, Mode=OneWay}"
@@ -736,6 +751,7 @@
                                                     <TextBlock
                                                         Grid.Column="3"
                                                         Margin="2,0,2,0"
+                                                        HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
                                                         Text="|"
@@ -744,6 +760,7 @@
 
                                                     <TextBlock
                                                         Grid.Column="4"
+                                                        HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
                                                         Text="{x:Bind TotalFileSize, Mode=OneWay}"
@@ -769,26 +786,31 @@
 
                                                 <Grid Grid.Column="0" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}">
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/InstallQueued')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Queued, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Downloading')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Installing')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Installing, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/InstallPostInstall')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.PostInstall, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/InstallFinished')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:False), Mode=OneWay}" />
@@ -796,12 +818,14 @@
 
                                                 <TextBlock
                                                     Grid.Column="0"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Canceling')}"
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Cancel), Mode=OneWay}" />
 
                                                 <TextBlock
                                                     Grid.Column="0"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/InstallFailed')}"
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}">
@@ -895,6 +919,7 @@
                                                 Grid.Row="0"
                                                 MinWidth="50"
                                                 Margin="0,0,5,0"
+                                                HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="14"
                                                 TextAlignment="Left"
@@ -932,21 +957,25 @@
 
                                                 <Grid Grid.Column="0" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}">
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UninstallQueued')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.Queued, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Uninstalling')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.Uninstalling, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UninstallPostUninstall')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.PostUninstall, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UninstallFinished')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.Finished, x:False), Mode=OneWay}" />
@@ -954,12 +983,14 @@
 
                                                 <TextBlock
                                                     Grid.Column="0"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Canceling')}"
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Cancel), Mode=OneWay}" />
 
                                                 <TextBlock
                                                     Grid.Column="0"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UninstallFailed')}"
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}">
@@ -1073,6 +1104,7 @@
                                                     Grid.Column="0"
                                                     MinWidth="50"
                                                     Margin="0,0,5,0"
+                                                    HorizontalAlignment="Left"
                                                     VerticalAlignment="Center"
                                                     FontSize="14"
                                                     TextAlignment="Left"
@@ -1106,6 +1138,7 @@
 
                                                 <TextBlock
                                                     Grid.Column="1"
+                                                    HorizontalAlignment="Left"
                                                     VerticalAlignment="Center"
                                                     FontSize="14"
                                                     Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}"
@@ -1131,21 +1164,25 @@
 
                                                 <Grid Grid.Column="0" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}">
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RepairQueued')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.Queued, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Repairing')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.Repairing, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RepairPostRepair')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.PostRepair, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RepairFinished')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.Finished, x:False), Mode=OneWay}" />
@@ -1153,12 +1190,14 @@
 
                                                 <TextBlock
                                                     Grid.Column="0"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Canceling')}"
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Cancel), Mode=OneWay}" />
 
                                                 <TextBlock
                                                     Grid.Column="0"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RepairFailed')}"
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}">
@@ -1272,6 +1311,7 @@
                                                     Grid.Column="0"
                                                     MinWidth="50"
                                                     Margin="0,0,5,0"
+                                                    HorizontalAlignment="Left"
                                                     VerticalAlignment="Center"
                                                     FontSize="14"
                                                     TextAlignment="Left"
@@ -1314,6 +1354,7 @@
 
                                                     <TextBlock
                                                         Grid.Column="0"
+                                                        HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
                                                         Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}"
@@ -1332,6 +1373,7 @@
                                                     <TextBlock
                                                         Grid.Column="1"
                                                         Margin="2,0,2,0"
+                                                        HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
                                                         Text="|"
@@ -1340,6 +1382,7 @@
 
                                                     <TextBlock
                                                         Grid.Column="2"
+                                                        HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
                                                         Text="{x:Bind DownloadedFileSize, Mode=OneWay}"
@@ -1359,6 +1402,7 @@
                                                     <TextBlock
                                                         Grid.Column="3"
                                                         Margin="2,0,2,0"
+                                                        HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
                                                         Text="|"
@@ -1366,6 +1410,7 @@
 
                                                     <TextBlock
                                                         Grid.Column="4"
+                                                        HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
                                                         Text="{x:Bind TotalFileSize, Mode=OneWay}"
@@ -1391,26 +1436,31 @@
 
                                                 <Grid Grid.Column="0" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}">
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UpgradeQueued')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Queued, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Downloading')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Upgrading')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Installing, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UpgradePostInstall')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.PostInstall, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
+                                                        HorizontalAlignment="Left"
                                                         FontSize="14"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UpgradeFinished')}"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:False), Mode=OneWay}" />
@@ -1418,12 +1468,14 @@
 
                                                 <TextBlock
                                                     Grid.Column="0"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Canceling')}"
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Cancel), Mode=OneWay}" />
 
                                                 <TextBlock
                                                     Grid.Column="0"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UpgradeFailed')}"
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}">

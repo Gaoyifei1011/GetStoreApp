@@ -53,6 +53,7 @@
 
             <TextBlock
                 Grid.Column="1"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Operation')}" />
 
@@ -60,12 +61,14 @@
 
             <TextBlock
                 Grid.Column="3"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DownloadingEmpty')}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(DownloadingCollection.Count), Mode=OneWay}" />
 
             <TextBlock
                 Grid.Column="3"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind x:String.Format(DownloadingCountInfoString, DownloadingCollection.Count), Mode=OneWay}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DownloadingCollection.Count), Mode=OneWay}" />
@@ -200,6 +203,7 @@
             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(DownloadingCollection.Count), Mode=OneWay}">
 
             <TextBlock
+                HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DownloadingEmptyDescription')}"
                 TextAlignment="Center" />
@@ -321,6 +325,7 @@
                                 <TextBlock
                                     x:Name="FileNameText"
                                     Grid.Column="0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="16"
                                     Text="{x:Bind FileName}"
@@ -338,6 +343,7 @@
 
                                 <TextBlock
                                     Grid.Column="1"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="16"
                                     Text="{x:Bind roothelper:SpeedHelper.ConvertSpeedToString(DownloadSpeed), Mode=OneWay}"
@@ -357,6 +363,7 @@
                                 <TextBlock
                                     Grid.Column="2"
                                     Margin="4,0,4,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="14"
                                     Text="|"
@@ -365,6 +372,7 @@
 
                                 <TextBlock
                                     Grid.Column="3"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="16"
                                     Text="{x:Bind roothelper:FileSizeHelper.ConvertFileSizeToString(CompletedSize), Mode=OneWay}"
@@ -384,6 +392,7 @@
                                 <TextBlock
                                     Grid.Column="4"
                                     Margin="4,0,4,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="14"
                                     Text="|"
@@ -392,6 +401,7 @@
 
                                 <TextBlock
                                     Grid.Column="5"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="16"
                                     Text="{x:Bind roothelper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}"
@@ -416,6 +426,7 @@
 
                                 <TextBlock
                                     Grid.Column="0"
+                                    HorizontalAlignment="Left"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DownloadQueued')}"
@@ -423,6 +434,7 @@
 
                                 <TextBlock
                                     Grid.Column="0"
+                                    HorizontalAlignment="Left"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Downloading')}"
@@ -430,6 +442,7 @@
 
                                 <TextBlock
                                     Grid.Column="0"
+                                    HorizontalAlignment="Left"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DownloadPaused')}"
@@ -437,6 +450,7 @@
 
                                 <TextBlock
                                     Grid.Column="0"
+                                    HorizontalAlignment="Left"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DownloadFailed')}"

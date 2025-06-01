@@ -13,8 +13,21 @@
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
-    <TextBox
-        IsReadOnly="True"
-        Text="{x:Bind LicenseText, Mode=OneWay}"
-        TextWrapping="Wrap" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <MenuFlyoutSeparator
+            Grid.Row="0"
+            Margin="0,0,0,10"
+            Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
+
+        <TextBlock
+            Grid.Row="1"
+            IsTextSelectionEnabled="True"
+            Text="{x:Bind LicenseText, Mode=OneWay}"
+            TextWrapping="Wrap" />
+    </Grid>
 </ContentDialog>

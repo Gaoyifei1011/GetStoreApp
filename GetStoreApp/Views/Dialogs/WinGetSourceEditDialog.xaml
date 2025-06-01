@@ -83,6 +83,7 @@
 
                         <TextBlock
                             Grid.Column="0"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SourceName')}" />
@@ -112,6 +113,7 @@
 
                         <TextBlock
                             Grid.Column="0"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SourceUri')}" />
@@ -141,6 +143,7 @@
 
                         <TextBlock
                             Grid.Column="0"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CustomHeader')}" />
@@ -170,6 +173,7 @@
 
                         <TextBlock
                             Grid.Column="0"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SourceType')}" />
@@ -199,6 +203,7 @@
 
                         <TextBlock
                             Grid.Column="0"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Explicit')}" />
@@ -244,6 +249,7 @@
 
                         <TextBlock
                             Grid.Column="0"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CatalogTrustLevel')}" />

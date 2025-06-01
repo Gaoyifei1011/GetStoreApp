@@ -15,9 +15,6 @@
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="Transparent" />
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="Transparent" />
 
-        <XamlUICommand x:Name="CopyAUMIDCommand" ExecuteRequested="{x:Bind OnCopyAUMIDExecuteRequested}" />
-        <XamlUICommand x:Name="CopyDependencyInformationCommand" ExecuteRequested="{x:Bind OnCopyDependencyInformationExecuteRequested}" />
-        <XamlUICommand x:Name="CopyDependencyNameCommand" ExecuteRequested="{x:Bind OnCopyDependencyNameExecuteRequested}" />
         <XamlUICommand x:Name="LaunchCommand" ExecuteRequested="{x:Bind OnLaunchExecuteRequested}" />
         <XamlUICommand x:Name="OpenFolderCommand" ExecuteRequested="{x:Bind OnOpenFolderExecuteRequested}" />
         <XamlUICommand x:Name="OpenStoreCommand" ExecuteRequested="{x:Bind OnOpenStoreExecuteRequested}" />
@@ -64,6 +61,7 @@
 
                         <TextBlock
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/AppInformation')}" />
 
@@ -122,54 +120,67 @@
                             Grid.RowSpan="2"
                             Grid.Column="0"
                             Margin="0,0,25,0"
+                            HorizontalAlignment="Left"
                             FontSize="17"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/BasicInformation')}" />
 
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/AppDisplayName')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind DisplayName, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PackageFamilyName')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind PackageFamilyName, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PackageFullName')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind PackageFullName, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="3"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/AppDescription')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="3"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind Description, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
@@ -183,30 +194,37 @@
                             Grid.RowSpan="2"
                             Grid.Column="0"
                             Margin="0,0,25,0"
+                            HorizontalAlignment="Left"
                             FontSize="17"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PublisherInformation')}" />
 
                         <TextBlock
                             Grid.Row="5"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PublisherDisplayName')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="5"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind PublisherDisplayName, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="6"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PublisherId')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="6"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind PublisherId, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
@@ -220,150 +238,187 @@
                             Grid.RowSpan="2"
                             Grid.Column="0"
                             Margin="0,0,25,0"
+                            HorizontalAlignment="Left"
                             FontSize="17"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PackageInformation')}" />
 
                         <TextBlock
                             Grid.Row="8"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Version')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="8"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind Version, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="9"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/InstalledDate')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="9"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind InstalledDate, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="10"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Architecture')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="10"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind Architecture, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="11"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/SignatureKind')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="11"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind SignatureKind, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="12"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/ResourceId')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="12"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind ResourceId, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="13"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsBundle')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="13"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind IsBundle, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="14"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsDevelopmentMode')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="14"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind IsDevelopmentMode, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="15"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsFramework')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="15"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind IsFramework, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="16"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsOptional')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="16"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind IsOptional, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="17"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsResourcePackage')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="17"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind IsResourcePackage, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="18"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsStub')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="18"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind IsStub, Mode=OneWay}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="19"
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/VertifyIsOK')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="19"
                             Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind VertifyIsOK, Mode=OneWay}"
                             TextWrapping="Wrap" />
                     </Grid>
@@ -440,13 +495,17 @@
                                         Orientation="Vertical">
 
                                         <TextBlock
+                                            HorizontalAlignment="Left"
+                                            IsTextSelectionEnabled="True"
                                             Style="{StaticResource BodyTextBlockStyle}"
                                             Text="{x:Bind DisplayName}"
                                             TextTrimming="CharacterEllipsis"
                                             TextWrapping="NoWrap" />
 
                                         <TextBlock
+                                            HorizontalAlignment="Left"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            IsTextSelectionEnabled="True"
                                             Style="{StaticResource CaptionTextBlockStyle}"
                                             TextTrimming="CharacterEllipsis"
                                             TextWrapping="NoWrap">
@@ -486,20 +545,6 @@
 
                                         <SplitButton.Flyout>
                                             <MenuFlyout Placement="Bottom">
-                                                <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Command="{StaticResource CopyAUMIDCommand}"
-                                                    CommandParameter="{x:Bind AppUserModelId}"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/CopyAUMID')}">
-
-                                                    <MenuFlyoutItem.Icon>
-                                                        <FontIcon Glyph="&#xE8C8;" />
-                                                    </MenuFlyoutItem.Icon>
-                                                </MenuFlyoutItem>
-
-                                                <MenuFlyoutSeparator />
-
                                                 <MenuFlyoutItem
                                                     Height="32"
                                                     Padding="11,0"
@@ -573,6 +618,7 @@
 
                         <TextBlock
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/DependencyInformation')}" />
                     </Grid>
@@ -618,13 +664,17 @@
                                         Orientation="Vertical">
 
                                         <TextBlock
+                                            HorizontalAlignment="Left"
+                                            IsTextSelectionEnabled="True"
                                             Style="{StaticResource BodyTextBlockStyle}"
                                             Text="{x:Bind DisplayName}"
                                             TextTrimming="CharacterEllipsis"
                                             TextWrapping="NoWrap" />
 
                                         <TextBlock
+                                            HorizontalAlignment="Left"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            IsTextSelectionEnabled="True"
                                             Style="{StaticResource CaptionTextBlockStyle}"
                                             TextTrimming="CharacterEllipsis"
                                             TextWrapping="NoWrap">
@@ -690,32 +740,6 @@
 
                                                     <MenuFlyoutItem.Icon>
                                                         <FontIcon Glyph="&#xE8B7;" />
-                                                    </MenuFlyoutItem.Icon>
-                                                </MenuFlyoutItem>
-
-                                                <MenuFlyoutSeparator />
-
-                                                <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Command="{StaticResource CopyDependencyNameCommand}"
-                                                    CommandParameter="{x:Bind DisplayName}"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/CopyDependencyName')}">
-
-                                                    <MenuFlyoutItem.Icon>
-                                                        <FontIcon Glyph="&#xE8C8;" />
-                                                    </MenuFlyoutItem.Icon>
-                                                </MenuFlyoutItem>
-
-                                                <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Command="{StaticResource CopyDependencyInformationCommand}"
-                                                    CommandParameter="{x:Bind Package}"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/CopyDependencyInformation')}">
-
-                                                    <MenuFlyoutItem.Icon>
-                                                        <FontIcon Glyph="&#xE8C8;" />
                                                     </MenuFlyoutItem.Icon>
                                                 </MenuFlyoutItem>
                                             </MenuFlyout>

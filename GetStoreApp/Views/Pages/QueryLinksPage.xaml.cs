@@ -413,23 +413,6 @@ namespace GetStoreApp.Views.Pages
         #region 第二部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
-        /// 复制到剪贴板
-        /// </summary>
-        private async void OnCopyExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is HistoryModel history)
-            {
-                string copyContent = await Task.Run(() =>
-                {
-                    return string.Join('\t', new string[] { history.HistoryAppName, history.HistoryTypeName, history.HistoryChannelName, history.HistoryLink });
-                });
-
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
-            }
-        }
-
-        /// <summary>
         /// 填入到文本框
         /// </summary>
         private void OnFillinExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
@@ -1381,7 +1364,7 @@ namespace GetStoreApp.Views.Pages
                         HistoryTypeName = TypeList[selectedType].DisplayName,
                         HistoryChannel = ChannelList[selectedChannel].InternalName,
                         HistoryChannelName = ChannelList[selectedChannel].DisplayName,
-                        HistoryLink = link
+                        HistoryLink = link,
                     };
 
                     historyList.Insert(0, history);

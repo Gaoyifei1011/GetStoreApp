@@ -349,14 +349,18 @@
                     <StackPanel Margin="0">
                         <TextBlock
                             Margin="30,10,16,10"
+                            HorizontalAlignment="Left"
                             FontSize="15"
                             FontWeight="Normal"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/DevelopPurpose')}"
                             TextAlignment="Left" />
+
                         <TextBlock
                             Margin="30,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/DevelopPurposeDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
@@ -365,14 +369,19 @@
 
                         <TextBlock
                             Margin="30,10,16,10"
+                            HorizontalAlignment="Left"
                             FontSize="15"
                             FontWeight="Normal"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/UpdatePath')}"
                             TextAlignment="Left" />
+
                         <TextBlock
                             Margin="30,0,16,5"
+                            HorizontalAlignment="Left"
                             FontSize="14"
                             FontWeight="Normal"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/UpdatePathDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
@@ -381,15 +390,20 @@
 
                         <TextBlock
                             Margin="30,10,16,10"
+                            HorizontalAlignment="Left"
                             FontSize="15"
                             FontWeight="Normal"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/PrivacyandSecurity')}"
                             TextAlignment="Left" />
+
                         <TextBlock
                             Margin="30,0,16,10"
                             Padding="0,0,2,0"
+                            HorizontalAlignment="Left"
                             FontSize="14"
                             FontWeight="Normal"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/PrivacyandSecurityDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />

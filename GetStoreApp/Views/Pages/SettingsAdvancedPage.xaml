@@ -53,10 +53,14 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/Notification')}" />
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/Notification')}" />
 
                     <TextBlock
                         x:Name="NotificationDescription"
+                        HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/NotificationDescription')}"
@@ -129,14 +133,20 @@
                     FontSize="16"
                     Glyph="&#xE774;" />
 
-                <StackPanel Grid.Column="1" Orientation="Vertical">
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+
                     <TextBlock
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Style="{StaticResource BodyTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/WebKernel')}" />
 
                     <TextBlock
                         x:Name="WebKernelDescription"
+                        HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/WebKernelDescription')}"
@@ -218,10 +228,14 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ShellMenu')}" />
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ShellMenu')}" />
 
                     <TextBlock
                         x:Name="ShellMenuDescription"
+                        HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ShellMenuDescription')}"
@@ -305,10 +319,14 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/TraceCleanup')}" />
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/TraceCleanup')}" />
 
                     <TextBlock
                         x:Name="TraceCleanupDescription"
+                        HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/TraceCleanupDescription')}"
@@ -356,13 +374,18 @@
 
                         <StackPanel
                             Grid.Column="1"
+                            Margin="0,10"
                             VerticalAlignment="Center"
                             Orientation="Vertical">
 
-                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/LogRecord')}" />
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/LogRecord')}" />
 
                             <TextBlock
                                 x:Name="LogRecordDescription"
+                                HorizontalAlignment="Left"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/LogRecordDescription')}"
@@ -399,12 +422,14 @@
                                 Orientation="Vertical">
 
                                 <TextBlock
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Style="{StaticResource BodyTextBlockStyle}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/LogFolder')}" />
 
                                 <TextBlock
                                     x:Name="LogFolderDescription"
+                                    HorizontalAlignment="Left"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/LogFolderDescription')}"
@@ -446,12 +471,14 @@
                                 Orientation="Vertical">
 
                                 <TextBlock
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Style="{StaticResource BodyTextBlockStyle}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ClearLog')}" />
 
                                 <TextBlock
                                     x:Name="ClearLogDescription"
+                                    HorizontalAlignment="Left"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ClearLogDescription')}"

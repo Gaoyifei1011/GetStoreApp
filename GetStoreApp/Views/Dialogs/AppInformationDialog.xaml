@@ -68,11 +68,15 @@
 
                         <TextBlock
                             Grid.Column="0"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind DisplayText}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
+
                         <TextBlock
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind SecondaryText}"
                             TextAlignment="DetectFromContent"
                             TextWrapping="Wrap" />

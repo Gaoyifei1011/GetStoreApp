@@ -51,6 +51,7 @@
 
             <TextBlock
                 Grid.Column="1"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/Operation')}" />
 
@@ -58,12 +59,14 @@
 
             <TextBlock
                 Grid.Column="3"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/UpgradableAppsCountEmpty')}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(UpgradableAppsCollection.Count), Mode=OneWay}" />
 
             <TextBlock
                 Grid.Column="3"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind x:String.Format(UpgradableAppsCountInfoString, UpgradableAppsCollection.Count), Mode=OneWay}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UpgradableAppsCollection.Count), Mode=OneWay}" />
@@ -207,6 +210,7 @@
             <Grid>
                 <!--  未检查更新  -->
                 <TextBlock
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/NotCheckUpdate')}"
                     TextAlignment="Center"
@@ -224,6 +228,7 @@
                     <ProgressRing IsActive="True" IsEnabled="True" />
 
                     <TextBlock
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/LoadingUpgradableApps')}"
                         TextAlignment="Center" />
@@ -231,6 +236,7 @@
 
                 <!--  搜索失败  -->
                 <TextBlock
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Text="{x:Bind UpgradableFailedContent, Mode=OneWay}"
                     TextAlignment="Center"
@@ -279,28 +285,23 @@
 
                         <StackPanel
                             Grid.Column="0"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Orientation="Vertical">
 
                             <TextBlock
+                                HorizontalAlignment="Left"
+                                IsTextSelectionEnabled="True"
                                 Style="{StaticResource BodyTextBlockStyle}"
                                 Text="{x:Bind AppName}"
                                 TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
+                                TextWrapping="NoWrap" />
 
-                                <ToolTipService.ToolTip>
-                                    <ToolTip MaxWidth="9999">
-                                        <TextBlock>
-                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppName')}" />
-                                            <Run Text="{x:Bind AppName}" />
-                                        </TextBlock>
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
-
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                                 <TextBlock
+                                    HorizontalAlignment="Left"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    IsTextSelectionEnabled="True"
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap">
@@ -312,13 +313,16 @@
 
                                 <FontIcon
                                     Margin="4,1,4,0"
+                                    HorizontalAlignment="Left"
                                     FontSize="{StaticResource CaptionTextBlockFontSize}"
                                     FontWeight="Normal"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Glyph="&#xEBE7;" />
 
                                 <TextBlock
+                                    HorizontalAlignment="Left"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    IsTextSelectionEnabled="True"
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap">
@@ -327,40 +331,46 @@
                                     <Run Text=" | " />
                                     <Run Text="{x:Bind AppID}" />
                                 </TextBlock>
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip MaxWidth="9999">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
-
-                                            <TextBlock Grid.Row="0">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppPublisher')}" />
-                                                <Run Text="{x:Bind AppPublisher}" />
-                                            </TextBlock>
-
-                                            <TextBlock Grid.Row="1">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppCurrentVersion')}" />
-                                                <Run Text="{x:Bind AppCurrentVersion}" />
-                                            </TextBlock>
-
-                                            <TextBlock Grid.Row="2">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppNewestVersion')}" />
-                                                <Run Text="{x:Bind AppNewestVersion}" />
-                                            </TextBlock>
-
-                                            <TextBlock Grid.Row="3">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppID')}" />
-                                                <Run Text="{x:Bind AppID}" />
-                                            </TextBlock>
-                                        </Grid>
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
                             </StackPanel>
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip MaxWidth="9999">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0">
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppName')}" />
+                                            <Run Text="{x:Bind AppName}" />
+                                        </TextBlock>
+
+                                        <TextBlock Grid.Row="1">
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppPublisher')}" />
+                                            <Run Text="{x:Bind AppPublisher}" />
+                                        </TextBlock>
+
+                                        <TextBlock Grid.Row="2">
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppCurrentVersion')}" />
+                                            <Run Text="{x:Bind AppCurrentVersion}" />
+                                        </TextBlock>
+
+                                        <TextBlock Grid.Row="3">
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppNewestVersion')}" />
+                                            <Run Text="{x:Bind AppNewestVersion}" />
+                                        </TextBlock>
+
+                                        <TextBlock Grid.Row="4">
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppID')}" />
+                                            <Run Text="{x:Bind AppID}" />
+                                        </TextBlock>
+                                    </Grid>
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
                         </StackPanel>
 
                         <ProgressRing

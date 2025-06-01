@@ -28,6 +28,7 @@
         <TextBlock
             Grid.Row="0"
             Margin="30,10,30,0"
+            HorizontalAlignment="Left"
             FontSize="22"
             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/AppUpdate')}" />
 
@@ -58,6 +59,7 @@
 
             <TextBlock
                 Grid.Column="1"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/Operation')}" />
 
@@ -65,12 +67,14 @@
 
             <TextBlock
                 Grid.Column="3"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/AppUpdateEmpty')}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(AppUpdateCollection.Count), Mode=OneWay}" />
 
             <TextBlock
                 Grid.Column="3"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind x:String.Format(AppUpdateCountInfoString, AppUpdateCollection.Count), Mode=OneWay}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppUpdateCollection.Count), Mode=OneWay}" />
@@ -145,6 +149,7 @@
             <Grid>
                 <!--  未检查更新  -->
                 <TextBlock
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/NotCheckUpdate')}"
                     TextAlignment="Center"
@@ -161,6 +166,7 @@
                     <ProgressRing IsActive="True" IsEnabled="True" />
 
                     <TextBlock
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/LoadingAppUpdate')}"
                         TextAlignment="Center" />
@@ -168,6 +174,7 @@
 
                 <!--  检查更新失败  -->
                 <TextBlock
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Text="{x:Bind AppUpdateFailedContent, Mode=OneWay}"
                     TextAlignment="Center"
@@ -238,13 +245,17 @@
                                 Orientation="Vertical">
 
                                 <TextBlock
+                                    HorizontalAlignment="Left"
+                                    IsTextSelectionEnabled="True"
                                     Style="{StaticResource BodyTextBlockStyle}"
                                     Text="{x:Bind DisplayName}"
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap" />
 
                                 <TextBlock
+                                    HorizontalAlignment="Left"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    IsTextSelectionEnabled="True"
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     Text="{x:Bind PublisherDisplayName}"
                                     TextTrimming="CharacterEllipsis"
@@ -276,6 +287,7 @@
 
                                 <TextBlock
                                     MinWidth="50"
+                                    HorizontalAlignment="Left"
                                     FontSize="14"
                                     HorizontalTextAlignment="Left"
                                     Text="{x:Bind InstallInformation, Mode=OneWay}"
@@ -285,6 +297,7 @@
 
                                 <TextBlock
                                     MinWidth="50"
+                                    HorizontalAlignment="Left"
                                     FontSize="12"
                                     Text="{x:Bind InstallSubInformation, Mode=OneWay}"
                                     TextAlignment="Left"

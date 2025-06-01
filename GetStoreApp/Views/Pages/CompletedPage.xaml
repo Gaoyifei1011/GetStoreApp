@@ -56,18 +56,21 @@
 
             <TextBlock
                 Grid.Column="1"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/Operation')}" />
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
             <TextBlock
                 Grid.Column="3"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/CompletedEmpty')}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(CompletedCollection.Count), Mode=OneWay}" />
 
             <TextBlock
                 Grid.Column="3"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind x:String.Format(CompletedCountInfoString, CompletedCollection.Count), Mode=OneWay}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(CompletedCollection.Count), Mode=OneWay}" />
@@ -219,6 +222,7 @@
                     <ProgressRing IsActive="True" IsEnabled="True" />
 
                     <TextBlock
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/LoadingFile')}"
                         TextAlignment="Center" />
@@ -226,6 +230,7 @@
 
                 <!--  下载已完成列表为空  -->
                 <TextBlock
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/CompletedEmptyDescription')}"
                     TextAlignment="Center"
@@ -324,6 +329,7 @@
                                     x:Name="FileNameText"
                                     Grid.Column="0"
                                     MinWidth="50"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="16"
                                     Text="{x:Bind FileName}"
@@ -342,6 +348,7 @@
                                 <TextBlock
                                     Grid.Column="1"
                                     MinWidth="50"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="16"
                                     Text="{x:Bind roothelper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}"
@@ -362,6 +369,7 @@
                                 Grid.Row="1"
                                 MinWidth="50"
                                 Margin="0,-3,0,0"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
@@ -385,6 +393,7 @@
                                     Grid.Column="0"
                                     MinWidth="50"
                                     Margin="0,-3,0,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
@@ -402,6 +411,7 @@
                                     Grid.Column="2"
                                     MinWidth="50"
                                     Margin="0,-3,0,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     x:Load="{x:Bind InstallFailed.Equals(x:False), Mode=OneWay}"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
@@ -414,6 +424,7 @@
                                     Grid.Column="2"
                                     MinWidth="50"
                                     Margin="0,-3,0,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     x:Load="{x:Bind InstallFailed, Mode=OneWay}"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"

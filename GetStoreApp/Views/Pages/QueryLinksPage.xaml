@@ -18,7 +18,7 @@
         <SolidColorBrush x:Key="ExpanderChevronPressedBackground" Color="Transparent" />
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="Transparent" />
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="Transparent" />
-        <XamlUICommand x:Name="CopyCommand" ExecuteRequested="{x:Bind OnCopyExecuteRequested}" />
+
         <XamlUICommand x:Name="FillinCommand" ExecuteRequested="{x:Bind OnFillinExecuteRequested}" />
         <XamlUICommand x:Name="DownloadCommand" ExecuteRequested="{x:Bind OnDownloadExecuteRequested}" />
         <XamlUICommand x:Name="OpenLinkCommand" ExecuteRequested="{x:Bind OnOpenLinkExecuteRequested}" />
@@ -212,6 +212,7 @@
 
                         <TextBlock
                             Grid.Column="1"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Recent')}" />
                     </Grid>
@@ -220,7 +221,7 @@
                 <Expander.Content>
                     <StackPanel>
                         <TextBlock
-                            HorizontalAlignment="Stretch"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryEmpty')}"
                             TextAlignment="Center"
@@ -235,13 +236,14 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="135" />
+                                <ColumnDefinition Width="70" />
                             </Grid.ColumnDefinitions>
 
                             <TextBlock
                                 x:Name="HistoryAppNameHeaderText"
                                 Grid.Column="0"
                                 Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryAppName')}"
                                 TextTrimming="CharacterEllipsis"
@@ -259,6 +261,7 @@
                                 x:Name="HistoryTypeHeaderText"
                                 Grid.Column="1"
                                 Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryType')}"
                                 TextTrimming="CharacterEllipsis"
@@ -276,6 +279,7 @@
                                 x:Name="HistoryChannelHeaderText"
                                 Grid.Column="2"
                                 Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryChannel')}"
                                 TextTrimming="CharacterEllipsis"
@@ -293,6 +297,7 @@
                                 x:Name="HistoryLinkHeaderText"
                                 Grid.Column="3"
                                 Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryLink')}"
                                 TextTrimming="CharacterEllipsis"
@@ -310,7 +315,7 @@
                                 Grid.Column="4"
                                 Grid.ColumnSpan="2"
                                 Margin="10,0,0,0"
-                                HorizontalAlignment="Stretch"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Options')}"
                                 ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OptionsToolTip')}" />
@@ -340,6 +345,7 @@
                                     <Grid
                                         Height="35"
                                         Padding="6,0,0,0"
+                                        HorizontalAlignment="Stretch"
                                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                         BorderThickness="0,1,0,0">
                                         <Grid.ColumnDefinitions>
@@ -348,7 +354,6 @@
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="3*" />
                                             <ColumnDefinition Width="70" />
-                                            <ColumnDefinition Width="65" />
                                         </Grid.ColumnDefinitions>
 
                                         <TextBlock
@@ -356,8 +361,10 @@
                                             Grid.Column="0"
                                             MinWidth="50"
                                             Margin="10,0,0,0"
+                                            HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
                                             FontSize="14"
+                                            IsTextSelectionEnabled="True"
                                             Text="{x:Bind HistoryAppName}"
                                             TextAlignment="Left"
                                             TextTrimming="CharacterEllipsis"
@@ -376,8 +383,10 @@
                                             Grid.Column="1"
                                             MinWidth="50"
                                             Margin="10,0,0,0"
+                                            HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
                                             FontSize="14"
+                                            IsTextSelectionEnabled="True"
                                             Text="{x:Bind HistoryTypeName}"
                                             TextAlignment="Left"
                                             TextTrimming="CharacterEllipsis"
@@ -396,8 +405,10 @@
                                             Grid.Column="2"
                                             MinWidth="50"
                                             Margin="10,0,0,0"
+                                            HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
                                             FontSize="14"
+                                            IsTextSelectionEnabled="True"
                                             Text="{x:Bind HistoryChannelName}"
                                             TextAlignment="Left"
                                             TextTrimming="CharacterEllipsis"
@@ -416,8 +427,10 @@
                                             Grid.Column="3"
                                             MinWidth="50"
                                             Margin="10,0,0,0"
+                                            HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
                                             FontSize="14"
+                                            IsTextSelectionEnabled="True"
                                             Text="{x:Bind HistoryLink}"
                                             TextAlignment="Left"
                                             TextTrimming="CharacterEllipsis"
@@ -439,13 +452,6 @@
                                             CommandParameter="{x:Bind}"
                                             Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Fillin')}"
                                             IsEnabled="{x:Bind IsQuerying.Equals(x:False), Mode=OneWay}" />
-
-                                        <HyperlinkButton
-                                            Grid.Column="5"
-                                            Padding="0"
-                                            Command="{StaticResource CopyCommand}"
-                                            CommandParameter="{x:Bind}"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Copy')}" />
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
@@ -494,6 +500,7 @@
                             <TextBlock
                                 Grid.Column="1"
                                 Margin="0,0,0,2"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryedAppInfo')}" />
 
@@ -548,6 +555,8 @@
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                IsTextSelectionEnabled="True"
                                 Text="{x:Bind AppInfo.Name, Mode=OneWay}"
                                 TextAlignment="Justify"
                                 TextWrapping="Wrap" />
@@ -560,6 +569,8 @@
                             <TextBlock
                                 Grid.Row="1"
                                 Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                IsTextSelectionEnabled="True"
                                 Text="{x:Bind AppInfo.Publisher, Mode=OneWay}"
                                 TextAlignment="Justify"
                                 TextWrapping="Wrap" />
@@ -572,6 +583,8 @@
                             <TextBlock
                                 Grid.Row="2"
                                 Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                IsTextSelectionEnabled="True"
                                 Text="{x:Bind AppInfo.Description, Mode=OneWay}"
                                 TextAlignment="Justify"
                                 TextWrapping="Wrap" />
@@ -605,6 +618,7 @@
 
                     <TextBlock
                         Grid.Column="1"
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryResult')}" />
 
@@ -621,15 +635,20 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryedAppType')}" />
+                            <TextBlock
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryedAppType')}" />
 
                             <TextBlock
                                 Grid.Column="1"
+                                HorizontalAlignment="Left"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/NonPackagedApp')}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPackagedApp), Mode=OneWay}" />
 
                             <TextBlock
                                 Grid.Column="1"
+                                HorizontalAlignment="Left"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/PackagedApp')}"
                                 Visibility="{x:Bind IsPackagedApp, Mode=OneWay}" />
                         </Grid>
@@ -639,6 +658,7 @@
 
                     <TextBlock
                         Grid.Column="4"
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryLinksEmpty')}"
                         Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(QueryLinksCollection.Count), Mode=OneWay}" />
@@ -745,8 +765,6 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="100" />
                         <ColumnDefinition Width="80" />
-                        <ColumnDefinition Width="80" />
-                        <ColumnDefinition Width="80" />
                     </Grid.ColumnDefinitions>
 
                     <TextBlock
@@ -799,7 +817,6 @@
 
                     <TextBlock
                         Grid.Column="3"
-                        Grid.ColumnSpan="3"
                         Margin="0,0,10,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
@@ -842,8 +859,6 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="100" />
-                                    <ColumnDefinition Width="80" />
-                                    <ColumnDefinition Width="80" />
                                     <ColumnDefinition Width="80" />
                                 </Grid.ColumnDefinitions>
 
@@ -892,6 +907,22 @@
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
                                     </HyperlinkButton.Content>
+
+                                    <HyperlinkButton.ContextFlyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem
+                                                Command="{StaticResource CopyLinkCommand}"
+                                                CommandParameter="{x:Bind FileLink}"
+                                                IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyLink')}"
+                                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyLinkToolTip')}">
+
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE8C8;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </HyperlinkButton.ContextFlyout>
                                 </HyperlinkButton>
 
                                 <TextBlock
@@ -899,8 +930,10 @@
                                     Grid.Column="2"
                                     MinWidth="50"
                                     Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="14"
+                                    IsTextSelectionEnabled="True"
                                     Text="{x:Bind FileSize}"
                                     TextAlignment="Left"
                                     TextTrimming="CharacterEllipsis"
@@ -925,26 +958,21 @@
                                     IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
                                     ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OpenLinkToolTip')}" />
 
-                                <HyperlinkButton
-                                    Grid.Column="4"
-                                    Margin="0,0,5,0"
-                                    Padding="0"
-                                    VerticalAlignment="Center"
-                                    Command="{StaticResource CopyLinkCommand}"
-                                    CommandParameter="{x:Bind FileLink}"
-                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyLink')}"
-                                    IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyLinkToolTip')}" />
+                                <Grid.ContextFlyout>
+                                    <MenuFlyout Placement="Bottom">
+                                        <MenuFlyoutItem
+                                            Command="{StaticResource CopyInformationCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyInformation')}"
+                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyInformationToolTip')}">
 
-                                <HyperlinkButton
-                                    Grid.Column="5"
-                                    Padding="0"
-                                    VerticalAlignment="Center"
-                                    Command="{StaticResource CopyInformationCommand}"
-                                    CommandParameter="{x:Bind}"
-                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyInformation')}"
-                                    IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyInformationToolTip')}" />
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE8C8;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+                                    </MenuFlyout>
+                                </Grid.ContextFlyout>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

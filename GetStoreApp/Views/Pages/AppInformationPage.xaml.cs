@@ -400,58 +400,6 @@ namespace GetStoreApp.Views.Pages
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
-        /// 复制应用入口的应用程序用户模型 ID
-        /// </summary>
-        private async void OnCopyAUMIDExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is string aumid && !string.IsNullOrEmpty(aumid))
-            {
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(aumid);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
-            }
-        }
-
-        /// <summary>
-        /// 复制依赖包信息
-        /// </summary>
-        private async void OnCopyDependencyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is Package package)
-            {
-                List<string> copyDependencyInformationCopyStringList = [];
-
-                await Task.Run(() =>
-                {
-                    try
-                    {
-                        copyDependencyInformationCopyStringList.Add(package.DisplayName);
-                        copyDependencyInformationCopyStringList.Add(package.Id.FamilyName);
-                        copyDependencyInformationCopyStringList.Add(package.Id.FullName);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OnCopyDependencyInformationExecuteRequested), 1, e);
-                    }
-                });
-
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyDependencyInformationCopyStringList));
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
-            }
-        }
-
-        /// <summary>
-        /// 复制依赖包名称
-        /// </summary>
-        private async void OnCopyDependencyNameExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is string displayName && !string.IsNullOrEmpty(displayName))
-            {
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(displayName);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
-            }
-        }
-
-        /// <summary>
         /// 启动对应入口的应用
         /// </summary>
         private void OnLaunchExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)

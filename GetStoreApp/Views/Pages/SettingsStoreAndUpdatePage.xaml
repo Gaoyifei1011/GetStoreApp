@@ -52,14 +52,20 @@
                     FontSize="16"
                     Glyph="&#xE721;" />
 
-                <StackPanel Grid.Column="1" Orientation="Vertical">
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+
                     <TextBlock
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Style="{StaticResource BodyTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/QueryLinksMode')}" />
 
                     <TextBlock
                         x:Name="QueryLinksModeDescription"
+                        HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/QueryLinksModeDescription')}"
@@ -132,10 +138,14 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/InstallMode')}" />
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/InstallMode')}" />
 
                     <TextBlock
                         x:Name="InstallModeDescription"
+                        HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/InstallModeDescription')}"
@@ -208,10 +218,14 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdate')}" />
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdate')}" />
 
                     <TextBlock
                         x:Name="CancelAutoUpdateDescription"
+                        HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdateDescription')}"
@@ -233,11 +247,13 @@
                     Orientation="Horizontal">
 
                     <TextBlock
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdateOffContent')}"
                         Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(CancelAutoUpdateValue), Mode=OneWay}" />
 
                     <TextBlock
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdateOnContent')}"
                         Visibility="{x:Bind CancelAutoUpdateValue, Mode=OneWay}" />
@@ -277,14 +293,18 @@
 
                         <StackPanel
                             Grid.Column="1"
-                            Margin="0,12"
+                            Margin="0,10"
                             VerticalAlignment="Center"
                             Orientation="Vertical">
 
-                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreCountryOrRegion')}" />
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreCountryOrRegion')}" />
 
                             <TextBlock
                                 x:Name="StoreCountryOrRegionDescription"
+                                HorizontalAlignment="Left"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreCountryOrRegionDescription')}"
@@ -322,12 +342,14 @@
                                 Orientation="Vertical">
 
                                 <TextBlock
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Style="{StaticResource BodyTextBlockStyle}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/UseSystemRegion')}" />
 
                                 <TextBlock
                                     x:Name="CurrentCountryOrRegionText"
+                                    HorizontalAlignment="Left"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     TextTrimming="CharacterEllipsis"
@@ -394,14 +416,19 @@
 
                             <StackPanel
                                 Grid.Column="0"
+                                Margin="0,10"
                                 VerticalAlignment="Center"
                                 Orientation="Vertical">
+
                                 <TextBlock
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Style="{StaticResource BodyTextBlockStyle}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreRegion')}" />
+
                                 <TextBlock
                                     x:Name="StoreRegionDescription"
+                                    HorizontalAlignment="Left"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreRegionDescription')}"
@@ -505,13 +532,18 @@
 
                         <StackPanel
                             Grid.Column="1"
+                            Margin="0,10"
                             VerticalAlignment="Center"
                             Orientation="Vertical">
 
-                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/LinkFilter')}" />
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/LinkFilter')}" />
 
                             <TextBlock
                                 x:Name="LinkFilterDescription"
+                                HorizontalAlignment="Left"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/LinkFilterDescription')}"
@@ -548,11 +580,14 @@
                                 Orientation="Vertical">
 
                                 <TextBlock
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Style="{StaticResource BodyTextBlockStyle}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackage')}" />
+
                                 <TextBlock
                                     x:Name="EncryptedPackageDescription"
+                                    HorizontalAlignment="Left"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageDescription')}"
@@ -610,12 +645,16 @@
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Orientation="Vertical">
+
                                 <TextBlock
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Style="{StaticResource BodyTextBlockStyle}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMap')}" />
+
                                 <TextBlock
                                     x:Name="BlockMapDescription"
+                                    HorizontalAlignment="Left"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapDescription')}"

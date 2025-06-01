@@ -136,7 +136,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnEditExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (RuntimeHelper.IsElevated && args.Parameter is WinGetSourceModel winGetSource)
+            if (!RuntimeHelper.IsElevated && args.Parameter is WinGetSourceModel winGetSource)
             {
                 WinGetSourceEditDialog winGetSourceEditDialog = new(WinGetSourceEditKind.Edit, winGetSource);
                 await MainWindow.Current.ShowDialogAsync(winGetSourceEditDialog);
@@ -417,7 +417,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnAddNewSourceClicked(object sender, RoutedEventArgs args)
         {
-            if (RuntimeHelper.IsElevated)
+            if (!RuntimeHelper.IsElevated)
             {
                 WinGetSourceEditDialog winGetSourceEditDialog = new(WinGetSourceEditKind.Add, null);
                 await MainWindow.Current.ShowDialogAsync(winGetSourceEditDialog);
