@@ -221,7 +221,7 @@
                 <Expander.Content>
                     <StackPanel>
                         <TextBlock
-                            HorizontalAlignment="Left"
+                            HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryEmpty')}"
                             TextAlignment="Center"

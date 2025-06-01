@@ -28,6 +28,7 @@
             Grid.Row="1"
             IsTextSelectionEnabled="True"
             Text="{x:Bind LicenseText, Mode=OneWay}"
+            TextAlignment="Justify"
             TextWrapping="Wrap" />
     </Grid>
 </ContentDialog>
