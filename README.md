@@ -8,7 +8,7 @@
 
 > * [简体中文](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/README_ZH-CN.md)&emsp;
 > * [English](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/README_EN-US.md)&emsp;
-> * [Hebrewq/עברית](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/README_HE-IL.md)&emsp;
+> * [Hebrew / עברית](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/README_HE-IL.md)&emsp;
 
 ------
 
