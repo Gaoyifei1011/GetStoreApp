@@ -1,0 +1,20 @@
+{
+  "About": "אודות",
+  "Advanced": "מתקדם",
+  "AppInstaller": "התקנת יישומים",
+  "Download": "ניהול הורדות",
+  "General": "כללי",
+  "PinToDesktop": "הצמד לשולחן העבודה",
+  "PinToDesktopToolTip": "הצמד את היישום לשולחן העבודה",
+  "PinToStartScreen": "הצמד למסך 'התחל'",
+  "PinToStartScreenToolTip": "הצמד את היישום למסך 'התחל'",
+  "PinToTaskbar": "הצמד לשורת המשימות",
+  "PinToTaskbarToolTip": "הצמד את היישום לשורת המשימות",
+  "RestartApp": "הפעל מחדש את היישום",
+  "RestartAppToolTip": "לאחר שינוי הגדרות היישום, אפשרויות מסוימות דורשות הפעלה מחדש כדי להיכנס לתוקף.",
+  "RunAsAdministrator": "הפעל כמנהל מערכת",
+  "SettingsInstruction": "הסבר הגדרות",
+  "StoreAndUpdate": "חנות ועדכונים",
+  "ViewMore": "הצג עוד",
+  "WinGet": "חבילת WinGet"
+}
