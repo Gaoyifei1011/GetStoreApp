@@ -10,6 +10,7 @@
   "AppInstalledState": "App installed state: ",
   "AppInstallerSourceLink": "Installer file source link: ",
   "AppInstallFailed": "{0} install failed",
+  "AppInstallFailedCode": "Error code: {0}",
   "AppInstallFailedReason": "Error reason: {0}",
   "AppInstallSelf": "The application may exit automatically during installation.",
   "AppInstallSuccessfully": "{0} install successfully",
