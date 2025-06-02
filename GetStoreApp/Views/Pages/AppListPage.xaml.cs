@@ -592,7 +592,7 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
                                 UninstallFailed3String,
-                                string.Format(UninstallFailed4String, packageDeploymentResult.ExtendedError is not null ? packageDeploymentResult.ExtendedError.HResult : UnknownString),
+                                string.Format(UninstallFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : UnknownString),
                                 string.Format(UninstallFailed5String, packageDeploymentResult.ErrorText)
                             }));
                             AppNotificationButton openSettingsButton = new(OpenSettingsString);

@@ -1492,7 +1492,7 @@ namespace GetStoreAppInstaller.Views.Pages
                     }
                     else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                     {
-                        string errorCode = packageDeploymentResult.ExtendedError is not null ? Convert.ToString(packageDeploymentResult.ExtendedError.HResult) : UnknownString;
+                        string errorCode = packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : UnknownString;
                         string errorMessage = packageDeploymentResult.ErrorText;
 
                         // 更新应用安装状态

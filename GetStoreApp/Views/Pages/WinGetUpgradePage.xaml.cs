@@ -440,13 +440,13 @@ namespace GetStoreApp.Views.Pages
                     else
                     {
                         UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
-                        UpgradableFailedContent = string.Format(UpgradableAppsFailedString, UpgradableFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : UnknownString);
+                        UpgradableFailedContent = string.Format(UpgradableAppsFailedString, UpgradableFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString);
                     }
                 }
                 else
                 {
                     UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
-                    UpgradableFailedContent = string.Format(UpgradableAppsFailedString, UpgradableCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : UnknownString);
+                    UpgradableFailedContent = string.Format(UpgradableAppsFailedString, UpgradableCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString);
                 }
             }
             else

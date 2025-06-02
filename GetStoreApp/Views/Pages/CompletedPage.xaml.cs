@@ -315,7 +315,7 @@ namespace GetStoreApp.Views.Pages
 
                                         await Task.Run(() =>
                                         {
-                                            string errorCode = packageDeploymentResult.ExtendedError is not null ? Convert.ToString(packageDeploymentResult.ExtendedError.HResult) : UnknownString;
+                                            string errorCode = packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : UnknownString;
                                             string errorMessage = packageDeploymentResult.ErrorText;
 
                                             // 显示安装失败通知

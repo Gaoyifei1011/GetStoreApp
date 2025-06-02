@@ -499,13 +499,13 @@ namespace GetStoreApp.Views.Pages
                     else
                     {
                         SearchAppsResultKind = SearchAppsResultKind.Failed;
-                        SearchFailedContent = string.Format(SearchAppsFailedString, SearchFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : UnknownString);
+                        SearchFailedContent = string.Format(SearchAppsFailedString, SearchFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString);
                     }
                 }
                 else
                 {
                     SearchAppsResultKind = SearchAppsResultKind.Failed;
-                    SearchFailedContent = string.Format(SearchAppsFailedString, SearchCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : UnknownString);
+                    SearchFailedContent = string.Format(SearchAppsFailedString, SearchCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString);
                 }
             }
             else
