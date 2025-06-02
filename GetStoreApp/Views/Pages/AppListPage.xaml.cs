@@ -9,6 +9,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.AppNotifications.Builder;
+using Microsoft.Windows.Management.Deployment;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -52,6 +53,7 @@ namespace GetStoreApp.Views.Pages
         private bool isInitialized;
         private bool needToRefreshData;
         private PackageManager packageManager;
+        private PackageDeploymentManager packageDeploymentManager;
 
         private string _searchText = string.Empty;
 
@@ -254,6 +256,7 @@ namespace GetStoreApp.Views.Pages
                 isInitialized = true;
 
                 packageManager = new();
+                packageDeploymentManager = PackageDeploymentManager.GetDefault();
                 AppManagerResultKind = AppManagerResultKind.Loading;
                 AppManagerList.Clear();
                 AppManagerCollection.Clear();
@@ -555,13 +558,13 @@ namespace GetStoreApp.Views.Pages
 
                 try
                 {
-                    DeploymentResult deploymentResult = await Task.Run(async () =>
+                    PackageDeploymentResult packageDeploymentResult = await Task.Run(async () =>
                     {
-                        return await packageManager.RemovePackageAsync(package.Package.Id.FullName, RemovalOptions.None);
+                        return await packageDeploymentManager.RemovePackageByFullNameAsync(package.Package.Id.FullName, new());
                     });
 
                     // 卸载成功
-                    if (deploymentResult.ExtendedErrorCode is null)
+                    if (packageDeploymentResult is not null && packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
                     {
                         // 显示 UWP 应用卸载成功通知
                         await Task.Run(() =>
@@ -589,14 +592,14 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
                                 UninstallFailed3String,
-                                string.Format(UninstallFailed4String, deploymentResult.ExtendedErrorCode is not null ? deploymentResult.ExtendedErrorCode.HResult : UnknownString),
-                                string.Format(UninstallFailed5String, deploymentResult.ErrorText)
+                                string.Format(UninstallFailed4String, packageDeploymentResult.ExtendedError is not null ? packageDeploymentResult.ExtendedError.HResult : UnknownString),
+                                string.Format(UninstallFailed5String, packageDeploymentResult.ErrorText)
                             }));
                             AppNotificationButton openSettingsButton = new(OpenSettingsString);
                             openSettingsButton.Arguments.Add("action", "OpenSettings");
                             appNotificationBuilder.AddButton(openSettingsButton);
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnUninstallExecuteRequested), 1, deploymentResult.ExtendedErrorCode is not null ? deploymentResult.ExtendedErrorCode : new Exception());
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnUninstallExecuteRequested), 1, packageDeploymentResult.ExtendedError is not null ? packageDeploymentResult.ExtendedError : new Exception());
                         });
 
                         package.IsUninstalling = false;

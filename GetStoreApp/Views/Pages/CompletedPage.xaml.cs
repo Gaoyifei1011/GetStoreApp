@@ -16,6 +16,8 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.AppNotifications.Builder;
 using System;
+using Microsoft.Windows.Management.Deployment;
+using Windows.Management.Deployment;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -24,7 +26,6 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
-using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.System;
@@ -43,9 +44,11 @@ namespace GetStoreApp.Views.Pages
         private readonly string FileShareString = ResourceService.GetLocalized("Completed/FileShare");
         private readonly string InstallFailed1String = ResourceService.GetLocalized("Completed/InstallFailed1");
         private readonly string InstallFailed2String = ResourceService.GetLocalized("Completed/InstallFailed2");
+        private readonly string InstallFailed3String = ResourceService.GetLocalized("Completed/InstallFailed3");
         private readonly string InstallSuccessfullyString = ResourceService.GetLocalized("Completed/InstallSuccessfully");
+        private readonly string UnknownString = ResourceService.GetLocalized("Completed/Unknown");
         private bool isInitialized;
-        private PackageManager packageManager;
+        private PackageDeploymentManager packageDeploymentManager;
 
         private CompletedResultKind _completedResultKind = CompletedResultKind.Loading;
 
@@ -102,7 +105,7 @@ namespace GetStoreApp.Views.Pages
                 isInitialized = true;
                 List<DownloadSchedulerModel> downloadStorageList = await Task.Run(() =>
                 {
-                    packageManager = new();
+                    packageDeploymentManager = PackageDeploymentManager.GetDefault();
 
                     DownloadStorageService.DownloadStorageSemaphoreSlim?.Wait();
                     return DownloadStorageService.GetDownloadData();
@@ -128,8 +131,6 @@ namespace GetStoreApp.Views.Pages
 
                 await Task.Run(() =>
                 {
-                    packageManager = new();
-
                     GlobalNotificationService.ApplicationExit += OnApplicationExit;
                     DownloadStorageService.StorageDataAdded += OnStorageDataAdded;
                     DownloadStorageService.StorageDataDeleted += OnStorageDataDeleted;
@@ -267,11 +268,11 @@ namespace GetStoreApp.Views.Pages
                                 // 标记安装状态
                                 completed.IsInstalling = true;
 
-                                (bool result, DeploymentResult deploymentResult, Exception exception) = await Task.Run(async () =>
+                                (bool result, PackageDeploymentResult packageDeploymentResult, Exception exception) = await Task.Run(async () =>
                                 {
                                     try
                                     {
-                                        AddPackageOptions addPackageOptions = new()
+                                        Microsoft.Windows.Management.Deployment.AddPackageOptions addPackageOptions = new()
                                         {
                                             AllowUnsigned = AppInstallService.AllowUnsignedPackageValue,
                                             ForceAppShutdown = AppInstallService.ForceAppShutdownValue,
@@ -279,24 +280,24 @@ namespace GetStoreApp.Views.Pages
                                         };
 
                                         // 安装目标应用，并获取安装进度
-                                        IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress = packageManager.AddPackageByUriAsync(new Uri(completed.FilePath), addPackageOptions);
+                                        IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> installPackageWithProgress = packageDeploymentManager.AddPackageByUriAsync(new Uri(completed.FilePath), addPackageOptions);
 
                                         // 更新安装进度
                                         installPackageWithProgress.Progress = (result, progress) => OnPackageInstallProgress(result, progress, completed);
-                                        return ValueTuple.Create<bool, DeploymentResult, Exception>(true, await installPackageWithProgress, null);
+                                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, await installPackageWithProgress, null);
                                     }
                                     // 安装失败显示失败信息
                                     catch (Exception e)
                                     {
                                         LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnInstallExecuteRequested), 2, e);
-                                        return ValueTuple.Create<bool, DeploymentResult, Exception>(false, null, e);
+                                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
                                     }
                                 });
 
-                                if (result && deploymentResult is not null)
+                                if (result && packageDeploymentResult is not null)
                                 {
                                     // 安装成功
-                                    if (deploymentResult.ExtendedErrorCode is null)
+                                    if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
                                     {
                                         await Task.Run(() =>
                                         {
@@ -314,11 +315,15 @@ namespace GetStoreApp.Views.Pages
 
                                         await Task.Run(() =>
                                         {
+                                            string errorCode = packageDeploymentResult.ExtendedError is not null ? Convert.ToString(packageDeploymentResult.ExtendedError.HResult) : UnknownString;
+                                            string errorMessage = packageDeploymentResult.ErrorText;
+
                                             // 显示安装失败通知
                                             AppNotificationBuilder appNotificationBuilder = new();
                                             appNotificationBuilder.AddArgument("action", "OpenApp");
                                             appNotificationBuilder.AddText(string.Format(InstallFailed1String, completedFile.Name));
-                                            appNotificationBuilder.AddText(string.Format(InstallFailed2String, deploymentResult.ExtendedErrorCode.Message));
+                                            appNotificationBuilder.AddText(string.Format(InstallFailed2String, errorCode));
+                                            appNotificationBuilder.AddText(string.Format(InstallFailed3String, errorMessage));
                                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                                         });
                                     }
@@ -329,11 +334,13 @@ namespace GetStoreApp.Views.Pages
 
                                     await Task.Run(() =>
                                     {
+                                        string errorMessage = exception is not null ? exception.Message : UnknownString;
+
                                         // 显示安装失败通知
                                         AppNotificationBuilder appNotificationBuilder = new();
                                         appNotificationBuilder.AddArgument("action", "OpenApp");
                                         appNotificationBuilder.AddText(string.Format(InstallFailed1String, completedFile.Name));
-                                        appNotificationBuilder.AddText(string.Format(InstallFailed2String, exception.Message));
+                                        appNotificationBuilder.AddText(string.Format(InstallFailed3String, errorMessage));
                                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                                     });
                                 }
@@ -779,7 +786,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用安装状态发生改变时触发的事件
         /// </summary>
-        private void OnPackageInstallProgress(IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> result, DeploymentProgress progress, CompletedModel completed)
+        private void OnPackageInstallProgress(IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> result, PackageDeploymentProgress progress, CompletedModel completed)
         {
             DispatcherQueue.TryEnqueue(() =>
             {
@@ -787,7 +794,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     if (Equals(CompletedCollection[index].DownloadKey, completed.DownloadKey))
                     {
-                        CompletedCollection[index].InstallValue = progress.percentage;
+                        CompletedCollection[index].InstallValue = progress.Progress * 100;
                         break;
                     }
                 }
