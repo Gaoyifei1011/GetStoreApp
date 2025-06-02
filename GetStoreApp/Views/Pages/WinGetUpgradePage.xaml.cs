@@ -372,12 +372,15 @@ namespace GetStoreApp.Views.Pages
                     {
                         packageCatalogReference = packageManager.GetPackageCatalogByName(winGetDataSourceName.Key);
 
-                        CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = new()
+                        if (packageCatalogReference is not null)
                         {
-                            CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs
-                        };
-                        createCompositePackageCatalogOptions.Catalogs.Add(packageCatalogReference);
-                        packageCatalogReference = packageManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
+                            CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = new()
+                            {
+                                CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs
+                            };
+                            createCompositePackageCatalogOptions.Catalogs.Add(packageCatalogReference);
+                            packageCatalogReference = packageManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
+                        }
                     }
                 }
 
