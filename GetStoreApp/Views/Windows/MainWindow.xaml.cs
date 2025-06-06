@@ -12,6 +12,7 @@ using GetStoreApp.WindowsAPI.ComTypes;
 using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using GetStoreApp.WindowsAPI.PInvoke.Uxtheme;
+using Microsoft.Graphics.Display;
 using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Content;
@@ -64,6 +65,8 @@ namespace GetStoreApp.Views.Windows
         private readonly SUBCLASSPROC mainWindowSubClassProc;
         private bool isDialogOpening;
         private ContentIsland contentIsland;
+        private readonly DisplayInformation displayInformation;
+        private readonly IDisplayInformation2 displayInformation2;
         private DesktopSiteBridge desktopSiteBridge;
         private InputKeyboardSource inputKeyboardSource;
 
@@ -194,6 +197,8 @@ namespace GetStoreApp.Views.Windows
             AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
             IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
+            displayInformation = DisplayInformation.CreateForWindowId(AppWindow.Id);
+            displayInformation2 = displayInformation.As<IDisplayInformation2>();
 
             // 标题栏和右键菜单设置
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
@@ -253,10 +258,10 @@ namespace GetStoreApp.Views.Windows
                 IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
             }
 
-            if (Content is not null && Content.XamlRoot is not null)
+            if (Content is not null && displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
             {
-                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1280 * Content.XamlRoot.RasterizationScale);
-                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(720 * Content.XamlRoot.RasterizationScale);
+                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1280 * rawPixelsPerViewPixel);
+                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(720 * rawPixelsPerViewPixel);
             }
         }
 
@@ -737,10 +742,10 @@ namespace GetStoreApp.Views.Windows
                 Show();
             }
 
-            if (Content is not null && Content.XamlRoot is not null)
+            if (Content is not null && displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
             {
-                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1280 * Content.XamlRoot.RasterizationScale);
-                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(720 * Content.XamlRoot.RasterizationScale);
+                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1280 * rawPixelsPerViewPixel);
+                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(720 * rawPixelsPerViewPixel);
             }
         }
 
@@ -1126,10 +1131,10 @@ namespace GetStoreApp.Views.Windows
         public void Show(bool isFirstActivate = false)
         {
             // 默认直接显示到窗口中间
-            if (isFirstActivate && DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea)
+            if (isFirstActivate && DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
             {
                 RectInt32 workArea = displayArea.WorkArea;
-                AppWindow.Resize(new SizeInt32(1280, 720));
+                AppWindow.Resize(new SizeInt32(Convert.ToInt32(1280 * rawPixelsPerViewPixel), Convert.ToInt32(720 * rawPixelsPerViewPixel)));
                 AppWindow.Move(new PointInt32((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
             }
 
