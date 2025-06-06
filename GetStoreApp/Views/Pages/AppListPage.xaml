@@ -22,6 +22,9 @@
         <XamlUICommand x:Name="OpenInstalledFolderCommand" ExecuteRequested="{x:Bind OnOpenInstalledFolderExecuteRequested}" />
         <XamlUICommand x:Name="OpenManifestCommand" ExecuteRequested="{x:Bind OnOpenManifestExecuteRequested}" />
         <XamlUICommand x:Name="OpenStoreCommand" ExecuteRequested="{x:Bind OnOpenStoreExecuteRequested}" />
+        <XamlUICommand x:Name="MoveCommand" ExecuteRequested="{x:Bind OnMoveExecuteRequested}" />
+        <XamlUICommand x:Name="RepairCommand" ExecuteRequested="{x:Bind OnRepairExecuteRequested}" />
+        <XamlUICommand x:Name="ResetCommand" ExecuteRequested="{x:Bind OnResetExecuteRequested}" />
         <XamlUICommand x:Name="UninstallCommand" ExecuteRequested="{x:Bind OnUninstallExecuteRequested}" />
         <XamlUICommand x:Name="ViewInformationCommand" ExecuteRequested="{x:Bind OnViewInformationExecuteRequested}" />
     </Page.Resources>
@@ -528,11 +531,54 @@
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/OpenCacheFolder')}" />
                                         </MenuFlyoutSubItem>
 
+                                        <MenuFlyoutSeparator />
+
+                                        <MenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
+                                            Command="{StaticResource MoveCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/Move')}"
+                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.IsNotSystemPackage(SignatureKind)}">
+
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE7C2;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+
+                                        <MenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
+                                            Command="{StaticResource RepairCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/Repair')}">
+
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE90F;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+
+                                        <MenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
+                                            Command="{StaticResource ResetCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/Reset')}">
+
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE845;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+
                                         <MenuFlyoutItem
                                             Height="32"
                                             Padding="11,0"
                                             Command="{StaticResource UninstallCommand}"
                                             CommandParameter="{x:Bind}"
+                                            IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
                                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/Uninstall')}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.IsNotSystemPackage(SignatureKind)}">
 
@@ -549,7 +595,7 @@
                             Margin="16,0"
                             VerticalAlignment="Bottom"
                             IsIndeterminate="True"
-                            Visibility="{x:Bind IsUninstalling, Mode=OneWay}" />
+                            Visibility="{x:Bind IsOperating, Mode=OneWay}" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

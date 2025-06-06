@@ -41,6 +41,18 @@ namespace GetStoreApp.Views.Pages
         private readonly string PackageCountInfoString = ResourceService.GetLocalized("AppList/PackageCountInfo");
         private readonly string PackageEmptyDescriptionString = ResourceService.GetLocalized("AppList/PackageEmptyDescription");
         private readonly string PackageEmptyWithConditionDescriptionString = ResourceService.GetLocalized("AppList/PackageEmptyWithConditionDescription");
+        private readonly string RepairFailed1String = ResourceService.GetLocalized("AppList/RepairFailed1");
+        private readonly string RepairFailed2String = ResourceService.GetLocalized("AppList/RepairFailed2");
+        private readonly string RepairFailed3String = ResourceService.GetLocalized("AppList/RepairFailed3");
+        private readonly string RepairFailed4String = ResourceService.GetLocalized("AppList/RepairFailed4");
+        private readonly string RepairFailed5String = ResourceService.GetLocalized("AppList/RepairFailed5");
+        private readonly string RepairSuccessfullyString = ResourceService.GetLocalized("AppList/RepairSuccessfully");
+        private readonly string ResetFailed1String = ResourceService.GetLocalized("AppList/ResetFailed1");
+        private readonly string ResetFailed2String = ResourceService.GetLocalized("AppList/ResetFailed2");
+        private readonly string ResetFailed3String = ResourceService.GetLocalized("AppList/ResetFailed3");
+        private readonly string ResetFailed4String = ResourceService.GetLocalized("AppList/ResetFailed4");
+        private readonly string ResetFailed5String = ResourceService.GetLocalized("AppList/ResetFailed5");
+        private readonly string ResetSuccessfullyString = ResourceService.GetLocalized("AppList/ResetSuccessfully");
         private readonly string UninstallFailed1String = ResourceService.GetLocalized("AppList/UninstallFailed1");
         private readonly string UninstallFailed2String = ResourceService.GetLocalized("AppList/UninstallFailed2");
         private readonly string UninstallFailed3String = ResourceService.GetLocalized("AppList/UninstallFailed3");
@@ -281,7 +293,7 @@ namespace GetStoreApp.Views.Pages
                                 SignatureKind = GetSignatureKind(package),
                                 InstalledDate = GetInstalledDate(package),
                                 Package = package,
-                                IsUninstalling = false
+                                IsOperating = false
                             });
                         }
                     }
@@ -548,13 +560,149 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 移动应用
+        /// </summary>
+        private void OnMoveExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            // TODO：未完成
+        }
+
+        /// <summary>
+        /// 修复应用
+        /// </summary>
+        private async void OnRepairExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is PackageModel package)
+            {
+                package.IsOperating = true;
+
+                try
+                {
+                    PackageDeploymentResult packageDeploymentResult = await Task.Run(async () =>
+                    {
+                        return await packageDeploymentManager.RepairPackageAsync(package.Package.Id.FullName);
+                    });
+
+                    // 修复成功
+                    if (packageDeploymentResult is not null && packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
+                    {
+                        // 显示 UWP 应用修复成功通知
+                        await Task.Run(() =>
+                        {
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(RepairSuccessfullyString, package.Package.DisplayName));
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                        });
+
+                        package.IsOperating = false;
+                    }
+                    // 修复失败
+                    else
+                    {
+                        // 显示 UWP 应用修复失败通知
+                        await Task.Run(() =>
+                        {
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(RepairFailed1String, package.Package.DisplayName));
+                            appNotificationBuilder.AddText(RepairFailed2String);
+                            appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                            {
+                                RepairFailed3String,
+                                string.Format(RepairFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : UnknownString),
+                                string.Format(RepairFailed5String, packageDeploymentResult.ErrorText)
+                            }));
+                            AppNotificationButton openSettingsButton = new(OpenSettingsString);
+                            openSettingsButton.Arguments.Add("action", "OpenSettings");
+                            appNotificationBuilder.AddButton(openSettingsButton);
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnRepairExecuteRequested), 1, packageDeploymentResult.ExtendedError is not null ? packageDeploymentResult.ExtendedError : new Exception());
+                        });
+
+                        package.IsOperating = false;
+                    }
+                }
+                catch (Exception e)
+                {
+                    package.IsOperating = false;
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnRepairExecuteRequested), 2, e);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 重置应用
+        /// </summary>
+        private async void OnResetExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is PackageModel package)
+            {
+                package.IsOperating = true;
+
+                try
+                {
+                    PackageDeploymentResult packageDeploymentResult = await Task.Run(async () =>
+                    {
+                        return await packageDeploymentManager.ResetPackageAsync(package.Package.Id.FullName);
+                    });
+
+                    // 重置成功
+                    if (packageDeploymentResult is not null && packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
+                    {
+                        // 显示 UWP 应用修复成功通知
+                        await Task.Run(() =>
+                        {
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(ResetSuccessfullyString, package.Package.DisplayName));
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                        });
+
+                        package.IsOperating = false;
+                    }
+                    // 重置失败
+                    else
+                    {
+                        // 显示 UWP 应用重置失败通知
+                        await Task.Run(() =>
+                        {
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(ResetFailed1String, package.Package.DisplayName));
+                            appNotificationBuilder.AddText(ResetFailed2String);
+                            appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                            {
+                                ResetFailed3String,
+                                string.Format(ResetFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : UnknownString),
+                                string.Format(ResetFailed5String, packageDeploymentResult.ErrorText)
+                            }));
+                            AppNotificationButton openSettingsButton = new(OpenSettingsString);
+                            openSettingsButton.Arguments.Add("action", "OpenSettings");
+                            appNotificationBuilder.AddButton(openSettingsButton);
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnResetExecuteRequested), 1, packageDeploymentResult.ExtendedError is not null ? packageDeploymentResult.ExtendedError : new Exception());
+                        });
+
+                        package.IsOperating = false;
+                    }
+                }
+                catch (Exception e)
+                {
+                    package.IsOperating = false;
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnResetExecuteRequested), 2, e);
+                }
+            }
+        }
+
+        /// <summary>
         /// 卸载应用
         /// </summary>
         private async void OnUninstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is PackageModel package)
             {
-                package.IsUninstalling = true;
+                package.IsOperating = true;
 
                 try
                 {
@@ -578,7 +726,6 @@ namespace GetStoreApp.Views.Pages
                         AppManagerList.Remove(package);
                         AppManagerCollection.Remove(package);
                     }
-
                     // 卸载失败
                     else
                     {
@@ -602,11 +749,12 @@ namespace GetStoreApp.Views.Pages
                             LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnUninstallExecuteRequested), 1, packageDeploymentResult.ExtendedError is not null ? packageDeploymentResult.ExtendedError : new Exception());
                         });
 
-                        package.IsUninstalling = false;
+                        package.IsOperating = false;
                     }
                 }
                 catch (Exception e)
                 {
+                    package.IsOperating = false;
                     LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnUninstallExecuteRequested), 2, e);
                 }
             }
@@ -1468,7 +1616,7 @@ namespace GetStoreApp.Views.Pages
                             SignatureKind = GetSignatureKind(package),
                             InstalledDate = GetInstalledDate(package),
                             Package = package,
-                            IsUninstalling = false
+                            IsOperating = false
                         });
                     }
                 }
