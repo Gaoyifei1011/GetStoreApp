@@ -1,0 +1,21 @@
+{
+  "AppCacheFolder": "מטמון יישום",
+  "Aria2Configuration": "תצורת הורדה של Aria2",
+  "Aria2ConfigurationDescription": "התאם אישית את אופן ההורדה של Aria2 באמצעות קובץ תצורה",
+  "ChangeFolder": "שנה תיקייה",
+  "Configuration": "הגדר",
+  "Custom": "מותאם אישית",
+  "DeliveryOptimization": "הגדרות אופטימיזציית מסירה",
+  "DeliveryOptimizationDescription": "פתח את הגדרות אופטימיזציית המסירה של המערכת",
+  "DesktopFolder": "שולחן עבודה",
+  "DoEngineAria2": "Aria2",
+  "DoEngineBits": "שירות העברה חכמה ברקע (BITS)",
+  "DoEngineDo": "אופטימיזציית מסירה",
+  "DoEngineMode": "מצב מנוע הורדה",
+  "DoEngineModeDescription": "הגדר את מנוע ההורדה שישמש בעת הורדת קבצים. הגדרה זו תיכנס לתוקף לאחר הפעלה מחדש.",
+  "DownloadFolder": "הורדות",
+  "FileStoragePath": "נתיב אחסון קבצים",
+  "LearnDoEngine": "הסבר על מנוע ההורדה",
+  "Open": "פתח",
+  "OpenFolder": "לחץ לגישה לתיקייה זו"
+}

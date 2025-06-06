@@ -1,0 +1,15 @@
+{
+  "AllowUnsignedPackage": "חבילת התקנה לא חתומה",
+  "AllowUnsignedPackageDescription": "אפשר התקנת חבילות התקנה לא חתומות",
+  "AllowUnsignedPackageOffContent": "לא",
+  "AllowUnsignedPackageOnContent": "כן",
+  "DeveloperOptions": "אפשרויות מפתחים",
+  "ForceAppShutdown": "כפה סגירת יישום",
+  "ForceAppShutdownDescription": "בעת התקנת יישום, כפה סגירת תהליכים המשויכים לחבילה",
+  "ForceAppShutdownOffContent": "לא",
+  "ForceAppShutdownOnContent": "כן",
+  "ForceTargetAppShutdown": "כפה סגירת תהליכים המשויכים לחבילה",
+  "ForceTargetAppShutdownDescription": "בעת התקנת יישום, כפה סגירת תהליכים המשויכים לחבילה",
+  "ForceTargetAppShutdownOffContent": "לא",
+  "ForceTargetAppShutdownOnContent": "כן"
+}

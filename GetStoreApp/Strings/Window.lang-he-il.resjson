@@ -1,0 +1,21 @@
+{
+  "AppManager": "ניהול יישומים",
+  "AppUpdate": "עדכון יישומים",
+  "CheckNetWorkConnection": "בדוק חיבור רשת",
+  "Close": "סגור",
+  "Download": "ניהול הורדות",
+  "Maximize": "הגדל",
+  "Minimize": "מזער",
+  "Move": "הזז",
+  "NetworkError1": "היישום במצב לא מקוון",
+  "NetworkError2": "חיבור הרשת אינו תקין, היישום במצב לא מקוון. אנא בדוק את חיבור הרשת שלך.",
+  "PinToStartScreen": "הצמד למסך 'התחל'",
+  "Restore": "שחזר",
+  "RunningAdministrator": "(מנהל מערכת)",
+  "Settings": "הגדרות",
+  "Size": "גודל",
+  "Store": "חנות Microsoft",
+  "Title": "קבל יישום מהחנות",
+  "Web": "פתח דף אינטרנט",
+  "WinGet": "חבילת WinGet"
+}

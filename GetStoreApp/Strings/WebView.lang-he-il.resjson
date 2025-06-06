@@ -1,0 +1,18 @@
+{
+  "Back": "חזור",
+  "ClearWebCache": "נקה מטמון אינטרנט",
+  "Download": "הורד",
+  "DownloadWebView2Runtime": "הורד והתקן את WebView2 Runtime",
+  "Forward": "המשך",
+  "Loading": "(טוען)",
+  "OpenCacheFolder": "פתח תיקיית מטמון",
+  "OpenWithBrowser": "פתח באמצעות דפדפן",
+  "Refresh": "רענן",
+  "Settings": "הגדרות",
+  "WarningSuitableWebView2NotFound": "לא זוהתה גרסה מתאימה של Microsoft Edge WebView2 Runtime.",
+  "WebBrowser": "דפדפן אינטרנט",
+  "WebTitle": "ממשק אינטרנט",
+  "WebView2Closed": "לא ניתן ליצור CoreWebView2 עבור רכיב WebView2 שנסגר.",
+  "WebView2NotPresent": "נכשל מכיוון שאין CoreWebView2 חוקי. ודא שאחד נוצר, לדוגמה על ידי קריאה ל-API EnsureCoreWebView2Async().",
+  "WebView2NotPresentClosed": "נכשל מכיוון שאין CoreWebView2 חוקי. אחד היה קיים, אך נסגר."
+}

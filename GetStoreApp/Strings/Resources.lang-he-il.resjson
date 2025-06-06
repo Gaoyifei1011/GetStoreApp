@@ -1,0 +1,16 @@
+{
+  "AppInstaller": "קובץ מתקין יישומים",
+  "InstallerAppDescription": "מתקין יישומים",
+  "InstallerAppDisplayName": "מתקין יישומים",
+  "InstallerAppShortDisplayName": "מתקין יישומים",
+  "MainAppDescription": "קבל יישום מהחנות",
+  "MainAppDisplayName": "קבל יישום מהחנות",
+  "MainAppShortDisplayName": "קבל יישום מהחנות",
+  "MainProtocolName": "קבל יישום מהחנות",
+  "Package": "חבילת יישום של Windows",
+  "PackageBundle": "אגֶדֶת חבילות יישום של Windows",
+  "PackageDisplayName": "קבל יישום מהחנות",
+  "PinnerProtocolName": "תוכנית עזר להצמדה",
+  "PublisherDisplayName": "גַאוֹ יִיפֵיי (高怡飞)",
+  "WebBrowserProtocolName": "דפדפן אינטרנט"
+}

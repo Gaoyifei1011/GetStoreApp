@@ -1,0 +1,8 @@
+{
+  "AppInstall": "התקן באמצעות מתקין היישומים",
+  "AppInstallAdmin": "התקן באמצעות מתקין היישומים (מנהל מערכת)",
+  "PSInstall": "התקן באמצעות PowerShell",
+  "PSInstallAdmin": "התקן באמצעות PowerShell (מנהל מערכת)",
+  "PSRegister": "רשום יישום באמצעות PowerShell",
+  "RootMenu": "קבל יישום מהחנות"
+}
