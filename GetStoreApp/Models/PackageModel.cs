@@ -69,20 +69,20 @@ namespace GetStoreApp.Models
         public DateTimeOffset InstalledDate { get; set; }
 
         /// <summary>
-        /// 应用是否正在卸载
+        /// 应用是否正在操作中
         /// </summary>
-        private bool _isUninstalling;
+        private bool _isOperating;
 
-        public bool IsUninstalling
+        public bool IsOperating
         {
-            get { return _isUninstalling; }
+            get { return _isOperating; }
 
             set
             {
-                if (!Equals(_isUninstalling, value))
+                if (!Equals(_isOperating, value))
                 {
-                    _isUninstalling = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUninstalling)));
+                    _isOperating = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsOperating)));
                 }
             }
         }
