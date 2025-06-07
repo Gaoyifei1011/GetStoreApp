@@ -264,6 +264,7 @@
     <None Remove="Views\Dialogs\DesktopStartupArgsDialog.xaml" />
     <None Remove="Views\Dialogs\FileInformationDialog.xaml" />
     <None Remove="Views\Dialogs\LicenseDialog.xaml" />
+    <None Remove="Views\Dialogs\PackageVolumeDialog.xaml" />
     <None Remove="Views\Dialogs\RebootDialog.xaml" />
     <None Remove="Views\Dialogs\RestartAppsDialog.xaml" />
     <None Remove="Views\Dialogs\TraceCleanupPromptDialog.xaml" />
@@ -313,6 +314,7 @@
     <Page Update="Views\Dialogs\DesktopStartupArgsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\FileInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\LicenseDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Dialogs\PackageVolumeDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\RebootDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\RestartAppsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\TraceCleanupPromptDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
