@@ -1,5 +1,4 @@
-﻿using Microsoft.Windows.Management.Deployment;
-using System;
+﻿using System;
 using System.ComponentModel;
 using Windows.ApplicationModel;
 
