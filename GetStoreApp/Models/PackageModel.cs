@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Windows.Management.Deployment;
+using System;
 using System.ComponentModel;
 using Windows.ApplicationModel;
 
@@ -83,6 +84,25 @@ namespace GetStoreApp.Models
                 {
                     _isOperating = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsOperating)));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 应用包操作进度
+        /// </summary>
+        private double _packageOperationProgress;
+
+        public double PackageOperationProgress
+        {
+            get { return _packageOperationProgress; }
+
+            set
+            {
+                if (!Equals(_packageOperationProgress, value))
+                {
+                    _packageOperationProgress = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageOperationProgress)));
                 }
             }
         }
