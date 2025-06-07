@@ -15,9 +15,8 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.AppNotifications.Builder;
-using System;
 using Microsoft.Windows.Management.Deployment;
-using Windows.Management.Deployment;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -267,6 +266,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 // 标记安装状态
                                 completed.IsInstalling = true;
+                                completed.InstallValue = 0;
 
                                 (bool result, PackageDeploymentResult packageDeploymentResult, Exception exception) = await Task.Run(async () =>
                                 {
@@ -790,14 +790,7 @@ namespace GetStoreApp.Views.Pages
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                for (int index = 0; index < CompletedCollection.Count; index++)
-                {
-                    if (Equals(CompletedCollection[index].DownloadKey, completed.DownloadKey))
-                    {
-                        CompletedCollection[index].InstallValue = progress.Progress * 100;
-                        break;
-                    }
-                }
+                completed.InstallValue = progress.Progress * 100;
             });
         }
 
