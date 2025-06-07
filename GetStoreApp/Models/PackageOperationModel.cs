@@ -47,7 +47,7 @@ namespace GetStoreApp.Models
         public UpgradableAppsModel UpgradableApps { get; set; }
 
         /// <summary>
-        /// 下载进度
+        /// 应用包操作进度
         /// </summary>
         private double _packageOperationProgress;
 
