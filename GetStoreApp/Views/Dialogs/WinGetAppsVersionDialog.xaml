@@ -68,6 +68,8 @@
 
             <Button
                 Grid.Column="0"
+                Width="36"
+                Height="36"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Click="{x:Bind OnBackClicked}"
@@ -76,7 +78,7 @@
                 ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Back')}">
 
                 <Button.Content>
-                    <AnimatedIcon Margin="4">
+                    <AnimatedIcon Margin="2">
                         <AnimatedIcon.Source>
                             <animatedvisuals:AnimatedBackVisualSource />
                         </AnimatedIcon.Source>

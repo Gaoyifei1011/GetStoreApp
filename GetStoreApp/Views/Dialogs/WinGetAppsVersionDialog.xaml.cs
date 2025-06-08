@@ -93,7 +93,7 @@ namespace GetStoreApp.Views.Dialogs
                     SecondaryText = "AppVersionInformation"
                 });
             }
-            if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageList[1]))
+            else if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageList[1]))
             {
                 if (args.Parameter is List<object> argsList && argsList.Count is 3 && argsList[2] is PackageOperationModel packageOperation)
                 {
@@ -195,7 +195,7 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 获取当前导航到的页
         /// </summary>
-        public Type GetCurrentPageType()
+        private Type GetCurrentPageType()
         {
             return WinGetAppsVersionFrame.CurrentSourcePageType;
         }
