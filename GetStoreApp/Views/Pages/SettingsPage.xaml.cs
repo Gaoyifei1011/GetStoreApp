@@ -254,7 +254,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取当前导航到的页
         /// </summary>
-        public Type GetCurrentPageType()
+        private Type GetCurrentPageType()
         {
             return SettingsFrame.CurrentSourcePageType;
         }
@@ -262,7 +262,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取当前导航控件内容对应的页面
         /// </summary>
-        public object GetFrameContent()
+        private object GetFrameContent()
         {
             return SettingsFrame.Content;
         }

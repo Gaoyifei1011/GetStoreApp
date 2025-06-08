@@ -272,7 +272,7 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     try
                                     {
-                                        Microsoft.Windows.Management.Deployment.AddPackageOptions addPackageOptions = new()
+                                        AddPackageOptions addPackageOptions = new()
                                         {
                                             AllowUnsigned = AppInstallService.AllowUnsignedPackageValue,
                                             ForceAppShutdown = AppInstallService.ForceAppShutdownValue,
@@ -854,9 +854,9 @@ namespace GetStoreApp.Views.Pages
         /// 获取是否正在加载中
         /// </summary>
 
-        private bool GetIsLoading(CompletedResultKind completedKind)
+        private bool GetIsLoading(CompletedResultKind completedResultKind)
         {
-            return completedKind is not CompletedResultKind.Loading;
+            return completedResultKind is not CompletedResultKind.Loading;
         }
     }
 }

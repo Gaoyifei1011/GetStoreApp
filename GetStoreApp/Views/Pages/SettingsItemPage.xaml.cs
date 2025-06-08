@@ -321,7 +321,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取当前导航到的页
         /// </summary>
-        public Type GetCurrentPageType()
+        private Type GetCurrentPageType()
         {
             return SettingsItemFrame.CurrentSourcePageType;
         }

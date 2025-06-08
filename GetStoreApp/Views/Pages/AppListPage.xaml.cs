@@ -454,7 +454,7 @@ namespace GetStoreApp.Views.Pages
 
         #endregion 第一部分：重写父类事件
 
-        #region 第一部分：XamlUICommand 命令调用时挂载的事件
+        #region 第二部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
         /// 打开应用
@@ -576,10 +576,10 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    PackageVolumeDialog packageVolumeDialog = new();
+                    PackageVolumeDialog packageVolumeDialog = new(packageManager, package);
                     ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(packageVolumeDialog);
 
-                    if (contentDialogResult is ContentDialogResult.Primary && packageVolumeDialog.SelectedPackageVolume is not null)
+                    if (contentDialogResult is ContentDialogResult.Primary && packageVolumeDialog.GetFrameContent() is PackageVolumeInfoPage packageVolumeInfoPage && packageVolumeInfoPage.SelectedPackageVolume is not null)
                     {
                         package.PackageOperationProgress = 0;
                         package.IsOperating = true;
@@ -589,7 +589,7 @@ namespace GetStoreApp.Views.Pages
                             try
                             {
                                 // 移动目标应用，并获取移动进度
-                                IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> movePackageWithProgress = packageManager.MovePackageToVolumeAsync(package.Package.Id.FullName, DeploymentOptions.ForceApplicationShutdown, packageVolumeDialog.SelectedPackageVolume.WinRTPackageVolume);
+                                IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> movePackageWithProgress = packageManager.MovePackageToVolumeAsync(package.Package.Id.FullName, DeploymentOptions.None, packageVolumeInfoPage.SelectedPackageVolume.WinRTPackageVolume);
 
                                 // 更新移动进度
                                 movePackageWithProgress.Progress = (result, progress) => OnPackageMoveProgress(result, progress, package);
@@ -1180,9 +1180,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第二部分：XamlUICommand 命令调用时挂载的事件
 
-        #region 第二部分：应用管理页面——挂载的事件
+        #region 第三部分：应用管理页面——挂载的事件
 
         /// <summary>
         /// 打开设置中的安装的应用
@@ -2125,9 +2125,9 @@ namespace GetStoreApp.Views.Pages
             needToRefreshData = false;
         }
 
-        #endregion 第二部分：应用管理页面——挂载的事件
+        #endregion 第三部分：应用管理页面——挂载的事件
 
-        #region 第三部分：应用管理页面——自定义事件
+        #region 第四部分：应用管理页面——自定义事件
 
         /// <summary>
         /// 应用移动状态发生改变时触发的事件
@@ -2173,7 +2173,7 @@ namespace GetStoreApp.Views.Pages
             });
         }
 
-        #endregion 第三部分：应用管理页面——自定义事件
+        #endregion 第四部分：应用管理页面——自定义事件
 
         /// <summary>
         /// 获取加载应用是否成功

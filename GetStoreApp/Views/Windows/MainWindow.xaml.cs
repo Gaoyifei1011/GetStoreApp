@@ -1224,7 +1224,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 页面向后导航
         /// </summary>
-        public void NavigationFrom()
+        private void NavigationFrom()
         {
             if (WindowFrame.CanGoBack)
             {
@@ -1235,7 +1235,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 获取当前导航到的页
         /// </summary>
-        public Type GetCurrentPageType()
+        private Type GetCurrentPageType()
         {
             return WindowFrame.CurrentSourcePageType;
         }
@@ -1243,7 +1243,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 检查当前页面是否能向后导航
         /// </summary>
-        public bool CanGoBack()
+        private bool CanGoBack()
         {
             return WindowFrame.CanGoBack;
         }

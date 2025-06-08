@@ -74,7 +74,7 @@ namespace GetStoreApp.Views.Pages
                     SecondaryText = "AppList"
                 });
             }
-            if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageList[1]))
+            else if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageList[1]))
             {
                 BreadCollection.Add(new ContentLinkInfo()
                 {
