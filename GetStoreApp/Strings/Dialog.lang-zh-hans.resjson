@@ -54,6 +54,8 @@
   "No": "否",
   "OK": "确定",
   "OpenDownloadPage": "打开下载页面",
+  "PackageVolumeInfo": "包存储卷",
+  "PackageVolumeAdd": "添加卷",
   "Reboot": "重启",
   "RebootTitle": "重启设备提示",
   "Restart": "重启应用",

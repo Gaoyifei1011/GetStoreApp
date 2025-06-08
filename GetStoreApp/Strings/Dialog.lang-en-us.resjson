@@ -54,6 +54,8 @@
   "No": "No",
   "OK": "OK",
   "OpenDownloadPage": "Open download page",
+  "PackageVolumeInfo": "Package volume",
+  "PackageVolumeAdd": "Add volume",
   "Reboot": "Reboot",
   "RebootTitle": "Reboot device prompt",
   "Restart": "Application restart",
