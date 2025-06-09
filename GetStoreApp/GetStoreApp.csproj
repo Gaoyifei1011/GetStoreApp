@@ -290,6 +290,7 @@
     <None Remove="Views\Pages\SettingsAppInstallPage.xaml" />
     <None Remove="Views\Pages\SettingsGeneralPage.xaml" />
     <None Remove="Views\Pages\SettingsItemPage.xaml" />
+    <None Remove="Views\Pages\SettingsPackageVolumePage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
     <None Remove="Views\Pages\SettingsStoreAndUpdatePage.xaml" />
     <None Remove="Views\Pages\SettingsWinGetPage.xaml" />
@@ -343,6 +344,7 @@
     <Page Update="Views\Pages\SettingsDownloadPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsGeneralPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsItemPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\SettingsPackageVolumePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsStoreAndUpdatePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsWinGetPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -403,6 +405,8 @@
     <PRIResource Include="Strings\SettingsGeneral.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\SettingsItem.lang-en-us.resjson" />
     <PRIResource Include="Strings\SettingsItem.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\SettingsPackageVolume.lang-en-us.resjson" />
+    <PRIResource Include="Strings\SettingsPackageVolume.lang-zh-hans.resjson" />    
     <PRIResource Include="Strings\SettingsStoreAndUpdate.lang-en-us.resjson" />
     <PRIResource Include="Strings\SettingsStoreAndUpdate.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\SettingsWinGet.lang-en-us.resjson" />
