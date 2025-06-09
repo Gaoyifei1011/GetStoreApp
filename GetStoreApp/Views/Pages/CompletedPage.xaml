@@ -14,6 +14,9 @@
     mc:Ignorable="d">
 
     <Page.Resources>
+        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
+
         <XamlUICommand x:Name="DeleteCommand" ExecuteRequested="{x:Bind OnDeleteExecuteRequested}" />
         <XamlUICommand x:Name="DeleteWithFileCommand" ExecuteRequested="{x:Bind OnDeleteWithFileExecuteRequested}" />
         <XamlUICommand x:Name="FileInformationCommand" ExecuteRequested="{x:Bind OnFileInformationExecuteRequested}" />
@@ -81,11 +84,6 @@
                 VerticalAlignment="Center"
                 Background="Transparent"
                 DefaultLabelPosition="Right">
-
-                <CommandBar.Resources>
-                    <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-                    <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-                </CommandBar.Resources>
 
                 <CommandBar.PrimaryCommands>
                     <AppBarButton

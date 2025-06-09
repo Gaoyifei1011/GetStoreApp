@@ -14,6 +14,9 @@
     mc:Ignorable="d">
 
     <Page.Resources>
+        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
+
         <XamlUICommand x:Name="DownloadCommand" ExecuteRequested="{x:Bind OnDownloadExecuteRequested}" />
         <XamlUICommand x:Name="InstallCommand" ExecuteRequested="{x:Bind OnInstallExecuteRequested}" />
         <XamlUICommand x:Name="RepairCommand" ExecuteRequested="{x:Bind OnRepairExecuteRequested}" />
@@ -97,11 +100,6 @@
                 VerticalAlignment="Center"
                 Background="Transparent"
                 DefaultLabelPosition="Right">
-
-                <CommandBar.Resources>
-                    <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-                    <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-                </CommandBar.Resources>
 
                 <CommandBar.PrimaryCommands>
                     <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/Sort')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/SortToolTip')}">

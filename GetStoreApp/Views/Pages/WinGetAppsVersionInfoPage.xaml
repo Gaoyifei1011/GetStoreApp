@@ -11,6 +11,11 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
+    </Page.Resources>
+
     <Grid>
         <Grid
             HorizontalAlignment="Center"
@@ -97,11 +102,6 @@
                         DefaultLabelPosition="Right"
                         Visibility="{x:Bind GetWinGetAppsType(SearchApps)}">
 
-                        <CommandBar.Resources>
-                            <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-                            <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-                        </CommandBar.Resources>
-
                         <CommandBar.PrimaryCommands>
                             <AppBarButton Click="{x:Bind OnCopyInformationClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/CopyInformation')}">
                                 <AppBarButton.Icon>
@@ -138,11 +138,6 @@
                         Background="Transparent"
                         DefaultLabelPosition="Right"
                         Visibility="{x:Bind GetWinGetAppsType(UpgradableApps)}">
-
-                        <CommandBar.Resources>
-                            <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-                            <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-                        </CommandBar.Resources>
 
                         <CommandBar.PrimaryCommands>
                             <AppBarButton Click="{x:Bind OnCopyInformationClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/CopyInformation')}">

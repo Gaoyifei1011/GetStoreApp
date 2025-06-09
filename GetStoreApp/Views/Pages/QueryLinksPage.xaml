@@ -18,6 +18,8 @@
         <SolidColorBrush x:Key="ExpanderChevronPressedBackground" Color="Transparent" />
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="Transparent" />
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="Transparent" />
+        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
 
         <XamlUICommand x:Name="FillinCommand" ExecuteRequested="{x:Bind OnFillinExecuteRequested}" />
         <XamlUICommand x:Name="DownloadCommand" ExecuteRequested="{x:Bind OnDownloadExecuteRequested}" />
@@ -511,11 +513,6 @@
                                 Background="Transparent"
                                 DefaultLabelPosition="Right">
 
-                                <CommandBar.Resources>
-                                    <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-                                    <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-                                </CommandBar.Resources>
-
                                 <CommandBar.PrimaryCommands>
                                     <AppBarButton Click="{x:Bind OnCopyQueryedAppInfoClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyQueryedAppInfo')}">
                                         <AppBarButton.Icon>
@@ -672,11 +669,6 @@
                         DefaultLabelPosition="Right"
                         Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelectMode), Mode=OneWay}">
 
-                        <CommandBar.Resources>
-                            <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-                            <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-                        </CommandBar.Resources>
-
                         <CommandBar.PrimaryCommands>
                             <AppBarButton
                                 Click="{x:Bind OnSelectClicked}"
@@ -698,11 +690,6 @@
                         Background="Transparent"
                         DefaultLabelPosition="Right"
                         Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
-
-                        <CommandBar.Resources>
-                            <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-                            <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-                        </CommandBar.Resources>
 
                         <CommandBar.PrimaryCommands>
                             <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyOptions')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyOptionsToolTip')}">

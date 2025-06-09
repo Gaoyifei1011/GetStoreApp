@@ -14,6 +14,8 @@
     <Page.Resources>
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="Transparent" />
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="Transparent" />
+        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
 
         <XamlUICommand x:Name="LaunchCommand" ExecuteRequested="{x:Bind OnLaunchExecuteRequested}" />
         <XamlUICommand x:Name="OpenFolderCommand" ExecuteRequested="{x:Bind OnOpenFolderExecuteRequested}" />
@@ -66,11 +68,6 @@
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/AppInformation')}" />
 
                         <CommandBar Grid.Column="2" DefaultLabelPosition="Right">
-
-                            <CommandBar.Resources>
-                                <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-                                <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-                            </CommandBar.Resources>
 
                             <CommandBar.PrimaryCommands>
                                 <AppBarButton Click="{x:Bind OnCopyClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Copy')}">
@@ -128,6 +125,7 @@
                             Grid.Row="0"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/AppDisplayName')}"
                             TextWrapping="Wrap" />
 
@@ -143,6 +141,7 @@
                             Grid.Row="1"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PackageFamilyName')}"
                             TextWrapping="Wrap" />
 
@@ -158,6 +157,7 @@
                             Grid.Row="2"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PackageFullName')}"
                             TextWrapping="Wrap" />
 
@@ -173,6 +173,7 @@
                             Grid.Row="3"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/AppDescription')}"
                             TextWrapping="Wrap" />
 
@@ -202,6 +203,7 @@
                             Grid.Row="5"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PublisherDisplayName')}"
                             TextWrapping="Wrap" />
 
@@ -217,6 +219,7 @@
                             Grid.Row="6"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PublisherId')}"
                             TextWrapping="Wrap" />
 
@@ -246,6 +249,7 @@
                             Grid.Row="8"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Version')}"
                             TextWrapping="Wrap" />
 
@@ -261,6 +265,7 @@
                             Grid.Row="9"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/InstalledDate')}"
                             TextWrapping="Wrap" />
 
@@ -276,6 +281,7 @@
                             Grid.Row="10"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Architecture')}"
                             TextWrapping="Wrap" />
 
@@ -291,6 +297,7 @@
                             Grid.Row="11"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/SignatureKind')}"
                             TextWrapping="Wrap" />
 
@@ -306,6 +313,7 @@
                             Grid.Row="12"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/ResourceId')}"
                             TextWrapping="Wrap" />
 
@@ -321,6 +329,7 @@
                             Grid.Row="13"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsBundle')}"
                             TextWrapping="Wrap" />
 
@@ -336,6 +345,7 @@
                             Grid.Row="14"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsDevelopmentMode')}"
                             TextWrapping="Wrap" />
 
@@ -351,6 +361,7 @@
                             Grid.Row="15"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsFramework')}"
                             TextWrapping="Wrap" />
 
@@ -366,6 +377,7 @@
                             Grid.Row="16"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsOptional')}"
                             TextWrapping="Wrap" />
 
@@ -381,6 +393,7 @@
                             Grid.Row="17"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsResourcePackage')}"
                             TextWrapping="Wrap" />
 
@@ -396,6 +409,7 @@
                             Grid.Row="18"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsStub')}"
                             TextWrapping="Wrap" />
 
@@ -411,6 +425,7 @@
                             Grid.Row="19"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/VertifyIsOK')}"
                             TextWrapping="Wrap" />
 

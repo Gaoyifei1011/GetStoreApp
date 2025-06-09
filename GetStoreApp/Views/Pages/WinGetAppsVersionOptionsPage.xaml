@@ -13,6 +13,11 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
+    </Page.Resources>
+
     <Grid>
         <!--  下载应用控件  -->
         <Grid x:Name="DownloadGrid" x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Download), Mode=OneWay}">
@@ -41,10 +46,7 @@
                     Background="Transparent"
                     DefaultLabelPosition="Right">
 
-                    <CommandBar.Resources>
-                        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-                        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-                    </CommandBar.Resources>
+
 
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnDownloadClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/Download')}">
@@ -403,10 +405,7 @@
                     Background="Transparent"
                     DefaultLabelPosition="Right">
 
-                    <CommandBar.Resources>
-                        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-                        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-                    </CommandBar.Resources>
+
 
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnInstallClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/Install')}">
@@ -936,10 +935,6 @@
                     Background="Transparent"
                     DefaultLabelPosition="Right">
 
-                    <CommandBar.Resources>
-                        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-                        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-                    </CommandBar.Resources>
 
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnRepairClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/Repair')}">
@@ -1279,10 +1274,7 @@
                     Background="Transparent"
                     DefaultLabelPosition="Right">
 
-                    <CommandBar.Resources>
-                        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-                        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-                    </CommandBar.Resources>
+
 
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnUpgradeClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/Upgrade')}">

@@ -13,6 +13,9 @@
     mc:Ignorable="d">
 
     <Page.Resources>
+        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
+
         <XamlUICommand x:Name="UpgradeCommand" ExecuteRequested="{x:Bind OnUpgradeExecuteRequested}" />
         <XamlUICommand x:Name="ViewVersionInfoCommand" ExecuteRequested="{x:Bind OnViewVersionInfoExecuteRequested}" />
     </Page.Resources>
@@ -77,11 +80,6 @@
                 VerticalAlignment="Center"
                 Background="Transparent"
                 DefaultLabelPosition="Right">
-
-                <CommandBar.Resources>
-                    <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-                    <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-                </CommandBar.Resources>
 
                 <CommandBar.PrimaryCommands>
                     <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/Sort')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortToolTip')}">

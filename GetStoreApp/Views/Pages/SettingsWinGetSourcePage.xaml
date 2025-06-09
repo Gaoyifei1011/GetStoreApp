@@ -12,6 +12,9 @@
     mc:Ignorable="d">
 
     <Page.Resources>
+        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
+
         <XamlUICommand x:Name="CheckBoxClickCommand" ExecuteRequested="{x:Bind OnCheckBoxClickExecuteRequested}" />
         <XamlUICommand x:Name="EditCommand" ExecuteRequested="{x:Bind OnEditExecuteRequested}" />
         <XamlUICommand x:Name="RemoveDataSourceCommand" ExecuteRequested="{x:Bind OnRemoveDataSourceExecuteRequested}" />
@@ -77,11 +80,6 @@
                 VerticalAlignment="Center"
                 Background="Transparent"
                 DefaultLabelPosition="Right">
-
-                <CommandBar.Resources>
-                    <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-                    <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-                </CommandBar.Resources>
 
                 <CommandBar.PrimaryCommands>
                     <AppBarButton
@@ -217,7 +215,7 @@
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="model:WinGetSourceModel">
                                 <Expander
-                                    Margin="0,0,0,3"
+                                    Margin="0,0,0,2"
                                     HorizontalAlignment="Stretch"
                                     HorizontalContentAlignment="Stretch"
                                     Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -320,6 +318,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/SourceId')}" />
 
                                             <TextBlock
@@ -336,6 +335,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Explicit')}" />
 
                                             <TextBlock
@@ -352,6 +352,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/TrustLevel')}" />
 
                                             <TextBlock
@@ -368,6 +369,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/LastUpdateTime')}" />
 
                                             <TextBlock
@@ -384,6 +386,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Origin')}" />
 
                                             <TextBlock
@@ -400,6 +403,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Type')}" />
 
                                             <TextBlock
@@ -416,6 +420,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AcceptSourceAgreements')}" />
 
                                             <TextBlock
@@ -432,6 +437,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AdditionalPackageCatalogArguments')}" />
 
                                             <TextBlock
@@ -448,6 +454,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AuthenticationType')}" />
 
                                             <TextBlock
@@ -464,6 +471,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AuthenticationAccount')}" />
 
                                             <TextBlock
@@ -480,6 +488,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/PackageCatalogBackgroundUpdateInterval')}" />
 
                                             <TextBlock
@@ -559,7 +568,7 @@
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="model:WinGetSourceModel">
                                 <Expander
-                                    Margin="0,0,0,3"
+                                    Margin="0,0,0,2"
                                     HorizontalAlignment="Stretch"
                                     HorizontalContentAlignment="Stretch"
                                     Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -709,6 +718,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/SourceId')}" />
 
                                             <TextBlock
@@ -725,6 +735,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Explicit')}" />
 
                                             <TextBlock
@@ -741,6 +752,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/TrustLevel')}" />
 
                                             <TextBlock
@@ -757,6 +769,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/LastUpdateTime')}" />
 
                                             <TextBlock
@@ -773,6 +786,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Origin')}" />
 
                                             <TextBlock
@@ -789,6 +803,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Type')}" />
 
                                             <TextBlock
@@ -805,6 +820,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AcceptSourceAgreements')}" />
 
                                             <TextBlock
@@ -821,6 +837,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AdditionalPackageCatalogArguments')}" />
 
                                             <TextBlock
@@ -837,6 +854,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AuthenticationType')}" />
 
                                             <TextBlock
@@ -853,6 +871,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AuthenticationAccount')}" />
 
                                             <TextBlock
@@ -869,6 +888,7 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/PackageCatalogBackgroundUpdateInterval')}" />
 
                                             <TextBlock
