@@ -20,6 +20,7 @@
   "LearnWinGetConfig": "learn config options",
   "LinkFilter": "Link filter",
   "OtherOption": "Other options instruction",
+  "PackageVolumeConfiguration": "Package volume configuration",
   "OtherOptionDescription": "Some options are enabled in relation to the corresponding system settings options, so please make sure that the corresponding options are properly enabled",
   "QueryLinksCountryOrRegion": "When you use the official interface to search for apps from the store or to search for links to apps from the store, search according to the country or region of the store that you set in the settings.",
   "QueryLinksMode": "Query links mode instruction",

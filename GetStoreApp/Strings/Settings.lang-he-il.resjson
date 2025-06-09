@@ -20,6 +20,7 @@
   "LearnWinGetConfig": "למד על אפשרויות תצורה",
   "LinkFilter": "סינון קישורים",
   "OtherOption": "הסבר על אפשרויות אחרות",
+  "PackageVolumeConfiguration": "Package volume configuration",
   "OtherOptionDescription": "הפעלת חלק מהאפשרויות קשורה לאפשרויות מקבילות בהגדרות המערכת. אנא ודא שהאפשרויות המתאימות מופעלות כראוי.",
   "QueryLinksCountryOrRegion": "בעת שימוש בממשק הרשמי לחיפוש יישומים בחנות או לשאילתת קישורים ליישומי חנות, החיפוש יתבצע בהתאם למדינה או לאזור של החנות שהגדרת בהגדרות.",
   "QueryLinksMode": "הסבר על שיטת שאילתת קישורים",

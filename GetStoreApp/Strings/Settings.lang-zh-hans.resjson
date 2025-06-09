@@ -20,6 +20,7 @@
   "LearnWinGetConfig": "了解配置选项",
   "LinkFilter": "链接过滤",
   "OtherOption": "其他选项说明",
+  "PackageVolumeConfiguration": "应用包存储卷配置",
   "OtherOptionDescription": "部分选项的功能启用与相应的系统设置选项有关，请确保对应的选项处于正常启用状态",
   "QueryLinksCountryOrRegion": "使用官方接口搜索商店应用或查询商店的应用的链接时，根据您在设置中设定的商店的国家或地区进行检索。",
   "QueryLinksMode": "查询链接方式说明",
