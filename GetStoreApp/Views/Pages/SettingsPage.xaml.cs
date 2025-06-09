@@ -24,10 +24,11 @@ namespace GetStoreApp.Views.Pages
     public sealed partial class SettingsPage : Page
     {
         private readonly string SettingsString = ResourceService.GetLocalized("Settings/Settings");
+        private readonly string PackageVolumeConfigurationString = ResourceService.GetLocalized("Settings/PackageVolumeConfiguration");
         private readonly string WinGetSourceConfigurationString = ResourceService.GetLocalized("Settings/WinGetSourceConfiguration");
         private AppNaviagtionArgs settingNavigationArgs = AppNaviagtionArgs.None;
 
-        public List<Type> PageList { get; } = [typeof(SettingsItemPage), typeof(SettingsWinGetSourcePage)];
+        public List<Type> PageList { get; } = [typeof(SettingsItemPage), typeof(SettingsWinGetSourcePage), typeof(SettingsPackageVolumePage)];
 
         public ObservableCollection<ContentLinkInfo> BreadCollection { get; } = [];
 
@@ -49,9 +50,18 @@ namespace GetStoreApp.Views.Pages
 
             if (settingNavigationArgs is AppNaviagtionArgs.WinGetDataSource)
             {
+                // 导航到 WinGet 数据源配置页面
                 if (!Equals(GetCurrentPageType(), PageList[1]))
                 {
                     NavigateTo(PageList[1], null, null);
+                }
+            }
+            else if (settingNavigationArgs is AppNaviagtionArgs.PackageVolume)
+            {
+                // 导航到应用包存储卷配置页面
+                if (!Equals(GetCurrentPageType(), PageList[2]))
+                {
+                    NavigateTo(PageList[2], null, null);
                 }
             }
             else
@@ -112,6 +122,19 @@ namespace GetStoreApp.Views.Pages
                         SecondaryText = "WinGetSourceConfiguration"
                     });
                 }
+                else if (Equals(GetCurrentPageType(), PageList[2]))
+                {
+                    BreadCollection.Add(new ContentLinkInfo()
+                    {
+                        DisplayText = SettingsString,
+                        SecondaryText = "Settings"
+                    });
+                    BreadCollection.Add(new ContentLinkInfo()
+                    {
+                        DisplayText = PackageVolumeConfigurationString,
+                        SecondaryText = "PackageVolumeConfiguration"
+                    });
+                }
             }
 
             if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageList[1]))
@@ -120,6 +143,14 @@ namespace GetStoreApp.Views.Pages
                 {
                     DisplayText = WinGetSourceConfigurationString,
                     SecondaryText = "WinGetSourceConfiguration"
+                });
+            }
+            else if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageList[2]))
+            {
+                BreadCollection.Add(new ContentLinkInfo()
+                {
+                    DisplayText = PackageVolumeConfigurationString,
+                    SecondaryText = "PackageVolumeConfiguration"
                 });
             }
             else if (BreadCollection.Count is 2 && Equals(GetCurrentPageType(), PageList[0]))

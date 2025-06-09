@@ -31,6 +31,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
             {
+                // 导航到 WinGet 数据源配置页面
                 settingsPage.NavigateTo(settingsPage.PageList[1], null, true);
             }
         }

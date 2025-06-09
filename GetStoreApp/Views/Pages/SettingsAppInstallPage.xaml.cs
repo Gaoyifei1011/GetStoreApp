@@ -136,6 +136,8 @@ namespace GetStoreApp.Views.Pages
         {
             if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
             {
+                // 导航到应用包存储卷配置页面
+                settingsPage.NavigateTo(settingsPage.PageList[2], null, true);
             }
         }
 
