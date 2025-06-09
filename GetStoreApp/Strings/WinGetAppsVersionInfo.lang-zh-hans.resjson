@@ -28,5 +28,5 @@
   "Unknown": "[未知]",
   "Upgrade": "更新",
   "Version": "版本：",
-  "WinGetAppsVersionCountInfo": "共有 {0} 个版本"
+  "WinGetAppsVersionCountInfo": "共有{0}个版本"
 }
