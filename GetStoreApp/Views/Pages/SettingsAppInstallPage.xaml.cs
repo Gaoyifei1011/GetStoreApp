@@ -13,9 +13,9 @@ using Windows.System;
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
-    /// 设置应用安装器页面
+    /// 设置应用安装页面
     /// </summary>
-    public sealed partial class SettingsAppInstallerPage : Page, INotifyPropertyChanged
+    public sealed partial class SettingsAppInstallPage : Page, INotifyPropertyChanged
     {
         private bool _allowUnsignedPackageValue = AppInstallService.AllowUnsignedPackageValue;
 
@@ -67,7 +67,7 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SettingsAppInstallerPage()
+        public SettingsAppInstallPage()
         {
             InitializeComponent();
         }

@@ -49,7 +49,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<Type> PageList { get; } = [typeof(SettingsGeneralPage), typeof(SettingsStoreAndUpdatePage), typeof(SettingsWinGetPage), typeof(SettingsDownloadPage), typeof(SettingsAppInstallerPage), typeof(SettingsAdvancedPage), typeof(SettingsAboutPage)];
+        private List<Type> PageList { get; } = [typeof(SettingsGeneralPage), typeof(SettingsStoreAndUpdatePage), typeof(SettingsWinGetPage), typeof(SettingsDownloadPage), typeof(SettingsAppInstallPage), typeof(SettingsAdvancedPage), typeof(SettingsAboutPage)];
 
         public event PropertyChangedEventHandler PropertyChanged;
 

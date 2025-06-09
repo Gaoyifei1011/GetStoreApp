@@ -225,8 +225,8 @@
     <None Remove="Strings\SettingsAbout.lang-zh-hans.resjson" />
     <None Remove="Strings\SettingsAdvanced.lang-en-us.resjson" />
     <None Remove="Strings\SettingsAdvanced.lang-zh-hans.resjson" />
-    <None Remove="Strings\SettingsAppInstaller.lang-en-us.resjson" />
-    <None Remove="Strings\SettingsAppInstaller.lang-zh-hans.resjson" />
+    <None Remove="Strings\SettingsAppInstall.lang-en-us.resjson" />
+    <None Remove="Strings\SettingsAppInstall.lang-zh-hans.resjson" />
     <None Remove="Strings\SettingsDownload.lang-en-us.resjson" />
     <None Remove="Strings\SettingsDownload.lang-zh-hans.resjson" />
     <None Remove="Strings\SettingsGeneral.lang-en-us.resjson" />
@@ -287,7 +287,7 @@
     <None Remove="Views\Pages\SearchStorePage.xaml" />
     <None Remove="Views\Pages\SettingsAboutPage.xaml" />
     <None Remove="Views\Pages\SettingsAdvancedPage.xaml" />
-    <None Remove="Views\Pages\SettingsAppInstallerPage.xaml" />
+    <None Remove="Views\Pages\SettingsAppInstallPage.xaml" />
     <None Remove="Views\Pages\SettingsGeneralPage.xaml" />
     <None Remove="Views\Pages\SettingsItemPage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
@@ -339,7 +339,7 @@
     <Page Update="Views\Pages\SearchStorePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsAboutPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsAdvancedPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Views\Pages\SettingsAppInstallerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\SettingsAppInstallPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsDownloadPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsGeneralPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsItemPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -395,8 +395,8 @@
     <PRIResource Include="Strings\SettingsAbout.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\SettingsAdvanced.lang-en-us.resjson" />
     <PRIResource Include="Strings\SettingsAdvanced.lang-zh-hans.resjson" />
-    <PRIResource Include="Strings\SettingsAppInstaller.lang-en-us.resjson" />
-    <PRIResource Include="Strings\SettingsAppInstaller.lang-zh-hans.resjson" />
+    <PRIResource Include="Strings\SettingsAppInstall.lang-en-us.resjson" />
+    <PRIResource Include="Strings\SettingsAppInstall.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\SettingsDownload.lang-en-us.resjson" />
     <PRIResource Include="Strings\SettingsDownload.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\SettingsGeneral.lang-en-us.resjson" />
