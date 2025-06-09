@@ -33,7 +33,7 @@ namespace GetStoreApp.Views.Dialogs
 
         public List<Type> PageList { get; } = [typeof(WinGetAppsVersionInfoPage), typeof(WinGetAppsVersionOptionsPage)];
 
-        public ObservableCollection<ContentLinkInfo> BreadCollection { get; } = [];
+        private ObservableCollection<ContentLinkInfo> BreadCollection { get; } = [];
 
         public WinGetAppsVersionDialog(WinGetOperationKind winGetOptionKind, WinGetPage winGetPage, object winGetApps)
         {
