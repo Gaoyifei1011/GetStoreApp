@@ -6,12 +6,7 @@
     public enum AppNaviagtionArgs
     {
         None = 0,
-        Store = 1,
-        History = 2,
-        Instructions = 3,
-        SettingsHelp = 4,
-        DownloadOptions = 5,
-        WinGetDataSource = 6,
-        PackageVolume = 7,
+        WinGetDataSource = 1,
+        PackageVolume = 2,
     }
 }

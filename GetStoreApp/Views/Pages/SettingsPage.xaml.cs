@@ -26,7 +26,6 @@ namespace GetStoreApp.Views.Pages
         private readonly string SettingsString = ResourceService.GetLocalized("Settings/Settings");
         private readonly string PackageVolumeConfigurationString = ResourceService.GetLocalized("Settings/PackageVolumeConfiguration");
         private readonly string WinGetSourceConfigurationString = ResourceService.GetLocalized("Settings/WinGetSourceConfiguration");
-        private AppNaviagtionArgs settingNavigationArgs = AppNaviagtionArgs.None;
 
         public List<Type> PageList { get; } = [typeof(SettingsItemPage), typeof(SettingsWinGetSourcePage), typeof(SettingsPackageVolumePage)];
 
@@ -46,9 +45,8 @@ namespace GetStoreApp.Views.Pages
         {
             base.OnNavigatedTo(args);
             SettingsFrame.ContentTransitions = SuppressNavigationTransitionCollection;
-            settingNavigationArgs = args.Parameter is string parameter && Enum.TryParse(Convert.ToString(parameter), out AppNaviagtionArgs appNaviagtionArgs) ? appNaviagtionArgs : AppNaviagtionArgs.None;
 
-            if (settingNavigationArgs is AppNaviagtionArgs.WinGetDataSource)
+            if (args.Parameter is AppNaviagtionArgs.WinGetDataSource)
             {
                 // 导航到 WinGet 数据源配置页面
                 if (!Equals(GetCurrentPageType(), PageList[1]))
@@ -56,7 +54,7 @@ namespace GetStoreApp.Views.Pages
                     NavigateTo(PageList[1], null, null);
                 }
             }
-            else if (settingNavigationArgs is AppNaviagtionArgs.PackageVolume)
+            else if (args.Parameter is AppNaviagtionArgs.PackageVolume)
             {
                 // 导航到应用包存储卷配置页面
                 if (!Equals(GetCurrentPageType(), PageList[2]))

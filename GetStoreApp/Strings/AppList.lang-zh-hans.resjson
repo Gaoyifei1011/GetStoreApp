@@ -27,6 +27,7 @@
   "PackageEmpty": "没有已安装的应用",
   "PackageEmptyDescription": "您的设备上没有应用",
   "PackageEmptyWithConditionDescription": "您的设备上没有符合对应条件的应用",
+  "PackageVolumeConfiguration": "存储卷设置",
   "PlaceHolderText": "搜索已安装的应用",
   "PublisherDisplayName": "发布者名称：",
   "Refresh": "刷新",

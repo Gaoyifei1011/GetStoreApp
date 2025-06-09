@@ -304,6 +304,12 @@
                             <FontIcon Glyph="&#xE71D;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
+
+                    <AppBarButton Click="{x:Bind OnPackageVolumeConfigurationClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppList/PackageVolumeConfiguration')}">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xEDA2;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
                 </CommandBar.SecondaryCommands>
             </CommandBar>
         </Grid>

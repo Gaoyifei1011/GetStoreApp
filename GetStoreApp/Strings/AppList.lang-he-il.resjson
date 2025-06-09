@@ -27,6 +27,7 @@
   "PackageEmpty": "אין יישומים מותקנים",
   "PackageEmptyDescription": "אין יישומים במכשירך",
   "PackageEmptyWithConditionDescription": "במכשירך אין יישומים העונים על התנאים שצוינו",
+  "PackageVolumeConfiguration": "Package volume settings",
   "PlaceHolderText": "חפש יישומים מותקנים",
   "PublisherDisplayName": "שם המפרסם:",
   "Refresh": "רענן",

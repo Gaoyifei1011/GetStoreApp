@@ -1193,6 +1193,15 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 打开应用包存储卷设置
+        /// </summary>
+        private async void OnPackageVolumeConfigurationClicked(object sender, RoutedEventArgs args)
+        {
+            await Task.Delay(300);
+            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.PackageVolume);
+        }
+
+        /// <summary>
         /// 根据输入的内容检索应用
         /// </summary>
         private async void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)

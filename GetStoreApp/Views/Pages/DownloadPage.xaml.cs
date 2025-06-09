@@ -137,7 +137,7 @@ namespace GetStoreApp.Views.Pages
         {
             DownloadSplitView.IsPaneOpen = false;
             await Task.Delay(300);
-            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
+            MainWindow.Current.NavigateTo(typeof(SettingsPage));
 
             if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
             {
@@ -170,7 +170,7 @@ namespace GetStoreApp.Views.Pages
         {
             DownloadSplitView.IsPaneOpen = false;
             await Task.Delay(300);
-            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
+            MainWindow.Current.NavigateTo(typeof(SettingsPage));
         }
 
         #endregion 第二部分：下载页面——挂载的事件

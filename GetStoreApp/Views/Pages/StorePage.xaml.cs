@@ -222,7 +222,7 @@ namespace GetStoreApp.Views.Pages
         {
             StoreSplitView.IsPaneOpen = false;
             await Task.Delay(300);
-            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
+            MainWindow.Current.NavigateTo(typeof(SettingsPage));
         }
 
         #endregion 第二部分：应用商店页面——挂载的事件

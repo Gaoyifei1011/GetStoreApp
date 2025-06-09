@@ -27,6 +27,7 @@
   "PackageEmpty": "There is no installed apps",
   "PackageEmptyDescription": "There is no app on your device",
   "PackageEmptyWithConditionDescription": "There are no apps on your device that match the conditions",
+  "PackageVolumeConfiguration": "Package volume settings",
   "PlaceHolderText": "Search installed apps",
   "PublisherDisplayName": "Publisher name: ",
   "Refresh": "Refresh",
