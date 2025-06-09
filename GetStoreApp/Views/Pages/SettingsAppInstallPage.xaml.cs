@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Services.Settings;
+using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -125,6 +126,16 @@ namespace GetStoreApp.Views.Pages
             {
                 AppInstallService.SetForceTargetAppShutdownValue(toggleSwitch.IsOn);
                 ForceTargetAppShutdownValue = toggleSwitch.IsOn;
+            }
+        }
+
+        /// <summary>
+        /// 配置应用包存储卷
+        /// </summary>
+        private void OnConfigurationClicked(object sender, RoutedEventArgs args)
+        {
+            if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
+            {
             }
         }
 

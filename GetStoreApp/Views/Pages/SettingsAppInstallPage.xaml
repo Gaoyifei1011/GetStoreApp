@@ -20,6 +20,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <!--  允许安装未签名安装包  -->
@@ -258,6 +259,64 @@
                         OnContent=""
                         Toggled="{x:Bind OnForceTargetAppShutdownToggled}" />
                 </StackPanel>
+            </Grid>
+
+            <!--  应用包存储卷设置  -->
+            <Grid
+                Grid.Row="3"
+                Height="60"
+                Margin="0,0,0,2"
+                Padding="16,0"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    FontSize="16"
+                    Glyph="&#xEDA2;" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/PackageVolume')}" />
+
+                    <TextBlock
+                        x:Name="PackageVolumeDescription"
+                        HorizontalAlignment="Left"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/PackageVolumeDescription')}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/PackageVolumenDescription')}"
+                                Visibility="{x:Bind PackageVolumeDescription.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+                </StackPanel>
+
+                <Button
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Click="{x:Bind OnConfigurationClicked}"
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/Configuration')}" />
             </Grid>
         </Grid>
     </ScrollViewer>

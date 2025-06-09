@@ -10,6 +10,11 @@
   "ForceAppShutdownOnContent": "כן",
   "ForceTargetAppShutdown": "כפה סגירת תהליכים המשויכים לחבילה",
   "ForceTargetAppShutdownDescription": "בעת התקנת יישום, כפה סגירת תהליכים המשויכים לחבילה",
+  "PackageVolume": "Package volume settings",
+  "PackageVolumeDescription": "Customize, add, remove, or modify the storage volume of the  package",
+  "PackageVolumeOffContent": "לא",
+  "PackageVolumeOnContent": "כן",
+  "Configuration": "Configuration",
   "ForceTargetAppShutdownOffContent": "לא",
   "ForceTargetAppShutdownOnContent": "כן"
 }

@@ -10,6 +10,11 @@
   "ForceAppShutdownOnContent": "Yes",
   "ForceTargetAppShutdown": "Force target app shutdown",
   "ForceTargetAppShutdownDescription": "Forcibly terminate process associated with the package during app installing",
+  "PackageVolume": "Package volume settings",
+  "PackageVolumeDescription": "Customize, add, remove, or modify the storage volume of the  package",
+  "PackageVolumeOffContent": "No",
+  "PackageVolumeOnContent": "Yes",
+  "Configuration": "Configuration",
   "ForceTargetAppShutdownOffContent": "No",
   "ForceTargetAppShutdownOnContent": "Yes"
 }
