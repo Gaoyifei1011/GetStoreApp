@@ -99,7 +99,7 @@
 
                     <ToggleSwitch
                         MinWidth="0"
-                        Margin="10,-2,-2,0"
+                        Margin="10,-2,-10,0"
                         IsOn="{x:Bind AllowUnsignedPackageValue, Mode=OneWay}"
                         OffContent=""
                         OnContent=""
@@ -175,7 +175,7 @@
 
                     <ToggleSwitch
                         MinWidth="0"
-                        Margin="10,-2,-2,0"
+                        Margin="10,-2,-10,0"
                         IsOn="{x:Bind ForceAppShutdownValue, Mode=OneWay}"
                         OffContent=""
                         OnContent=""
@@ -253,7 +253,7 @@
 
                     <ToggleSwitch
                         MinWidth="0"
-                        Margin="10,-2,-2,0"
+                        Margin="10,-2,-10,0"
                         IsOn="{x:Bind ForceTargetAppShutdownValue, Mode=OneWay}"
                         OffContent=""
                         OnContent=""

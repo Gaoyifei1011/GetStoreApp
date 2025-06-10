@@ -260,7 +260,7 @@
 
                     <ToggleSwitch
                         MinWidth="0"
-                        Margin="10,-2,-2,0"
+                        Margin="10,-2,-10,0"
                         IsOn="{x:Bind CancelAutoUpdateValue, Mode=OneWay}"
                         OffContent=""
                         OnContent=""
