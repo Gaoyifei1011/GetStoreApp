@@ -23,6 +23,8 @@
   "StartScreenSuccessfully": "You successfully pinned the app to the Start screen",
   "TaskbarFailed": "App pinning to taskbar failed. Please pin manually",
   "TaskbarSuccessfully": "The app was successfully pinned to the taskbar",
+  "SelectFolderEmpty": "Selected folder is empty",
+  "SelectPackageVolumeEmpty": "Please select a volume",
   "TerminateFailed": "Terminate the browser process failed, please terminate it manually",
   "TerminateSuccess": "Terminate the browser process successfully"
 }

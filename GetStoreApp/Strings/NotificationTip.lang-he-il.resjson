@@ -23,6 +23,8 @@
   "StartScreenSuccessfully": "היישום הוצמד בהצלחה למסך 'התחל'",
   "TaskbarFailed": "הצמדת היישום לשורת המשימות נכשלה, אנא הצמד אותו ידנית",
   "TaskbarSuccessfully": "היישום הוצמד בהצלחה לשורת המשימות",
+  "SelectFolderEmpty": "Selected folder is empty",
+  "SelectPackageVolumeEmpty": "Please select a volume",
   "TerminateFailed": "סגירת תהליך הדפדפן נכשלה, אנא סגור אותו ידנית",
   "TerminateSuccess": "תהליך הדפדפן נסגר בהצלחה"
 }

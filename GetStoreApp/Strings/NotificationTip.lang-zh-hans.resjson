@@ -23,6 +23,8 @@
   "StartScreenSuccessfully": "已成功将应用固定到“开始”屏幕",
   "TaskbarFailed": "应用固定到任务栏失败，请手动固定",
   "TaskbarSuccessfully": "已成功将应用固定到任务栏",
+  "SelectFolderEmpty": "选择的文件夹为空",
+  "SelectPackageVolumeEmpty": "请选择一个存储卷",
   "TerminateFailed": "浏览器进程关闭失败，请手动关闭",
   "TerminateSuccess": "浏览器进程关闭成功"
 }

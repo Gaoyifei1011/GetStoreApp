@@ -78,6 +78,16 @@ namespace GetStoreApp.UI.TeachingTips
                 IsSuccessOperation = false;
                 OperationContent = ResourceService.GetLocalized("NotificationTip/SelectEmpty");
             }
+            else if (operationKind is OperationKind.SelectFolderEmpty)
+            {
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("NotificationTip/SelectFolderEmpty");
+            }
+            else if (operationKind is OperationKind.SelectPackageVolumeEmpty)
+            {
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("NotificationTip/SelectPackageVolumeEmpty");
+            }
             else if (operationKind is OperationKind.SourceNameEmpty)
             {
                 IsSuccessOperation = false;
