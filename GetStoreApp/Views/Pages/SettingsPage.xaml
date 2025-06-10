@@ -167,6 +167,8 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
                         <TextBlock
@@ -293,12 +295,21 @@
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetConfigDescription')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetConfigDescription1')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+
+                        <TextBlock
+                            Grid.Row="15"
+                            Margin="16,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetConfigDescription2')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
                         <StackPanel
-                            Grid.Row="15"
+                            Grid.Row="16"
                             Margin="16,0,16,5"
                             Spacing="5">
 
@@ -312,10 +323,10 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <MenuFlyoutSeparator Grid.Row="16" />
+                        <MenuFlyoutSeparator Grid.Row="17" />
 
                         <TextBlock
-                            Grid.Row="17"
+                            Grid.Row="18"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -323,7 +334,7 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="18"
+                            Grid.Row="19"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -332,7 +343,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="19"
+                            Grid.Row="20"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -341,7 +352,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="20"
+                            Grid.Row="21"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -350,7 +361,7 @@
                             TextWrapping="Wrap" />
 
                         <StackPanel
-                            Grid.Row="21"
+                            Grid.Row="22"
                             Margin="16,0,16,5"
                             Spacing="5">
 
@@ -379,10 +390,10 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <MenuFlyoutSeparator Grid.Row="22" />
+                        <MenuFlyoutSeparator Grid.Row="23" />
 
                         <TextBlock
-                            Grid.Row="23"
+                            Grid.Row="24"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -390,7 +401,7 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="24"
+                            Grid.Row="25"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -399,7 +410,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="25"
+                            Grid.Row="26"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -408,7 +419,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="26"
+                            Grid.Row="27"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -416,10 +427,19 @@
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
-                        <MenuFlyoutSeparator Grid.Row="27" />
-
                         <TextBlock
                             Grid.Row="28"
+                            Margin="16,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/InstallModeDescription4')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+
+                        <MenuFlyoutSeparator Grid.Row="29" />
+
+                        <TextBlock
+                            Grid.Row="30"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -427,7 +447,7 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="29"
+                            Grid.Row="31"
                             Margin="16,0,16,10"
                             FontSize="14"
                             FontWeight="Normal"

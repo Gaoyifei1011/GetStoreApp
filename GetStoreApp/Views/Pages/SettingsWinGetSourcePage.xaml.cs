@@ -445,6 +445,18 @@ namespace GetStoreApp.Views.Pages
             IsLoadedCompleted = true;
         }
 
+        /// <summary>
+        /// 设置说明
+        /// </summary>
+        private async void OnSettingsInstructionClicked(object sender, RoutedEventArgs args)
+        {
+            await Task.Delay(300);
+            if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
+            {
+                settingsPage.ShowSettingsInstruction();
+            }
+        }
+
         #endregion 第二部分：设置页面——挂载的事件
 
         /// <summary>
