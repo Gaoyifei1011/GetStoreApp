@@ -41,6 +41,7 @@
   "SetDefaultFailed4": "错误信息：{0}",
   "SetDefaultSuccessfully": "{0}存储卷设置默认成功",
   "SetDefaultVolume": "设置为默认卷",
+  "SettingsInstruction": "设置说明",
   "SupportedHardLinks": "支持硬链接：",
   "SystemVolume": "系统卷：",
   "Unknown": "[未知]",

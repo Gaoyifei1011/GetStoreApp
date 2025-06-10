@@ -15,6 +15,8 @@
   "NotElevated": "Current operation needs to be executed in elevation mode",
   "NotNewestVersion": "The app is not the latest version, click on the project home page to get an update",
   "SelectEmpty": "You have not selected anything, please select it before proceeding",
+  "SelectFolderEmpty": "Selected folder is empty",
+  "SelectPackageVolumeEmpty": "Please select a volume",
   "ShareFailed": "File sharing fails. Please check the access permission of the shared file",
   "ShareSelectedFailed": "{0} files sharing failed. Please check the access permission of the shared files",
   "SourceNameEmpty": "The data source name is empty. Please enter a data source name",
@@ -23,8 +25,6 @@
   "StartScreenSuccessfully": "You successfully pinned the app to the Start screen",
   "TaskbarFailed": "App pinning to taskbar failed. Please pin manually",
   "TaskbarSuccessfully": "The app was successfully pinned to the taskbar",
-  "SelectFolderEmpty": "Selected folder is empty",
-  "SelectPackageVolumeEmpty": "Please select a volume",
   "TerminateFailed": "Terminate the browser process failed, please terminate it manually",
   "TerminateSuccess": "Terminate the browser process successfully"
 }

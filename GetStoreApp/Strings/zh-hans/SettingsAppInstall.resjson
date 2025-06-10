@@ -3,6 +3,7 @@
   "AllowUnsignedPackageDescription": "允许安装未签名的安装包",
   "AllowUnsignedPackageOffContent": "否",
   "AllowUnsignedPackageOnContent": "是",
+  "Configuration": "配置",
   "DeveloperOptions": "开发者选项",
   "ForceAppShutdown": "强制关闭应用",
   "ForceAppShutdownDescription": "安装应用时强制关闭与包关联的进程",
@@ -10,11 +11,10 @@
   "ForceAppShutdownOnContent": "是",
   "ForceTargetAppShutdown": "强制关闭与包关联的进程",
   "ForceTargetAppShutdownDescription": "安装应用时强制关闭与包关联的进程",
+  "ForceTargetAppShutdownOffContent": "否",
+  "ForceTargetAppShutdownOnContent": "是",
   "PackageVolume": "应用包存储卷设置",
   "PackageVolumeDescription": "自定义/添加/删除/修改应用包的存储卷",
   "PackageVolumeOffContent": "否",
-  "PackageVolumeOnContent": "是",
-  "Configuration": "配置",
-  "ForceTargetAppShutdownOffContent": "否",
-  "ForceTargetAppShutdownOnContent": "是"
+  "PackageVolumeOnContent": "是"
 }

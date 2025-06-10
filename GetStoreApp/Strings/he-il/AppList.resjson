@@ -1,5 +1,6 @@
 {
   "AppType": "סוג יישום",
+  "DeveloperOptions": "Developer options",
   "DisplayName": "שם היישום:",
   "Filter": "סינון",
   "FilterToolTip": "סנן לפי כללים",

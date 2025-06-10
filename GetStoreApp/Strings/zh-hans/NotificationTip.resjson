@@ -15,6 +15,8 @@
   "NotElevated": "当前操作需要在提权模式下进行",
   "NotNewestVersion": "应用不是最新版本，点击项目主页以获取更新",
   "SelectEmpty": "您没有选择任何内容，请选中后再进行操作",
+  "SelectFolderEmpty": "选择的文件夹为空",
+  "SelectPackageVolumeEmpty": "请选择一个存储卷",
   "ShareFailed": "文件分享失败，请检查被分享文件的访问权限",
   "ShareSelectedFailed": "{0}个文件分享失败，请检查被分享文件的访问权限",
   "SourceNameEmpty": "数据源名称为空，请输入数据源名称",
@@ -23,8 +25,6 @@
   "StartScreenSuccessfully": "已成功将应用固定到“开始”屏幕",
   "TaskbarFailed": "应用固定到任务栏失败，请手动固定",
   "TaskbarSuccessfully": "已成功将应用固定到任务栏",
-  "SelectFolderEmpty": "选择的文件夹为空",
-  "SelectPackageVolumeEmpty": "请选择一个存储卷",
   "TerminateFailed": "浏览器进程关闭失败，请手动关闭",
   "TerminateSuccess": "浏览器进程关闭成功"
 }

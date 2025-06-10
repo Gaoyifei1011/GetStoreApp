@@ -28,6 +28,7 @@
   "RemoveDataSource": "הסר מקור נתונים",
   "RemoveDataSourcePreserveData": "הסר מקור נתונים (שמור נתונים)",
   "Selected": "נבחר",
+  "SettingsInstruction": "Settings instruction",
   "SourceId": "מזהה מקור נתונים:",
   "Trusted": "מהימן",
   "TrustLevel": "רמת אמון במקור נתונים:",

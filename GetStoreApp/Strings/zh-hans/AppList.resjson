@@ -1,5 +1,6 @@
 ﻿{
   "AppType": "应用类型",
+  "DeveloperOptions": "开发者选项",
   "DisplayName": "应用名称：",
   "Filter": "筛选",
   "FilterToolTip": "按照规则进行筛选",

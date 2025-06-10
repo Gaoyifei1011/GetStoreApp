@@ -1,5 +1,6 @@
 ﻿{
   "AppType": "App type",
+  "DeveloperOptions": "Developer options",
   "DisplayName": "Display name: ",
   "Filter": "Filter",
   "FilterToolTip": "Filter according to the rules",

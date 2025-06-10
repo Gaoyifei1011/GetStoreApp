@@ -41,6 +41,7 @@
   "SetDefaultFailed4": "Error message:{0}",
   "SetDefaultSuccessfully": "{0} volume set default successfully",
   "SetDefaultVolume": "Set as default volume",
+  "SettingsInstruction": "Settings instruction",
   "SupportedHardLinks": "Support hard link: ",
   "SystemVolume": "System volume: ",
   "Unknown": "[לא ידוע]",

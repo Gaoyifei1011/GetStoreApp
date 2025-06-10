@@ -3,6 +3,7 @@
   "AllowUnsignedPackageDescription": "אפשר התקנת חבילות התקנה לא חתומות",
   "AllowUnsignedPackageOffContent": "לא",
   "AllowUnsignedPackageOnContent": "כן",
+  "Configuration": "Configuration",
   "DeveloperOptions": "אפשרויות מפתחים",
   "ForceAppShutdown": "כפה סגירת יישום",
   "ForceAppShutdownDescription": "בעת התקנת יישום, כפה סגירת תהליכים המשויכים לחבילה",
@@ -10,11 +11,10 @@
   "ForceAppShutdownOnContent": "כן",
   "ForceTargetAppShutdown": "כפה סגירת תהליכים המשויכים לחבילה",
   "ForceTargetAppShutdownDescription": "בעת התקנת יישום, כפה סגירת תהליכים המשויכים לחבילה",
+  "ForceTargetAppShutdownOffContent": "לא",
+  "ForceTargetAppShutdownOnContent": "כן",
   "PackageVolume": "Package volume settings",
   "PackageVolumeDescription": "Customize, add, remove, or modify the storage volume of the  package",
   "PackageVolumeOffContent": "לא",
-  "PackageVolumeOnContent": "כן",
-  "Configuration": "Configuration",
-  "ForceTargetAppShutdownOffContent": "לא",
-  "ForceTargetAppShutdownOnContent": "כן"
+  "PackageVolumeOnContent": "כן"
 }

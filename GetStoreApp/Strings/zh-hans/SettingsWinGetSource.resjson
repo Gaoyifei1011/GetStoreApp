@@ -28,6 +28,7 @@
   "RemoveDataSource": "移除数据源",
   "RemoveDataSourcePreserveData": "移除数据源（保存数据）",
   "Selected": "已选择",
+  "SettingsInstruction": "设置说明",
   "SourceId": "数据源 ID：",
   "Trusted": "信任",
   "TrustLevel": "数据源信任等级：",

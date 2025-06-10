@@ -28,6 +28,7 @@
   "RemoveDataSource": "Remove data source",
   "RemoveDataSourcePreserveData": "Remove data source (Preserve data)",
   "Selected": "Selected",
+  "SettingsInstruction": "Settings instruction",
   "SourceId": "Source ID: ",
   "Trusted": "Trusted",
   "TrustLevel": "Data source trust level: ",

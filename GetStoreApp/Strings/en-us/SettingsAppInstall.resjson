@@ -3,6 +3,7 @@
   "AllowUnsignedPackageDescription": "Allows unsigned installation packages to be installed",
   "AllowUnsignedPackageOffContent": "No",
   "AllowUnsignedPackageOnContent": "Yes",
+  "Configuration": "Configuration",
   "DeveloperOptions": "Developer options",
   "ForceAppShutdown": "Force app shutdown",
   "ForceAppShutdownDescription": "Forcibly terminate process associated with the package during app installing",
@@ -10,11 +11,10 @@
   "ForceAppShutdownOnContent": "Yes",
   "ForceTargetAppShutdown": "Force target app shutdown",
   "ForceTargetAppShutdownDescription": "Forcibly terminate process associated with the package during app installing",
+  "ForceTargetAppShutdownOffContent": "No",
+  "ForceTargetAppShutdownOnContent": "Yes",
   "PackageVolume": "Package volume settings",
   "PackageVolumeDescription": "Customize, add, remove, or modify the storage volume of the  package",
   "PackageVolumeOffContent": "No",
-  "PackageVolumeOnContent": "Yes",
-  "Configuration": "Configuration",
-  "ForceTargetAppShutdownOffContent": "No",
-  "ForceTargetAppShutdownOnContent": "Yes"
+  "PackageVolumeOnContent": "Yes"
 }
