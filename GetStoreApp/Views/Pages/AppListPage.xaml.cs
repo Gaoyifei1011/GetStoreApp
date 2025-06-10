@@ -1187,9 +1187,37 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开设置中的安装的应用
         /// </summary>
-        private async void OnInstalledAppsClicked(object sender, RoutedEventArgs args)
+        private void OnInstalledAppsClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 打开开发者选项
+        /// </summary>
+        private void OnDeveloperOptionsClicked(object sender, RoutedEventArgs args)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("ms-settings:developers"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>

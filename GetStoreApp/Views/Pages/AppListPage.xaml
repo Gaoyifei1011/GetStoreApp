@@ -305,6 +305,12 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
 
+                    <AppBarButton Click="{x:Bind OnDeveloperOptionsClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppList/DeveloperOptions')}">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xEC7A;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+
                     <AppBarButton Click="{x:Bind OnPackageVolumeConfigurationClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppList/PackageVolumeConfiguration')}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xEDA2;" />
