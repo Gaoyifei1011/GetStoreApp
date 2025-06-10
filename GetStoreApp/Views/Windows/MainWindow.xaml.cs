@@ -621,13 +621,13 @@ namespace GetStoreApp.Views.Windows
 
             if (dataKind is StorageDataKind.Launch)
             {
-                // 正常启动重定向获得的内容
+                // 正常启动或重新启动重定向获得的内容
                 if (dataContentList.Count is 1 || dataContentList.Count is 2)
                 {
                     NavigateTo(typeof(StorePage));
 
-                    // 正常启动
-                    if (dataContentList[0] is "Launch")
+                    // 正常启动或重新启动
+                    if (dataContentList[0] is "Launch" || dataContentList[0] is "Restart")
                     {
                         Show();
 

@@ -85,7 +85,7 @@ namespace GetStoreApp.Services.Root
                     // 应用程序重新启动
                     if (argumentsList[0] is "Restart")
                     {
-                        return;
+                        dataList.Add("Restart");
                     }
                     // 带参数启动：只有一个参数，直接输入链接
                     else
