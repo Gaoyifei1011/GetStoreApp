@@ -3,6 +3,7 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Dialogs;
+using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -18,8 +19,8 @@ using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
 using Windows.Storage;
 
-// 抑制 CA1822，IDE0060 警告
-#pragma warning disable CA1822,IDE0060
+// 抑制 CA1822，IDE0028，IDE0060 警告
+#pragma warning disable CA1822,IDE0028,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
@@ -422,9 +423,14 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 添加存储卷
         /// </summary>
-        private void OnAddNewPackageVolumeClicked(object sender, RoutedEventArgs args)
+        private async void OnAddNewPackageVolumeClicked(object sender, RoutedEventArgs args)
         {
-            // TODO：未完成
+            ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new PackageVolumeAddDialog(packageManager));
+
+            if (contentDialogResult is ContentDialogResult.Primary)
+            {
+                await GetPackageVolumeInfoAsync();
+            }
         }
 
         /// <summary>
