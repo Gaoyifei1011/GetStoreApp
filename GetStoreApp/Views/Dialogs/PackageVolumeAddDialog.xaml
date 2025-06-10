@@ -15,7 +15,7 @@
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
     IsPrimaryButtonEnabled="{x:Bind IsPrimaryEnabled, Mode=OneWay}"
     Opened="{x:Bind OnOpened}"
-    PrimaryButtonClick="{x:Bind OnPrimaryButtonClicked}"
+    PrimaryButtonClick="{x:Bind OnSaveClicked}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
     PrimaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Save')}"
     RequestedTheme="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).RequestedTheme, Mode=OneWay}"

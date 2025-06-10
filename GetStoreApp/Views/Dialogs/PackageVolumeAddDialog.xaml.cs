@@ -274,7 +274,7 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 保存添加的存储卷
         /// </summary>
-        private async void OnPrimaryButtonClicked(object sender, ContentDialogButtonClickEventArgs args)
+        private async void OnSaveClicked(object sender, ContentDialogButtonClickEventArgs args)
         {
             ContentDialogButtonClickDeferral contentDialogButtonClickDeferral = args.GetDeferral();
 
@@ -342,7 +342,7 @@ namespace GetStoreApp.Views.Dialogs
                             string.Format(CreateFailed4String, exception.Message)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeDialog), nameof(OnPrimaryButtonClicked), 1, exception is not null ? exception : new Exception());
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeDialog), nameof(OnSaveClicked), 1, exception is not null ? exception : new Exception());
                         });
                         PackageVolumeResultKind = PackageVolumeResultKind.Successfully;
                         IsAddingPackageVolume = false;
