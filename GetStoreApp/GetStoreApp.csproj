@@ -233,6 +233,8 @@
     <None Remove="Strings\SettingsGeneral.lang-zh-hans.resjson" />
     <None Remove="Strings\SettingsItem.lang-en-us.resjson" />
     <None Remove="Strings\SettingsItem.lang-zh-hans.resjson" />
+    <None Remove="Strings\SettingsPackageVolume.lang-en-us.resjson" />
+    <None Remove="Strings\SettingsPackageVolume.lang-zh-hans.resjson" />
     <None Remove="Strings\SettingsStoreAndUpdate.lang-en-us.resjson" />
     <None Remove="Strings\SettingsStoreAndUpdate.lang-zh-hans.resjson" />
     <None Remove="Strings\SettingsWinGet.lang-en-us.resjson" />
@@ -266,6 +268,7 @@
     <None Remove="Views\Dialogs\DesktopStartupArgsDialog.xaml" />
     <None Remove="Views\Dialogs\FileInformationDialog.xaml" />
     <None Remove="Views\Dialogs\LicenseDialog.xaml" />
+    <None Remove="Views\Dialogs\PackageVolumeAddDialog.xaml" />
     <None Remove="Views\Dialogs\PackageVolumeDialog.xaml" />
     <None Remove="Views\Dialogs\RebootDialog.xaml" />
     <None Remove="Views\Dialogs\RestartAppsDialog.xaml" />
@@ -319,6 +322,7 @@
     <Page Update="Views\Dialogs\DesktopStartupArgsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\FileInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\LicenseDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Dialogs\PackageVolumeAddDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\PackageVolumeDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\RebootDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\RestartAppsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
