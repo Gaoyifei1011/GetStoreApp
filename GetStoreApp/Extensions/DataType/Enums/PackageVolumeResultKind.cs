@@ -2,9 +2,10 @@
 {
     public enum PackageVolumeResultKind
     {
-        Empty = 0,
-        Loading = 1,
-        Operating = 2,
-        Successfully = 3
+        Loading = 0,
+        Operating = 1,
+        Failed = 2,
+        Successfully = 3,
+        Empty = 4
     }
 }

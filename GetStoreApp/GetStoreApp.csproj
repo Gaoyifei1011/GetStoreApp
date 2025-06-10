@@ -209,8 +209,6 @@
     <None Remove="Strings\Installer.lang-zh-hans.resjson" />
     <None Remove="Strings\NotificationTip.lang-en-us.resjson" />
     <None Remove="Strings\NotificationTip.lang-zh-hans.resjson" />
-    <None Remove="Strings\PackageVolumeInfo.lang-en-us.resjson" />
-    <None Remove="Strings\PackageVolumeInfo.lang-zh-hans.resjson" />
     <None Remove="Strings\Pinner.lang-en-us.resjson" />
     <None Remove="Strings\Pinner.lang-zh-hans.resjson" />
     <None Remove="Strings\QueryLinks.lang-en-us.resjson" />
@@ -269,7 +267,7 @@
     <None Remove="Views\Dialogs\FileInformationDialog.xaml" />
     <None Remove="Views\Dialogs\LicenseDialog.xaml" />
     <None Remove="Views\Dialogs\PackageVolumeAddDialog.xaml" />
-    <None Remove="Views\Dialogs\PackageVolumeDialog.xaml" />
+    <None Remove="Views\Dialogs\PackageVolumeInfoDialog.xaml" />
     <None Remove="Views\Dialogs\RebootDialog.xaml" />
     <None Remove="Views\Dialogs\RestartAppsDialog.xaml" />
     <None Remove="Views\Dialogs\TraceCleanupPromptDialog.xaml" />
@@ -284,8 +282,6 @@
     <None Remove="Views\Pages\CompletedPage.xaml" />
     <None Remove="Views\Pages\DownloadingPage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
-    <None Remove="Views\Pages\PackageVolumeAddPage.xaml" />
-    <None Remove="Views\Pages\PackageVolumeInfoPage.xaml" />
     <None Remove="Views\Pages\QueryLinksPage.xaml" />
     <None Remove="Views\Pages\SearchStorePage.xaml" />
     <None Remove="Views\Pages\SettingsAboutPage.xaml" />
@@ -323,7 +319,7 @@
     <Page Update="Views\Dialogs\FileInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\LicenseDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\PackageVolumeAddDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Views\Dialogs\PackageVolumeDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Dialogs\PackageVolumeInfoDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\RebootDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\RestartAppsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\TraceCleanupPromptDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -338,8 +334,6 @@
     <Page Update="Views\Pages\CompletedPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\DownloadingPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\DownloadPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Views\Pages\PackageVolumeAddPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Views\Pages\PackageVolumeInfoPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\QueryLinksPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SearchStorePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsAboutPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -385,8 +379,6 @@
     <PRIResource Include="Strings\Installer.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\NotificationTip.lang-en-us.resjson" />
     <PRIResource Include="Strings\NotificationTip.lang-zh-hans.resjson" />
-    <PRIResource Include="Strings\PackageVolumeInfo.lang-en-us.resjson" />
-    <PRIResource Include="Strings\PackageVolumeInfo.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\Pinner.lang-en-us.resjson" />
     <PRIResource Include="Strings\Pinner.lang-zh-hans.resjson" />
     <PRIResource Include="Strings\QueryLinks.lang-en-us.resjson" />

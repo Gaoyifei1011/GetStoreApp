@@ -576,7 +576,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private Visibility GetPackageVolumeSuccessfullyState(PackageVolumeResultKind packageVolumeResultKind, bool isSuccessfully)
         {
-            return isSuccessfully ? packageVolumeResultKind is PackageVolumeResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed : packageVolumeResultKind is PackageVolumeResultKind.Successfully || packageVolumeResultKind is PackageVolumeResultKind.Operating ? Visibility.Collapsed : Visibility.Visible;
+            return isSuccessfully ? packageVolumeResultKind is PackageVolumeResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed : packageVolumeResultKind is PackageVolumeResultKind.Successfully ? Visibility.Collapsed : Visibility.Visible;
         }
 
         /// <summary>
