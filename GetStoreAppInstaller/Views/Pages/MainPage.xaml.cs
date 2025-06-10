@@ -1435,11 +1435,14 @@ namespace GetStoreAppInstaller.Views.Pages
                                 });
                             }
 
+                            Windows.Management.Deployment.PackageVolume defaultVolume = packageManager.GetDefaultPackageVolume();
+
                             Microsoft.Windows.Management.Deployment.AddPackageOptions addPackageOptions = new()
                             {
                                 AllowUnsigned = AppInstallService.AllowUnsignedPackageValue,
                                 ForceAppShutdown = AppInstallService.ForceAppShutdownValue,
-                                ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdownValue
+                                ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdownValue,
+                                TargetVolume = Microsoft.Windows.Management.Deployment.PackageVolume.FindPackageVolumeByPath(defaultVolume.PackageStorePath)
                             };
 
                             foreach (InstallDependencyModel installDependencyItem in InstallDependencyCollection)

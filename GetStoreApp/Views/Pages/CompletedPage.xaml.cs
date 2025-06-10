@@ -48,6 +48,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string UnknownString = ResourceService.GetLocalized("Completed/Unknown");
         private bool isInitialized;
         private PackageDeploymentManager packageDeploymentManager;
+        private global::Windows.Management.Deployment.PackageManager packageManager;
 
         private CompletedResultKind _completedResultKind = CompletedResultKind.Loading;
 
@@ -105,6 +106,7 @@ namespace GetStoreApp.Views.Pages
                 List<DownloadSchedulerModel> downloadStorageList = await Task.Run(() =>
                 {
                     packageDeploymentManager = PackageDeploymentManager.GetDefault();
+                    packageManager = new();
 
                     DownloadStorageService.DownloadStorageSemaphoreSlim?.Wait();
                     return DownloadStorageService.GetDownloadData();
@@ -272,11 +274,14 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     try
                                     {
+                                        global::Windows.Management.Deployment.PackageVolume defaultVolume = packageManager.GetDefaultPackageVolume();
+
                                         AddPackageOptions addPackageOptions = new()
                                         {
                                             AllowUnsigned = AppInstallService.AllowUnsignedPackageValue,
                                             ForceAppShutdown = AppInstallService.ForceAppShutdownValue,
-                                            ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdownValue
+                                            ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdownValue,
+                                            TargetVolume = PackageVolume.FindPackageVolumeByPath(defaultVolume.PackageStorePath)
                                         };
 
                                         // 安装目标应用，并获取安装进度
