@@ -174,7 +174,7 @@ namespace GetStoreApp.Views.Pages
                             string.Format(SetDefaultFailed4String, exception.Message)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeDialog), nameof(OnSetDefaultVolumeExecuteRequested), 2, exception is not null ? exception : new Exception());
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeInfoDialog), nameof(OnSetDefaultVolumeExecuteRequested), 2, exception is not null ? exception : new Exception());
                     });
                 }
             }
@@ -234,7 +234,7 @@ namespace GetStoreApp.Views.Pages
                                 string.Format(MountFailed4String, exception.Message)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeDialog), nameof(OnMountExecuteRequested), 2, exception is not null ? exception : new Exception());
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeInfoDialog), nameof(OnMountExecuteRequested), 2, exception is not null ? exception : new Exception());
                         });
                     }
                 }
@@ -253,7 +253,7 @@ namespace GetStoreApp.Views.Pages
                                 string.Format(MountFailed4String, exception.Message)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeDialog), nameof(OnMountExecuteRequested), 2, exception is not null ? exception : new Exception());
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeInfoDialog), nameof(OnMountExecuteRequested), 2, exception is not null ? exception : new Exception());
                     });
                 }
             }
@@ -313,7 +313,7 @@ namespace GetStoreApp.Views.Pages
                                 string.Format(DismountFailed4String, exception.Message)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeDialog), nameof(OnDismountExecuteRequested), 2, exception is not null ? exception : new Exception());
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeInfoDialog), nameof(OnDismountExecuteRequested), 2, exception is not null ? exception : new Exception());
                         });
                     }
                 }
@@ -332,7 +332,7 @@ namespace GetStoreApp.Views.Pages
                                 string.Format(DismountFailed4String, exception.Message)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeDialog), nameof(OnDismountExecuteRequested), 2, exception is not null ? exception : new Exception());
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeInfoDialog), nameof(OnDismountExecuteRequested), 2, exception is not null ? exception : new Exception());
                     });
                 }
             }
@@ -391,7 +391,7 @@ namespace GetStoreApp.Views.Pages
                                 string.Format(RemoveFailed4String, exception.Message)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeDialog), nameof(OnRemoveExecuteRequested), 2, exception is not null ? exception : new Exception());
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeInfoDialog), nameof(OnRemoveExecuteRequested), 2, exception is not null ? exception : new Exception());
                         });
                     }
                 }
@@ -410,7 +410,7 @@ namespace GetStoreApp.Views.Pages
                                 string.Format(RemoveFailed4String, exception.Message)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeDialog), nameof(OnRemoveExecuteRequested), 2, exception is not null ? exception : new Exception());
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeInfoDialog), nameof(OnRemoveExecuteRequested), 2, exception is not null ? exception : new Exception());
                     });
                 }
             }

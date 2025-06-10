@@ -223,7 +223,7 @@ namespace GetStoreApp.Views.Dialogs
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeAddPage), nameof(OnSelectFolderClicked), 1, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeAddDialog), nameof(OnSelectFolderClicked), 1, e);
                     await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.FolderPicker));
                 }
             }
@@ -342,7 +342,7 @@ namespace GetStoreApp.Views.Dialogs
                             string.Format(CreateFailed4String, exception.Message)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeDialog), nameof(OnSaveClicked), 1, exception is not null ? exception : new Exception());
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeInfoDialog), nameof(OnSaveClicked), 1, exception is not null ? exception : new Exception());
                         });
                         PackageVolumeResultKind = PackageVolumeResultKind.Successfully;
                         IsAddingPackageVolume = false;

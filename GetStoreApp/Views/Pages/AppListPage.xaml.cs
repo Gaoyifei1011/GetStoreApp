@@ -576,10 +576,10 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    PackageVolumeDialog packageVolumeDialog = new(packageManager, package);
-                    ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(packageVolumeDialog);
+                    PackageVolumeInfoDialog packageVolumeInfoDialog = new(packageManager, package);
+                    ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(packageVolumeInfoDialog);
 
-                    if (contentDialogResult is ContentDialogResult.Primary && packageVolumeDialog.GetFrameContent() is PackageVolumeInfoPage packageVolumeInfoPage && packageVolumeInfoPage.SelectedPackageVolume is not null)
+                    if (contentDialogResult is ContentDialogResult.Primary && packageVolumeInfoDialog.SelectedPackageVolume is not null)
                     {
                         package.PackageOperationProgress = 0;
                         package.IsOperating = true;
@@ -589,7 +589,7 @@ namespace GetStoreApp.Views.Pages
                             try
                             {
                                 // 移动目标应用，并获取移动进度
-                                IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> movePackageWithProgress = packageManager.MovePackageToVolumeAsync(package.Package.Id.FullName, DeploymentOptions.None, packageVolumeInfoPage.SelectedPackageVolume.WinRTPackageVolume);
+                                IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> movePackageWithProgress = packageManager.MovePackageToVolumeAsync(package.Package.Id.FullName, DeploymentOptions.None, packageVolumeInfoDialog.SelectedPackageVolume.WinRTPackageVolume);
 
                                 // 更新移动进度
                                 movePackageWithProgress.Progress = (result, progress) => OnPackageMoveProgress(result, progress, package);
