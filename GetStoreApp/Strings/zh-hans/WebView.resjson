@@ -9,6 +9,7 @@
   "OpenWithBrowser": "使用浏览器打开",
   "Refresh": "刷新",
   "Settings": "设置",
+  "Title": "网页浏览器",
   "WarningSuitableWebView2NotFound": "未检测到合适版本的 Microsoft Edge WebView2 运行时。",
   "WebBrowser": "网页浏览器",
   "WebTitle": "网页接口",

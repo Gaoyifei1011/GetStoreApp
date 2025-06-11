@@ -246,7 +246,7 @@
   "SupportedArchitecture": "Supported architecture: ",
   "TargetDeviceFamily": "Package device family information",
   "TargetDeviceName": "Target device name",
-  "Title": "Package installer",
+  "Title": "App installer",
   "Unknown": "[Unknown]",
   "UnsupportedFileType": "The selected file type is not supported",
   "UnsupportedMultiFiles": "Dragging multiple files is not supported",
