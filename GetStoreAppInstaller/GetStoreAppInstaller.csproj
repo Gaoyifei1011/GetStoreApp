@@ -78,7 +78,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250513003" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="True" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250606001" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="True" />
     
     <Reference Include="$(PkgMicrosoft_WindowsAppSDK)\lib\net6.0-windows10.0.22621.0\Microsoft.InteractiveExperiences.Projection.dll" />
     <Reference Include="$(PkgMicrosoft_WindowsAppSDK)\lib\net6.0-windows10.0.22621.0\Microsoft.Windows.AppLifecycle.Projection.dll" />
