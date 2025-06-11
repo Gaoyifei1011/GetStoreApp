@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
@@ -418,25 +419,20 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is CompletedModel completed && File.Exists(completed.FilePath))
             {
-                try
+                if (DataTransferManager.IsSupported())
                 {
-                    DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
-
-                    dataTransferManager.DataRequested += async (sender, args) =>
+                    try
                     {
-                        DataRequestDeferral deferral = args.Request.GetDeferral();
-
-                        args.Request.Data.Properties.Title = FileShareString;
-                        args.Request.Data.SetStorageItems(new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completed.FilePath) });
-                        deferral.Complete();
-                    };
-
-                    DataTransferManagerInterop.ShowShareUIForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
-                }
-                catch (Exception e)
-                {
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.ShareFailed, false, 1));
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShareFileExecuteRequested), 1, e);
+                        List<StorageFile> fileList = [await StorageFile.GetFileFromPathAsync(completed.FilePath)];
+                        DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
+                        dataTransferManager.DataRequested += (sender, args) => OnDataRequested(sender, args, fileList);
+                        DataTransferManagerInterop.ShowShareUIForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
+                    }
+                    catch (Exception e)
+                    {
+                        await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.ShareFailed, false, 1));
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShareFileExecuteRequested), 1, e);
+                    }
                 }
             }
             else
@@ -655,14 +651,8 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
-
-                    dataTransferManager.DataRequested += async (sender, args) =>
+                    if (DataTransferManager.IsSupported())
                     {
-                        DataRequestDeferral deferral = args.Request.GetDeferral();
-
-                        args.Request.Data.Properties.Title = FileShareString;
-
                         List<StorageFile> selectedFileList = [];
                         foreach (CompletedModel completedItem in selectedCompletedDataList)
                         {
@@ -679,11 +669,11 @@ namespace GetStoreApp.Views.Pages
                                 continue;
                             }
                         }
-                        args.Request.Data.SetStorageItems(selectedFileList);
-                        deferral.Complete();
-                    };
 
-                    DataTransferManagerInterop.ShowShareUIForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
+                        DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
+                        dataTransferManager.DataRequested += (sender, args) => OnDataRequested(sender, args, selectedFileList);
+                        DataTransferManagerInterop.ShowShareUIForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
+                    }
                 }
                 catch (Exception e)
                 {
@@ -718,6 +708,25 @@ namespace GetStoreApp.Views.Pages
         }
 
         #region 第三部分：已下载完成页面——自定义事件
+
+        private void OnDataRequested(DataTransferManager sender, DataRequestedEventArgs args, List<StorageFile> fileList)
+        {
+            DataRequestDeferral dataRequestDeferral = args.Request.GetDeferral();
+
+            try
+            {
+                args.Request.Data.Properties.Title = FileShareString;
+                args.Request.Data.SetStorageItems(fileList);
+            }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
+            finally
+            {
+                dataRequestDeferral.Complete();
+            }
+        }
 
         /// <summary>
         /// 应用程序退出时触发的事件

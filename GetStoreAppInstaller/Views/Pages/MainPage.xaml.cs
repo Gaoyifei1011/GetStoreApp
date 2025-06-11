@@ -902,7 +902,7 @@ namespace GetStoreAppInstaller.Views.Pages
         protected override async void OnDragEnter(DragEventArgs args)
         {
             base.OnDragEnter(args);
-            DragOperationDeferral deferral = args.GetDeferral();
+            DragOperationDeferral dragOperationDeferral = args.GetDeferral();
 
             try
             {
@@ -954,7 +954,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             finally
             {
-                deferral.Complete();
+                dragOperationDeferral.Complete();
             }
         }
 
@@ -964,28 +964,38 @@ namespace GetStoreAppInstaller.Views.Pages
         protected override async void OnDrop(DragEventArgs args)
         {
             base.OnDrop(args);
-            DragOperationDeferral deferral = args.GetDeferral();
-            DataPackageView view = args.DataView;
-            fileName = string.Empty;
+            DragOperationDeferral dragOperationDeferral = args.GetDeferral();
 
-            if (view.Contains(StandardDataFormats.StorageItems))
+            try
             {
-                IReadOnlyList<IStorageItem> dragItemsList = await args.DataView.GetStorageItemsAsync();
+                DataPackageView dataPackageView = args.DataView;
+                fileName = string.Empty;
 
-                if (dragItemsList.Count > 0)
+                if (dataPackageView.Contains(StandardDataFormats.StorageItems))
                 {
-                    try
+                    IReadOnlyList<IStorageItem> dragItemsList = await args.DataView.GetStorageItemsAsync();
+
+                    if (dragItemsList.Count > 0)
                     {
-                        fileName = dragItemsList[0].Path;
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnDrop), 1, e);
+                        try
+                        {
+                            fileName = dragItemsList[0].Path;
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnDrop), 1, e);
+                        }
                     }
                 }
             }
-
-            deferral.Complete();
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnDrop), 1, e);
+            }
+            finally
+            {
+                dragOperationDeferral.Complete();
+            }
 
             if (!string.IsNullOrEmpty(fileName))
             {
