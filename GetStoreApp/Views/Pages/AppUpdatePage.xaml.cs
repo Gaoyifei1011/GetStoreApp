@@ -320,7 +320,7 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     AppInstallStatus appInstallStatus = upgradableAppItem.GetCurrentStatus();
                                     string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
-                                    string installSubInformation = string.Format(InstallingSubInformationString, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
+                                    string installSubInformation = string.Format(InstallingSubInformationString, VolumeSizeHelper.ConvertVolumeSizeToString(appInstallStatus.DownloadSizeInBytes), VolumeSizeHelper.ConvertVolumeSizeToString(appInstallStatus.BytesDownloaded));
 
                                     appUpdateList.Add(new AppUpdateModel()
                                     {
@@ -467,7 +467,7 @@ namespace GetStoreApp.Views.Pages
             if (appInstallStatus is not null)
             {
                 string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
-                string installSubInformation = string.Format(InstallingSubInformationString, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
+                string installSubInformation = string.Format(InstallingSubInformationString, VolumeSizeHelper.ConvertVolumeSizeToString(appInstallStatus.DownloadSizeInBytes), VolumeSizeHelper.ConvertVolumeSizeToString(appInstallStatus.BytesDownloaded));
 
                 DispatcherQueue.TryEnqueue(() =>
                 {

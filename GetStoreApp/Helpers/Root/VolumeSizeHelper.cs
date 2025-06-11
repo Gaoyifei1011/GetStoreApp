@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace GetStoreApp.Helpers.Root
 {
     /// <summary>
-    /// 文件大小转换辅助类
+    /// 体积大小转换辅助类
     /// </summary>
-    public static class FileSizeHelper
+    public static class VolumeSizeHelper
     {
         private static readonly Dictionary<string, int> sizeDict = new()
         {
@@ -18,7 +18,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 转换为相应格式的文件大小值
         /// </summary>
-        public static string ConvertFileSizeToString(double size)
+        public static string ConvertVolumeSizeToString(double size)
         {
             if (size / sizeDict["GB"] >= 1)
             {

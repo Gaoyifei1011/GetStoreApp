@@ -349,14 +349,14 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="16"
-                                    Text="{x:Bind roothelper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}"
+                                    Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(TotalSize), Mode=OneWay}"
                                     TextAlignment="Right">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip MaxWidth="9999">
                                             <TextBlock>
                                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/FileSize')}" />
-                                                <Run Text="{x:Bind roothelper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}" />
+                                                <Run Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(TotalSize), Mode=OneWay}" />
                                             </TextBlock>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>

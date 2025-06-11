@@ -299,7 +299,7 @@ namespace GetStoreApp.Helpers.Store
                                 string revisionNumber = xmlNode.GetElementsByName("UpdateIdentity").Attributes.GetNamedItem("RevisionNumber").InnerText;
                                 string updateID = xmlNode.GetElementsByName("UpdateIdentity").Attributes.GetNamedItem("UpdateID").InnerText;
                                 string uri = await GetAppxUrlAsync(updateID, revisionNumber, ring, digest);
-                                string fileSizeString = FileSizeHelper.ConvertFileSizeToString(double.TryParse(fileSize, out double size) ? size : 0);
+                                string fileSizeString = VolumeSizeHelper.ConvertVolumeSizeToString(double.TryParse(fileSize, out double size) ? size : 0);
 
                                 appxPackagesLock.Enter();
 
@@ -458,7 +458,7 @@ namespace GetStoreApp.Helpers.Store
                                 string installerType = installerObject.GetNamedString("InstallerType");
                                 string installerUrl = installerObject.GetNamedString("InstallerUrl");
                                 string fileSize = await GetNonAppxPackageFileSizeAsync(installerUrl);
-                                string fileSizeString = FileSizeHelper.ConvertFileSizeToString(double.TryParse(fileSize, out double size) ? size : 0);
+                                string fileSizeString = VolumeSizeHelper.ConvertVolumeSizeToString(double.TryParse(fileSize, out double size) ? size : 0);
 
                                 if (string.IsNullOrEmpty(installerType) || installerUrl.ToLower().EndsWith(".exe") || installerUrl.ToLower().EndsWith(".msi"))
                                 {

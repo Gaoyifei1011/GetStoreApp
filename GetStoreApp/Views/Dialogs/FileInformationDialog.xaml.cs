@@ -70,7 +70,7 @@ namespace GetStoreApp.Views.Dialogs
             InitializeComponent();
             FileName = completed.FileName;
             FilePath = completed.FilePath;
-            FileSize = FileSizeHelper.ConvertFileSizeToString(completed.TotalSize);
+            FileSize = VolumeSizeHelper.ConvertVolumeSizeToString(completed.TotalSize);
         }
 
         /// <summary>

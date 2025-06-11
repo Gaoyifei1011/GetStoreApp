@@ -373,7 +373,7 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="16"
-                                    Text="{x:Bind roothelper:FileSizeHelper.ConvertFileSizeToString(CompletedSize), Mode=OneWay}"
+                                    Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(CompletedSize), Mode=OneWay}"
                                     TextAlignment="Right"
                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}">
 
@@ -381,7 +381,7 @@
                                         <ToolTip MaxWidth="9999">
                                             <TextBlock>
                                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/CompletedSize')}" />
-                                                <Run Text="{x:Bind roothelper:FileSizeHelper.ConvertFileSizeToString(CompletedSize), Mode=OneWay}" />
+                                                <Run Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(CompletedSize), Mode=OneWay}" />
                                             </TextBlock>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
@@ -402,14 +402,14 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="16"
-                                    Text="{x:Bind roothelper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}"
+                                    Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(TotalSize), Mode=OneWay}"
                                     TextAlignment="Right">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip MaxWidth="9999">
                                             <TextBlock>
                                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/FileSize')}" />
-                                                <Run Text="{x:Bind roothelper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}" />
+                                                <Run Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(TotalSize), Mode=OneWay}" />
                                             </TextBlock>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>

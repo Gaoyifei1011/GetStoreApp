@@ -438,8 +438,8 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     packageOperation.PackageDownloadProgressState = packageDownloadProgress.State;
                                     packageOperation.PackageOperationProgress = Math.Round(packageDownloadProgress.DownloadProgress * 100, 2);
-                                    packageOperation.DownloadedFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(packageDownloadProgress.BytesDownloaded));
-                                    packageOperation.TotalFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(packageDownloadProgress.BytesRequired));
+                                    packageOperation.DownloadedFileSize = Convert.ToString(VolumeSizeHelper.ConvertVolumeSizeToString(packageDownloadProgress.BytesDownloaded));
+                                    packageOperation.TotalFileSize = Convert.ToString(VolumeSizeHelper.ConvertVolumeSizeToString(packageDownloadProgress.BytesRequired));
                                 }
                                 catch (Exception e)
                                 {
@@ -496,8 +496,8 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     packageOperation.PackageInstallProgressState = installProgress.State;
                                     packageOperation.PackageOperationProgress = Math.Round(installProgress.DownloadProgress * 100, 2);
-                                    packageOperation.DownloadedFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(installProgress.BytesDownloaded));
-                                    packageOperation.TotalFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(installProgress.BytesRequired));
+                                    packageOperation.DownloadedFileSize = Convert.ToString(VolumeSizeHelper.ConvertVolumeSizeToString(installProgress.BytesDownloaded));
+                                    packageOperation.TotalFileSize = Convert.ToString(VolumeSizeHelper.ConvertVolumeSizeToString(installProgress.BytesRequired));
                                 }
                                 catch (Exception e)
                                 {
