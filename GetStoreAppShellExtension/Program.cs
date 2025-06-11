@@ -32,12 +32,14 @@ namespace GetStoreAppShellExtension
 
             if (Equals(clsid, typeof(RootExplorerCommand).GUID))
             {
-                ShellMenuClassFactory classFactory = new();
-                IntPtr pIUnknown = StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(classFactory, CreateComInterfaceFlags.None);
+                ShellMenuClassFactory shellMenuClassFactory = new();
+                IntPtr pIUnknown = StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(shellMenuClassFactory, CreateComInterfaceFlags.None);
                 return Marshal.QueryInterface(pIUnknown, in riid, out *ppv);
             }
-
-            return unchecked((int)0x80040111);
+            else
+            {
+                return unchecked((int)0x80040111);
+            }
         }
     }
 }
