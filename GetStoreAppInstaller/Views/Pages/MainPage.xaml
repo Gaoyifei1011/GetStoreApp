@@ -441,7 +441,7 @@
                                                             VerticalAlignment="Center"
                                                             Click="{x:Bind OnCloseFlyoutClicked}"
                                                             Style="{StaticResource AlternateCloseButtonStyle}"
-                                                            Tag="AddDependencyFlyout"
+                                                            Tag="{x:Bind AddDependencyFlyout}"
                                                             ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}">
 
                                                             <Button.Content>
@@ -721,7 +721,7 @@
                                                         VerticalAlignment="Center"
                                                         Click="{x:Bind OnCloseFlyoutClicked}"
                                                         Style="{StaticResource AlternateCloseButtonStyle}"
-                                                        Tag="ViewErrorInformationFlyout"
+                                                        Tag="{x:Bind ViewErrorInformationFlyout}"
                                                         ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}">
 
                                                         <Button.Content>

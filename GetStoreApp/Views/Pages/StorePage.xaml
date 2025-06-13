@@ -50,7 +50,6 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <!--  标题  -->
                 <TextBlock
                     Grid.Row="0"
                     Margin="30,10,30,0"
@@ -79,7 +78,7 @@
                             <SelectorBarItem
                                 Padding="12,6,12,3"
                                 IsTapEnabled="True"
-                                Tag="0"
+                                Tag="{x:Bind PageList[0]}"
                                 Tapped="{x:Bind OnSelectorBarTapped}"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryLinks')}">
                                 <SelectorBarItem.Icon>
@@ -90,7 +89,7 @@
                             <SelectorBarItem
                                 Padding="12,6,12,3"
                                 IsTapEnabled="True"
-                                Tag="1"
+                                Tag="{x:Bind PageList[1]}"
                                 Tapped="{x:Bind OnSelectorBarTapped}"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchApps')}">
                                 <SelectorBarItem.Icon>

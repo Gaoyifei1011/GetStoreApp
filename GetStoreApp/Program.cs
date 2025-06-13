@@ -64,6 +64,7 @@ namespace GetStoreApp
             }
 
             // 初始化应用启动参数
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             AppActivationArguments appActivationArguments = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
             InitializeResourcesAsync().Wait();
             DownloadSchedulerService.InitializeDownloadScheduler();

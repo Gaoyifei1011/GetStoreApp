@@ -274,7 +274,7 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 保存添加的存储卷
         /// </summary>
-        private async void OnSaveClicked(object sender, ContentDialogButtonClickEventArgs args)
+        private async void OnSaveClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             ContentDialogButtonClickDeferral contentDialogButtonClickDeferral = args.GetDeferral();
 

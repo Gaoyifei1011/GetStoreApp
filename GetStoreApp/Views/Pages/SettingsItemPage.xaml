@@ -54,49 +54,49 @@
                 <SelectorBarItem
                     FontSize="16"
                     IsTapEnabled="True"
-                    Tag="0"
+                    Tag="{x:Bind PageList[0]}"
                     Tapped="{x:Bind OnSelectorBarTapped}"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/General')}" />
 
                 <SelectorBarItem
                     FontSize="16"
                     IsTapEnabled="True"
-                    Tag="1"
+                    Tag="{x:Bind PageList[1]}"
                     Tapped="{x:Bind OnSelectorBarTapped}"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/StoreAndUpdate')}" />
 
                 <SelectorBarItem
                     FontSize="16"
                     IsTapEnabled="True"
-                    Tag="2"
+                    Tag="{x:Bind PageList[2]}"
                     Tapped="{x:Bind OnSelectorBarTapped}"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/WinGet')}" />
 
                 <SelectorBarItem
                     FontSize="16"
                     IsTapEnabled="True"
-                    Tag="3"
+                    Tag="{x:Bind PageList[3]}"
                     Tapped="{x:Bind OnSelectorBarTapped}"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/Download')}" />
 
                 <SelectorBarItem
                     FontSize="16"
                     IsTapEnabled="True"
-                    Tag="4"
+                    Tag="{x:Bind PageList[4]}"
                     Tapped="{x:Bind OnSelectorBarTapped}"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/AppInstaller')}" />
 
                 <SelectorBarItem
                     FontSize="16"
                     IsTapEnabled="True"
-                    Tag="5"
+                    Tag="{x:Bind PageList[5]}"
                     Tapped="{x:Bind OnSelectorBarTapped}"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/Advanced')}" />
 
                 <SelectorBarItem
                     FontSize="16"
                     IsTapEnabled="True"
-                    Tag="6"
+                    Tag="{x:Bind PageList[6]}"
                     Tapped="{x:Bind OnSelectorBarTapped}"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/About')}" />
             </SelectorBar>

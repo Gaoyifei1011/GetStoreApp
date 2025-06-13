@@ -308,7 +308,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 关闭窗口之后关闭其他服务
         /// </summary>
-        private async void OnAppWindowClosing(object sender, AppWindowClosingEventArgs args)
+        private async void OnAppWindowClosing(AppWindow sender, AppWindowClosingEventArgs args)
         {
             args.Cancel = true;
 
@@ -752,7 +752,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 当后退按钮收到交互（如单击或点击）时发生
         /// </summary>
-        private void OnBackRequested(object sender, NavigationViewBackRequestedEventArgs args)
+        private void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
             if (GetFrameContent() is AppManagerPage appManagerPage && appManagerPage.BreadCollection.Count is 2)
             {

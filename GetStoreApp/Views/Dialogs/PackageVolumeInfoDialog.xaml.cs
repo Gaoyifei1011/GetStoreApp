@@ -139,7 +139,7 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 打开对话框时触发的事件
         /// </summary>
-        private async void OnOpened(object sender, ContentDialogOpenedEventArgs args)
+        private async void OnOpened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
             SelectedPackageVolume = null;
             IsRemovePackageVolumeEnabled = false;

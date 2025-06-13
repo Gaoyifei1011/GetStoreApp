@@ -578,9 +578,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnTypeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is TypeModel type)
             {
-                SelectedType = TypeList[Convert.ToInt32(tag)];
+                SelectedType = type;
                 sampleLink = SampleLinkList[TypeList.FindIndex(item => Equals(item.InternalName, SelectedType.InternalName))];
                 LinkPlaceHolderText = SampleTitleString + sampleLink;
                 LinkText = string.Empty;
@@ -592,9 +592,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnChannelSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is ChannelModel channel)
             {
-                SelectedChannel = ChannelList[Convert.ToInt32(tag)];
+                SelectedChannel = channel;
             }
         }
 

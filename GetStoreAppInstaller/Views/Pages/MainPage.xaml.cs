@@ -1400,16 +1400,9 @@ namespace GetStoreAppInstaller.Views.Pages
         /// </summary>
         private void OnCloseFlyoutClicked(object sender, RoutedEventArgs args)
         {
-            if ((sender as Button).Tag is string tag)
+            if ((sender as Button).Tag is Flyout flyout && flyout.IsOpen)
             {
-                if (string.Equals(tag, "AddDependencyFlyout", StringComparison.OrdinalIgnoreCase) && AddDependencyFlyout.IsOpen)
-                {
-                    AddDependencyFlyout.Hide();
-                }
-                else if (string.Equals(tag, "ViewErrorInformationFlyout", StringComparison.OrdinalIgnoreCase) && ViewErrorInformationFlyout.IsOpen)
-                {
-                    ViewErrorInformationFlyout.Hide();
-                }
+                flyout.Hide();
             }
         }
 

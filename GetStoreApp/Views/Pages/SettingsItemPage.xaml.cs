@@ -84,9 +84,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectorBarTapped(object sender, TappedRoutedEventArgs args)
         {
-            if (sender is SelectorBarItem selectorBarItem && selectorBarItem.Tag is string tag)
+            if (sender is SelectorBarItem selectorBarItem && selectorBarItem.Tag is Type pageType)
             {
-                int index = Convert.ToInt32(tag);
+                int index = PageList.IndexOf(pageType);
                 int currentIndex = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
 
                 if (index is 0 && !Equals(GetCurrentPageType(), PageList[0]))

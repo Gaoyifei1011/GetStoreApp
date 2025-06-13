@@ -40,7 +40,7 @@ namespace GetStoreApp.Services.Download
                 {
                     try
                     {
-                        int createResult = Ole32Library.CoCreateInstance(CLSID_BackgroundCopyManager, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, typeof(IBackgroundCopyManager).GUID, out nint ppv);
+                        int createResult = Ole32Library.CoCreateInstance(CLSID_BackgroundCopyManager, IntPtr.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, typeof(IBackgroundCopyManager).GUID, out nint ppv);
 
                         if (createResult is 0)
                         {
@@ -102,7 +102,6 @@ namespace GetStoreApp.Services.Download
                         };
                         backgroundCopyCallback.StatusChanged += OnStatusChanged;
                         downloadJob.SetNotifyInterface(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(new UnknownWrapper(backgroundCopyCallback).WrappedObject, CreateComInterfaceFlags.None));
-
                         downloadJob.GetProgress(out BG_JOB_PROGRESS progress);
 
                         bitsLock.Enter();

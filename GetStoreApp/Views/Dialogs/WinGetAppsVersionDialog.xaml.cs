@@ -47,7 +47,7 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 打开对话框时触发的事件
         /// </summary>
-        private void OnOpened(object sender, ContentDialogOpenedEventArgs args)
+        private void OnOpened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
             WinGetAppsVersionFrame.ContentTransitions = SuppressNavigationTransitionCollection;
 
@@ -72,7 +72,7 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 单击痕迹栏条目时发生的事件
         /// </summary>
-        private void OnItemClicked(object sender, BreadcrumbBarItemClickedEventArgs args)
+        private void OnItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
         {
             if (args.Item is ContentLinkInfo contentLinkInfo && BreadCollection.Count is 2 && Equals(contentLinkInfo.SecondaryText, BreadCollection[0].SecondaryText))
             {

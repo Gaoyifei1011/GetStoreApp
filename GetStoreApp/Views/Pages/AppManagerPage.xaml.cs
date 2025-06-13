@@ -53,7 +53,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 单击痕迹栏条目时发生的事件
         /// </summary>
-        private void OnItemClicked(object sender, BreadcrumbBarItemClickedEventArgs args)
+        private void OnItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
         {
             if (args.Item is ContentLinkInfo contentLinkInfo && BreadCollection.Count is 2 && Equals(contentLinkInfo.SecondaryText, BreadCollection[0].SecondaryText))
             {

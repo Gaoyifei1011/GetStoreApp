@@ -70,7 +70,7 @@
                         Padding="12,5"
                         FontSize="22"
                         IsTapEnabled="True"
-                        Tag="0"
+                        Tag="{x:Bind PageList[0]}"
                         Tapped="{x:Bind OnSelectorBarTapped}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/SearchApps')}" />
 
@@ -78,7 +78,7 @@
                         Padding="12,5"
                         FontSize="22"
                         IsTapEnabled="True"
-                        Tag="1"
+                        Tag="{x:Bind PageList[1]}"
                         Tapped="{x:Bind OnSelectorBarTapped}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/InstalledApps')}" />
 
@@ -86,7 +86,7 @@
                         Padding="12,5"
                         FontSize="22"
                         IsTapEnabled="True"
-                        Tag="2"
+                        Tag="{x:Bind PageList[2]}"
                         Tapped="{x:Bind OnSelectorBarTapped}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UpgradableApps')}" />
                 </SelectorBar>

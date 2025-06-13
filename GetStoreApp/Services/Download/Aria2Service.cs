@@ -27,7 +27,7 @@ namespace GetStoreApp.Services.Download
         private static readonly string defaultAria2Arguments = "-c --enable-rpc=true --rpc-allow-origin-all=true --rpc-listen-all=true --rpc-listen-port=6300 --stop-with-process={0} -D";
         private static readonly string rpcServerLink = "http://127.0.0.1:6300/jsonrpc";
         private static string aria2Arguments;
-        private static ThreadPoolTimer downloadSchedulerTimer;
+        private static ThreadPoolTimer aria2Timer;
 
         private static SemaphoreSlim Aria2SemaphoreSlim { get; set; } = new(1, 1);
 
@@ -73,8 +73,8 @@ namespace GetStoreApp.Services.Download
             {
                 try
                 {
-                    Shell32Library.ShellExecute(nint.Zero, "open", aria2FilePath, aria2Arguments, null, WindowShowStyle.SW_HIDE);
-                    downloadSchedulerTimer = ThreadPoolTimer.CreatePeriodicTimer(OnTimerElapsed, TimeSpan.FromSeconds(1));
+                    Shell32Library.ShellExecute(IntPtr.Zero, "open", aria2FilePath, aria2Arguments, null, WindowShowStyle.SW_HIDE);
+                    aria2Timer = ThreadPoolTimer.CreatePeriodicTimer(OnTimerElapsed, TimeSpan.FromSeconds(1));
                 }
                 catch (Exception e)
                 {
@@ -92,7 +92,7 @@ namespace GetStoreApp.Services.Download
             {
                 try
                 {
-                    downloadSchedulerTimer?.Cancel();
+                    aria2Timer?.Cancel();
                     Aria2SemaphoreSlim?.Dispose();
                     Aria2SemaphoreSlim = null;
                 }
@@ -119,11 +119,11 @@ namespace GetStoreApp.Services.Download
 
                 string versionString = versionObject.Stringify();
                 byte[] contentBytes = Encoding.UTF8.GetBytes(versionString);
-                HttpStringContent httpContent = new(versionString);
-                httpContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
-                httpContent.Headers.ContentType.CharSet = "utf-8";
+                HttpStringContent httpStringContent = new(versionString);
+                httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
+                httpStringContent.Headers.ContentType.CharSet = "utf-8";
                 HttpClient httpClient = new();
-                HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpContent);
+                HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
                 return response.IsSuccessStatusCode;
             }
             catch (Exception e)
@@ -163,11 +163,11 @@ namespace GetStoreApp.Services.Download
 
                         string createDownloadString = jsonObject.Stringify();
                         byte[] contentBytes = Encoding.UTF8.GetBytes(createDownloadString);
-                        HttpStringContent httpContent = new(createDownloadString);
-                        httpContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
-                        httpContent.Headers.ContentType.CharSet = "utf-8";
+                        HttpStringContent httpStringContent = new(createDownloadString);
+                        httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
+                        httpStringContent.Headers.ContentType.CharSet = "utf-8";
                         HttpClient httpClient = new();
-                        HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpContent);
+                        HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
 
                         // 请求成功
                         if (response.IsSuccessStatusCode)
@@ -236,11 +236,11 @@ namespace GetStoreApp.Services.Download
 
                         string pauseDownloadString = jsonObject.Stringify();
                         byte[] contentBytes = Encoding.UTF8.GetBytes(pauseDownloadString);
-                        HttpStringContent httpContent = new(pauseDownloadString);
-                        httpContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
-                        httpContent.Headers.ContentType.CharSet = "utf-8";
+                        HttpStringContent httpStringContent = new(pauseDownloadString);
+                        httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
+                        httpStringContent.Headers.ContentType.CharSet = "utf-8";
                         HttpClient httpClient = new();
-                        HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpContent);
+                        HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
 
                         // 请求成功
                         if (response.IsSuccessStatusCode)
@@ -310,11 +310,11 @@ namespace GetStoreApp.Services.Download
 
                         string pauseDownloadString = jsonObject.Stringify();
                         byte[] contentBytes = Encoding.UTF8.GetBytes(pauseDownloadString);
-                        HttpStringContent httpContent = new(pauseDownloadString);
-                        httpContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
-                        httpContent.Headers.ContentType.CharSet = "utf-8";
+                        HttpStringContent httpStringContent = new(pauseDownloadString);
+                        httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
+                        httpStringContent.Headers.ContentType.CharSet = "utf-8";
                         HttpClient httpClient = new();
-                        HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpContent);
+                        HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
 
                         // 请求成功
                         if (response.IsSuccessStatusCode)
@@ -371,11 +371,11 @@ namespace GetStoreApp.Services.Download
 
                         string deleteDownloadString = jsonObject.Stringify();
                         byte[] contentBytes = Encoding.UTF8.GetBytes(deleteDownloadString);
-                        HttpStringContent httpContent = new(deleteDownloadString);
-                        httpContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
-                        httpContent.Headers.ContentType.CharSet = "utf-8";
+                        HttpStringContent httpStringContent = new(deleteDownloadString);
+                        httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
+                        httpStringContent.Headers.ContentType.CharSet = "utf-8";
                         HttpClient httpClient = new();
-                        HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpContent);
+                        HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
 
                         // 请求成功
                         if (response.IsSuccessStatusCode)
@@ -459,11 +459,11 @@ namespace GetStoreApp.Services.Download
 
                     string tellStatusString = jsonObject.Stringify();
                     byte[] contentBytes = Encoding.UTF8.GetBytes(tellStatusString);
-                    HttpStringContent httpContent = new(tellStatusString);
-                    httpContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
-                    httpContent.Headers.ContentType.CharSet = "utf-8";
+                    HttpStringContent httpStringContent = new(tellStatusString);
+                    httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
+                    httpStringContent.Headers.ContentType.CharSet = "utf-8";
                     HttpClient httpClient = new();
-                    HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpContent);
+                    HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
 
                     // 请求成功
                     if (response.IsSuccessStatusCode)
@@ -583,11 +583,11 @@ namespace GetStoreApp.Services.Download
 
                         string removeResultString = jsonObject.Stringify();
                         byte[] contentBytes = Encoding.UTF8.GetBytes(removeResultString);
-                        HttpStringContent httpContent = new(removeResultString);
-                        httpContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
-                        httpContent.Headers.ContentType.CharSet = "utf-8";
+                        HttpStringContent httpStringContent = new(removeResultString);
+                        httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
+                        httpStringContent.Headers.ContentType.CharSet = "utf-8";
                         HttpClient httpClient = new();
-                        await httpClient.PostAsync(new Uri(rpcServerLink), httpContent);
+                        await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
                     }
                 }
                 catch (Exception e)

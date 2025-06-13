@@ -459,7 +459,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 根据输入的内容检索应用
         /// </summary>
-        private void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private void OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             if (!string.IsNullOrEmpty(SearchText))
             {
@@ -502,32 +502,29 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 文本输入框内容为空时，复原原来的内容
         /// </summary>
-        private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
+        private void OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            if (sender is AutoSuggestBox autoSuggestBox)
+            SearchText = sender.Text;
+            InstalledAppsCollection.Clear();
+            if (string.IsNullOrEmpty(SearchText) && InstalledAppsResultKind is InstalledAppsResultKind.SearchResult)
             {
-                SearchText = autoSuggestBox.Text;
-                InstalledAppsCollection.Clear();
-                if (string.IsNullOrEmpty(SearchText) && InstalledAppsResultKind is InstalledAppsResultKind.SearchResult)
+                InstalledAppsLock.Enter();
+                try
                 {
-                    InstalledAppsLock.Enter();
-                    try
+                    foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
                     {
-                        foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
-                        {
-                            InstalledAppsCollection.Add(installedAppsItem);
-                        }
+                        InstalledAppsCollection.Add(installedAppsItem);
                     }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    }
-                    finally
-                    {
-                        InstalledAppsLock.Exit();
-                    }
-                    InstalledAppsResultKind = InstalledAppsResultKind.Successfully;
                 }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+                finally
+                {
+                    InstalledAppsLock.Exit();
+                }
+                InstalledAppsResultKind = InstalledAppsResultKind.Successfully;
             }
         }
 

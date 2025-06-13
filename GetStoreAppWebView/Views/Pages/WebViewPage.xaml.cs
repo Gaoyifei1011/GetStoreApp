@@ -433,7 +433,7 @@ namespace GetStoreAppWebView.Views.Pages
         /// <summary>
         /// 进程异常退出时触发的事件
         /// </summary>
-        private async void OnCoreProcessFailed(object sender, CoreWebView2ProcessFailedEventArgs args)
+        private async void OnCoreProcessFailed(WebView2 sender, CoreWebView2ProcessFailedEventArgs args)
         {
             Dictionary<string, string> logInformationDict = new()
             {
@@ -451,7 +451,7 @@ namespace GetStoreAppWebView.Views.Pages
         /// <summary>
         /// 初始化 CoreWebView2 对象
         /// </summary>
-        private void OnCoreWebView2Initialized(object sender, CoreWebView2InitializedEventArgs args)
+        private void OnCoreWebView2Initialized(WebView2 sender, CoreWebView2InitializedEventArgs args)
         {
             if (WebView2Browser.CoreWebView2 is not null)
             {
@@ -466,7 +466,7 @@ namespace GetStoreAppWebView.Views.Pages
         /// <summary>
         /// 页面开始导航
         /// </summary>
-        private void OnWebView2NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs args)
+        private void OnWebView2NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
         {
             IsLoading = true;
         }
@@ -474,7 +474,7 @@ namespace GetStoreAppWebView.Views.Pages
         /// <summary>
         /// 页面完成导航
         /// </summary>
-        private void OnWebView2NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
+        private void OnWebView2NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
         {
             IsLoading = false;
             applicationView.Title = string.Format("{0} - {1}", WebView2Browser.CoreWebView2.DocumentTitle, WebBrowserString);
@@ -483,22 +483,19 @@ namespace GetStoreAppWebView.Views.Pages
         /// <summary>
         /// 当前页面对应的链接发生改变时触发这一事件
         /// </summary>
-        private void OnSourceChanged(object sender, CoreWebView2SourceChangedEventArgs args)
+        private void OnSourceChanged(CoreWebView2 sender, CoreWebView2SourceChangedEventArgs args)
         {
-            if (sender is CoreWebView2 coreWebView2)
-            {
-                CanGoBack = coreWebView2.CanGoBack;
-                CanGoForward = coreWebView2.CanGoForward;
-            }
+            CanGoBack = sender.CanGoBack;
+            CanGoForward = sender.CanGoForward;
         }
 
         /// <summary>
         /// 捕捉打开新窗口事件，并禁止弹窗
         /// </summary>
-        private void OnCoreWebViewNewWindowRequested(object sender, CoreWebView2NewWindowRequestedEventArgs args)
+        private void OnCoreWebViewNewWindowRequested(CoreWebView2 sender, CoreWebView2NewWindowRequestedEventArgs args)
         {
             args.Handled = true;
-            (sender as CoreWebView2)?.Navigate(args.Uri);
+            sender.Navigate(args.Uri);
         }
 
         #endregion 第四部分：WebView2 浏览器事件

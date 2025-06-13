@@ -389,7 +389,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 根据输入的内容检索应用
         /// </summary>
-        private async void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private async void OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             if (!string.IsNullOrEmpty(SearchText))
             {
@@ -403,12 +403,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 文本输入框内容为空时，复原原来的内容
         /// </summary>
-        private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
+        private void OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            if (sender is AutoSuggestBox autoSuggestBox)
-            {
-                SearchText = autoSuggestBox.Text;
-            }
+            SearchText = sender.Text;
         }
 
         #endregion 第三部分：WinGet 搜索应用界面——挂载的事件

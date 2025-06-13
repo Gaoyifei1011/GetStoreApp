@@ -90,7 +90,7 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 加载完成前禁用关闭对话框
         /// </summary>
-        private void OnClosing(object sender, ContentDialogClosingEventArgs args)
+        private void OnClosing(ContentDialog sender, ContentDialogClosingEventArgs args)
         {
             if (!IsLoadCompleted)
             {
