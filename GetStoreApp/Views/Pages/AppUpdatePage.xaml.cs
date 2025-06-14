@@ -77,7 +77,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_appUpdateResultKind, value))
+                if (!string.Equals(_appUpdateFailedContent, value))
                 {
                     _appUpdateFailedContent = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppUpdateFailedContent)));
@@ -133,7 +133,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     foreach (AppUpdateModel appUpdateItem in AppUpdateList)
                     {
-                        if (Equals(appUpdateItem.PackageFamilyName, packageFamilyName))
+                        if (string.Equals(appUpdateItem.PackageFamilyName, packageFamilyName))
                         {
                             appUpdateItem.IsOperating = true;
                             AppInstallItem appInstallItem = await Task.Run(async () =>
@@ -195,7 +195,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     foreach (AppUpdateModel appUpdateItem in AppUpdateList)
                     {
-                        if (Equals(appUpdateItem.PackageFamilyName, packageFamilyName))
+                        if (string.Equals(appUpdateItem.PackageFamilyName, packageFamilyName))
                         {
                             appUpdateItem.IsOperating = true;
                         }
@@ -216,7 +216,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         foreach (AppInstallItem appInstallItem in appInstallManager.AppInstallItems)
                         {
-                            if (Equals(packageFamilyName, appInstallItem.PackageFamilyName))
+                            if (string.Equals(packageFamilyName, appInstallItem.PackageFamilyName))
                             {
                                 appInstallItem.Cancel();
                                 break;
@@ -284,7 +284,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             foreach (AppUpdateModel appUpdateItem in AppUpdateList)
                             {
-                                if (Equals(appUpdateItem.PackageFamilyName, upgradableAppItem.PackageFamilyName))
+                                if (string.Equals(appUpdateItem.PackageFamilyName, upgradableAppItem.PackageFamilyName))
                                 {
                                     isExisted = true;
                                     isUpdating = appUpdateItem.IsUpdating;

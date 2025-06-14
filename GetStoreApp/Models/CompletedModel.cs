@@ -66,25 +66,6 @@ namespace GetStoreApp.Models
         }
 
         /// <summary>
-        /// 是否正在进行操作
-        /// </summary>
-        private bool _isNotOperated;
-
-        public bool IsNotOperated
-        {
-            get { return _isNotOperated; }
-
-            set
-            {
-                if (!Equals(_isNotOperated, value))
-                {
-                    _isNotOperated = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNotOperated)));
-                }
-            }
-        }
-
-        /// <summary>
         /// 下载任务的唯一标识码，该值唯一
         /// </summary>
         public string DownloadKey { get; set; }

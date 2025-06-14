@@ -84,7 +84,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_packageVolumeFailedContent, value))
+                if (!string.Equals(_packageVolumeFailedContent, value))
                 {
                     _packageVolumeFailedContent = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageVolumeFailedContent)));

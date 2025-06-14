@@ -79,7 +79,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             IsSelected = false,
                             IsSelectMode = false,
-                            IsNotOperated = true,
+                            IsOperating = false,
                             DownloadID = downloadSchedulerItem.DownloadID,
                             FileName = downloadSchedulerItem.FileName,
                             FilePath = downloadSchedulerItem.FilePath,
@@ -100,7 +100,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 IsSelected = false,
                                 IsSelectMode = false,
-                                IsNotOperated = true,
+                                IsOperating = false,
                                 DownloadID = downloadSchedulerItem.DownloadID,
                                 FileName = downloadSchedulerItem.FileName,
                                 FilePath = downloadSchedulerItem.FilePath,
@@ -142,7 +142,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is DownloadingModel downloading && !string.IsNullOrEmpty(downloading.DownloadID))
             {
-                downloading.IsNotOperated = false;
+                downloading.IsOperating = true;
                 DownloadSchedulerService.ContinueDownload(downloading.DownloadID);
             }
         }
@@ -172,7 +172,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is DownloadingModel downloading && !string.IsNullOrEmpty(downloading.DownloadID))
             {
-                downloading.IsNotOperated = false;
+                downloading.IsOperating = true;
                 DownloadSchedulerService.PauseDownload(downloading.DownloadID);
             }
         }
@@ -190,7 +190,7 @@ namespace GetStoreApp.Views.Pages
             {
                 if (downloadingItem.DownloadProgressState is DownloadProgressState.Paused)
                 {
-                    downloadingItem.IsNotOperated = false;
+                    downloadingItem.IsOperating = true;
                     DownloadSchedulerService.ContinueDownload(downloadingItem.DownloadID);
                 }
             }
@@ -205,7 +205,7 @@ namespace GetStoreApp.Views.Pages
             {
                 if (downloadingItem.DownloadProgressState is DownloadProgressState.Queued || downloadingItem.DownloadProgressState is DownloadProgressState.Downloading)
                 {
-                    downloadingItem.IsNotOperated = false;
+                    downloadingItem.IsOperating = true;
                     DownloadSchedulerService.PauseDownload(downloadingItem.DownloadID);
                 }
             }
@@ -304,7 +304,7 @@ namespace GetStoreApp.Views.Pages
                     if (downloadingItem.IsSelected)
                     {
                         downloadingItem.IsSelected = false;
-                        downloadingItem.IsNotOperated = false;
+                        downloadingItem.IsOperating = true;
 
                         if (downloadingItem.DownloadProgressState is DownloadProgressState.Queued || downloadingItem.DownloadProgressState is DownloadProgressState.Downloading || downloadingItem.DownloadProgressState is DownloadProgressState.Paused)
                         {
@@ -376,9 +376,9 @@ namespace GetStoreApp.Views.Pages
                     // 下载任务已经存在，更新下载状态
                     foreach (DownloadingModel downloadingItem in DownloadingCollection)
                     {
-                        if (Equals(downloadingItem.DownloadID, downloadScheduler.DownloadID))
+                        if (string.Equals(downloadingItem.DownloadID, downloadScheduler.DownloadID))
                         {
-                            downloadingItem.IsNotOperated = true;
+                            downloadingItem.IsOperating = false;
                             downloadingItem.DownloadProgressState = downloadScheduler.DownloadProgressState;
                             return;
                         }
@@ -389,7 +389,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         IsSelected = false,
                         IsSelectMode = false,
-                        IsNotOperated = true,
+                        IsOperating = false,
                         DownloadID = downloadScheduler.DownloadID,
                         FileName = downloadScheduler.FileName,
                         FilePath = downloadScheduler.FilePath,
@@ -409,7 +409,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     foreach (DownloadingModel downloadingItem in DownloadingCollection)
                     {
-                        if (Equals(downloadingItem.DownloadID, downloadScheduler.DownloadID))
+                        if (string.Equals(downloadingItem.DownloadID, downloadScheduler.DownloadID))
                         {
                             downloadingItem.DownloadProgressState = downloadScheduler.DownloadProgressState;
                             downloadingItem.DownloadSpeed = downloadScheduler.DownloadSpeed;
@@ -427,9 +427,9 @@ namespace GetStoreApp.Views.Pages
                 {
                     foreach (DownloadingModel downloadingItem in DownloadingCollection)
                     {
-                        if (Equals(downloadingItem.DownloadID, downloadScheduler.DownloadID))
+                        if (string.Equals(downloadingItem.DownloadID, downloadScheduler.DownloadID))
                         {
-                            downloadingItem.IsNotOperated = true;
+                            downloadingItem.IsOperating = false;
                             downloadingItem.DownloadProgressState = downloadScheduler.DownloadProgressState;
                             return;
                         }
@@ -443,7 +443,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     foreach (DownloadingModel downloadingItem in DownloadingCollection)
                     {
-                        if (Equals(downloadingItem.DownloadID, downloadScheduler.DownloadID))
+                        if (string.Equals(downloadingItem.DownloadID, downloadScheduler.DownloadID))
                         {
                             downloadingItem.DownloadProgressState = downloadScheduler.DownloadProgressState;
                             downloadingItem.DownloadSpeed = downloadScheduler.DownloadSpeed;
@@ -463,7 +463,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     foreach (DownloadingModel downloadingItem in DownloadingCollection)
                     {
-                        if (Equals(downloadingItem.DownloadID, downloadScheduler.DownloadID))
+                        if (string.Equals(downloadingItem.DownloadID, downloadScheduler.DownloadID))
                         {
                             DownloadingCollection.Remove(downloadingItem);
                             return;

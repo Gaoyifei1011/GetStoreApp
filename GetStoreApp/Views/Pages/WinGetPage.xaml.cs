@@ -2227,7 +2227,7 @@ namespace GetStoreApp.Views.Pages
                                     {
                                         foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
                                         {
-                                            if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
+                                            if (string.Equals(packageOperation.AppID, packageOperationItem.AppID) && string.Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
                                             {
                                                 packageOperationItem.PackageInstallProgress = upgradePackageWithProgress;
                                                 break;
@@ -2740,7 +2740,7 @@ namespace GetStoreApp.Views.Pages
                         PackageOperationCollection.Remove(packageOperationItem);
                         break;
                     }
-                    else if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
+                    else if (string.Equals(packageOperation.AppID, packageOperationItem.AppID) && string.Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
                     {
                         isExisted = true;
                         break;

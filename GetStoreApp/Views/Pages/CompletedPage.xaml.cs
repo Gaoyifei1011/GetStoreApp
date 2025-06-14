@@ -124,7 +124,6 @@ namespace GetStoreApp.Views.Pages
                             FileName = downloadSchedulerItem.FileName,
                             FilePath = downloadSchedulerItem.FilePath,
                             TotalSize = downloadSchedulerItem.TotalSize,
-                            IsNotOperated = true,
                             IsSelected = false,
                             IsSelectMode = false
                         });
@@ -162,7 +161,6 @@ namespace GetStoreApp.Views.Pages
                 }
                 else
                 {
-                    completed.IsNotOperated = false;
                     await Task.Run(() =>
                     {
                         DownloadStorageService.DeleteDownloadData(completed.DownloadKey);
@@ -184,7 +182,6 @@ namespace GetStoreApp.Views.Pages
                 }
                 else
                 {
-                    completed.IsNotOperated = false;
                     await Task.Run(() =>
                     {
                         // 删除文件
@@ -257,7 +254,7 @@ namespace GetStoreApp.Views.Pages
                         try
                         {
                             // 使用应用安装程序安装
-                            if (Equals(InstallModeService.InstallMode, InstallModeService.InstallModeList[0]))
+                            if (string.Equals(InstallModeService.InstallMode, InstallModeService.InstallModeList[0]))
                             {
                                 await Task.Run(async () =>
                                 {
@@ -265,7 +262,7 @@ namespace GetStoreApp.Views.Pages
                                 });
                             }
                             // 直接安装
-                            else if (Equals(InstallModeService.InstallMode, InstallModeService.InstallModeList[1]))
+                            else if (string.Equals(InstallModeService.InstallMode, InstallModeService.InstallModeList[1]))
                             {
                                 // 标记安装状态
                                 completed.IsInstalling = true;
@@ -546,7 +543,6 @@ namespace GetStoreApp.Views.Pages
 
                     if (completedItem.IsSelected)
                     {
-                        completedItem.IsNotOperated = false;
                         await Task.Run(() =>
                         {
                             DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
@@ -601,7 +597,6 @@ namespace GetStoreApp.Views.Pages
 
                     if (completedItem.IsSelected)
                     {
-                        completedItem.IsNotOperated = false;
                         await Task.Run(() =>
                         {
                             // 删除文件
@@ -760,7 +755,6 @@ namespace GetStoreApp.Views.Pages
                     FileName = downloadScheduler.FileName,
                     FilePath = downloadScheduler.FilePath,
                     TotalSize = downloadScheduler.TotalSize,
-                    IsNotOperated = true,
                     IsSelected = false,
                     IsSelectMode = false
                 });
@@ -778,7 +772,7 @@ namespace GetStoreApp.Views.Pages
             {
                 foreach (CompletedModel completedItem in CompletedCollection)
                 {
-                    if (Equals(completedItem.DownloadKey, downloadKey))
+                    if (string.Equals(completedItem.DownloadKey, downloadKey))
                     {
                         CompletedCollection.Remove(completedItem);
                         break;

@@ -160,7 +160,7 @@ namespace GetStoreApp.Services.Settings
 
             try
             {
-                if (wingetDataSourceContainer.Values.TryGetValue(WinetDataSource, out object value) && value is ApplicationDataCompositeValue compositeValue && compositeValue.TryGetValue("Name", out object nameValue) && Equals(Convert.ToString(nameValue), winGetDataSourceName.Key) && compositeValue.TryGetValue("IsInternal", out object isInternalValue) && Equals(Convert.ToBoolean(isInternalValue), winGetDataSourceName.Value))
+                if (wingetDataSourceContainer.Values.TryGetValue(WinetDataSource, out object value) && value is ApplicationDataCompositeValue compositeValue && compositeValue.TryGetValue("Name", out object nameValue) && string.Equals(Convert.ToString(nameValue), winGetDataSourceName.Key) && compositeValue.TryGetValue("IsInternal", out object isInternalValue) && Equals(Convert.ToBoolean(isInternalValue), winGetDataSourceName.Value))
                 {
                     wingetDataSourceContainer.Values.Remove(WinetDataSource);
                 }

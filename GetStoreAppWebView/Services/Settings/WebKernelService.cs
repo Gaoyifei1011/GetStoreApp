@@ -49,7 +49,7 @@ namespace GetStoreAppWebView.Services.Settings
             }
             else
             {
-                return WebKernelList.Find(item => Equals(item, "IE"));
+                return WebKernelList.Find(item => string.Equals(item, "IE"));
             }
         }
     }

@@ -384,7 +384,7 @@ namespace GetStoreApp.Helpers.Store
 
                         foreach (IXmlNode fileLocationNode in fileLocationList)
                         {
-                            if (Equals(fileLocationNode.GetElementsByName("FileDigest").InnerText, digest))
+                            if (string.Equals(fileLocationNode.GetElementsByName("FileDigest").InnerText, digest))
                             {
                                 urlResult = fileLocationNode.GetElementsByName("Url").InnerText;
                                 break;
@@ -583,7 +583,7 @@ namespace GetStoreApp.Helpers.Store
         {
             foreach (IXmlNode node in xmlNode.ChildNodes)
             {
-                if (Equals(node.NodeName, name))
+                if (string.Equals(node.NodeName, name))
                 {
                     return node;
                 }

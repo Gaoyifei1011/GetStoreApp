@@ -49,7 +49,7 @@ namespace GetStoreApp.Services.Settings
         {
             GeographicRegion systemRegion = new();
 
-            if (!systemRegion.CodeTwoLetter.Equals(DefaultStoreRegion.CodeTwoLetter))
+            if (!string.Equals(systemRegion.CodeTwoLetter, DefaultStoreRegion.CodeTwoLetter))
             {
                 DefaultStoreRegion = StoreRegionList.Find(item => string.Equals(item.CodeTwoLetter, systemRegion.CodeTwoLetter, StringComparison.OrdinalIgnoreCase));
 

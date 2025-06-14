@@ -76,7 +76,7 @@ namespace GetStoreApp.Models
 
             set
             {
-                if (!Equals(_downloadedFileSize, value))
+                if (!string.Equals(_downloadedFileSize, value))
                 {
                     _downloadedFileSize = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadedFileSize)));
@@ -197,7 +197,7 @@ namespace GetStoreApp.Models
 
             set
             {
-                if (!Equals(_packageOperationFailedContent, value))
+                if (!string.Equals(_packageOperationFailedContent, value))
                 {
                     _packageOperationFailedContent = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageOperationFailedContent)));

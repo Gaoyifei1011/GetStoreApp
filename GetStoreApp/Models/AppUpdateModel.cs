@@ -89,7 +89,7 @@ namespace GetStoreApp.Models
 
             set
             {
-                if (!Equals(_installInformation, value))
+                if (!string.Equals(_installInformation, value))
                 {
                     _installInformation = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallInformation)));
@@ -105,7 +105,7 @@ namespace GetStoreApp.Models
 
             set
             {
-                if (!Equals(_installSubInformation, value))
+                if (!string.Equals(_installSubInformation, value))
                 {
                     _installSubInformation = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallSubInformation)));

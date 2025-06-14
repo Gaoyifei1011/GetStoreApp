@@ -206,7 +206,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnDoEngineModeSelectClicked}"
                                 GroupName="DoEngineModeModeRadioGroup"
-                                IsChecked="{x:Bind x:Object.Equals(DoEngineMode.Key, DoEngineModeList[0].Key), Mode=OneWay}"
+                                IsChecked="{x:Bind x:String.Equals(DoEngineMode.Key, DoEngineModeList[0].Key), Mode=OneWay}"
                                 Tag="0"
                                 Text="{x:Bind DoEngineModeList[0].Value}" />
 
@@ -215,7 +215,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnDoEngineModeSelectClicked}"
                                 GroupName="DoEngineModeModeRadioGroup"
-                                IsChecked="{x:Bind x:Object.Equals(DoEngineMode.Key, DoEngineModeList[1].Key), Mode=OneWay}"
+                                IsChecked="{x:Bind x:String.Equals(DoEngineMode.Key, DoEngineModeList[1].Key), Mode=OneWay}"
                                 Tag="1"
                                 Text="{x:Bind DoEngineModeList[1].Value}" />
 
@@ -224,7 +224,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnDoEngineModeSelectClicked}"
                                 GroupName="DoEngineModeModeRadioGroup"
-                                IsChecked="{x:Bind x:Object.Equals(DoEngineMode.Key, DoEngineModeList[2].Key), Mode=OneWay}"
+                                IsChecked="{x:Bind x:String.Equals(DoEngineMode.Key, DoEngineModeList[2].Key), Mode=OneWay}"
                                 Tag="2"
                                 Text="{x:Bind DoEngineModeList[2].Value}" />
                         </MenuFlyout>

@@ -96,7 +96,7 @@ namespace GetStoreApp.Views.Dialogs
 
             set
             {
-                if (!Equals(_selectedFolder, value))
+                if (!string.Equals(_selectedFolder, value))
                 {
                     _selectedFolder = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedFolder)));

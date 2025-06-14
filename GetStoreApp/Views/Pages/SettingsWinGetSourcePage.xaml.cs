@@ -163,7 +163,7 @@ namespace GetStoreApp.Views.Pages
             {
                 foreach (WinGetSourceModel wingetSourceCustomItem in WinGetSourceCustomCollection)
                 {
-                    if (Equals(wingetSourceCustomItem.Name, winGetSource.Name))
+                    if (string.Equals(wingetSourceCustomItem.Name, winGetSource.Name))
                     {
                         wingetSourceCustomItem.IsOperating = true;
                         break;
@@ -193,7 +193,7 @@ namespace GetStoreApp.Views.Pages
 
                             foreach (WinGetSourceModel wingetSourceCustomItem in WinGetSourceCustomCollection)
                             {
-                                if (Equals(wingetSourceCustomItem.Name, winGetSource.Name))
+                                if (string.Equals(wingetSourceCustomItem.Name, winGetSource.Name))
                                 {
                                     WinGetSourceCustomCollection.Remove(wingetSourceCustomItem);
                                     break;
@@ -207,7 +207,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             foreach (WinGetSourceModel wingetSourceCustomItem in WinGetSourceCustomCollection)
                             {
-                                if (Equals(wingetSourceCustomItem.Name, winGetSource.Name))
+                                if (string.Equals(wingetSourceCustomItem.Name, winGetSource.Name))
                                 {
                                     wingetSourceCustomItem.IsOperating = false;
                                     break;
@@ -221,7 +221,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             foreach (WinGetSourceModel wingetSourceCustomItem in WinGetSourceCustomCollection)
                             {
-                                if (Equals(wingetSourceCustomItem.Name, winGetSource.Name))
+                                if (string.Equals(wingetSourceCustomItem.Name, winGetSource.Name))
                                 {
                                     wingetSourceCustomItem.IsOperating = false;
                                     break;
@@ -235,7 +235,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             foreach (WinGetSourceModel wingetSourceCustomItem in WinGetSourceCustomCollection)
                             {
-                                if (Equals(wingetSourceCustomItem.Name, winGetSource.Name))
+                                if (string.Equals(wingetSourceCustomItem.Name, winGetSource.Name))
                                 {
                                     wingetSourceCustomItem.IsOperating = false;
                                     break;
@@ -249,7 +249,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             foreach (WinGetSourceModel wingetSourceCustomItem in WinGetSourceCustomCollection)
                             {
-                                if (Equals(wingetSourceCustomItem.Name, winGetSource.Name))
+                                if (string.Equals(wingetSourceCustomItem.Name, winGetSource.Name))
                                 {
                                     wingetSourceCustomItem.IsOperating = false;
                                     break;
@@ -263,7 +263,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             foreach (WinGetSourceModel wingetSourceCustomItem in WinGetSourceCustomCollection)
                             {
-                                if (Equals(wingetSourceCustomItem.Name, winGetSource.Name))
+                                if (string.Equals(wingetSourceCustomItem.Name, winGetSource.Name))
                                 {
                                     wingetSourceCustomItem.IsOperating = false;
                                     break;
@@ -290,7 +290,7 @@ namespace GetStoreApp.Views.Pages
             {
                 foreach (WinGetSourceModel wingetSourceCustomItem in WinGetSourceCustomCollection)
                 {
-                    if (Equals(wingetSourceCustomItem.Name, winGetSource.Name))
+                    if (string.Equals(wingetSourceCustomItem.Name, winGetSource.Name))
                     {
                         wingetSourceCustomItem.IsOperating = true;
                         break;
@@ -320,7 +320,7 @@ namespace GetStoreApp.Views.Pages
 
                             foreach (WinGetSourceModel wingetSourceCustomItem in WinGetSourceCustomCollection)
                             {
-                                if (Equals(wingetSourceCustomItem.Name, winGetSource.Name))
+                                if (string.Equals(wingetSourceCustomItem.Name, winGetSource.Name))
                                 {
                                     WinGetSourceCustomCollection.Remove(wingetSourceCustomItem);
                                     break;
@@ -334,7 +334,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             foreach (WinGetSourceModel wingetSourceCustomItem in WinGetSourceCustomCollection)
                             {
-                                if (Equals(wingetSourceCustomItem.Name, winGetSource.Name))
+                                if (string.Equals(wingetSourceCustomItem.Name, winGetSource.Name))
                                 {
                                     wingetSourceCustomItem.IsOperating = false;
                                     break;
@@ -348,7 +348,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             foreach (WinGetSourceModel wingetSourceCustomItem in WinGetSourceCustomCollection)
                             {
-                                if (Equals(wingetSourceCustomItem.Name, winGetSource.Name))
+                                if (string.Equals(wingetSourceCustomItem.Name, winGetSource.Name))
                                 {
                                     wingetSourceCustomItem.IsOperating = false;
                                     break;
@@ -362,7 +362,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             foreach (WinGetSourceModel wingetSourceCustomItem in WinGetSourceCustomCollection)
                             {
-                                if (Equals(wingetSourceCustomItem.Name, winGetSource.Name))
+                                if (string.Equals(wingetSourceCustomItem.Name, winGetSource.Name))
                                 {
                                     wingetSourceCustomItem.IsOperating = false;
                                     break;
@@ -376,7 +376,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             foreach (WinGetSourceModel wingetSourceCustomItem in WinGetSourceCustomCollection)
                             {
-                                if (Equals(wingetSourceCustomItem.Name, winGetSource.Name))
+                                if (string.Equals(wingetSourceCustomItem.Name, winGetSource.Name))
                                 {
                                     wingetSourceCustomItem.IsOperating = false;
                                     break;
@@ -390,7 +390,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             foreach (WinGetSourceModel wingetSourceCustomItem in WinGetSourceCustomCollection)
                             {
-                                if (Equals(wingetSourceCustomItem.Name, winGetSource.Name))
+                                if (string.Equals(wingetSourceCustomItem.Name, winGetSource.Name))
                                 {
                                     wingetSourceCustomItem.IsOperating = false;
                                     break;

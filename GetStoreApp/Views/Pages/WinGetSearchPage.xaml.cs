@@ -47,7 +47,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_searchText, value))
+                if (!string.Equals(_searchText, value))
                 {
                     _searchText = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchText)));
@@ -127,7 +127,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_searchFailedContent, value))
+                if (!string.Equals(_searchFailedContent, value))
                 {
                     _searchFailedContent = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchFailedContent)));
@@ -429,7 +429,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalog in WinGetConfigService.PredefinedPackageCatalogList)
                         {
-                            if (Equals(winGetDataSourceName.Key, predefinedPackageCatalog.Key))
+                            if (string.Equals(winGetDataSourceName.Key, predefinedPackageCatalog.Key))
                             {
                                 packageCatalogReference = packageManager.GetPredefinedPackageCatalog(predefinedPackageCatalog.Value);
                                 break;

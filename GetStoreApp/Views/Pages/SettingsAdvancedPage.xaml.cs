@@ -285,7 +285,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnServicePropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            if (Equals(args.PropertyName, nameof(NotificationService.NotificationSetting)))
+            if (string.Equals(args.PropertyName, nameof(NotificationService.NotificationSetting)))
             {
                 DispatcherQueue.TryEnqueue(() =>
                 {

@@ -178,7 +178,7 @@ namespace GetStoreApp.Views.Pages
 
             foreach (GeographicRegion geographicRegionItem in StoreRegionService.StoreRegionList)
             {
-                if (Equals(StoreRegionService.StoreRegion.CodeTwoLetter, geographicRegionItem.CodeTwoLetter))
+                if (string.Equals(StoreRegionService.StoreRegion.CodeTwoLetter, geographicRegionItem.CodeTwoLetter))
                 {
                     StoreRegion = geographicRegionItem;
                     StoreRegionCollection.Add(new StoreRegionModel()
@@ -218,7 +218,7 @@ namespace GetStoreApp.Views.Pages
                 foreach (StoreRegionModel storeRegionItem in StoreRegionCollection)
                 {
                     storeRegionItem.IsChecked = false;
-                    if (Equals(storeRegion.StoreRegionInfo.CodeTwoLetter, storeRegionItem.StoreRegionInfo.CodeTwoLetter))
+                    if (string.Equals(storeRegion.StoreRegionInfo.CodeTwoLetter, storeRegionItem.StoreRegionInfo.CodeTwoLetter))
                     {
                         StoreRegion = storeRegionItem.StoreRegionInfo;
                         storeRegionItem.IsChecked = true;
@@ -305,7 +305,7 @@ namespace GetStoreApp.Views.Pages
                     foreach (StoreRegionModel storeRegionItem in StoreRegionCollection)
                     {
                         storeRegionItem.IsChecked = false;
-                        if (Equals(StoreRegion.CodeTwoLetter, storeRegionItem.StoreRegionInfo.CodeTwoLetter))
+                        if (string.Equals(StoreRegion.CodeTwoLetter, storeRegionItem.StoreRegionInfo.CodeTwoLetter))
                         {
                             StoreRegion = storeRegionItem.StoreRegionInfo;
                             storeRegionItem.IsChecked = true;
@@ -379,11 +379,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnServicePropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            if (Equals(args.PropertyName, nameof(StoreRegionService.StoreRegion)))
+            if (string.Equals(args.PropertyName, nameof(StoreRegionService.StoreRegion)))
             {
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    if (!Equals(CurrentCountryOrRegion.CodeTwoLetter, StoreRegionService.DefaultStoreRegion.CodeTwoLetter))
+                    if (!string.Equals(CurrentCountryOrRegion.CodeTwoLetter, StoreRegionService.DefaultStoreRegion.CodeTwoLetter))
                     {
                         CurrentCountryOrRegion = StoreRegionService.DefaultStoreRegion;
                     }
@@ -395,7 +395,7 @@ namespace GetStoreApp.Views.Pages
                         foreach (StoreRegionModel storeRegionItem in StoreRegionCollection)
                         {
                             storeRegionItem.IsChecked = false;
-                            if (Equals(StoreRegion.CodeTwoLetter, storeRegionItem.StoreRegionInfo.CodeTwoLetter))
+                            if (string.Equals(StoreRegion.CodeTwoLetter, storeRegionItem.StoreRegionInfo.CodeTwoLetter))
                             {
                                 StoreRegion = storeRegionItem.StoreRegionInfo;
                                 storeRegionItem.IsChecked = true;

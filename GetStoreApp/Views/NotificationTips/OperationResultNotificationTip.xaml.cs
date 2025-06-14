@@ -34,7 +34,7 @@ namespace GetStoreApp.UI.TeachingTips
 
             set
             {
-                if (!Equals(_operationContent, value))
+                if (!string.Equals(_operationContent, value))
                 {
                     _operationContent = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OperationContent)));

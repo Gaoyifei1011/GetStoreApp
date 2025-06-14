@@ -93,7 +93,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnQueryLinksModeSelectClicked}"
                                 GroupName="QueryLinksModeRadioGroup"
-                                IsChecked="{x:Bind x:Object.Equals(QueryLinksMode.Key, QueryLinksModeList[0].Key), Mode=OneWay}"
+                                IsChecked="{x:Bind x:String.Equals(QueryLinksMode.Key, QueryLinksModeList[0].Key), Mode=OneWay}"
                                 Tag="0"
                                 Text="{x:Bind QueryLinksModeList[0].Value}" />
 
@@ -102,7 +102,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnQueryLinksModeSelectClicked}"
                                 GroupName="QueryLinksModeRadioGroup"
-                                IsChecked="{x:Bind x:Object.Equals(QueryLinksMode.Key, QueryLinksModeList[1].Key), Mode=OneWay}"
+                                IsChecked="{x:Bind x:String.Equals(QueryLinksMode.Key, QueryLinksModeList[1].Key), Mode=OneWay}"
                                 Tag="1"
                                 Text="{x:Bind QueryLinksModeList[1].Value}" />
                         </MenuFlyout>
@@ -173,7 +173,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnInstallModeSelectClicked}"
                                 GroupName="InstallModeModeRadioGroup"
-                                IsChecked="{x:Bind x:Object.Equals(InstallMode.Key, InstallModeList[0].Key), Mode=OneWay}"
+                                IsChecked="{x:Bind x:String.Equals(InstallMode.Key, InstallModeList[0].Key), Mode=OneWay}"
                                 Tag="0"
                                 Text="{x:Bind InstallModeList[0].Value}" />
 
@@ -182,7 +182,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnInstallModeSelectClicked}"
                                 GroupName="InstallModeModeRadioGroup"
-                                IsChecked="{x:Bind x:Object.Equals(InstallMode.Key, InstallModeList[1].Key), Mode=OneWay}"
+                                IsChecked="{x:Bind x:String.Equals(InstallMode.Key, InstallModeList[1].Key), Mode=OneWay}"
                                 Tag="1"
                                 Text="{x:Bind InstallModeList[1].Value}" />
                         </MenuFlyout>

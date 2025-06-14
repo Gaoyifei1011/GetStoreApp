@@ -181,7 +181,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnWebKernelSelectClicked}"
                                 GroupName="WebKernelRadioGroup"
-                                IsChecked="{x:Bind x:Object.Equals(WebKernel.Key, WebKernelList[0].Key), Mode=OneWay}"
+                                IsChecked="{x:Bind x:String.Equals(WebKernel.Key, WebKernelList[0].Key), Mode=OneWay}"
                                 Tag="0"
                                 Text="{x:Bind WebKernelList[0].Value}" />
 
@@ -190,7 +190,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnWebKernelSelectClicked}"
                                 GroupName="WebKernelRadioGroup"
-                                IsChecked="{x:Bind x:Object.Equals(WebKernel.Key, WebKernelList[1].Key), Mode=OneWay}"
+                                IsChecked="{x:Bind x:String.Equals(WebKernel.Key, WebKernelList[1].Key), Mode=OneWay}"
                                 Tag="1"
                                 Text="{x:Bind WebKernelList[1].Value}" />
                         </MenuFlyout>

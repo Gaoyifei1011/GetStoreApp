@@ -18,7 +18,7 @@ namespace GetStoreApp.Views.Dialogs
 
             set
             {
-                if (!Equals(_licenseText, value))
+                if (!string.Equals(_licenseText, value))
                 {
                     _licenseText = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LicenseText)));

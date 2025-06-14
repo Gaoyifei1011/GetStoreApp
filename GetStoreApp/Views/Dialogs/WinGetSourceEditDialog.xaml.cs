@@ -56,7 +56,7 @@ namespace GetStoreApp.Views.Dialogs
 
             set
             {
-                if (!Equals(_isSaving, value))
+                if (!string.Equals(_isSaving, value))
                 {
                     _isSaving = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSaving)));
@@ -72,7 +72,7 @@ namespace GetStoreApp.Views.Dialogs
 
             set
             {
-                if (!Equals(_editTitle, value))
+                if (!string.Equals(_editTitle, value))
                 {
                     _editTitle = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EditTitle)));
@@ -88,7 +88,7 @@ namespace GetStoreApp.Views.Dialogs
 
             set
             {
-                if (!Equals(_sourceName, value))
+                if (!string.Equals(_sourceName, value))
                 {
                     _sourceName = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SourceName)));
@@ -104,7 +104,7 @@ namespace GetStoreApp.Views.Dialogs
 
             set
             {
-                if (!Equals(_sourceUri, value))
+                if (!string.Equals(_sourceUri, value))
                 {
                     _sourceUri = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SourceUri)));
@@ -120,7 +120,7 @@ namespace GetStoreApp.Views.Dialogs
 
             set
             {
-                if (!Equals(_customHeader, value))
+                if (!string.Equals(_customHeader, value))
                 {
                     _customHeader = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CustomHeader)));
@@ -136,7 +136,7 @@ namespace GetStoreApp.Views.Dialogs
 
             set
             {
-                if (!Equals(_sourceType, value))
+                if (!string.Equals(_sourceType, value))
                 {
                     _sourceType = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SourceType)));

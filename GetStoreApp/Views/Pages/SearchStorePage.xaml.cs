@@ -42,7 +42,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_searchText, value))
+                if (!string.Equals(_searchText, value))
                 {
                     _searchText = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchText)));
@@ -74,7 +74,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_stateInfoText, value))
+                if (!string.Equals(_stateInfoText, value))
                 {
                     _stateInfoText = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StateInfoText)));

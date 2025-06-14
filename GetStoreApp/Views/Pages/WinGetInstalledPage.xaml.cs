@@ -53,7 +53,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_searchText, value))
+                if (!string.Equals(_searchText, value))
                 {
                     _searchText = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchText)));
@@ -165,7 +165,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_installedFailedContent, value))
+                if (!string.Equals(_installedFailedContent, value))
                 {
                     _installedFailedContent = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstalledFailedContent)));
@@ -556,7 +556,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
                         {
-                            if (Equals(installedApps.AppID, installedAppsItem.AppID) && Equals(installedApps.AppVersion, installedAppsItem.AppVersion))
+                            if (string.Equals(installedApps.AppID, installedAppsItem.AppID) && string.Equals(installedApps.AppVersion, installedAppsItem.AppVersion))
                             {
                                 InstalledAppsList.Remove(installedAppsItem);
                                 InstalledAppsCollection.Remove(installedAppsItem);
@@ -568,7 +568,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
                         {
-                            if (Equals(installedApps.AppID, installedAppsItem.AppID) && Equals(installedApps.AppVersion, installedAppsItem.AppVersion))
+                            if (string.Equals(installedApps.AppID, installedAppsItem.AppID) && string.Equals(installedApps.AppVersion, installedAppsItem.AppVersion))
                             {
                                 installedAppsItem.IsUninstalling = false;
                                 break;
@@ -788,7 +788,7 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     foreach (PackageOperationModel packageOperationItem in WinGetPageInstance.PackageOperationCollection)
                                     {
-                                        if (Equals(catalogPackage.InstalledVersion.Id, packageOperationItem.AppID) && Equals(catalogPackage.InstalledVersion.Version, packageOperationItem.AppVersion))
+                                        if (string.Equals(catalogPackage.InstalledVersion.Id, packageOperationItem.AppID) && string.Equals(catalogPackage.InstalledVersion.Version, packageOperationItem.AppVersion))
                                         {
                                             isUninstalling = true;
                                             break;

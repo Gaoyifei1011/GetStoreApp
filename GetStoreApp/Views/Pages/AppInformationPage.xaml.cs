@@ -60,7 +60,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_displayName, value))
+                if (!string.Equals(_displayName, value))
                 {
                     _displayName = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayName)));
@@ -76,7 +76,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_packageFamilyName, value))
+                if (!string.Equals(_packageFamilyName, value))
                 {
                     _packageFamilyName = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageFamilyName)));
@@ -92,7 +92,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_packageFullName, value))
+                if (!string.Equals(_packageFullName, value))
                 {
                     _packageFullName = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageFullName)));
@@ -108,7 +108,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_description, value))
+                if (!string.Equals(_description, value))
                 {
                     _description = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Description)));
@@ -124,7 +124,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_publisherDisplayName, value))
+                if (!string.Equals(_publisherDisplayName, value))
                 {
                     _publisherDisplayName = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PublisherDisplayName)));
@@ -140,7 +140,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_publisherId, value))
+                if (!string.Equals(_publisherId, value))
                 {
                     _publisherId = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PublisherId)));
@@ -156,7 +156,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_version, value))
+                if (!string.Equals(_version, value))
                 {
                     _version = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Version)));
@@ -172,7 +172,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_installedDate, value))
+                if (!string.Equals(_installedDate, value))
                 {
                     _installedDate = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstalledDate)));
@@ -188,7 +188,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_architecture, value))
+                if (!string.Equals(_architecture, value))
                 {
                     _architecture = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Architecture)));
@@ -204,7 +204,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_signatureKind, value))
+                if (!string.Equals(_signatureKind, value))
                 {
                     _signatureKind = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SignatureKind)));
@@ -220,7 +220,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_resourceId, value))
+                if (!string.Equals(_resourceId, value))
                 {
                     _resourceId = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResourceId)));
@@ -236,7 +236,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_isBundle, value))
+                if (!string.Equals(_isBundle, value))
                 {
                     _isBundle = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsBundle)));
@@ -252,7 +252,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_isDevelopmentMode, value))
+                if (!string.Equals(_isDevelopmentMode, value))
                 {
                     _isDevelopmentMode = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDevelopmentMode)));
@@ -268,7 +268,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_isFramework, value))
+                if (!string.Equals(_isFramework, value))
                 {
                     _isFramework = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsFramework)));
@@ -284,7 +284,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_isOptional, value))
+                if (!string.Equals(_isOptional, value))
                 {
                     _isOptional = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsOptional)));
@@ -300,7 +300,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_isResourcePackage, value))
+                if (!string.Equals(_isResourcePackage, value))
                 {
                     _isResourcePackage = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsResourcePackage)));
@@ -316,7 +316,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_isStub, value))
+                if (!string.Equals(_isStub, value))
                 {
                     _isStub = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsStub)));
@@ -332,7 +332,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_vertifyIsOK, value))
+                if (!string.Equals(_vertifyIsOK, value))
                 {
                     _vertifyIsOK = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VertifyIsOK)));

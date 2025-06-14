@@ -15,7 +15,7 @@ namespace GetStoreApp.Models
 
             set
             {
-                if (!Equals(_name, value))
+                if (!string.Equals(_name, value))
                 {
                     _name = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
@@ -31,7 +31,7 @@ namespace GetStoreApp.Models
 
             set
             {
-                if (!Equals(_publisher, value))
+                if (!string.Equals(_publisher, value))
                 {
                     _publisher = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Publisher)));
@@ -47,7 +47,7 @@ namespace GetStoreApp.Models
 
             set
             {
-                if (!Equals(_description, value))
+                if (!string.Equals(_description, value))
                 {
                     _description = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Description)));
@@ -63,7 +63,7 @@ namespace GetStoreApp.Models
 
             set
             {
-                if (!Equals(_categoryID, value))
+                if (!string.Equals(_categoryID, value))
                 {
                     _categoryID = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CategoryID)));

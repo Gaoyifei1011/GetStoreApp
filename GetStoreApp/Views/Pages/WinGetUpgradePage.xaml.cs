@@ -97,7 +97,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_upgradableFailedContent, value))
+                if (!string.Equals(_upgradableFailedContent, value))
                 {
                     _upgradableFailedContent = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UpgradableFailedContent)));
@@ -302,7 +302,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsCollection)
                         {
-                            if (Equals(upgradableApps.AppID, upgradableAppsItem.AppID) && Equals(upgradableApps.AppCurrentVersion, upgradableAppsItem.AppCurrentVersion) && Equals(upgradableApps.AppNewestVersion, upgradableApps.AppNewestVersion))
+                            if (string.Equals(upgradableApps.AppID, upgradableAppsItem.AppID) && string.Equals(upgradableApps.AppCurrentVersion, upgradableAppsItem.AppCurrentVersion) && Equals(upgradableApps.AppNewestVersion, upgradableApps.AppNewestVersion))
                             {
                                 UpgradableAppsCollection.Remove(upgradableApps);
                                 break;
@@ -313,7 +313,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsCollection)
                         {
-                            if (Equals(upgradableApps.AppID, upgradableAppsItem.AppID) && Equals(upgradableApps.AppCurrentVersion, upgradableAppsItem.AppCurrentVersion) && Equals(upgradableApps.AppNewestVersion, upgradableApps.AppNewestVersion))
+                            if (string.Equals(upgradableApps.AppID, upgradableAppsItem.AppID) && string.Equals(upgradableApps.AppCurrentVersion, upgradableAppsItem.AppCurrentVersion) && Equals(upgradableApps.AppNewestVersion, upgradableApps.AppNewestVersion))
                             {
                                 upgradableAppsItem.IsUpgrading = false;
                                 break;
@@ -353,7 +353,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalog in WinGetConfigService.PredefinedPackageCatalogList)
                         {
-                            if (Equals(winGetDataSourceName.Key, predefinedPackageCatalog.Key))
+                            if (string.Equals(winGetDataSourceName.Key, predefinedPackageCatalog.Key))
                             {
                                 packageCatalogReference = packageManager.GetPredefinedPackageCatalog(predefinedPackageCatalog.Value);
 
@@ -528,7 +528,7 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     foreach (PackageOperationModel packageOperationItem in WinGetPageInstance.PackageOperationCollection)
                                     {
-                                        if (Equals(matchItem.CatalogPackage.DefaultInstallVersion.Id, packageOperationItem.AppID) && Equals(matchItem.CatalogPackage.DefaultInstallVersion.Version, packageOperationItem.AppVersion) && packageOperationItem.PackageOperationKind is PackageOperationKind.Upgrade)
+                                        if (string.Equals(matchItem.CatalogPackage.DefaultInstallVersion.Id, packageOperationItem.AppID) && string.Equals(matchItem.CatalogPackage.DefaultInstallVersion.Version, packageOperationItem.AppVersion) && packageOperationItem.PackageOperationKind is PackageOperationKind.Upgrade)
                                         {
                                             isUpgrading = true;
                                             break;

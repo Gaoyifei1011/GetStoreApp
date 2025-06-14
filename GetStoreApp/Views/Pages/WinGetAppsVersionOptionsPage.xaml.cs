@@ -67,7 +67,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_winGetAppsOptionsTitle, value))
+                if (!string.Equals(_winGetAppsOptionsTitle, value))
                 {
                     _winGetAppsOptionsTitle = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WinGetAppsOptionsTitle)));
@@ -115,7 +115,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_packageDownloadPath, value))
+                if (!string.Equals(_packageDownloadPath, value))
                 {
                     _packageDownloadPath = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageDownloadPath)));
@@ -227,7 +227,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_packageInstallPath, value))
+                if (!string.Equals(_packageInstallPath, value))
                 {
                     _packageInstallPath = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageInstallPath)));
@@ -291,7 +291,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_additionalInstallerArguments, value))
+                if (!string.Equals(_additionalInstallerArguments, value))
                 {
                     _additionalInstallerArguments = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AdditionalInstallerArguments)));

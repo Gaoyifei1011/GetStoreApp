@@ -96,7 +96,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_linkPlaceHolderText, value))
+                if (!string.Equals(_linkPlaceHolderText, value))
                 {
                     _linkPlaceHolderText = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LinkPlaceHolderText)));
@@ -112,7 +112,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_linkText, value))
+                if (!string.Equals(_linkText, value))
                 {
                     _linkText = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LinkText)));
@@ -176,7 +176,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_stateInfoText, value))
+                if (!string.Equals(_stateInfoText, value))
                 {
                     _stateInfoText = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StateInfoText)));
@@ -581,7 +581,7 @@ namespace GetStoreApp.Views.Pages
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is TypeModel type)
             {
                 SelectedType = type;
-                sampleLink = SampleLinkList[TypeList.FindIndex(item => Equals(item.InternalName, SelectedType.InternalName))];
+                sampleLink = SampleLinkList[TypeList.FindIndex(item => string.Equals(item.InternalName, SelectedType.InternalName))];
                 LinkPlaceHolderText = SampleTitleString + sampleLink;
                 LinkText = string.Empty;
             }
@@ -1047,12 +1047,12 @@ namespace GetStoreApp.Views.Pages
                 }
 
                 // 记录当前选定的选项和填入的内容
-                int typeIndex = TypeList.FindIndex(item => Equals(item.InternalName, SelectedType.InternalName));
-                int channelIndex = ChannelList.FindIndex(item => Equals(item.InternalName, SelectedChannel.InternalName));
+                int typeIndex = TypeList.FindIndex(item => string.Equals(item.InternalName, SelectedType.InternalName));
+                int channelIndex = ChannelList.FindIndex(item => string.Equals(item.InternalName, SelectedChannel.InternalName));
                 string link = LinkText;
 
                 // 商店接口查询方式
-                if (Equals(QueryLinksModeService.QueryLinksMode, QueryLinksModeService.QueryLinksModeList[0]))
+                if (string.Equals(QueryLinksModeService.QueryLinksMode, QueryLinksModeService.QueryLinksModeList[0]))
                 {
                     (bool requestResult, bool isPackagedApp, AppInfoModel appInfoItem, List<QueryLinksModel> queryLinksList) = await Task.Run(async () =>
                     {
@@ -1095,7 +1095,7 @@ namespace GetStoreApp.Views.Pages
                                         bool isExisted = false;
                                         foreach (QueryLinksModel queryLinksItem in queryLinksList)
                                         {
-                                            if (Equals(queryLinksItem.FileName, appxPackage.FileName) && Equals(queryLinksItem.FileLink, appxPackage.FileLink) && Equals(queryLinksItem.FileSize, queryLinksItem.FileSize))
+                                            if (string.Equals(queryLinksItem.FileName, appxPackage.FileName) && Equals(queryLinksItem.FileLink, appxPackage.FileLink) && Equals(queryLinksItem.FileSize, queryLinksItem.FileSize))
                                             {
                                                 isExisted = true;
                                             }
@@ -1194,7 +1194,7 @@ namespace GetStoreApp.Views.Pages
                 }
 
                 // 第三方接口查询方式
-                else if (Equals(QueryLinksModeService.QueryLinksMode, QueryLinksModeService.QueryLinksModeList[1]))
+                else if (string.Equals(QueryLinksModeService.QueryLinksMode, QueryLinksModeService.QueryLinksModeList[1]))
                 {
                     (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksModel> queryLinksList) = await Task.Run(async () =>
                     {

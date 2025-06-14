@@ -88,7 +88,7 @@ namespace GetStoreApp.Models
 
             set
             {
-                if (!Equals(_defaultVolume, value))
+                if (!string.Equals(_defaultVolume, value))
                 {
                     _defaultVolume = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DefaultVolume)));
@@ -126,7 +126,7 @@ namespace GetStoreApp.Models
 
             set
             {
-                if (!Equals(_isAppxInstallSupported, value))
+                if (!string.Equals(_isAppxInstallSupported, value))
                 {
                     _isAppxInstallSupported = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAppxInstallSupported)));
@@ -145,7 +145,7 @@ namespace GetStoreApp.Models
 
             set
             {
-                if (!Equals(_isFullTrustPackageSupported, value))
+                if (!string.Equals(_isFullTrustPackageSupported, value))
                 {
                     _isFullTrustPackageSupported = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsFullTrustPackageSupported)));
@@ -164,7 +164,7 @@ namespace GetStoreApp.Models
 
             set
             {
-                if (!Equals(_offline, value))
+                if (!string.Equals(_offline, value))
                 {
                     _offline = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Offline)));
@@ -202,7 +202,7 @@ namespace GetStoreApp.Models
 
             set
             {
-                if (!Equals(_isSystemVolume, value))
+                if (!string.Equals(_isSystemVolume, value))
                 {
                     _isSystemVolume = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSystemVolume)));
@@ -221,7 +221,7 @@ namespace GetStoreApp.Models
 
             set
             {
-                if (!Equals(_supportedHardLinks, value))
+                if (!string.Equals(_supportedHardLinks, value))
                 {
                     _supportedHardLinks = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSystemVolume)));

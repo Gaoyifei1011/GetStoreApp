@@ -55,7 +55,7 @@ namespace GetStoreApp.Views.Dialogs
 
             set
             {
-                if (!Equals(_fileSHA256, value))
+                if (!string.Equals(_fileSHA256, value))
                 {
                     _fileSHA256 = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FileSHA256)));

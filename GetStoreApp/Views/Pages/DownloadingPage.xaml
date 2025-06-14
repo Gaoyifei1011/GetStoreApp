@@ -481,7 +481,7 @@
                                     Command="{StaticResource ContinueCommand}"
                                     CommandParameter="{x:Bind}"
                                     CornerRadius="{StaticResource ControlCornerRadius}"
-                                    IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
+                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
                                     ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Continue')}"
                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Paused), Mode=OneWay}">
 
@@ -498,7 +498,7 @@
                                     Command="{StaticResource PauseCommand}"
                                     CommandParameter="{x:Bind}"
                                     CornerRadius="{StaticResource ControlCornerRadius}"
-                                    IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
+                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
                                     ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Pause')}"
                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadingState(DownloadProgressState), Mode=OneWay}">
 
@@ -515,7 +515,7 @@
                                     Command="{StaticResource DeleteCommand}"
                                     CommandParameter="{x:Bind}"
                                     CornerRadius="{StaticResource ControlCornerRadius}"
-                                    IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
+                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
                                     ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Delete')}">
 
                                     <Button.Content>

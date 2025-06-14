@@ -49,7 +49,7 @@ namespace GetStoreApp.Services.Download
                     // 下载任务已经存在，更新下载状态
                     foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                     {
-                        if (Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
+                        if (string.Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
                             downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
                             DownloadProgress?.Invoke(new DownloadSchedulerModel()
@@ -109,7 +109,7 @@ namespace GetStoreApp.Services.Download
                 {
                     foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                     {
-                        if (Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
+                        if (string.Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
                             downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
                             downloadSchedulerItem.DownloadSpeed = downloadProgress.CompletedSize - downloadSchedulerItem.CompletedSize;
@@ -147,7 +147,7 @@ namespace GetStoreApp.Services.Download
                 {
                     foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                     {
-                        if (Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
+                        if (string.Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
                             downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
                             DownloadProgress?.Invoke(new DownloadSchedulerModel()
@@ -182,7 +182,7 @@ namespace GetStoreApp.Services.Download
                 {
                     foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                     {
-                        if (Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
+                        if (string.Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
                             downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
                             downloadSchedulerItem.CompletedSize = 1;
@@ -236,7 +236,7 @@ namespace GetStoreApp.Services.Download
                 {
                     foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                     {
-                        if (Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
+                        if (string.Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
                             downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
                             downloadSchedulerItem.DownloadSpeed = downloadProgress.CompletedSize - downloadSchedulerItem.CompletedSize;
@@ -277,7 +277,7 @@ namespace GetStoreApp.Services.Download
                 {
                     foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                     {
-                        if (Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
+                        if (string.Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
                             downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
                             DownloadProgress?.Invoke(new DownloadSchedulerModel()
@@ -353,16 +353,16 @@ namespace GetStoreApp.Services.Download
                 BadgeNotificationService.Show(badgeCount);
 
                 // 初始化下载服务
-                if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
+                if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
                 {
                     DeliveryOptimizationService.DownloadProgress += OnDownloadProgress;
                 }
-                else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
+                else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
                 {
                     BitsService.Initialize();
                     BitsService.DownloadProgress += OnDownloadProgress;
                 }
-                else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
+                else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
                 {
                     Aria2Service.InitializeAria2Conf();
                     Aria2Service.Initialize();
@@ -384,17 +384,17 @@ namespace GetStoreApp.Services.Download
                 DownloadSchedulerSemaphoreSlim = null;
 
                 // 注销下载服务
-                if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
+                if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
                 {
                     DeliveryOptimizationService.TerminateDownload();
                     DeliveryOptimizationService.DownloadProgress -= OnDownloadProgress;
                 }
-                else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
+                else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
                 {
                     BitsService.TerminateDownload();
                     BitsService.DownloadProgress -= OnDownloadProgress;
                 }
-                else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
+                else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
                 {
                     Aria2Service.Release();
                     Aria2Service.DownloadProgress -= OnDownloadProgress;
@@ -407,15 +407,15 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         public static void CreateDownload(string fileLink, string filePath)
         {
-            if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
+            if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
                 DeliveryOptimizationService.CreateDownload(fileLink, filePath);
             }
-            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
+            else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
             {
                 BitsService.CreateDownload(fileLink, filePath);
             }
-            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
+            else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
             {
                 Aria2Service.CreateDownload(fileLink, filePath);
             }
@@ -426,15 +426,15 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         public static void ContinueDownload(string downloadID)
         {
-            if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
+            if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
                 DeliveryOptimizationService.ContinueDownload(downloadID);
             }
-            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
+            else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
             {
                 BitsService.ContinueDownload(downloadID);
             }
-            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
+            else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
             {
                 Aria2Service.ContinueDownload(downloadID);
             }
@@ -445,15 +445,15 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         public static void PauseDownload(string downloadID)
         {
-            if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
+            if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
                 DeliveryOptimizationService.PauseDownload(downloadID);
             }
-            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
+            else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
             {
                 BitsService.PauseDownload(downloadID);
             }
-            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
+            else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
             {
                 Aria2Service.PauseDownload(downloadID);
             }
@@ -464,15 +464,15 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         public static void DeleteDownload(string downloadID)
         {
-            if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
+            if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
                 DeliveryOptimizationService.DeleteDownload(downloadID);
             }
-            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
+            else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
             {
                 BitsService.DeleteDownload(downloadID);
             }
-            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
+            else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
             {
                 Aria2Service.DeleteDownload(downloadID);
             }
@@ -483,15 +483,15 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         public static void TerminateDownload()
         {
-            if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
+            if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
                 DeliveryOptimizationService.TerminateDownload();
             }
-            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
+            else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
             {
                 BitsService.TerminateDownload();
             }
-            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
+            else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
             {
                 Aria2Service.Release();
             }

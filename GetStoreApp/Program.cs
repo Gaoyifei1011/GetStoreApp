@@ -52,7 +52,7 @@ namespace GetStoreApp
                         IReadOnlyList<AppListEntry> appListEntryList = package.GetAppListEntries();
                         foreach (AppListEntry appListEntry in appListEntryList)
                         {
-                            if (Equals(appListEntry.AppUserModelId, "Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp"))
+                            if (string.Equals(appListEntry.AppUserModelId, "Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp"))
                             {
                                 appListEntry.LaunchAsync().GetResults();
                                 break;

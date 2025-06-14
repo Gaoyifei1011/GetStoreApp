@@ -98,7 +98,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_displayName, value))
+                if (!string.Equals(_displayName, value))
                 {
                     _displayName = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayName)));
@@ -114,7 +114,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_description, value))
+                if (!string.Equals(_description, value))
                 {
                     _description = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Description)));
@@ -130,7 +130,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_version, value))
+                if (!string.Equals(_version, value))
                 {
                     _version = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Version)));
@@ -162,7 +162,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_packageLink, value))
+                if (!string.Equals(_packageLink, value))
                 {
                     _packageLink = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageLink)));
@@ -178,7 +178,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_author, value))
+                if (!string.Equals(_author, value))
                 {
                     _author = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Author)));
@@ -194,7 +194,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_publisher, value))
+                if (!string.Equals(_publisher, value))
                 {
                     _publisher = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Publisher)));
@@ -274,7 +274,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_locale, value))
+                if (!string.Equals(_locale, value))
                 {
                     _locale = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Locale)));
@@ -290,7 +290,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_copyRight, value))
+                if (!string.Equals(_copyRight, value))
                 {
                     _copyRight = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CopyRight)));
@@ -338,7 +338,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_license, value))
+                if (!string.Equals(_license, value))
                 {
                     _license = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(License)));
@@ -450,7 +450,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_releaseNotes, value))
+                if (!string.Equals(_releaseNotes, value))
                 {
                     _releaseNotes = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ReleaseNotes)));
