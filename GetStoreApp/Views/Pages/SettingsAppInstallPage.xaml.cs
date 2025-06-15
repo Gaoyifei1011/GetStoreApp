@@ -73,7 +73,7 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        #region 第一部分：设置应用安装器页面——挂载的事件
+        #region 第一部分：设置应用安装页面——挂载的事件
 
         /// <summary>
         /// 打开开发者选项
@@ -141,6 +141,6 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：设置应用安装器页面——挂载的事件
+        #endregion 第一部分：设置应用安装页面——挂载的事件
     }
 }

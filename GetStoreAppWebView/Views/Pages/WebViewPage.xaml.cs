@@ -372,7 +372,7 @@ namespace GetStoreAppWebView.Views.Pages
 
         #endregion 第二部分：浏览器窗口挂载的事件
 
-        #region 第三部分 WebView 浏览器事件
+        #region 第三部分：WebView 浏览器事件
 
         /// <summary>
         /// 页面开始导航
@@ -426,7 +426,7 @@ namespace GetStoreAppWebView.Views.Pages
             await Launcher.LaunchUriAsync(args.Uri);
         }
 
-        #endregion 第三部分 WebView 浏览器事件
+        #endregion 第三部分：WebView 浏览器事件
 
         #region 第四部分：WebView2 浏览器事件
 

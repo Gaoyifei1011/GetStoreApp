@@ -79,7 +79,7 @@ namespace GetStoreApp.Views.Pages
 
         #endregion 第一部分：重写父类事件
 
-        #region 第二部分：应用管理页面——挂载的事件
+        #region 第二部分：设置页面——挂载的事件
 
         /// <summary>
         /// 单击痕迹栏条目时发生的事件
@@ -255,9 +255,7 @@ namespace GetStoreApp.Views.Pages
             });
         }
 
-        #endregion 第二部分：应用管理页面——挂载的事件
-
-        #region 第三部分：应用管理页面——窗口导航方法
+        #endregion 第二部分：设置页面——挂载的事件
 
         /// <summary>
         /// 页面向前导航
@@ -295,8 +293,6 @@ namespace GetStoreApp.Views.Pages
         {
             return SettingsFrame.Content;
         }
-
-        #endregion 第三部分：应用管理页面——窗口导航方法
 
         /// <summary>
         /// 显示设置说明

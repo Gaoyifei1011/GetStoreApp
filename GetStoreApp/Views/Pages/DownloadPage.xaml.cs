@@ -175,7 +175,7 @@ namespace GetStoreApp.Views.Pages
 
         #endregion 第二部分：下载页面——挂载的事件
 
-        #region 第三部分：应用商店页面——窗口导航方法
+        #region 第三部分：下载页面——窗口导航方法
 
         /// <summary>
         /// 页面向前导航
@@ -206,7 +206,7 @@ namespace GetStoreApp.Views.Pages
             return DownloadFrame.CurrentSourcePageType;
         }
 
-        #endregion 第三部分：应用商店页面——窗口导航方法
+        #endregion 第三部分：下载页面——窗口导航方法
 
         /// <summary>
         /// 显示下载使用说明

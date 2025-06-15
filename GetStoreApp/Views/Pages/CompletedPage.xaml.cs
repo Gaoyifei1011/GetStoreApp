@@ -92,7 +92,7 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        #region 重载父类事件
+        #region 第一部分：重写父类事件
 
         /// <summary>
         /// 导航到该页面触发的事件
@@ -144,9 +144,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 重载父类事件
+        #endregion 第一部分：重写父类事件
 
-        #region 第一部分：XamlUICommand 命令调用时挂载的事件
+        #region 第二部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
         /// 删除当前任务
@@ -438,9 +438,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第二部分：XamlUICommand 命令调用时挂载的事件
 
-        #region 第二部分：已下载完成控件——挂载的事件
+        #region 第三部分：已下载完成页面——挂载的事件
 
         /// <summary>
         /// 打开默认保存的文件夹
@@ -498,7 +498,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第二部分：已下载完成控件——挂载的事件
+        #endregion 第三部分：已下载完成页面——挂载的事件
 
         /// <summary>
         /// 删除选中的任务
@@ -704,6 +704,9 @@ namespace GetStoreApp.Views.Pages
 
         #region 第三部分：已下载完成页面——自定义事件
 
+        /// <summary>
+        /// 在共享操作启动时发生的事件
+        /// </summary>
         private void OnDataRequested(DataTransferManager sender, DataRequestedEventArgs args, List<StorageFile> fileList)
         {
             DataRequestDeferral dataRequestDeferral = args.Request.GetDeferral();

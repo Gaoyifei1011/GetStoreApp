@@ -397,7 +397,7 @@ namespace GetStoreApp.Views.Pages
 
         #endregion 第一部分：重写父类事件
 
-        #region 第一部分：XamlUICommand 命令调用时挂载的事件
+        #region 第二部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
         /// 启动对应入口的应用
@@ -541,9 +541,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第二部分：XamlUICommand 命令调用时挂载的事件
 
-        #region 第二部分：应用信息页面——挂载的事件
+        #region 第三部分：应用信息页面——挂载的事件
 
         /// <summary>
         /// 复制应用信息
@@ -579,6 +579,6 @@ namespace GetStoreApp.Views.Pages
             await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
         }
 
-        #endregion 第二部分：应用信息页面——挂载的事件
+        #endregion 第三部分：应用信息页面——挂载的事件
     }
 }

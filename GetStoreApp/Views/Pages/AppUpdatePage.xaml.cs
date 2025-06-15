@@ -446,7 +446,7 @@ namespace GetStoreApp.Views.Pages
 
         #endregion 第三部分：商店应用更新页面——挂载的事件
 
-        #region 第四部分：自定义事件
+        #region 第四部分：商店应用更新页面——自定义事件
 
         /// <summary>
         /// 应用程序退出时触发的事件
@@ -526,7 +526,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第四部分：自定义事件
+        #endregion 第四部分：商店应用更新页面——自定义事件
 
         /// <summary>
         /// 获取应用安装的描述信息

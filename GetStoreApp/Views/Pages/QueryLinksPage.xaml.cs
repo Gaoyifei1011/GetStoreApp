@@ -563,7 +563,7 @@ namespace GetStoreApp.Views.Pages
 
         #endregion 第二部分：XamlUICommand 命令调用时挂载的事件
 
-        #region 第三部分：查找链接控件——挂载的事件
+        #region 第三部分：查找链接页面——挂载的事件
 
         /// <summary>
         /// 输入文本框内容发生改变时响应的事件
@@ -1028,7 +1028,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第三部分：查找链接控件——挂载的事件
+        #endregion 第三部分：查找链接页面——挂载的事件
 
         /// <summary>
         /// 获取链接

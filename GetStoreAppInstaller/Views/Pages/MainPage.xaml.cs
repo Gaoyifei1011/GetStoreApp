@@ -1754,7 +1754,7 @@ namespace GetStoreAppInstaller.Views.Pages
 
         #endregion 第四部分：应用安装器主页面——挂载的事件
 
-        #region 第五部分：自定义事件
+        #region 第五部分：应用安装器主页面——自定义事件
 
         /// <summary>
         /// 应用安装状态发生改变时触发的事件
@@ -1779,7 +1779,7 @@ namespace GetStoreAppInstaller.Views.Pages
             });
         }
 
-        #endregion 第五部分：自定义事件
+        #endregion 第五部分：应用安装器主页面——自定义事件
 
         #region 第六部分：解析应用包信息
 

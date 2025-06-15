@@ -310,7 +310,6 @@
                             </Grid.RowDefinitions>
 
                             <Grid Grid.Row="0">
-
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
@@ -472,7 +471,6 @@
                             IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}">
 
                             <StackPanel Orientation="Horizontal">
-
                                 <Button
                                     Width="32"
                                     Height="32"
