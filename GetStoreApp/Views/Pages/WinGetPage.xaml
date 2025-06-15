@@ -46,7 +46,7 @@
 
     <SplitView
         x:Name="WinGetSplitView"
-        Grid.Row="1"
+        DisplayMode="Overlay"
         PaneBackground="Transparent"
         PanePlacement="Right">
 

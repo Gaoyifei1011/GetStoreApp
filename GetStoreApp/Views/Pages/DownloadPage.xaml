@@ -36,7 +36,8 @@
 
     <SplitView
         x:Name="DownloadSplitView"
-        Grid.Row="1"
+        DisplayMode="Overlay"
+        OpenPaneLength="320"
         PaneBackground="Transparent"
         PanePlacement="Right">
 
