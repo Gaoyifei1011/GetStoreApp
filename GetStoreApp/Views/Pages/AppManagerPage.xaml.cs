@@ -99,8 +99,6 @@ namespace GetStoreApp.Views.Pages
 
         #endregion 第二部分：应用管理页面——挂载的事件
 
-        #region 第三部分：应用管理页面——窗口导航方法
-
         /// <summary>
         /// 页面向前导航
         /// </summary>
@@ -129,7 +127,5 @@ namespace GetStoreApp.Views.Pages
         {
             return AppManagerFrame.CurrentSourcePageType;
         }
-
-        #endregion 第三部分：应用管理页面——窗口导航方法
     }
 }

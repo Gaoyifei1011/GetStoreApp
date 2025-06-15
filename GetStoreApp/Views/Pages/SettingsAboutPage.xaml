@@ -59,7 +59,11 @@
                             FontSize="15"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/Developer')}" />
 
-                        <TextBlock VerticalAlignment="Center" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/DeveloperNameToolTip')}">
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/DeveloperNameToolTip')}">
+
                             <Hyperlink NavigateUri="https://github.com/Gaoyifei1011" UnderlineStyle="None">
                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/DeveloperName')}" />
                             </Hyperlink>

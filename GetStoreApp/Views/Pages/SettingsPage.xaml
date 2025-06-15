@@ -193,7 +193,7 @@
                             Margin="16,0,16,5"
                             Spacing="5">
 
-                            <TextBlock>
+                            <TextBlock HorizontalAlignment="Left">
                                 <Hyperlink Click="{x:Bind OnAppSettingsClicked}" UnderlineStyle="None">
                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/AppSettings')}" />
                                 </Hyperlink>
@@ -383,7 +383,7 @@
                                 </Hyperlink>
                             </TextBlock>
 
-                            <TextBlock>
+                            <TextBlock HorizontalAlignment="Left">
                                 <Hyperlink Click="{x:Bind OnTroubleShootClicked}" UnderlineStyle="None">
                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/TroubleShoot')}" />
                                 </Hyperlink>

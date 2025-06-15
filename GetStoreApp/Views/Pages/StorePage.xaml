@@ -288,7 +288,7 @@
                             Margin="16,0,16,5"
                             Spacing="5">
 
-                            <TextBlock>
+                            <TextBlock HorizontalAlignment="Left">
                                 <Hyperlink Click="{x:Bind OnDesktopLaunchClicked}" UnderlineStyle="None">
                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DesktopLaunch')}" />
                                 </Hyperlink>
@@ -355,13 +355,13 @@
                             Margin="16,0,16,5"
                             Spacing="5">
 
-                            <TextBlock>
+                            <TextBlock HorizontalAlignment="Left">
                                 <Hyperlink Click="{x:Bind OnCheckNetWorkClicked}" UnderlineStyle="None">
                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/CheckNetwork')}" />
                                 </Hyperlink>
                             </TextBlock>
 
-                            <TextBlock>
+                            <TextBlock HorizontalAlignment="Left">
                                 <Hyperlink Click="{x:Bind OnTroubleShootClicked}" UnderlineStyle="None">
                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/TroubleShoot')}" />
                                 </Hyperlink>
@@ -429,7 +429,7 @@
                             Margin="16,0,16,5"
                             Spacing="5">
 
-                            <TextBlock>
+                            <TextBlock HorizontalAlignment="Left">
                                 <Hyperlink Click="{x:Bind OnDownloadSettingsClicked}" UnderlineStyle="None">
                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadSettings')}" />
                                 </Hyperlink>

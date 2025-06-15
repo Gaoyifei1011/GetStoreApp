@@ -1063,6 +1063,7 @@
                                                     Grid.Row="0"
                                                     Grid.Column="2"
                                                     Margin="0,0,0,3"
+                                                    HorizontalAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     Visibility="{x:Bind IsAppInstallerSourceLinkExisted, Mode=OneWay}">
 
@@ -1106,6 +1107,7 @@
                                                     Grid.Row="1"
                                                     Grid.Column="2"
                                                     Margin="0,0,0,3"
+                                                    HorizontalAlignment="Left"
                                                     TextTrimming="CharacterEllipsis"
                                                     Visibility="{x:Bind IsPackageSourceLinkExisted, Mode=OneWay}">
 
@@ -1942,6 +1944,7 @@
                                                                 x:Name="AppInstallerDependencyProcessorArchitectureText"
                                                                 Grid.Column="3"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
                                                                 Text="{x:Bind ProcessorArchitecture}"
                                                                 TextAlignment="Left"
@@ -1959,6 +1962,7 @@
                                                             <TextBlock
                                                                 Grid.Column="4"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
                                                                 ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenLink')}">
 

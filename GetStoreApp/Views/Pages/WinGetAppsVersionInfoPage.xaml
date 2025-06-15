@@ -241,6 +241,7 @@
                             <TextBlock
                                 Grid.Row="1"
                                 Grid.Column="1"
+                                HorizontalAlignment="Left"
                                 IsTextSelectionEnabled="True"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind IsPackageLinkExisted, Mode=OneWay}">
@@ -288,6 +289,7 @@
                             <TextBlock
                                 Grid.Row="4"
                                 Grid.Column="1"
+                                HorizontalAlignment="Left"
                                 IsTextSelectionEnabled="True"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind IsPublisherLinkExisted, Mode=OneWay}">
@@ -311,6 +313,7 @@
                             <TextBlock
                                 Grid.Row="5"
                                 Grid.Column="1"
+                                HorizontalAlignment="Left"
                                 IsTextSelectionEnabled="True"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind IsPublisherSupportLinkExisted, Mode=OneWay}">
@@ -358,6 +361,7 @@
                             <TextBlock
                                 Grid.Row="8"
                                 Grid.Column="1"
+                                HorizontalAlignment="Left"
                                 IsTextSelectionEnabled="True"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind IsCopyRightLinkExisted, Mode=OneWay}">
@@ -393,6 +397,7 @@
                             <TextBlock
                                 Grid.Row="10"
                                 Grid.Column="1"
+                                HorizontalAlignment="Left"
                                 IsTextSelectionEnabled="True"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind IsLicenseLinkExisted, Mode=OneWay}">
@@ -416,6 +421,7 @@
                             <TextBlock
                                 Grid.Row="11"
                                 Grid.Column="1"
+                                HorizontalAlignment="Left"
                                 IsTextSelectionEnabled="True"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind IsPrivacyLinkExisted, Mode=OneWay}">
@@ -439,6 +445,7 @@
                             <TextBlock
                                 Grid.Row="12"
                                 Grid.Column="1"
+                                HorizontalAlignment="Left"
                                 IsTextSelectionEnabled="True"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind IsPurchaseLinkExisted, Mode=OneWay}">
@@ -474,6 +481,7 @@
                             <TextBlock
                                 Grid.Row="14"
                                 Grid.Column="1"
+                                HorizontalAlignment="Left"
                                 IsTextSelectionEnabled="True"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind IsReleaseNotesLinkExisted, Mode=OneWay}">

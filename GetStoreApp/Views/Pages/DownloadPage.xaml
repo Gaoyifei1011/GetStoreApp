@@ -191,19 +191,19 @@
                             Margin="16,0,16,5"
                             Spacing="5">
 
-                            <TextBlock>
+                            <TextBlock HorizontalAlignment="Left">
                                 <Hyperlink Click="{x:Bind OnLearnMoreClicked}" UnderlineStyle="None">
                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/LearnMore')}" />
                                 </Hyperlink>
                             </TextBlock>
 
-                            <TextBlock>
+                            <TextBlock HorizontalAlignment="Left">
                                 <Hyperlink Click="{x:Bind OnNetworkInternetClicked}" UnderlineStyle="None">
                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/NetworkAndInternet')}" />
                                 </Hyperlink>
                             </TextBlock>
 
-                            <TextBlock>
+                            <TextBlock HorizontalAlignment="Left">
                                 <Hyperlink Click="{x:Bind OnOpenSettingsClicked}" UnderlineStyle="None">
                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/OpenSettings')}" />
                                 </Hyperlink>

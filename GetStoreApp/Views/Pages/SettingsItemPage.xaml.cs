@@ -295,8 +295,6 @@ namespace GetStoreApp.Views.Pages
 
         #endregion 第二部分：设置项页面——挂载的事件
 
-        #region 第三部分：设置项页面——窗口导航方法
-
         /// <summary>
         /// 页面向前导航
         /// </summary>
@@ -325,8 +323,6 @@ namespace GetStoreApp.Views.Pages
         {
             return SettingsItemFrame.CurrentSourcePageType;
         }
-
-        #endregion 第三部分：设置项页面——窗口导航方法
 
         /// <summary>
         /// 恢复页面默认导航设置

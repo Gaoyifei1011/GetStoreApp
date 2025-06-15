@@ -371,7 +371,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开当前项目存储的文件夹
         /// </summary>
-        private void OnOpenItemFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnOpenFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is string filePath)
             {
@@ -392,7 +392,7 @@ namespace GetStoreApp.Views.Pages
                             }
                             catch (Exception e)
                             {
-                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnOpenItemFolderExecuteRequested), 1, e);
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnOpenFolderExecuteRequested), 1, e);
                                 await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
                             }
                         }
