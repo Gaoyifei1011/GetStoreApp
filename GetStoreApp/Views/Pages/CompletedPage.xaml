@@ -21,7 +21,7 @@
         <XamlUICommand x:Name="DeleteWithFileCommand" ExecuteRequested="{x:Bind OnDeleteWithFileExecuteRequested}" />
         <XamlUICommand x:Name="FileInformationCommand" ExecuteRequested="{x:Bind OnFileInformationExecuteRequested}" />
         <XamlUICommand x:Name="InstallCommand" ExecuteRequested="{x:Bind OnInstallExecuteRequested}" />
-        <XamlUICommand x:Name="OpenItemFolderCommand" ExecuteRequested="{x:Bind OnOpenItemFolderExecuteRequested}" />
+        <XamlUICommand x:Name="OpenFolderCommand" ExecuteRequested="{x:Bind OnOpenFolderExecuteRequested}" />
         <XamlUICommand x:Name="ShareFileCommand" ExecuteRequested="{x:Bind OnShareFileExecuteRequested}" />
     </Page.Resources>
 
@@ -461,10 +461,10 @@
                                     Height="32"
                                     Margin="5,0,0,0"
                                     Padding="0"
-                                    Command="{StaticResource OpenItemFolderCommand}"
+                                    Command="{StaticResource OpenFolderCommand}"
                                     CommandParameter="{x:Bind FilePath}"
                                     CornerRadius="{StaticResource ControlCornerRadius}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Completed/OpenItemFolder')}">
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Completed/OpenFolder')}">
 
                                     <Button.Content>
                                         <FontIcon FontSize="14" Glyph="&#xEC50;" />

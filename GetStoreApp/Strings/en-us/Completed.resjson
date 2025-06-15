@@ -29,7 +29,6 @@
   "LoadingFile": "Loading files, please wait...",
   "OpenFolder": "Open folder",
   "OpenFolderToolTip": "Open the folder for default downloads",
-  "OpenItemFolder": "Open the folder where the current task was saved after the download was completed",
   "Operation": "Operation",
   "Select": "Select",
   "SelectAll": "Select all",
