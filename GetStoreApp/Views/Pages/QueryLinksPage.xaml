@@ -592,7 +592,7 @@
                 <!--  查询链接结果控制栏  -->
                 <Grid
                     Grid.Row="1"
-                    Height="66"
+                    Height="60"
                     Padding="16,8,2,8"
                     Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                     BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -663,7 +663,6 @@
                     <CommandBar
                         x:Name="NormalMode"
                         Grid.Column="5"
-                        Margin="0,0,10,0"
                         VerticalAlignment="Center"
                         Background="Transparent"
                         DefaultLabelPosition="Right"
@@ -685,7 +684,6 @@
                     <CommandBar
                         x:Name="SelectMode"
                         Grid.Column="5"
-                        Margin="0,0,10,0"
                         VerticalAlignment="Center"
                         Background="Transparent"
                         DefaultLabelPosition="Right"

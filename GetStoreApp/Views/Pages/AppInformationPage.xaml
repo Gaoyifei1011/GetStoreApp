@@ -67,7 +67,10 @@
                             VerticalAlignment="Center"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/AppInformation')}" />
 
-                        <CommandBar Grid.Column="2" DefaultLabelPosition="Right">
+                        <CommandBar
+                            Grid.Column="2"
+                            Margin="0,0,-15,0"
+                            DefaultLabelPosition="Right">
 
                             <CommandBar.PrimaryCommands>
                                 <AppBarButton Click="{x:Bind OnCopyClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Copy')}">

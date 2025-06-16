@@ -19,8 +19,7 @@
         <XamlUICommand x:Name="CancelCommand" ExecuteRequested="{x:Bind OnCancelExecuteRequested}" />
     </Page.Resources>
 
-    <Grid Padding="0">
-
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -38,9 +37,9 @@
         <!--  应用更新控制栏  -->
         <Grid
             Grid.Row="1"
-            Height="66"
+            Height="60"
             Margin="30,5,30,3"
-            Padding="16,8,2,8"
+            Padding="16,8,0,8"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
@@ -82,10 +81,7 @@
                 Text="{x:Bind x:String.Format(AppUpdateCountInfoString, AppUpdateCollection.Count), Mode=OneWay}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppUpdateCollection.Count), Mode=OneWay}" />
 
-            <CommandBar
-                Grid.Column="4"
-                Margin="0,0,10,0"
-                DefaultLabelPosition="Right">
+            <CommandBar Grid.Column="4" DefaultLabelPosition="Right">
 
                 <CommandBar.PrimaryCommands>
                     <AppBarButton

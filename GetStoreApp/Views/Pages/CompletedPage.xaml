@@ -25,7 +25,7 @@
         <XamlUICommand x:Name="ShareFileCommand" ExecuteRequested="{x:Bind OnShareFileExecuteRequested}" />
     </Page.Resources>
 
-    <Grid Padding="0">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -35,9 +35,9 @@
         <!--  下载完成文件控制栏  -->
         <Grid
             Grid.Row="0"
-            Height="66"
+            Height="60"
             Margin="30,0,30,3"
-            Padding="16,8,2,8"
+            Padding="16,8,0,8"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
@@ -80,7 +80,6 @@
 
             <CommandBar
                 Grid.Column="4"
-                Margin="0,0,10,0"
                 VerticalAlignment="Center"
                 Background="Transparent"
                 DefaultLabelPosition="Right">

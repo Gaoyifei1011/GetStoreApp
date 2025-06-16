@@ -33,9 +33,9 @@
         <!--  WinGet 程序包搜索应用控制栏  -->
         <Grid
             Grid.Row="0"
-            Height="66"
+            Height="60"
             Margin="30,0"
-            Padding="16,8,2,8"
+            Padding="16,8,0,8"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
@@ -96,7 +96,7 @@
 
             <CommandBar
                 Grid.Column="5"
-                Margin="4,0,10,0"
+                Margin="4,0,0,0"
                 VerticalAlignment="Center"
                 Background="Transparent"
                 DefaultLabelPosition="Right">
@@ -254,7 +254,6 @@
                     </AppBarButton>
 
                     <AppBarButton Click="{x:Bind OnTaskManagerClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/TaskManager')}">
-
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE71D;" />
                         </AppBarButton.Icon>
