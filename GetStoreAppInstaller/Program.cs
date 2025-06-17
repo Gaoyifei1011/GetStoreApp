@@ -191,8 +191,8 @@ namespace GetStoreAppInstaller
             MainAppWindow.Show();
 
             Application.LoadComponent(app, new Uri("ms-appx:///XamlIslandsApp.xaml"), ComponentResourceLocation.Application);
-            Window.Current.Content = new MainPage(appActivationArguments);
-            (Window.Current.Content as MainPage).IsWindowMaximized = (MainAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
+            Window.Current.Content = new InstallerPage(appActivationArguments);
+            (Window.Current.Content as InstallerPage).IsWindowMaximized = (MainAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
             Window.Current.Activate();
             frameworkView.Run();
         }
@@ -210,7 +210,7 @@ namespace GetStoreAppInstaller
                     (MainAppWindow.Presenter as OverlappedPresenter).PreferredMinimumHeight = Convert.ToInt32(560 * DisplayInformation.RawPixelsPerViewPixel);
                 }
 
-                if (Window.Current is not null && Window.Current.Content is MainPage mainPage)
+                if (Window.Current is not null && Window.Current.Content is InstallerPage mainPage)
                 {
                     CoreAppWindow.Resize(MainAppWindow.ClientSize);
                     mainPage.IsWindowMaximized = (MainAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
@@ -273,7 +273,7 @@ namespace GetStoreAppInstaller
                 // 当用户按下鼠标左键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCLBUTTONDOWN:
                     {
-                        if (Window.Current is not null && Window.Current.Content is MainPage mainPage && mainPage.TitlebarMenuFlyout.IsOpen)
+                        if (Window.Current is not null && Window.Current.Content is InstallerPage mainPage && mainPage.TitlebarMenuFlyout.IsOpen)
                         {
                             mainPage.TitlebarMenuFlyout.Hide();
                         }
@@ -282,7 +282,7 @@ namespace GetStoreAppInstaller
                 // 当用户按下鼠标右键并释放时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONUP:
                     {
-                        if (wParam is 2 && Window.Current is not null && Window.Current.Content is MainPage mainPage && DisplayInformation is not null)
+                        if (wParam is 2 && Window.Current is not null && Window.Current.Content is InstallerPage mainPage && DisplayInformation is not null)
                         {
                             User32Library.GetCursorPos(out PointInt32 screenPoint);
                             Point localPoint = contentCoordinateConverter.ConvertScreenToLocal(screenPoint);
@@ -311,7 +311,7 @@ namespace GetStoreAppInstaller
                 // 处理 Alt + space 按键弹出窗口右键菜单的消息
                 case WindowMessage.WM_SYSKEYDOWN:
                     {
-                        if (Equals(wParam, (UIntPtr)Windows.System.VirtualKey.Space) && ((lParam & 0x20000000) is not 0) && Window.Current is not null && Window.Current.Content is MainPage mainPage)
+                        if (Equals(wParam, (UIntPtr)Windows.System.VirtualKey.Space) && ((lParam & 0x20000000) is not 0) && Window.Current is not null && Window.Current.Content is InstallerPage mainPage)
                         {
                             FlyoutShowOptions options = new()
                             {
@@ -326,7 +326,7 @@ namespace GetStoreAppInstaller
                 // 提升权限时允许应用接收拖放文件消息
                 case WindowMessage.WM_DROPFILES:
                     {
-                        if (Window.Current is not null && Window.Current.Content is MainPage mainPage && Window.Current.CoreWindow is CoreWindow coreWindow)
+                        if (Window.Current is not null && Window.Current.Content is InstallerPage mainPage && Window.Current.CoreWindow is CoreWindow coreWindow)
                         {
                             Task.Run(() =>
                             {

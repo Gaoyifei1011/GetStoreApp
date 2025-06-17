@@ -61,7 +61,7 @@ namespace GetStoreAppInstaller.Views.Pages
     /// <summary>
     /// 应用主页面
     /// </summary>
-    public sealed partial class MainPage : Page, INotifyPropertyChanged
+    public sealed partial class InstallerPage : Page, INotifyPropertyChanged
     {
         private readonly string msresource = "ms-resource:";
         private readonly string AppInstallFailedCodeString = ResourceService.GetLocalized("Installer/AppInstallFailedCode");
@@ -874,7 +874,7 @@ namespace GetStoreAppInstaller.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public MainPage(AppActivationArguments activationArguments)
+        public InstallerPage(AppActivationArguments activationArguments)
         {
             InitializeComponent();
             appActivationArguments = activationArguments;
@@ -950,7 +950,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnDragEnter), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerPage), nameof(OnDragEnter), 1, e);
             }
             finally
             {
@@ -983,14 +983,14 @@ namespace GetStoreAppInstaller.Views.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnDrop), 1, e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerPage), nameof(OnDrop), 1, e);
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnDrop), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerPage), nameof(OnDrop), 1, e);
             }
             finally
             {
@@ -1260,7 +1260,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnOpenPackageClicked), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerPage), nameof(OnOpenPackageClicked), 1, e);
             }
 
             if (hasSelectFile)
@@ -1305,7 +1305,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnOpenOtherPackageClicked), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerPage), nameof(OnOpenOtherPackageClicked), 1, e);
             }
 
             if (hasSelectFile)
@@ -1365,7 +1365,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnAddDependencyClicked), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerPage), nameof(OnAddDependencyClicked), 1, e);
             }
         }
 
@@ -1463,7 +1463,7 @@ namespace GetStoreAppInstaller.Views.Pages
                         // 安装失败显示失败信息
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnInstallAppClicked), 1, e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerPage), nameof(OnInstallAppClicked), 1, e);
                             return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, null, e);
                         }
                     }
@@ -1607,7 +1607,7 @@ namespace GetStoreAppInstaller.Views.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnOpenAppInstalledFolderClicked), 1, e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerPage), nameof(OnOpenAppInstalledFolderClicked), 1, e);
                         }
                     }
                 }
@@ -1632,7 +1632,7 @@ namespace GetStoreAppInstaller.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(OnOpenAppCachedFolderClicked), 1, e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerPage), nameof(OnOpenAppCachedFolderClicked), 1, e);
                     }
                 }
             });
@@ -1766,8 +1766,9 @@ namespace GetStoreAppInstaller.Views.Pages
                 if (progress.Status is PackageDeploymentProgressStatus.Queued)
                 {
                     IsInstalling = true;
-                    IsInstallWaiting = true;
-                    InstallStateString = WaitInstallString;
+                    IsInstallWaiting = false; // TODO：wasdk api 问题
+                    //InstallStateString = WaitInstallString;
+                    InstallStateString = string.Format(InstallProgressString, progress.Progress * 100);
                 }
                 else if (progress.Status is PackageDeploymentProgressStatus.InProgress)
                 {
@@ -2190,7 +2191,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(ParsePackagedAppAsync), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerPage), nameof(ParsePackagedAppAsync), 1, e);
             }
 
             return ValueTuple.Create(parseResult, packageInformation);
@@ -2259,7 +2260,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(ParseDependencyAppAsync), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerPage), nameof(ParseDependencyAppAsync), 1, e);
             }
 
             return ValueTuple.Create(parseResult, dependencyAppInformation);
@@ -2437,7 +2438,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(ParsePackageManifest), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerPage), nameof(ParsePackageManifest), 1, e);
             }
 
             return manifestInformation;
@@ -2762,7 +2763,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(ParsePackageResources), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerPage), nameof(ParsePackageResources), 1, e);
             }
 
             return resourceDict;
@@ -2825,7 +2826,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(ParseDependencyPackageManifest), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerPage), nameof(ParseDependencyPackageManifest), 1, e);
             }
 
             return dependencyAppInformation;
@@ -2856,7 +2857,7 @@ namespace GetStoreAppInstaller.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(ParseDependencyPackageBundleManifest), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerPage), nameof(ParseDependencyPackageBundleManifest), 1, e);
             }
 
             return dependencyAppInformation;
@@ -3613,7 +3614,7 @@ namespace GetStoreAppInstaller.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(MainPage), nameof(UpdateResultAsync), 1, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerPage), nameof(UpdateResultAsync), 1, e);
                 }
             }
 

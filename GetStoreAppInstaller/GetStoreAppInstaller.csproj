@@ -64,11 +64,11 @@
     
     <None Remove="XamlIslandsApp.xaml" />
     <None Remove="Views\NotificationTips\CopyPasteInstallerNotificationTip.xaml" />
-    <None Remove="Views\Pages\MainPage.xaml" />
+    <None Remove="Views\Pages\InstallerPage.xaml" />
 
     <Page Remove="XamlIslandsApp.xaml" />
     <Page Update="Views\NotificationTips\CopyPasteInstallerNotificationTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Views\Pages\MainPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\InstallerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
