@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Services.Root;
-using Microsoft.UI.Xaml.Media.Imaging;
+﻿using Microsoft.UI.Xaml.Media;
 using System.ComponentModel;
 
 namespace GetStoreApp.Models
@@ -9,11 +8,9 @@ namespace GetStoreApp.Models
     /// </summary>
     public sealed partial class CompletedModel : INotifyPropertyChanged
     {
-        public readonly string InstalledValueString = ResourceService.GetLocalized("Completed/InstalledValue");
+        private ImageSource _iconImage;
 
-        private BitmapImage _iconImage;
-
-        public BitmapImage IconImage
+        public ImageSource IconImage
         {
             get { return _iconImage; }
 
@@ -112,18 +109,53 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 安装文件的进度
         /// </summary>
-        private double _installValue;
+        private double _installProgressValue;
 
-        public double InstallValue
+        public double InstallProgressValue
         {
-            get { return _installValue; }
+            get { return _installProgressValue; }
 
             set
             {
-                if (!Equals(_installValue, value))
+                if (!Equals(_installProgressValue, value))
                 {
-                    _installValue = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallValue)));
+                    _installProgressValue = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallProgressValue)));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 安装是否处于等待中
+        /// </summary>
+        private bool _isInstallWaiting;
+
+        public bool IsInstallWaiting
+        {
+            get { return _isInstallWaiting; }
+
+            set
+            {
+                if (!Equals(_isInstallWaiting, value))
+                {
+                    _isInstallWaiting = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsInstallWaiting)));
+                }
+            }
+        }
+
+        private string _installStateString;
+
+        public string InstallStateString
+        {
+            get { return _installStateString; }
+
+            set
+            {
+                if (!string.Equals(_installStateString, value))
+                {
+                    _installStateString = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallStateString)));
                 }
             }
         }
