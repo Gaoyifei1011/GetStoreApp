@@ -399,35 +399,21 @@
 
                                 <ProgressBar
                                     Grid.Column="1"
-                                    IsIndeterminate="False"
+                                    IsIndeterminate="{x:Bind IsInstallWaiting, Mode=OneWay}"
                                     ShowError="{x:Bind InstallFailed, Mode=OneWay}"
-                                    Value="{x:Bind InstallValue, Mode=OneWay}" />
+                                    Value="{x:Bind InstallProgressValue, Mode=OneWay}" />
 
                                 <TextBlock
-                                    x:Name="InstallStateInfo"
                                     Grid.Column="2"
                                     MinWidth="50"
                                     Margin="0,-3,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
-                                    x:Load="{x:Bind InstallFailed.Equals(x:False), Mode=OneWay}"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind x:String.Format(InstalledValueString, InstallValue), Mode=OneWay}"
-                                    TextAlignment="Left" />
-
-                                <TextBlock
-                                    x:Name="InstallFailedInfo"
-                                    Grid.Column="2"
-                                    MinWidth="50"
-                                    Margin="0,-3,0,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    x:Load="{x:Bind InstallFailed, Mode=OneWay}"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/InstallFailed')}"
-                                    TextAlignment="Left" />
+                                    Text="{x:Bind InstallStateString, Mode=OneWay}"
+                                    TextAlignment="Left"
+                                    Visibility="{x:Bind IsInstalling, Mode=OneWay}" />
                             </Grid>
                         </Grid>
 

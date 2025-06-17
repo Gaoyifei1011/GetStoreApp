@@ -50,6 +50,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using WinRT;
 
@@ -64,11 +65,13 @@ namespace GetStoreAppInstaller.Views.Pages
     public sealed partial class InstallerPage : Page, INotifyPropertyChanged
     {
         private readonly string msresource = "ms-resource:";
-        private readonly string AppInstallFailedCodeString = ResourceService.GetLocalized("Installer/AppInstallFailedCode");
         private readonly string AppInstallFailedString = ResourceService.GetLocalized("Installer/AppInstallFailed");
-        private readonly string AppInstallFailedReasonString = ResourceService.GetLocalized("Installer/AppInstallFailedReason");
+        private readonly string AppInstallFailed1String = ResourceService.GetLocalized("Installer/AppInstallFailed1");
+        private readonly string AppInstallFailed2String = ResourceService.GetLocalized("Installer/AppInstallFailed2");
+        private readonly string AppInstallFailed3String = ResourceService.GetLocalized("Installer/AppInstallFailed3");
         private readonly string AppInstallSelfString = ResourceService.GetLocalized("Installer/AppInstallSelf");
         private readonly string AppInstallSuccessfullyString = ResourceService.GetLocalized("Installer/AppInstallSuccessfully");
+        private readonly string AppInstallSuccessfully1String = ResourceService.GetLocalized("Installer/AppInstallSuccessfully1");
         private readonly string AppInstalledNotNewVersionString = ResourceService.GetLocalized("Installer/AppInstalledNotNewVersion");
         private readonly string AppInstalledNewVersionString = ResourceService.GetLocalized("Installer/AppInstalledNewVersion");
         private readonly string AppNotInstallString = ResourceService.GetLocalized("Installer/AppNotInstall");
@@ -233,9 +236,9 @@ namespace GetStoreAppInstaller.Views.Pages
             }
         }
 
-        private BitmapImage _packageIconImage;
+        private ImageSource _packageIconImage;
 
-        public BitmapImage PackageIconImage
+        public ImageSource PackageIconImage
         {
             get { return _packageIconImage; }
 
@@ -1479,12 +1482,12 @@ namespace GetStoreAppInstaller.Views.Pages
                     {
                         // 更新应用安装状态
                         CanDragFile = true;
-                        IsInstalling = false;
-                        InstallProgressValue = 0;
+                        InstallProgressValue = 100;
                         IsInstallWaiting = false;
                         IsInstallFailed = false;
                         InstallFailedInformation = string.Empty;
                         IsAppInstalled = true;
+                        InstallStateString = AppInstallSuccessfullyString;
                         AppInstalledState = AppInstalledNotNewVersionString;
 
                         await Task.Run(() =>
@@ -1492,7 +1495,7 @@ namespace GetStoreAppInstaller.Views.Pages
                             // 显示安装成功通知
                             AppNotificationBuilder appNotificationBuilder = new();
                             appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(AppInstallSuccessfullyString, PackageName));
+                            appNotificationBuilder.AddText(string.Format(AppInstallSuccessfully1String, PackageName));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                         });
                     }
@@ -1503,46 +1506,56 @@ namespace GetStoreAppInstaller.Views.Pages
 
                         // 更新应用安装状态
                         CanDragFile = true;
-                        IsInstalling = false;
-                        InstallProgressValue = 0;
+                        InstallProgressValue = 100;
                         IsInstallWaiting = false;
                         IsInstallFailed = true;
                         InstallFailedInformation = errorMessage;
+                        IsAppInstalled = false;
+                        InstallStateString = AppInstallFailedString;
+                        AppInstalledState = AppNotInstallString;
 
                         await Task.Run(() =>
                         {
                             // 显示安装失败通知
                             AppNotificationBuilder appNotificationBuilder = new();
                             appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(AppInstallFailedString, PackageName));
-                            appNotificationBuilder.AddText(string.Format(AppInstallFailedCodeString, errorCode));
-                            appNotificationBuilder.AddText(string.Format(AppInstallFailedReasonString, errorMessage));
+                            appNotificationBuilder.AddText(string.Format(AppInstallFailed1String, PackageName));
+                            appNotificationBuilder.AddText(string.Format(AppInstallFailed2String, errorCode));
+                            appNotificationBuilder.AddText(string.Format(AppInstallFailed3String, errorMessage));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                         });
                     }
                 }
                 else
                 {
+                    string errorCode = exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : UnknownString;
                     string errorMessage = exception is not null ? exception.Message : UnknownString;
 
                     // 更新应用安装状态
                     CanDragFile = true;
-                    IsInstalling = false;
-                    InstallProgressValue = 0;
+                    InstallProgressValue = 100;
                     IsInstallWaiting = false;
                     IsInstallFailed = true;
                     InstallFailedInformation = errorMessage;
+                    IsAppInstalled = false;
+                    AppInstalledState = AppNotInstallString;
 
                     await Task.Run(() =>
                     {
                         // 显示安装失败通知
                         AppNotificationBuilder appNotificationBuilder = new();
                         appNotificationBuilder.AddArgument("action", "OpenApp");
-                        appNotificationBuilder.AddText(string.Format(AppInstallFailedString, PackageName));
-                        appNotificationBuilder.AddText(string.Format(AppInstallFailedReasonString, errorMessage));
+                        appNotificationBuilder.AddText(string.Format(AppInstallFailed1String, PackageName));
+                        appNotificationBuilder.AddText(string.Format(AppInstallFailed2String, errorCode));
+                        appNotificationBuilder.AddText(string.Format(AppInstallFailed3String, errorMessage));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                     });
                 }
+
+                // 恢复原来的安装信息显示（并延缓当前安装信息显示时间0.5秒）
+                await Task.Delay(500);
+                IsInstalling = false;
+                InstallProgressValue = 0;
             }
         }
 
@@ -1768,13 +1781,14 @@ namespace GetStoreAppInstaller.Views.Pages
                     IsInstalling = true;
                     IsInstallWaiting = false; // TODO：wasdk api 问题
                     //InstallStateString = WaitInstallString;
+                    InstallProgressValue = progress.Progress * 100;
                     InstallStateString = string.Format(InstallProgressString, progress.Progress * 100);
                 }
                 else if (progress.Status is PackageDeploymentProgressStatus.InProgress)
                 {
                     IsInstalling = true;
                     IsInstallWaiting = false;
-                    InstallProgressValue = progress.Progress;
+                    InstallProgressValue = progress.Progress * 100;
                     InstallStateString = string.Format(InstallProgressString, progress.Progress * 100);
                 }
             });

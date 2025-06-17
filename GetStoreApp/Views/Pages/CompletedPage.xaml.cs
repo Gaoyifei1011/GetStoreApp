@@ -12,6 +12,7 @@ using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.AppNotifications.Builder;
@@ -42,10 +43,15 @@ namespace GetStoreApp.Views.Pages
     {
         private readonly string CompletedCountInfoString = ResourceService.GetLocalized("Completed/CompletedCountInfo");
         private readonly string FileShareString = ResourceService.GetLocalized("Completed/FileShare");
+        private readonly string InstallProgressString = ResourceService.GetLocalized("Completed/InstallProgress");
+        private readonly string InstallFailedString = ResourceService.GetLocalized("Completed/InstallFailed");
         private readonly string InstallFailed1String = ResourceService.GetLocalized("Completed/InstallFailed1");
         private readonly string InstallFailed2String = ResourceService.GetLocalized("Completed/InstallFailed2");
         private readonly string InstallFailed3String = ResourceService.GetLocalized("Completed/InstallFailed3");
+        private readonly string PrepareInstallString = ResourceService.GetLocalized("Completed/PrepareInstall");
         private readonly string InstallSuccessfullyString = ResourceService.GetLocalized("Completed/InstallSuccessfully");
+        private readonly string InstallSuccessfully1String = ResourceService.GetLocalized("Completed/InstallSuccessfully1");
+        private readonly string WaitInstallString = ResourceService.GetLocalized("Completed/WaitInstall");
         private readonly string UnknownString = ResourceService.GetLocalized("Completed/Unknown");
         private bool isInitialized;
         private PackageDeploymentManager packageDeploymentManager;
@@ -266,7 +272,8 @@ namespace GetStoreApp.Views.Pages
                             {
                                 // 标记安装状态
                                 completed.IsInstalling = true;
-                                completed.InstallValue = 0;
+                                completed.InstallProgressValue = 0;
+                                completed.InstallStateString = PrepareInstallString;
 
                                 (bool result, PackageDeploymentResult packageDeploymentResult, Exception exception) = await Task.Run(async () =>
                                 {
@@ -302,19 +309,27 @@ namespace GetStoreApp.Views.Pages
                                     // 安装成功
                                     if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
                                     {
+                                        completed.InstallProgressValue = 100;
+                                        completed.IsInstallWaiting = false;
+                                        completed.InstallFailed = false;
+                                        completed.InstallStateString = InstallSuccessfullyString;
+
                                         await Task.Run(() =>
                                         {
                                             // 显示安装成功通知
                                             AppNotificationBuilder appNotificationBuilder = new();
                                             appNotificationBuilder.AddArgument("action", "OpenApp");
-                                            appNotificationBuilder.AddText(string.Format(InstallSuccessfullyString, completedFile.Name));
+                                            appNotificationBuilder.AddText(string.Format(InstallSuccessfully1String, completedFile.Name));
                                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                                         });
                                     }
                                     // 安装失败
                                     else
                                     {
+                                        completed.InstallProgressValue = 100;
+                                        completed.IsInstallWaiting = false;
                                         completed.InstallFailed = true;
+                                        completed.InstallStateString = InstallFailedString;
 
                                         await Task.Run(() =>
                                         {
@@ -333,16 +348,21 @@ namespace GetStoreApp.Views.Pages
                                 }
                                 else
                                 {
+                                    completed.InstallProgressValue = 100;
+                                    completed.IsInstallWaiting = false;
                                     completed.InstallFailed = true;
+                                    completed.InstallStateString = InstallFailedString;
 
                                     await Task.Run(() =>
                                     {
+                                        string errorCode = exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : UnknownString;
                                         string errorMessage = exception is not null ? exception.Message : UnknownString;
 
                                         // 显示安装失败通知
                                         AppNotificationBuilder appNotificationBuilder = new();
                                         appNotificationBuilder.AddArgument("action", "OpenApp");
                                         appNotificationBuilder.AddText(string.Format(InstallFailed1String, completedFile.Name));
+                                        appNotificationBuilder.AddText(string.Format(InstallFailed2String, errorCode));
                                         appNotificationBuilder.AddText(string.Format(InstallFailed3String, errorMessage));
                                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                                     });
@@ -801,7 +821,21 @@ namespace GetStoreApp.Views.Pages
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                completed.InstallValue = progress.Progress * 100;
+                if (progress.Status is PackageDeploymentProgressStatus.Queued)
+                {
+                    completed.IsInstalling = true;
+                    completed.IsInstallWaiting = false; // TODO：wasdk api 问题
+                    //InstallStateString = WaitInstallString;
+                    completed.InstallProgressValue = progress.Progress * 100;
+                    completed.InstallStateString = string.Format(InstallProgressString, progress.Progress * 100);
+                }
+                else if (progress.Status is PackageDeploymentProgressStatus.InProgress)
+                {
+                    completed.IsInstalling = true;
+                    completed.IsInstallWaiting = false;
+                    completed.InstallProgressValue = progress.Progress * 100;
+                    completed.InstallStateString = string.Format(InstallProgressString, progress.Progress * 100);
+                }
             });
         }
 
@@ -810,7 +844,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取文件缩略图
         /// </summary>
-        private async Task<BitmapImage> GetFileIconImageAsync(string filePath)
+        private async Task<ImageSource> GetFileIconImageAsync(string filePath)
         {
             if (File.Exists(filePath))
             {

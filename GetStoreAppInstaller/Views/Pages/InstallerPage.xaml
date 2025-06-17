@@ -301,6 +301,7 @@
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 IsIndeterminate="{x:Bind IsInstallWaiting, Mode=OneWay}"
+                                ShowError="{x:Bind IsInstallFailed, Mode=OneWay}"
                                 Visibility="{x:Bind IsInstalling, Mode=OneWay}"
                                 Value="{x:Bind InstallProgressValue, Mode=OneWay}" />
                         </Grid>
