@@ -438,7 +438,7 @@ namespace GetStoreApp.Views.Dialogs
 
             if (packageVolumeList.Count is 0)
             {
-                PackageVolumeResultKind = PackageVolumeResultKind.Empty;
+                PackageVolumeResultKind = PackageVolumeResultKind.Failed;
             }
             else
             {

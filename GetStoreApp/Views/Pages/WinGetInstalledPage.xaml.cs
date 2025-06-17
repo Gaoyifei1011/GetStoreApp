@@ -371,7 +371,10 @@ namespace GetStoreApp.Views.Pages
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string increase && (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult))
             {
                 IsIncrease = Convert.ToBoolean(increase);
-                InitializeMatchedInstalledApps();
+                if (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult)
+                {
+                    InitializeMatchedInstalledApps();
+                }
             }
         }
 
@@ -383,7 +386,10 @@ namespace GetStoreApp.Views.Pages
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind && (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult))
             {
                 SelectedAppSortRuleKind = appSortRuleKind;
-                InitializeMatchedInstalledApps();
+                if (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult)
+                {
+                    InitializeMatchedInstalledApps();
+                }
             }
         }
 
@@ -461,7 +467,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            if (!string.IsNullOrEmpty(SearchText))
+            if (!string.IsNullOrEmpty(SearchText) && InstalledAppsResultKind is InstalledAppsResultKind.Successfully)
             {
                 InstalledAppsResultKind = InstalledAppsResultKind.Querying;
                 InstalledAppsCollection.Clear();
@@ -469,21 +475,11 @@ namespace GetStoreApp.Views.Pages
                 InstalledAppsLock.Enter();
                 try
                 {
-                    if (string.IsNullOrEmpty(SearchText))
+                    foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
                     {
-                        foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
+                        if (installedAppsItem.AppName.Contains(SearchText) || installedAppsItem.AppPublisher.Contains(SearchText))
                         {
                             InstalledAppsCollection.Add(installedAppsItem);
-                        }
-                    }
-                    else
-                    {
-                        foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
-                        {
-                            if (installedAppsItem.AppName.Contains(SearchText) || installedAppsItem.AppPublisher.Contains(SearchText))
-                            {
-                                InstalledAppsCollection.Add(installedAppsItem);
-                            }
                         }
                     }
                 }
@@ -505,9 +501,11 @@ namespace GetStoreApp.Views.Pages
         private void OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             SearchText = sender.Text;
-            InstalledAppsCollection.Clear();
             if (string.IsNullOrEmpty(SearchText) && InstalledAppsResultKind is InstalledAppsResultKind.SearchResult)
             {
+                InstalledAppsResultKind = InstalledAppsResultKind.Querying;
+                InstalledAppsCollection.Clear();
+
                 InstalledAppsLock.Enter();
                 try
                 {

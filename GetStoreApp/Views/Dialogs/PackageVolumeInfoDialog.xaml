@@ -181,7 +181,7 @@
                         VerticalAlignment="Center"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/PackageVolumeEmptyDescription')}"
                         TextAlignment="Center"
-                        Visibility="{x:Bind CheckPackageVolumeState(PackageVolumeResultKind, enum:PackageVolumeResultKind.Empty, x:False), Mode=OneWay}" />
+                        Visibility="{x:Bind CheckPackageVolumeState(PackageVolumeResultKind, enum:PackageVolumeResultKind.Failed, x:False), Mode=OneWay}" />
                 </Grid>
             </Grid>
 
