@@ -124,7 +124,7 @@
         <Frame
             x:Name="WinGetAppsVersionFrame"
             Grid.Row="1"
-            Background="{ThemeResource NavigationViewDefaultPaneBackground}"
+            Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
             Navigated="{x:Bind OnNavigated}"
             NavigationFailed="{x:Bind OnNavigationFailed}" />
     </Grid>

@@ -303,9 +303,8 @@
 
                     <Grid
                         Grid.Row="1"
-                        Width="300"
-                        Height="100"
-                        Padding="20"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
                         Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(PackageOperationCollection.Count), Mode=OneWay}">
 
                         <TextBlock
