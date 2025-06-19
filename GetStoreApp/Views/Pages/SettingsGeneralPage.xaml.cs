@@ -323,7 +323,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 开关按钮切换时修改相应设置
+        /// 是否开启始终显示背景色
         /// </summary>
         private void OnAlwaysShowBackdropToggled(object sender, RoutedEventArgs args)
         {
