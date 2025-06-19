@@ -13,7 +13,7 @@
   "AppInstallFailed1": "{0} 安装失败",
   "AppInstallFailed2": "错误代码：{0}",
   "AppInstallFailed3": "错误信息：{0}",
-  "AppInstallSelf": "即将安装本应用，安装过程中程序可能会自动退出。",
+  "AppInstallSelf": "即将安装本应用，安装过程中程序可能会自动退出",
   "AppInstallSuccessfully": "安装成功",
   "AppInstallSuccessfully1": "{0} 安装成功",
   "AppNotInstall": "未安装",

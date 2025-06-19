@@ -15,7 +15,7 @@
   "Language": "Language",
   "LanguageDescription": "Modify the language displayed in the app interface",
   "LanguageInstruction": "Language setting insturctions",
-  "LanguageInstructionDescription": "The name of the Start menu app doesn't change with the app language setting. Find the app in settings and click the Repair button and the app name changes without clearing your app's data.",
+  "LanguageInstructionDescription": "The name of the Start menu app doesn't change with the app language setting. Find the app in settings and click the Repair button and the app name changes without clearing your app's data",
   "Mica": "Mica",
   "SystemBackdropSettings": "System backdrop settings",
   "SystemLanguageSettings": "System language settings",

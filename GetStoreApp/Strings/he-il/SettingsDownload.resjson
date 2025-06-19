@@ -12,7 +12,7 @@
   "DoEngineBits": "שירות העברה חכמה ברקע (BITS)",
   "DoEngineDo": "אופטימיזציית מסירה",
   "DoEngineMode": "מצב מנוע הורדה",
-  "DoEngineModeDescription": "הגדר את מנוע ההורדה שישמש בעת הורדת קבצים. הגדרה זו תיכנס לתוקף לאחר הפעלה מחדש.",
+  "DoEngineModeDescription": "הגדר את מנוע ההורדה שישמש בעת הורדת קבצים. הגדרה זו תיכנס לתוקף לאחר הפעלה מחדש",
   "DownloadFolder": "הורדות",
   "FileStoragePath": "נתיב אחסון קבצים",
   "LearnDoEngine": "הסבר על מנוע ההורדה",

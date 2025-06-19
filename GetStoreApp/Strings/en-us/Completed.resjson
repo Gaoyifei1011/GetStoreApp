@@ -23,7 +23,7 @@
   "InstallFailed1": "File {0} install failed",
   "InstallFailed2": "Error code: {0}",
   "InstallFailed3": "Error message: {0}",
-  "Installing": "Installing, please wait......",
+  "Installing": "Installing, please wait...",
   "InstallProgress": "{0}% Installed",
   "InstallSuccessfully": "Install successfully",
   "InstallSuccessfully1": "File {0} was successfully installed",

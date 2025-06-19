@@ -13,7 +13,7 @@
   "AppInstallFailed1": "{0} install failed",
   "AppInstallFailed2": "Error code: {0}",
   "AppInstallFailed3": "Error message: {0}",
-  "AppInstallSelf": "The application may exit automatically during installation.",
+  "AppInstallSelf": "The application may exit automatically during installation",
   "AppInstallSuccessfully": "Install successfully",
   "AppInstallSuccessfully1": "{0} install successfully",
   "AppNotInstall": "Not install",

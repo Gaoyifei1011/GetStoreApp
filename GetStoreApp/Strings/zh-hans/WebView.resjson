@@ -10,10 +10,10 @@
   "Refresh": "刷新",
   "Settings": "设置",
   "Title": "网页浏览器",
-  "WarningSuitableWebView2NotFound": "未检测到合适版本的 Microsoft Edge WebView2 运行时。",
+  "WarningSuitableWebView2NotFound": "未检测到合适版本的 Microsoft Edge WebView2 运行时",
   "WebBrowser": "网页浏览器",
   "WebTitle": "网页接口",
-  "WebView2Closed": "不能为关闭的 WebView2 元素创建 CoreWebView2。",
-  "WebView2NotPresent": "失败，因为不存在有效的 CoreWebView2。确保已创建一个，例如通过调用 EnsureCoreWebView2Async() API。",
+  "WebView2Closed": "不能为关闭的 WebView2 元素创建 CoreWebView2",
+  "WebView2NotPresent": "失败，因为不存在有效的 CoreWebView2。确保已创建一个，例如通过调用 EnsureCoreWebView2Async() API",
   "WebView2NotPresentClosed": "失败，因为不存在有效的 CoreWebView2。一个存在，但已经关闭。"
 }

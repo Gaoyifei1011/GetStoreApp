@@ -15,7 +15,7 @@
   "Language": "界面语言",
   "LanguageDescription": "修改应用界面显示的语言",
   "LanguageInstruction": "界面语言设置说明",
-  "LanguageInstructionDescription": "\"开始\"菜单应用的名称并不会跟随应用语言设置发生改变。请在设置中找到应用点击修复按钮，应用名称随即发生改变，这不会清除您应用的数据。",
+  "LanguageInstructionDescription": "\"开始\"菜单应用的名称并不会跟随应用语言设置发生改变。请在设置中找到应用点击修复按钮，应用名称随即发生改变，这不会清除您应用的数据",
   "Mica": "云母",
   "SystemBackdropSettings": "系统背景色设置",
   "SystemLanguageSettings": "系统语言设置",

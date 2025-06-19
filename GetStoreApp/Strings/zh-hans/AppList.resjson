@@ -7,7 +7,7 @@
   "FrameworkPackage": "框架包",
   "InstalledApps": "安装的应用",
   "InstalledDate": "安装日期：",
-  "LoadingApps": "正在加载已安装的应用列表，请稍候......",
+  "LoadingApps": "正在加载已安装的应用列表，请稍候...",
   "Move": "移动",
   "MoveFailed1": "{0}应用移动失败",
   "MoveFailed2": "应用移动失败，请检查您是否有移动应用的权限",

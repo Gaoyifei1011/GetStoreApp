@@ -13,7 +13,7 @@
   "AppInstallFailed1": "התקנת {0} נכשלה",
   "AppInstallFailed2": "קוד שגיאה: {0}",
   "AppInstallFailed3": "הודעת שגיאה: {0}",
-  "AppInstallSelf": "היישום יותקן בקרוב, התוכנית עשויה להיסגר אוטומטית במהלך ההתקנה.",
+  "AppInstallSelf": "היישום יותקן בקרוב, התוכנית עשויה להיסגר אוטומטית במהלך ההתקנה",
   "AppInstallSuccessfully": "ההתקנה הצליחה",
   "AppInstallSuccessfully1": "התקנת {0} הצליחה",
   "AppNotInstall": "לא מותקן",
