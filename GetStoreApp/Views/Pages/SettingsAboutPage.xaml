@@ -13,7 +13,6 @@
     mc:Ignorable="d">
 
     <ScrollViewer
-        Margin="1"
         HorizontalScrollBarVisibility="Disabled"
         HorizontalScrollMode="Disabled"
         VerticalScrollBarVisibility="Auto"
@@ -165,11 +164,13 @@
 
                             <TextBlock
                                 Grid.Column="1"
+                                FontSize="16"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/CheckUpdate')}"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsChecking), Mode=OneWay}" />
 
                             <TextBlock
                                 Grid.Column="1"
+                                FontSize="16"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/Checking')}"
                                 Visibility="{x:Bind IsChecking, Mode=OneWay}" />
                         </Grid>
