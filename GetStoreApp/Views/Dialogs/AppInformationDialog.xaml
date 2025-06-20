@@ -9,17 +9,15 @@
     xmlns:text="using:Windows.UI.Text"
     xmlns:window="using:GetStoreApp.Views.Windows"
     Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/AppInformation')}"
-    Closing="{x:Bind OnClosing}"
+    CloseButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Close')}"
     DefaultButton="Primary"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
     IsPrimaryButtonEnabled="{x:Bind IsLoadCompleted, Mode=OneWay}"
-    IsSecondaryButtonEnabled="{x:Bind IsLoadCompleted, Mode=OneWay}"
     Loaded="{x:Bind OnLoaded}"
     PrimaryButtonClick="{x:Bind OnCopyAppInformationClicked}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
     PrimaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CopyAppInformation')}"
     RequestedTheme="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).RequestedTheme, Mode=OneWay}"
-    SecondaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Close')}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
@@ -69,6 +67,7 @@
                         <TextBlock
                             Grid.Column="0"
                             HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
                             Text="{x:Bind DisplayText}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />

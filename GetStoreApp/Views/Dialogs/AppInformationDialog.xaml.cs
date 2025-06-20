@@ -32,7 +32,6 @@ namespace GetStoreApp.Views.Dialogs
         private readonly string WindowsUIVersionString = ResourceService.GetLocalized("Dialog/WindowsUIVersion");
         private readonly string WinUI2VersionString = ResourceService.GetLocalized("Dialog/WinUI2Version");
         private readonly string WinUI3VersionString = ResourceService.GetLocalized("Dialog/WinUI3Version");
-        private bool isInitialized;
         private readonly string fileVersionProperty = "System.FileVersion";
 
         private bool _isLoadCompleted = false;
@@ -67,148 +66,132 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
-            if (!isInitialized)
+            List<ContentLinkInfo> dependencyInformationList = await Task.Run(async () =>
             {
-                isInitialized = true;
+                List<ContentLinkInfo> dependencyInformationList = [];
+                IReadOnlyList<Package> dependencyPackageList = Package.Current.Dependencies;
 
-                List<ContentLinkInfo> dependencyInformationList = await Task.Run(async () =>
+                // Windows 应用 SDK 版本信息
+                dependencyInformationList.Add(new ContentLinkInfo()
                 {
-                    List<ContentLinkInfo> dependencyInformationList = [];
-                    IReadOnlyList<Package> dependencyPackageList = Package.Current.Dependencies;
-
-                    // Windows 应用 SDK 版本信息
-                    dependencyInformationList.Add(new ContentLinkInfo()
-                    {
-                        DisplayText = WindowsAppSDKVersionString,
-                        SecondaryText = RuntimeInfo.AsString
-                    });
-
-                    foreach (Package dependencyPackage in dependencyPackageList)
-                    {
-                        if (dependencyPackage.DisplayName.Contains("WindowsAppRuntime"))
-                        {
-                            // WinUI 3 版本信息
-                            try
-                            {
-                                StorageFile winUI3File = await StorageFile.GetFileFromPathAsync(Path.Combine(dependencyPackage.InstalledLocation.Path, "Microsoft.UI.Xaml.dll"));
-                                IDictionary<string, object> winUI3FileProperties = await winUI3File.Properties.RetrievePropertiesAsync(PropertyNamesList);
-                                dependencyInformationList.Add(new ContentLinkInfo()
-                                {
-                                    DisplayText = WinUI3VersionString,
-                                    SecondaryText = Convert.ToString((winUI3FileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()))
-                                });
-                            }
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(OnLoaded), 1, e);
-                                dependencyInformationList.Add(new ContentLinkInfo()
-                                {
-                                    DisplayText = WinUI3VersionString,
-                                    SecondaryText = Convert.ToString(new Version())
-                                });
-                            }
-                            break;
-                        }
-                    }
-
-                    foreach (Package dependencyPackage in dependencyPackageList)
-                    {
-                        if (dependencyPackage.DisplayName.Contains("Microsoft.UI.Xaml"))
-                        {
-                            // WinUI 2 版本信息
-                            try
-                            {
-                                StorageFile winUI2File = await StorageFile.GetFileFromPathAsync(Path.Combine(dependencyPackage.InstalledLocation.Path, "Microsoft.UI.Xaml.dll"));
-                                IDictionary<string, object> winUI2FileProperties = await winUI2File.Properties.RetrievePropertiesAsync(PropertyNamesList);
-                                dependencyInformationList.Add(new ContentLinkInfo()
-                                {
-                                    DisplayText = WinUI2VersionString,
-                                    SecondaryText = Convert.ToString((winUI2FileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()))
-                                });
-                            }
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(OnLoaded), 2, e);
-                                dependencyInformationList.Add(new ContentLinkInfo()
-                                {
-                                    DisplayText = WinUI2VersionString,
-                                    SecondaryText = Convert.ToString(new Version())
-                                });
-                            }
-                            break;
-                        }
-                    }
-
-                    // Windows UI 版本信息
-                    try
-                    {
-                        StorageFile windowsUIFile = await StorageFile.GetFileFromPathAsync(Path.Combine(InfoHelper.SystemDataPath.System, "Windows.UI.Xaml.dll"));
-                        IDictionary<string, object> windowsUIFileProperties = await windowsUIFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
-                        dependencyInformationList.Add(new ContentLinkInfo()
-                        {
-                            DisplayText = WindowsUIVersionString,
-                            SecondaryText = Convert.ToString((windowsUIFileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()))
-                        });
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(OnLoaded), 3, e);
-                        dependencyInformationList.Add(new ContentLinkInfo()
-                        {
-                            DisplayText = WindowsUIVersionString,
-                            SecondaryText = Convert.ToString(new Version())
-                        });
-                    }
-
-                    // WebView2 SDK 版本信息
-                    try
-                    {
-                        StorageFile webView2CoreFile = await StorageFile.GetFileFromPathAsync(Path.Combine(InfoHelper.AppInstalledLocation, "Microsoft.Web.WebView2.Core.dll"));
-                        IDictionary<string, object> webView2CoreFileProperties = await webView2CoreFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
-                        dependencyInformationList.Add(new ContentLinkInfo()
-                        {
-                            DisplayText = WebView2SDKVersionString,
-                            SecondaryText = Convert.ToString((webView2CoreFileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()))
-                        });
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(OnLoaded), 4, e);
-                        dependencyInformationList.Add(new ContentLinkInfo()
-                        {
-                            DisplayText = WebView2SDKVersionString,
-                            SecondaryText = Convert.ToString(new Version())
-                        });
-                    }
-
-                    // .NET 版本信息
-                    dependencyInformationList.Add(new ContentLinkInfo()
-                    {
-                        DisplayText = DoNetVersionString,
-                        SecondaryText = Convert.ToString(Environment.Version)
-                    });
-
-                    return dependencyInformationList;
+                    DisplayText = WindowsAppSDKVersionString,
+                    SecondaryText = RuntimeInfo.AsString
                 });
 
-                foreach (ContentLinkInfo dependencyInformation in dependencyInformationList)
+                foreach (Package dependencyPackage in dependencyPackageList)
                 {
-                    AppInformationCollection.Add(dependencyInformation);
+                    if (dependencyPackage.DisplayName.Contains("WindowsAppRuntime"))
+                    {
+                        // WinUI 3 版本信息
+                        try
+                        {
+                            StorageFile winUI3File = await StorageFile.GetFileFromPathAsync(Path.Combine(dependencyPackage.InstalledLocation.Path, "Microsoft.UI.Xaml.dll"));
+                            IDictionary<string, object> winUI3FileProperties = await winUI3File.Properties.RetrievePropertiesAsync(PropertyNamesList);
+                            dependencyInformationList.Add(new ContentLinkInfo()
+                            {
+                                DisplayText = WinUI3VersionString,
+                                SecondaryText = Convert.ToString((winUI3FileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()))
+                            });
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(OnLoaded), 1, e);
+                            dependencyInformationList.Add(new ContentLinkInfo()
+                            {
+                                DisplayText = WinUI3VersionString,
+                                SecondaryText = Convert.ToString(new Version())
+                            });
+                        }
+                        break;
+                    }
                 }
 
-                IsLoadCompleted = true;
-            }
-        }
+                foreach (Package dependencyPackage in dependencyPackageList)
+                {
+                    if (dependencyPackage.DisplayName.Contains("Microsoft.UI.Xaml"))
+                    {
+                        // WinUI 2 版本信息
+                        try
+                        {
+                            StorageFile winUI2File = await StorageFile.GetFileFromPathAsync(Path.Combine(dependencyPackage.InstalledLocation.Path, "Microsoft.UI.Xaml.dll"));
+                            IDictionary<string, object> winUI2FileProperties = await winUI2File.Properties.RetrievePropertiesAsync(PropertyNamesList);
+                            dependencyInformationList.Add(new ContentLinkInfo()
+                            {
+                                DisplayText = WinUI2VersionString,
+                                SecondaryText = Convert.ToString((winUI2FileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()))
+                            });
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(OnLoaded), 2, e);
+                            dependencyInformationList.Add(new ContentLinkInfo()
+                            {
+                                DisplayText = WinUI2VersionString,
+                                SecondaryText = Convert.ToString(new Version())
+                            });
+                        }
+                        break;
+                    }
+                }
 
-        /// <summary>
-        /// 加载完成前禁用关闭对话框
-        /// </summary>
-        private void OnClosing(ContentDialog sender, ContentDialogClosingEventArgs args)
-        {
-            if (!IsLoadCompleted)
+                // Windows UI 版本信息
+                try
+                {
+                    StorageFile windowsUIFile = await StorageFile.GetFileFromPathAsync(Path.Combine(InfoHelper.SystemDataPath.System, "Windows.UI.Xaml.dll"));
+                    IDictionary<string, object> windowsUIFileProperties = await windowsUIFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
+                    dependencyInformationList.Add(new ContentLinkInfo()
+                    {
+                        DisplayText = WindowsUIVersionString,
+                        SecondaryText = Convert.ToString((windowsUIFileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()))
+                    });
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(OnLoaded), 3, e);
+                    dependencyInformationList.Add(new ContentLinkInfo()
+                    {
+                        DisplayText = WindowsUIVersionString,
+                        SecondaryText = Convert.ToString(new Version())
+                    });
+                }
+
+                // WebView2 SDK 版本信息
+                try
+                {
+                    StorageFile webView2CoreFile = await StorageFile.GetFileFromPathAsync(Path.Combine(InfoHelper.AppInstalledLocation, "Microsoft.Web.WebView2.Core.dll"));
+                    IDictionary<string, object> webView2CoreFileProperties = await webView2CoreFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
+                    dependencyInformationList.Add(new ContentLinkInfo()
+                    {
+                        DisplayText = WebView2SDKVersionString,
+                        SecondaryText = Convert.ToString((webView2CoreFileProperties[fileVersionProperty] is string fileVersionString ? new Version(fileVersionString) : new Version()))
+                    });
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(OnLoaded), 4, e);
+                    dependencyInformationList.Add(new ContentLinkInfo()
+                    {
+                        DisplayText = WebView2SDKVersionString,
+                        SecondaryText = Convert.ToString(new Version())
+                    });
+                }
+
+                // .NET 版本信息
+                dependencyInformationList.Add(new ContentLinkInfo()
+                {
+                    DisplayText = DoNetVersionString,
+                    SecondaryText = Convert.ToString(Environment.Version)
+                });
+
+                return dependencyInformationList;
+            });
+
+            foreach (ContentLinkInfo dependencyInformation in dependencyInformationList)
             {
-                args.Cancel = true;
+                AppInformationCollection.Add(dependencyInformation);
             }
+
+            IsLoadCompleted = true;
         }
 
         /// <summary>
@@ -216,19 +199,34 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async void OnCopyAppInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            args.Cancel = true;
-            List<string> appInformationCopyStringList = [];
+            bool copyResult = false;
+            ContentDialogButtonClickDeferral contentDialogButtonClickDeferral = args.GetDeferral();
 
-            await Task.Run(() =>
+            try
             {
-                foreach (ContentLinkInfo appInformationItem in AppInformationCollection)
+                List<string> appInformationCopyStringList = await Task.Run(() =>
                 {
-                    appInformationCopyStringList.Add(appInformationItem.DisplayText + appInformationItem.SecondaryText);
-                }
-            });
+                    List<string> appInformationCopyStringList = [];
 
-            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, appInformationCopyStringList));
-            sender.Hide();
+                    foreach (ContentLinkInfo appInformationItem in AppInformationCollection)
+                    {
+                        appInformationCopyStringList.Add(appInformationItem.DisplayText + appInformationItem.SecondaryText);
+                    }
+
+                    return appInformationCopyStringList;
+                });
+
+                copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, appInformationCopyStringList));
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(OnCopyAppInformationClicked), 1, e);
+            }
+            finally
+            {
+                contentDialogButtonClickDeferral.Complete();
+            }
+
             await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
         }
     }
