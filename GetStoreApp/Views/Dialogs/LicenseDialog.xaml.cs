@@ -10,7 +10,7 @@ namespace GetStoreApp.Views.Dialogs
     /// </summary>
     public sealed partial class LicenseDialog : ContentDialog, INotifyPropertyChanged
     {
-        private string _licenseText;
+        private string _licenseText = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, CryptographicBuffer.CreateFromByteArray(ResourceService.GetEmbeddedData("Files/Assets/Embed/LICENSE")));
 
         public string LicenseText
         {
@@ -31,7 +31,6 @@ namespace GetStoreApp.Views.Dialogs
         public LicenseDialog()
         {
             InitializeComponent();
-            LicenseText = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, CryptographicBuffer.CreateFromByteArray(ResourceService.GetEmbeddedData("Files/Assets/Embed/LICENSE")));
         }
     }
 }
