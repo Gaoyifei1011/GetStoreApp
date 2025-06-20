@@ -217,7 +217,7 @@ namespace GetStoreApp.Views.Dialogs
                             }
                         }
 
-                        double usedPercentage = totalSpace.Equals(0) ? 0 : (totalSpace - availableSpace) / totalSpace * 100;
+                        double usedPercentage = totalSpace is 0 ? 0 : (totalSpace - availableSpace) / totalSpace * 100;
                         string availableSpaceString = VolumeSizeHelper.ConvertVolumeSizeToString(availableSpace);
                         string totalSpaceString = VolumeSizeHelper.ConvertVolumeSizeToString(totalSpace);
 
