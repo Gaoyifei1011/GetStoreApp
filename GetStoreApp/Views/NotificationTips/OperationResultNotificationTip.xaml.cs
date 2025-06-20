@@ -117,6 +117,19 @@ namespace GetStoreApp.Views.NotificationTips
                     OperationContent = ResourceService.GetLocalized("NotificationTip/NotNewestVersion");
                 }
             }
+            else if (operationKind is OperationKind.Desktop)
+            {
+                if (operationResult)
+                {
+                    IsSuccessOperation = true;
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/DesktopShortcutSuccessfully");
+                }
+                else
+                {
+                    IsSuccessOperation = false;
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/DesktopShortcutFailed");
+                }
+            }
             else if (operationKind is OperationKind.DownloadCreate)
             {
                 if (operationResult)
@@ -143,32 +156,6 @@ namespace GetStoreApp.Views.NotificationTips
                     OperationContent = ResourceService.GetLocalized("NotificationTip/LogCleanFailed");
                 }
             }
-            else if (operationKind is OperationKind.TerminateProcess)
-            {
-                if (operationResult)
-                {
-                    IsSuccessOperation = true;
-                    OperationContent = ResourceService.GetLocalized("NotificationTip/TerminateSuccess");
-                }
-                else
-                {
-                    IsSuccessOperation = false;
-                    OperationContent = ResourceService.GetLocalized("NotificationTip/TerminateFailed");
-                }
-            }
-            else if (operationKind is OperationKind.Desktop)
-            {
-                if (operationResult)
-                {
-                    IsSuccessOperation = true;
-                    OperationContent = ResourceService.GetLocalized("NotificationTip/DesktopShortcutSuccessfully");
-                }
-                else
-                {
-                    IsSuccessOperation = false;
-                    OperationContent = ResourceService.GetLocalized("NotificationTip/DesktopShortcutFailed");
-                }
-            }
             else if (operationKind is OperationKind.StartScreen)
             {
                 if (operationResult)
@@ -193,6 +180,19 @@ namespace GetStoreApp.Views.NotificationTips
                 {
                     IsSuccessOperation = false;
                     OperationContent = ResourceService.GetLocalized("NotificationTip/TaskbarFailed");
+                }
+            }
+            else if (operationKind is OperationKind.TerminateProcess)
+            {
+                if (operationResult)
+                {
+                    IsSuccessOperation = true;
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/TerminateSuccess");
+                }
+                else
+                {
+                    IsSuccessOperation = false;
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/TerminateFailed");
                 }
             }
         }
