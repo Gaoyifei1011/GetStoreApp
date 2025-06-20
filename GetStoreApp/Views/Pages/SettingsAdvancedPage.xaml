@@ -360,7 +360,11 @@
                 IsExpanded="True">
 
                 <Expander.Header>
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <Grid
+                        Height="60"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center">
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -374,7 +378,6 @@
 
                         <StackPanel
                             Grid.Column="1"
-                            Margin="0,10"
                             VerticalAlignment="Center"
                             Orientation="Vertical">
 

@@ -185,7 +185,11 @@
                         IsExpanded="False">
 
                         <Expander.Header>
-                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                            <Grid
+                                Height="60"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center">
+
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
@@ -201,7 +205,7 @@
 
                                 <StackPanel
                                     Grid.Column="1"
-                                    Margin="0,5,10,5"
+                                    Margin="0,0,10,0"
                                     VerticalAlignment="Center"
                                     Orientation="Vertical">
 
