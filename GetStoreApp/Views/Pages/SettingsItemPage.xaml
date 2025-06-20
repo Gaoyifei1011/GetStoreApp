@@ -183,7 +183,7 @@
             </Button>
         </Grid>
 
-        <MenuFlyoutSeparator Grid.Row="1" Margin="32,0,34,3" />
+        <MenuFlyoutSeparator Grid.Row="1" Margin="34,0,35,3" />
 
         <!--  设置项内容  -->
         <Frame
