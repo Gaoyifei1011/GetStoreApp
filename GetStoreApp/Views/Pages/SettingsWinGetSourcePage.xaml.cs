@@ -4,8 +4,8 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
-using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Dialogs;
+using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
@@ -150,7 +150,7 @@ namespace GetStoreApp.Views.Pages
             }
             else
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.NotElevated));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.NotElevated));
             }
         }
 
@@ -200,7 +200,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, true, WinGetDataSourceRemoveSuccessString));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, true, WinGetDataSourceRemoveSuccessString));
                             break;
                         }
                     case RemovePackageCatalogStatus.GroupPolicyError:
@@ -214,7 +214,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
                             break;
                         }
                     case RemovePackageCatalogStatus.CatalogError:
@@ -228,7 +228,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveCatalogErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveCatalogErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
                             break;
                         }
                     case RemovePackageCatalogStatus.InternalError:
@@ -242,7 +242,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveInternalErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveInternalErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
                             break;
                         }
                     case RemovePackageCatalogStatus.InvalidOptions:
@@ -256,7 +256,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveInvalidOptionsString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveInvalidOptionsString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
                             break;
                         }
                     case RemovePackageCatalogStatus.AccessDenied:
@@ -270,14 +270,14 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveAccessDeniedString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveAccessDeniedString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
                             break;
                         }
                 }
             }
             else
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.NotElevated));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.NotElevated));
             }
         }
 
@@ -327,7 +327,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, true, WinGetDataSourceRemoveSuccessString));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, true, WinGetDataSourceRemoveSuccessString));
                             break;
                         }
                     case RemovePackageCatalogStatus.GroupPolicyError:
@@ -341,7 +341,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
                             break;
                         }
                     case RemovePackageCatalogStatus.CatalogError:
@@ -355,7 +355,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
                             break;
                         }
                     case RemovePackageCatalogStatus.InternalError:
@@ -369,7 +369,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
                             break;
                         }
                     case RemovePackageCatalogStatus.InvalidOptions:
@@ -383,7 +383,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
                             break;
                         }
                     case RemovePackageCatalogStatus.AccessDenied:
@@ -397,14 +397,14 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString)));
                             break;
                         }
                 }
             }
             else
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.NotElevated));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.NotElevated));
             }
         }
 
@@ -431,7 +431,7 @@ namespace GetStoreApp.Views.Pages
             }
             else
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.NotElevated));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.NotElevated));
             }
         }
 

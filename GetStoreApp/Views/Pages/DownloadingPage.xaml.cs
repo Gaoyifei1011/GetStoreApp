@@ -3,8 +3,8 @@ using GetStoreApp.Models;
 using GetStoreApp.Services.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
-using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Dialogs;
+using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -285,7 +285,7 @@ namespace GetStoreApp.Views.Pages
             // 没有选中任何内容时显示空提示对话框
             if (selectedDownloadingList.Count is 0)
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.SelectEmpty));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                 return;
             }
 

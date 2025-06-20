@@ -3,7 +3,7 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
-using GetStoreApp.UI.TeachingTips;
+using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -133,7 +133,7 @@ namespace GetStoreApp.Views.Pages
                             catch (Exception e)
                             {
                                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsDownloadPage), nameof(OnDownloadChangeFolderClicked), 1, e);
-                                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.FolderPicker));
+                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.FolderPicker));
                             }
 
                             break;

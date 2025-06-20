@@ -5,8 +5,8 @@ using GetStoreApp.Models;
 using GetStoreApp.Services.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
-using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Dialogs;
+using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.ComTypes;
 using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
@@ -555,7 +555,7 @@ namespace GetStoreApp.Views.Windows
                     }
                     finally
                     {
-                        await ShowNotificationAsync(new OperationResultTip(OperationKind.StartScreen, isPinnedSuccessfully));
+                        await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.StartScreen, isPinnedSuccessfully));
                     }
                 }
             }
@@ -982,7 +982,7 @@ namespace GetStoreApp.Views.Windows
                 {
                     DispatcherQueue.TryEnqueue(async () =>
                     {
-                        await ShowNotificationAsync(new OperationResultTip(OperationKind.StartScreen, Convert.ToBoolean(dataList[0])));
+                        await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.StartScreen, Convert.ToBoolean(dataList[0])));
                     });
                 }
             }
@@ -993,7 +993,7 @@ namespace GetStoreApp.Views.Windows
                 {
                     DispatcherQueue.TryEnqueue(async () =>
                     {
-                        await ShowNotificationAsync(new OperationResultTip(OperationKind.Taskbar, Convert.ToBoolean(dataList[0])));
+                        await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, Convert.ToBoolean(dataList[0])));
                     });
                 }
             }

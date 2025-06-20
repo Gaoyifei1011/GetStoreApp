@@ -3,7 +3,6 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
-using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
@@ -675,7 +674,7 @@ namespace GetStoreApp.Views.Pages
                             catch (Exception e)
                             {
                                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetAppsVersionOptionsPage), nameof(OnChangePackageDownloadPathClicked), 1, e);
-                                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.FolderPicker));
+                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.FolderPicker));
                             }
 
                             break;
@@ -969,7 +968,7 @@ namespace GetStoreApp.Views.Pages
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetAppsVersionOptionsPage), nameof(OnChangePackageInstallPathClicked), 1, e);
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.FolderPicker));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.FolderPicker));
             }
         }
 

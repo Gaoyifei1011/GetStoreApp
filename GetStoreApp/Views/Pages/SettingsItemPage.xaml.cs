@@ -1,8 +1,8 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
-using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Dialogs;
+using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
@@ -208,7 +208,7 @@ namespace GetStoreApp.Views.Pages
                 }
             });
 
-            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.Desktop, isCreatedSuccessfully));
+            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Desktop, isCreatedSuccessfully));
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace GetStoreApp.Views.Pages
                 }
             });
 
-            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.StartScreen, isPinnedSuccessfully));
+            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.StartScreen, isPinnedSuccessfully));
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace GetStoreApp.Views.Pages
 
             if (pinnedRsult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available || pinnedRsult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.AvailableWithoutToken)
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.Taskbar, pinnedRsult.isPinnedSuccessfully));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedRsult.isPinnedSuccessfully));
             }
         }
 

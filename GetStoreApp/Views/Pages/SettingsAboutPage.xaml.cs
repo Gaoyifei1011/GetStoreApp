@@ -1,8 +1,8 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
-using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Dialogs;
+using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -230,7 +230,7 @@ namespace GetStoreApp.Views.Pages
                 IsChecking = false;
                 if (isNewest.HasValue)
                 {
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.CheckUpdate, isNewest.Value));
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, isNewest.Value));
                 }
             }
         }

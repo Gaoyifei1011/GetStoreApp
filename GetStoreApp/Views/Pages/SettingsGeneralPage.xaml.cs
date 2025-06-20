@@ -2,7 +2,7 @@
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
-using GetStoreApp.UI.TeachingTips;
+using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -229,7 +229,7 @@ namespace GetStoreApp.Views.Pages
                 }
 
                 LanguageService.SetLanguage(AppLanguage);
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.LanguageChange));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.LanguageChange));
             }
         }
 

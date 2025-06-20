@@ -2,8 +2,8 @@
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
-using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Dialogs;
+using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.Rstrtmgr;
@@ -257,7 +257,7 @@ namespace GetStoreApp.Views.Pages
         private async void OnClearClicked(object sender, RoutedEventArgs args)
         {
             bool result = await LogService.ClearLogAsync();
-            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.LogClean, result));
+            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.LogClean, result));
         }
 
         #endregion 第一部分：设置高级页面——挂载的事件

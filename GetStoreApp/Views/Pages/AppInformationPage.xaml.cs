@@ -3,7 +3,6 @@ using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
-using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
@@ -485,7 +484,7 @@ namespace GetStoreApp.Views.Pages
                 }
             });
 
-            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.Desktop, isPinnedSuccessfully));
+            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Desktop, isPinnedSuccessfully));
         }
 
         /// <summary>
@@ -511,7 +510,7 @@ namespace GetStoreApp.Views.Pages
                     }
                 });
 
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.StartScreen, isPinnedSuccessfully));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.StartScreen, isPinnedSuccessfully));
             }
         }
 

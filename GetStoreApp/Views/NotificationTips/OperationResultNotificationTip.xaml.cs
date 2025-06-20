@@ -3,12 +3,12 @@ using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
 
-namespace GetStoreApp.UI.TeachingTips
+namespace GetStoreApp.Views.NotificationTips
 {
     /// <summary>
     /// 操作完成后应用内通知
     /// </summary>
-    public sealed partial class OperationResultTip : TeachingTip, INotifyPropertyChanged
+    public sealed partial class OperationResultNotificationTip : TeachingTip, INotifyPropertyChanged
     {
         private bool _isSuccessOperation;
 
@@ -44,7 +44,7 @@ namespace GetStoreApp.UI.TeachingTips
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public OperationResultTip(OperationKind operationKind)
+        public OperationResultNotificationTip(OperationKind operationKind)
         {
             InitializeComponent();
 
@@ -100,7 +100,7 @@ namespace GetStoreApp.UI.TeachingTips
             }
         }
 
-        public OperationResultTip(OperationKind operationKind, bool operationResult)
+        public OperationResultNotificationTip(OperationKind operationKind, bool operationResult)
         {
             InitializeComponent();
 
@@ -197,7 +197,7 @@ namespace GetStoreApp.UI.TeachingTips
             }
         }
 
-        public OperationResultTip(OperationKind operationKind, bool isMultiSelected, int count)
+        public OperationResultNotificationTip(OperationKind operationKind, bool isMultiSelected, int count)
         {
             InitializeComponent();
 
@@ -216,7 +216,7 @@ namespace GetStoreApp.UI.TeachingTips
             }
         }
 
-        public OperationResultTip(OperationKind operationKind, bool operationResult, string reason)
+        public OperationResultNotificationTip(OperationKind operationKind, bool operationResult, string reason)
         {
             InitializeComponent();
 

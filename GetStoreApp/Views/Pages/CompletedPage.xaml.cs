@@ -4,8 +4,8 @@ using GetStoreApp.Models;
 using GetStoreApp.Services.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
-using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Dialogs;
+using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI;
@@ -163,7 +163,7 @@ namespace GetStoreApp.Views.Pages
             {
                 if (completed.IsInstalling)
                 {
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.InstallingNotify));
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.InstallingNotify));
                 }
                 else
                 {
@@ -184,7 +184,7 @@ namespace GetStoreApp.Views.Pages
             {
                 if (completed.IsInstalling)
                 {
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.InstallingNotify));
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.InstallingNotify));
                 }
                 else
                 {
@@ -220,7 +220,7 @@ namespace GetStoreApp.Views.Pages
             }
             else
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.FileLost));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.FileLost));
             }
         }
 
@@ -384,7 +384,7 @@ namespace GetStoreApp.Views.Pages
             }
             else
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.FileLost));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.FileLost));
             }
         }
 
@@ -447,14 +447,14 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.ShareFailed, false, 1));
+                        await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.ShareFailed, false, 1));
                         LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShareFileExecuteRequested), 1, e);
                     }
                 }
             }
             else
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.FileLost));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.FileLost));
             }
         }
 
@@ -538,14 +538,14 @@ namespace GetStoreApp.Views.Pages
             // 没有选中任何内容时显示空提示对话框
             if (selectedCompletedDataList.Count is 0)
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.SelectEmpty));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                 return;
             }
 
             // 当前任务正在安装时，不进行其他任何操作
             if (selectedCompletedDataList.Exists(item => item.IsInstalling))
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.InstallingNotify));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.InstallingNotify));
                 return;
             }
 
@@ -592,14 +592,14 @@ namespace GetStoreApp.Views.Pages
             // 没有选中任何内容时显示空提示对话框
             if (selectedCompletedDataList.Count is 0)
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.SelectEmpty));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                 return;
             }
 
             // 当前任务正在安装时，不进行其他任何操作
             if (selectedCompletedDataList.Exists(item => item.IsInstalling))
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.SelectEmpty));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                 return;
             }
 
@@ -659,7 +659,7 @@ namespace GetStoreApp.Views.Pages
             // 没有选中任何内容时显示空提示对话框
             if (selectedCompletedDataList.Count is 0)
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.SelectEmpty));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                 return;
             }
             else
@@ -692,7 +692,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.ShareFailed, true, selectedCompletedDataList.Count));
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.ShareFailed, true, selectedCompletedDataList.Count));
                     LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShareSelectedFileClicked), 2, e);
                 }
             }

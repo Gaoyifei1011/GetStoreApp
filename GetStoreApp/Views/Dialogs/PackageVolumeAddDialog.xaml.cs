@@ -2,8 +2,7 @@
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
-using GetStoreApp.UI.TeachingTips;
-using GetStoreApp.Views.Pages;
+using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -224,12 +223,12 @@ namespace GetStoreApp.Views.Dialogs
                 catch (Exception e)
                 {
                     LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeAddDialog), nameof(OnSelectFolderClicked), 1, e);
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.FolderPicker));
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.FolderPicker));
                 }
             }
             else
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.SelectPackageVolumeEmpty));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectPackageVolumeEmpty));
             }
         }
 
@@ -353,7 +352,7 @@ namespace GetStoreApp.Views.Dialogs
                     // 显示选择的文件夹为空的通知
                     DispatcherQueue.TryEnqueue(async () =>
                     {
-                        await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.SelectFolderEmpty));
+                        await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectFolderEmpty));
                     });
                     PackageVolumeResultKind = PackageVolumeResultKind.Successfully;
                     IsAddingPackageVolume = false;

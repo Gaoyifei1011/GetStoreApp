@@ -6,7 +6,6 @@ using GetStoreApp.Services.Download;
 using GetStoreApp.Services.History;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
-using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
@@ -507,7 +506,7 @@ namespace GetStoreApp.Views.Pages
                 });
 
                 // 显示下载任务创建成功消息
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
             }
         }
 
@@ -754,7 +753,7 @@ namespace GetStoreApp.Views.Pages
             // 内容为空时显示空提示对话框
             if (selectedQueryLinksList.Count is 0)
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.SelectEmpty));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                 return;
             }
             else
@@ -811,7 +810,7 @@ namespace GetStoreApp.Views.Pages
             // 内容为空时显示空提示对话框
             if (selectedQueryLinksList.Count is 0)
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.SelectEmpty));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                 return;
             }
             else
@@ -868,7 +867,7 @@ namespace GetStoreApp.Views.Pages
             // 内容为空时显示空提示对话框
             if (selectedQueryLinksList.Count is 0)
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.SelectEmpty));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                 return;
             }
             else
@@ -955,7 +954,7 @@ namespace GetStoreApp.Views.Pages
                 });
 
                 // 显示下载任务创建成功消息
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
                 IsSelectMode = false;
                 queryLinksLock.Enter();
 
