@@ -52,6 +52,10 @@ namespace GetStoreApp.Services.Root
 
                     httpRequestSession.AddLoggingChannel(httpRequestChannel);
                     httpRequestFields.AddString("LogLevel", Convert.ToString(logLevel));
+                    httpRequestFields.AddString("NameSpace", nameSpaceName);
+                    httpRequestFields.AddString("Class", className);
+                    httpRequestFields.AddString("Method", methodName);
+                    httpRequestFields.AddString("Index", Convert.ToString(index));
 
                     foreach (KeyValuePair<string, string> loggingInformationItem in loggingInformationDict)
                     {
@@ -102,6 +106,10 @@ namespace GetStoreApp.Services.Root
 
                     exceptionSession.AddLoggingChannel(exceptionChannel);
                     exceptionFields.AddString("LogLevel", Convert.ToString(logLevel));
+                    exceptionFields.AddString("NameSpace", nameSpaceName);
+                    exceptionFields.AddString("Class", className);
+                    exceptionFields.AddString("Method", methodName);
+                    exceptionFields.AddString("Index", Convert.ToString(index));
                     exceptionFields.AddString("HelpLink", string.IsNullOrEmpty(exception.HelpLink) ? unknown : exception.HelpLink.Replace('\r', ' ').Replace('\n', ' '));
                     exceptionFields.AddString("Message", string.IsNullOrEmpty(exception.Message) ? unknown : exception.Message.Replace('\r', ' ').Replace('\n', ' '));
                     exceptionFields.AddString("HResult", "0x" + Convert.ToString(exception.HResult, 16).ToUpper());
@@ -110,7 +118,7 @@ namespace GetStoreApp.Services.Root
 
                     string logFileName = string.Format("Logs-{0}-{1}-{2}-{3:D2}-{4}.etl", nameSpaceName, className, methodName, index, DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss.fff"));
                     exceptionChannel.LogEvent(logFileName, exceptionFields, logLevel, exceptionOptions);
-                    await exceptionSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(httpRequestFolderPath), logFileName);
+                    await exceptionSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), logFileName);
                     exceptionSession.Dispose();
                 }
                 catch (Exception e)
