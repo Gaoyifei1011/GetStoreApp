@@ -110,14 +110,14 @@ namespace GetStoreApp.Services.Download
         {
             try
             {
-                JsonObject versionObject = new()
+                JsonObject jsonObject = new()
                 {
                     ["jsonrpc"] = JsonValue.CreateStringValue("2.0"),
                     ["id"] = JsonValue.CreateStringValue(string.Empty),
                     ["method"] = JsonValue.CreateStringValue("aria2.getVersion")
                 };
 
-                string versionString = versionObject.Stringify();
+                string versionString = jsonObject.Stringify();
                 byte[] contentBytes = Encoding.UTF8.GetBytes(versionString);
                 HttpStringContent httpStringContent = new(versionString);
                 httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);

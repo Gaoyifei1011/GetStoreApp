@@ -384,20 +384,27 @@ namespace GetStoreApp.Services.Download
                 DownloadSchedulerSemaphoreSlim = null;
 
                 // 注销下载服务
-                if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
+                try
                 {
-                    DeliveryOptimizationService.TerminateDownload();
-                    DeliveryOptimizationService.DownloadProgress -= OnDownloadProgress;
+                    if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
+                    {
+                        DeliveryOptimizationService.TerminateDownload();
+                        DeliveryOptimizationService.DownloadProgress -= OnDownloadProgress;
+                    }
+                    else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
+                    {
+                        BitsService.TerminateDownload();
+                        BitsService.DownloadProgress -= OnDownloadProgress;
+                    }
+                    else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
+                    {
+                        Aria2Service.Release();
+                        Aria2Service.DownloadProgress -= OnDownloadProgress;
+                    }
                 }
-                else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
+                catch (Exception e)
                 {
-                    BitsService.TerminateDownload();
-                    BitsService.DownloadProgress -= OnDownloadProgress;
-                }
-                else if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
-                {
-                    Aria2Service.Release();
-                    Aria2Service.DownloadProgress -= OnDownloadProgress;
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadSchedulerService), nameof(CloseDownloadScheduler), 1, e);
                 }
             }
         }
