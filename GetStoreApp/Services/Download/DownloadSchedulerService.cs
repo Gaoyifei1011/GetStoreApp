@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
+using Windows.Foundation.Diagnostics;
 
 namespace GetStoreApp.Services.Download
 {
