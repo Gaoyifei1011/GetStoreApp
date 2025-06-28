@@ -2,12 +2,8 @@ using GetStoreAppWebView.Helpers.Root;
 using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.Services.Settings;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Core;
-using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
@@ -33,22 +29,7 @@ namespace GetStoreAppWebView
 
             if (!RuntimeHelper.IsMSIX)
             {
-                PackageManager packageManager = new();
-                foreach (Package package in packageManager.FindPackagesForUser(string.Empty))
-                {
-                    if (package.Id.FullName.Contains("Gaoyifei1011.GetStoreApp"))
-                    {
-                        IReadOnlyList<AppListEntry> appListEntryList = package.GetAppListEntries();
-                        foreach (AppListEntry appListEntry in appListEntryList)
-                        {
-                            if (string.Equals(appListEntry.AppUserModelId, "Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp"))
-                            {
-                                appListEntry.LaunchAsync().GetResults();
-                                break;
-                            }
-                        }
-                    }
-                }
+                Launcher.LaunchUriAsync(new Uri("getstoreapp:")).Wait();
                 return;
             }
 

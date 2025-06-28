@@ -44,22 +44,7 @@ namespace GetStoreApp
 
             if (!RuntimeHelper.IsMSIX)
             {
-                PackageManager packageManager = new();
-                foreach (Package package in packageManager.FindPackagesForUser(string.Empty))
-                {
-                    if (package.Id.FullName.Contains("Gaoyifei1011.GetStoreApp"))
-                    {
-                        IReadOnlyList<AppListEntry> appListEntryList = package.GetAppListEntries();
-                        foreach (AppListEntry appListEntry in appListEntryList)
-                        {
-                            if (string.Equals(appListEntry.AppUserModelId, "Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp"))
-                            {
-                                appListEntry.LaunchAsync().GetResults();
-                                break;
-                            }
-                        }
-                    }
-                }
+                Launcher.LaunchUriAsync(new Uri("getstoreapp:")).Wait();
                 return;
             }
 
