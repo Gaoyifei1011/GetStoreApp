@@ -131,9 +131,13 @@
                 Margin="35,0,0,0"
                 VerticalAlignment="Top">
 
-                <TitleBar.IconSource>
-                    <ImageIconSource ImageSource="ms-appx:///Assets/MainApp/Square44x44Logo.altform-unplated_targetsize-256.png" />
-                </TitleBar.IconSource>
+                <TitleBar.LeftHeader>
+                    <ImageIcon
+                        MaxWidth="16"
+                        MaxHeight="16"
+                        Margin="14,0,2,0"
+                        Source="ms-appx:///Assets/MainApp/Square44x44Logo.altform-unplated_targetsize-256.png" />
+                </TitleBar.LeftHeader>
             </TitleBar>
 
             <NavigationView
