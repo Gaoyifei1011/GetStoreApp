@@ -69,7 +69,7 @@ namespace GetStoreAppWebView
             Application.Start((param) =>
             {
                 SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread()));
-                _ = new App();
+                new App();
             });
         }
 

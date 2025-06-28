@@ -12,6 +12,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 
+// 抑制 CA1806 警告
+#pragma warning disable CA1806
+
 namespace GetStoreApp.Services.Download
 {
     /// <summary>
@@ -75,8 +78,8 @@ namespace GetStoreApp.Services.Download
                         doManager = (IDOManager)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.None);
                         doManager.CreateDownload(out IDODownload doDownload);
                         ComWrappers.TryGetComInstance(doDownload, out IntPtr doDownloadPointer);
-                        _ = Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new IntPtr(-1), 0, 3, IntPtr.Zero, 32);
-                        _ = Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new IntPtr(-1), 0, 3, IntPtr.Zero, 32);
+                        Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new IntPtr(-1), 0, 3, IntPtr.Zero, 32);
+                        Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new IntPtr(-1), 0, 3, IntPtr.Zero, 32);
 
                         // 添加下载信息
                         ComVariant displayNameVariant = ComVariant.Create(displayName);
