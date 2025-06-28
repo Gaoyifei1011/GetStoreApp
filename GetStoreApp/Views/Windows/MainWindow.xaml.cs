@@ -67,7 +67,6 @@ namespace GetStoreApp.Views.Windows
         private ContentIsland contentIsland;
         private readonly DisplayInformation displayInformation;
         private readonly IDisplayInformation2 displayInformation2;
-        private DesktopSiteBridge desktopSiteBridge;
         private InputKeyboardSource inputKeyboardSource;
 
         public new static MainWindow Current { get; private set; }
@@ -274,11 +273,6 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnAppWindowChanged(AppWindow sender, AppWindowChangedEventArgs args)
         {
-            if (desktopSiteBridge is not null && !desktopSiteBridge.IsClosed)
-            {
-                desktopSiteBridge.MoveAndResize(new RectInt32(0, 0, AppWindow.ClientSize.Width, AppWindow.ClientSize.Height));
-            }
-
             // 窗口位置发生变化
             if (args.DidPositionChange)
             {
@@ -571,8 +565,6 @@ namespace GetStoreApp.Views.Windows
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
             contentIsland = Content.XamlRoot.ContentIsland;
-            contentIsland.As<IContentIslandPartner>().Get_TEMP_DesktopSiteBridge(out IntPtr desktopSiteBridgePtr);
-            desktopSiteBridge = DesktopSiteBridge.FromAbi(desktopSiteBridgePtr);
             contentIsland.Environment.SettingChanged += OnSettingChanged;
             inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
             inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
