@@ -1,0 +1,17 @@
+﻿{
+  "AppManager": "应用管理",
+  "AppManagerDescription": "管理设备上的所有应用",
+  "AppUpdate": "应用更新",
+  "AppUpdateDescription": "检查并自动更新设备应用",
+  "Download": "下载管理",
+  "DownloadDescription": "管理下载队列中的应用",
+  "FunctionSummary": "功能概要",
+  "GetStoreApp": "获取商店应用",
+  "GetStoreAppDescription": "离线下载 Microsoft Store 商店应用",
+  "Store": "微软商店",
+  "StoreDescription": "搜索并下载微软商店应用",
+  "Web": "打开网页",
+  "WebDescription": "使用网页下载应用",
+  "WinGet": "WinGet 程序包",
+  "WinGetDescription": "管理 WinGet 应用程序包"
+}

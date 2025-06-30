@@ -1,0 +1,17 @@
+﻿{
+  "AppManager": "App Manager",
+  "AppManagerDescription": "Manage all apps on the device",
+  "AppUpdate": "App Update",
+  "AppUpdateDescription": "Check and automatically update device apps",
+  "Download": "Download Management",
+  "DownloadDescription": "Manage the apps in the download queue",
+  "FunctionSummary": "Function summary",
+  "GetStoreApp": "GetStoreApp",
+  "GetStoreAppDescription": "Download the Microsoft Store app offline",
+  "Store": "Microsoft Store",
+  "StoreDescription": "Search for and download Microsoft Store apps",
+  "Web": "Open Browser",
+  "WebDescription": "Download the app using the web page",
+  "WinGet": "WinGet Package",
+  "WinGetDescription": "Manage the WinGet app package"
+}

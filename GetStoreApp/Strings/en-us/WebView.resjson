@@ -1,8 +1,6 @@
 {
   "Back": "Back",
   "ClearWebCache": "Clean up the web cache",
-  "Download": "Download",
-  "DownloadWebView2Runtime": "Download and install WebView2 Runtime",
   "Forward": "Forward",
   "Loading": "(Loading)",
   "OpenCacheFolder": "Open the cache folder",

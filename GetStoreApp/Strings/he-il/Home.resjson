@@ -1,0 +1,17 @@
+﻿{
+  "AppManager": "ניהול יישומים",
+  "AppManagerDescription": "נהל את כל האפליקציות במכשיר שלך",
+  "AppUpdate": "עדכון יישומים",
+  "AppUpdateDescription": "בדיקה ועדכון אוטומטי של אפליקציות מכשיר",
+  "Download": "ניהול הורדות",
+  "DownloadDescription": "ניהול יישומים בתור ההורדות",
+  "FunctionSummary": "סיכום תכונות",
+  "GetStoreApp": "קבל יישום מהחנות",
+  "GetStoreAppDescription": "הורד את אפליקציית Microsoft Store במצב לא מקוון",
+  "Store": "חנות Microsoft",
+  "StoreDescription": "חיפוש והורדה של אפליקציית Microsoft Store",
+  "Web": "פתח דף אינטרנט",
+  "WebDescription": "השתמש באינטרנט כדי להוריד את האפליקציה",
+  "WinGet": "חבילת WinGet",
+  "WinGetDescription": "ניהול חבילות אפליקציות WinGet"
+}

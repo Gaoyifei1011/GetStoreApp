@@ -1,8 +1,6 @@
 {
   "Back": "חזור",
   "ClearWebCache": "נקה מטמון אינטרנט",
-  "Download": "הורד",
-  "DownloadWebView2Runtime": "הורד והתקן את WebView2 Runtime",
   "Forward": "המשך",
   "Loading": "(טוען)",
   "OpenCacheFolder": "פתח תיקיית מטמון",
