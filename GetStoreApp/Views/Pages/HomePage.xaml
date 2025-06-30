@@ -54,7 +54,7 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom">
 
-                        <Image Source="ms-appx:///Assets/Header.png" Stretch="UniformToFill" />
+                        <Image Source="ms-appx:///Assets/Cover.png" Stretch="UniformToFill" />
                     </Viewbox>
 
                     <StackPanel
