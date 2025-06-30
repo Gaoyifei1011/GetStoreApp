@@ -238,17 +238,37 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开微软商店并更新微软商店应用
         /// </summary>
-        private async void OnOpenStoreClicked(object sender, RoutedEventArgs args)
+        private void OnOpenStoreClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("ms-windows-store://downloadsandupdates"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("ms-windows-store://downloadsandupdates"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>
         /// 设置当前系统的预览体验计划
         /// </summary>
-        private async void OnInsiderProgramClicked(object sender, RoutedEventArgs args)
+        private void OnInsiderProgramClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("ms-settings:windowsinsider"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("ms-settings:windowsinsider"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>

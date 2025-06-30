@@ -85,9 +85,19 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 查看更新日志
         /// </summary>
-        private async void OnShowReleaseNotesClicked(object sender, RoutedEventArgs args)
+        private void OnShowReleaseNotesClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>
