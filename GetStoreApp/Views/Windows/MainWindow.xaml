@@ -155,11 +155,51 @@
                 SelectionChanged="{x:Bind OnSelectionChanged}">
 
                 <NavigationView.MenuItems>
+                    <NavigationViewItem Tag="Home">
+
+                        <NavigationViewItem.Content>
+                            <TextBlock
+                                x:Name="WindowHomeText"
+                                Tag="Home"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Home')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap" />
+                        </NavigationViewItem.Content>
+
+                        <NavigationViewItem.Icon>
+                            <ImageIcon Source="ms-appx:///Assets/Icon/Control/Home.png" />
+                        </NavigationViewItem.Icon>
+
+                        <NavigationViewItem.ContextFlyout>
+                            <MenuFlyout Placement="Bottom">
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnPinToStartScreenClicked}"
+                                    Tag="{x:Bind WindowHomeText}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToStartScreen')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE8FC;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </NavigationViewItem.ContextFlyout>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Window/Store')}"
+                                Visibility="{x:Bind WindowHomeText.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </NavigationViewItem>
+
+                    <NavigationViewItemSeparator Margin="0,0,5,0" />
+
                     <NavigationViewItem Tag="Store">
 
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowStoreText"
+                                Tag="Store"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Store')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
@@ -173,7 +213,7 @@
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
-                                    Tag="Store"
+                                    Tag="{x:Bind WindowStoreText}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToStartScreen')}">
 
                                     <MenuFlyoutItem.Icon>
@@ -196,6 +236,7 @@
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowAppUpdateText"
+                                Tag="AppUpdate"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/AppUpdate')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
@@ -209,7 +250,7 @@
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
-                                    Tag="AppUpdate"
+                                    Tag="{x:Bind WindowAppUpdateText}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToStartScreen')}">
 
                                     <MenuFlyoutItem.Icon>
@@ -234,6 +275,7 @@
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowWinGetText"
+                                Tag="WinGet"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/WinGet')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
@@ -247,7 +289,7 @@
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
-                                    Tag="WinGet"
+                                    Tag="{x:Bind WindowWinGetText}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToStartScreen')}">
 
                                     <MenuFlyoutItem.Icon>
@@ -270,6 +312,7 @@
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowAppManagerText"
+                                Tag="AppManager"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/AppManager')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
@@ -283,7 +326,7 @@
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
-                                    Tag="AppManager"
+                                    Tag="{x:Bind WindowAppManagerText}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToStartScreen')}">
 
                                     <MenuFlyoutItem.Icon>
@@ -308,6 +351,7 @@
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowDownloadText"
+                                Tag="Download"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Download')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
@@ -321,7 +365,7 @@
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
-                                    Tag="Download"
+                                    Tag="{x:Bind WindowDownloadText}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToStartScreen')}">
 
                                     <MenuFlyoutItem.Icon>
@@ -344,6 +388,7 @@
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowWebText"
+                                Tag="Web"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Web')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
@@ -357,7 +402,7 @@
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
-                                    Tag="Web"
+                                    Tag="{x:Bind WindowWebText}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToStartScreen')}">
 
                                     <MenuFlyoutItem.Icon>

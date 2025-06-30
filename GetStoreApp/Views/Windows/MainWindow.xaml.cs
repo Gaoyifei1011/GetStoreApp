@@ -167,8 +167,9 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        private List<KeyValuePair<string, Type>> PageList { get; } =
+        public List<KeyValuePair<string, Type>> PageList { get; } =
         [
+            KeyValuePair.Create("Home",typeof(HomePage)),
             KeyValuePair.Create("Store",typeof(StorePage)),
             KeyValuePair.Create("AppUpdate", typeof(AppUpdatePage)),
             KeyValuePair.Create("WinGet", typeof(WinGetPage)),
@@ -497,20 +498,9 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private async void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is string tag)
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is TextBlock textBlock)
             {
-                string displayName = string.Empty;
-
-                switch (tag)
-                {
-                    case "Store": displayName = WindowStoreText.Text; break;
-                    case "AppUpdate": displayName = WindowAppUpdateText.Text; break;
-                    case "WinGet": displayName = WindowWinGetText.Text; break;
-                    case "AppManager": displayName = WindowAppManagerText.Text; break;
-                    case "Download": displayName = WindowDownloadText.Text; break;
-                    case "Web": displayName = WindowWebText.Text; break;
-                    case "Settings": displayName = WindowSettingsText.Text; break;
-                }
+                string displayName = textBlock.Text;
 
                 if (RuntimeHelper.IsElevated)
                 {
@@ -518,7 +508,7 @@ namespace GetStoreApp.Views.Windows
                     {
                         {"Type", nameof(SecondaryTile) },
                         { "DisplayName", displayName },
-                        { "Tag", tag },
+                        { "Tag", Convert.ToString(textBlock.Tag) },
                     });
                 }
                 else
@@ -527,16 +517,16 @@ namespace GetStoreApp.Views.Windows
 
                     try
                     {
-                        SecondaryTile secondaryTile = new("GetStoreApp" + tag)
+                        SecondaryTile secondaryTile = new("GetStoreApp" + Convert.ToString(textBlock.Tag))
                         {
                             DisplayName = displayName,
-                            Arguments = "SecondaryTile " + tag
+                            Arguments = "SecondaryTile " + Convert.ToString(textBlock.Tag)
                         };
 
                         secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
-                        secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                        secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                        secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                        secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", Convert.ToString(textBlock.Tag)));
+                        secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", Convert.ToString(textBlock.Tag)));
+                        secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", Convert.ToString(textBlock.Tag)));
 
                         secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
 
@@ -616,7 +606,7 @@ namespace GetStoreApp.Views.Windows
                 // 正常启动或重新启动重定向获得的内容
                 if (dataContentList.Count is 1 || dataContentList.Count is 2)
                 {
-                    NavigateTo(typeof(StorePage));
+                    NavigateTo(typeof(HomePage));
 
                     // 正常启动或重新启动
                     if (dataContentList[0] is "Launch" || dataContentList[0] is "Restart")
@@ -632,6 +622,7 @@ namespace GetStoreApp.Views.Windows
                     // 跳转列表或辅助磁贴启动重定向获得的内容
                     else if (dataContentList[0] is "JumpList" || dataContentList[0] is "SecondaryTile")
                     {
+                        NavigateTo(typeof(HomePage));
                         if (dataContentList[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
                         {
                             NavigateTo(typeof(StorePage));
@@ -657,6 +648,7 @@ namespace GetStoreApp.Views.Windows
                 // 带有命令参数启动重定向获得的内容
                 else if (dataContentList.Count is 4 && dataContentList[0] is "Console")
                 {
+                    NavigateTo(typeof(HomePage));
                     if (Equals(GetCurrentPageType(), typeof(StorePage)))
                     {
                         (GetFrameContent() as StorePage).InitializeQueryLinksContent(dataContentList[1..4]);
@@ -670,7 +662,7 @@ namespace GetStoreApp.Views.Windows
             // 从通知协议启动重定向获得的内容
             else if (dataKind is StorageDataKind.Protocol)
             {
-                NavigateTo(typeof(StorePage));
+                NavigateTo(typeof(HomePage));
 
                 // 正常启动重定向获得的内容
                 if (dataContentList.Count is 1 || dataContentList.Count is 2)
@@ -699,6 +691,8 @@ namespace GetStoreApp.Views.Windows
             // 从共享目标启动重定向获得的内容
             else if (dataKind is StorageDataKind.ShareTarget)
             {
+                NavigateTo(typeof(HomePage));
+
                 if (dataContentList.Count is 3)
                 {
                     if (Equals(GetCurrentPageType(), typeof(StorePage)))
@@ -716,11 +710,13 @@ namespace GetStoreApp.Views.Windows
             // 从 Toast 通知启动重定向获得的内容
             else if (dataKind is StorageDataKind.ToastNotification)
             {
+                NavigateTo(typeof(HomePage));
+
                 if (dataContentList.Count is 1 && dataContentList[0] is "OpenApp")
                 {
-                    if (GetCurrentPageType() != typeof(StorePage))
+                    if (GetCurrentPageType() != typeof(HomePage))
                     {
-                        NavigateTo(typeof(StorePage));
+                        NavigateTo(typeof(HomePage));
                     }
                 }
                 else if (dataContentList.Count is 1 && dataContentList[0] is "ViewDownloadPage")
@@ -763,7 +759,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 在当前导航控件所选项更改时发生
         /// </summary>
-        private async void OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private void OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (args.SelectedItemContainer is NavigationViewItemBase navigationViewItem && navigationViewItem.Tag is string tag)
             {
@@ -773,7 +769,18 @@ namespace GetStoreApp.Views.Windows
                 {
                     if (PageList[PageList.FindIndex(item => string.Equals(item.Key, tag))].Key is "Web")
                     {
-                        await Launcher.LaunchUriAsync(new Uri("getstoreappwebbrowser:"));
+                        Task.Run(async () =>
+                        {
+                            try
+                            {
+                                await Launcher.LaunchUriAsync(new Uri("getstoreappwebbrowser:"));
+                            }
+                            catch (Exception e)
+                            {
+                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                            }
+                        });
+
                         sender.SelectedItem = SelectedItem;
                     }
                     else
@@ -849,7 +856,11 @@ namespace GetStoreApp.Views.Windows
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            if (dataList[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
+                            if (dataList[1] is "Home" && GetCurrentPageType() != typeof(HomePage))
+                            {
+                                NavigateTo(typeof(HomePage));
+                            }
+                            else if (dataList[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
                             {
                                 NavigateTo(typeof(StorePage));
                             }
