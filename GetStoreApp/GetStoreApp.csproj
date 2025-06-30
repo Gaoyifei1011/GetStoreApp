@@ -66,9 +66,11 @@
     <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="SourceItemGroup" />
 
     <Content Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" ExcludeFromSingleFile="true" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Header.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\AppManager.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\AppUpdate.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\Download.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Icon\Control\Home.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\Settings.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\Store.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\Web.png" CopyToOutputDirectory="Always" />
@@ -196,6 +198,7 @@
     <None Remove="Strings\he-il\Dialog.resjson" />
     <None Remove="Strings\he-il\Download.resjson" />
     <None Remove="Strings\he-il\Downloading.resjson" />
+    <None Remove="Strings\he-il\Home.resjson" />
     <None Remove="Strings\he-il\Installer.resjson" />
     <None Remove="Strings\he-il\NotificationTip.resjson" />
     <None Remove="Strings\he-il\Pinner.resjson" />
@@ -232,6 +235,7 @@
     <None Remove="Strings\en-us\Dialog.resjson" />
     <None Remove="Strings\en-us\Download.resjson" />
     <None Remove="Strings\en-us\Downloading.resjson" />
+    <None Remove="Strings\en-us\Home.resjson" />
     <None Remove="Strings\en-us\Installer.resjson" />
     <None Remove="Strings\en-us\NotificationTip.resjson" />
     <None Remove="Strings\en-us\Pinner.resjson" />
@@ -268,6 +272,7 @@
     <None Remove="Strings\zh-hans\Dialog.resjson" />
     <None Remove="Strings\zh-hans\Download.resjson" />
     <None Remove="Strings\zh-hans\Downloading.resjson" />
+    <None Remove="Strings\zh-hans\Home.resjson" />
     <None Remove="Strings\zh-hans\Installer.resjson" />
     <None Remove="Strings\zh-hans\NotificationTip.resjson" />
     <None Remove="Strings\zh-hans\Pinner.resjson" />
@@ -318,6 +323,7 @@
     <None Remove="Views\Pages\CompletedPage.xaml" />
     <None Remove="Views\Pages\DownloadingPage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
+    <None Remove="Views\Pages\HomePage.xaml" />
     <None Remove="Views\Pages\QueryLinksPage.xaml" />
     <None Remove="Views\Pages\SearchStorePage.xaml" />
     <None Remove="Views\Pages\SettingsAboutPage.xaml" />
@@ -370,6 +376,7 @@
     <Page Update="Views\Pages\CompletedPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\DownloadingPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\DownloadPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\HomePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\QueryLinksPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SearchStorePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsAboutPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -402,6 +409,7 @@
     <PRIResource Include="Strings\he-il\Dialog.resjson" />
     <PRIResource Include="Strings\he-il\Download.resjson" />
     <PRIResource Include="Strings\he-il\Downloading.resjson" />
+    <PRIResource Include="Strings\he-il\Home.resjson" />
     <PRIResource Include="Strings\he-il\Installer.resjson" />
     <PRIResource Include="Strings\he-il\NotificationTip.resjson" />
     <PRIResource Include="Strings\he-il\Pinner.resjson" />
@@ -438,6 +446,7 @@
     <PRIResource Include="Strings\en-us\Dialog.resjson" />
     <PRIResource Include="Strings\en-us\Download.resjson" />
     <PRIResource Include="Strings\en-us\Downloading.resjson" />
+    <PRIResource Include="Strings\en-us\Home.resjson" />
     <PRIResource Include="Strings\en-us\Installer.resjson" />
     <PRIResource Include="Strings\en-us\NotificationTip.resjson" />
     <PRIResource Include="Strings\en-us\Pinner.resjson" />
@@ -474,6 +483,7 @@
     <PRIResource Include="Strings\zh-hans\Dialog.resjson" />
     <PRIResource Include="Strings\zh-hans\Download.resjson" />
     <PRIResource Include="Strings\zh-hans\Downloading.resjson" />
+    <PRIResource Include="Strings\zh-hans\Home.resjson" />
     <PRIResource Include="Strings\zh-hans\Installer.resjson" />
     <PRIResource Include="Strings\zh-hans\NotificationTip.resjson" />
     <PRIResource Include="Strings\zh-hans\Pinner.resjson" />
@@ -512,12 +522,6 @@
   <Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Debug|true|true'">
     <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Publish" />
     <Copy SourceFiles="$(NativeOutputPath)$(AssemblyName).exe" DestinationFiles="$(ProjectDir)obj\$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\apphost.exe" />
-  </Target>
-  
-  <!-- 捆绑前对二进制文件进行后处理 -->
-  <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Release|true|true'">
-    <!-- 对生成的 GetStoreApp.exe 文件进行数字签名 -->  
-    <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(NativeOutputPath)$(AssemblyName).exe" />
   </Target>
 
   <!-- 将需要的文件嵌入到包资源索引文件（Pri）中 -->
