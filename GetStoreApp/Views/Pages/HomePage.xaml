@@ -1,0 +1,211 @@
+<Page
+    x:Class="GetStoreApp.Views.Pages.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:GetStoreApp.Models"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <LinearGradientBrush x:Key="BackgroundGradient" StartPoint="1,-0.4" EndPoint="1,1.3">
+                        <GradientStop Offset="0.2" Color="#15246A" />
+                        <GradientStop Offset="1.2" Color="#010516" />
+                    </LinearGradientBrush>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <LinearGradientBrush x:Key="BackgroundGradient" StartPoint="0.4,-0.2" EndPoint="0.9,1.3">
+                        <GradientStop Offset="0.2" Color="#59BCDC" />
+                        <GradientStop Offset="0.6" Color="#4155B1" />
+                        <GradientStop Offset="1.2" Color="#15246A" />
+                    </LinearGradientBrush>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <ScrollViewer
+        Margin="0,15,0,0"
+        HorizontalScrollBarVisibility="Disabled"
+        HorizontalScrollMode="Disabled"
+        VerticalScrollBarVisibility="Visible"
+        VerticalScrollMode="Enabled">
+
+        <StackPanel
+            Margin="30,0,0,0"
+            Padding="0,0,0,30"
+            CornerRadius="4,0,0,0"
+            Spacing="3">
+
+            <!--  主页面颜色背景  -->
+            <Grid BorderBrush="{ThemeResource NavigationViewContentGridBorderBrush}" CornerRadius="8,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid Height="360" Background="{ThemeResource BackgroundGradient}">
+                    <Viewbox
+                        Width="600"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom">
+
+                        <Image Source="ms-appx:///Assets/Header.png" Stretch="UniformToFill" />
+                    </Viewbox>
+
+                    <StackPanel
+                        Margin="40,0,0,20"
+                        VerticalAlignment="Center"
+                        Orientation="Vertical"
+                        Spacing="4">
+
+                        <TextBlock FontSize="36" FontWeight="SemiBold">
+                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Home/GetStoreApp')}" />
+                            <Run Text="" />
+                        </TextBlock>
+
+                        <Rectangle
+                            Width="80"
+                            Height="1"
+                            Margin="0,16,0,16"
+                            HorizontalAlignment="Left"
+                            Fill="{ThemeResource TextFillColorPrimaryBrush}" />
+
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Home/GetStoreAppDescription')}" />
+                    </StackPanel>
+                </Grid>
+
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="LayoutVisualStates">
+                        <VisualState x:Name="WideLayout">
+                            <VisualState.StateTriggers>
+                                <AdaptiveTrigger MinWindowWidth="1200" />
+                            </VisualState.StateTriggers>
+                        </VisualState>
+                        <VisualState x:Name="NarrowLayout">
+                            <VisualState.StateTriggers>
+                                <AdaptiveTrigger MinWindowWidth="0" />
+                            </VisualState.StateTriggers>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Grid>
+
+            <!--  选择栏  -->
+            <GridView
+                Margin="0,10,0,0"
+                IsItemClickEnabled="True"
+                IsSwipeEnabled="False"
+                ItemClick="{x:Bind OnItemClick}"
+                ItemsSource="{x:Bind HomeList}"
+                SelectionMode="None"
+                TabIndex="1">
+
+                <GridView.Header>
+                    <TextBlock
+                        Margin="0,0,0,16"
+                        FontSize="22"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Home/FunctionSummary')}" />
+                </GridView.Header>
+
+                <GridView.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
+                        <Setter Property="Margin" Value="0,0,12,12" />
+                    </Style>
+                </GridView.ItemContainerStyle>
+
+                <ItemsControl.ItemContainerTransitions>
+                    <TransitionCollection />
+                </ItemsControl.ItemContainerTransitions>
+
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="model:ControlItemModel">
+                        <Grid
+                            Width="300"
+                            Height="90"
+                            Padding="8"
+                            HorizontalAlignment="Stretch"
+                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1"
+                            CornerRadius="{StaticResource ControlCornerRadius}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid
+                                Grid.Column="0"
+                                Width="72"
+                                CornerRadius="{ThemeResource ControlCornerRadius}">
+                                <Image
+                                    Width="48"
+                                    VerticalAlignment="Center"
+                                    AutomationProperties.Name="{x:Bind Title}"
+                                    Source="{x:Bind ImagePath}"
+                                    Stretch="Uniform" />
+                            </Grid>
+
+                            <StackPanel
+                                Grid.Column="1"
+                                Margin="16,0,0,0"
+                                VerticalAlignment="Center"
+                                Orientation="Vertical"
+                                Spacing="2">
+
+                                <TextBlock
+                                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                                    Text="{x:Bind Title}"
+                                    TextLineBounds="TrimToCapHeight"
+                                    TextWrapping="NoWrap" />
+
+                                <TextBlock
+                                    x:Name="DescriptionText"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    RelativePanel.Below="titleText"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    Text="{x:Bind Description}"
+                                    TextTrimming="CharacterEllipsis">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Content="{x:Bind Description}"
+                                            Visibility="{Binding ElementName=DescriptionText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="LayoutVisualStates">
+                                    <VisualState x:Name="WideLayout">
+                                        <VisualState.StateTriggers>
+                                            <AdaptiveTrigger MinWindowWidth="641" />
+                                        </VisualState.StateTriggers>
+                                        <VisualState.Setters />
+                                    </VisualState>
+                                    <VisualState x:Name="NarrowLayout">
+                                        <VisualState.StateTriggers>
+                                            <AdaptiveTrigger MinWindowWidth="0" />
+                                        </VisualState.StateTriggers>
+                                        <VisualState.Setters>
+                                            <Setter Target="controlRoot.Width" Value="Auto" />
+                                            <Setter Target="controlRoot.Height" Value="120" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
