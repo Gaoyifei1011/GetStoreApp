@@ -108,14 +108,9 @@
 
                         <AppBarButton.Flyout>
                             <MenuFlyout Placement="Bottom">
-                                <MenuFlyoutSubItem
-                                    Height="32"
-                                    Padding="11,0"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortWay')}">
+                                <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortWay')}">
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnSortWayClicked}"
                                         GroupName="InstalledSortWayRadioGroup"
                                         IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
@@ -123,8 +118,6 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortIncrease')}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnSortWayClicked}"
                                         GroupName="InstalledSortWayRadioGroup"
                                         IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
@@ -132,14 +125,9 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortDecrease')}" />
                                 </MenuFlyoutSubItem>
 
-                                <MenuFlyoutSubItem
-                                    Height="32"
-                                    Padding="11,0"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortRule')}">
+                                <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortRule')}">
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnSortRuleClicked}"
                                         GroupName="InstalledSortRuleRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
@@ -147,8 +135,6 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortByDisplayName')}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnSortRuleClicked}"
                                         GroupName="InstalledSortRuleRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
@@ -514,8 +500,6 @@
                             <SplitButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <MenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Command="{StaticResource CopyUninstallTextCommand}"
                                         CommandParameter="{x:Bind AppID}"
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/CopyUninstallText')}">
@@ -526,8 +510,6 @@
                                     </MenuFlyoutItem>
 
                                     <MenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Command="{StaticResource UninstallWithCmdCommand}"
                                         CommandParameter="{x:Bind AppID}"
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/UninstallWithCmd')}">

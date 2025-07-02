@@ -97,8 +97,6 @@
                     <DropDownButton.Flyout>
                         <MenuFlyout Placement="Bottom">
                             <RadioMenuFlyoutItem
-                                Height="32"
-                                Padding="11,0"
                                 Click="{x:Bind OnThemeSelectClicked}"
                                 GroupName="ThemeRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(Theme.Key, ThemeList[0].Key), Mode=OneWay}"
@@ -106,8 +104,6 @@
                                 Text="{x:Bind ThemeList[0].Value}" />
 
                             <RadioMenuFlyoutItem
-                                Height="32"
-                                Padding="11,0"
                                 Click="{x:Bind OnThemeSelectClicked}"
                                 GroupName="ThemeRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(Theme.Key, ThemeList[1].Key), Mode=OneWay}"
@@ -115,8 +111,6 @@
                                 Text="{x:Bind ThemeList[1].Value}" />
 
                             <RadioMenuFlyoutItem
-                                Height="32"
-                                Padding="11,0"
                                 Click="{x:Bind OnThemeSelectClicked}"
                                 GroupName="ThemeRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(Theme.Key, ThemeList[2].Key), Mode=OneWay}"
@@ -195,8 +189,6 @@
                     <DropDownButton.Flyout>
                         <MenuFlyout Placement="Bottom">
                             <RadioMenuFlyoutItem
-                                Height="32"
-                                Padding="11,0"
                                 Click="{x:Bind OnBackdropSelectClicked}"
                                 GroupName="BackdropRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(Backdrop.Key, BackdropList[0].Key), Mode=OneWay}"
@@ -205,14 +197,10 @@
 
                             <MenuFlyoutSubItem
                                 x:Name="MicaFlyoutItem"
-                                Height="32"
-                                Padding="11,0"
                                 x:Load="{x:Bind systembackdrop:MicaController.IsSupported()}"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/Mica')}">
 
                                 <RadioMenuFlyoutItem
-                                    Height="32"
-                                    Padding="11,0"
                                     Click="{x:Bind OnBackdropSelectClicked}"
                                     GroupName="BackdropRadioGroup"
                                     IsChecked="{x:Bind x:String.Equals(Backdrop.Key, BackdropList[1].Key), Mode=OneWay}"
@@ -220,8 +208,6 @@
                                     Text="{x:Bind BackdropList[1].Value}" />
 
                                 <RadioMenuFlyoutItem
-                                    Height="32"
-                                    Padding="11,0"
                                     Click="{x:Bind OnBackdropSelectClicked}"
                                     GroupName="BackdropRadioGroup"
                                     IsChecked="{x:Bind x:String.Equals(Backdrop.Key, BackdropList[2].Key), Mode=OneWay}"
@@ -231,14 +217,10 @@
 
                             <MenuFlyoutSubItem
                                 x:Name="DesktopAcrylicFlyoutItem"
-                                Height="32"
-                                Padding="11,0"
                                 x:Load="{x:Bind systembackdrop:DesktopAcrylicController.IsSupported()}"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/DesktopAcrylic')}">
 
                                 <RadioMenuFlyoutItem
-                                    Height="32"
-                                    Padding="11,0"
                                     Click="{x:Bind OnBackdropSelectClicked}"
                                     GroupName="BackdropRadioGroup"
                                     IsChecked="{x:Bind x:String.Equals(Backdrop.Key, BackdropList[3].Key), Mode=OneWay}"
@@ -246,8 +228,6 @@
                                     Text="{x:Bind BackdropList[3].Value}" />
 
                                 <RadioMenuFlyoutItem
-                                    Height="32"
-                                    Padding="11,0"
                                     Click="{x:Bind OnBackdropSelectClicked}"
                                     GroupName="BackdropRadioGroup"
                                     IsChecked="{x:Bind x:String.Equals(Backdrop.Key, BackdropList[4].Key), Mode=OneWay}"
@@ -255,8 +235,6 @@
                                     Text="{x:Bind BackdropList[4].Value}" />
 
                                 <RadioMenuFlyoutItem
-                                    Height="32"
-                                    Padding="11,0"
                                     Click="{x:Bind OnBackdropSelectClicked}"
                                     GroupName="BackdropRadioGroup"
                                     IsChecked="{x:Bind x:String.Equals(Backdrop.Key, BackdropList[5].Key), Mode=OneWay}"
@@ -448,8 +426,6 @@
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="model:LanguageModel">
                                         <RadioMenuFlyoutItem
-                                            Height="32"
-                                            Padding="11,0"
                                             Command="{StaticResource LanguageCommand}"
                                             CommandParameter="{x:Bind}"
                                             GroupName="LanguageRadioGroup"

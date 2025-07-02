@@ -120,14 +120,9 @@
 
                         <AppBarButton.Flyout>
                             <MenuFlyout Placement="Bottom">
-                                <MenuFlyoutSubItem
-                                    Height="32"
-                                    Padding="11,0"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortWay')}">
+                                <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortWay')}">
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnSortWayClicked}"
                                         GroupName="SortWayRadioGroup"
                                         IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
@@ -135,8 +130,6 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortIncrease')}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnSortWayClicked}"
                                         GroupName="SortWayRadioGroup"
                                         IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
@@ -144,14 +137,9 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortDecrease')}" />
                                 </MenuFlyoutSubItem>
 
-                                <MenuFlyoutSubItem
-                                    Height="32"
-                                    Padding="11,0"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortRule')}">
+                                <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortRule')}">
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnSortRuleClicked}"
                                         GroupName="SortRuleRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
@@ -159,8 +147,6 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortByDisplayName')}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnSortRuleClicked}"
                                         GroupName="SortRuleRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
@@ -168,8 +154,6 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortByPublisher')}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnSortRuleClicked}"
                                         GroupName="SortRuleRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.InstallDate), Mode=OneWay}"
@@ -478,8 +462,6 @@
                                 <SplitButton.Flyout>
                                     <MenuFlyout Placement="Bottom">
                                         <MenuFlyoutItem
-                                            Height="32"
-                                            Padding="11,0"
                                             Command="{StaticResource OpenAppCommand}"
                                             CommandParameter="{x:Bind Package}"
                                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/OpenApp')}"
@@ -491,8 +473,6 @@
                                         </MenuFlyoutItem>
 
                                         <MenuFlyoutItem
-                                            Height="32"
-                                            Padding="11,0"
                                             Command="{StaticResource OpenStoreCommand}"
                                             CommandParameter="{x:Bind Package}"
                                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/OpenStore')}"
@@ -504,8 +484,6 @@
                                         </MenuFlyoutItem>
 
                                         <MenuFlyoutItem
-                                            Height="32"
-                                            Padding="11,0"
                                             Command="{StaticResource OpenManifestCommand}"
                                             CommandParameter="{x:Bind Package}"
                                             Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/OpenManifest')}">
@@ -515,25 +493,18 @@
                                             </MenuFlyoutItem.Icon>
                                         </MenuFlyoutItem>
 
-                                        <MenuFlyoutSubItem
-                                            Height="32"
-                                            Padding="11,0"
-                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/OpenFolder')}">
+                                        <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/OpenFolder')}">
 
                                             <MenuFlyoutSubItem.Icon>
                                                 <FontIcon Glyph="&#xE8B7;" />
                                             </MenuFlyoutSubItem.Icon>
 
                                             <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
                                                 Command="{StaticResource OpenInstalledFolderCommand}"
                                                 CommandParameter="{x:Bind Package}"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/OpenInstalledFolder')}" />
 
                                             <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
                                                 Command="{StaticResource OpenCacheFolderCommand}"
                                                 CommandParameter="{x:Bind Package}"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/OpenCacheFolder')}" />
@@ -542,8 +513,6 @@
                                         <MenuFlyoutSeparator />
 
                                         <MenuFlyoutItem
-                                            Height="32"
-                                            Padding="11,0"
                                             Command="{StaticResource MoveCommand}"
                                             CommandParameter="{x:Bind}"
                                             IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
@@ -556,8 +525,6 @@
                                         </MenuFlyoutItem>
 
                                         <MenuFlyoutItem
-                                            Height="32"
-                                            Padding="11,0"
                                             Command="{StaticResource RepairCommand}"
                                             CommandParameter="{x:Bind}"
                                             IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
@@ -569,8 +536,6 @@
                                         </MenuFlyoutItem>
 
                                         <MenuFlyoutItem
-                                            Height="32"
-                                            Padding="11,0"
                                             Command="{StaticResource ResetCommand}"
                                             CommandParameter="{x:Bind}"
                                             IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
@@ -582,8 +547,6 @@
                                         </MenuFlyoutItem>
 
                                         <MenuFlyoutItem
-                                            Height="32"
-                                            Padding="11,0"
                                             Command="{StaticResource UninstallCommand}"
                                             CommandParameter="{x:Bind}"
                                             IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"

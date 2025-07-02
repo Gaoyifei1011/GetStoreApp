@@ -177,8 +177,6 @@
                     <DropDownButton.Flyout>
                         <MenuFlyout Placement="Bottom">
                             <RadioMenuFlyoutItem
-                                Height="32"
-                                Padding="11,0"
                                 Click="{x:Bind OnWebKernelSelectClicked}"
                                 GroupName="WebKernelRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(WebKernel.Key, WebKernelList[0].Key), Mode=OneWay}"
@@ -186,8 +184,6 @@
                                 Text="{x:Bind WebKernelList[0].Value}" />
 
                             <RadioMenuFlyoutItem
-                                Height="32"
-                                Padding="11,0"
                                 Click="{x:Bind OnWebKernelSelectClicked}"
                                 GroupName="WebKernelRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(WebKernel.Key, WebKernelList[1].Key), Mode=OneWay}"

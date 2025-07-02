@@ -89,8 +89,6 @@
                     <DropDownButton.Flyout>
                         <MenuFlyout Placement="Bottom">
                             <RadioMenuFlyoutItem
-                                Height="32"
-                                Padding="11,0"
                                 Click="{x:Bind OnQueryLinksModeSelectClicked}"
                                 GroupName="QueryLinksModeRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(QueryLinksMode.Key, QueryLinksModeList[0].Key), Mode=OneWay}"
@@ -98,8 +96,6 @@
                                 Text="{x:Bind QueryLinksModeList[0].Value}" />
 
                             <RadioMenuFlyoutItem
-                                Height="32"
-                                Padding="11,0"
                                 Click="{x:Bind OnQueryLinksModeSelectClicked}"
                                 GroupName="QueryLinksModeRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(QueryLinksMode.Key, QueryLinksModeList[1].Key), Mode=OneWay}"
@@ -169,8 +165,6 @@
                     <DropDownButton.Flyout>
                         <MenuFlyout Placement="Bottom">
                             <RadioMenuFlyoutItem
-                                Height="32"
-                                Padding="11,0"
                                 Click="{x:Bind OnInstallModeSelectClicked}"
                                 GroupName="InstallModeModeRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(InstallMode.Key, InstallModeList[0].Key), Mode=OneWay}"
@@ -178,8 +172,6 @@
                                 Text="{x:Bind InstallModeList[0].Value}" />
 
                             <RadioMenuFlyoutItem
-                                Height="32"
-                                Padding="11,0"
                                 Click="{x:Bind OnInstallModeSelectClicked}"
                                 GroupName="InstallModeModeRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(InstallMode.Key, InstallModeList[1].Key), Mode=OneWay}"
@@ -492,8 +484,6 @@
                                             <ListView.ItemTemplate>
                                                 <DataTemplate x:DataType="model:StoreRegionModel">
                                                     <RadioMenuFlyoutItem
-                                                        Height="32"
-                                                        Padding="11,0"
                                                         Command="{StaticResource StoreRegionCommand}"
                                                         CommandParameter="{x:Bind}"
                                                         GroupName="StoreRegionRadioGroup"

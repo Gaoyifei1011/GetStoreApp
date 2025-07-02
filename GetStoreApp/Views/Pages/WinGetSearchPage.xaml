@@ -111,8 +111,6 @@
                         <AppBarButton.Flyout>
                             <MenuFlyout Placement="Bottom">
                                 <RadioMenuFlyoutItem
-                                    Height="32"
-                                    Padding="11,0"
                                     Click="{x:Bind OnSortWayClicked}"
                                     GroupName="SearchSortWayRadioGroup"
                                     IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
@@ -120,8 +118,6 @@
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/SortIncrease')}" />
 
                                 <RadioMenuFlyoutItem
-                                    Height="32"
-                                    Padding="11,0"
                                     Click="{x:Bind OnSortWayClicked}"
                                     GroupName="SearchSortWayRadioGroup"
                                     IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
@@ -139,14 +135,9 @@
 
                         <AppBarButton.Flyout>
                             <MenuFlyout Placement="Bottom">
-                                <MenuFlyoutSubItem
-                                    Height="32"
-                                    Padding="11,0"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/PackageMatchField')}">
+                                <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/PackageMatchField')}">
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageMatchFieldClicked}"
                                         GroupName="PackageMatchFieldRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(PackageMatchField, deployment:PackageMatchField.CatalogDefault), Mode=OneWay}"
@@ -154,8 +145,6 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/MatchFieldCatalogDefault')}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageMatchFieldClicked}"
                                         GroupName="PackageMatchFieldRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(PackageMatchField, deployment:PackageMatchField.Id), Mode=OneWay}"
@@ -163,8 +152,6 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/MatchFieldId')}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageMatchFieldClicked}"
                                         GroupName="PackageMatchFieldRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(PackageMatchField, deployment:PackageMatchField.Name), Mode=OneWay}"
@@ -172,8 +159,6 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/MatchFieldName')}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageMatchFieldClicked}"
                                         GroupName="PackageMatchFieldRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(PackageMatchField, deployment:PackageMatchField.Moniker), Mode=OneWay}"
@@ -181,8 +166,6 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/MatchFieldMoniker')}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageMatchFieldClicked}"
                                         GroupName="PackageMatchFieldRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(PackageMatchField, deployment:PackageMatchField.Command), Mode=OneWay}"
@@ -190,8 +173,6 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/MatchFieldCommand')}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageMatchFieldClicked}"
                                         GroupName="PackageMatchFieldRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(PackageMatchField, deployment:PackageMatchField.Tag), Mode=OneWay}"
@@ -199,8 +180,6 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/MatchFieldTag')}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageMatchFieldClicked}"
                                         GroupName="PackageMatchFieldRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(PackageMatchField, deployment:PackageMatchField.PackageFamilyName), Mode=OneWay}"
@@ -208,8 +187,6 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/MatchFieldPackageFamilyName')}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageMatchFieldClicked}"
                                         GroupName="PackageMatchFieldRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(PackageMatchField, deployment:PackageMatchField.ProductCode), Mode=OneWay}"
@@ -217,14 +194,9 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/MatchFieldProductCode')}" />
                                 </MenuFlyoutSubItem>
 
-                                <MenuFlyoutSubItem
-                                    Height="32"
-                                    Padding="11,0"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/PackageFieldMatchOption')}">
+                                <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/PackageFieldMatchOption')}">
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageFieldMatchOptionClicked}"
                                         GroupName="PackageFieldMatchOptionRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(PackageFieldMatchOption, deployment:PackageFieldMatchOption.EqualsCaseInsensitive), Mode=OneWay}"
@@ -232,8 +204,6 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/FieldMatchOptionEqualsCaseInsensitive')}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageFieldMatchOptionClicked}"
                                         GroupName="PackageFieldMatchOptionRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(PackageFieldMatchOption, deployment:PackageFieldMatchOption.StartsWithCaseInsensitive), Mode=OneWay}"
@@ -241,8 +211,6 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/FieldMatchOptionStartsWithCaseInsensitive')}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageFieldMatchOptionClicked}"
                                         GroupName="PackageFieldMatchOptionRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(PackageFieldMatchOption, deployment:PackageFieldMatchOption.ContainsCaseInsensitive), Mode=OneWay}"
@@ -446,8 +414,6 @@
                             <SplitButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <MenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Command="{StaticResource DownloadCommand}"
                                         CommandParameter="{x:Bind}"
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/Download')}">
@@ -458,8 +424,6 @@
                                     </MenuFlyoutItem>
 
                                     <MenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Command="{StaticResource RepairCommand}"
                                         CommandParameter="{x:Bind}"
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/Repair')}">
@@ -472,8 +436,6 @@
                                     <MenuFlyoutSeparator />
 
                                     <MenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Command="{StaticResource ViewVersionInfoCommand}"
                                         CommandParameter="{x:Bind}"
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/ViewVersionInfo')}">

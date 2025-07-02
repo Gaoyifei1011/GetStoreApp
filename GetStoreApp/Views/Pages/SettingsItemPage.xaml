@@ -144,8 +144,6 @@
                         <MenuFlyoutSeparator />
 
                         <MenuFlyoutItem
-                            Height="32"
-                            Padding="11,0"
                             Click="{x:Bind OnPinToDesktopClicked}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToDesktop')}"
                             ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToDesktopToolTip')}">
@@ -156,8 +154,6 @@
                         </MenuFlyoutItem>
 
                         <MenuFlyoutItem
-                            Height="32"
-                            Padding="11,0"
                             Click="{x:Bind OnPinToStartScreenClicked}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToStartScreen')}"
                             ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToStartScreenToolTip')}">
@@ -168,8 +164,6 @@
                         </MenuFlyoutItem>
 
                         <MenuFlyoutItem
-                            Height="32"
-                            Padding="11,0"
                             Click="{x:Bind OnPinToTaskbarClicked}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToTaskbar')}"
                             ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToTaskbarToolTip')}">

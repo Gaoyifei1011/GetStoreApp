@@ -90,14 +90,9 @@
 
                         <AppBarButton.Flyout>
                             <MenuFlyout Placement="Bottom">
-                                <MenuFlyoutSubItem
-                                    Height="32"
-                                    Padding="11,0"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortWay')}">
+                                <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortWay')}">
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnSortWayClicked}"
                                         GroupName="UpgradeSortWayRadioGroup"
                                         IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
@@ -105,8 +100,6 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortIncrease')}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnSortWayClicked}"
                                         GroupName="UpgradeSortWayRadioGroup"
                                         IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
@@ -114,14 +107,9 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortDecrease')}" />
                                 </MenuFlyoutSubItem>
 
-                                <MenuFlyoutSubItem
-                                    Height="32"
-                                    Padding="11,0"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortRule')}">
+                                <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortRule')}">
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnSortRuleClicked}"
                                         GroupName="UpgradeSortRuleRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
@@ -129,8 +117,6 @@
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortByDisplayName')}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnSortRuleClicked}"
                                         GroupName="UpgradeSortRuleRadioGroup"
                                         IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
@@ -388,8 +374,6 @@
                             <SplitButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <MenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Command="{StaticResource ViewVersionInfoCommand}"
                                         CommandParameter="{x:Bind}"
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/ViewVersionInfo')}">

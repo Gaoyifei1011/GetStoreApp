@@ -564,8 +564,6 @@
                                         <SplitButton.Flyout>
                                             <MenuFlyout Placement="Bottom">
                                                 <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
                                                     Command="{StaticResource PinToDesktopCommand}"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToDesktop')}"
                                                     ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToDesktopToolTip')}">
@@ -576,8 +574,6 @@
                                                 </MenuFlyoutItem>
 
                                                 <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
                                                     Command="{StaticResource PinToStartScreenCommand}"
                                                     CommandParameter="{x:Bind}"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToStartScreen')}"
@@ -589,8 +585,6 @@
                                                 </MenuFlyoutItem>
 
                                                 <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
                                                     Command="{StaticResource PinToTaskbarCommand}"
                                                     CommandParameter="{x:Bind}"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToTaskbar')}"
@@ -738,8 +732,6 @@
                                         <Button.Flyout>
                                             <MenuFlyout Placement="Bottom">
                                                 <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
                                                     Command="{StaticResource OpenStoreCommand}"
                                                     CommandParameter="{x:Bind Package}"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/OpenStore')}">
@@ -750,8 +742,6 @@
                                                 </MenuFlyoutItem>
 
                                                 <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
                                                     Command="{StaticResource OpenFolderCommand}"
                                                     CommandParameter="{x:Bind Package}"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/OpenFolder')}">

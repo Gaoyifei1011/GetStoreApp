@@ -263,8 +263,6 @@
                             <DropDownButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnCatalogTrustLevelClicked}"
                                         GroupName="CatalogTrustLevel"
                                         IsChecked="{x:Bind x:Object.Equals(SelectedCatalogTrustLevel.Key, CatalogTrustLevelList[0].Key), Mode=OneWay}"
@@ -272,8 +270,6 @@
                                         Text="{x:Bind CatalogTrustLevelList[0].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnCatalogTrustLevelClicked}"
                                         GroupName="CatalogTrustLevel"
                                         IsChecked="{x:Bind x:Object.Equals(SelectedCatalogTrustLevel.Key, CatalogTrustLevelList[1].Key), Mode=OneWay}"

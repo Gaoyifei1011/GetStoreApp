@@ -673,8 +673,6 @@
                                                 <SplitButton.Flyout>
                                                     <MenuFlyout Placement="Bottom">
                                                         <MenuFlyoutItem
-                                                            Height="32"
-                                                            Padding="11,0"
                                                             Command="{StaticResource RemoveDataSourceCommand}"
                                                             CommandParameter="{x:Bind}"
                                                             IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
@@ -686,8 +684,6 @@
                                                         </MenuFlyoutItem>
 
                                                         <MenuFlyoutItem
-                                                            Height="32"
-                                                            Padding="11,0"
                                                             Command="{StaticResource RemoveDataSourcePreserveDataCommand}"
                                                             CommandParameter="{x:Bind}"
                                                             IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"

@@ -166,8 +166,6 @@
                             <DropDownButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageArchitectureSelectClicked}"
                                         GroupName="PackageArchitectureRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageArchitecture.Key, PackageArchitectureList[0].Key), Mode=OneWay}"
@@ -175,8 +173,6 @@
                                         Text="{x:Bind PackageArchitectureList[0].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageArchitectureSelectClicked}"
                                         GroupName="PackageArchitectureRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageArchitecture.Key, PackageArchitectureList[1].Key), Mode=OneWay}"
@@ -184,8 +180,6 @@
                                         Text="{x:Bind PackageArchitectureList[1].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageArchitectureSelectClicked}"
                                         GroupName="PackageArchitectureRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageArchitecture.Key, PackageArchitectureList[2].Key), Mode=OneWay}"
@@ -193,8 +187,6 @@
                                         Text="{x:Bind PackageArchitectureList[2].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageArchitectureSelectClicked}"
                                         GroupName="PackageArchitectureRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageArchitecture.Key, PackageArchitectureList[3].Key), Mode=OneWay}"
@@ -236,8 +228,6 @@
                             <DropDownButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageInstallScopeSelectClicked}"
                                         GroupName="PackageInstallScopeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[0].Key), Mode=OneWay}"
@@ -245,8 +235,6 @@
                                         Text="{x:Bind PackageInstallScopeList[0].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageInstallScopeSelectClicked}"
                                         GroupName="PackageInstallScopeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[1].Key), Mode=OneWay}"
@@ -254,8 +242,6 @@
                                         Text="{x:Bind PackageInstallScopeList[1].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageInstallScopeSelectClicked}"
                                         GroupName="PackageInstallScopeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[2].Key), Mode=OneWay}"
@@ -325,8 +311,6 @@
                             <DropDownButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <MenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnChangePackageDownloadPathClicked}"
                                         Tag="AppCache"
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AppCacheFolder')}">
@@ -337,8 +321,6 @@
                                     </MenuFlyoutItem>
 
                                     <MenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnChangePackageDownloadPathClicked}"
                                         Tag="Download"
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/DownloadFolder')}">
@@ -349,8 +331,6 @@
                                     </MenuFlyoutItem>
 
                                     <MenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnChangePackageDownloadPathClicked}"
                                         Tag="Desktop"
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/DesktopFolder')}">
@@ -363,8 +343,6 @@
                                     <MenuFlyoutSeparator />
 
                                     <MenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnChangePackageDownloadPathClicked}"
                                         Tag="Custom"
                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/Custom')}" />
@@ -672,8 +650,6 @@
                             <DropDownButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageInstallScopeSelectClicked}"
                                         GroupName="PackageInstallScopeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[0].Key), Mode=OneWay}"
@@ -681,8 +657,6 @@
                                         Text="{x:Bind PackageInstallScopeList[0].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageInstallScopeSelectClicked}"
                                         GroupName="PackageInstallScopeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[1].Key), Mode=OneWay}"
@@ -690,8 +664,6 @@
                                         Text="{x:Bind PackageInstallScopeList[1].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageInstallScopeSelectClicked}"
                                         GroupName="PackageInstallScopeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[2].Key), Mode=OneWay}"
@@ -733,8 +705,6 @@
                             <DropDownButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageInstallModeSelectClicked}"
                                         GroupName="PackageInstallModeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageInstallMode.Key, PackageInstallModeList[0].Key), Mode=OneWay}"
@@ -742,8 +712,6 @@
                                         Text="{x:Bind PackageInstallModeList[0].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageInstallModeSelectClicked}"
                                         GroupName="PackageInstallModeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageInstallMode.Key, PackageInstallModeList[1].Key), Mode=OneWay}"
@@ -751,8 +719,6 @@
                                         Text="{x:Bind PackageInstallModeList[1].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageInstallModeSelectClicked}"
                                         GroupName="PackageInstallModeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageInstallMode.Key, PackageInstallModeList[2].Key), Mode=OneWay}"
@@ -1149,8 +1115,6 @@
                             <DropDownButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageRepairScopeSelectClicked}"
                                         GroupName="PackageRepairScopeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageRepairScope.Key, PackageRepairScopeList[0].Key), Mode=OneWay}"
@@ -1158,8 +1122,6 @@
                                         Text="{x:Bind PackageRepairScopeList[0].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageRepairScopeSelectClicked}"
                                         GroupName="PackageRepairScopeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageRepairScope.Key, PackageRepairScopeList[1].Key), Mode=OneWay}"
@@ -1167,8 +1129,6 @@
                                         Text="{x:Bind PackageRepairScopeList[1].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageRepairScopeSelectClicked}"
                                         GroupName="PackageRepairScopeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageRepairScope.Key, PackageRepairScopeList[2].Key), Mode=OneWay}"
@@ -1209,8 +1169,6 @@
                             <DropDownButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageRepairModeSelectClicked}"
                                         GroupName="PackageRepairModeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageRepairMode.Key, PackageRepairModeList[0].Key), Mode=OneWay}"
@@ -1218,8 +1176,6 @@
                                         Text="{x:Bind PackageRepairScopeList[0].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageRepairModeSelectClicked}"
                                         GroupName="PackageRepairModeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageRepairMode.Key, PackageRepairModeList[1].Key), Mode=OneWay}"
@@ -1227,8 +1183,6 @@
                                         Text="{x:Bind PackageRepairScopeList[1].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageRepairModeSelectClicked}"
                                         GroupName="PackageRepairModeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageRepairMode.Key, PackageRepairModeList[2].Key), Mode=OneWay}"
@@ -1538,8 +1492,6 @@
                             <DropDownButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageInstallScopeSelectClicked}"
                                         GroupName="PackageInstallScopeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[0].Key), Mode=OneWay}"
@@ -1547,8 +1499,6 @@
                                         Text="{x:Bind PackageInstallScopeList[0].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageInstallScopeSelectClicked}"
                                         GroupName="PackageInstallScopeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[1].Key), Mode=OneWay}"
@@ -1556,8 +1506,6 @@
                                         Text="{x:Bind PackageInstallScopeList[1].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageInstallScopeSelectClicked}"
                                         GroupName="PackageInstallScopeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[2].Key), Mode=OneWay}"
@@ -1599,8 +1547,6 @@
                             <DropDownButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageInstallModeSelectClicked}"
                                         GroupName="PackageInstallModeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageInstallMode.Key, PackageInstallModeList[0].Key), Mode=OneWay}"
@@ -1608,8 +1554,6 @@
                                         Text="{x:Bind PackageInstallModeList[0].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageInstallModeSelectClicked}"
                                         GroupName="PackageInstallModeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageInstallMode.Key, PackageInstallModeList[1].Key), Mode=OneWay}"
@@ -1617,8 +1561,6 @@
                                         Text="{x:Bind PackageInstallModeList[1].Value}" />
 
                                     <RadioMenuFlyoutItem
-                                        Height="32"
-                                        Padding="11,0"
                                         Click="{x:Bind OnPackageInstallModeSelectClicked}"
                                         GroupName="PackageInstallModeRadioGroup"
                                         IsChecked="{x:Bind x:String.Equals(PackageInstallMode.Key, PackageInstallModeList[2].Key), Mode=OneWay}"

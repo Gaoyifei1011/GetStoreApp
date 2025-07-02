@@ -819,33 +819,21 @@
 
                                                 <FlyoutBase.AttachedFlyout>
                                                     <MenuFlyout Placement="Bottom">
-                                                        <MenuFlyoutItem
-                                                            Height="32"
-                                                            Padding="11,0"
-                                                            Click="{x:Bind OnStartAppClicked}"
-                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/StartApp')}">
+                                                        <MenuFlyoutItem Click="{x:Bind OnStartAppClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/StartApp')}">
 
                                                             <MenuFlyoutItem.Icon>
                                                                 <FontIcon Glyph="&#xEB3B;" />
                                                             </MenuFlyoutItem.Icon>
                                                         </MenuFlyoutItem>
 
-                                                        <MenuFlyoutItem
-                                                            Height="32"
-                                                            Padding="11,0"
-                                                            Click="{x:Bind OnOpenAppInstalledFolderClicked}"
-                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenAppInstalledFolder')}">
+                                                        <MenuFlyoutItem Click="{x:Bind OnOpenAppInstalledFolderClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenAppInstalledFolder')}">
 
                                                             <MenuFlyoutItem.Icon>
                                                                 <FontIcon Glyph="&#xE8B7;" />
                                                             </MenuFlyoutItem.Icon>
                                                         </MenuFlyoutItem>
 
-                                                        <MenuFlyoutItem
-                                                            Height="32"
-                                                            Padding="11,0"
-                                                            Click="{x:Bind OnOpenAppCachedFolderClicked}"
-                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenAppCachedFolder')}">
+                                                        <MenuFlyoutItem Click="{x:Bind OnOpenAppCachedFolderClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenAppCachedFolder')}">
 
                                                             <MenuFlyoutItem.Icon>
                                                                 <FontIcon Glyph="&#xE8B7;" />

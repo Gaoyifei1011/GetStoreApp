@@ -132,15 +132,11 @@
                         <AppBarButton.Flyout>
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutItem
-                                    Height="32"
-                                    Padding="11,0"
                                     Click="{x:Bind OnDeleteSelectedClicked}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DeleteSelected')}"
                                     ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DeleteSelectedToolTip')}" />
 
                                 <MenuFlyoutItem
-                                    Height="32"
-                                    Padding="11,0"
                                     Click="{x:Bind OnDeleteSelectedWithFileClicked}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DeleteSelectedWithFile')}"
                                     ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DeleteSelectedWithFileToolTip')}" />
@@ -471,8 +467,6 @@
                                     <Button.Flyout>
                                         <MenuFlyout Placement="Bottom">
                                             <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
                                                 Command="{StaticResource DeleteCommand}"
                                                 CommandParameter="{x:Bind}"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/Delete')}"
@@ -484,8 +478,6 @@
                                             </MenuFlyoutItem>
 
                                             <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
                                                 Command="{StaticResource DeleteWithFileCommand}"
                                                 CommandParameter="{x:Bind}"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DeleteWithFile')}"
@@ -499,8 +491,6 @@
                                             <MenuFlyoutSeparator />
 
                                             <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
                                                 Command="{StaticResource ShareFileCommand}"
                                                 CommandParameter="{x:Bind}"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/ShareFile')}">
@@ -511,8 +501,6 @@
                                             </MenuFlyoutItem>
 
                                             <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
                                                 Command="{StaticResource FileInformationCommand}"
                                                 CommandParameter="{x:Bind}"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/FileInformation')}">
