@@ -4,6 +4,7 @@
     <AnalysisLevel>latest</AnalysisLevel>
     <AssemblyName>GetStoreAppShellExtension</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <CompileProcessorArchitecture>X64</CompileProcessorArchitecture>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
     <DefaultLanguage>en-US</DefaultLanguage>
     <Deterministic>true</Deterministic>
@@ -54,6 +55,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" GeneratePathProperty="true" />
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->
@@ -63,8 +65,8 @@
   </Target>
 
   <!-- 捆绑前对二进制文件进行后处理 -->
-  <Target Name="DigitialSignGeneratedFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Release|true|true'">
+  <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="'$(Configuration)|$(PublishAot)' == 'Release|true'">
     <!-- 对生成的 GetStoreAppShellExtension.dll 文件进行数字签名 -->
-    <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(NativeOutputPath)$(AssemblyName).dll" />
+    <Exec Command="$(PkgMicrosoft_Windows_SDK_BuildTools)\bin\10.0.26100.0\$(CompileProcessorArchitecture)\signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(NativeOutputPath)$(AssemblyName).dll" />
   </Target>
 </Project>

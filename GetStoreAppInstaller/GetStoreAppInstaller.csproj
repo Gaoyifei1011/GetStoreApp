@@ -4,6 +4,7 @@
     <AnalysisLevel>latest</AnalysisLevel>
     <AssemblyName>GetStoreAppInstaller</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <CompileProcessorArchitecture>X64</CompileProcessorArchitecture>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
     <DefaultLanguage>en-US</DefaultLanguage>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
@@ -72,7 +73,7 @@
     
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" GeneratePathProperty="true" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.7.20250528.2" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250606001" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="True" />
     
@@ -92,8 +93,8 @@
   </Target>
 
   <!-- 捆绑前对二进制文件进行后处理 -->
-  <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Release|true|true'">
+  <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="'$(Configuration)|$(PublishAot)' == 'Release|true'">
     <!-- 对生成的 GetStoreAppInstaller.exe 文件进行数字签名 -->
-    <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(NativeOutputPath)$(AssemblyName).exe" />
+    <Exec Command="$(PkgMicrosoft_Windows_SDK_BuildTools)\bin\10.0.26100.0\$(CompileProcessorArchitecture)\signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(NativeOutputPath)$(AssemblyName).exe" />
   </Target>
 </Project>
