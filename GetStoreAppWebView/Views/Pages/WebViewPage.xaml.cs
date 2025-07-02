@@ -150,7 +150,7 @@ namespace GetStoreAppWebView.Views.Pages
                 if (!Equals(_source, value))
                 {
                     _source = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDownloadClickEnabled)));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Source)));
                 }
             }
         }
