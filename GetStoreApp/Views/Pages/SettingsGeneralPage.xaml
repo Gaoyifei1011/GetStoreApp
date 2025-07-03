@@ -426,6 +426,8 @@
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="model:LanguageModel">
                                         <RadioMenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
                                             Command="{StaticResource LanguageCommand}"
                                             CommandParameter="{x:Bind}"
                                             GroupName="LanguageRadioGroup"
