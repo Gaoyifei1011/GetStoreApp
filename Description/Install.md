@@ -1,5 +1,5 @@
-### <p align="center">学习过程中参考或使用的代码</p>
-### <p align="center">Code referenced or used during the learning process</p>
+### <p align="center">安装步骤</p>
+### <p align="center">Install procedure</p>
 
 ------
 
