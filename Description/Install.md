@@ -1,5 +1,5 @@
 ### <p align="center">安装步骤</p>
-### <p align="center">Install procedure</p>
+### <p align="center">Installation procedure</p>
 
 ------
 
