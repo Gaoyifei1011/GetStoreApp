@@ -1,4 +1,4 @@
-using GetStoreApp.Models;
+ï»¿using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml.Controls;
@@ -8,13 +8,13 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.System;
 
-// ÒÖÖÆ IDE0060 ¾¯¸æ
+// æŠ‘åˆ¶ IDE0060 è­¦å‘Š
 #pragma warning disable IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
-    /// Ö÷Ò³Ãæ
+    /// ä¸»é¡µé¢
     /// </summary>
     public sealed partial class HomePage : Page
     {
@@ -69,10 +69,10 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        #region µÚÒ»²¿·Ö£ºÖ÷Ò³Ãæ¡ª¡ª¹ÒÔØµÄÊÂ¼ş
+        #region ç¬¬ä¸€éƒ¨åˆ†ï¼šä¸»é¡µé¢â€”â€”æŒ‚è½½çš„äº‹ä»¶
 
         /// <summary>
-        /// µã»÷ÌõÄ¿Ê±½øÈëÌõÄ¿¶ÔÓ¦µÄÒ³Ãæ
+        /// ç‚¹å‡»æ¡ç›®æ—¶è¿›å…¥æ¡ç›®å¯¹åº”çš„é¡µé¢
         /// </summary>
         private void OnItemClick(object sender, ItemClickEventArgs args)
         {
@@ -99,6 +99,6 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion µÚÒ»²¿·Ö£ºÖ÷Ò³Ãæ¡ª¡ª¹ÒÔØµÄÊÂ¼ş
+        #endregion ç¬¬ä¸€éƒ¨åˆ†ï¼šä¸»é¡µé¢â€”â€”æŒ‚è½½çš„äº‹ä»¶
     }
 }
