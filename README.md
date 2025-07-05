@@ -33,73 +33,89 @@
 
 ### 应用截图
 
+#### <p align="center">主页</p>
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/Home.png" />
+</div>
+
 #### <p align="center">微软商店</p>
 ##### <p align="center">查询链接</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/a67d7bfb-e887-41e7-accb-db2b5172c6ba" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/Querylinks.png" />
 </div>
 
 ##### <p align="center">搜索应用</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/3b8f5798-0c9d-4aca-811b-2713cc0b28e6" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/SearchStore.png" />
 </div>
 
 #### <p align="center">应用更新</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/545eafdc-863a-4e3e-b024-29f18f11f837" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/AppUpdate.png" />
 </div>
 
 #### <p align="center">WinGet 程序包管理</p>
 ##### <p align="center">查找应用</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/8a1c7426-62cc-4452-bc68-98ee6256c412" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/WinGetSearchApps.png" />
 </div>
 
 ##### <p align="center">已安装应用</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/add818fa-dc43-473e-b587-6b43fb28b64b" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/WinGetInstalledApps.png" />
 </div>
 
 ##### <p align="center">可更新应用</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/ce2cdb09-38ec-43f9-9aed-282f7d7732fe" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/WinGetUpgradeApps.png" />
 </div>
 
 #### <p align="center">应用管理</p>
 ##### <p align="center">应用列表</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/8a2b2385-bba8-4630-af15-c958828ca80b" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/AppList.png" />
 </div>
 
 ##### <p align="center">应用信息</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/9995cc95-a9cb-41c9-8dce-60dc1f7a2bde" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/AppInformation.png" />
 </div>
 
 #### <p align="center">下载管理</p>
 ##### <p align="center">正在下载</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/f15d506e-212d-4579-8ce3-b0d5867e9f20" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/Downloading.png" />
 </div>
 
 ##### <p align="center">已完成</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/d962186c-85ab-4489-a920-6a3d541fa862" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/Completed.png" />
 </div>
 
 #### <p align="center">网页接口</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/b59711aa-ab99-442b-adc8-189df7eb1d11" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/WebBrowser.png" />
 </div>
 
-#### <p align="center">应用说明</p>
+#### <p align="center">设置</p>
+##### <p align="center">应用包存储卷配置</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/07927be5-9bac-4509-ba22-bec8540e4969" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/PackageVolume.png" />
 </div>
 
-#### <p align="center">应用包解析器</p>
+##### <p align="center">WinGet 数据源配置</p>
 <div align="center">
-<img src="https://github.com/user-attachments/assets/0b64a2d6-da20-4d8f-b1eb-5a955a02845b" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/WinGetDataSource.png" />
+</div>
+
+#### <p align="center">关于</p>
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/About.png" />
+</div>
+
+#### <p align="center">应用安装程序</p>
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/AppInstaller.png" />
 </div>
 
 ------

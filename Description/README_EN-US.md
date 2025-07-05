@@ -25,73 +25,89 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 
 ### Screenshot of the app
 
+#### <p align="center">Home</p>
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/Home.png" />
+</div>
+
 #### <p align="center">Microsoft Store</p>
 ##### <p align="center">Query links</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/c8440900-bc9b-4b01-8ce1-9b0cb97aa51c" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/Querylinks.png" />
 </div>
 
-##### <p align="center">Search apps</p>
+##### <p align="center">Search store</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/7da559fd-61bc-4913-b34a-5537b18a3c59" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/SearchStore.png" />
 </div>
 
 #### <p align="center">App update</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/fbc9204e-63d6-4025-9fa0-4e973965a202" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/AppUpdate.png" />
 </div>
 
-#### <p align="center">WinGet Package</p>
+#### <p align="center">WinGet package management</p>
 ##### <p align="center">Search apps</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/bf52e643-dd79-4f11-a7aa-bdf41f3a15bf" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/WinGetSearchApps.png" />
 </div>
 
 ##### <p align="center">Installed apps</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/6e4d4151-ab22-4107-a4a0-e7b4357acc42" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/WinGetInstalledApps.png" />
 </div>
 
 ##### <p align="center">Upgradable apps</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/27fdb105-8e9a-4ed8-9fbd-cd7009b8c870" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/WinGetUpgradeApps.png" />
 </div>
 
-#### <p align="center">Package manager</p>
+#### <p align="center">App manager</p>
 ##### <p align="center">App list</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/b08ec757-6da6-4948-a6b6-f89f010655f3" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/AppList.png" />
 </div>
 
 ##### <p align="center">App information</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/98af21e1-bdda-4e62-89b2-4516b0c005a8" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/AppInformation.png" />
 </div>
 
 #### <p align="center">Download management</p>
 ##### <p align="center">Downloading</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/863c4c90-d4aa-4832-a23f-ba2725e4df99" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/Downloading.png" />
 </div>
 
 ##### <p align="center">Completed</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/8214b39e-ffa9-4874-84a1-68fbf29a3d4f" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/Completed.png" />
 </div>
 
-#### <p align="center">WebBrowser Interface</p>
+#### <p align="center">Web interface</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/ebc10af8-d03d-45f6-8d7a-f0211ae22c11" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/WebBrowser.png" />
 </div>
 
-#### <p align="center">App introduction</p>
+#### <p align="center">Settings</p>
+##### <p align="center">Package volume configuration</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/73f536d3-3f7d-455a-9ca0-b542bb5ab2ce" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/PackageVolume.png" />
 </div>
 
-#### <p align="center">应用包解析器</p>
+##### <p align="center">WinGet data source configuration</p>
 <div align="center">
-<img src="https://github.com/user-attachments/assets/9b4e37f9-07cb-4827-9aaf-24dad184cccd" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/WinGetDataSource.png" />
+</div>
+
+#### <p align="center">About</p>
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/About.png" />
+</div>
+
+#### <p align="center">App installer</p>
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/AppInstaller.png" />
 </div>
 
 ------
