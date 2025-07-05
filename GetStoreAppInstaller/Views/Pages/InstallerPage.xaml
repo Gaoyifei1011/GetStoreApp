@@ -150,6 +150,7 @@
             </controls:AnimatedIcon>
         </Button>
 
+        <!--  空应用包  -->
         <Grid
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
@@ -176,6 +177,7 @@
 
         <Grid Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsParseEmpty), Mode=OneWay}">
 
+            <!--  正在解析应用中  -->
             <Grid
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -218,6 +220,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
+                        <!--  应用图标  -->
                         <Grid
                             x:Name="PackageImage"
                             Grid.Column="0"
@@ -237,6 +240,7 @@
                                 Stretch="None" />
                         </Grid>
 
+                        <!--  应用信息  -->
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -248,8 +252,10 @@
                             <TextBlock
                                 x:Name="PackageNameText"
                                 Grid.Row="0"
+                                HorizontalAlignment="Left"
                                 FontSize="26"
                                 FontWeight="SemiBold"
+                                IsTextSelectionEnabled="True"
                                 Text="{x:Bind PackageName, Mode=OneWay}"
                                 TextTrimming="CharacterEllipsis">
 
@@ -264,6 +270,8 @@
                             <TextBlock
                                 x:Name="PublisherText"
                                 Grid.Row="1"
+                                HorizontalAlignment="Left"
+                                IsTextSelectionEnabled="True"
                                 TextTrimming="CharacterEllipsis">
                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Publisher')}" />
                                 <Run Text="{x:Bind PublisherDisplayName, Mode=OneWay}" />
@@ -281,6 +289,8 @@
                             <TextBlock
                                 x:Name="PackageVersionText"
                                 Grid.Row="2"
+                                HorizontalAlignment="Left"
+                                IsTextSelectionEnabled="True"
                                 TextTrimming="CharacterEllipsis">
                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageVersion')}" />
                                 <Run Text="{x:Bind system:Convert.ToString(Version), Mode=OneWay}" />
@@ -473,10 +483,6 @@
                                                         Width="450"
                                                         Height="200"
                                                         ItemsSource="{x:Bind InstallDependencyCollection}"
-                                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                                        ScrollViewer.HorizontalScrollMode="Disabled"
-                                                        ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                                        ScrollViewer.VerticalScrollMode="Enabled"
                                                         SelectionMode="None"
                                                         Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(InstallDependencyCollection.Count), Mode=OneWay}">
 
@@ -523,8 +529,10 @@
                                                                             Grid.Row="0"
                                                                             MinWidth="50"
                                                                             Margin="0,0,5,0"
+                                                                            HorizontalAlignment="Left"
                                                                             VerticalAlignment="Center"
                                                                             FontSize="14"
+                                                                            IsTextSelectionEnabled="True"
                                                                             Text="{x:Bind DependencyName}"
                                                                             TextAlignment="Left"
                                                                             TextTrimming="CharacterEllipsis">
@@ -542,8 +550,10 @@
                                                                             Grid.Row="1"
                                                                             MinWidth="50"
                                                                             Margin="0,0,5,0"
+                                                                            HorizontalAlignment="Left"
                                                                             VerticalAlignment="Center"
                                                                             FontSize="14"
+                                                                            IsTextSelectionEnabled="True"
                                                                             TextAlignment="Left"
                                                                             TextTrimming="CharacterEllipsis">
 
@@ -740,7 +750,11 @@
                                                     MinHeight="100"
                                                     Padding="16,8,16,8">
 
-                                                    <TextBlock Text="{x:Bind InstallFailedInformation, Mode=OneWay}" TextWrapping="Wrap" />
+                                                    <TextBlock
+                                                        HorizontalAlignment="Left"
+                                                        IsTextSelectionEnabled="True"
+                                                        Text="{x:Bind InstallFailedInformation, Mode=OneWay}"
+                                                        TextWrapping="Wrap" />
                                                 </Grid>
                                             </Grid>
                                         </Flyout>
@@ -881,13 +895,17 @@
                                                     Grid.Row="0"
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
+                                                    IsTextSelectionEnabled="True"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageDescription')}" />
 
                                                 <TextBlock
                                                     Grid.Row="0"
                                                     Grid.Column="2"
                                                     Margin="0,0,0,3"
+                                                    HorizontalAlignment="Left"
+                                                    IsTextSelectionEnabled="True"
                                                     Text="{x:Bind PackageDescription, Mode=OneWay}"
                                                     TextWrapping="Wrap" />
 
@@ -903,13 +921,17 @@
                                                     Grid.Row="1"
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
+                                                    IsTextSelectionEnabled="True"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageFamilyName')}" />
 
                                                 <TextBlock
                                                     Grid.Row="1"
                                                     Grid.Column="2"
                                                     Margin="0,0,0,3"
+                                                    HorizontalAlignment="Left"
+                                                    IsTextSelectionEnabled="True"
                                                     Text="{x:Bind PackageFamilyName, Mode=OneWay}"
                                                     TextWrapping="Wrap" />
 
@@ -925,13 +947,17 @@
                                                     Grid.Row="2"
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
+                                                    IsTextSelectionEnabled="True"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageFullName')}" />
 
                                                 <TextBlock
                                                     Grid.Row="2"
                                                     Grid.Column="2"
                                                     Margin="0,0,0,3"
+                                                    HorizontalAlignment="Left"
+                                                    IsTextSelectionEnabled="True"
                                                     Text="{x:Bind PackageFullName, Mode=OneWay}"
                                                     TextWrapping="Wrap" />
 
@@ -953,13 +979,17 @@
                                                     Grid.Row="4"
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
+                                                    IsTextSelectionEnabled="True"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/SupportedArchitecture')}" />
 
                                                 <TextBlock
                                                     Grid.Row="4"
                                                     Grid.Column="2"
                                                     Margin="0,0,0,3"
+                                                    HorizontalAlignment="Left"
+                                                    IsTextSelectionEnabled="True"
                                                     Text="{x:Bind SupportedArchitecture, Mode=OneWay}"
                                                     TextWrapping="Wrap" />
 
@@ -975,13 +1005,17 @@
                                                     Grid.Row="5"
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
+                                                    IsTextSelectionEnabled="True"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/IsFramework')}" />
 
                                                 <TextBlock
                                                     Grid.Row="5"
                                                     Grid.Column="2"
                                                     Margin="0,0,0,3"
+                                                    HorizontalAlignment="Left"
+                                                    IsTextSelectionEnabled="True"
                                                     Text="{x:Bind IsFramework, Mode=OneWay}"
                                                     TextWrapping="Wrap" />
 
@@ -997,13 +1031,17 @@
                                                     Grid.Row="6"
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
+                                                    IsTextSelectionEnabled="True"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppInstalledState')}" />
 
                                                 <TextBlock
                                                     Grid.Row="6"
                                                     Grid.Column="2"
                                                     Margin="0,0,0,3"
+                                                    HorizontalAlignment="Left"
+                                                    IsTextSelectionEnabled="True"
                                                     Text="{x:Bind AppInstalledState, Mode=OneWay}"
                                                     TextWrapping="Wrap" />
                                             </Grid>
@@ -1038,14 +1076,17 @@
                                                     Grid.Row="0"
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
+                                                    IsTextSelectionEnabled="True"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppInstallerSourceLink')}" />
 
                                                 <TextBlock
                                                     Grid.Row="0"
                                                     Grid.Column="2"
                                                     Margin="0,0,0,3"
-                                                    Text="{x:Bind PackageSourceLink, Mode=OneWay}"
+                                                    HorizontalAlignment="Left"
+                                                    Text="{x:Bind AppInstallerSourceLink, Mode=OneWay}"
                                                     Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsAppInstallerSourceLinkExisted), Mode=OneWay}" />
 
                                                 <TextBlock
@@ -1082,7 +1123,9 @@
                                                     Grid.Row="1"
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
+                                                    IsTextSelectionEnabled="True"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageSourceLink')}" />
 
                                                 <TextBlock
@@ -1126,13 +1169,17 @@
                                                     Grid.Row="2"
                                                     Grid.Column="1"
                                                     Margin="0,0,3,3"
+                                                    HorizontalAlignment="Left"
                                                     FontSize="14"
+                                                    IsTextSelectionEnabled="True"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageType')}" />
 
                                                 <TextBlock
                                                     Grid.Row="2"
                                                     Grid.Column="2"
                                                     Margin="0,0,0,3"
+                                                    HorizontalAlignment="Left"
+                                                    IsTextSelectionEnabled="True"
                                                     Text="{x:Bind PackageType, Mode=OneWay}"
                                                     TextWrapping="Wrap" />
                                             </Grid>
@@ -1207,13 +1254,17 @@
                                                 Grid.Row="0"
                                                 Grid.Column="1"
                                                 Margin="0,0,3,3"
+                                                HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/HoursBetweenUpdateChecks')}" />
 
                                             <TextBlock
                                                 Grid.Row="0"
                                                 Grid.Column="2"
                                                 Margin="0,0,0,3"
+                                                HorizontalAlignment="Left"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind HoursBetweenUpdateChecks, Mode=OneWay}"
                                                 TextWrapping="Wrap" />
 
@@ -1229,13 +1280,17 @@
                                                 Grid.Row="1"
                                                 Grid.Column="1"
                                                 Margin="0,0,3,3"
+                                                HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/UpdateBlocksActivation')}" />
 
                                             <TextBlock
                                                 Grid.Row="1"
                                                 Grid.Column="2"
                                                 Margin="0,0,0,3"
+                                                HorizontalAlignment="Left"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind UpdateBlocksActivation, Mode=OneWay}"
                                                 TextWrapping="Wrap" />
 
@@ -1251,13 +1306,17 @@
                                                 Grid.Row="2"
                                                 Grid.Column="1"
                                                 Margin="0,0,3,3"
+                                                HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ShowPrompt')}" />
 
                                             <TextBlock
                                                 Grid.Row="2"
                                                 Grid.Column="2"
                                                 Margin="0,0,0,3"
+                                                HorizontalAlignment="Left"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind ShowPrompt, Mode=OneWay}"
                                                 TextWrapping="Wrap" />
 
@@ -1273,13 +1332,17 @@
                                                 Grid.Row="3"
                                                 Grid.Column="1"
                                                 Margin="0,0,3,3"
+                                                HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ForceUpdateFromAnyVersion')}" />
 
                                             <TextBlock
                                                 Grid.Row="3"
                                                 Grid.Column="2"
                                                 Margin="0,0,0,3"
+                                                HorizontalAlignment="Left"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind ForceUpdateFromAnyVersion, Mode=OneWay}"
                                                 TextWrapping="Wrap" />
 
@@ -1295,13 +1358,17 @@
                                                 Grid.Row="4"
                                                 Grid.Column="1"
                                                 Margin="0,0,3,3"
+                                                HorizontalAlignment="Left"
                                                 FontSize="14"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AutomaticBackgroundTask')}" />
 
                                             <TextBlock
                                                 Grid.Row="4"
                                                 Grid.Column="2"
                                                 Margin="0,0,0,3"
+                                                HorizontalAlignment="Left"
+                                                IsTextSelectionEnabled="True"
                                                 Text="{x:Bind ForceUpdateFromAnyVersion, Mode=OneWay}"
                                                 TextWrapping="Wrap" />
                                         </Grid>
@@ -1423,10 +1490,6 @@
                                             <ListView
                                                 Grid.Row="1"
                                                 ItemsSource="{x:Bind TargetDeviceFamilyCollection}"
-                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                                ScrollViewer.HorizontalScrollMode="Disabled"
-                                                ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                                ScrollViewer.VerticalScrollMode="Enabled"
                                                 SelectionMode="None">
 
                                                 <ListView.ItemContainerStyle>
@@ -1460,7 +1523,9 @@
                                                                 x:Name="TargetDeviceNameText"
                                                                 Grid.Column="0"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
+                                                                IsTextSelectionEnabled="True"
                                                                 Text="{x:Bind TargetDeviceName}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
@@ -1478,7 +1543,9 @@
                                                                 x:Name="MinVersionText"
                                                                 Grid.Column="1"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
+                                                                IsTextSelectionEnabled="True"
                                                                 Text="{x:Bind system:Convert.ToString(MinVersion)}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
@@ -1496,7 +1563,9 @@
                                                                 x:Name="MaxVersionTestedText"
                                                                 Grid.Column="2"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
+                                                                IsTextSelectionEnabled="True"
                                                                 Text="{x:Bind system:Convert.ToString(MaxVersionTested)}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
@@ -1636,10 +1705,6 @@
                                                 Grid.Row="1"
                                                 x:Load="{x:Bind x:Object.Equals(PackageFileType, enum:PackageFileType.Package), Mode=OneWay}"
                                                 ItemsSource="{x:Bind DependencyCollection}"
-                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                                ScrollViewer.HorizontalScrollMode="Disabled"
-                                                ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                                ScrollViewer.VerticalScrollMode="Enabled"
                                                 SelectionMode="None">
 
                                                 <ListView.ItemContainerStyle>
@@ -1673,7 +1738,9 @@
                                                                 x:Name="PackageDependencyNameText"
                                                                 Grid.Column="0"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
+                                                                IsTextSelectionEnabled="True"
                                                                 Text="{x:Bind DependencyName}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
@@ -1691,7 +1758,9 @@
                                                                 x:Name="PackageDependencyPublisherText"
                                                                 Grid.Column="1"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
+                                                                IsTextSelectionEnabled="True"
                                                                 Text="{x:Bind DependencyPublisher}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
@@ -1709,7 +1778,9 @@
                                                                 x:Name="PackageDependencyMinVersionText"
                                                                 Grid.Column="2"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
+                                                                IsTextSelectionEnabled="True"
                                                                 Text="{x:Bind system:Convert.ToString(DependencyMinVersion)}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
@@ -1840,10 +1911,6 @@
                                                 Grid.Row="1"
                                                 x:Load="{x:Bind x:Object.Equals(PackageFileType, enum:PackageFileType.AppInstaller), Mode=OneWay}"
                                                 ItemsSource="{x:Bind DependencyCollection}"
-                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                                ScrollViewer.HorizontalScrollMode="Disabled"
-                                                ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                                ScrollViewer.VerticalScrollMode="Enabled"
                                                 SelectionMode="None">
 
                                                 <ListView.ItemContainerStyle>
@@ -1879,7 +1946,9 @@
                                                                 x:Name="AppInstallerDependencyNameText"
                                                                 Grid.Column="0"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
+                                                                IsTextSelectionEnabled="True"
                                                                 Text="{x:Bind DependencyName}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
@@ -1897,7 +1966,9 @@
                                                                 x:Name="AppInstallerDependencyPublisherText"
                                                                 Grid.Column="1"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
+                                                                IsTextSelectionEnabled="True"
                                                                 Text="{x:Bind DependencyPublisher}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
@@ -1915,7 +1986,9 @@
                                                                 x:Name="AppInstallerDependencyVersionText"
                                                                 Grid.Column="2"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
+                                                                IsTextSelectionEnabled="True"
                                                                 Text="{x:Bind system:Convert.ToString(DependencyVersion)}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
@@ -1935,6 +2008,7 @@
                                                                 Margin="6,0,0,0"
                                                                 HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
+                                                                IsTextSelectionEnabled="True"
                                                                 Text="{x:Bind ProcessorArchitecture}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
@@ -1952,6 +2026,7 @@
                                                                 Grid.Column="4"
                                                                 Margin="6,0,0,0"
                                                                 HorizontalAlignment="Left"
+                                                                IsTextSelectionEnabled="True"
                                                                 TextTrimming="CharacterEllipsis"
                                                                 ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenLink')}">
 
@@ -2038,7 +2113,9 @@
 
                                                             <TextBlock
                                                                 Grid.Column="1"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
+                                                                IsTextSelectionEnabled="True"
                                                                 Text="{x:Bind CapabilityLocalizedName}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
@@ -2207,10 +2284,6 @@
                                             <ListView
                                                 Grid.Row="1"
                                                 ItemsSource="{x:Bind ApplicationCollection}"
-                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                                ScrollViewer.HorizontalScrollMode="Disabled"
-                                                ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                                ScrollViewer.VerticalScrollMode="Enabled"
                                                 SelectionMode="None">
 
                                                 <ListView.ItemContainerStyle>
@@ -2246,7 +2319,9 @@
                                                                 x:Name="AppIDText"
                                                                 Grid.Column="0"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
+                                                                IsTextSelectionEnabled="True"
                                                                 Text="{x:Bind AppID}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
@@ -2264,7 +2339,9 @@
                                                                 x:Name="AppDescriptionText"
                                                                 Grid.Column="1"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
+                                                                IsTextSelectionEnabled="True"
                                                                 Text="{x:Bind AppDescription}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
@@ -2282,7 +2359,9 @@
                                                                 x:Name="ExecutableText"
                                                                 Grid.Column="2"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
+                                                                IsTextSelectionEnabled="True"
                                                                 Text="{x:Bind Executable}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
@@ -2300,7 +2379,9 @@
                                                                 x:Name="EntryPointText"
                                                                 Grid.Column="3"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
+                                                                IsTextSelectionEnabled="True"
                                                                 Text="{x:Bind EntryPoint}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
@@ -2318,7 +2399,9 @@
                                                                 x:Name="AppUserModelIdText"
                                                                 Grid.Column="4"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
+                                                                IsTextSelectionEnabled="True"
                                                                 Text="{x:Bind AppUserModelId}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
@@ -2401,7 +2484,9 @@
 
                                                             <TextBlock
                                                                 Grid.Column="1"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
+                                                                IsTextSelectionEnabled="True"
                                                                 Text="{x:Bind DisplayName}"
                                                                 TextAlignment="Left"
                                                                 TextTrimming="CharacterEllipsis"
@@ -2431,6 +2516,7 @@
                     </ScrollViewer>
                 </Grid>
 
+                <!--  解析失败  -->
                 <Grid
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
