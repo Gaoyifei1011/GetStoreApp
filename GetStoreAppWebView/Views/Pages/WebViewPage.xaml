@@ -72,6 +72,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
+            <!--  左侧控制栏  -->
             <CommandBar
                 Grid.Column="0"
                 Margin="4,0,0,0"
@@ -113,6 +114,7 @@
                 </CommandBar.PrimaryCommands>
             </CommandBar>
 
+            <!--  网页标题  -->
             <Grid
                 Grid.Column="1"
                 HorizontalAlignment="Center"
@@ -143,6 +145,7 @@
                     Visibility="{x:Bind IsLoading, Mode=OneWay}" />
             </Grid>
 
+            <!--  右侧控制栏  -->
             <CommandBar
                 Grid.Column="2"
                 HorizontalAlignment="Right"
@@ -200,6 +203,7 @@
             </CommandBar>
         </Grid>
 
+        <!--  网页控件  -->
         <WebView
             x:Name="WebViewBrowser"
             Grid.Row="2"
@@ -210,6 +214,7 @@
             Source="{x:Bind Source, Mode=OneWay}"
             UnviewableContentIdentified="{x:Bind OnUnviewableContentIdentified}" />
 
+        <!--  网页控件  -->
         <controls:WebView2
             x:Name="WebView2Browser"
             Grid.Row="2"
