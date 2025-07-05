@@ -66,7 +66,6 @@
 
     <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="SourceItemGroup" />
 
-    <Content Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" ExcludeFromSingleFile="true" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Cover.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\AppManager.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\AppUpdate.png" CopyToOutputDirectory="Always" />
@@ -515,7 +514,6 @@
     
     <Reference Include="Microsoft.Windows.Storage.Pickers.Projection.dll" />
     <Content Include="$(PkgMicrosoft_WindowsPackageManager_InProcCom)\runtimes\win-$(Platform)\native\Microsoft.Management.Deployment.InProc.dll" Link="Microsoft.Management.Deployment.dll" CopyToOutputDirectory="Always" />
-    <Content Include="$(PkgMicrosoft_WindowsPackageManager_InProcCom)\runtimes\win-$(Platform)\native\Microsoft.Management.Deployment.winmd" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
     <Content Include="$(PkgMicrosoft_WindowsPackageManager_InProcCom)\runtimes\win-$(Platform)\native\WindowsPackageManager.dll" Link="WindowsPackageManager.dll" CopyToOutputDirectory="Always" />
   </ItemGroup>
   
