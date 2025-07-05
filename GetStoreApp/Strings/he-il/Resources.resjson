@@ -9,6 +9,7 @@
   "MainProtocolName": "קבל יישום מהחנות",
   "Package": "חבילת יישום של Windows",
   "PackageBundle": "אגֶדֶת חבילות יישום של Windows",
+  "PackageDescription": "הורד את אפליקציית Microsoft Store במצב לא מקוון",
   "PackageDisplayName": "קבל יישום מהחנות",
   "PinnerProtocolName": "תוכנית עזר להצמדה",
   "WebBrowserProtocolName": "דפדפן אינטרנט"

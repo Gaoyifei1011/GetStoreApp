@@ -9,6 +9,7 @@
   "MainProtocolName": "GetStoreApp",
   "Package": "Windows app package",
   "PackageBundle": "Windows app package bundle",
+  "PackageDescription": "Download the Microsoft Store app offline",
   "PackageDisplayName": "GetStoreApp",
   "PinnerProtocolName": "Pinner auxiliary program",
   "WebBrowserProtocolName": "Web Browser"

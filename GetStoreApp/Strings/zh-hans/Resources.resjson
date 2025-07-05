@@ -9,6 +9,7 @@
   "MainProtocolName": "获取商店应用",
   "Package": "Windows 应用包",
   "PackageBundle": "Windows 应用捆绑包",
+  "PackageDescription": "离线下载 Microsoft Store 商店应用",
   "PackageDisplayName": "获取商店应用",
   "PinnerProtocolName": "固定辅助程序",
   "WebBrowserProtocolName": "网页浏览器"
