@@ -145,7 +145,6 @@
 
             <CommandBar
                 Grid.Column="2"
-                Margin="0,0,4,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Background="Transparent"
