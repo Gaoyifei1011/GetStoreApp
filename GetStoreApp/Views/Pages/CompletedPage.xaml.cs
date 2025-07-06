@@ -826,14 +826,14 @@ namespace GetStoreApp.Views.Pages
                     completed.IsInstalling = true;
                     completed.IsInstallWaiting = false; // TODO：wasdk api 问题
                     //InstallStateString = WaitInstallString;
-                    completed.InstallProgressValue = progress.Progress * 100;
+                    completed.InstallProgressValue = Convert.ToInt32(progress.Progress * 100);
                     completed.InstallStateString = string.Format(InstallProgressString, progress.Progress * 100);
                 }
                 else if (progress.Status is PackageDeploymentProgressStatus.InProgress)
                 {
                     completed.IsInstalling = true;
                     completed.IsInstallWaiting = false;
-                    completed.InstallProgressValue = progress.Progress * 100;
+                    completed.InstallProgressValue = Convert.ToInt32(progress.Progress * 100);
                     completed.InstallStateString = string.Format(InstallProgressString, progress.Progress * 100);
                 }
             });

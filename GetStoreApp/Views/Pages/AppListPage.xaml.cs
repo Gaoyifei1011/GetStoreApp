@@ -1863,7 +1863,7 @@ namespace GetStoreApp.Views.Pages
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                package.PackageOperationProgress = progress.Progress * 100;
+                package.PackageOperationProgress = Convert.ToInt32(progress.Progress * 100);
             });
         }
 
@@ -1874,7 +1874,7 @@ namespace GetStoreApp.Views.Pages
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                package.PackageOperationProgress = progress.Progress * 100;
+                package.PackageOperationProgress = Convert.ToInt32(progress.Progress * 100);
             });
         }
 
@@ -1885,7 +1885,7 @@ namespace GetStoreApp.Views.Pages
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                package.PackageOperationProgress = progress.Progress * 100;
+                package.PackageOperationProgress = Convert.ToInt32(progress.Progress * 100);
             });
         }
 
