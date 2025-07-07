@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Windows.Storage;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
@@ -6,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
-using Windows.Storage;
 using Windows.System;
 
 namespace GetStoreApp.Services.Root
@@ -17,12 +17,12 @@ namespace GetStoreApp.Services.Root
     public static class LogService
     {
         private static readonly string unknown = "unknown";
-        private static readonly string httpRequestFolderPath = Path.Combine([ApplicationData.Current.LocalCacheFolder.Path, "Logs", "HttpRequest"]);
-        private static readonly string exceptionFolderPath = Path.Combine([ApplicationData.Current.LocalCacheFolder.Path, "Logs", "Exception"]);
+        private static readonly string httpRequestFolderPath = Path.Combine([ApplicationData.GetDefault().LocalCacheFolder.Path, "Logs", "HttpRequest"]);
+        private static readonly string exceptionFolderPath = Path.Combine([ApplicationData.GetDefault().LocalCacheFolder.Path, "Logs", "Exception"]);
         private static readonly LoggingChannelOptions channelOptions = new();
         private static SemaphoreSlim logSemaphoreSlim = new(1, 1);
 
-        public static string WinGetFolderPath { get; } = Path.Combine([ApplicationData.Current.LocalCacheFolder.Path, "Logs", "WinGet"]);
+        public static string WinGetFolderPath { get; } = Path.Combine([ApplicationData.GetDefault().LocalCacheFolder.Path, "Logs", "WinGet"]);
 
         /// <summary>
         /// 写入日志
@@ -64,7 +64,7 @@ namespace GetStoreApp.Services.Root
 
                     string logFileName = string.Format("Logs-{0}-{1}-{2}-{3:D2}-{4}.etl", nameSpaceName, className, methodName, index, DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss.fff"));
                     httpRequestChannel.LogEvent(logFileName, httpRequestFields, logLevel, httpRequestOptions);
-                    await httpRequestSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(httpRequestFolderPath), logFileName);
+                    await httpRequestSession.SaveToFileAsync(await Windows.Storage.StorageFolder.GetFolderFromPathAsync(httpRequestFolderPath), logFileName);
                     httpRequestSession.Dispose();
                 }
                 catch (Exception e)
@@ -118,7 +118,7 @@ namespace GetStoreApp.Services.Root
 
                     string logFileName = string.Format("Logs-{0}-{1}-{2}-{3:D2}-{4}.etl", nameSpaceName, className, methodName, index, DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss.fff"));
                     exceptionChannel.LogEvent(logFileName, exceptionFields, logLevel, exceptionOptions);
-                    await exceptionSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), logFileName);
+                    await exceptionSession.SaveToFileAsync(await Windows.Storage.StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), logFileName);
                     exceptionSession.Dispose();
                 }
                 catch (Exception e)
@@ -137,15 +137,15 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static async Task OpenLogFolderAsync()
         {
-            string logFolderPath = Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "Logs");
+            string logFolderPath = Path.Combine(ApplicationData.GetDefault().LocalCacheFolder.Path, "Logs");
 
             if (Directory.Exists(logFolderPath))
             {
-                await Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(logFolderPath));
+                await Launcher.LaunchFolderAsync(await Windows.Storage.StorageFolder.GetFolderFromPathAsync(logFolderPath));
             }
             else
             {
-                await Launcher.LaunchFolderAsync(ApplicationData.Current.LocalCacheFolder);
+                await Launcher.LaunchFolderAsync(ApplicationData.GetDefault().LocalCacheFolder);
             }
         }
 

@@ -3,6 +3,7 @@ using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +13,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Foundation.Diagnostics;
-using Windows.Storage;
 using Windows.System.Threading;
 using Windows.Web.Http;
 
@@ -33,7 +33,7 @@ namespace GetStoreApp.Services.Download
 
         private static Dictionary<string, string> Aria2DownloadDict { get; } = [];
 
-        public static string Aria2ConfPath { get; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Aria2.conf");
+        public static string Aria2ConfPath { get; } = Path.Combine(ApplicationData.GetDefault().LocalFolder.Path, "Aria2.conf");
 
         public static event Action<DownloadProgress> DownloadProgress;
 

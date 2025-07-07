@@ -1,11 +1,11 @@
 ﻿using GetStoreApp.Models;
 using GetStoreApp.Services.Download;
 using GetStoreApp.Services.Root;
+using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using Windows.Foundation.Diagnostics;
-using Windows.Storage;
 
 namespace GetStoreApp.Services.History
 {
@@ -25,7 +25,7 @@ namespace GetStoreApp.Services.History
         private const string HistoryLink = "HistoryLink";
 
         private static readonly Lock historyStorageLock = new();
-        private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
+        private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.GetDefault().LocalSettings;
         private static ApplicationDataContainer queryLinksContainer;
         private static ApplicationDataContainer searchStoreContainer;
 
@@ -71,7 +71,7 @@ namespace GetStoreApp.Services.History
                 {
                     for (int index = 1; index <= 3; index++)
                     {
-                        if (queryLinksContainer.Values.TryGetValue(QueryLinks + Convert.ToString(index), out object value) && value is ApplicationDataCompositeValue compositeValue)
+                        if (queryLinksContainer.Values.TryGetValue(QueryLinks + Convert.ToString(index), out object value) && value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                         {
                             TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
                             ChannelModel channel = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
@@ -116,7 +116,7 @@ namespace GetStoreApp.Services.History
                 {
                     if (searchStoreContainer.Values.TryGetValue(SearchStore + Convert.ToString(index), out object value))
                     {
-                        if (value is ApplicationDataCompositeValue compositeValue)
+                        if (value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                         {
                             TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryType"] as string, StringComparison.OrdinalIgnoreCase));
                             ChannelModel channelItem = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryChannel"] as string, StringComparison.OrdinalIgnoreCase));
@@ -156,7 +156,7 @@ namespace GetStoreApp.Services.History
             {
                 for (int index = 1; index <= endIndex; index++)
                 {
-                    ApplicationDataCompositeValue compositeValue = new()
+                    Windows.Storage.ApplicationDataCompositeValue compositeValue = new()
                     {
                         [CreateTimeStamp] = queryLinksHistoryList[index - 1].CreateTimeStamp,
                         [HistoryKey] = queryLinksHistoryList[index - 1].HistoryKey,
@@ -193,7 +193,7 @@ namespace GetStoreApp.Services.History
             {
                 for (int index = 1; index <= endIndex; index++)
                 {
-                    ApplicationDataCompositeValue compositeValue = new()
+                    Windows.Storage.ApplicationDataCompositeValue compositeValue = new()
                     {
                         [CreateTimeStamp] = searchStoreHistoryList[index - 1].CreateTimeStamp,
                         [HistoryKey] = searchStoreHistoryList[index - 1].HistoryKey,

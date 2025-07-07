@@ -2,11 +2,10 @@
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.Windows.Storage;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Windows.Management.Core;
-using Windows.Storage;
 using Windows.System;
 
 // 抑制 CS8305，IDE0060 警告
@@ -43,13 +42,13 @@ namespace GetStoreApp.Views.Pages
         {
             Task.Run(async () =>
             {
-                if (ApplicationDataManager.CreateForPackageFamily("Microsoft.DesktopAppInstaller_8wekyb3d8bbwe") is ApplicationData applicationData)
+                if (ApplicationData.GetForPackageFamily("Microsoft.DesktopAppInstaller_8wekyb3d8bbwe") is ApplicationData applicationData)
                 {
                     string wingetConfigFilePath = Path.Combine(applicationData.LocalFolder.Path, "settings.json");
 
                     if (File.Exists(wingetConfigFilePath))
                     {
-                        await Launcher.LaunchFileAsync(await StorageFile.GetFileFromPathAsync(wingetConfigFilePath));
+                        await Launcher.LaunchFileAsync(await global::Windows.Storage.StorageFile.GetFileFromPathAsync(wingetConfigFilePath));
                     }
                     else
                     {

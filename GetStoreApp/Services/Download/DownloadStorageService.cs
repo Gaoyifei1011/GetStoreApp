@@ -1,11 +1,11 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
+using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using Windows.Foundation.Diagnostics;
-using Windows.Storage;
 
 namespace GetStoreApp.Services.Download
 {
@@ -17,7 +17,6 @@ namespace GetStoreApp.Services.Download
         private const string DownloadStorage = "DownloadStorage";
         private const string DownloadKey = "DownloadKey";
         private const string FileName = "FileName";
-        private const string FileLink = "FileLink";
         private const string FilePath = "FilePath";
         private const string FileSize = "FileSize";
 
@@ -37,7 +36,7 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         public static void Initialize()
         {
-            localSettingsContainer = ApplicationData.Current.LocalSettings;
+            localSettingsContainer = ApplicationData.GetDefault().LocalSettings;
             DownloadStorageSemaphoreSlim?.Wait();
 
             try
@@ -63,7 +62,7 @@ namespace GetStoreApp.Services.Download
 
                 try
                 {
-                    ApplicationDataCompositeValue compositeValue = [];
+                    Windows.Storage.ApplicationDataCompositeValue compositeValue = [];
 
                     downloadScheduler.DownloadKey = string.IsNullOrEmpty(downloadScheduler.DownloadKey)
                         ? HashAlgorithmHelper.GenerateDownloadKey(downloadScheduler.FileName, downloadScheduler.FilePath)
@@ -126,7 +125,7 @@ namespace GetStoreApp.Services.Download
                 {
                     foreach (KeyValuePair<string, object> downloadStorageItem in downloadStorageContainer.Values)
                     {
-                        if (downloadStorageItem.Value is ApplicationDataCompositeValue compositeValue)
+                        if (downloadStorageItem.Value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                         {
                             downloadSchedulerList.Add(new DownloadSchedulerModel()
                             {

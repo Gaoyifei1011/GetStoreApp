@@ -11,6 +11,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.AppNotifications.Builder;
 using Microsoft.Windows.Management.Deployment;
+using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,9 +23,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
-using Windows.Management.Core;
 using Windows.Management.Deployment;
-using Windows.Storage;
 using Windows.System;
 
 // 抑制 CA1822，IDE0060 警告
@@ -317,7 +316,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     try
                     {
-                        if (ApplicationDataManager.CreateForPackageFamily(package.Id.FamilyName) is ApplicationData applicationData)
+                        if (ApplicationData.GetForPackageFamily(package.Id.FamilyName) is Microsoft.Windows.Storage.ApplicationData applicationData)
                         {
                             await Launcher.LaunchFolderAsync(applicationData.LocalFolder);
                         }
@@ -362,7 +361,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     try
                     {
-                        if (await StorageFile.GetFileFromPathAsync(Path.Combine(package.InstalledPath, "AppxManifest.xml")) is StorageFile file)
+                        if (await global::Windows.Storage.StorageFile.GetFileFromPathAsync(Path.Combine(package.InstalledPath, "AppxManifest.xml")) is global::Windows.Storage.StorageFile file)
                         {
                             await Launcher.LaunchFileAsync(file);
                         }

@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
-using Windows.Storage;
 
 namespace GetStoreApp.Services.Root
 {
@@ -13,7 +13,7 @@ namespace GetStoreApp.Services.Root
         private const string result = "Result";
         private const string parameter = "Parameter";
 
-        private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
+        private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.GetDefault().LocalSettings;
         private static ApplicationDataContainer resultContainer;
 
         /// <summary>
