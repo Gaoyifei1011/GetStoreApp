@@ -2,10 +2,10 @@
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
+using Microsoft.Windows.Globalization;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Windows.Globalization;
 
 namespace GetStoreApp.Services.Settings
 {
@@ -133,7 +133,7 @@ namespace GetStoreApp.Services.Settings
         {
             AppLanguage = language;
             LocalSettingsService.SaveSetting(settingsKey, language.Key);
-            ApplicationLanguages.PrimaryLanguageOverride = language.Key;
+            Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = language.Key;
         }
     }
 }
