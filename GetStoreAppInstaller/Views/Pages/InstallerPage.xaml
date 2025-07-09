@@ -350,7 +350,9 @@
                                         Click="{x:Bind OnOpenPackageClicked}"
                                         ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenPackage')}">
 
-                                        <FontIcon FontSize="16" Glyph="&#xE8E5;" />
+                                        <Button.Content>
+                                            <FontIcon FontSize="16" Glyph="&#xE8E5;" />
+                                        </Button.Content>
                                     </Button>
 
                                     <Button
@@ -362,7 +364,7 @@
                                         ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependency')}">
 
                                         <Button.Content>
-                                            <FontIcon FontSize="16" Glyph="&#xE710;" />
+                                            <FontIcon FontSize="16" Glyph="&#xF003;" />
                                         </Button.Content>
 
                                         <Button.Flyout>
@@ -403,7 +405,7 @@
                                                             Margin="16,0,6,0"
                                                             VerticalAlignment="Center"
                                                             FontSize="16"
-                                                            Glyph="&#xE8BC;" />
+                                                            Glyph="&#xF003;" />
 
                                                         <TextBlock
                                                             Grid.Column="1"
@@ -606,11 +608,15 @@
                                         Width="32"
                                         Height="32"
                                         Padding="0"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Stretch"
                                         Click="{x:Bind OnInstallAppClicked}"
                                         Style="{StaticResource AccentButtonStyle}"
                                         ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/InstallApp')}">
 
-                                        <FontIcon FontSize="16" Glyph="&#xE74B;" />
+                                        <Button.Content>
+                                            <FontIcon FontSize="16" Glyph="&#xE896;" />
+                                        </Button.Content>
                                     </Button>
                                 </Grid>
                             </ContentControl>

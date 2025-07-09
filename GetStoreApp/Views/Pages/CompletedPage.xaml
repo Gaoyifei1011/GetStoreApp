@@ -433,7 +433,7 @@
                                     ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Completed/Install')}">
 
                                     <Button.Content>
-                                        <FontIcon FontSize="14" Glyph="&#xE710;" />
+                                        <FontIcon FontSize="14" Glyph="&#xE896;" />
                                     </Button.Content>
                                 </Button>
 
