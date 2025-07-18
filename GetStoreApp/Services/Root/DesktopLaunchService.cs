@@ -96,7 +96,7 @@ namespace GetStoreApp.Services.Root
                         dataList.Add(argumentsList[0]);
                     }
                 }
-                else if (argumentsList.Count is 2)
+                else if (argumentsList.Count >= 2)
                 {
                     // 从跳转列表启动或从辅助磁贴启动
                     if (argumentsList[0] is "JumpList" || argumentsList[0] is "SecondaryTile")
@@ -114,15 +114,8 @@ namespace GetStoreApp.Services.Root
                             }
                         }
                     }
-                    else
-                    {
-                        Environment.Exit(Environment.ExitCode);
-                    }
-                }
-                else
-                {
                     // 带参数启动：包含多个参数
-                    if (argumentsList.Count % 2 is 0)
+                    else if (argumentsList.Count % 2 is 0)
                     {
                         int typeNameParameterIndex = argumentsList.FindIndex(item => string.Equals(item, "-t", StringComparison.OrdinalIgnoreCase) || string.Equals(item, "--type", StringComparison.OrdinalIgnoreCase));
                         int channelNameParameterIndex = argumentsList.FindIndex(item => string.Equals(item, "-c", StringComparison.OrdinalIgnoreCase) || string.Equals(item, "--channel", StringComparison.OrdinalIgnoreCase));

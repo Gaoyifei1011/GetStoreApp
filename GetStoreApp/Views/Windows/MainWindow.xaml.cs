@@ -646,16 +646,46 @@ namespace GetStoreApp.Views.Windows
                     }
                 }
                 // 带有命令参数启动重定向获得的内容
-                else if (dataContentList.Count is 4 && dataContentList[0] is "Console")
+                else if (dataContentList.Count is 4)
                 {
                     NavigateTo(typeof(HomePage));
-                    if (Equals(GetCurrentPageType(), typeof(StorePage)))
+
+                    if (dataContentList[0] is "SecondaryTile")
                     {
-                        (GetFrameContent() as StorePage).InitializeQueryLinksContent(dataContentList[1..4]);
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            if (dataContentList[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
+                            {
+                                NavigateTo(typeof(StorePage));
+                            }
+                            else if (dataContentList[1] is "AppUpdate" && GetCurrentPageType() != typeof(AppUpdatePage))
+                            {
+                                NavigateTo(typeof(AppUpdatePage));
+                            }
+                            else if (dataContentList[1] is "WinGet" && GetCurrentPageType() != typeof(WinGetPage))
+                            {
+                                NavigateTo(typeof(WinGetPage));
+                            }
+                            else if (dataContentList[1] is "AppManager" && GetCurrentPageType() != typeof(AppManagerPage))
+                            {
+                                NavigateTo(typeof(AppManagerPage));
+                            }
+                            else if (dataContentList[1] is "Download" && GetCurrentPageType() != typeof(DownloadPage))
+                            {
+                                NavigateTo(typeof(DownloadPage));
+                            }
+                        });
                     }
-                    else
+                    else if (dataContentList[0] is "Console")
                     {
-                        NavigateTo(typeof(StorePage), dataContentList[1..4]);
+                        if (Equals(GetCurrentPageType(), typeof(StorePage)))
+                        {
+                            (GetFrameContent() as StorePage).InitializeQueryLinksContent(dataContentList[1..4]);
+                        }
+                        else
+                        {
+                            NavigateTo(typeof(StorePage), dataContentList[1..4]);
+                        }
                     }
                 }
             }
@@ -884,11 +914,41 @@ namespace GetStoreApp.Views.Windows
                     }
                 }
                 // 带有命令参数启动重定向获得的内容
-                else if (dataList.Count is 4 && dataList[0] is "Console")
+                else if (dataList.Count is 4)
                 {
-                    DispatcherQueue.TryEnqueue(() =>
+                    if (dataList[0] is "SecondaryTile")
                     {
-                        if (dataList.Count is 4)
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            if (dataList[1] is "Home" && GetCurrentPageType() != typeof(HomePage))
+                            {
+                                NavigateTo(typeof(HomePage));
+                            }
+                            else if (dataList[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
+                            {
+                                NavigateTo(typeof(StorePage));
+                            }
+                            else if (dataList[1] is "AppUpdate" && GetCurrentPageType() != typeof(AppUpdatePage))
+                            {
+                                NavigateTo(typeof(AppUpdatePage));
+                            }
+                            else if (dataList[1] is "WinGet" && GetCurrentPageType() != typeof(WinGetPage))
+                            {
+                                NavigateTo(typeof(WinGetPage));
+                            }
+                            else if (dataList[1] is "AppManager" && GetCurrentPageType() != typeof(AppManagerPage))
+                            {
+                                NavigateTo(typeof(AppManagerPage));
+                            }
+                            else if (dataList[1] is "Download" && GetCurrentPageType() != typeof(DownloadPage))
+                            {
+                                NavigateTo(typeof(DownloadPage));
+                            }
+                        });
+                    }
+                    else if (dataList[0] is "Console")
+                    {
+                        DispatcherQueue.TryEnqueue(() =>
                         {
                             if (Equals(GetCurrentPageType(), typeof(StorePage)))
                             {
@@ -898,8 +958,8 @@ namespace GetStoreApp.Views.Windows
                             {
                                 NavigateTo(typeof(StorePage), dataList[1..4]);
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
             // 从共享目标启动重定向获得的内容
