@@ -22,6 +22,7 @@
   "Close": "关闭",
   "ClosingWindow": "任务下载中提示",
   "ClosingWindowContent": "您目前还有尚未完成下载的任务，是否要保存下载状态并强制退出应用?",
+  "Continue": "继续",
   "CopyAppInformation": "复制应用信息",
   "CopyFileInformation": "复制文件信息",
   "CreateFailed1": "{0}存储卷添加失败",

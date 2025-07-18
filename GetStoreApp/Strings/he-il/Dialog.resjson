@@ -22,6 +22,7 @@
   "Close": "סגור",
   "ClosingWindow": "התראה על הורדת משימות",
   "ClosingWindowContent": "יש לך כעת משימות הורדה שטרם הושלמו. האם ברצונך לשמור את מצב ההורדה ולכפות יציאה מהיישום?",
+  "Continue": "נמשך",
   "CopyAppInformation": "העתק פרטי יישום",
   "CopyFileInformation": "העתק פרטי קובץ",
   "CreateFailed1": "יצירת האחסון נכשלה {0}",  
