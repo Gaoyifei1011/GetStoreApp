@@ -15,9 +15,7 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
-using Windows.ApplicationModel.Core;
 using Windows.Foundation.Diagnostics;
-using Windows.Management.Deployment;
 using Windows.System;
 using WinRT;
 
