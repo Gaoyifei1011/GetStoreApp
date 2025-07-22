@@ -754,6 +754,7 @@ namespace GetStoreApp.Views.Pages
             try
             {
                 GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+                CommandBarSecondaryCommandsBackdrop.Dispose();
                 DownloadStorageService.StorageDataAdded -= OnStorageDataAdded;
                 DownloadStorageService.StorageDataDeleted -= OnStorageDataDeleted;
                 DownloadStorageService.StorageDataCleared -= OnStorageDataCleared;

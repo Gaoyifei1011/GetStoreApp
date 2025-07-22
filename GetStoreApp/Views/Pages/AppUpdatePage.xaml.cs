@@ -31,8 +31,6 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AppUpdatePage : Page, INotifyPropertyChanged
     {
-        private bool isInitialized;
-
         private readonly string AcquiringLicenseString = ResourceService.GetLocalized("AppUpdate/AcquiringLicense");
         private readonly string AppUpdateCountInfoString = ResourceService.GetLocalized("AppUpdate/AppUpdateCountInfo");
         private readonly string AppUpdateEmptyString = ResourceService.GetLocalized("AppUpdate/AppUpdateEmpty");
@@ -50,6 +48,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string StartingString = ResourceService.GetLocalized("AppUpdate/Starting");
 
         private readonly Lock AppUpdateLock = new();
+        private bool isInitialized;
         private AppInstallManager appInstallManager;
         private PackageManager packageManager;
 
@@ -473,8 +472,16 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnApplicationExit()
         {
-            GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-            appInstallManager.ItemStatusChanged -= OnAppInstallItemStatusChanged;
+            try
+            {
+                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+                CommandBarSecondaryCommandsBackdrop.Dispose();
+                appInstallManager.ItemStatusChanged -= OnAppInstallItemStatusChanged;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppUpdatePage), nameof(OnApplicationExit), 1, e);
+            }
         }
 
         /// <summary>

@@ -283,8 +283,16 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnApplicationExit()
         {
-            GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-            WinGetPageInstance.UpgradeAppsPackageOperationEvent -= OnUpgradeAppsPackageOperationEvent;
+            try
+            {
+                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+                CommandBarSecondaryCommandsBackdrop.Dispose();
+                WinGetPageInstance.UpgradeAppsPackageOperationEvent -= OnUpgradeAppsPackageOperationEvent;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetUpgradePage), nameof(OnApplicationExit), 1, e);
+            }
         }
 
         /// <summary>

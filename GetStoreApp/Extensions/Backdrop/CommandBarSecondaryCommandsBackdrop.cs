@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Views.Windows;
+﻿using GetStoreApp.Services.Root;
+using GetStoreApp.Views.Windows;
 using Microsoft.UI.Composition;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Content;
@@ -9,6 +10,7 @@ using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Numerics;
+using Windows.Foundation.Diagnostics;
 
 // 抑制 CA1822 警告
 #pragma warning disable CA1822
@@ -67,7 +69,7 @@ namespace GetStoreApp.Extensions.Backdrop
             {
                 isLoaded = true;
                 secondaryCommandsPopup = popup;
-                secondaryCommandsPopup.Opened += OnPopupOpened;
+                secondaryCommandsPopup.Opened += OnOpened;
                 secondaryCommandsPopup.ActualThemeChanged += OnActualThemeChanged;
             }
         }
@@ -87,7 +89,7 @@ namespace GetStoreApp.Extensions.Backdrop
         /// <summary>
         /// 弹出窗口打开后触发的事件
         /// </summary>
-        private void OnPopupOpened(object sender, object args)
+        private void OnOpened(object sender, object args)
         {
             if (secondaryCommandsPopup is not null && secondaryCommandsPopup.FindName("SecondaryItemsControlShadowWrapper") is Grid grid)
             {
@@ -129,16 +131,6 @@ namespace GetStoreApp.Extensions.Backdrop
         /// <summary>
         /// ElementTheme 转换到 SystemBackdropTheme
         /// </summary>
-        private SystemBackdropTheme ElementThemeToSystemBackdropTheme(ElementTheme elementTheme)
-        {
-            return elementTheme switch
-            {
-                ElementTheme.Default => SystemBackdropTheme.Default,
-                ElementTheme.Light => SystemBackdropTheme.Light,
-                ElementTheme.Dark => SystemBackdropTheme.Dark,
-                _ => SystemBackdropTheme.Default,
-            };
-        }
 
         /// <summary>
         /// 查找 CommandBar 的 OverflowPopup 子控件
@@ -193,6 +185,17 @@ namespace GetStoreApp.Extensions.Backdrop
                     desktopAcrylicController.RemoveSystemBackdropTarget(backdropLink);
                     backdropLink.Dispose();
                     backdropLink = null;
+
+                    try
+                    {
+                        secondaryCommandsPopup.Opened -= OnOpened;
+                        secondaryCommandsPopup.ActualThemeChanged -= OnActualThemeChanged;
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CommandBarSecondaryCommandsBackdrop), nameof(Dispose), 1, e);
+                    }
+
                     secondaryCommandsPopup = null;
                 }
 

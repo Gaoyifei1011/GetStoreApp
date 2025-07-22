@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.Views.Pages.SettingsPackageVolumePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:backdrop="using:GetStoreApp.Extensions.Backdrop"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
@@ -12,12 +13,15 @@
 
     <Page.Resources>
         <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+        <SolidColorBrush x:Key="CommandBarOverflowPresenterBackground" Color="Transparent" />
         <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
 
         <XamlUICommand x:Name="SetDefaultVolumeCommand" ExecuteRequested="{x:Bind OnSetDefaultVolumeExecuteRequested}" />
         <XamlUICommand x:Name="MountCommand" ExecuteRequested="{x:Bind OnMountExecuteRequested}" />
         <XamlUICommand x:Name="DismountCommand" ExecuteRequested="{x:Bind OnDismountExecuteRequested}" />
         <XamlUICommand x:Name="RemoveCommand" ExecuteRequested="{x:Bind OnRemoveExecuteRequested}" />
+
+        <backdrop:CommandBarSecondaryCommandsBackdrop x:Name="CommandBarSecondaryCommandsBackdrop" />
     </Page.Resources>
 
     <Grid>
@@ -79,7 +83,8 @@
                 Margin="4,0,0,0"
                 VerticalAlignment="Center"
                 Background="Transparent"
-                DefaultLabelPosition="Right">
+                DefaultLabelPosition="Right"
+                Loaded="{x:Bind CommandBarSecondaryCommandsBackdrop.OnLoaded}">
 
                 <CommandBar.PrimaryCommands>
                     <AppBarButton
@@ -261,56 +266,69 @@
                                     IsIndeterminate="True"
                                     Visibility="{x:Bind IsOperating, Mode=OneWay}" />
 
-                                <CommandBar
-                                    Grid.Column="3"
-                                    Margin="10,0,-15,0"
-                                    VerticalAlignment="Center">
+                                <Button
+                                    MinHeight="{ThemeResource AppBarThemeCompactHeight}"
+                                    Padding="{ThemeResource CommandBarMoreButtonMargin}"
+                                    VerticalAlignment="Top"
+                                    Foreground="{ThemeResource CommandBarForeground}"
+                                    IsAccessKeyScope="True"
+                                    Style="{ThemeResource EllipsisButton}">
 
-                                    <CommandBar.SecondaryCommands>
-                                        <AppBarButton
-                                            Command="{StaticResource SetDefaultVolumeCommand}"
-                                            CommandParameter="{x:Bind}"
-                                            IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                            Label="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/SetDefaultVolume')}"
-                                            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsDefaultVolume), Mode=OneWay}">
-                                            <AppBarButton.Icon>
-                                                <FontIcon Glyph="&#xE958;" />
-                                            </AppBarButton.Icon>
-                                        </AppBarButton>
+                                    <FontIcon
+                                        x:Name="EllipsisIcon"
+                                        Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
+                                        VerticalAlignment="Center"
+                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                        FontSize="20"
+                                        Glyph="&#xE712;" />
 
-                                        <AppBarButton
-                                            Command="{StaticResource MountCommand}"
-                                            CommandParameter="{x:Bind}"
-                                            IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                            Label="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Mount')}"
-                                            Visibility="{x:Bind IsOffline, Mode=OneWay}">
-                                            <AppBarButton.Icon>
-                                                <FontIcon Glyph="&#xE8CE;" />
-                                            </AppBarButton.Icon>
-                                        </AppBarButton>
+                                    <Button.Flyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem
+                                                Command="{StaticResource SetDefaultVolumeCommand}"
+                                                CommandParameter="{x:Bind}"
+                                                IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/SetDefaultVolume')}"
+                                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsDefaultVolume), Mode=OneWay}">
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE958;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
 
-                                        <AppBarButton
-                                            Command="{StaticResource DismountCommand}"
-                                            CommandParameter="{x:Bind}"
-                                            IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                            Label="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Dismount')}"
-                                            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsOffline), Mode=OneWay}">
-                                            <AppBarButton.Icon>
-                                                <FontIcon Glyph="&#xE8CD;" />
-                                            </AppBarButton.Icon>
-                                        </AppBarButton>
+                                            <MenuFlyoutItem
+                                                Command="{StaticResource MountCommand}"
+                                                CommandParameter="{x:Bind}"
+                                                IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Mount')}"
+                                                Visibility="{x:Bind IsOffline, Mode=OneWay}">
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE8CE;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
 
-                                        <AppBarButton
-                                            Command="{StaticResource RemoveCommand}"
-                                            CommandParameter="{x:Bind}"
-                                            IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                            Label="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Remove')}">
-                                            <AppBarButton.Icon>
-                                                <FontIcon Glyph="&#xE74D;" />
-                                            </AppBarButton.Icon>
-                                        </AppBarButton>
-                                    </CommandBar.SecondaryCommands>
-                                </CommandBar>
+                                            <MenuFlyoutItem
+                                                Command="{StaticResource DismountCommand}"
+                                                CommandParameter="{x:Bind}"
+                                                IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Dismount')}"
+                                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsOffline), Mode=OneWay}">
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE8CD;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+
+                                            <MenuFlyoutItem
+                                                Command="{StaticResource RemoveCommand}"
+                                                CommandParameter="{x:Bind}"
+                                                IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Remove')}">
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE74D;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </Button.Flyout>
+                                </Button>
                             </Grid>
                         </Expander.Header>
 

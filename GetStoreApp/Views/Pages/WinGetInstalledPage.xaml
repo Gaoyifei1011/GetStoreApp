@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:backdrop="using:GetStoreApp.Extensions.Backdrop"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:deployment="using:Microsoft.Management.Deployment"
@@ -15,11 +16,13 @@
 
     <Page.Resources>
         <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+        <SolidColorBrush x:Key="CommandBarOverflowPresenterBackground" Color="Transparent" />
         <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
 
         <XamlUICommand x:Name="CopyUninstallTextCommand" ExecuteRequested="{x:Bind OnCopyUninstallTextExecuteRequested}" />
         <XamlUICommand x:Name="UninstallCommand" ExecuteRequested="{x:Bind OnUninstallExecuteRequested}" />
         <XamlUICommand x:Name="UninstallWithCmdCommand" ExecuteRequested="{x:Bind OnUninstallWithCmdExecuteRequested}" />
+        <backdrop:CommandBarSecondaryCommandsBackdrop x:Name="CommandBarSecondaryCommandsBackdrop" />
     </Page.Resources>
 
     <Grid>
@@ -97,7 +100,8 @@
                 Margin="4,0,0,0"
                 VerticalAlignment="Center"
                 Background="Transparent"
-                DefaultLabelPosition="Right">
+                DefaultLabelPosition="Right"
+                Loaded="{x:Bind CommandBarSecondaryCommandsBackdrop.OnLoaded}">
 
                 <CommandBar.PrimaryCommands>
                     <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/Sort')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortToolTip')}">

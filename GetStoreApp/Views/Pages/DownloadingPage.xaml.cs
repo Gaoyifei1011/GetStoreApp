@@ -355,6 +355,7 @@ namespace GetStoreApp.Views.Pages
             try
             {
                 GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+                CommandBarSecondaryCommandsBackdrop.Dispose();
                 DownloadSchedulerService.DownloadProgress -= OnDownloadProgress;
             }
             catch (Exception e)

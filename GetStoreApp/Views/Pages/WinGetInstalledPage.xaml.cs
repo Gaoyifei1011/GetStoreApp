@@ -21,6 +21,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Store.Preview.InstallControl;
 using Windows.Foundation.Diagnostics;
 
 // 抑制 CA1822，IDE0060 警告
@@ -535,8 +536,16 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnApplicationExit()
         {
-            GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-            WinGetPageInstance.InstalledAppsPackageOperationEvent -= OnInstalledAppsPackageOperationEvent;
+            try
+            {
+                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+                CommandBarSecondaryCommandsBackdrop.Dispose();
+                WinGetPageInstance.InstalledAppsPackageOperationEvent -= OnInstalledAppsPackageOperationEvent;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetInstalledPage), nameof(OnApplicationExit), 1, e);
+            }
         }
 
         /// <summary>

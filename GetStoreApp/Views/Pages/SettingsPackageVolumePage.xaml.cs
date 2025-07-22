@@ -15,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Store.Preview.InstallControl;
 using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
 using Windows.Storage;
@@ -58,6 +59,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string UnknownString = ResourceService.GetLocalized("SettingsPackageVolume/Unknown");
         private readonly string VolumeSpaceString = ResourceService.GetLocalized("SettingsPackageVolume/VolumeSpace");
         private readonly string YesString = ResourceService.GetLocalized("SettingsPackageVolume/Yes");
+        private bool isInitialized;
         private PackageManager packageManager;
 
         private PackageVolumeResultKind _packageVolumeResultKind = PackageVolumeResultKind.Loading;
@@ -109,6 +111,12 @@ namespace GetStoreApp.Views.Pages
         protected override async void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
+            if (!isInitialized)
+            {
+                isInitialized = true;
+                GlobalNotificationService.ApplicationExit += OnApplicationExit;
+            }
+
             await GetPackageVolumeInfoAsync();
         }
 
@@ -454,6 +462,26 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第三部分：应用包存储卷设置页面——挂载的事件
+
+        #region 第四部分：应用包存储卷设置页面——挂载的事件
+
+        /// <summary>
+        /// 应用程序退出时触发的事件
+        /// </summary>
+        private void OnApplicationExit()
+        {
+            try
+            {
+                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+                CommandBarSecondaryCommandsBackdrop.Dispose();
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnApplicationExit), 1, e);
+            }
+        }
+
+        #endregion 第四部分：应用包存储卷设置页面——挂载的事件
 
         /// <summary>
         /// 获取应用包存储卷信息

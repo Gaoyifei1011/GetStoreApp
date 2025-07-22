@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:applicationmodel="using:Windows.ApplicationModel"
+    xmlns:backdrop="using:GetStoreApp.Extensions.Backdrop"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:deployment="using:Microsoft.Windows.Management.Deployment"
@@ -18,6 +19,7 @@
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="Transparent" />
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="Transparent" />
         <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+        <SolidColorBrush x:Key="CommandBarOverflowPresenterBackground" Color="Transparent" />
         <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
 
         <XamlUICommand x:Name="OpenAppCommand" ExecuteRequested="{x:Bind OnOpenAppExecuteRequested}" />
@@ -30,6 +32,8 @@
         <XamlUICommand x:Name="ResetCommand" ExecuteRequested="{x:Bind OnResetExecuteRequested}" />
         <XamlUICommand x:Name="UninstallCommand" ExecuteRequested="{x:Bind OnUninstallExecuteRequested}" />
         <XamlUICommand x:Name="ViewInformationCommand" ExecuteRequested="{x:Bind OnViewInformationExecuteRequested}" />
+
+        <backdrop:CommandBarSecondaryCommandsBackdrop x:Name="CommandBarSecondaryCommandsBackdrop" />
     </Page.Resources>
 
     <Grid>
@@ -106,7 +110,8 @@
                 Grid.Column="5"
                 VerticalAlignment="Center"
                 Background="Transparent"
-                DefaultLabelPosition="Right">
+                DefaultLabelPosition="Right"
+                Loaded="{x:Bind CommandBarSecondaryCommandsBackdrop.OnLoaded}">
 
                 <CommandBar.PrimaryCommands>
                     <AppBarButton

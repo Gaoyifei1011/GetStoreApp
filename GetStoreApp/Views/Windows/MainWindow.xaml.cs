@@ -65,8 +65,8 @@ namespace GetStoreApp.Views.Windows
         private readonly SUBCLASSPROC mainWindowSubClassProc;
         private bool isDialogOpening;
         private ContentIsland contentIsland;
-        private readonly DisplayInformation displayInformation;
-        private readonly IDisplayInformation2 displayInformation2;
+        private DisplayInformation displayInformation;
+        private IDisplayInformation2 displayInformation2;
         private InputKeyboardSource inputKeyboardSource;
 
         public new static MainWindow Current { get; private set; }
@@ -199,6 +199,7 @@ namespace GetStoreApp.Views.Windows
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
             displayInformation = DisplayInformation.CreateForWindowId(AppWindow.Id);
             displayInformation2 = displayInformation.As<IDisplayInformation2>();
+            CommandBarSecondaryCommandsBackdrop.Initialize();
 
             // 标题栏和右键菜单设置
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
@@ -332,6 +333,10 @@ namespace GetStoreApp.Views.Windows
 
                 if (result is ContentDialogResult.Primary)
                 {
+                    displayInformation.Dispose();
+                    displayInformation = null;
+                    displayInformation2 = null;
+                    CommandBarSecondaryCommandsBackdrop.Uninitialize();
                     AppWindow.Changed -= OnAppWindowChanged;
                     contentIsland.Environment.SettingChanged -= OnSettingChanged;
                     inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
@@ -353,6 +358,10 @@ namespace GetStoreApp.Views.Windows
             }
             else
             {
+                displayInformation.Dispose();
+                displayInformation = null;
+                displayInformation2 = null;
+                CommandBarSecondaryCommandsBackdrop.Uninitialize();
                 AppWindow.Changed -= OnAppWindowChanged;
                 contentIsland.Environment.SettingChanged -= OnSettingChanged;
                 inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;

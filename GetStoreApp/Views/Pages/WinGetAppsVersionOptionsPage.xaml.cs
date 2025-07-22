@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.Backdrop;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
@@ -51,6 +52,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string ProcessorArchitectureX64String = ResourceService.GetLocalized("WinGetAppsVersionOptions/ProcessorArchitectureX64");
         private readonly string ProcessorArchitectureX86String = ResourceService.GetLocalized("WinGetAppsVersionOptions/ProcessorArchitectureX86");
         private readonly ProcessorArchitecture currentProcessorArchitecture = Package.Current.Id.Architecture;
+        private bool isInitialized;
 
         private WinGetPage WinGetPage { get; set; }
 
@@ -372,6 +374,12 @@ namespace GetStoreApp.Views.Pages
         protected override void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
+
+            if (!isInitialized)
+            {
+                isInitialized = true;
+                GlobalNotificationService.ApplicationExit += OnApplicationExit;
+            }
 
             if (args.Parameter is List<object> argsList && argsList.Count is 3 && argsList[0] is WinGetPage winGetPage && argsList[1] is WinGetAppsVersionDialog winGetAppsVersionDialog && argsList[2] is PackageOperationModel packageOperation)
             {
@@ -1359,6 +1367,29 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第二部分：WinGet 应用版本信息操作选项页面——挂载的事件
+
+        #region 第二部分：WinGet 应用版本信息操作选项页面——自定义事件
+
+        /// <summary>
+        /// 应用程序退出时触发的事件
+        /// </summary>
+        private void OnApplicationExit()
+        {
+            try
+            {
+                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+                CommandBarSecondaryCommandsDownloadBackdrop.Dispose();
+                CommandBarSecondaryCommandsInstallBackdrop.Dispose();
+                CommandBarSecondaryCommandsRepairBackdrop.Dispose();
+                CommandBarSecondaryCommandsUpgradeBackdrop.Dispose();
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetAppsVersionOptionsPage), nameof(OnApplicationExit), 1, e);
+            }
+        }
+
+        #endregion 第二部分：WinGet 应用版本信息操作选项页面——自定义事件
 
         private Visibility CheckPackagePath(string packagePath)
         {
