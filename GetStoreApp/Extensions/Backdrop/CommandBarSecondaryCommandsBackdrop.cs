@@ -9,7 +9,6 @@ using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Numerics;
-using WinRT;
 
 // 抑制 CA1822 警告
 #pragma warning disable CA1822
@@ -26,6 +25,7 @@ namespace GetStoreApp.Extensions.Backdrop
 
         private bool isDisposed;
         private bool isConnected;
+        private bool isLoaded;
         private Grid visualGrid;
         private Popup secondaryCommandsPopup;
         private ContentExternalBackdropLink backdropLink;
@@ -63,11 +63,24 @@ namespace GetStoreApp.Extensions.Backdrop
         /// </summary>
         public void OnLoaded(object sender, RoutedEventArgs args)
         {
-            if (sender is CommandBar commandBar && FindDescendant<Popup>(commandBar, "OverflowPopup") is Popup popup)
+            if (!isLoaded && sender is CommandBar commandBar && FindDescendant<Popup>(commandBar, "OverflowPopup") is Popup popup)
             {
+                isLoaded = true;
                 secondaryCommandsPopup = popup;
                 secondaryCommandsPopup.Opened += OnPopupOpened;
                 secondaryCommandsPopup.ActualThemeChanged += OnActualThemeChanged;
+            }
+        }
+
+        /// <summary>
+        /// 弹出窗口主题发生更改时触发的事件
+        /// </summary>
+
+        private void OnActualThemeChanged(FrameworkElement sender, object args)
+        {
+            if (isConnected && systemBackdropConfiguration is not null)
+            {
+                systemBackdropConfiguration.Theme = Enum.TryParse(Convert.ToString(secondaryCommandsPopup.ActualTheme), out SystemBackdropTheme systemBackdropTheme) ? systemBackdropTheme : SystemBackdropTheme.Default;
             }
         }
 
@@ -80,45 +93,36 @@ namespace GetStoreApp.Extensions.Backdrop
             {
                 Compositor compositor = ElementCompositionPreview.GetElementVisual(grid).Compositor;
 
-                if (isInitialized && !isConnected)
+                if (isInitialized)
                 {
-                    isConnected = true;
-                    visualGrid = new();
-                    grid.Children.Insert(0, visualGrid);
-
-                    backdropLink = ContentExternalBackdropLink.Create(compositor);
-                    backdropLink.ExternalBackdropBorderMode = CompositionBorderMode.Soft;
-                    backdropLink.PlacementVisual.Size = grid.ActualSize;
-                    backdropLink.PlacementVisual.Clip = compositor.CreateRectangleClip(0, 0, grid.ActualSize.X, grid.ActualSize.Y, cornerRadius, cornerRadius, cornerRadius, cornerRadius);
-                    backdropLink.PlacementVisual.BorderMode = CompositionBorderMode.Soft;
-
-                    ElementCompositionPreview.SetElementChildVisual(visualGrid, backdropLink.PlacementVisual);
-
-                    systemBackdropConfiguration = new()
+                    if (!isConnected)
                     {
-                        IsInputActive = true,
-                        Theme = ElementThemeToSystemBackdropTheme(secondaryCommandsPopup.ActualTheme)
-                    };
-                    desktopAcrylicController.SetSystemBackdropConfiguration(systemBackdropConfiguration);
-                    desktopAcrylicController.AddSystemBackdropTarget(backdropLink.As<ICompositionSupportsSystemBackdrop>());
-                }
-                else if (backdropLink is not null && systemBackdropConfiguration is not null)
-                {
-                    backdropLink.PlacementVisual.Size = grid.ActualSize;
-                    backdropLink.PlacementVisual.Clip = compositor.CreateRectangleClip(0, 0, grid.ActualSize.X, grid.ActualSize.Y, cornerRadius, cornerRadius, cornerRadius, cornerRadius);
-                }
-            }
-        }
+                        isConnected = true;
+                        visualGrid = new();
+                        grid.Children.Insert(0, visualGrid);
 
-        /// <summary>
-        /// 弹出窗口主题发生更改时触发的事件
-        /// </summary>
+                        backdropLink = ContentExternalBackdropLink.Create(compositor);
+                        backdropLink.ExternalBackdropBorderMode = CompositionBorderMode.Soft;
+                        backdropLink.PlacementVisual.Size = grid.ActualSize;
+                        backdropLink.PlacementVisual.Clip = compositor.CreateRectangleClip(0, 0, grid.ActualSize.X, grid.ActualSize.Y, cornerRadius, cornerRadius, cornerRadius, cornerRadius);
+                        backdropLink.PlacementVisual.BorderMode = CompositionBorderMode.Soft;
 
-        private void OnActualThemeChanged(FrameworkElement sender, object args)
-        {
-            if (isConnected && systemBackdropConfiguration is not null)
-            {
-                systemBackdropConfiguration.Theme = ElementThemeToSystemBackdropTheme(sender.ActualTheme);
+                        ElementCompositionPreview.SetElementChildVisual(visualGrid, backdropLink.PlacementVisual);
+
+                        systemBackdropConfiguration = new()
+                        {
+                            IsInputActive = true,
+                            Theme = Enum.TryParse(Convert.ToString(secondaryCommandsPopup.ActualTheme), out SystemBackdropTheme systemBackdropTheme) ? systemBackdropTheme : SystemBackdropTheme.Default
+                        };
+                        desktopAcrylicController.SetSystemBackdropConfiguration(systemBackdropConfiguration);
+                        desktopAcrylicController.AddSystemBackdropTarget(backdropLink);
+                    }
+                    else if (backdropLink is not null && systemBackdropConfiguration is not null)
+                    {
+                        backdropLink.PlacementVisual.Size = grid.ActualSize;
+                        backdropLink.PlacementVisual.Clip = compositor.CreateRectangleClip(0, 0, grid.ActualSize.X, grid.ActualSize.Y, cornerRadius, cornerRadius, cornerRadius, cornerRadius);
+                    }
+                }
             }
         }
 
@@ -184,9 +188,14 @@ namespace GetStoreApp.Extensions.Backdrop
         {
             if (!isDisposed && disposing)
             {
-                backdropLink.Dispose();
-                backdropLink = null;
-                secondaryCommandsPopup = null;
+                if (isInitialized && isConnected)
+                {
+                    desktopAcrylicController.RemoveSystemBackdropTarget(backdropLink);
+                    backdropLink.Dispose();
+                    backdropLink = null;
+                    secondaryCommandsPopup = null;
+                }
+
                 isConnected = false;
                 isDisposed = true;
             }
