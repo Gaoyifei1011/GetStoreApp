@@ -64,9 +64,7 @@ namespace Microsoft.UI.Content
             get
             {
                 IObjectReference factory = objRefMicrosoftUIContentIContentExternalBackdropLinkStatics;
-                return factory is not null && factory.IsInCurrentContext
-                    ? factory
-                    : objRefMicrosoftUIContentIContentExternalBackdropLinkStatics = ActivationFactory.Get("Microsoft.UI.Content.ContentExternalBackdropLink", IContentExternalBackdropLinkStaticsMethods.IID);
+                return factory is not null && factory.IsInCurrentContext ? factory : objRefMicrosoftUIContentIContentExternalBackdropLinkStatics = ActivationFactory.Get("Microsoft.UI.Content.ContentExternalBackdropLink", IContentExternalBackdropLinkStaticsMethods.IID);
             }
         }
 
