@@ -267,12 +267,15 @@
                                     Visibility="{x:Bind IsOperating, Mode=OneWay}" />
 
                                 <Button
+                                    Grid.Column="3"
                                     MinHeight="{ThemeResource AppBarThemeCompactHeight}"
+                                    Margin="10,0,-15,0"
                                     Padding="{ThemeResource CommandBarMoreButtonMargin}"
-                                    VerticalAlignment="Top"
+                                    VerticalAlignment="Center"
                                     Foreground="{ThemeResource CommandBarForeground}"
                                     IsAccessKeyScope="True"
-                                    Style="{ThemeResource EllipsisButton}">
+                                    Style="{ThemeResource EllipsisButton}"
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/ViewMore')}">
 
                                     <FontIcon
                                         x:Name="EllipsisIcon"
