@@ -1,5 +1,4 @@
 ﻿using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
-using System;
 using System.Runtime.InteropServices;
 
 namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Comctl32

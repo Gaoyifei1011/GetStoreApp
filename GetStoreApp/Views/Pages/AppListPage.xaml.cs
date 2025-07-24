@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Classes;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models;
-using GetStoreApp.Services.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.Windows;

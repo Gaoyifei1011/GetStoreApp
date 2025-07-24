@@ -1,5 +1,4 @@
-﻿using System;
-using WinRT;
+﻿using WinRT;
 using WinRT.Interop;
 
 // 抑制 IDE0130 警告
