@@ -186,7 +186,7 @@ namespace GetStoreApp.Views.Pages
 
             Task.Run(() =>
             {
-                int createResult = Ole32Library.CoCreateInstance(CLSID_OpenControlPanel, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER | CLSCTX.CLSCTX_INPROC_HANDLER | CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_REMOTE_SERVER, typeof(IOpenControlPanel).GUID, out IntPtr ppv);
+                int createResult = Ole32Library.CoCreateInstance(CLSID_OpenControlPanel, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER | CLSCTX.CLSCTX_INPROC_HANDLER | CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_REMOTE_SERVER, typeof(IOpenControlPanel).GUID, out nint ppv);
 
                 if (createResult is 0)
                 {
@@ -304,7 +304,7 @@ namespace GetStoreApp.Views.Pages
 
                 await Task.Run(() =>
                 {
-                    Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", uninstallParameter, null, WindowShowStyle.SW_SHOWNORMAL);
+                    Shell32Library.ShellExecute(nint.Zero, "open", "winget.exe", uninstallParameter, null, WindowShowStyle.SW_SHOWNORMAL);
                 });
             }
         }
@@ -451,7 +451,7 @@ namespace GetStoreApp.Views.Pages
         {
             Task.Run(() =>
             {
-                openControlPanel?.Open("Microsoft.ProgramsAndFeatures", null, IntPtr.Zero);
+                openControlPanel?.Open("Microsoft.ProgramsAndFeatures", null, nint.Zero);
             });
         }
 

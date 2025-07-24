@@ -25,7 +25,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// <returns>如果该函数成功，则返回值为非零值。</returns>
         [LibraryImport(Advapi32, EntryPoint = "AdjustTokenPrivileges", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool AdjustTokenPrivileges(IntPtr TokenHandle, [MarshalAs(UnmanagedType.Bool)] bool DisableAllPrivileges, ref TOKEN_PRIVILEGES NewState, uint BufferLength, IntPtr PreviousState, IntPtr ReturnLength);
+        public static partial bool AdjustTokenPrivileges(nint TokenHandle, [MarshalAs(UnmanagedType.Bool)] bool DisableAllPrivileges, ref TOKEN_PRIVILEGES NewState, uint BufferLength, nint PreviousState, nint ReturnLength);
 
         /// <summary>
         /// 启动指定计算机的关闭和可选重启，并选择性地记录关闭的原因。
@@ -68,6 +68,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
         [LibraryImport(Advapi32, EntryPoint = "OpenProcessToken", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool OpenProcessToken(IntPtr processHandle, uint desiredAccess, out IntPtr tokenHandle);
+        public static partial bool OpenProcessToken(nint processHandle, uint desiredAccess, out nint tokenHandle);
     }
 }

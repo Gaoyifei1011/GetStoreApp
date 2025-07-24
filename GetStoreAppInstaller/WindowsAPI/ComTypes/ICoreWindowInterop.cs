@@ -16,7 +16,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="hwnd">CoreWindow 的窗口句柄</param>
         /// <returns>此方法返回 HRESULT 成功或错误代码。</returns>
         [PreserveSig]
-        int GetWindowHandle(out IntPtr hwnd);
+        int GetWindowHandle(out nint hwnd);
 
         /// <summary>
         /// 设置是否已处理到 CoreWindow 的消息。此属性是只写的。

@@ -25,7 +25,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="blockMapReader">捆绑包中包的块映射的对象模型。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetBlockMap(out IntPtr blockMapReader);
+        int GetBlockMap(out nint blockMapReader);
 
         /// <summary>
         /// 从捆绑中检索只读清单对象。

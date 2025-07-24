@@ -180,8 +180,8 @@ namespace GetStoreApp.Views.Pages
                         for (int index = 0; index < processPIDList.Count; index++)
                         {
                             lpRmProcList[index].dwProcessId = (int)processPIDList[index];
-                            IntPtr hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_QUERY_LIMITED_INFORMATION, false, (int)processPIDList[index]);
-                            lpRmProcList[index].ProcessStartTime = hProcess != IntPtr.Zero && Kernel32Library.GetProcessTimes(hProcess, out FILETIME creationTime, out FILETIME exitTime, out FILETIME kernelTime, out FILETIME userTime) ? creationTime : new();
+                            nint hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_QUERY_LIMITED_INFORMATION, false, (int)processPIDList[index]);
+                            lpRmProcList[index].ProcessStartTime = hProcess != nint.Zero && Kernel32Library.GetProcessTimes(hProcess, out FILETIME creationTime, out FILETIME exitTime, out FILETIME kernelTime, out FILETIME userTime) ? creationTime : new();
                         }
 
                         dwRmStatus = RstrtmgrLibrary.RmRegisterResources(dwSessionHandle, 0, null, (uint)processPIDList.Count, lpRmProcList, 0, null);

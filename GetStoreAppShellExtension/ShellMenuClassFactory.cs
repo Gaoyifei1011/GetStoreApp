@@ -14,11 +14,11 @@ namespace GetStoreAppShellExtension
     {
         private readonly IExplorerCommand rootExplorerCommand = new RootExplorerCommand();
 
-        public int CreateInstance(IntPtr pUnkOuter, in Guid riid, out IntPtr ppvObject)
+        public int CreateInstance(nint pUnkOuter, in Guid riid, out nint ppvObject)
         {
-            if (pUnkOuter != IntPtr.Zero)
+            if (pUnkOuter != nint.Zero)
             {
-                ppvObject = IntPtr.Zero;
+                ppvObject = nint.Zero;
                 return unchecked((int)0x80040110);
             }
 

@@ -586,7 +586,7 @@ namespace GetStoreApp.Views.Pages
 
             await Task.Run(() =>
             {
-                Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", downloadParameter, null, WindowShowStyle.SW_SHOWNORMAL);
+                Shell32Library.ShellExecute(nint.Zero, "open", "winget.exe", downloadParameter, null, WindowShowStyle.SW_SHOWNORMAL);
             });
         }
 
@@ -879,7 +879,7 @@ namespace GetStoreApp.Views.Pages
 
             await Task.Run(() =>
             {
-                Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", installParameter, null, WindowShowStyle.SW_SHOWNORMAL);
+                Shell32Library.ShellExecute(nint.Zero, "open", "winget.exe", installParameter, null, WindowShowStyle.SW_SHOWNORMAL);
             });
         }
 
@@ -1148,7 +1148,7 @@ namespace GetStoreApp.Views.Pages
 
             await Task.Run(() =>
             {
-                Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", repairParameter, null, WindowShowStyle.SW_SHOWNORMAL);
+                Shell32Library.ShellExecute(nint.Zero, "open", "winget.exe", repairParameter, null, WindowShowStyle.SW_SHOWNORMAL);
             });
         }
 
@@ -1362,7 +1362,7 @@ namespace GetStoreApp.Views.Pages
 
             await Task.Run(() =>
             {
-                Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", upgradeParameter, null, WindowShowStyle.SW_SHOWNORMAL);
+                Shell32Library.ShellExecute(nint.Zero, "open", "winget.exe", upgradeParameter, null, WindowShowStyle.SW_SHOWNORMAL);
             });
         }
 

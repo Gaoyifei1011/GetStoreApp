@@ -25,6 +25,6 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.WindowsUI
         /// <param name="ppv">创建 CoreWindow 返回的对象</param>
         /// <returns>创建 CoreWindow 的结果</returns>
         [LibraryImport(WindowsUI, EntryPoint = "#1500", SetLastError = true, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
-        public static partial int PrivateCreateCoreWindow(WINDOW_TYPE WindowType, string pWindowTitle, int X, int Y, int uWidth, int uHeight, int dwAttributes, IntPtr hOwnerWindow, Guid riid, out IntPtr ppv);
+        public static partial int PrivateCreateCoreWindow(WINDOW_TYPE WindowType, string pWindowTitle, int X, int Y, int uWidth, int uHeight, int dwAttributes, nint hOwnerWindow, Guid riid, out nint ppv);
     }
 }

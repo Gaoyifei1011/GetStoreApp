@@ -886,12 +886,12 @@ namespace GetStoreAppInstaller.Views.Pages
             Program.SetTitleBarTheme(ActualTheme);
             Program.SetClassicMenuTheme(ActualTheme);
 
-            if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory3).GUID, out IntPtr appxFactoryPtr) is 0)
+            if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory3).GUID, out nint appxFactoryPtr) is 0)
             {
                 appxFactory = (IAppxFactory3)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxFactoryPtr, CreateObjectFlags.Unwrap);
             }
 
-            if (Ole32Library.CoCreateInstance(CLSID_AppxBundleFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxBundleFactory2).GUID, out IntPtr appxBundleFactoryPtr) is 0)
+            if (Ole32Library.CoCreateInstance(CLSID_AppxBundleFactory, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxBundleFactory2).GUID, out nint appxBundleFactoryPtr) is 0)
             {
                 appxBundleFactory = (IAppxBundleFactory2)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxBundleFactoryPtr, CreateObjectFlags.Unwrap);
             }
@@ -1023,7 +1023,7 @@ namespace GetStoreAppInstaller.Views.Pages
         /// </summary>
         private void OnRestoreClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_RESTORE, 0);
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_RESTORE, 0);
         }
 
         /// <summary>
@@ -1034,7 +1034,7 @@ namespace GetStoreAppInstaller.Views.Pages
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
-                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MOVE, 0);
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MOVE, 0);
             }
         }
 
@@ -1046,7 +1046,7 @@ namespace GetStoreAppInstaller.Views.Pages
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
-                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_SIZE, 0);
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_SIZE, 0);
             }
         }
 
@@ -1055,7 +1055,7 @@ namespace GetStoreAppInstaller.Views.Pages
         /// </summary>
         private void OnMinimizeClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MINIMIZE, 0);
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MINIMIZE, 0);
         }
 
         /// <summary>
@@ -1063,7 +1063,7 @@ namespace GetStoreAppInstaller.Views.Pages
         /// </summary>
         private void OnMaximizeClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MAXIMIZE, 0);
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MAXIMIZE, 0);
         }
 
         /// <summary>
@@ -1071,7 +1071,7 @@ namespace GetStoreAppInstaller.Views.Pages
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_CLOSE, 0);
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_CLOSE, 0);
         }
 
         #endregion 第二部分：窗口右键菜单事件
@@ -2250,7 +2250,7 @@ namespace GetStoreAppInstaller.Views.Pages
                     // 解析以 appxbundle 或 msixbundle 格式结尾的应用包
                     else if (string.Equals(extensionName, ".appxbundle", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msixbundle", StringComparison.OrdinalIgnoreCase))
                     {
-                        if (Ole32Library.CoCreateInstance(CLSID_AppxBundleFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxBundleFactory2).GUID, out IntPtr appxBundleFactoryPtr) is 0)
+                        if (Ole32Library.CoCreateInstance(CLSID_AppxBundleFactory, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxBundleFactory2).GUID, out nint appxBundleFactoryPtr) is 0)
                         {
                             IRandomAccessStream randomAccessStream = await FileRandomAccessStream.OpenAsync(filePath, FileAccessMode.Read);
                             if (randomAccessStream is not null && ShCoreLibrary.CreateStreamOverRandomAccessStream((randomAccessStream as IWinRTObject).NativeObject.ThisPtr, typeof(IStream).GUID, out IStream fileStream) is 0)
@@ -2516,7 +2516,7 @@ namespace GetStoreAppInstaller.Views.Pages
                 // 分段 3 ：解析资源文件
                 if (resourceFileStream is not null)
                 {
-                    ShCoreLibrary.CreateRandomAccessStreamOverStream(resourceFileStream, BSOS_OPTIONS.BSOS_DEFAULT, typeof(IRandomAccessStream).GUID, out IntPtr ppv);
+                    ShCoreLibrary.CreateRandomAccessStreamOverStream(resourceFileStream, BSOS_OPTIONS.BSOS_DEFAULT, typeof(IRandomAccessStream).GUID, out nint ppv);
                     RandomAccessStreamOverStream randomAccessStreamOverStream = RandomAccessStreamOverStream.FromAbi(ppv);
                     Stream resourceStream = randomAccessStreamOverStream.AsStream();
 
@@ -3612,7 +3612,7 @@ namespace GetStoreAppInstaller.Views.Pages
                 {
                     if (packageInformation.ImageLogo is not null)
                     {
-                        ShCoreLibrary.CreateRandomAccessStreamOverStream(packageInformation.ImageLogo, BSOS_OPTIONS.BSOS_DEFAULT, typeof(IRandomAccessStream).GUID, out IntPtr ppv);
+                        ShCoreLibrary.CreateRandomAccessStreamOverStream(packageInformation.ImageLogo, BSOS_OPTIONS.BSOS_DEFAULT, typeof(IRandomAccessStream).GUID, out nint ppv);
                         RandomAccessStreamOverStream randomAccessStreamOverStream = RandomAccessStreamOverStream.FromAbi(ppv);
                         BitmapImage bitmapImage = new();
                         await bitmapImage.SetSourceAsync(randomAccessStreamOverStream);

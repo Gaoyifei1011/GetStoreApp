@@ -18,7 +18,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="pcbRead">指向 ULONG 变量的指针，该变量接收从流对象读取的实际字节数。</param>
         /// <returns>此方法可以返回其中一个值。</returns>
         [PreserveSig]
-        int Read(IntPtr pv, uint cb, out uint pcbRead);
+        int Read(nint pv, uint cb, out uint pcbRead);
 
         /// <summary>
         /// Write 方法从当前搜寻指针处开始，将指定数量的字节写入流对象。
@@ -28,6 +28,6 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="pcbWritten">指向 ULONG 变量的指针，此方法在其中写入流对象的实际字节数。 调用方可以将此指针设置为 NULL，在这种情况下，此方法不提供实际写入的字节数。</param>
         /// <returns>此方法可以返回其中一个值。</returns>
         [PreserveSig]
-        int Write(IntPtr pv, uint cb, out uint pcbWritten);
+        int Write(nint pv, uint cb, out uint pcbWritten);
     }
 }

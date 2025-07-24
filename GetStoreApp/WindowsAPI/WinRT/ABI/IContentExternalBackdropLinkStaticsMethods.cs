@@ -19,14 +19,14 @@ namespace ABI.Microsoft.UI.Content
 
         public static unsafe global::Microsoft.UI.Content.ContentExternalBackdropLink Create(IObjectReference obj, global::Microsoft.UI.Composition.Compositor compositor)
         {
-            IntPtr thisPtr = obj.ThisPtr;
+            nint thisPtr = obj.ThisPtr;
 
             ObjectReferenceValue compositorAbi = default;
-            IntPtr retval = default;
+            nint retval = default;
             try
             {
                 compositorAbi = Compositor.CreateMarshaler2(compositor);
-                ExceptionHelpers.ThrowExceptionForHR((*(delegate* unmanaged[Stdcall]<IntPtr, IntPtr, IntPtr*, int>**)thisPtr)[6](thisPtr, MarshalInspectable<object>.GetAbi(compositorAbi), &retval));
+                ExceptionHelpers.ThrowExceptionForHR((*(delegate* unmanaged[Stdcall]<nint, nint, nint*, int>**)thisPtr)[6](thisPtr, MarshalInspectable<object>.GetAbi(compositorAbi), &retval));
                 GC.KeepAlive(obj);
                 return ContentExternalBackdropLink.FromAbi(retval);
             }

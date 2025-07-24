@@ -57,7 +57,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="token">LayoutBounds 值更改时引发事件的注册令牌</param>
         /// <returns>此方法始终返回 S_OK。</returns>
         [PreserveSig]
-        int AddLayoutBoundsChanged(IntPtr handler, out EventRegistrationToken token);
+        int AddLayoutBoundsChanged(nint handler, out EventRegistrationToken token);
 
         /// <summary>
         /// 移除当 LayoutBounds 的值更改时引发的事件。
@@ -74,7 +74,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="token">VisibleBounds 值更改时引发事件的注册令牌</param>
         /// <returns>此方法始终返回 S_OK。</returns>
         [PreserveSig]
-        int AddVisibleBoundsChanged(IntPtr handler, out EventRegistrationToken token);
+        int AddVisibleBoundsChanged(nint handler, out EventRegistrationToken token);
 
         /// <summary>
         /// 移除当 VisibleBounds 的值更改时引发的事件。
@@ -91,7 +91,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="token">按下非系统键时引发事件的注册令牌</param>
         /// <returns>此方法始终返回 S_OK。</returns>
         [PreserveSig]
-        int AddSysKeyDown(IntPtr handler, out EventRegistrationToken token);
+        int AddSysKeyDown(nint handler, out EventRegistrationToken token);
 
         /// <summary>
         /// 移除按下非系统键时引发的事件。
@@ -108,7 +108,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="token">按下非系统键后释放时引发事件的注册令牌</param>
         /// <returns>此方法始终返回 S_OK。</returns>
         [PreserveSig]
-        int AddSysKeyUp(IntPtr handler, out EventRegistrationToken token);
+        int AddSysKeyUp(nint handler, out EventRegistrationToken token);
 
         /// <summary>
         /// 移除在按下非系统键后释放时引发的事件。
@@ -125,7 +125,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="token">窗口位置发生变化的事件令牌</param>
         /// <returns>此方法始终返回 S_OK。</returns>
         [PreserveSig]
-        int AddWindowPositionChanged(IntPtr handler, out EventRegistrationToken token);
+        int AddWindowPositionChanged(nint handler, out EventRegistrationToken token);
 
         /// <summary>
         /// 移除窗口位置发生变化的事件
@@ -142,7 +142,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="token">系统设置发生变化的事件令牌</param>
         /// <returns>此方法始终返回 S_OK。</returns>
         [PreserveSig]
-        int AddSettingsChanged(IntPtr handler, out EventRegistrationToken token);
+        int AddSettingsChanged(nint handler, out EventRegistrationToken token);
 
         /// <summary>
         /// 移除系统设置发生变化的事件
@@ -159,7 +159,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="token">指示视图发生改变时的令牌</param>
         /// <returns>此方法始终返回 S_OK。</returns>
         [PreserveSig]
-        int AddViewStateChanged(IntPtr handler, out EventRegistrationToken token);
+        int AddViewStateChanged(nint handler, out EventRegistrationToken token);
 
         /// <summary>
         /// 移除指示视图发生改变时的事件
@@ -176,7 +176,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="token">在销毁窗口时发生的事件令牌</param>
         /// <returns>此方法始终返回 S_OK。</returns>
         [PreserveSig]
-        int AddDestroying(IntPtr handler, out EventRegistrationToken token);
+        int AddDestroying(nint handler, out EventRegistrationToken token);
 
         /// <summary>
         /// 移除在销毁窗口时发生的事件。

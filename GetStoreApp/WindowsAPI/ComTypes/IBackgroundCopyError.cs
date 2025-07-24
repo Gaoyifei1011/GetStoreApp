@@ -27,7 +27,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="pVal">IBackgroundCopyFile 接口指针，用于确定与错误关联的本地和远程文件名的方法。 如果错误未与本地或远程文件关联， 则 ppFile 参数设置为 NULL 。 完成后，释放 ppFile。</param>
         /// <returns>此方法返回以下 HRESULT 值。</returns>
         [PreserveSig]
-        int GetFile(out IntPtr pVal);
+        int GetFile(out nint pVal);
 
         /// <summary>
         /// 检索与错误关联的错误文本。

@@ -27,7 +27,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <summary>
         /// 此成员不再使用，并且始终设置为零。
         /// </summary>
-        public UIntPtr th32DefaultHeapID;
+        public nuint th32DefaultHeapID;
 
         /// <summary>
         /// 此成员不再使用，并且始终设置为零。

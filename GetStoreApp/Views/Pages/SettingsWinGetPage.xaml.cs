@@ -52,7 +52,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     else
                     {
-                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", "settings", null, WindowShowStyle.SW_HIDE);
+                        Shell32Library.ShellExecute(nint.Zero, "open", "winget.exe", "settings", null, WindowShowStyle.SW_HIDE);
                     }
                 }
             });

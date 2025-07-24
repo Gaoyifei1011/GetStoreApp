@@ -26,9 +26,9 @@ namespace GetStoreApp.Helpers.Root
             List<uint> processEntry32PIDList = [];
             try
             {
-                IntPtr hSnapshot = Kernel32Library.CreateToolhelp32Snapshot(CreateToolhelp32SnapshotFlags.TH32CS_SNAPPROCESS, 0);
+                nint hSnapshot = Kernel32Library.CreateToolhelp32Snapshot(CreateToolhelp32SnapshotFlags.TH32CS_SNAPPROCESS, 0);
 
-                if (Equals(hSnapshot, IntPtr.Zero) || Equals(hSnapshot, Kernel32Library.INVALID_HANDLE_VALUE))
+                if (Equals(hSnapshot, nint.Zero) || Equals(hSnapshot, Kernel32Library.INVALID_HANDLE_VALUE))
                 {
                     return processEntry32PIDList;
                 }
@@ -40,7 +40,7 @@ namespace GetStoreApp.Helpers.Root
 
                 for (bool result = Kernel32Library.Process32First(hSnapshot, ref processEntry32); result; result = Kernel32Library.Process32Next(hSnapshot, ref processEntry32))
                 {
-                    if (string.Equals(Marshal.PtrToStringUni(new IntPtr(processEntry32.szExeFile)), processName, StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(Marshal.PtrToStringUni(new nint(processEntry32.szExeFile)), processName, StringComparison.OrdinalIgnoreCase))
                     {
                         processEntry32PIDList.Add(processEntry32.th32ProcessID);
                     }

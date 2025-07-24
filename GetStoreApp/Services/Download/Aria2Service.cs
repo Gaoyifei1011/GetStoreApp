@@ -73,7 +73,7 @@ namespace GetStoreApp.Services.Download
             {
                 try
                 {
-                    Shell32Library.ShellExecute(IntPtr.Zero, "open", aria2FilePath, aria2Arguments, null, WindowShowStyle.SW_HIDE);
+                    Shell32Library.ShellExecute(nint.Zero, "open", aria2FilePath, aria2Arguments, null, WindowShowStyle.SW_HIDE);
                     aria2Timer = ThreadPoolTimer.CreatePeriodicTimer(OnTimerElapsed, TimeSpan.FromSeconds(1));
                 }
                 catch (Exception e)

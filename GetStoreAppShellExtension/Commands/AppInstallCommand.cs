@@ -73,12 +73,12 @@ namespace GetStoreAppShellExtension.Commands
         /// <summary>
         /// 根菜单命令响应处理
         /// </summary>
-        public int Invoke(IShellItemArray psiItemArray, IntPtr pbc)
+        public int Invoke(IShellItemArray psiItemArray, nint pbc)
         {
             if (psiItemArray is not null && psiItemArray.GetCount(out uint count) is 0 && count >= 1 && psiItemArray.GetItemAt(0, out IShellItem shellItem) is 0)
             {
                 shellItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string filePath);
-                Shell32Library.ShellExecute(IntPtr.Zero, "open", "GetStoreAppInstaller.exe", filePath, Path.GetDirectoryName(filePath), WindowShowStyle.SW_SHOWNORMAL);
+                Shell32Library.ShellExecute(nint.Zero, "open", "GetStoreAppInstaller.exe", filePath, Path.GetDirectoryName(filePath), WindowShowStyle.SW_SHOWNORMAL);
             }
             return 0;
         }

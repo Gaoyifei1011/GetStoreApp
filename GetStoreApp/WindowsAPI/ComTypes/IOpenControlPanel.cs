@@ -18,7 +18,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="punkSite">指向站点的指针，用于在框架中导航 Shell 文件夹控制面板项。 此参数可以为 NULL。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int Open([MarshalAs(UnmanagedType.LPWStr)] string pszName, [MarshalAs(UnmanagedType.LPWStr)] string page, IntPtr punkSite);
+        int Open([MarshalAs(UnmanagedType.LPWStr)] string pszName, [MarshalAs(UnmanagedType.LPWStr)] string page, nint punkSite);
 
         /// <summary>
         /// 获取指定控制面板项的路径。
@@ -28,7 +28,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="cchPath">pszPath 指向的缓冲区的大小（以 WCHAR 表示）。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetPath([MarshalAs(UnmanagedType.LPWStr)] string pszName, out IntPtr pszPath, uint cchPath);
+        int GetPath([MarshalAs(UnmanagedType.LPWStr)] string pszName, out nint pszPath, uint cchPath);
 
         /// <summary>
         /// 获取最新的控制面板视图：经典视图或类别视图。
@@ -36,6 +36,6 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="pView">接收最新视图的指针。 </param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetCurrentView(out IntPtr pView);
+        int GetCurrentView(out nint pView);
     }
 }

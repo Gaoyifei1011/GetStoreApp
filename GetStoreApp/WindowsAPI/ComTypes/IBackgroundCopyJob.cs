@@ -21,7 +21,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// </param>
         /// <returns>此方法返回以下 HRESULT 值以及其他值。</returns>
         [PreserveSig]
-        int AddFileSet(uint cFileCount, IntPtr pFileSet);
+        int AddFileSet(uint cFileCount, nint pFileSet);
 
         /// <summary>
         /// 将单个文件添加到作业。
@@ -38,7 +38,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="pEnum">用于枚举作业中的文件的 IEnumBackgroundCopyFiles 接口指针。 完成后释放 ppEnumFiles 。</param>
         /// <returns>此方法在成功时返回 S_OK 或错误时返回标准 COM HRESULT 值之一。</returns>
         [PreserveSig]
-        int EnumFiles(out IntPtr pEnum);
+        int EnumFiles(out nint pEnum);
 
         /// <summary>
         /// 挂起作业。 新作业、出错的作业和已完成文件传输的作业将自动挂起。
@@ -98,7 +98,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="pVal">包含与作业相关的时间戳。 有关可用的时间戳，请参阅 BG_JOB_TIMES 结构。</param>
         /// <returns>此方法返回以下 HRESULT 值以及其他值。</returns>
         [PreserveSig]
-        int GetTimes(out IntPtr pVal);
+        int GetTimes(out nint pVal);
 
         /// <summary>
         /// 检索作业的状态。
@@ -195,7 +195,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="Val">IBackgroundCopyCallback 接口指针。 若要删除当前回调接口指针，请将此参数设置为 NULL。</param>
         /// <returns>此方法返回以下 HRESULT 值以及其他值。</returns>
         [PreserveSig]
-        int SetNotifyInterface(IntPtr Val);
+        int SetNotifyInterface(nint Val);
 
         /// <summary>
         /// 检索指向 IBackgroundCopyCallback 接口实现的接口指针。
@@ -203,7 +203,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="pVal">指向 IBackgroundCopyCallback 接口实现的接口指针。 完成后，释放 ppNotifyInterface。</param>
         /// <returns>此方法返回以下 HRESULT 值以及其他值。</returns>
         [PreserveSig]
-        int GetNotifyInterface(out IntPtr pVal);
+        int GetNotifyInterface(out nint pVal);
 
         /// <summary>
         /// 设置 BITS 在尝试传输文件之前遇到暂时性错误条件后等待的最短时间长度。

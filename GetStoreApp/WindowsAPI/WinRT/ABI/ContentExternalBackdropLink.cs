@@ -19,17 +19,17 @@ namespace ABI.Microsoft.UI.Content
             return MarshalInspectable<object>.CreateMarshaler2(obj, IContentExternalBackdropLinkMethods.IID);
         }
 
-        public static IntPtr GetAbi(IObjectReference value)
+        public static nint GetAbi(IObjectReference value)
         {
             return value is null ? 0 : MarshalInterfaceHelper<object>.GetAbi(value);
         }
 
-        public static global::Microsoft.UI.Content.ContentExternalBackdropLink FromAbi(IntPtr thisPtr)
+        public static global::Microsoft.UI.Content.ContentExternalBackdropLink FromAbi(nint thisPtr)
         {
             return global::Microsoft.UI.Content.ContentExternalBackdropLink.FromAbi(thisPtr);
         }
 
-        public static IntPtr FromManaged(global::Microsoft.UI.Content.ContentExternalBackdropLink obj)
+        public static nint FromManaged(global::Microsoft.UI.Content.ContentExternalBackdropLink obj)
         {
             return obj is null ? 0 : CreateMarshaler2(obj).Detach();
         }
@@ -39,7 +39,7 @@ namespace ABI.Microsoft.UI.Content
             return MarshalInterfaceHelper<global::Microsoft.UI.Content.ContentExternalBackdropLink>.CreateMarshalerArray2(array, CreateMarshaler2);
         }
 
-        public static (int Length, IntPtr Data) GetAbiArray(object box)
+        public static (int Length, nint Data) GetAbiArray(object box)
         {
             return MarshalInterfaceHelper<global::Microsoft.UI.Content.ContentExternalBackdropLink>.GetAbiArray(box);
         }
@@ -54,7 +54,7 @@ namespace ABI.Microsoft.UI.Content
             MarshalInterfaceHelper<global::Microsoft.UI.Content.ContentExternalBackdropLink>.CopyAbiArray(array, box, FromAbi);
         }
 
-        public static (int Length, IntPtr Data) FromManagedArray(global::Microsoft.UI.Content.ContentExternalBackdropLink[] array)
+        public static (int Length, nint Data) FromManagedArray(global::Microsoft.UI.Content.ContentExternalBackdropLink[] array)
         {
             return MarshalInterfaceHelper<global::Microsoft.UI.Content.ContentExternalBackdropLink>.FromManagedArray(array, FromManaged);
         }
@@ -69,7 +69,7 @@ namespace ABI.Microsoft.UI.Content
             MarshalInterfaceHelper<global::Microsoft.UI.Content.ContentExternalBackdropLink>.DisposeMarshalerArray(array);
         }
 
-        public static void DisposeAbi(IntPtr abi)
+        public static void DisposeAbi(nint abi)
         {
             MarshalInspectable<object>.DisposeAbi(abi);
         }

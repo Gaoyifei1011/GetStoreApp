@@ -12,11 +12,11 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <summary>
         /// 指向包含筛选器友好名称的缓冲区的指针。
         /// </summary>
-        public IntPtr pszName;
+        public nint pszName;
 
         /// <summary>
         /// 指向包含筛选器模式的缓冲区的指针。
         /// </summary>
-        public IntPtr pszSpec;
+        public nint pszSpec;
     }
 }

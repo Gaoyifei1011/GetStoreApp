@@ -18,7 +18,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// </param>
         /// <returns>如果函数成功，则返回 S_OK。 否则，它将返回 HRESULT错误代码。</returns>
         [PreserveSig]
-        int Start(IntPtr ranges);
+        int Start(nint ranges);
 
         /// <summary>
         /// 暂停下载。

@@ -127,7 +127,7 @@ namespace GetStoreApp
                     }
                     else
                     {
-                        if (KernelBaseLibrary.TryCreatePackageDependency(IntPtr.Zero, dependencyPacakge.Id.FamilyName, new Windows.ApplicationModel.PackageVersion(), packageDependencyProcessorArchitectures, PackageDependencyLifetimeArtifactKind.Process, string.Empty, WindowsAPI.PInvoke.KernelBase.CreatePackageDependencyOptions.CreatePackageDependencyOptions_None, out string packageDependencyId) is 0)
+                        if (KernelBaseLibrary.TryCreatePackageDependency(nint.Zero, dependencyPacakge.Id.FamilyName, new Windows.ApplicationModel.PackageVersion(), packageDependencyProcessorArchitectures, PackageDependencyLifetimeArtifactKind.Process, string.Empty, WindowsAPI.PInvoke.KernelBase.CreatePackageDependencyOptions.CreatePackageDependencyOptions_None, out string packageDependencyId) is 0)
                         {
                             if (KernelBaseLibrary.AddPackageDependency(packageDependencyId, 0, WindowsAPI.PInvoke.KernelBase.AddPackageDependencyOptions.AddPackageDependencyOptions_PrependIfRankCollision, out _, out _) is 0)
                             {

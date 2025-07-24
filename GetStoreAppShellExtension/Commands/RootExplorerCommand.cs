@@ -81,7 +81,7 @@ namespace GetStoreAppShellExtension.Commands
         /// <summary>
         /// 根菜单命令响应处理
         /// </summary>
-        public int Invoke(IShellItemArray psiItemArray, IntPtr pbc)
+        public int Invoke(IShellItemArray psiItemArray, nint pbc)
         {
             return 0;
         }

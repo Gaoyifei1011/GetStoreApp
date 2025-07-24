@@ -20,12 +20,12 @@ namespace ABI.Microsoft.UI.Content
 
         public static unsafe global::Microsoft.UI.Dispatching.DispatcherQueue get_DispatcherQueue(IObjectReference obj)
         {
-            IntPtr thisPtr = obj.ThisPtr;
+            nint thisPtr = obj.ThisPtr;
 
-            IntPtr retval = default;
+            nint retval = default;
             try
             {
-                ExceptionHelpers.ThrowExceptionForHR((*(delegate* unmanaged[Stdcall]<IntPtr, IntPtr*, int>**)thisPtr)[6](thisPtr, &retval));
+                ExceptionHelpers.ThrowExceptionForHR((*(delegate* unmanaged[Stdcall]<nint, nint*, int>**)thisPtr)[6](thisPtr, &retval));
                 GC.KeepAlive(obj);
                 return DispatcherQueue.FromAbi(retval);
             }
@@ -37,30 +37,30 @@ namespace ABI.Microsoft.UI.Content
 
         public static unsafe global::Microsoft.UI.Composition.CompositionBorderMode get_ExternalBackdropBorderMode(IObjectReference obj)
         {
-            IntPtr thisPtr = obj.ThisPtr;
+            nint thisPtr = obj.ThisPtr;
 
             global::Microsoft.UI.Composition.CompositionBorderMode retval = default;
-            ExceptionHelpers.ThrowExceptionForHR((*(delegate* unmanaged[Stdcall]<IntPtr, global::Microsoft.UI.Composition.CompositionBorderMode*, int>**)thisPtr)[7](thisPtr, &retval));
+            ExceptionHelpers.ThrowExceptionForHR((*(delegate* unmanaged[Stdcall]<nint, global::Microsoft.UI.Composition.CompositionBorderMode*, int>**)thisPtr)[7](thisPtr, &retval));
             GC.KeepAlive(obj);
             return retval;
         }
 
         public static unsafe void set_ExternalBackdropBorderMode(IObjectReference obj, global::Microsoft.UI.Composition.CompositionBorderMode value)
         {
-            IntPtr thisPtr = obj.ThisPtr;
+            nint thisPtr = obj.ThisPtr;
 
-            ExceptionHelpers.ThrowExceptionForHR((*(delegate* unmanaged[Stdcall]<IntPtr, global::Microsoft.UI.Composition.CompositionBorderMode, int>**)thisPtr)[8](thisPtr, value));
+            ExceptionHelpers.ThrowExceptionForHR((*(delegate* unmanaged[Stdcall]<nint, global::Microsoft.UI.Composition.CompositionBorderMode, int>**)thisPtr)[8](thisPtr, value));
             GC.KeepAlive(obj);
         }
 
         public static unsafe global::Microsoft.UI.Composition.Visual get_PlacementVisual(IObjectReference obj)
         {
-            IntPtr thisPtr = obj.ThisPtr;
+            nint thisPtr = obj.ThisPtr;
 
-            IntPtr retval = default;
+            nint retval = default;
             try
             {
-                ExceptionHelpers.ThrowExceptionForHR((*(delegate* unmanaged[Stdcall]<IntPtr, IntPtr*, int>**)thisPtr)[9](thisPtr, &retval));
+                ExceptionHelpers.ThrowExceptionForHR((*(delegate* unmanaged[Stdcall]<nint, nint*, int>**)thisPtr)[9](thisPtr, &retval));
                 GC.KeepAlive(obj);
                 return Visual.FromAbi(retval);
             }

@@ -20,7 +20,7 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32
         /// <param name="hwnd">正在注册是否接受已删除文件的窗口的标识符。</param>
         /// <param name="fAccept">一个值，该值指示 hWnd 参数标识的窗口是否接受已删除的文件。 如果接受已删除的文件，则此值为 TRUE ;如果值为 FALSE ，则表示停止接受已删除的文件。</param>
         [LibraryImport(Shell32, EntryPoint = "DragAcceptFiles", SetLastError = false), PreserveSig]
-        public static partial void DragAcceptFiles(IntPtr hwnd, [MarshalAs(UnmanagedType.Bool)] bool fAccept);
+        public static partial void DragAcceptFiles(nint hwnd, [MarshalAs(UnmanagedType.Bool)] bool fAccept);
 
         /// <summary>
         /// 检索由于成功拖放操作而删除的文件的名称。
@@ -36,7 +36,7 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32
         /// 如果索引值介于零和已删除文件总数之间，并且 lpszFile 缓冲区地址为 NULL，则返回值是缓冲区所需的大小（以字符为单位）， 不包括 终止 null 字符。
         /// </returns>
         [LibraryImport(Shell32, EntryPoint = "DragQueryFileW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
-        public static partial uint DragQueryFile(UIntPtr hDrop, uint iFile, [Out, MarshalAs(UnmanagedType.LPArray)] char[] lpszFile, uint cch);
+        public static partial uint DragQueryFile(nuint hDrop, uint iFile, [Out, MarshalAs(UnmanagedType.LPArray)] char[] lpszFile, uint cch);
 
         /// <summary>
         /// 检索在拖放操作期间删除文件时鼠标指针的位置。
@@ -46,14 +46,14 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32
         /// <returns>如果删除发生在窗口的工作区中，则为 TRUE;否则为 FALSE。</returns>
         [LibraryImport(Shell32, EntryPoint = "DragQueryPoint", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool DragQueryPoint(UIntPtr hDrop, out PointInt32 lppt);
+        public static partial bool DragQueryPoint(nuint hDrop, out PointInt32 lppt);
 
         /// <summary>
         /// 描述已删除的文件的结构的标识符。 此句柄是从WM_DROPFILES消息的 wParam 参数检索的。
         /// </summary>
         /// <param name="hDrop">释放系统分配用于将文件名传输到应用程序的内存。</param>
         [LibraryImport(Shell32, EntryPoint = "DragFinish", SetLastError = false)]
-        public static partial void DragFinish(UIntPtr hDrop);
+        public static partial void DragFinish(nuint hDrop);
 
         /// <summary>
         /// 从分析名称创建和初始化命令行管理程序项对象。

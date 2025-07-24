@@ -60,7 +60,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="token">设备的每英寸 (DPI) 的原始点数属性更改时发生的事件令牌</param>
         /// <returns>此方法始终返回 S_OK。</returns>
         [PreserveSig]
-        int AddDpiChanged(IntPtr handler, out EventRegistrationToken token);
+        int AddDpiChanged(nint handler, out EventRegistrationToken token);
 
         /// <summary>
         /// 注销设备的每英寸 (DPI) 的原始点数属性更改时发生的事件。
@@ -85,7 +85,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="token">注册设备上的按钮与监视器方向匹配的方向更改时发生的事件令牌</param>
         /// <returns>此方法始终返回 S_OK。</returns>
         [PreserveSig]
-        int AddOrientationChanged(IntPtr handler, out EventRegistrationToken token);
+        int AddOrientationChanged(nint handler, out EventRegistrationToken token);
 
         /// <summary>
         /// 注册注销设备上的按钮与监视器方向匹配的方向更改时发生的事件。

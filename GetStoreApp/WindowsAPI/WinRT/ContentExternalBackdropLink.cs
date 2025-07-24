@@ -68,7 +68,7 @@ namespace Microsoft.UI.Content
             }
         }
 
-        private IntPtr ThisPtr { get => inner?.ThisPtr ?? ((IWinRTObject)this).NativeObject.ThisPtr; }
+        private nint ThisPtr { get => inner?.ThisPtr ?? ((IWinRTObject)this).NativeObject.ThisPtr; }
 
         private IObjectReference ObjRefMicrosoftUIContentIContentExternalBackdropLink { get => inner; }
 
@@ -96,7 +96,7 @@ namespace Microsoft.UI.Content
             return IContentExternalBackdropLinkStaticsMethods.Create(ObjRefMicrosoftUIContentIContentExternalBackdropLinkStatics, compositor);
         }
 
-        public static ContentExternalBackdropLink FromAbi(IntPtr thisPtr)
+        public static ContentExternalBackdropLink FromAbi(nint thisPtr)
         {
             return thisPtr is 0 ? default! : MarshalInspectable<ContentExternalBackdropLink>.FromAbi(thisPtr);
         }
@@ -118,7 +118,7 @@ namespace Microsoft.UI.Content
 
         public void Dispose() => ABI.System.IDisposableMethods.Dispose(ObjRefSystemIDisposable);
 
-        CustomQueryInterfaceResult ICustomQueryInterface.GetInterface(ref Guid iid, out IntPtr ppv)
+        CustomQueryInterfaceResult ICustomQueryInterface.GetInterface(ref Guid iid, out nint ppv)
         {
             ppv = 0;
             if (IsOverridableInterface(iid) || IID.IID_IInspectable == iid)

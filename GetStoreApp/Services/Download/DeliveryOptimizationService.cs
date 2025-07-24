@@ -71,15 +71,15 @@ namespace GetStoreApp.Services.Download
                     IDOManager doManager = null;
 
                     // 创建 IDoManager
-                    int createResult = Ole32Library.CoCreateInstance(CLSID_DeliveryOptimization, IntPtr.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, typeof(IDOManager).GUID, out IntPtr ppv);
+                    int createResult = Ole32Library.CoCreateInstance(CLSID_DeliveryOptimization, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, typeof(IDOManager).GUID, out nint ppv);
 
                     if (createResult is 0)
                     {
                         doManager = (IDOManager)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.None);
                         doManager.CreateDownload(out IDODownload doDownload);
-                        ComWrappers.TryGetComInstance(doDownload, out IntPtr doDownloadPointer);
-                        Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new IntPtr(-1), 0, 3, IntPtr.Zero, 32);
-                        Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new IntPtr(-1), 0, 3, IntPtr.Zero, 32);
+                        ComWrappers.TryGetComInstance(doDownload, out nint doDownloadPointer);
+                        Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new nint(-1), 0, 3, nint.Zero, 32);
+                        Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new nint(-1), 0, 3, nint.Zero, 32);
 
                         // 添加下载信息
                         ComVariant displayNameVariant = ComVariant.Create(displayName);
@@ -127,7 +127,7 @@ namespace GetStoreApp.Services.Download
                             TotalSize = 0,
                         });
 
-                        doDownload.Start(IntPtr.Zero);
+                        doDownload.Start(nint.Zero);
                     }
                 }
                 catch (Exception e)
@@ -150,7 +150,7 @@ namespace GetStoreApp.Services.Download
                 {
                     if (DeliveryOptimizationDict.TryGetValue(downloadID, out (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
                     {
-                        int continueResult = downloadValue.doDownload.Start(IntPtr.Zero);
+                        int continueResult = downloadValue.doDownload.Start(nint.Zero);
 
                         if (continueResult is 0)
                         {

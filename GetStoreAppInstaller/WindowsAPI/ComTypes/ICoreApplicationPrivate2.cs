@@ -11,9 +11,9 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         int InitializeForAttach();
 
         [PreserveSig]
-        int WaitForActivate(out IntPtr coreWindow);
+        int WaitForActivate(out nint coreWindow);
 
         [PreserveSig]
-        int CreateNonImmersiveView(out IntPtr coreApplicationView);
+        int CreateNonImmersiveView(out nint coreApplicationView);
     }
 }

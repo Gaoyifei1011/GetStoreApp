@@ -48,7 +48,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="resources">循环访问资源的枚举器。</param>
         /// <returns>如果方法成功，则返回 S_OK。</returns>
         [PreserveSig]
-        int GetResources(out IntPtr resources);
+        int GetResources(out nint resources);
 
         /// <summary>
         /// 获取循环访问清单中定义的设备功能的枚举器。
@@ -56,7 +56,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="deviceCapabilities">循环访问设备功能的枚举器。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetDeviceCapabilities(out IntPtr deviceCapabilities);
+        int GetDeviceCapabilities(out nint deviceCapabilities);
 
         /// <summary>
         /// 获取包清单中定义的指定先决条件。

@@ -43,7 +43,7 @@ namespace GetStoreApp.Helpers.Root
 
             try
             {
-                IntPtr handle = NativeLibrary.Load(KernelBaseLibrary.KernelBase);
+                nint handle = NativeLibrary.Load(KernelBaseLibrary.KernelBase);
                 try
                 {
                     IsWindows11_24H1OrGreater = NativeLibrary.TryGetExport(handle, "TryCreatePackageDependency2", out _);

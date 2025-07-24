@@ -70,7 +70,7 @@ namespace GetStoreAppInstaller
         {
             ComWrappersSupport.InitializeComWrappers();
 
-            if (Ole32Library.CoCreateInstance(CLSID_ApplicationActivationManager, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IApplicationActivationManager).GUID, out IntPtr applicationActivationManagerPtr) is 0)
+            if (Ole32Library.CoCreateInstance(CLSID_ApplicationActivationManager, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IApplicationActivationManager).GUID, out nint applicationActivationManagerPtr) is 0)
             {
                 applicationActivationManager = (IApplicationActivationManager)StrategyBasedComWrappers.GetOrCreateObjectForComInstance(applicationActivationManagerPtr, CreateObjectFlags.Unwrap);
             }
@@ -134,9 +134,9 @@ namespace GetStoreAppInstaller
             MainAppWindow.Closing += OnAppWindowClosing;
 
             // 创建 CoreWindow
-            WindowsUILibrary.PrivateCreateCoreWindow(WINDOW_TYPE.IMMERSIVE_HOSTED, "XamlContentCoreWindow", 0, 0, 0, 0, 0, Win32Interop.GetWindowFromWindowId(MainAppWindow.Id), typeof(ICoreWindow).GUID, out IntPtr coreWindowPtr);
+            WindowsUILibrary.PrivateCreateCoreWindow(WINDOW_TYPE.IMMERSIVE_HOSTED, "XamlContentCoreWindow", 0, 0, 0, 0, 0, Win32Interop.GetWindowFromWindowId(MainAppWindow.Id), typeof(ICoreWindow).GUID, out nint coreWindowPtr);
             CoreWindow coreWindow = CoreWindow.FromAbi(coreWindowPtr);
-            coreWindow.As<ICoreWindowInterop>().GetWindowHandle(out IntPtr coreWindowHandle);
+            coreWindow.As<ICoreWindowInterop>().GetWindowHandle(out nint coreWindowHandle);
             DisplayInformation = DisplayInformation.GetForCurrentView();
             MainAppWindow.Resize(new SizeInt32(Convert.ToInt32(800 * DisplayInformation.RawPixelsPerViewPixel), Convert.ToInt32(560 * DisplayInformation.RawPixelsPerViewPixel)));
             (MainAppWindow.Presenter as OverlappedPresenter).PreferredMinimumWidth = Convert.ToInt32(800 * DisplayInformation.RawPixelsPerViewPixel);
@@ -166,14 +166,14 @@ namespace GetStoreAppInstaller
             XamlIslandsApp app = new();
 
             mainWindowSubClassProc = new SUBCLASSPROC(MainWindowSubClassProc);
-            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(MainAppWindow.Id), mainWindowSubClassProc, 0, IntPtr.Zero);
+            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(MainAppWindow.Id), mainWindowSubClassProc, 0, nint.Zero);
 
             int style = GetWindowLongAuto(coreWindowHandle, WindowLongIndexFlags.GWL_STYLE);
             style |= (int)WindowStyle.WS_CHILD;
             style &= ~unchecked((int)WindowStyle.WS_POPUP);
             SetWindowLongAuto(coreWindowHandle, WindowLongIndexFlags.GWL_STYLE, style);
 
-            CoreApplication.As<ICoreApplicationPrivate2>().CreateNonImmersiveView(out IntPtr coreApplicationViewPtr);
+            CoreApplication.As<ICoreApplicationPrivate2>().CreateNonImmersiveView(out nint coreApplicationViewPtr);
             CoreApplicationView coreApplicationView = CoreApplicationView.FromAbi(coreApplicationViewPtr);
 
             if (RuntimeHelper.IsElevated)
@@ -223,7 +223,7 @@ namespace GetStoreAppInstaller
             }
             else if (args.DidPositionChange)
             {
-                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(CoreAppWindow.Id), WindowMessage.WM_MOVE, UIntPtr.Zero, IntPtr.Zero);
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(CoreAppWindow.Id), WindowMessage.WM_MOVE, nuint.Zero, nint.Zero);
             }
         }
 
@@ -266,7 +266,7 @@ namespace GetStoreAppInstaller
         /// <summary>
         /// 应用主窗口消息处理
         /// </summary>
-        private static IntPtr MainWindowSubClassProc(IntPtr hWnd, WindowMessage Msg, UIntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
+        private static nint MainWindowSubClassProc(nint hWnd, WindowMessage Msg, nuint wParam, nint lParam, uint uIdSubclass, nint dwRefData)
         {
             switch (Msg)
             {
@@ -302,7 +302,7 @@ namespace GetStoreAppInstaller
                     {
                         SYSTEMCOMMAND sysCommand = (SYSTEMCOMMAND)(wParam & 0xFFF0);
 
-                        if (sysCommand is SYSTEMCOMMAND.SC_KEYMENU && lParam is (IntPtr)Windows.System.VirtualKey.Space)
+                        if (sysCommand is SYSTEMCOMMAND.SC_KEYMENU && lParam is (nint)Windows.System.VirtualKey.Space)
                         {
                             return 0;
                         }
@@ -311,7 +311,7 @@ namespace GetStoreAppInstaller
                 // 处理 Alt + space 按键弹出窗口右键菜单的消息
                 case WindowMessage.WM_SYSKEYDOWN:
                     {
-                        if (Equals(wParam, (UIntPtr)Windows.System.VirtualKey.Space) && ((lParam & 0x20000000) is not 0) && Window.Current is not null && Window.Current.Content is InstallerPage mainPage)
+                        if (Equals(wParam, (nuint)Windows.System.VirtualKey.Space) && ((lParam & 0x20000000) is not 0) && Window.Current is not null && Window.Current.Content is InstallerPage mainPage)
                         {
                             FlyoutShowOptions options = new()
                             {
@@ -385,7 +385,7 @@ namespace GetStoreAppInstaller
             int iconTotalCount = User32Library.PrivateExtractIcons(Environment.ProcessPath, 0, 0, 0, null, null, 0, 0);
 
             // 用于接收获取到的图标指针
-            IntPtr[] hIcons = new IntPtr[iconTotalCount];
+            nint[] hIcons = new nint[iconTotalCount];
 
             // 对应的图标id
             int[] ids = new int[iconTotalCount];
@@ -394,7 +394,7 @@ namespace GetStoreAppInstaller
             int successCount = User32Library.PrivateExtractIcons(Environment.ProcessPath, 0, 256, 256, hIcons, ids, iconTotalCount, 0);
 
             // GetStoreApp.exe 应用程序只有一个图标
-            if (successCount >= 1 && hIcons[0] != IntPtr.Zero)
+            if (successCount >= 1 && hIcons[0] != nint.Zero)
             {
                 appWindow.SetIcon(Win32Interop.GetIconIdFromIcon(hIcons[0]));
             }
@@ -485,17 +485,17 @@ namespace GetStoreAppInstaller
         /// <summary>
         /// 获取窗口属性
         /// </summary>
-        private static int GetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex)
+        private static int GetWindowLongAuto(nint hWnd, WindowLongIndexFlags nIndex)
         {
-            return IntPtr.Size is 8 ? User32Library.GetWindowLongPtr(hWnd, nIndex) : User32Library.GetWindowLong(hWnd, nIndex);
+            return nint.Size is 8 ? User32Library.GetWindowLongPtr(hWnd, nIndex) : User32Library.GetWindowLong(hWnd, nIndex);
         }
 
         /// <summary>
         /// 更改窗口属性
         /// </summary>
-        private static IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, IntPtr dwNewLong)
+        private static nint SetWindowLongAuto(nint hWnd, WindowLongIndexFlags nIndex, nint dwNewLong)
         {
-            return IntPtr.Size is 8 ? User32Library.SetWindowLongPtr(hWnd, nIndex, dwNewLong) : User32Library.SetWindowLong(hWnd, nIndex, dwNewLong);
+            return nint.Size is 8 ? User32Library.SetWindowLongPtr(hWnd, nIndex, dwNewLong) : User32Library.SetWindowLong(hWnd, nIndex, dwNewLong);
         }
     }
 }

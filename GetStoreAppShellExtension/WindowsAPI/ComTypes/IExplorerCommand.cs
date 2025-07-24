@@ -62,7 +62,7 @@ namespace GetStoreAppShellExtension.WindowsAPI.ComTypes
         /// <param name="pbc">指向 IBindCtx 接口的指针，该接口提供对绑定上下文的访问。 如果不需要绑定上下文，此值可以为 NULL 。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int Invoke([MarshalAs(UnmanagedType.Interface)] IShellItemArray psiItemArray, IntPtr pbc);
+        int Invoke([MarshalAs(UnmanagedType.Interface)] IShellItemArray psiItemArray, nint pbc);
 
         /// <summary>
         /// 获取与 Windows 资源管理器命令关联的标志。

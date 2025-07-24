@@ -175,7 +175,7 @@ namespace GetStoreApp.Views.Pages
         {
             int result = await Task.Run(() =>
             {
-                return Shell32Library.ShellExecute(IntPtr.Zero, "runas", Environment.ProcessPath, null, null, WindowShowStyle.SW_SHOWNORMAL);
+                return Shell32Library.ShellExecute(nint.Zero, "runas", Environment.ProcessPath, null, null, WindowShowStyle.SW_SHOWNORMAL);
             });
 
             //返回值大于 32 代表函数执行成功

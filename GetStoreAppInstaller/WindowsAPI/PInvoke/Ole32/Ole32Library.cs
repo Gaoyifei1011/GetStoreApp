@@ -25,6 +25,6 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Ole32
         /// <param name="riid">对要用于与对象通信的接口标识符的引用。</param>
         /// <param name="ppv">接收 riid 中请求的接口指针的指针变量的地址。 成功返回后，*ppv 包含请求的接口指针。 失败后，*ppv 包含 NULL。</param>
         [LibraryImport(Ole32, EntryPoint = "CoCreateInstance", SetLastError = false), PreserveSig]
-        public static partial int CoCreateInstance(in Guid rclsid, IntPtr pUnkOuter, CLSCTX dwClsContext, in Guid riid, out IntPtr ppv);
+        public static partial int CoCreateInstance(in Guid rclsid, nint pUnkOuter, CLSCTX dwClsContext, in Guid riid, out nint ppv);
     }
 }

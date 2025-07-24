@@ -83,7 +83,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="grfStatFlag">指定此方法不返回 STATSTG 结构中的某些成员，从而保存内存分配操作。 值取自 STATFLAG 枚举。</param>
         /// <returns>此方法可以返回其中一个值。</returns>
         [PreserveSig]
-        int Stat(out IntPtr pstatstg, uint grfStatFlag);
+        int Stat(out nint pstatstg, uint grfStatFlag);
 
         /// <summary>
         /// Clone 方法使用自己的 seek 指针创建新的流对象，该对象引用与原始流相同的字节。

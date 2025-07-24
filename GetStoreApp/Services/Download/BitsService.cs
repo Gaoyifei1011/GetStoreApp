@@ -40,7 +40,7 @@ namespace GetStoreApp.Services.Download
                 {
                     try
                     {
-                        int createResult = Ole32Library.CoCreateInstance(CLSID_BackgroundCopyManager, IntPtr.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, typeof(IBackgroundCopyManager).GUID, out nint ppv);
+                        int createResult = Ole32Library.CoCreateInstance(CLSID_BackgroundCopyManager, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, typeof(IBackgroundCopyManager).GUID, out nint ppv);
 
                         if (createResult is 0)
                         {

@@ -101,7 +101,7 @@ namespace GetStoreApp
             int iconTotalCount = User32Library.PrivateExtractIcons(Environment.ProcessPath, 0, 0, 0, null, null, 0, 0);
 
             // 用于接收获取到的图标指针
-            IntPtr[] hIcons = new IntPtr[iconTotalCount];
+            nint[] hIcons = new nint[iconTotalCount];
 
             // 对应的图标id
             int[] ids = new int[iconTotalCount];
@@ -110,7 +110,7 @@ namespace GetStoreApp
             int successCount = User32Library.PrivateExtractIcons(Environment.ProcessPath, 0, 256, 256, hIcons, ids, iconTotalCount, 0);
 
             // GetStoreApp.exe 应用程序只有一个图标
-            if (successCount >= 1 && hIcons[0] != IntPtr.Zero)
+            if (successCount >= 1 && hIcons[0] != nint.Zero)
             {
                 appWindow.SetIcon(Win32Interop.GetIconIdFromIcon(hIcons[0]));
             }

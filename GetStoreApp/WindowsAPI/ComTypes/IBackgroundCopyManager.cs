@@ -37,7 +37,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="ppenum">用于枚举传输队列中的作业的 IEnumBackgroundCopyJobs 接口指针。 枚举器的内容取决于 dwFlags 的值。</param>
         /// <returns>如果函数成功，则返回 S_OK。 否则，它将返回 HRESULT错误代码。</returns>
         [PreserveSig]
-        int EnumJobs(uint dwFlags, out IntPtr ppenum);
+        int EnumJobs(uint dwFlags, out nint ppenum);
 
         /// <summary>
         /// 检索指定错误代码的说明。

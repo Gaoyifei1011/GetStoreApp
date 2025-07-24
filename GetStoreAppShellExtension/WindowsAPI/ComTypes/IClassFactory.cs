@@ -18,7 +18,7 @@ namespace GetStoreAppShellExtension.WindowsAPI.ComTypes
         /// <param name="ppvObject">接收 riid 中请求的接口指针的指针变量的地址。 成功返回后，*ppvObject 包含请求的接口指针。 如果 对象不支持 riid 中指定的接口，则实现必须将 *ppvObject 设置为 NULL。</param>
         /// <returns>此方法可以返回标准返回值E_INVALIDARG、E_OUTOFMEMORY和E_UNEXPECTED 和 S_OK、CLASS_E_NOAGGREGATION、E_NOINTERFACE。</returns>
         [PreserveSig]
-        int CreateInstance(IntPtr pUnkOuter, in Guid riid, out IntPtr ppvObject);
+        int CreateInstance(nint pUnkOuter, in Guid riid, out nint ppvObject);
 
         /// <summary>
         /// 锁定在内存中打开的对象应用程序。 这样可以更快地创建实例。

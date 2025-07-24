@@ -30,7 +30,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="processId">指向一个值的指针，该值在此方法成功返回时接收满足此协定的应用实例的进程 ID。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int ActivateForFile([MarshalAs(UnmanagedType.LPWStr)] string appUserModelId, IntPtr itemArray, [MarshalAs(UnmanagedType.LPWStr)] string verb, out uint processId);
+        int ActivateForFile([MarshalAs(UnmanagedType.LPWStr)] string appUserModelId, nint itemArray, [MarshalAs(UnmanagedType.LPWStr)] string verb, out uint processId);
 
         /// <summary>
         /// 为 Windows.Protocol 协议协定激活指定的 Windows 应用商店应用。
@@ -40,6 +40,6 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="processId">指向一个值的指针，该值在此方法成功返回时接收满足此协定的应用实例的进程 ID。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int ActivateForProtocol([MarshalAs(UnmanagedType.LPWStr)] string appUserModelId, IntPtr itemArray, out uint processId);
+        int ActivateForProtocol([MarshalAs(UnmanagedType.LPWStr)] string appUserModelId, nint itemArray, out uint processId);
     }
 }

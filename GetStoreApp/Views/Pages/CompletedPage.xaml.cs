@@ -236,7 +236,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     await Task.Run(() =>
                     {
-                        Shell32Library.ShellExecute(IntPtr.Zero, "open", completed.FilePath, string.Empty, null, WindowShowStyle.SW_SHOWNORMAL);
+                        Shell32Library.ShellExecute(nint.Zero, "open", completed.FilePath, string.Empty, null, WindowShowStyle.SW_SHOWNORMAL);
                     });
                 }
                 // 商店打包应用：使用应用安装程序安装或直接安装

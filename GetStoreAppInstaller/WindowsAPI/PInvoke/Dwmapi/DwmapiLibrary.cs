@@ -19,6 +19,6 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Dwmapi
         /// <param name="attrSize">通过 pvAttribute 参数设置的属性值的大小（以字节为单位）。 值集的类型及其大小（以字节为单位）取决于 dwAttribute 参数的值。</param>
         /// <returns>如果函数成功，则返回 S_OK。 否则，它将返回 HRESULT错误代码。如果桌面合成已被禁用（Windows 7 及更早版本），则此函数将返回 DWM_E_COMPOSITIONDISABLED。</returns>
         [LibraryImport(Dwmapi, EntryPoint = "DwmSetWindowAttribute", SetLastError = false), PreserveSig]
-        public static partial int DwmSetWindowAttribute(IntPtr hwnd, DWMWINDOWATTRIBUTE attr, ref int attrValue, int attrSize);
+        public static partial int DwmSetWindowAttribute(nint hwnd, DWMWINDOWATTRIBUTE attr, ref int attrValue, int attrSize);
     }
 }

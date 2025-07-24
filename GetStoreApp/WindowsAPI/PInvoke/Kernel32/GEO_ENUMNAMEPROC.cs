@@ -9,5 +9,5 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
     /// <param name="GeoId">要检查的地理位置的标识符。</param>
     /// <returns>返回 TRUE 以继续枚举，否则返回 FALSE。</returns>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate bool GEO_ENUMNAMEPROC(IntPtr unmamedParam1, IntPtr unmamedParam2);
+    public delegate bool GEO_ENUMNAMEPROC(nint unmamedParam1, nint unmamedParam2);
 }

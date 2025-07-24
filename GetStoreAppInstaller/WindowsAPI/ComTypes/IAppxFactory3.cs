@@ -35,6 +35,6 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="appInstallerReader">接收创建的 IAppInstallerReader 实例。</param>
         /// <returns>如果该方法成功，则它会返回 S_OK。 否则，它将返回一个错误代码。</returns>
         [PreserveSig]
-        int CreateAppInstallerReader([MarshalAs(UnmanagedType.Interface)] IStream inputStream, [MarshalAs(UnmanagedType.LPWStr)] string expectedDigest, [MarshalAs(UnmanagedType.Interface)] out IntPtr appInstallerReader);
+        int CreateAppInstallerReader([MarshalAs(UnmanagedType.Interface)] IStream inputStream, [MarshalAs(UnmanagedType.LPWStr)] string expectedDigest, [MarshalAs(UnmanagedType.Interface)] out nint appInstallerReader);
     }
 }

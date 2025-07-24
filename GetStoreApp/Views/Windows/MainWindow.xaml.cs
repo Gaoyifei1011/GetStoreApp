@@ -215,7 +215,7 @@ namespace GetStoreApp.Views.Windows
 
             // 为应用主窗口添加窗口过程
             mainWindowSubClassProc = new SUBCLASSPROC(MainWindowSubClassProc);
-            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0, IntPtr.Zero);
+            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0, nint.Zero);
 
             SetWindowTheme();
             SetSystemBackdrop();
@@ -416,7 +416,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnRestoreClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_RESTORE, 0);
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_RESTORE, 0);
         }
 
         /// <summary>
@@ -427,7 +427,7 @@ namespace GetStoreApp.Views.Windows
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
-                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MOVE, 0);
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MOVE, 0);
             }
         }
 
@@ -439,7 +439,7 @@ namespace GetStoreApp.Views.Windows
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
-                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_SIZE, 0);
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_SIZE, 0);
             }
         }
 
@@ -448,7 +448,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnMinimizeClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MINIMIZE, 0);
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MINIMIZE, 0);
         }
 
         /// <summary>
@@ -456,7 +456,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnMaximizeClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MAXIMIZE, 0);
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MAXIMIZE, 0);
         }
 
         /// <summary>
@@ -464,7 +464,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_CLOSE, 0);
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_CLOSE, 0);
         }
 
         #endregion 第三部分：窗口右键菜单事件
@@ -1228,7 +1228,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 应用主窗口消息处理
         /// </summary>
-        private IntPtr MainWindowSubClassProc(IntPtr hWnd, WindowMessage Msg, UIntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
+        private nint MainWindowSubClassProc(nint hWnd, WindowMessage Msg, nuint wParam, nint lParam, uint uIdSubclass, nint dwRefData)
         {
             switch (Msg)
             {

@@ -68,7 +68,7 @@ namespace GetStoreApp.Services.Settings
         private static void InitializeStoreRegionList()
         {
             enumNameProc = new GEO_ENUMNAMEPROC(EnumNameProc);
-            Kernel32Library.EnumSystemGeoNames(SYSGEOCLASS.GEOCLASS_NATION, enumNameProc, IntPtr.Zero);
+            Kernel32Library.EnumSystemGeoNames(SYSGEOCLASS.GEOCLASS_NATION, enumNameProc, nint.Zero);
             StoreRegionList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
         }
 

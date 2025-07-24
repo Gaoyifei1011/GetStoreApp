@@ -30,7 +30,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// 如果 <param name="phicon"> 参数为 NULL 且此函数成功，则返回值为文件中的图标数。 如果函数失败，则返回值为 0。 如果 <param name="phicon"> 参数不是 NULL 且函数成功，则返回值是提取的图标数。 否则，如果未找到文件，则返回值0xFFFFFFFF。
         /// </returns>
         [LibraryImport(User32, EntryPoint = "PrivateExtractIconsW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
-        public static partial int PrivateExtractIcons([MarshalAs(UnmanagedType.LPWStr)] string lpszFile, int nIconIndex, int cxIcon, int cyIcon, [Out, MarshalAs(UnmanagedType.LPArray)] IntPtr[] phicon, [Out, MarshalAs(UnmanagedType.LPArray)] int[] piconid, int nIcons, int flags);
+        public static partial int PrivateExtractIcons([MarshalAs(UnmanagedType.LPWStr)] string lpszFile, int nIconIndex, int cxIcon, int cyIcon, [Out, MarshalAs(UnmanagedType.LPArray)] nint[] phicon, [Out, MarshalAs(UnmanagedType.LPArray)] int[] piconid, int nIcons, int flags);
 
         /// <summary>
         /// 将指定的消息发送到窗口或窗口。 SendMessage 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。
@@ -45,7 +45,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="lParam">其他的消息特定信息。</param>
         /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
         [LibraryImport(User32, EntryPoint = "SendMessageW", SetLastError = false), PreserveSig]
-        public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, UIntPtr wParam, IntPtr lParam);
+        public static partial nint SendMessage(nint hWnd, WindowMessage wMsg, nuint wParam, nint lParam);
 
         /// <summary>
         /// 当仅针对当前正在运行的进程创建没有父级或所有者的窗口时，更改默认布局。
