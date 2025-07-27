@@ -1419,176 +1419,167 @@
                                     </controls:Expander.Header>
 
                                     <controls:Expander.Content>
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
+                                        <ListView ItemsSource="{x:Bind TargetDeviceFamilyCollection}" SelectionMode="None">
 
-                                            <Grid
-                                                Grid.Row="0"
-                                                Height="35"
-                                                Padding="10,0,16,0"
-                                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                                BorderThickness="0">
+                                            <ListView.ItemContainerStyle>
+                                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                    <Setter Property="Margin" Value="0" />
+                                                    <Setter Property="MinHeight" Value="0" />
+                                                    <Setter Property="Padding" Value="0" />
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
 
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="3*" />
-                                                    <ColumnDefinition Width="2*" />
-                                                    <ColumnDefinition Width="2*" />
-                                                </Grid.ColumnDefinitions>
+                                            <ItemsControl.ItemContainerTransitions>
+                                                <TransitionCollection />
+                                            </ItemsControl.ItemContainerTransitions>
 
-                                                <TextBlock
-                                                    x:Name="TargetDeviceNameHeaderText"
-                                                    Grid.Column="0"
-                                                    Margin="6,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/TargetDeviceName')}"
-                                                    TextAlignment="Left"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
+                                            <ListView.Header>
+                                                <Grid
+                                                    Height="35"
+                                                    Padding="10,0,16,0"
+                                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                    BorderThickness="0">
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/TargetDeviceName')}"
-                                                            Visibility="{x:Bind TargetDeviceNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="3*" />
+                                                        <ColumnDefinition Width="2*" />
+                                                        <ColumnDefinition Width="2*" />
+                                                    </Grid.ColumnDefinitions>
 
-                                                <TextBlock
-                                                    x:Name="MinVersionHeaderText"
-                                                    Grid.Column="1"
-                                                    Margin="6,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MinVersion')}"
-                                                    TextAlignment="Left"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
+                                                    <TextBlock
+                                                        x:Name="TargetDeviceNameHeaderText"
+                                                        Grid.Column="0"
+                                                        Margin="6,0,0,0"
+                                                        VerticalAlignment="Center"
+                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/TargetDeviceName')}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        TextWrapping="NoWrap">
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MinVersion')}"
-                                                            Visibility="{x:Bind MinVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/TargetDeviceName')}"
+                                                                Visibility="{x:Bind TargetDeviceNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
 
-                                                <TextBlock
-                                                    x:Name="MaxVersionTestedHeaderText"
-                                                    Grid.Column="2"
-                                                    Margin="6,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MaxVersionTested')}"
-                                                    TextAlignment="Left"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
+                                                    <TextBlock
+                                                        x:Name="MinVersionHeaderText"
+                                                        Grid.Column="1"
+                                                        Margin="6,0,0,0"
+                                                        VerticalAlignment="Center"
+                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MinVersion')}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        TextWrapping="NoWrap">
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MaxVersionTested')}"
-                                                            Visibility="{x:Bind MaxVersionTestedHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
-                                            </Grid>
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MinVersion')}"
+                                                                Visibility="{x:Bind MinVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
 
-                                            <ListView
-                                                Grid.Row="1"
-                                                ItemsSource="{x:Bind TargetDeviceFamilyCollection}"
-                                                SelectionMode="None">
+                                                    <TextBlock
+                                                        x:Name="MaxVersionTestedHeaderText"
+                                                        Grid.Column="2"
+                                                        Margin="6,0,0,0"
+                                                        VerticalAlignment="Center"
+                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MaxVersionTested')}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        TextWrapping="NoWrap">
 
-                                                <ListView.ItemContainerStyle>
-                                                    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                                        <Setter Property="Background" Value="Transparent" />
-                                                        <Setter Property="Margin" Value="0" />
-                                                        <Setter Property="MinHeight" Value="0" />
-                                                        <Setter Property="Padding" Value="0" />
-                                                    </Style>
-                                                </ListView.ItemContainerStyle>
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MaxVersionTested')}"
+                                                                Visibility="{x:Bind MaxVersionTestedHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
+                                                </Grid>
+                                            </ListView.Header>
 
-                                                <ItemsControl.ItemContainerTransitions>
-                                                    <TransitionCollection />
-                                                </ItemsControl.ItemContainerTransitions>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate x:DataType="model:TargetDeviceFamilyModel">
+                                                    <Grid
+                                                        Height="35"
+                                                        Padding="10,0,16,0"
+                                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                        BorderThickness="0,1,0,0">
 
-                                                <ListView.ItemTemplate>
-                                                    <DataTemplate x:DataType="model:TargetDeviceFamilyModel">
-                                                        <Grid
-                                                            Height="35"
-                                                            Padding="10,0,16,0"
-                                                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                                            BorderThickness="0,1,0,0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="3*" />
+                                                            <ColumnDefinition Width="2*" />
+                                                            <ColumnDefinition Width="2*" />
+                                                        </Grid.ColumnDefinitions>
 
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="3*" />
-                                                                <ColumnDefinition Width="2*" />
-                                                                <ColumnDefinition Width="2*" />
-                                                            </Grid.ColumnDefinitions>
+                                                        <TextBlock
+                                                            x:Name="TargetDeviceNameText"
+                                                            Grid.Column="0"
+                                                            Margin="6,0,0,0"
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Center"
+                                                            IsTextSelectionEnabled="True"
+                                                            Text="{x:Bind TargetDeviceName}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
 
-                                                            <TextBlock
-                                                                x:Name="TargetDeviceNameText"
-                                                                Grid.Column="0"
-                                                                Margin="6,0,0,0"
-                                                                HorizontalAlignment="Left"
-                                                                VerticalAlignment="Center"
-                                                                IsTextSelectionEnabled="True"
-                                                                Text="{x:Bind TargetDeviceName}"
-                                                                TextAlignment="Left"
-                                                                TextTrimming="CharacterEllipsis"
-                                                                TextWrapping="NoWrap">
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind TargetDeviceName}"
+                                                                    Visibility="{Binding ElementName=TargetDeviceNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
 
-                                                                <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Content="{x:Bind TargetDeviceName}"
-                                                                        Visibility="{Binding ElementName=TargetDeviceNameText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                                </ToolTipService.ToolTip>
-                                                            </TextBlock>
+                                                        <TextBlock
+                                                            x:Name="MinVersionText"
+                                                            Grid.Column="1"
+                                                            Margin="6,0,0,0"
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Center"
+                                                            IsTextSelectionEnabled="True"
+                                                            Text="{x:Bind system:Convert.ToString(MinVersion)}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
 
-                                                            <TextBlock
-                                                                x:Name="MinVersionText"
-                                                                Grid.Column="1"
-                                                                Margin="6,0,0,0"
-                                                                HorizontalAlignment="Left"
-                                                                VerticalAlignment="Center"
-                                                                IsTextSelectionEnabled="True"
-                                                                Text="{x:Bind system:Convert.ToString(MinVersion)}"
-                                                                TextAlignment="Left"
-                                                                TextTrimming="CharacterEllipsis"
-                                                                TextWrapping="NoWrap">
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind system:Convert.ToString(MinVersion)}"
+                                                                    Visibility="{Binding ElementName=MinVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
 
-                                                                <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Content="{x:Bind system:Convert.ToString(MinVersion)}"
-                                                                        Visibility="{Binding ElementName=MinVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                                </ToolTipService.ToolTip>
-                                                            </TextBlock>
+                                                        <TextBlock
+                                                            x:Name="MaxVersionTestedText"
+                                                            Grid.Column="2"
+                                                            Margin="6,0,0,0"
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Center"
+                                                            IsTextSelectionEnabled="True"
+                                                            Text="{x:Bind system:Convert.ToString(MaxVersionTested)}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
 
-                                                            <TextBlock
-                                                                x:Name="MaxVersionTestedText"
-                                                                Grid.Column="2"
-                                                                Margin="6,0,0,0"
-                                                                HorizontalAlignment="Left"
-                                                                VerticalAlignment="Center"
-                                                                IsTextSelectionEnabled="True"
-                                                                Text="{x:Bind system:Convert.ToString(MaxVersionTested)}"
-                                                                TextAlignment="Left"
-                                                                TextTrimming="CharacterEllipsis"
-                                                                TextWrapping="NoWrap">
-
-                                                                <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Content="{x:Bind system:Convert.ToString(MaxVersionTested)}"
-                                                                        Visibility="{Binding ElementName=MaxVersionTestedText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                                </ToolTipService.ToolTip>
-                                                            </TextBlock>
-                                                        </Grid>
-                                                    </DataTemplate>
-                                                </ListView.ItemTemplate>
-                                            </ListView>
-                                        </Grid>
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind system:Convert.ToString(MaxVersionTested)}"
+                                                                    Visibility="{Binding ElementName=MaxVersionTestedText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
                                     </controls:Expander.Content>
                                 </controls:Expander>
 
@@ -1631,84 +1622,8 @@
 
                                     <controls:Expander.Content>
                                         <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
-
-                                            <Grid
-                                                x:Name="PackageDependencyGrid"
-                                                Grid.Row="0"
-                                                Height="35"
-                                                Padding="10,0,16,0"
-                                                x:Load="{x:Bind x:Object.Equals(PackageFileType, enum:PackageFileType.Package), Mode=OneWay}"
-                                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                                BorderThickness="0">
-
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="2*" />
-                                                    <ColumnDefinition Width="2*" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-
-                                                <TextBlock
-                                                    x:Name="PackageDependencyNameHeaderText"
-                                                    Grid.Column="0"
-                                                    Margin="6,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}"
-                                                    TextAlignment="Left"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
-
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}"
-                                                            Visibility="{x:Bind PackageDependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
-
-                                                <TextBlock
-                                                    x:Name="PackageDependencyPublisherHeaderText"
-                                                    Grid.Column="1"
-                                                    Margin="6,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
-                                                    TextAlignment="Left"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
-
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
-                                                            Visibility="{x:Bind PackageDependencyPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
-
-                                                <TextBlock
-                                                    x:Name="PackageDependencyMinVersionHeaderText"
-                                                    Grid.Column="2"
-                                                    Margin="6,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyMinVersion')}"
-                                                    TextAlignment="Left"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
-
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyMinVersion')}"
-                                                            Visibility="{x:Bind PackageDependencyMinVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
-                                            </Grid>
-
                                             <ListView
                                                 x:Name="PackageDependencyListView"
-                                                Grid.Row="1"
                                                 x:Load="{x:Bind x:Object.Equals(PackageFileType, enum:PackageFileType.Package), Mode=OneWay}"
                                                 ItemsSource="{x:Bind DependencyCollection}"
                                                 SelectionMode="None">
@@ -1725,6 +1640,76 @@
                                                 <ItemsControl.ItemContainerTransitions>
                                                     <TransitionCollection />
                                                 </ItemsControl.ItemContainerTransitions>
+
+                                                <ListView.Header>
+                                                    <Grid
+                                                        x:Name="PackageDependencyGrid"
+                                                        Height="35"
+                                                        Padding="10,0,16,0"
+                                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                        BorderThickness="0">
+
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="2*" />
+                                                            <ColumnDefinition Width="2*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <TextBlock
+                                                            x:Name="PackageDependencyNameHeaderText"
+                                                            Grid.Column="0"
+                                                            Margin="6,0,0,0"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}"
+                                                                    Visibility="{x:Bind PackageDependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+
+                                                        <TextBlock
+                                                            x:Name="PackageDependencyPublisherHeaderText"
+                                                            Grid.Column="1"
+                                                            Margin="6,0,0,0"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
+                                                                    Visibility="{x:Bind PackageDependencyPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+
+                                                        <TextBlock
+                                                            x:Name="PackageDependencyMinVersionHeaderText"
+                                                            Grid.Column="2"
+                                                            Margin="6,0,0,0"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyMinVersion')}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyMinVersion')}"
+                                                                    Visibility="{x:Bind PackageDependencyMinVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </ListView.Header>
 
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate x:DataType="model:DependencyModel">
@@ -1804,117 +1789,8 @@
                                                 </ListView.ItemTemplate>
                                             </ListView>
 
-                                            <Grid
-                                                x:Name="AppInstallerDependencyGrid"
-                                                Grid.Row="0"
-                                                Height="35"
-                                                Padding="10,0,16,0"
-                                                x:Load="{x:Bind x:Object.Equals(PackageFileType, enum:PackageFileType.AppInstaller), Mode=OneWay}"
-                                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                                BorderThickness="0">
-
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="2*" />
-                                                    <ColumnDefinition Width="2*" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="40" />
-                                                </Grid.ColumnDefinitions>
-
-                                                <TextBlock
-                                                    x:Name="AppInstallerDependencyNameHeaderText"
-                                                    Grid.Column="0"
-                                                    Margin="6,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}"
-                                                    TextAlignment="Left"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
-
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}"
-                                                            Visibility="{x:Bind AppInstallerDependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
-
-                                                <TextBlock
-                                                    x:Name="AppInstallerDependencyPublisherHeaderText"
-                                                    Grid.Column="1"
-                                                    Margin="6,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
-                                                    TextAlignment="Left"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
-
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
-                                                            Visibility="{x:Bind AppInstallerDependencyPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
-
-                                                <TextBlock
-                                                    x:Name="AppInstallerDependencyVersionHeaderText"
-                                                    Grid.Column="2"
-                                                    Margin="6,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyVersion')}"
-                                                    TextAlignment="Left"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
-
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyVersion')}"
-                                                            Visibility="{x:Bind AppInstallerDependencyVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
-
-                                                <TextBlock
-                                                    x:Name="AppInstallerDependencyProcessorArchitectureHeaderText"
-                                                    Grid.Column="3"
-                                                    Margin="6,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyProcessorArchitecture')}"
-                                                    TextAlignment="Left"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
-
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyProcessorArchitecture')}"
-                                                            Visibility="{x:Bind AppInstallerDependencyProcessorArchitectureHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
-
-                                                <TextBlock
-                                                    x:Name="AppInstallerDependencyOperationHeaderText"
-                                                    Grid.Column="4"
-                                                    Margin="6,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyOperation')}"
-                                                    TextAlignment="Left"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
-
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyOperation')}"
-                                                            Visibility="{x:Bind AppInstallerDependencyOperationHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
-                                            </Grid>
-
                                             <ListView
                                                 x:Name="AppInstallerDependencyListView"
-                                                Grid.Row="1"
                                                 x:Load="{x:Bind x:Object.Equals(PackageFileType, enum:PackageFileType.AppInstaller), Mode=OneWay}"
                                                 ItemsSource="{x:Bind DependencyCollection}"
                                                 SelectionMode="None">
@@ -1931,6 +1807,114 @@
                                                 <ItemsControl.ItemContainerTransitions>
                                                     <TransitionCollection />
                                                 </ItemsControl.ItemContainerTransitions>
+
+                                                <ListView.Header>
+                                                    <Grid
+                                                        x:Name="AppInstallerDependencyGrid"
+                                                        Height="35"
+                                                        Padding="10,0,16,0"
+                                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                        BorderThickness="0">
+
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="2*" />
+                                                            <ColumnDefinition Width="2*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="40" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <TextBlock
+                                                            x:Name="AppInstallerDependencyNameHeaderText"
+                                                            Grid.Column="0"
+                                                            Margin="6,0,0,0"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}"
+                                                                    Visibility="{x:Bind AppInstallerDependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+
+                                                        <TextBlock
+                                                            x:Name="AppInstallerDependencyPublisherHeaderText"
+                                                            Grid.Column="1"
+                                                            Margin="6,0,0,0"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
+                                                                    Visibility="{x:Bind AppInstallerDependencyPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+
+                                                        <TextBlock
+                                                            x:Name="AppInstallerDependencyVersionHeaderText"
+                                                            Grid.Column="2"
+                                                            Margin="6,0,0,0"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyVersion')}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyVersion')}"
+                                                                    Visibility="{x:Bind AppInstallerDependencyVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+
+                                                        <TextBlock
+                                                            x:Name="AppInstallerDependencyProcessorArchitectureHeaderText"
+                                                            Grid.Column="3"
+                                                            Margin="6,0,0,0"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyProcessorArchitecture')}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyProcessorArchitecture')}"
+                                                                    Visibility="{x:Bind AppInstallerDependencyProcessorArchitectureHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+
+                                                        <TextBlock
+                                                            x:Name="AppInstallerDependencyOperationHeaderText"
+                                                            Grid.Column="4"
+                                                            Margin="6,0,0,0"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyOperation')}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyOperation')}"
+                                                                    Visibility="{x:Bind AppInstallerDependencyOperationHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </ListView.Header>
 
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate x:DataType="model:DependencyModel">
@@ -2175,256 +2159,247 @@
                                     </controls:Expander.Header>
 
                                     <controls:Expander.Content>
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
+                                        <ListView ItemsSource="{x:Bind ApplicationCollection}" SelectionMode="None">
 
-                                            <Grid
-                                                Grid.Row="0"
-                                                Height="35"
-                                                Padding="10,0,16,0"
-                                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                                BorderThickness="0">
+                                            <ListView.ItemContainerStyle>
+                                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                    <Setter Property="Margin" Value="0" />
+                                                    <Setter Property="MinHeight" Value="0" />
+                                                    <Setter Property="Padding" Value="0" />
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
 
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="2*" />
-                                                    <ColumnDefinition Width="2*" />
-                                                    <ColumnDefinition Width="2*" />
-                                                    <ColumnDefinition Width="2*" />
-                                                    <ColumnDefinition Width="3*" />
-                                                </Grid.ColumnDefinitions>
+                                            <ItemsControl.ItemContainerTransitions>
+                                                <TransitionCollection />
+                                            </ItemsControl.ItemContainerTransitions>
 
-                                                <TextBlock
-                                                    x:Name="AppIDHeaderText"
-                                                    Grid.Column="0"
-                                                    Margin="6,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppID')}"
-                                                    TextAlignment="Left"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
+                                            <ListView.Header>
+                                                <Grid
+                                                    Height="35"
+                                                    Padding="10,0,16,0"
+                                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                    BorderThickness="0">
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppID')}"
-                                                            Visibility="{x:Bind AppIDHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="2*" />
+                                                        <ColumnDefinition Width="2*" />
+                                                        <ColumnDefinition Width="2*" />
+                                                        <ColumnDefinition Width="2*" />
+                                                        <ColumnDefinition Width="3*" />
+                                                    </Grid.ColumnDefinitions>
 
-                                                <TextBlock
-                                                    x:Name="AppDescriptionHeaderText"
-                                                    Grid.Column="1"
-                                                    Margin="6,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppDescription')}"
-                                                    TextAlignment="Left"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
+                                                    <TextBlock
+                                                        x:Name="AppIDHeaderText"
+                                                        Grid.Column="0"
+                                                        Margin="6,0,0,0"
+                                                        VerticalAlignment="Center"
+                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppID')}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        TextWrapping="NoWrap">
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppDescription')}"
-                                                            Visibility="{x:Bind AppDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppID')}"
+                                                                Visibility="{x:Bind AppIDHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
 
-                                                <TextBlock
-                                                    x:Name="ExecutableHeaderText"
-                                                    Grid.Column="2"
-                                                    Margin="6,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Executable')}"
-                                                    TextAlignment="Left"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
+                                                    <TextBlock
+                                                        x:Name="AppDescriptionHeaderText"
+                                                        Grid.Column="1"
+                                                        Margin="6,0,0,0"
+                                                        VerticalAlignment="Center"
+                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppDescription')}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        TextWrapping="NoWrap">
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Executable')}"
-                                                            Visibility="{x:Bind ExecutableHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppDescription')}"
+                                                                Visibility="{x:Bind AppDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
 
-                                                <TextBlock
-                                                    x:Name="EntryPointHeaderText"
-                                                    Grid.Column="3"
-                                                    Margin="6,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/EntryPoint')}"
-                                                    TextAlignment="Left"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
+                                                    <TextBlock
+                                                        x:Name="ExecutableHeaderText"
+                                                        Grid.Column="2"
+                                                        Margin="6,0,0,0"
+                                                        VerticalAlignment="Center"
+                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Executable')}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        TextWrapping="NoWrap">
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/EntryPoint')}"
-                                                            Visibility="{x:Bind EntryPointHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Executable')}"
+                                                                Visibility="{x:Bind ExecutableHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
 
-                                                <TextBlock
-                                                    x:Name="AppUserModelIdHeaderText"
-                                                    Grid.Column="4"
-                                                    Margin="6,0,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppUserModelId')}"
-                                                    TextAlignment="Left"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
+                                                    <TextBlock
+                                                        x:Name="EntryPointHeaderText"
+                                                        Grid.Column="3"
+                                                        Margin="6,0,0,0"
+                                                        VerticalAlignment="Center"
+                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/EntryPoint')}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        TextWrapping="NoWrap">
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppUserModelId')}"
-                                                            Visibility="{x:Bind AppUserModelIdHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
-                                            </Grid>
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/EntryPoint')}"
+                                                                Visibility="{x:Bind EntryPointHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
 
-                                            <ListView
-                                                Grid.Row="1"
-                                                ItemsSource="{x:Bind ApplicationCollection}"
-                                                SelectionMode="None">
+                                                    <TextBlock
+                                                        x:Name="AppUserModelIdHeaderText"
+                                                        Grid.Column="4"
+                                                        Margin="6,0,0,0"
+                                                        VerticalAlignment="Center"
+                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppUserModelId')}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        TextWrapping="NoWrap">
 
-                                                <ListView.ItemContainerStyle>
-                                                    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                                        <Setter Property="Background" Value="Transparent" />
-                                                        <Setter Property="Margin" Value="0" />
-                                                        <Setter Property="MinHeight" Value="0" />
-                                                        <Setter Property="Padding" Value="0" />
-                                                    </Style>
-                                                </ListView.ItemContainerStyle>
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppUserModelId')}"
+                                                                Visibility="{x:Bind AppUserModelIdHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
+                                                </Grid>
+                                            </ListView.Header>
 
-                                                <ItemsControl.ItemContainerTransitions>
-                                                    <TransitionCollection />
-                                                </ItemsControl.ItemContainerTransitions>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate x:DataType="model:ApplicationModel">
+                                                    <Grid
+                                                        Height="35"
+                                                        Padding="10,0,16,0"
+                                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                        BorderThickness="0,1,0,0">
 
-                                                <ListView.ItemTemplate>
-                                                    <DataTemplate x:DataType="model:ApplicationModel">
-                                                        <Grid
-                                                            Height="35"
-                                                            Padding="10,0,16,0"
-                                                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                                            BorderThickness="0,1,0,0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="2*" />
+                                                            <ColumnDefinition Width="2*" />
+                                                            <ColumnDefinition Width="2*" />
+                                                            <ColumnDefinition Width="2*" />
+                                                            <ColumnDefinition Width="3*" />
+                                                        </Grid.ColumnDefinitions>
 
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="2*" />
-                                                                <ColumnDefinition Width="2*" />
-                                                                <ColumnDefinition Width="2*" />
-                                                                <ColumnDefinition Width="2*" />
-                                                                <ColumnDefinition Width="3*" />
-                                                            </Grid.ColumnDefinitions>
+                                                        <TextBlock
+                                                            x:Name="AppIDText"
+                                                            Grid.Column="0"
+                                                            Margin="6,0,0,0"
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Center"
+                                                            IsTextSelectionEnabled="True"
+                                                            Text="{x:Bind AppID}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
 
-                                                            <TextBlock
-                                                                x:Name="AppIDText"
-                                                                Grid.Column="0"
-                                                                Margin="6,0,0,0"
-                                                                HorizontalAlignment="Left"
-                                                                VerticalAlignment="Center"
-                                                                IsTextSelectionEnabled="True"
-                                                                Text="{x:Bind AppID}"
-                                                                TextAlignment="Left"
-                                                                TextTrimming="CharacterEllipsis"
-                                                                TextWrapping="NoWrap">
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind AppID}"
+                                                                    Visibility="{Binding ElementName=AppIDText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
 
-                                                                <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Content="{x:Bind AppID}"
-                                                                        Visibility="{Binding ElementName=AppIDText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                                </ToolTipService.ToolTip>
-                                                            </TextBlock>
+                                                        <TextBlock
+                                                            x:Name="AppDescriptionText"
+                                                            Grid.Column="1"
+                                                            Margin="6,0,0,0"
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Center"
+                                                            IsTextSelectionEnabled="True"
+                                                            Text="{x:Bind AppDescription}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
 
-                                                            <TextBlock
-                                                                x:Name="AppDescriptionText"
-                                                                Grid.Column="1"
-                                                                Margin="6,0,0,0"
-                                                                HorizontalAlignment="Left"
-                                                                VerticalAlignment="Center"
-                                                                IsTextSelectionEnabled="True"
-                                                                Text="{x:Bind AppDescription}"
-                                                                TextAlignment="Left"
-                                                                TextTrimming="CharacterEllipsis"
-                                                                TextWrapping="NoWrap">
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind AppDescription}"
+                                                                    Visibility="{Binding ElementName=AppDescriptionText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
 
-                                                                <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Content="{x:Bind AppDescription}"
-                                                                        Visibility="{Binding ElementName=AppDescriptionText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                                </ToolTipService.ToolTip>
-                                                            </TextBlock>
+                                                        <TextBlock
+                                                            x:Name="ExecutableText"
+                                                            Grid.Column="2"
+                                                            Margin="6,0,0,0"
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Center"
+                                                            IsTextSelectionEnabled="True"
+                                                            Text="{x:Bind Executable}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
 
-                                                            <TextBlock
-                                                                x:Name="ExecutableText"
-                                                                Grid.Column="2"
-                                                                Margin="6,0,0,0"
-                                                                HorizontalAlignment="Left"
-                                                                VerticalAlignment="Center"
-                                                                IsTextSelectionEnabled="True"
-                                                                Text="{x:Bind Executable}"
-                                                                TextAlignment="Left"
-                                                                TextTrimming="CharacterEllipsis"
-                                                                TextWrapping="NoWrap">
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind Executable}"
+                                                                    Visibility="{Binding ElementName=ExecutableText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
 
-                                                                <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Content="{x:Bind Executable}"
-                                                                        Visibility="{Binding ElementName=ExecutableText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                                </ToolTipService.ToolTip>
-                                                            </TextBlock>
+                                                        <TextBlock
+                                                            x:Name="EntryPointText"
+                                                            Grid.Column="3"
+                                                            Margin="6,0,0,0"
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Center"
+                                                            IsTextSelectionEnabled="True"
+                                                            Text="{x:Bind EntryPoint}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
 
-                                                            <TextBlock
-                                                                x:Name="EntryPointText"
-                                                                Grid.Column="3"
-                                                                Margin="6,0,0,0"
-                                                                HorizontalAlignment="Left"
-                                                                VerticalAlignment="Center"
-                                                                IsTextSelectionEnabled="True"
-                                                                Text="{x:Bind EntryPoint}"
-                                                                TextAlignment="Left"
-                                                                TextTrimming="CharacterEllipsis"
-                                                                TextWrapping="NoWrap">
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind EntryPoint}"
+                                                                    Visibility="{Binding ElementName=EntryPointText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
 
-                                                                <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Content="{x:Bind EntryPoint}"
-                                                                        Visibility="{Binding ElementName=EntryPointText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                                </ToolTipService.ToolTip>
-                                                            </TextBlock>
+                                                        <TextBlock
+                                                            x:Name="AppUserModelIdText"
+                                                            Grid.Column="4"
+                                                            Margin="6,0,0,0"
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Center"
+                                                            IsTextSelectionEnabled="True"
+                                                            Text="{x:Bind AppUserModelId}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
 
-                                                            <TextBlock
-                                                                x:Name="AppUserModelIdText"
-                                                                Grid.Column="4"
-                                                                Margin="6,0,0,0"
-                                                                HorizontalAlignment="Left"
-                                                                VerticalAlignment="Center"
-                                                                IsTextSelectionEnabled="True"
-                                                                Text="{x:Bind AppUserModelId}"
-                                                                TextAlignment="Left"
-                                                                TextTrimming="CharacterEllipsis"
-                                                                TextWrapping="NoWrap">
-
-                                                                <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Content="{x:Bind AppUserModelId}"
-                                                                        Visibility="{Binding ElementName=AppUserModelIdText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                                </ToolTipService.ToolTip>
-                                                            </TextBlock>
-                                                        </Grid>
-                                                    </DataTemplate>
-                                                </ListView.ItemTemplate>
-                                            </ListView>
-                                        </Grid>
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind AppUserModelId}"
+                                                                    Visibility="{Binding ElementName=AppUserModelIdText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
                                     </controls:Expander.Content>
                                 </controls:Expander>
 

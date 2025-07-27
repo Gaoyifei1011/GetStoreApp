@@ -217,100 +217,6 @@
                             TextAlignment="Center"
                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(HistoryCollection.Count), Mode=OneWay}" />
 
-                        <Grid
-                            Height="35"
-                            Padding="6,0,0,0"
-                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(HistoryCollection.Count), Mode=OneWay}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1.5*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="70" />
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock
-                                x:Name="HistoryAppNameHeaderText"
-                                Grid.Column="0"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryAppName')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryAppName')}"
-                                        Visibility="{x:Bind HistoryAppNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
-
-                            <TextBlock
-                                x:Name="HistoryTypeHeaderText"
-                                Grid.Column="1"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryType')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryType')}"
-                                        Visibility="{x:Bind HistoryTypeHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
-
-                            <TextBlock
-                                x:Name="HistoryChannelHeaderText"
-                                Grid.Column="2"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryChannel')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryChannel')}"
-                                        Visibility="{x:Bind HistoryChannelHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
-
-                            <TextBlock
-                                x:Name="HistoryLinkHeaderText"
-                                Grid.Column="3"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryLink')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryLink')}"
-                                        Visibility="{x:Bind HistoryLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
-
-                            <TextBlock
-                                Grid.Column="4"
-                                Grid.ColumnSpan="2"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Options')}"
-                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OptionsToolTip')}" />
-                        </Grid>
-
                         <ListView
                             CornerRadius="0"
                             ItemsSource="{x:Bind HistoryCollection}"
@@ -329,6 +235,99 @@
                             <ItemsControl.ItemContainerTransitions>
                                 <TransitionCollection />
                             </ItemsControl.ItemContainerTransitions>
+
+                            <ListView.Header>
+                                <Grid Height="35" Padding="6,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.5*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="70" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock
+                                        x:Name="HistoryAppNameHeaderText"
+                                        Grid.Column="0"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryAppName')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryAppName')}"
+                                                Visibility="{x:Bind HistoryAppNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        x:Name="HistoryTypeHeaderText"
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryType')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryType')}"
+                                                Visibility="{x:Bind HistoryTypeHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        x:Name="HistoryChannelHeaderText"
+                                        Grid.Column="2"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryChannel')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryChannel')}"
+                                                Visibility="{x:Bind HistoryChannelHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        x:Name="HistoryLinkHeaderText"
+                                        Grid.Column="3"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryLink')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryLink')}"
+                                                Visibility="{x:Bind HistoryLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        Grid.Column="4"
+                                        Grid.ColumnSpan="2"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Options')}"
+                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OptionsToolTip')}" />
+                                </Grid>
+                            </ListView.Header>
 
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="model:HistoryModel">
@@ -457,7 +456,6 @@
                 Visibility="{x:Bind ResultControlVisable, Mode=OneWay}">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
@@ -719,83 +717,9 @@
                     </CommandBar>
                 </Grid>
 
-                <!--  查询链接结果列表表头栏  -->
-                <Grid
-                    Grid.Row="2"
-                    Height="35"
-                    Padding="6,0,0,0"
-                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1,0,1,1"
-                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(QueryLinksCollection.Count), Mode=OneWay}">
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="80" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock
-                        x:Name="SelectHeaderText"
-                        Grid.Column="0"
-                        Width="50"
-                        Margin="10,0,0,0"
-                        VerticalAlignment="Center"
-                        IsTapEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
-                        Tapped="{x:Bind OnSelectTapped}"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Select')}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="NoWrap"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/SelectHeader')}"
-                        Visibility="{x:Bind IsSelectMode, Mode=OneWay}" />
-
-                    <TextBlock
-                        x:Name="FileNameHeaderText"
-                        Grid.Column="1"
-                        Margin="10,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileName')}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="NoWrap">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileName')}"
-                                Visibility="{x:Bind FileNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
-
-                    <TextBlock
-                        x:Name="FileSizeHeaderText"
-                        Grid.Column="2"
-                        Margin="10,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileSize')}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="NoWrap">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileSize')}"
-                                Visibility="{x:Bind FileSizeHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
-
-                    <TextBlock
-                        Grid.Column="3"
-                        Margin="0,0,10,0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Options')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OptionsToolTip')}" />
-                </Grid>
-
                 <!--  查询链接结果列表  -->
                 <ListView
-                    Grid.Row="3"
+                    Grid.Row="2"
                     CornerRadius="0"
                     IsItemClickEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
                     ItemClick="{x:Bind OnItemClick}"
@@ -815,6 +739,79 @@
                     <ItemsControl.ItemContainerTransitions>
                         <TransitionCollection />
                     </ItemsControl.ItemContainerTransitions>
+
+                    <ListView.Header>
+                        <Grid
+                            Height="35"
+                            Padding="6,0,0,0"
+                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1,0,1,1">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="80" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                x:Name="SelectHeaderText"
+                                Grid.Column="0"
+                                Width="50"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                IsTapEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
+                                Tapped="{x:Bind OnSelectTapped}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Select')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap"
+                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/SelectHeader')}"
+                                Visibility="{x:Bind IsSelectMode, Mode=OneWay}" />
+
+                            <TextBlock
+                                x:Name="FileNameHeaderText"
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileName')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileName')}"
+                                        Visibility="{x:Bind FileNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock
+                                x:Name="FileSizeHeaderText"
+                                Grid.Column="2"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileSize')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileSize')}"
+                                        Visibility="{x:Bind FileSizeHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock
+                                Grid.Column="3"
+                                Margin="0,0,10,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Options')}"
+                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OptionsToolTip')}" />
+                        </Grid>
+                    </ListView.Header>
 
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="model:QueryLinksModel">

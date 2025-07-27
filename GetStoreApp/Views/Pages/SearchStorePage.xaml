@@ -147,44 +147,6 @@
                             TextAlignment="Center"
                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(HistoryCollection.Count), Mode=OneWay}" />
 
-                        <Grid
-                            Height="35"
-                            Padding="6,0,0,0"
-                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(HistoryCollection.Count), Mode=OneWay}">
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="80" />
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock
-                                x:Name="HistoryContentHeaderText"
-                                Grid.Column="0"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/HistoryContent')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/HistoryContent')}"
-                                        Visibility="{x:Bind HistoryContentHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
-
-                            <TextBlock
-                                Grid.Column="1"
-                                Grid.ColumnSpan="2"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/Options')}"
-                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/OptionsToolTip')}" />
-                        </Grid>
-
                         <ListView
                             CornerRadius="0"
                             ItemsSource="{x:Bind HistoryCollection}"
@@ -203,6 +165,42 @@
                             <ItemsControl.ItemContainerTransitions>
                                 <TransitionCollection />
                             </ItemsControl.ItemContainerTransitions>
+
+                            <ListView.Header>
+                                <Grid Height="35" Padding="6,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="80" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock
+                                        x:Name="HistoryContentHeaderText"
+                                        Grid.Column="0"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/HistoryContent')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/HistoryContent')}"
+                                                Visibility="{x:Bind HistoryContentHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="2"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/Options')}"
+                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/OptionsToolTip')}" />
+                                </Grid>
+                            </ListView.Header>
 
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="model:HistoryModel">
@@ -261,7 +259,6 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
@@ -310,88 +307,8 @@
                         Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(SearchStoreCollection.Count), Mode=OneWay}" />
                 </Grid>
 
-                <Grid
-                    Grid.Row="1"
-                    Height="35"
-                    Padding="6,0,0,0"
-                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1,0,1,1"
-                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(SearchStoreCollection.Count), Mode=OneWay}">
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.5*" />
-                        <ColumnDefinition Width="1.5*" />
-                        <ColumnDefinition Width="3*" />
-                        <ColumnDefinition Width="95" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock
-                        x:Name="StoreAppNameHeaderText"
-                        Grid.Column="0"
-                        Margin="10,0,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppName')}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="NoWrap">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppName')}"
-                                Visibility="{x:Bind StoreAppNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
-
-                    <TextBlock
-                        x:Name="StoreAppPublisherHeaderText"
-                        Grid.Column="1"
-                        Margin="10,0,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppPublisher')}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="NoWrap">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppPublisher')}"
-                                Visibility="{x:Bind StoreAppPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
-
-                    <TextBlock
-                        x:Name="StoreAppLinkHeaderText"
-                        Grid.Column="2"
-                        Margin="10,0,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppLink')}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="NoWrap">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppLink')}"
-                                Visibility="{x:Bind StoreAppLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
-
-                    <TextBlock
-                        Grid.Column="3"
-                        Grid.ColumnSpan="3"
-                        Margin="0,0,10,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/Options')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/OptionsToolTip')}" />
-                </Grid>
-
                 <ListView
-                    Grid.Row="2"
+                    Grid.Row="1"
                     ItemsSource="{x:Bind SearchStoreCollection}"
                     SelectionMode="None"
                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(SearchStoreCollection.Count), Mode=OneWay}">
@@ -408,6 +325,86 @@
                     <ItemsControl.ItemContainerTransitions>
                         <TransitionCollection />
                     </ItemsControl.ItemContainerTransitions>
+
+                    <ListView.Header>
+                        <Grid
+                            Height="35"
+                            Padding="6,0,0,0"
+                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1,0,1,1">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.5*" />
+                                <ColumnDefinition Width="1.5*" />
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="95" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                x:Name="StoreAppNameHeaderText"
+                                Grid.Column="0"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppName')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppName')}"
+                                        Visibility="{x:Bind StoreAppNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock
+                                x:Name="StoreAppPublisherHeaderText"
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppPublisher')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppPublisher')}"
+                                        Visibility="{x:Bind StoreAppPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock
+                                x:Name="StoreAppLinkHeaderText"
+                                Grid.Column="2"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppLink')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppLink')}"
+                                        Visibility="{x:Bind StoreAppLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock
+                                Grid.Column="3"
+                                Grid.ColumnSpan="3"
+                                Margin="0,0,10,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/Options')}"
+                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/OptionsToolTip')}" />
+                        </Grid>
+                    </ListView.Header>
 
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="model:SearchStoreModel">
