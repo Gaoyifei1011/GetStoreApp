@@ -306,7 +306,7 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/PackageVolumenDescription')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/PackageVolumeDescription')}"
                                 Visibility="{x:Bind PackageVolumeDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
