@@ -12,9 +12,11 @@
     mc:Ignorable="d">
 
     <Page.Resources>
+        <x:Double x:Key="ProgressBarTrackHeight">8</x:Double>
+
+        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
         <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
         <SolidColorBrush x:Key="CommandBarOverflowPresenterBackground" Color="Transparent" />
-        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
 
         <XamlUICommand x:Name="SetDefaultVolumeCommand" ExecuteRequested="{x:Bind OnSetDefaultVolumeExecuteRequested}" />
         <XamlUICommand x:Name="MountCommand" ExecuteRequested="{x:Bind OnMountExecuteRequested}" />
@@ -235,6 +237,7 @@
                                         Grid.ColumnSpan="2"
                                         MinHeight="8"
                                         Margin="0,2,0,2"
+                                        Background="{ThemeResource SurfaceStrokeColorDefaultBrush}"
                                         CornerRadius="{StaticResource ControlCornerRadius}"
                                         ShowError="{x:Bind IsAvailableSpaceError}"
                                         ShowPaused="{x:Bind IsAvailableSpaceWarning}"
