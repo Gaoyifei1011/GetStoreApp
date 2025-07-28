@@ -178,8 +178,6 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
                         <TextBlock
@@ -507,13 +505,8 @@
 
                         <MenuFlyoutSeparator Grid.Row="4" Margin="2,10" />
 
-                        <TextBlock
-                            Grid.Row="5"
-                            Margin="0,0,0,5"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Tag')}" />
-
                         <GridView
-                            Grid.Row="6"
+                            Grid.Row="5"
                             ItemsSource="{x:Bind TagCollection}"
                             SelectionMode="None">
 
@@ -529,6 +522,10 @@
                             <ItemsControl.ItemContainerTransitions>
                                 <TransitionCollection />
                             </ItemsControl.ItemContainerTransitions>
+
+                            <GridView.Header>
+                                <TextBlock Margin="0,0,0,5" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Tag')}" />
+                            </GridView.Header>
 
                             <GridView.ItemTemplate>
                                 <DataTemplate x:DataType="x:String">
@@ -561,18 +558,12 @@
                         </GridView>
 
                         <MenuFlyoutSeparator
-                            Grid.Row="7"
+                            Grid.Row="6"
                             Margin="2,10"
                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DocumentionCollection.Count), Mode=OneWay}" />
 
-                        <TextBlock
-                            Grid.Row="8"
-                            Margin="0,0,0,5"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Documention')}"
-                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DocumentionCollection.Count), Mode=OneWay}" />
-
                         <GridView
-                            Grid.Row="9"
+                            Grid.Row="7"
                             ItemsSource="{x:Bind DocumentionCollection}"
                             SelectionMode="None"
                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DocumentionCollection.Count), Mode=OneWay}">
@@ -589,6 +580,10 @@
                             <ItemsControl.ItemContainerTransitions>
                                 <TransitionCollection />
                             </ItemsControl.ItemContainerTransitions>
+
+                            <GridView.Header>
+                                <TextBlock Margin="0,0,0,5" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Documention')}" />
+                            </GridView.Header>
 
                             <GridView.ItemTemplate>
                                 <DataTemplate x:DataType="text:ContentLinkInfo">
