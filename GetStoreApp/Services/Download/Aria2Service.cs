@@ -174,7 +174,7 @@ namespace GetStoreApp.Services.Download
                         {
                             string responseContent = await response.Content.ReadAsStringAsync();
                             JsonObject resultObject = JsonObject.Parse(responseContent);
-                            string gid = resultObject.GetNamedString("result");
+                            string gid = resultObject.GetNamedString("appLaunch");
 
                             Aria2SemaphoreSlim?.Wait();
 
@@ -247,7 +247,7 @@ namespace GetStoreApp.Services.Download
                         {
                             string responseContent = await response.Content.ReadAsStringAsync();
                             JsonObject resultObject = JsonObject.Parse(responseContent);
-                            string gid = resultObject.GetNamedString("result");
+                            string gid = resultObject.GetNamedString("appLaunch");
 
                             Aria2SemaphoreSlim?.Wait();
 
@@ -321,7 +321,7 @@ namespace GetStoreApp.Services.Download
                         {
                             string responseContent = await response.Content.ReadAsStringAsync();
                             JsonObject resultObject = JsonObject.Parse(responseContent);
-                            string gid = resultObject.GetNamedString("result");
+                            string gid = resultObject.GetNamedString("appLaunch");
 
                             if (Aria2DownloadDict.TryGetValue(gid, out string saveFilePath))
                             {
@@ -382,7 +382,7 @@ namespace GetStoreApp.Services.Download
                         {
                             string responseContent = await response.Content.ReadAsStringAsync();
                             JsonObject resultObject = JsonObject.Parse(responseContent);
-                            string gid = resultObject.GetNamedString("result");
+                            string gid = resultObject.GetNamedString("appLaunch");
 
                             Aria2SemaphoreSlim?.Wait();
 
@@ -472,7 +472,7 @@ namespace GetStoreApp.Services.Download
 
                         string responseContent = await response.Content.ReadAsStringAsync();
                         JsonObject resultObject = JsonObject.Parse(responseContent);
-                        JsonObject downloadResultObject = resultObject.GetNamedObject("result");
+                        JsonObject downloadResultObject = resultObject.GetNamedObject("appLaunch");
                         string status = downloadResultObject.GetNamedString("status");
                         completedSize = Convert.ToDouble(downloadResultObject.GetNamedString("completedLength"));
                         totalSize = Convert.ToDouble(downloadResultObject.GetNamedString("totalLength"));

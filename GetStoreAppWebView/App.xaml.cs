@@ -1,4 +1,5 @@
-﻿using GetStoreAppWebView.Extensions.DataType.Enums;
+﻿using GetStoreAppWebView.Extensions.DataType.Classes;
+using GetStoreAppWebView.Extensions.DataType.Enums;
 using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.Views.Pages;
 using System;
@@ -10,6 +11,7 @@ using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
@@ -102,7 +104,6 @@ namespace GetStoreAppWebView
                                 secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
                                 secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
                                 secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-
                                 secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
                                 isPinnedSuccessfully = await secondaryTile.RequestCreateAsync();
                             }
@@ -112,9 +113,13 @@ namespace GetStoreAppWebView
                             }
                             finally
                             {
-                                List<string> dataList = [];
-                                dataList.Add(Convert.ToString(isPinnedSuccessfully));
-                                ResultService.SaveResult(StorageDataKind.SecondaryTile, dataList);
+                                AppLaunchArguments appLaunchArguments = new()
+                                {
+                                    AppLaunchKind = AppLaunchKind.Pinner,
+                                    IsLaunched = false,
+                                    SubParameters = [nameof(SecondaryTile), Convert.ToString(isPinnedSuccessfully)]
+                                };
+                                await AppLaunchService.SaveArgumentsAsync(appLaunchArguments);
                                 ApplicationData.Current.SignalDataChanged();
                                 await appWindow.CloseAsync();
                                 appWindowList.Remove(appWindow.UIContext);
@@ -145,9 +150,13 @@ namespace GetStoreAppWebView
                             }
                             finally
                             {
-                                List<string> dataList = [];
-                                dataList.Add(Convert.ToString(isPinnedSuccessfully));
-                                ResultService.SaveResult(StorageDataKind.TaskbarManager, dataList);
+                                AppLaunchArguments appLaunchArguments = new()
+                                {
+                                    AppLaunchKind = AppLaunchKind.Pinner,
+                                    IsLaunched = false,
+                                    SubParameters = [nameof(TaskbarManager), Convert.ToString(isPinnedSuccessfully)]
+                                };
+                                await AppLaunchService.SaveArgumentsAsync(appLaunchArguments);
                                 ApplicationData.Current.SignalDataChanged();
                                 await appWindow.CloseAsync();
                                 appWindowList.Remove(appWindow.UIContext);

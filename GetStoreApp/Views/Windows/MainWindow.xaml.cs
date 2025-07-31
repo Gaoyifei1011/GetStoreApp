@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.Backdrop;
+using GetStoreApp.Extensions.DataType.Classes;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
@@ -39,8 +40,8 @@ using Windows.Foundation.Diagnostics;
 using Windows.Graphics;
 using Windows.Networking.Connectivity;
 using Windows.Storage;
-using Windows.System;
 using Windows.UI;
+using Windows.UI.Shell;
 using Windows.UI.StartScreen;
 using WinRT;
 using WinRT.Interop;
@@ -350,7 +351,7 @@ namespace GetStoreApp.Views.Windows
                 }
                 else if (result is ContentDialogResult.Secondary)
                 {
-                    if (GetCurrentPageType() != typeof(DownloadPage))
+                    if (!Equals(GetCurrentPageType(), typeof(DownloadPage)))
                     {
                         NavigateTo(typeof(DownloadPage));
                     }
@@ -395,7 +396,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnSystemKeyDown(InputKeyboardSource sender, KeyEventArgs args)
         {
-            if (args.VirtualKey is VirtualKey.Space)
+            if (args.VirtualKey is global::Windows.System.VirtualKey.Space)
             {
                 args.Handled = true;
                 FlyoutShowOptions options = new()
@@ -485,7 +486,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnKeyDown(object sender, KeyRoutedEventArgs args)
         {
-            if (args.Key is VirtualKey.Back && args.KeyStatus.IsMenuKeyDown)
+            if (args.Key is global::Windows.System.VirtualKey.Back && args.KeyStatus.IsMenuKeyDown)
             {
                 if (GetFrameContent() is AppManagerPage appManagerPage && appManagerPage.BreadCollection.Count is 2)
                 {
@@ -513,7 +514,7 @@ namespace GetStoreApp.Views.Windows
 
                 if (RuntimeHelper.IsElevated)
                 {
-                    await Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                    await global::Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new global::Windows.System.LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
                     {
                         {"Type", nameof(SecondaryTile) },
                         { "DisplayName", displayName },
@@ -605,169 +606,11 @@ namespace GetStoreApp.Views.Windows
                 }
             }
 
+            NavigateTo(typeof(HomePage));
+
             // 初始化启动信息
-            StorageDataKind dataKind = ResultService.GetStorageDataKind();
-            List<string> dataContentList = ResultService.ReadResult(dataKind);
-            ResultService.SaveResult(StorageDataKind.None, null);
-
-            if (dataKind is StorageDataKind.Launch)
-            {
-                // 正常启动或重新启动重定向获得的内容
-                if (dataContentList.Count is 1 || dataContentList.Count is 2)
-                {
-                    NavigateTo(typeof(HomePage));
-
-                    // 正常启动或重新启动
-                    if (dataContentList[0] is "Launch" || dataContentList[0] is "Restart")
-                    {
-                        Show();
-
-                        // 应用已经启动
-                        if (dataContentList.Count is 2 && dataContentList[1] is "IsRunning")
-                        {
-                            await ShowDialogAsync(new AppRunningDialog());
-                        }
-                    }
-                    // 跳转列表或辅助磁贴启动重定向获得的内容
-                    else if (dataContentList[0] is "JumpList" || dataContentList[0] is "SecondaryTile")
-                    {
-                        NavigateTo(typeof(HomePage));
-                        if (dataContentList[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
-                        {
-                            NavigateTo(typeof(StorePage));
-                        }
-                        else if (dataContentList[1] is "AppUpdate" && GetCurrentPageType() != typeof(AppUpdatePage))
-                        {
-                            NavigateTo(typeof(AppUpdatePage));
-                        }
-                        else if (dataContentList[1] is "WinGet" && GetCurrentPageType() != typeof(WinGetPage))
-                        {
-                            NavigateTo(typeof(WinGetPage));
-                        }
-                        else if (dataContentList[1] is "AppManager" && GetCurrentPageType() != typeof(AppManagerPage))
-                        {
-                            NavigateTo(typeof(AppManagerPage));
-                        }
-                        else if (dataContentList[1] is "Download" && GetCurrentPageType() != typeof(DownloadPage))
-                        {
-                            NavigateTo(typeof(DownloadPage));
-                        }
-                    }
-                }
-                // 带有命令参数启动重定向获得的内容
-                else if (dataContentList.Count is 4)
-                {
-                    NavigateTo(typeof(HomePage));
-
-                    if (dataContentList[0] is "SecondaryTile")
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            if (dataContentList[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
-                            {
-                                NavigateTo(typeof(StorePage));
-                            }
-                            else if (dataContentList[1] is "AppUpdate" && GetCurrentPageType() != typeof(AppUpdatePage))
-                            {
-                                NavigateTo(typeof(AppUpdatePage));
-                            }
-                            else if (dataContentList[1] is "WinGet" && GetCurrentPageType() != typeof(WinGetPage))
-                            {
-                                NavigateTo(typeof(WinGetPage));
-                            }
-                            else if (dataContentList[1] is "AppManager" && GetCurrentPageType() != typeof(AppManagerPage))
-                            {
-                                NavigateTo(typeof(AppManagerPage));
-                            }
-                            else if (dataContentList[1] is "Download" && GetCurrentPageType() != typeof(DownloadPage))
-                            {
-                                NavigateTo(typeof(DownloadPage));
-                            }
-                        });
-                    }
-                    else if (dataContentList[0] is "Console")
-                    {
-                        if (Equals(GetCurrentPageType(), typeof(StorePage)))
-                        {
-                            (GetFrameContent() as StorePage).InitializeQueryLinksContent(dataContentList[1..4]);
-                        }
-                        else
-                        {
-                            NavigateTo(typeof(StorePage), dataContentList[1..4]);
-                        }
-                    }
-                }
-            }
-            // 从通知协议启动重定向获得的内容
-            else if (dataKind is StorageDataKind.Protocol)
-            {
-                NavigateTo(typeof(HomePage));
-
-                // 正常启动重定向获得的内容
-                if (dataContentList.Count is 1 || dataContentList.Count is 2)
-                {
-                    // 正常启动
-                    if (dataContentList[0] is "Launch")
-                    {
-                        Show();
-
-                        // 应用已经启动
-                        if (dataContentList.Count is 2 && dataContentList[1] is "IsRunning")
-                        {
-                            await ShowDialogAsync(new AppRunningDialog());
-                        }
-                    }
-                    // 打开设置
-                    else if (dataContentList[0] is "Settings")
-                    {
-                        if (GetCurrentPageType() != typeof(SettingsPage))
-                        {
-                            NavigateTo(typeof(SettingsPage));
-                        }
-                    }
-                }
-            }
-            // 从共享目标启动重定向获得的内容
-            else if (dataKind is StorageDataKind.ShareTarget)
-            {
-                NavigateTo(typeof(HomePage));
-
-                if (dataContentList.Count is 3)
-                {
-                    if (Equals(GetCurrentPageType(), typeof(StorePage)))
-                    {
-                        (GetFrameContent() as StorePage).InitializeQueryLinksContent(dataContentList);
-                    }
-                    else
-                    {
-                        NavigateTo(typeof(StorePage), dataContentList);
-                    }
-                }
-
-                Show();
-            }
-            // 从 Toast 通知启动重定向获得的内容
-            else if (dataKind is StorageDataKind.ToastNotification)
-            {
-                NavigateTo(typeof(HomePage));
-
-                if (dataContentList.Count is 1 && dataContentList[0] is "OpenApp")
-                {
-                    if (GetCurrentPageType() != typeof(HomePage))
-                    {
-                        NavigateTo(typeof(HomePage));
-                    }
-                }
-                else if (dataContentList.Count is 1 && dataContentList[0] is "ViewDownloadPage")
-                {
-                    if (GetCurrentPageType() != typeof(DownloadPage))
-                    {
-                        NavigateTo(typeof(DownloadPage));
-                    }
-                }
-
-                Show();
-            }
+            AppLaunchArguments appLaunchArguments = await AppLaunchService.ReadArgumentsAsync();
+            await ParseAppLaunchArgumentsAsync(appLaunchArguments, true);
 
             if (Content is not null && displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
             {
@@ -804,7 +647,7 @@ namespace GetStoreApp.Views.Windows
             {
                 NavigationModel navigationItem = NavigationItemList.Find(item => string.Equals(item.NavigationTag, PageList[PageList.FindIndex(item => string.Equals(item.Key, tag))].Key));
 
-                if (SelectedItem != navigationItem.NavigationItem)
+                if (!Equals(SelectedItem, navigationItem.NavigationItem))
                 {
                     if (PageList[PageList.FindIndex(item => string.Equals(item.Key, tag))].Key is "Web")
                     {
@@ -812,7 +655,7 @@ namespace GetStoreApp.Views.Windows
                         {
                             try
                             {
-                                await Launcher.LaunchUriAsync(new Uri("getstoreappwebbrowser:"));
+                                await global::Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreappwebbrowser:"));
                             }
                             catch (Exception e)
                             {
@@ -866,209 +709,12 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnDataChanged(ApplicationData sender, object args)
         {
-            StorageDataKind dataKind = ResultService.GetStorageDataKind();
-            List<string> dataList = ResultService.ReadResult(dataKind);
-
-            ResultService.SaveResult(StorageDataKind.None, null);
-
-            if (dataKind is StorageDataKind.Launch)
+            DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
             {
-                // 正常启动重定向获得的内容
-                if (dataList.Count is 1 || dataList.Count is 2)
-                {
-                    // 正常启动
-                    if (dataList[0] is "Launch")
-                    {
-                        DispatcherQueue.TryEnqueue(async () =>
-                        {
-                            Show();
-
-                            // 应用已经启动
-                            if (dataList.Count is 2 && dataList[1] is "IsRunning")
-                            {
-                                await ShowDialogAsync(new AppRunningDialog());
-                            }
-                        });
-                    }
-                    // 跳转列表或辅助磁贴启动重定向获得的内容
-                    else if (dataList[0] is "JumpList" || dataList[0] is "SecondaryTile")
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            if (dataList[1] is "Home" && GetCurrentPageType() != typeof(HomePage))
-                            {
-                                NavigateTo(typeof(HomePage));
-                            }
-                            else if (dataList[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
-                            {
-                                NavigateTo(typeof(StorePage));
-                            }
-                            else if (dataList[1] is "AppUpdate" && GetCurrentPageType() != typeof(AppUpdatePage))
-                            {
-                                NavigateTo(typeof(AppUpdatePage));
-                            }
-                            else if (dataList[1] is "WinGet" && GetCurrentPageType() != typeof(WinGetPage))
-                            {
-                                NavigateTo(typeof(WinGetPage));
-                            }
-                            else if (dataList[1] is "AppManager" && GetCurrentPageType() != typeof(AppManagerPage))
-                            {
-                                NavigateTo(typeof(AppManagerPage));
-                            }
-                            else if (dataList[1] is "Download" && GetCurrentPageType() != typeof(DownloadPage))
-                            {
-                                NavigateTo(typeof(DownloadPage));
-                            }
-                        });
-                    }
-                }
-                // 带有命令参数启动重定向获得的内容
-                else if (dataList.Count is 4)
-                {
-                    if (dataList[0] is "SecondaryTile")
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            if (dataList[1] is "Home" && GetCurrentPageType() != typeof(HomePage))
-                            {
-                                NavigateTo(typeof(HomePage));
-                            }
-                            else if (dataList[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
-                            {
-                                NavigateTo(typeof(StorePage));
-                            }
-                            else if (dataList[1] is "AppUpdate" && GetCurrentPageType() != typeof(AppUpdatePage))
-                            {
-                                NavigateTo(typeof(AppUpdatePage));
-                            }
-                            else if (dataList[1] is "WinGet" && GetCurrentPageType() != typeof(WinGetPage))
-                            {
-                                NavigateTo(typeof(WinGetPage));
-                            }
-                            else if (dataList[1] is "AppManager" && GetCurrentPageType() != typeof(AppManagerPage))
-                            {
-                                NavigateTo(typeof(AppManagerPage));
-                            }
-                            else if (dataList[1] is "Download" && GetCurrentPageType() != typeof(DownloadPage))
-                            {
-                                NavigateTo(typeof(DownloadPage));
-                            }
-                        });
-                    }
-                    else if (dataList[0] is "Console")
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            if (Equals(GetCurrentPageType(), typeof(StorePage)))
-                            {
-                                (GetFrameContent() as StorePage).InitializeQueryLinksContent(dataList[1..4]);
-                            }
-                            else
-                            {
-                                NavigateTo(typeof(StorePage), dataList[1..4]);
-                            }
-                        });
-                    }
-                }
-            }
-            // 从共享目标启动重定向获得的内容
-            else if (dataKind is StorageDataKind.ShareTarget)
-            {
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    if (dataList.Count is 3)
-                    {
-                        if (Equals(GetCurrentPageType(), typeof(StorePage)))
-                        {
-                            (GetFrameContent() as StorePage).InitializeQueryLinksContent(dataList);
-                        }
-                        else
-                        {
-                            NavigateTo(typeof(StorePage), dataList);
-                        }
-                    }
-
-                    Show();
-                });
-            }
-            // 从通知协议启动重定向获得的内容
-            else if (dataKind is StorageDataKind.Protocol)
-            {
-                // 正常启动重定向获得的内容
-                if (dataList.Count is 1 || dataList.Count is 2)
-                {
-                    // 正常启动
-                    if (dataList[0] is "Launch")
-                    {
-                        DispatcherQueue.TryEnqueue(async () =>
-                        {
-                            Show();
-
-                            // 应用已经启动
-                            if (dataList.Count is 2 && dataList[1] is "IsRunning")
-                            {
-                                await ShowDialogAsync(new AppRunningDialog());
-                            }
-                        });
-                    }
-                    // 打开设置
-                    else if (dataList[0] is "Settings")
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            if (GetCurrentPageType() != typeof(SettingsPage))
-                            {
-                                NavigateTo(typeof(SettingsPage));
-                            }
-                        });
-                    }
-                }
-            }
-            // 从 Toast 通知启动重定向获得的内容
-            else if (dataKind is StorageDataKind.ToastNotification)
-            {
-                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-                {
-                    if (dataList.Count is 1 && dataList[0] is "OpenApp")
-                    {
-                        if (GetCurrentPageType() != typeof(StorePage))
-                        {
-                            NavigateTo(typeof(StorePage));
-                        }
-                    }
-                    else if (dataList.Count is 1 && dataList[0] is "ViewDownloadPage")
-                    {
-                        if (GetCurrentPageType() != typeof(DownloadPage))
-                        {
-                            NavigateTo(typeof(DownloadPage));
-                        }
-                    }
-
-                    Show();
-                });
-            }
-            // 开始屏幕“辅助磁贴”固定结果
-            else if (dataKind is StorageDataKind.SecondaryTile)
-            {
-                if (dataList.Count is 1)
-                {
-                    DispatcherQueue.TryEnqueue(async () =>
-                    {
-                        await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.StartScreen, Convert.ToBoolean(dataList[0])));
-                    });
-                }
-            }
-            // 任务栏应用固定结果
-            else if (dataKind is StorageDataKind.TaskbarManager)
-            {
-                if (dataList.Count is 1)
-                {
-                    DispatcherQueue.TryEnqueue(async () =>
-                    {
-                        await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, Convert.ToBoolean(dataList[0])));
-                    });
-                }
-            }
+                // 初始化启动信息
+                AppLaunchArguments appLaunchArguments = await AppLaunchService.ReadArgumentsAsync();
+                await ParseAppLaunchArgumentsAsync(appLaunchArguments, false);
+            });
         }
 
         /// <summary>
@@ -1385,6 +1031,156 @@ namespace GetStoreApp.Views.Windows
         }
 
         #endregion 第十部分：显示对话框和应用通知
+
+        /// <summary>
+        /// 解析应用启动参数
+        /// </summary>
+        private async Task ParseAppLaunchArgumentsAsync(AppLaunchArguments appLaunchArguments, bool isFirstLaunch)
+        {
+            Show();
+
+            // 正常启动
+            if (appLaunchArguments.AppLaunchKind is AppLaunchKind.Launch)
+            {
+                // 应用已经启动
+                if (!isFirstLaunch && appLaunchArguments.IsLaunched && !(appLaunchArguments.SubParameters is not null && appLaunchArguments.SubParameters.Count > 0 && appLaunchArguments.SubParameters[0] is "Restart"))
+                {
+                    await ShowDialogAsync(new AppRunningDialog());
+                }
+            }
+            // 从跳转列表处启动
+            else if (appLaunchArguments.AppLaunchKind is AppLaunchKind.JumpList)
+            {
+                if (appLaunchArguments.SubParameters is not null && appLaunchArguments.SubParameters.Count >= 1)
+                {
+                    if (appLaunchArguments.SubParameters[0] is "Store" && !Equals(GetCurrentPageType(), typeof(StorePage)))
+                    {
+                        NavigateTo(typeof(StorePage));
+                    }
+                    else if (appLaunchArguments.SubParameters[0] is "AppUpdate" && !Equals(GetCurrentPageType(), typeof(AppUpdatePage)))
+                    {
+                        NavigateTo(typeof(AppUpdatePage));
+                    }
+                    else if (appLaunchArguments.SubParameters[0] is "WinGet" && !Equals(GetCurrentPageType(), typeof(WinGetPage)))
+                    {
+                        NavigateTo(typeof(WinGetPage));
+                    }
+                    else if (appLaunchArguments.SubParameters[0] is "AppManager" && !Equals(GetCurrentPageType(), typeof(AppManagerPage)))
+                    {
+                        NavigateTo(typeof(AppManagerPage));
+                    }
+                    else if (appLaunchArguments.SubParameters[0] is "Download" && !Equals(GetCurrentPageType(), typeof(DownloadPage)))
+                    {
+                        NavigateTo(typeof(DownloadPage));
+                    }
+                }
+            }
+            // 从辅助磁贴处启动
+            else if (appLaunchArguments.AppLaunchKind is AppLaunchKind.SecondaryTile)
+            {
+                if (appLaunchArguments.SubParameters is not null && appLaunchArguments.SubParameters.Count >= 1)
+                {
+                    if (appLaunchArguments.SubParameters[0] is "Store" && !Equals(GetCurrentPageType(), typeof(StorePage)))
+                    {
+                        NavigateTo(typeof(StorePage));
+                    }
+                    else if (appLaunchArguments.SubParameters[0] is "AppUpdate" && !Equals(GetCurrentPageType(), typeof(AppUpdatePage)))
+                    {
+                        NavigateTo(typeof(AppUpdatePage));
+                    }
+                    else if (appLaunchArguments.SubParameters[0] is "WinGet" && !Equals(GetCurrentPageType(), typeof(WinGetPage)))
+                    {
+                        NavigateTo(typeof(WinGetPage));
+                    }
+                    else if (appLaunchArguments.SubParameters[0] is "AppManager" && !Equals(GetCurrentPageType(), typeof(AppManagerPage)))
+                    {
+                        NavigateTo(typeof(AppManagerPage));
+                    }
+                    else if (appLaunchArguments.SubParameters[0] is "Download" && !Equals(GetCurrentPageType(), typeof(DownloadPage)))
+                    {
+                        NavigateTo(typeof(DownloadPage));
+                    }
+                }
+            }
+            // 从共享目标启动
+            else if (appLaunchArguments.AppLaunchKind is AppLaunchKind.ShareTarget)
+            {
+                if (appLaunchArguments.SubParameters is not null && appLaunchArguments.SubParameters.Count is 3)
+                {
+                    if (Equals(GetCurrentPageType(), typeof(StorePage)))
+                    {
+                        (GetFrameContent() as StorePage).InitializeQueryLinksContent(appLaunchArguments.SubParameters);
+                    }
+                    else
+                    {
+                        NavigateTo(typeof(StorePage), appLaunchArguments.SubParameters);
+                    }
+                }
+            }
+            // 从通知协议启动
+            else if (appLaunchArguments.AppLaunchKind is AppLaunchKind.Protocol)
+            {
+                if (appLaunchArguments.SubParameters is null)
+                {
+                    if (!isFirstLaunch && appLaunchArguments.IsLaunched)
+                    {
+                        await ShowDialogAsync(new AppRunningDialog());
+                    }
+                }
+                else
+                {
+                    if (appLaunchArguments.SubParameters.Count > 0 && appLaunchArguments.SubParameters[0] is "Settings" && !Equals(GetCurrentPageType(), typeof(SettingsPage)))
+                    {
+                        NavigateTo(typeof(SettingsPage));
+                    }
+                }
+            }
+            // 从 Toast 通知启动
+            else if (appLaunchArguments.AppLaunchKind is AppLaunchKind.ToastNotification)
+            {
+                if (appLaunchArguments.SubParameters is not null && appLaunchArguments.SubParameters.Count > 0)
+                {
+                    if (!isFirstLaunch && appLaunchArguments.IsLaunched && appLaunchArguments.SubParameters[0] is "OpenApp")
+                    {
+                        await ShowDialogAsync(new AppRunningDialog());
+                    }
+                    else if (appLaunchArguments.SubParameters[0] is "ViewDownloadPage")
+                    {
+                        if (!Equals(GetCurrentPageType(), typeof(DownloadPage)))
+                        {
+                            NavigateTo(typeof(DownloadPage));
+                        }
+                    }
+                }
+            }
+            // 从控制台启动
+            else if (appLaunchArguments.AppLaunchKind is AppLaunchKind.Console)
+            {
+                if (Equals(GetCurrentPageType(), typeof(StorePage)))
+                {
+                    (GetFrameContent() as StorePage).InitializeQueryLinksContent(appLaunchArguments.SubParameters);
+                }
+                else
+                {
+                    NavigateTo(typeof(StorePage), appLaunchArguments.SubParameters);
+                }
+            }
+            // 应用固定提示
+            else if (appLaunchArguments.AppLaunchKind is AppLaunchKind.Pinner)
+            {
+                if (appLaunchArguments.SubParameters is not null && appLaunchArguments.SubParameters.Count is 2)
+                {
+                    if (string.Equals(appLaunchArguments.SubParameters[0], nameof(SecondaryTile)))
+                    {
+                        await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.StartScreen, Convert.ToBoolean(appLaunchArguments.SubParameters[1])));
+                    }
+                    else if (string.Equals(appLaunchArguments.SubParameters[0], nameof(TaskbarManager)))
+                    {
+                        await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, Convert.ToBoolean(appLaunchArguments.SubParameters[1])));
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// 检查网络状态

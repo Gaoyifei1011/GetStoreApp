@@ -167,7 +167,7 @@ namespace GetStoreApp
             // 初始化应用资源，应用使用的语言信息和启动参数
             LanguageService.InitializeLanguage();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
-            ResultService.Initialize();
+            AppLaunchService.Initialize();
             StoreRegionService.InitializeStoreRegion();
             LinkFilterService.InitializeLinkFilter();
             QueryLinksModeService.InitializeQueryLinksMode();

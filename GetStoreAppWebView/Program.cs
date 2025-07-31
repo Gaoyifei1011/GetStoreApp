@@ -63,7 +63,7 @@ namespace GetStoreAppWebView
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
             ResourceService.LocalizeReosurce();
 
-            ResultService.Initialize();
+            AppLaunchService.Initialize();
             ThemeService.InitializeTheme();
             WebKernelService.InitializeWebKernel();
         }

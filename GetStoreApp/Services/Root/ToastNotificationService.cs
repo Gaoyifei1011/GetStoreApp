@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Classes;
+using GetStoreApp.Extensions.DataType.Enums;
 using Microsoft.Windows.AppNotifications;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,12 @@ namespace GetStoreApp.Services.Root
     {
         public static ToastNotifier AppToastNotifier { get; } = ToastNotificationManager.CreateToastNotifier();
 
+        public static AppNotificationManager AppNotificationManager { get; } = AppNotificationManager.Default;
+
         /// <summary>
         /// 处理应用通知
         /// </summary>
-        public static async Task HandleToastNotificationAsync(string content)
+        public static async Task HandleToastNotificationAsync(string content, bool isLaunched)
         {
             string notificationArgs = new WwwFormUrlDecoder(content).GetFirstValueByName("action");
 
@@ -55,15 +58,25 @@ namespace GetStoreApp.Services.Root
             }
             else if (notificationArgs.Contains("OpenApp"))
             {
-                List<string> dataList = [];
-                dataList.Add("OpenApp");
-                ResultService.SaveResult(StorageDataKind.ToastNotification, dataList);
+                AppLaunchArguments appLaunchArguments = new()
+                {
+                    AppLaunchKind = AppLaunchKind.ToastNotification,
+                    IsLaunched = isLaunched,
+                    SubParameters = ["OpenApp"]
+                };
+
+                await AppLaunchService.SaveArgumentsAsync(appLaunchArguments);
             }
             else if (notificationArgs.Contains("ViewDownloadPage"))
             {
-                List<string> dataList = [];
-                dataList.Add("ViewDownloadPage");
-                ResultService.SaveResult(StorageDataKind.ToastNotification, dataList);
+                AppLaunchArguments appLaunchArguments = new()
+                {
+                    AppLaunchKind = AppLaunchKind.ToastNotification,
+                    IsLaunched = isLaunched,
+                    SubParameters = ["ViewDownloadPage"]
+                };
+
+                await AppLaunchService.SaveArgumentsAsync(appLaunchArguments);
             }
         }
 
@@ -74,10 +87,17 @@ namespace GetStoreApp.Services.Root
         {
             try
             {
-                XmlDocument notificationDocument = new();
-                notificationDocument.LoadXml(appNotification.Payload);
-                ToastNotification notificaiton = new(notificationDocument);
-                AppToastNotifier.Show(notificaiton);
+                if (AppNotificationManager.IsSupported())
+                {
+                    AppNotificationManager.Show(appNotification);
+                }
+                else
+                {
+                    XmlDocument notificationDocument = new();
+                    notificationDocument.LoadXml(appNotification.Payload);
+                    ToastNotification notificaiton = new(notificationDocument);
+                    AppToastNotifier.Show(notificaiton);
+                }
             }
             catch (Exception e)
             {

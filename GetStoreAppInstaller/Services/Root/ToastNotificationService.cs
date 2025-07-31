@@ -13,6 +13,8 @@ namespace GetStoreAppInstaller.Services.Root
     {
         public static ToastNotifier AppToastNotifier { get; } = ToastNotificationManager.CreateToastNotifier();
 
+        public static AppNotificationManager AppNotificationManager { get; } = AppNotificationManager.Default;
+
         /// <summary>
         /// 显示通知
         /// </summary>
@@ -20,10 +22,17 @@ namespace GetStoreAppInstaller.Services.Root
         {
             try
             {
-                XmlDocument notificationDocument = new();
-                notificationDocument.LoadXml(appNotification.Payload);
-                ToastNotification notificaiton = new(notificationDocument);
-                AppToastNotifier.Show(notificaiton);
+                if (AppNotificationManager.IsSupported())
+                {
+                    AppNotificationManager.Show(appNotification);
+                }
+                else
+                {
+                    XmlDocument notificationDocument = new();
+                    notificationDocument.LoadXml(appNotification.Payload);
+                    ToastNotification notificaiton = new(notificationDocument);
+                    AppToastNotifier.Show(notificaiton);
+                }
             }
             catch (Exception e)
             {

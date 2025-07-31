@@ -12,8 +12,8 @@ using System;
 using System.Numerics;
 using Windows.Foundation.Diagnostics;
 
-// 抑制 CA1822 警告
-#pragma warning disable CA1822
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Extensions.Backdrop
 {

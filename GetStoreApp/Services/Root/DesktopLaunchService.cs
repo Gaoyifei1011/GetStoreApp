@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Classes;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models;
 using Microsoft.Windows.AppLifecycle;
 using System;
@@ -50,6 +51,7 @@ namespace GetStoreApp.Services.Root
             {
                 List<string> argumentsList = [];
                 List<string> dataList = [];
+                AppLaunchArguments appLaunchArguments = new();
                 string[] argumentsArray = Environment.GetCommandLineArgs();
                 string executableFileName = Path.GetFileName(Environment.ProcessPath);
 
@@ -73,27 +75,25 @@ namespace GetStoreApp.Services.Root
                 // 正常启动
                 if (argumentsList.Count is 0)
                 {
-                    dataList.Add("Launch");
-
-                    if (isLaunched)
-                    {
-                        dataList.Add("IsRunning");
-                    }
+                    appLaunchArguments.AppLaunchKind = AppLaunchKind.Launch;
+                    appLaunchArguments.IsLaunched = isLaunched;
+                    appLaunchArguments.SubParameters = [];
                 }
                 else if (argumentsList.Count is 1)
                 {
                     // 应用程序重新启动
                     if (argumentsList[0] is "Restart")
                     {
-                        dataList.Add("Restart");
+                        appLaunchArguments.AppLaunchKind = AppLaunchKind.Launch;
+                        appLaunchArguments.IsLaunched = isLaunched;
+                        appLaunchArguments.SubParameters = ["Restart"];
                     }
                     // 带参数启动：只有一个参数，直接输入链接
                     else
                     {
-                        dataList.Add("Console");
-                        dataList.Add("-1");
-                        dataList.Add("-1");
-                        dataList.Add(argumentsList[0]);
+                        appLaunchArguments.AppLaunchKind = AppLaunchKind.Console;
+                        appLaunchArguments.IsLaunched = isLaunched;
+                        appLaunchArguments.SubParameters = ["-1", "-1", argumentsList[0]];
                     }
                 }
                 else if (argumentsList.Count >= 2)
@@ -108,10 +108,17 @@ namespace GetStoreApp.Services.Root
                         }
                         else
                         {
-                            foreach (string argument in argumentsList)
+                            if (argumentsList[0] is "JumpList")
                             {
-                                dataList.Add(argument);
+                                appLaunchArguments.AppLaunchKind = AppLaunchKind.JumpList;
                             }
+                            else if (argumentsList[0] is "SecondaryTile")
+                            {
+                                appLaunchArguments.AppLaunchKind = AppLaunchKind.SecondaryTile;
+                            }
+
+                            appLaunchArguments.IsLaunched = isLaunched;
+                            appLaunchArguments.SubParameters = argumentsList[1..];
                         }
                     }
                     // 带参数启动：包含多个参数
@@ -125,10 +132,9 @@ namespace GetStoreApp.Services.Root
                         int channelNameIndex = channelNameParameterIndex is -1 ? -1 : ChannelList.FindIndex(item => string.Equals(item.ShortName, argumentsList[channelNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
                         string link = linkParameterIndex is -1 ? null : argumentsList[linkParameterIndex + 1];
 
-                        dataList.Add("Console");
-                        dataList.Add(Convert.ToString(typeNameIndex));
-                        dataList.Add(Convert.ToString(channelNameIndex));
-                        dataList.Add(string.IsNullOrEmpty(link) ? "PlaceHolderText" : argumentsList[5]);
+                        appLaunchArguments.AppLaunchKind = AppLaunchKind.Console;
+                        appLaunchArguments.IsLaunched = isLaunched;
+                        appLaunchArguments.SubParameters = [Convert.ToString(typeNameIndex), Convert.ToString(channelNameIndex), string.IsNullOrEmpty(link) ? "PlaceHolderText" : argumentsList[5]];
                     }
                     else
                     {
@@ -136,7 +142,7 @@ namespace GetStoreApp.Services.Root
                     }
                 }
 
-                ResultService.SaveResult(StorageDataKind.Launch, dataList);
+                await AppLaunchService.SaveArgumentsAsync(appLaunchArguments);
             }
             // 通过共享目标启动
             else if (appActivationArguments.Kind is ExtendedActivationKind.ShareTarget)
@@ -147,11 +153,14 @@ namespace GetStoreApp.Services.Root
 
                 if (shareOperation.Data.Contains(StandardDataFormats.Uri))
                 {
-                    List<string> dataList = [];
-                    dataList.Add("-1");
-                    dataList.Add("-1");
-                    dataList.Add(Convert.ToString(await shareOperation.Data.GetUriAsync()));
-                    ResultService.SaveResult(StorageDataKind.ShareTarget, dataList);
+                    AppLaunchArguments appLaunchArguments = new()
+                    {
+                        AppLaunchKind = AppLaunchKind.ShareTarget,
+                        IsLaunched = isLaunched,
+                        SubParameters = ["-1", "-1", Convert.ToString(await shareOperation.Data.GetUriAsync())]
+                    };
+
+                    await AppLaunchService.SaveArgumentsAsync(appLaunchArguments);
                 }
                 else
                 {
@@ -162,29 +171,24 @@ namespace GetStoreApp.Services.Root
             else if (appActivationArguments.Kind is ExtendedActivationKind.Protocol)
             {
                 ProtocolActivatedEventArgs protocolActivatedEventArgs = appActivationArguments.Data as ProtocolActivatedEventArgs;
-                List<string> dataList = [];
+                AppLaunchArguments appLaunchArguments = new()
+                {
+                    AppLaunchKind = AppLaunchKind.Protocol,
+                    IsLaunched = isLaunched
+                };
 
                 if (protocolActivatedEventArgs.Data is ValueSet dataSet && dataSet.TryGetValue("Parameter", out object parameterobj))
                 {
-                    dataList.Add(Convert.ToString(parameterobj));
-                }
-                else
-                {
-                    dataList.Add("Launch");
-
-                    if (isLaunched)
-                    {
-                        dataList.Add("IsRunning");
-                    }
+                    appLaunchArguments.SubParameters = [Convert.ToString(parameterobj)];
                 }
 
-                ResultService.SaveResult(StorageDataKind.Protocol, dataList);
+                await AppLaunchService.SaveArgumentsAsync(appLaunchArguments);
             }
             // 应用通知启动
             else if (appActivationArguments.Kind is ExtendedActivationKind.ToastNotification)
             {
                 ToastNotificationActivatedEventArgs toastNotificationActivatedEventArgs = appActivationArguments.Data as ToastNotificationActivatedEventArgs;
-                await ToastNotificationService.HandleToastNotificationAsync(toastNotificationActivatedEventArgs.Argument);
+                await ToastNotificationService.HandleToastNotificationAsync(toastNotificationActivatedEventArgs.Argument, isLaunched);
             }
             // 暂不支持以其他方式启动应用
             else
