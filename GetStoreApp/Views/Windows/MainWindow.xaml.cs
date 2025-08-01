@@ -200,7 +200,7 @@ namespace GetStoreApp.Views.Windows
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
             displayInformation = DisplayInformation.CreateForWindowId(AppWindow.Id);
             displayInformation2 = displayInformation.As<IDisplayInformation2>();
-            CommandBarSecondaryCommandsBackdrop.Initialize();
+            ControlBackdropController.Initialize(Current);
 
             // 标题栏和右键菜单设置
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
@@ -337,7 +337,7 @@ namespace GetStoreApp.Views.Windows
                     displayInformation.Dispose();
                     displayInformation = null;
                     displayInformation2 = null;
-                    CommandBarSecondaryCommandsBackdrop.Uninitialize();
+                    ControlBackdropController.UnInitialize();
                     AppWindow.Changed -= OnAppWindowChanged;
                     contentIsland.Environment.SettingChanged -= OnSettingChanged;
                     inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
@@ -362,7 +362,7 @@ namespace GetStoreApp.Views.Windows
                 displayInformation.Dispose();
                 displayInformation = null;
                 displayInformation2 = null;
-                CommandBarSecondaryCommandsBackdrop.Uninitialize();
+                ControlBackdropController.UnInitialize();
                 AppWindow.Changed -= OnAppWindowChanged;
                 contentIsland.Environment.SettingChanged -= OnSettingChanged;
                 inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
@@ -479,6 +479,7 @@ namespace GetStoreApp.Views.Windows
         {
             SetTitleBarTheme(sender.ActualTheme);
             SetClassicMenuTheme(sender.ActualTheme);
+            ControlBackdropController.UpdateControlTheme(sender.ActualTheme);
         }
 
         /// <summary>
