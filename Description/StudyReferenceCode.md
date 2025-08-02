@@ -22,4 +22,5 @@
 > * [Wice](https://github.com/aelyo-softworks/Wice)&emsp;
 > * [WindowsAppSDK-Samples](https://github.com/microsoft/WindowsAppSDK-Samples)&emsp;
 > * [Windows Community Toolkit](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
+> * [XamlBehaviors](https://github.com/microsoft/XamlBehaviors)&emsp;
 > * [XamlHost](https://github.com/driver1998/XamlHost)&emsp;
