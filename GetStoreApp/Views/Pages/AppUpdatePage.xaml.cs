@@ -475,7 +475,6 @@ namespace GetStoreApp.Views.Pages
             try
             {
                 GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-                CommandBarSecondaryCommandsBackdrop.Dispose();
                 appInstallManager.ItemStatusChanged -= OnAppInstallItemStatusChanged;
             }
             catch (Exception e)

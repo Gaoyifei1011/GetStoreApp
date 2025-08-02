@@ -156,7 +156,6 @@ namespace GetStoreApp.Views.Pages
             if (args.Parameter is WinGetPage winGetPage && WinGetPageInstance is null)
             {
                 WinGetPageInstance = winGetPage;
-                GlobalNotificationService.ApplicationExit += OnApplicationExit;
             }
         }
 
@@ -410,26 +409,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第三部分：WinGet 搜索应用界面——挂载的事件
-
-        #region 第四部分：WinGet 搜索应用页面——自定义事件
-
-        /// <summary>
-        /// 应用程序退出时触发的事件
-        /// </summary>
-        private void OnApplicationExit()
-        {
-            try
-            {
-                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-                CommandBarSecondaryCommandsBackdrop.Dispose();
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetSearchPage), nameof(OnApplicationExit), 1, e);
-            }
-        }
-
-        #endregion 第四部分：WinGet 搜索应用页面——自定义事件
 
         /// <summary>
         /// 获取设置中选择的 WinGet 数据源

@@ -50,7 +50,6 @@ namespace GetStoreApp.Views.Pages
         private readonly string UnknownString = ResourceService.GetLocalized("WinGetAppsVersionInfo/Unknown");
         private readonly string VersionString = ResourceService.GetLocalized("WinGetAppsVersionInfo/Version");
         private readonly string WinGetAppsVersionCountInfoString = ResourceService.GetLocalized("WinGetAppsVersionInfo/WinGetAppsVersionCountInfo");
-        private bool isInitialized;
 
         private WinGetPage WinGetPage { get; set; }
 
@@ -530,12 +529,6 @@ namespace GetStoreApp.Views.Pages
                     UpgradableApps = upgradableApps;
                 }
 
-                if (!isInitialized)
-                {
-                    isInitialized = true;
-                    GlobalNotificationService.ApplicationExit += OnApplicationExit;
-                }
-
                 DisplayName = UnknownString;
                 Description = UnknownString;
                 Version = UnknownString;
@@ -824,27 +817,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第二部分：WinGet 应用版本信息页面——挂载的事件
-
-        #region 第三部分：WinGet 应用版本信息页面——自定义事件
-
-        /// <summary>
-        /// 应用程序退出时触发的事件
-        /// </summary>
-        private void OnApplicationExit()
-        {
-            try
-            {
-                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-                CommandBarSecondaryCommandsSearchBackdrop.Dispose();
-                CommandBarSecondaryCommandsUpgradeBackdrop.Dispose();
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetAppsVersionInfoPage), nameof(OnApplicationExit), 1, e);
-            }
-        }
-
-        #endregion 第三部分：WinGet 应用版本信息页面——自定义事件
 
         /// <summary>
         /// 初始化对应版本信息

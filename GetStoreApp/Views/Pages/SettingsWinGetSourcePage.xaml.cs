@@ -86,7 +86,6 @@ namespace GetStoreApp.Views.Pages
             if (!isInitialized)
             {
                 isInitialized = true;
-                GlobalNotificationService.ApplicationExit += OnApplicationExit;
                 await InitializeWinGetSourceDataAsync();
                 IsLoadedCompleted = true;
             }
@@ -460,26 +459,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第二部分：设置页面——挂载的事件
-
-        #region 第三部分：设置页面——自定义事件
-
-        /// <summary>
-        /// 应用程序退出时触发的事件
-        /// </summary>
-        private void OnApplicationExit()
-        {
-            try
-            {
-                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-                CommandBarSecondaryCommandsBackdrop.Dispose();
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsWinGetSourcePage), nameof(OnApplicationExit), 1, e);
-            }
-        }
-
-        #endregion 第三部分：设置页面——自定义事件
 
         /// <summary>
         /// 初始化 WinGet 数据源信息

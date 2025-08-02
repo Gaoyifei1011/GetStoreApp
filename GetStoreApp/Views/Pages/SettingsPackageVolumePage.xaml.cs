@@ -114,10 +114,8 @@ namespace GetStoreApp.Views.Pages
             if (!isInitialized)
             {
                 isInitialized = true;
-                GlobalNotificationService.ApplicationExit += OnApplicationExit;
+                await GetPackageVolumeInfoAsync();
             }
-
-            await GetPackageVolumeInfoAsync();
         }
 
         #endregion 第一部分：重写父类事件
@@ -462,26 +460,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第三部分：应用包存储卷设置页面——挂载的事件
-
-        #region 第四部分：应用包存储卷设置页面——挂载的事件
-
-        /// <summary>
-        /// 应用程序退出时触发的事件
-        /// </summary>
-        private void OnApplicationExit()
-        {
-            try
-            {
-                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-                CommandBarSecondaryCommandsBackdrop.Dispose();
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnApplicationExit), 1, e);
-            }
-        }
-
-        #endregion 第四部分：应用包存储卷设置页面——挂载的事件
 
         /// <summary>
         /// 获取应用包存储卷信息

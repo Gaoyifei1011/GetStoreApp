@@ -276,7 +276,6 @@ namespace GetStoreApp.Views.Pages
 
                 packageManager = new();
                 packageDeploymentManager = PackageDeploymentManager.GetDefault();
-                GlobalNotificationService.ApplicationExit += OnApplicationExit;
                 await GetAppListAsync();
             }
         }
@@ -1844,22 +1843,6 @@ namespace GetStoreApp.Views.Pages
         #endregion 第三部分：应用管理页面——挂载的事件
 
         #region 第四部分：应用管理页面——自定义事件
-
-        /// <summary>
-        /// 应用程序退出时触发的事件
-        /// </summary>
-        private void OnApplicationExit()
-        {
-            try
-            {
-                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-                CommandBarSecondaryCommandsBackdrop.Dispose();
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnApplicationExit), 1, e);
-            }
-        }
 
         /// <summary>
         /// 应用移动状态发生改变时触发的事件

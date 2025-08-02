@@ -286,7 +286,6 @@ namespace GetStoreApp.Views.Pages
             try
             {
                 GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-                CommandBarSecondaryCommandsBackdrop.Dispose();
                 WinGetPageInstance.UpgradeAppsPackageOperationEvent -= OnUpgradeAppsPackageOperationEvent;
             }
             catch (Exception e)
