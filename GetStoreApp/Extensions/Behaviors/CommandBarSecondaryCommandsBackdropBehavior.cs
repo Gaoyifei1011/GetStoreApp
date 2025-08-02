@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Extensions.Backdrop;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Views.Windows;
 using Microsoft.UI.Composition;
 using Microsoft.UI.Content;
 using Microsoft.UI.Xaml;
@@ -22,12 +21,15 @@ namespace GetStoreApp.Extensions.Behaviors
         private bool isLoaded;
         private bool isConnected;
         private Grid visualGrid;
+        private Grid secondaryItemsControlShadowWrapperGrid;
         private Popup secondaryCommandsPopup;
         private ContentExternalBackdropLink contentExternalBackdropLink;
-        private Vector2 cornerRadius = new(8, 8);
 
         public DependencyObject AssociatedObject { get; private set; }
 
+        /// <summary>
+        /// 附加到指定的对象
+        /// </summary>
         public void Attach(DependencyObject associatedObject)
         {
             if (!Equals(AssociatedObject, associatedObject) && AssociatedObject is null)
@@ -41,6 +43,9 @@ namespace GetStoreApp.Extensions.Behaviors
             }
         }
 
+        /// <summary>
+        /// 将此实例与其关联对象分离
+        /// </summary>
         public void Detach()
         {
             try
@@ -54,7 +59,16 @@ namespace GetStoreApp.Extensions.Behaviors
                         secondaryCommandsPopup.Opened -= OnOpened;
                     }
 
+                    if (secondaryItemsControlShadowWrapperGrid is not null && isConnected)
+                    {
+                        secondaryItemsControlShadowWrapperGrid.SizeChanged -= OnSizeChanged;
+                    }
+
                     AssociatedObject = null;
+                    secondaryCommandsPopup = null;
+                    contentExternalBackdropLink = null;
+                    isConnected = false;
+                    isLoaded = false;
                 }
             }
             catch (Exception e)
@@ -68,7 +82,7 @@ namespace GetStoreApp.Extensions.Behaviors
         /// </summary>
         public void OnLoaded(object sender, RoutedEventArgs args)
         {
-            if (!isLoaded && sender is CommandBar commandBar && FindDescendant<Popup>(commandBar, "OverflowPopup") is Popup popup)
+            if (!isLoaded && sender is CommandBar commandBar && FindDescendant<Popup>(commandBar, "OverflowPopup") is Popup popup && secondaryCommandsPopup is null)
             {
                 isLoaded = true;
                 secondaryCommandsPopup = popup;
@@ -83,34 +97,54 @@ namespace GetStoreApp.Extensions.Behaviors
         {
             if (secondaryCommandsPopup is not null && secondaryCommandsPopup.FindName("SecondaryItemsControlShadowWrapper") is Grid grid)
             {
-                if (!ControlBackdropController.IsClosed)
+                secondaryItemsControlShadowWrapperGrid = grid;
+            }
+
+            if (secondaryItemsControlShadowWrapperGrid is not null && !ControlBackdropController.IsClosed)
+            {
+                if (!isConnected)
                 {
-                    if (!isConnected)
-                    {
-                        isConnected = true;
-                        visualGrid = new();
-                        Canvas.SetZIndex(visualGrid, -9999);
-                        grid.Children.Add(visualGrid);
+                    visualGrid = new();
+                    Canvas.SetZIndex(visualGrid, -9999);
+                    secondaryItemsControlShadowWrapperGrid.Children.Add(visualGrid);
+                    secondaryItemsControlShadowWrapperGrid.SizeChanged += OnSizeChanged;
+                    contentExternalBackdropLink = ControlBackdropController.CreateContentExternalBackdropLink();
 
-                        contentExternalBackdropLink = ControlBackdropController.CreateContentExternalBackdropLink();
-
-                        if (contentExternalBackdropLink is not null)
-                        {
-                            contentExternalBackdropLink.ExternalBackdropBorderMode = CompositionBorderMode.Soft;
-                            contentExternalBackdropLink.PlacementVisual.Size = grid.ActualSize;
-                            contentExternalBackdropLink.PlacementVisual.Clip = MainWindow.Current.Compositor.CreateRectangleClip(0, 0, grid.ActualSize.X, grid.ActualSize.Y, cornerRadius, cornerRadius, cornerRadius, cornerRadius);
-                            ElementCompositionPreview.SetElementChildVisual(visualGrid, contentExternalBackdropLink.PlacementVisual);
-                        }
-                    }
-                    else
+                    if (contentExternalBackdropLink is not null)
                     {
-                        if (contentExternalBackdropLink is not null)
-                        {
-                            contentExternalBackdropLink.PlacementVisual.Size = grid.ActualSize;
-                            contentExternalBackdropLink.PlacementVisual.Clip = contentExternalBackdropLink.PlacementVisual.Compositor.CreateRectangleClip(0, 0, grid.ActualSize.X, grid.ActualSize.Y, cornerRadius, cornerRadius, cornerRadius, cornerRadius);
-                        }
+                        contentExternalBackdropLink.ExternalBackdropBorderMode = CompositionBorderMode.Soft;
+                        contentExternalBackdropLink.PlacementVisual.Size = secondaryItemsControlShadowWrapperGrid.ActualSize;
+                        contentExternalBackdropLink.PlacementVisual.Clip = contentExternalBackdropLink.PlacementVisual.Compositor.CreateRectangleClip(0, 0, secondaryItemsControlShadowWrapperGrid.ActualSize.X, secondaryItemsControlShadowWrapperGrid.ActualSize.Y,
+                            new Vector2(Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.TopLeft), Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.TopLeft)),
+                            new Vector2(Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.TopRight), Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.TopRight)),
+                            new Vector2(Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.BottomRight), Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.BottomRight)),
+                            new Vector2(Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.BottomLeft), Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.BottomLeft)));
+                        ElementCompositionPreview.SetElementChildVisual(visualGrid, contentExternalBackdropLink.PlacementVisual);
                     }
                 }
+                else
+                {
+                    if (contentExternalBackdropLink is not null)
+                    {
+                        contentExternalBackdropLink.PlacementVisual.Size = secondaryItemsControlShadowWrapperGrid.ActualSize;
+                        contentExternalBackdropLink.PlacementVisual.Clip = contentExternalBackdropLink.PlacementVisual.Compositor.CreateRectangleClip(0, 0, secondaryItemsControlShadowWrapperGrid.ActualSize.X, secondaryItemsControlShadowWrapperGrid.ActualSize.Y,
+                            new Vector2(Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.TopLeft), Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.TopLeft)),
+                            new Vector2(Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.TopRight), Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.TopRight)),
+                            new Vector2(Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.BottomRight), Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.BottomRight)),
+                            new Vector2(Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.BottomLeft), Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.BottomLeft)));
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 目标控件大小发生变化时触发的事件
+        /// </summary>
+        private void OnSizeChanged(object sender, SizeChangedEventArgs args)
+        {
+            if (contentExternalBackdropLink is not null)
+            {
+                contentExternalBackdropLink.PlacementVisual.Size = secondaryItemsControlShadowWrapperGrid.ActualSize;
             }
         }
 
