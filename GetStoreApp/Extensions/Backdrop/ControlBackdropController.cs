@@ -40,7 +40,7 @@ namespace GetStoreApp.Extensions.Backdrop
                 {
                     Theme = Enum.TryParse(Convert.ToString(frameworkElement.ActualTheme), out SystemBackdropTheme systemBackdropTheme) ? systemBackdropTheme : SystemBackdropTheme.Default
                 };
-
+                desktopAcrylicController.SetSystemBackdropConfiguration(systemBackdropConfiguration);
                 isClosed = false;
             }
         }
