@@ -2,7 +2,7 @@
     x:Class="GetStoreApp.Views.Pages.AppUpdatePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:backdrop="using:GetStoreApp.Extensions.Backdrop"
+    xmlns:behavior="using:GetStoreApp.Extensions.Behaviors"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
@@ -19,8 +19,6 @@
 
         <XamlUICommand x:Name="UpdateCommand" ExecuteRequested="{x:Bind OnUpdateExecuteRequested}" />
         <XamlUICommand x:Name="CancelCommand" ExecuteRequested="{x:Bind OnCancelExecuteRequested}" />
-
-        <backdrop:CommandBarSecondaryCommandsBackdrop x:Name="CommandBarSecondaryCommandsBackdrop" />
     </Page.Resources>
 
     <Grid>
@@ -85,10 +83,11 @@
                 Text="{x:Bind x:String.Format(AppUpdateCountInfoString, AppUpdateCollection.Count), Mode=OneWay}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppUpdateCollection.Count), Mode=OneWay}" />
 
-            <CommandBar
-                Grid.Column="4"
-                DefaultLabelPosition="Right"
-                Loaded="{x:Bind CommandBarSecondaryCommandsBackdrop.OnLoaded}">
+            <CommandBar Grid.Column="4" DefaultLabelPosition="Right">
+
+                <behavior:Interaction.Behaviors>
+                    <behavior:CommandBarSecondaryCommandsBackdropBehavior />
+                </behavior:Interaction.Behaviors>
 
                 <CommandBar.PrimaryCommands>
                     <AppBarButton

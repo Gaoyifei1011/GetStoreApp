@@ -2,10 +2,9 @@
     x:Class="GetStoreApp.Views.Pages.WinGetAppsVersionOptionsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:backdrop="using:GetStoreApp.Extensions.Backdrop"
+    xmlns:behavior="using:GetStoreApp.Extensions.Behaviors"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:deployment="using:Microsoft.Management.Deployment"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
@@ -18,11 +17,6 @@
         <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
         <SolidColorBrush x:Key="CommandBarOverflowPresenterBackground" Color="Transparent" />
         <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-
-        <backdrop:CommandBarSecondaryCommandsBackdrop x:Name="CommandBarSecondaryCommandsDownloadBackdrop" />
-        <backdrop:CommandBarSecondaryCommandsBackdrop x:Name="CommandBarSecondaryCommandsInstallBackdrop" />
-        <backdrop:CommandBarSecondaryCommandsBackdrop x:Name="CommandBarSecondaryCommandsRepairBackdrop" />
-        <backdrop:CommandBarSecondaryCommandsBackdrop x:Name="CommandBarSecondaryCommandsUpgradeBackdrop" />
     </Page.Resources>
 
     <Grid>
@@ -51,8 +45,11 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    DefaultLabelPosition="Right"
-                    Loaded="{x:Bind CommandBarSecondaryCommandsDownloadBackdrop.OnLoaded}">
+                    DefaultLabelPosition="Right">
+
+                    <behavior:Interaction.Behaviors>
+                        <behavior:CommandBarSecondaryCommandsBackdropBehavior />
+                    </behavior:Interaction.Behaviors>
 
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnDownloadClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/Download')}">
@@ -387,8 +384,11 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    DefaultLabelPosition="Right"
-                    Loaded="{x:Bind CommandBarSecondaryCommandsInstallBackdrop.OnLoaded}">
+                    DefaultLabelPosition="Right">
+
+                    <behavior:Interaction.Behaviors>
+                        <behavior:CommandBarSecondaryCommandsBackdropBehavior />
+                    </behavior:Interaction.Behaviors>
 
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnInstallClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/Install')}">
@@ -904,8 +904,11 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    DefaultLabelPosition="Right"
-                    Loaded="{x:Bind CommandBarSecondaryCommandsRepairBackdrop.OnLoaded}">
+                    DefaultLabelPosition="Right">
+
+                    <behavior:Interaction.Behaviors>
+                        <behavior:CommandBarSecondaryCommandsBackdropBehavior />
+                    </behavior:Interaction.Behaviors>
 
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnRepairClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/Repair')}">
@@ -1231,8 +1234,11 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    DefaultLabelPosition="Right"
-                    Loaded="{x:Bind CommandBarSecondaryCommandsUpgradeBackdrop.OnLoaded}">
+                    DefaultLabelPosition="Right">
+
+                    <behavior:Interaction.Behaviors>
+                        <behavior:CommandBarSecondaryCommandsBackdropBehavior />
+                    </behavior:Interaction.Behaviors>
 
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnUpgradeClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/Upgrade')}">

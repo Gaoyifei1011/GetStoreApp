@@ -2,8 +2,7 @@
     x:Class="GetStoreApp.Views.Pages.WinGetSearchPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
-    xmlns:backdrop="using:GetStoreApp.Extensions.Backdrop"
+    xmlns:behavior="using:GetStoreApp.Extensions.Behaviors"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:deployment="using:Microsoft.Management.Deployment"
@@ -23,8 +22,6 @@
         <XamlUICommand x:Name="InstallCommand" ExecuteRequested="{x:Bind OnInstallExecuteRequested}" />
         <XamlUICommand x:Name="RepairCommand" ExecuteRequested="{x:Bind OnRepairExecuteRequested}" />
         <XamlUICommand x:Name="ViewVersionInfoCommand" ExecuteRequested="{x:Bind OnViewVersionInfoExecuteRequested}" />
-
-        <backdrop:CommandBarSecondaryCommandsBackdrop x:Name="CommandBarSecondaryCommandsBackdrop" />
     </Page.Resources>
 
     <Grid>
@@ -103,8 +100,11 @@
                 Margin="4,0,0,0"
                 VerticalAlignment="Center"
                 Background="Transparent"
-                DefaultLabelPosition="Right"
-                Loaded="{x:Bind CommandBarSecondaryCommandsBackdrop.OnLoaded}">
+                DefaultLabelPosition="Right">
+
+                <behavior:Interaction.Behaviors>
+                    <behavior:CommandBarSecondaryCommandsBackdropBehavior />
+                </behavior:Interaction.Behaviors>
 
                 <CommandBar.PrimaryCommands>
                     <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/Sort')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/SortToolTip')}">
