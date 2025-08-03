@@ -6,6 +6,8 @@ using Microsoft.UI.Content;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices.Marshalling;
 using Windows.Foundation.Diagnostics;
 
 namespace GetStoreApp.Extensions.Backdrop
@@ -88,6 +90,26 @@ namespace GetStoreApp.Extensions.Backdrop
             else
             {
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// 移除 ContentExternalBackdropLink
+        /// </summary>
+        public static void RemoveContentExternalBackdropLink(ContentExternalBackdropLink contentExternalBackdropLink)
+        {
+            if (contentExternalBackdropLinkList.Contains(contentExternalBackdropLink))
+            {
+                try
+                {
+                    desktopAcrylicController.RemoveSystemBackdropTarget(contentExternalBackdropLink);
+                    contentExternalBackdropLink.Dispose();
+                    contentExternalBackdropLinkList.Remove(contentExternalBackdropLink);
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
             }
         }
 
