@@ -91,7 +91,7 @@ namespace GetStoreApp.Extensions.Behaviors
         {
             if (secondaryCommandsPopup is not null && secondaryCommandsPopup.FindName("SecondaryItemsControlShadowWrapper") is Grid grid)
             {
-                if (!ControlBackdropController.IsClosed)
+                if (ControlBackdropController.IsLoaded)
                 {
                     if (!isConnected)
                     {
