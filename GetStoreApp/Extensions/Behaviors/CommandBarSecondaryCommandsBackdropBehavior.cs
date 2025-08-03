@@ -1,14 +1,20 @@
 ﻿using GetStoreApp.Extensions.Backdrop;
+using GetStoreApp.Helpers.Controls;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Views.Windows;
+using Microsoft.UI;
 using Microsoft.UI.Composition;
 using Microsoft.UI.Content;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Hosting;
+using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Numerics;
+using System.Runtime.InteropServices.Marshalling;
+using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 
 namespace GetStoreApp.Extensions.Behaviors
@@ -21,6 +27,7 @@ namespace GetStoreApp.Extensions.Behaviors
         private bool isLoaded;
         private bool isConnected;
         private Grid visualGrid;
+        private Button moreButton;
         private Popup secondaryCommandsPopup;
         private ContentExternalBackdropLink contentExternalBackdropLink;
 
@@ -58,6 +65,11 @@ namespace GetStoreApp.Extensions.Behaviors
                         secondaryCommandsPopup.Opened -= OnOpened;
                     }
 
+                    if (moreButton is not null)
+                    {
+                        moreButton.PointerEntered -= OnPointerEntered;
+                    }
+
                     AssociatedObject = null;
                     secondaryCommandsPopup = null;
                     contentExternalBackdropLink = null;
@@ -76,11 +88,21 @@ namespace GetStoreApp.Extensions.Behaviors
         /// </summary>
         public void OnLoaded(object sender, RoutedEventArgs args)
         {
-            if (!isLoaded && sender is CommandBar commandBar && FindDescendant<Popup>(commandBar, "OverflowPopup") is Popup popup && secondaryCommandsPopup is null)
+            if (!isLoaded && sender is CommandBar commandBar)
             {
                 isLoaded = true;
-                secondaryCommandsPopup = popup;
-                secondaryCommandsPopup.Opened += OnOpened;
+
+                if (XamlTreeHelper.FindDescendant<Popup>(commandBar, "OverflowPopup") is Popup popup && secondaryCommandsPopup is null)
+                {
+                    secondaryCommandsPopup = popup;
+                    secondaryCommandsPopup.Opened += OnOpened;
+                }
+
+                if (XamlTreeHelper.FindDescendant<Button>(commandBar, "MoreButton") is Button button && moreButton is null)
+                {
+                    moreButton = button;
+                    moreButton.PointerEntered += OnPointerEntered;
+                }
             }
         }
 
@@ -128,31 +150,32 @@ namespace GetStoreApp.Extensions.Behaviors
             }
         }
 
-        /// <summary>
-        /// 查找 CommandBar 的 OverflowPopup 子控件
-        /// </summary>
-        private static T FindDescendant<T>(DependencyObject parent, string childName = null) where T : DependencyObject
+        private async void OnPointerEntered(object sender, PointerRoutedEventArgs args)
         {
-            if (parent is not null)
+            if (AssociatedObject is CommandBar commandBar)
             {
-                for (int index = 0; index < VisualTreeHelper.GetChildrenCount(parent); index++)
+                await Task.Delay(900);
+
+                try
                 {
-                    DependencyObject child = VisualTreeHelper.GetChild(parent, index);
-
-                    if (child is T result && (childName is null || child is FrameworkElement frameworkElement && string.Equals(frameworkElement.Name, childName)))
+                    if (MainWindow.Current is not null && MainWindow.Current.Content is not null && MainWindow.Current.Content.XamlRoot is not null)
                     {
-                        return result;
-                    }
-
-                    T foundChild = FindDescendant<T>(child, childName);
-                    if (foundChild is not null)
-                    {
-                        return foundChild;
+                        foreach (Popup popup in VisualTreeHelper.GetOpenPopupsForXamlRoot(MainWindow.Current.Content.XamlRoot))
+                        {
+                            if (popup.Child is ToolTip toolTip)
+                            {
+                                popup.RequestedTheme = commandBar.ActualTheme;
+                                popup.SystemBackdrop ??= new DesktopAcrylicBackdrop();
+                                toolTip.Background = new SolidColorBrush(Colors.Transparent);
+                            }
+                        }
                     }
                 }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
             }
-
-            return null;
         }
     }
 }
