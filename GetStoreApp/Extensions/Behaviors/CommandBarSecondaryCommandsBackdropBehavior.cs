@@ -21,7 +21,6 @@ namespace GetStoreApp.Extensions.Behaviors
         private bool isLoaded;
         private bool isConnected;
         private Grid visualGrid;
-        private Grid secondaryItemsControlShadowWrapperGrid;
         private Popup secondaryCommandsPopup;
         private ContentExternalBackdropLink contentExternalBackdropLink;
 
@@ -59,11 +58,6 @@ namespace GetStoreApp.Extensions.Behaviors
                         secondaryCommandsPopup.Opened -= OnOpened;
                     }
 
-                    if (secondaryItemsControlShadowWrapperGrid is not null && isConnected)
-                    {
-                        secondaryItemsControlShadowWrapperGrid.SizeChanged -= OnSizeChanged;
-                    }
-
                     AssociatedObject = null;
                     secondaryCommandsPopup = null;
                     contentExternalBackdropLink = null;
@@ -97,54 +91,40 @@ namespace GetStoreApp.Extensions.Behaviors
         {
             if (secondaryCommandsPopup is not null && secondaryCommandsPopup.FindName("SecondaryItemsControlShadowWrapper") is Grid grid)
             {
-                secondaryItemsControlShadowWrapperGrid = grid;
-            }
-
-            if (secondaryItemsControlShadowWrapperGrid is not null && !ControlBackdropController.IsClosed)
-            {
-                if (!isConnected)
+                if (!ControlBackdropController.IsClosed)
                 {
-                    visualGrid = new();
-                    Canvas.SetZIndex(visualGrid, -9999);
-                    secondaryItemsControlShadowWrapperGrid.Children.Add(visualGrid);
-                    secondaryItemsControlShadowWrapperGrid.SizeChanged += OnSizeChanged;
-                    contentExternalBackdropLink = ControlBackdropController.CreateContentExternalBackdropLink();
-
-                    if (contentExternalBackdropLink is not null)
+                    if (!isConnected)
                     {
-                        contentExternalBackdropLink.ExternalBackdropBorderMode = CompositionBorderMode.Soft;
-                        contentExternalBackdropLink.PlacementVisual.Size = secondaryItemsControlShadowWrapperGrid.ActualSize;
-                        contentExternalBackdropLink.PlacementVisual.Clip = contentExternalBackdropLink.PlacementVisual.Compositor.CreateRectangleClip(0, 0, secondaryItemsControlShadowWrapperGrid.ActualSize.X, secondaryItemsControlShadowWrapperGrid.ActualSize.Y,
-                            new Vector2(Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.TopLeft), Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.TopLeft)),
-                            new Vector2(Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.TopRight), Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.TopRight)),
-                            new Vector2(Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.BottomRight), Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.BottomRight)),
-                            new Vector2(Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.BottomLeft), Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.BottomLeft)));
-                        ElementCompositionPreview.SetElementChildVisual(visualGrid, contentExternalBackdropLink.PlacementVisual);
+                        visualGrid = new();
+                        Canvas.SetZIndex(visualGrid, -9999);
+                        grid.Children.Add(visualGrid);
+                        contentExternalBackdropLink = ControlBackdropController.CreateContentExternalBackdropLink();
+
+                        if (contentExternalBackdropLink is not null)
+                        {
+                            contentExternalBackdropLink.ExternalBackdropBorderMode = CompositionBorderMode.Soft;
+                            contentExternalBackdropLink.PlacementVisual.Size = grid.ActualSize;
+                            contentExternalBackdropLink.PlacementVisual.Clip = contentExternalBackdropLink.PlacementVisual.Compositor.CreateRectangleClip(0, 0, grid.ActualSize.X, grid.ActualSize.Y,
+                                new Vector2(Convert.ToSingle(grid.CornerRadius.TopLeft), Convert.ToSingle(grid.CornerRadius.TopLeft)),
+                                new Vector2(Convert.ToSingle(grid.CornerRadius.TopRight), Convert.ToSingle(grid.CornerRadius.TopRight)),
+                                new Vector2(Convert.ToSingle(grid.CornerRadius.BottomRight), Convert.ToSingle(grid.CornerRadius.BottomRight)),
+                                new Vector2(Convert.ToSingle(grid.CornerRadius.BottomLeft), Convert.ToSingle(grid.CornerRadius.BottomLeft)));
+                            ElementCompositionPreview.SetElementChildVisual(visualGrid, contentExternalBackdropLink.PlacementVisual);
+                        }
+                    }
+                    else
+                    {
+                        if (contentExternalBackdropLink is not null)
+                        {
+                            contentExternalBackdropLink.PlacementVisual.Size = grid.ActualSize;
+                            contentExternalBackdropLink.PlacementVisual.Clip = contentExternalBackdropLink.PlacementVisual.Compositor.CreateRectangleClip(0, 0, grid.ActualSize.X, grid.ActualSize.Y,
+                                new Vector2(Convert.ToSingle(grid.CornerRadius.TopLeft), Convert.ToSingle(grid.CornerRadius.TopLeft)),
+                                new Vector2(Convert.ToSingle(grid.CornerRadius.TopRight), Convert.ToSingle(grid.CornerRadius.TopRight)),
+                                new Vector2(Convert.ToSingle(grid.CornerRadius.BottomRight), Convert.ToSingle(grid.CornerRadius.BottomRight)),
+                                new Vector2(Convert.ToSingle(grid.CornerRadius.BottomLeft), Convert.ToSingle(grid.CornerRadius.BottomLeft)));
+                        }
                     }
                 }
-                else
-                {
-                    if (contentExternalBackdropLink is not null)
-                    {
-                        contentExternalBackdropLink.PlacementVisual.Size = secondaryItemsControlShadowWrapperGrid.ActualSize;
-                        contentExternalBackdropLink.PlacementVisual.Clip = contentExternalBackdropLink.PlacementVisual.Compositor.CreateRectangleClip(0, 0, secondaryItemsControlShadowWrapperGrid.ActualSize.X, secondaryItemsControlShadowWrapperGrid.ActualSize.Y,
-                            new Vector2(Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.TopLeft), Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.TopLeft)),
-                            new Vector2(Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.TopRight), Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.TopRight)),
-                            new Vector2(Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.BottomRight), Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.BottomRight)),
-                            new Vector2(Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.BottomLeft), Convert.ToSingle(secondaryItemsControlShadowWrapperGrid.CornerRadius.BottomLeft)));
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 目标控件大小发生变化时触发的事件
-        /// </summary>
-        private void OnSizeChanged(object sender, SizeChangedEventArgs args)
-        {
-            if (contentExternalBackdropLink is not null)
-            {
-                contentExternalBackdropLink.PlacementVisual.Size = secondaryItemsControlShadowWrapperGrid.ActualSize;
             }
         }
 
