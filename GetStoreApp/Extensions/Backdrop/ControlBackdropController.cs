@@ -18,12 +18,12 @@ namespace GetStoreApp.Extensions.Backdrop
         private static DesktopAcrylicController desktopAcrylicController;
         private static SystemBackdropConfiguration systemBackdropConfiguration;
         private static Compositor compositor;
-        private static volatile bool isClosed = true;
+        private static volatile bool isLoaded = false;
         private static readonly List<ContentExternalBackdropLink> contentExternalBackdropLinkList = [];
 
-        public static bool IsClosed
+        public static bool IsLoaded
         {
-            get { return isClosed; }
+            get { return isLoaded; }
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace GetStoreApp.Extensions.Backdrop
         /// </summary>
         public static void Initialize(MainWindow mainWindow)
         {
-            if (desktopAcrylicController is null && mainWindow is not null && mainWindow.Content is FrameworkElement frameworkElement)
+            if (desktopAcrylicController is null && DesktopAcrylicController.IsSupported() && mainWindow is not null && mainWindow.Content is FrameworkElement frameworkElement)
             {
                 mainWindow.DispatcherQueue.EnsureSystemDispatcherQueue();
                 compositor = mainWindow.Compositor;
@@ -41,7 +41,7 @@ namespace GetStoreApp.Extensions.Backdrop
                     Theme = Enum.TryParse(Convert.ToString(frameworkElement.ActualTheme), out SystemBackdropTheme systemBackdropTheme) ? systemBackdropTheme : SystemBackdropTheme.Default
                 };
                 desktopAcrylicController.SetSystemBackdropConfiguration(systemBackdropConfiguration);
-                isClosed = false;
+                isLoaded = true;
             }
         }
 
@@ -69,7 +69,7 @@ namespace GetStoreApp.Extensions.Backdrop
                     LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(ControlBackdropController), nameof(UnInitialize), 1, e);
                 }
 
-                isClosed = true;
+                isLoaded = false;
             }
         }
 
@@ -78,7 +78,7 @@ namespace GetStoreApp.Extensions.Backdrop
         /// </summary>
         public static ContentExternalBackdropLink CreateContentExternalBackdropLink()
         {
-            if (!IsClosed && desktopAcrylicController is not null && compositor is not null)
+            if (IsLoaded && desktopAcrylicController is not null && compositor is not null)
             {
                 ContentExternalBackdropLink contentExternalBackdropLink = ContentExternalBackdropLink.Create(compositor);
                 contentExternalBackdropLinkList.Add(contentExternalBackdropLink);
@@ -96,7 +96,7 @@ namespace GetStoreApp.Extensions.Backdrop
         /// </summary>
         public static void UpdateControlTheme(ElementTheme elementTheme)
         {
-            if (!IsClosed && desktopAcrylicController is not null && systemBackdropConfiguration is not null)
+            if (IsLoaded && desktopAcrylicController is not null && systemBackdropConfiguration is not null)
             {
                 systemBackdropConfiguration.Theme = Enum.TryParse(Convert.ToString(elementTheme), out SystemBackdropTheme systemBackdropTheme) ? systemBackdropTheme : SystemBackdropTheme.Default;
             }
