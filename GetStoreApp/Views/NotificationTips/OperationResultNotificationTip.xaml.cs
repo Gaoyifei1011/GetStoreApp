@@ -272,6 +272,8 @@ namespace GetStoreApp.Views.NotificationTips
                 {
                     nonHeroContentRootGrid.Loaded -= OnLoaded;
                 }
+
+                ControlBackdropController.RemoveContentExternalBackdropLink(contentExternalBackdropLink);
             }
             catch (Exception e)
             {
