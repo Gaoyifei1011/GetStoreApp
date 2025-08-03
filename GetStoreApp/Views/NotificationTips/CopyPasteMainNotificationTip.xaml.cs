@@ -45,21 +45,6 @@ namespace GetStoreApp.Views.NotificationTips
             IsSuccessfully = isSuccessfully;
         }
 
-        ~CopyPasteMainNotificationTip()
-        {
-            if (nonHeroContentRootGrid is not null)
-            {
-                try
-                {
-                    nonHeroContentRootGrid.Loaded -= OnLoaded;
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            }
-        }
-
         /// <summary>
         /// 自定义控件样式
         /// </summary>
@@ -74,11 +59,29 @@ namespace GetStoreApp.Views.NotificationTips
         }
 
         /// <summary>
+        /// 教学提示关闭后触发的事件
+        /// </summary>
+        private void OnClosed(object sender, TeachingTipClosedEventArgs args)
+        {
+            try
+            {
+                if (nonHeroContentRootGrid is not null)
+                {
+                    nonHeroContentRootGrid.Loaded -= OnLoaded;
+                }
+            }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
+        }
+
+        /// <summary>
         /// 控件加载完成后触发的事件
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            if (!ControlBackdropController.IsClosed && sender is Grid grid)
+            if (ControlBackdropController.IsLoaded && sender is Grid grid)
             {
                 if (!isConnected)
                 {
