@@ -1,6 +1,8 @@
 ﻿using GetStoreApp.Extensions.Backdrop;
 using GetStoreApp.Extensions.DataType.Classes;
 using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Backdrop;
+using GetStoreApp.Helpers.Controls;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Download;
@@ -69,6 +71,7 @@ namespace GetStoreApp.Views.Windows
         private DisplayInformation displayInformation;
         private IDisplayInformation2 displayInformation2;
         private InputKeyboardSource inputKeyboardSource;
+        private ToolTip navigationViewBackButtonToolTip;
 
         public new static MainWindow Current { get; private set; }
 
@@ -345,6 +348,10 @@ namespace GetStoreApp.Views.Windows
                     ThemeService.PropertyChanged -= OnServicePropertyChanged;
                     BackdropService.PropertyChanged -= OnServicePropertyChanged;
                     TopMostService.PropertyChanged -= OnServicePropertyChanged;
+                    if (navigationViewBackButtonToolTip is not null)
+                    {
+                        navigationViewBackButtonToolTip.Loaded -= ToolTipBackdropHelper.OnLoaded;
+                    }
                     DownloadSchedulerService.TerminateDownload();
                     Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0);
                     (Application.Current as WinUIApp).Dispose();
@@ -370,6 +377,10 @@ namespace GetStoreApp.Views.Windows
                 ThemeService.PropertyChanged -= OnServicePropertyChanged;
                 BackdropService.PropertyChanged -= OnServicePropertyChanged;
                 TopMostService.PropertyChanged -= OnServicePropertyChanged;
+                if (navigationViewBackButtonToolTip is not null)
+                {
+                    navigationViewBackButtonToolTip.Loaded -= ToolTipBackdropHelper.OnLoaded;
+                }
                 Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0);
                 (Application.Current as WinUIApp).Dispose();
             }
@@ -576,6 +587,17 @@ namespace GetStoreApp.Views.Windows
             // 导航控件加载完成后初始化内容
             if (sender is NavigationView navigationView)
             {
+                if (XamlTreeHelper.FindDescendant<Button>(navigationView, "NavigationViewBackButton") is Button navigationViewBackButton)
+                {
+                    navigationViewBackButtonToolTip = ToolTipService.GetToolTip(navigationViewBackButton) as ToolTip;
+
+                    if (navigationViewBackButtonToolTip is not null)
+                    {
+                        navigationViewBackButtonToolTip.Background = new SolidColorBrush(Colors.Transparent);
+                        navigationViewBackButtonToolTip.Loaded += ToolTipBackdropHelper.OnLoaded;
+                    }
+                }
+
                 foreach (object menuItem in navigationView.MenuItems)
                 {
                     if (menuItem is NavigationViewItem navigationViewItem && navigationViewItem.Tag is string tag)
