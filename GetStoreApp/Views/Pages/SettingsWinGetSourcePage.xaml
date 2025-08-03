@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.Views.Pages.SettingsWinGetSourcePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
     xmlns:behavior="using:GetStoreApp.Extensions.Behaviors"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -255,7 +256,11 @@
                                                 IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}">
 
                                                 <ToolTipService.ToolTip>
-                                                    <ToolTip MaxWidth="9999">
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Background="Transparent"
+                                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                         <Grid>
                                                             <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Selected')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
                                                             <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/UnSelected')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
@@ -287,7 +292,11 @@
                                                     TextWrapping="NoWrap" />
 
                                                 <ToolTipService.ToolTip>
-                                                    <ToolTip MaxWidth="9999">
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Background="Transparent"
+                                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                         <StackPanel>
                                                             <TextBlock>
                                                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Name')}" />
@@ -613,7 +622,11 @@
                                                 IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}">
 
                                                 <ToolTipService.ToolTip>
-                                                    <ToolTip MaxWidth="9999">
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Background="Transparent"
+                                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                         <Grid>
                                                             <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Selected')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
                                                             <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/UnSelected')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
@@ -645,7 +658,11 @@
                                                     TextWrapping="NoWrap" />
 
                                                 <ToolTipService.ToolTip>
-                                                    <ToolTip MaxWidth="9999">
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Background="Transparent"
+                                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                         <StackPanel>
                                                             <TextBlock>
                                                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Name')}" />
@@ -672,8 +689,7 @@
                                                 Command="{StaticResource EditCommand}"
                                                 CommandParameter="{x:Bind}"
                                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Edit')}"
-                                                IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/EditToolTip')}">
+                                                IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}">
 
                                                 <SplitButton.Flyout>
                                                     <MenuFlyout Placement="Bottom">
@@ -700,6 +716,14 @@
                                                         </MenuFlyoutItem>
                                                     </MenuFlyout>
                                                 </SplitButton.Flyout>
+
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Background="Transparent"
+                                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/EditToolTip')}"
+                                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                                </ToolTipService.ToolTip>
                                             </SplitButton>
                                         </Grid>
                                     </Expander.Header>

@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -534,7 +535,11 @@
                                         </TextBlock>
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip MaxWidth="9999">
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Background="Transparent"
+                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                 <StackPanel>
                                                     <TextBlock>
                                                         <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/EntryDisplayName')}" />
@@ -563,36 +568,55 @@
 
                                         <SplitButton.Flyout>
                                             <MenuFlyout Placement="Bottom">
-                                                <MenuFlyoutItem
-                                                    Command="{StaticResource PinToDesktopCommand}"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToDesktop')}"
-                                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToDesktopToolTip')}">
+                                                <MenuFlyoutItem Command="{StaticResource PinToDesktopCommand}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToDesktop')}">
 
                                                     <MenuFlyoutItem.Icon>
                                                         <FontIcon Glyph="&#xE7F4;" />
                                                     </MenuFlyoutItem.Icon>
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip
+                                                            MaxWidth="9999"
+                                                            Background="Transparent"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToDesktopToolTip')}"
+                                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                                    </ToolTipService.ToolTip>
                                                 </MenuFlyoutItem>
 
                                                 <MenuFlyoutItem
                                                     Command="{StaticResource PinToStartScreenCommand}"
                                                     CommandParameter="{x:Bind}"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToStartScreen')}"
-                                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToStartScreenToolTip')}">
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToStartScreen')}">
 
                                                     <MenuFlyoutItem.Icon>
                                                         <FontIcon Glyph="&#xE8FC;" />
                                                     </MenuFlyoutItem.Icon>
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip
+                                                            MaxWidth="9999"
+                                                            Background="Transparent"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToStartScreenToolTip')}"
+                                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                                    </ToolTipService.ToolTip>
                                                 </MenuFlyoutItem>
 
                                                 <MenuFlyoutItem
                                                     Command="{StaticResource PinToTaskbarCommand}"
                                                     CommandParameter="{x:Bind}"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToTaskbar')}"
-                                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToTaskbarToolTip')}">
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToTaskbar')}">
 
                                                     <MenuFlyoutItem.Icon>
                                                         <FontIcon Glyph="&#xE770;" />
                                                     </MenuFlyoutItem.Icon>
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip
+                                                            MaxWidth="9999"
+                                                            Background="Transparent"
+                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToTaskbarToolTip')}"
+                                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                                    </ToolTipService.ToolTip>
                                                 </MenuFlyoutItem>
                                             </MenuFlyout>
                                         </SplitButton.Flyout>
@@ -697,7 +721,11 @@
                                         </TextBlock>
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip MaxWidth="9999">
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Background="Transparent"
+                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                 <StackPanel>
                                                     <TextBlock>
                                                         <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/DependencyDisplayName')}" />
@@ -722,8 +750,7 @@
                                         Grid.Column="1"
                                         Width="34"
                                         Height="34"
-                                        Padding="0"
-                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/ViewMore')}">
+                                        Padding="0">
 
                                         <Button.Content>
                                             <FontIcon FontSize="16" Glyph="&#xE712;" />
@@ -752,6 +779,14 @@
                                                 </MenuFlyoutItem>
                                             </MenuFlyout>
                                         </Button.Flyout>
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Background="Transparent"
+                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/ViewMore')}"
+                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                        </ToolTipService.ToolTip>
                                     </Button>
                                 </Grid>
                             </DataTemplate>

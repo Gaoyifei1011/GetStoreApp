@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.Views.Pages.StorePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
@@ -103,8 +104,7 @@
                         Width="34"
                         Height="34"
                         Padding="0"
-                        HorizontalAlignment="Right"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/ViewMore')}">
+                        HorizontalAlignment="Right">
 
                         <Button.Content>
                             <FontIcon FontSize="16" Glyph="&#xE712;" />
@@ -112,27 +112,45 @@
 
                         <Button.Flyout>
                             <MenuFlyout Placement="Bottom">
-                                <MenuFlyoutItem
-                                    Click="{x:Bind OnLanguageAndRegionClicked}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/LanguageAndRegion')}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/LanguageAndRegionToolTip')}">
+                                <MenuFlyoutItem Click="{x:Bind OnLanguageAndRegionClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/LanguageAndRegion')}">
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xF2B7;" />
                                     </MenuFlyoutItem.Icon>
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Background="Transparent"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/LanguageAndRegionToolTip')}"
+                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                    </ToolTipService.ToolTip>
                                 </MenuFlyoutItem>
 
-                                <MenuFlyoutItem
-                                    Click="{x:Bind OnUseInstructionClicked}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstruction')}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstructionToolTip')}">
+                                <MenuFlyoutItem Click="{x:Bind OnUseInstructionClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstruction')}">
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xE946;" />
                                     </MenuFlyoutItem.Icon>
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Background="Transparent"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstructionToolTip')}"
+                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                    </ToolTipService.ToolTip>
                                 </MenuFlyoutItem>
                             </MenuFlyout>
                         </Button.Flyout>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/ViewMore')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        </ToolTipService.ToolTip>
                     </Button>
                 </Grid>
 
@@ -191,8 +209,7 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Click="{x:Bind OnCloseClicked}"
-                        Style="{StaticResource AlternateCloseButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/Close')}">
+                        Style="{StaticResource AlternateCloseButtonStyle}">
 
                         <Button.Content>
                             <FontIcon
@@ -200,6 +217,14 @@
                                 FontSize="16"
                                 Glyph="&#xE711;" />
                         </Button.Content>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/Close')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        </ToolTipService.ToolTip>
                     </Button>
                 </Grid>
 

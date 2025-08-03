@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -124,7 +125,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind CurrentPackageVolume.Name, Mode=OneWay}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind CurrentPackageVolumeNameText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -152,7 +155,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind CurrentPackageVolume.Space, Mode=OneWay}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind CurrentPackageVolumeSpaceText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -250,7 +255,9 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
+                                            Background="Transparent"
                                             Content="{x:Bind Name}"
+                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                             Visibility="{Binding ElementName=PackageVolumeNameText, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
@@ -278,7 +285,9 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
+                                            Background="Transparent"
                                             Content="{x:Bind Name}"
+                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                             Visibility="{Binding ElementName=PackageVolumeSpaceText, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
@@ -299,12 +308,19 @@
             Padding="0"
             HorizontalAlignment="Left"
             Click="{x:Bind OnRefreshClicked}"
-            IsEnabled="{x:Bind GetIsLoading(PackageVolumeResultKind), Mode=OneWay}"
-            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Refresh')}">
+            IsEnabled="{x:Bind GetIsLoading(PackageVolumeResultKind), Mode=OneWay}">
 
             <Button.Content>
                 <FontIcon FontSize="16" Glyph="&#xE72C;" />
             </Button.Content>
+
+            <ToolTipService.ToolTip>
+                <ToolTip
+                    MaxWidth="9999"
+                    Background="Transparent"
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Refresh')}"
+                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+            </ToolTipService.ToolTip>
         </Button>
     </Grid>
 </ContentDialog>

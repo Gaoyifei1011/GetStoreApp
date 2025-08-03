@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.Views.Pages.SettingsGeneralPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -76,7 +77,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/ThemeDescription')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind ThemeDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -167,7 +170,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/BackdropDescription')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind BackdropDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -291,7 +296,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/AlwaysShowBackdropDescription')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind AlwaysShowBackdropDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -369,7 +376,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/LanguageDescription')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind LanguageDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -485,7 +494,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/TopMostDescription')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind TopMostDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>

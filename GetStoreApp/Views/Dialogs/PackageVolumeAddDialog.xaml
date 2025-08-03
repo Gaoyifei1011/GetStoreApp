@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.Views.Dialogs.PackageVolumeAddDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
@@ -160,7 +161,9 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
+                                            Background="Transparent"
                                             Content="{x:Bind Name}"
+                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                             Visibility="{Binding ElementName=PackageVolumeNameText, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
@@ -188,7 +191,9 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
+                                            Background="Transparent"
                                             Content="{x:Bind Name}"
+                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                             Visibility="{Binding ElementName=PackageVolumeSpaceText, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
@@ -223,12 +228,19 @@
                     Height="34"
                     Padding="0"
                     Click="{x:Bind OnSelectFolderClicked}"
-                    IsEnabled="{x:Bind UseWindowsAppsFolderValue.Equals(x:False), Mode=OneWay}"
-                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SelectFolder')}">
+                    IsEnabled="{x:Bind UseWindowsAppsFolderValue.Equals(x:False), Mode=OneWay}">
 
                     <Button.Content>
                         <FontIcon FontSize="16" Glyph="&#xE8B7;" />
                     </Button.Content>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            MaxWidth="9999"
+                            Background="Transparent"
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SelectFolder')}"
+                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                    </ToolTipService.ToolTip>
                 </Button>
             </Grid>
 
@@ -327,12 +339,19 @@
                         Width="34"
                         Height="34"
                         Padding="0"
-                        Click="{x:Bind OnRefreshClicked}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Refresh')}">
+                        Click="{x:Bind OnRefreshClicked}">
 
                         <Button.Content>
                             <FontIcon FontSize="16" Glyph="&#xE72C;" />
                         </Button.Content>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Refresh')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        </ToolTipService.ToolTip>
                     </Button>
                 </Grid>
             </ContentControl>

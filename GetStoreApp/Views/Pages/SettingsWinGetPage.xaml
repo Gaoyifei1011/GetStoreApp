@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.Views.Pages.SettingsWinGetPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
@@ -65,7 +66,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceConfigurationDescription')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind WinGetSourceConfigurationDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -124,7 +127,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSettingsDescription')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind WinGetSettingsDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -139,8 +144,16 @@
                 <Button
                     Grid.Column="3"
                     Click="{x:Bind OnOpenWinGetSettingsClicked}"
-                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/Open')}"
-                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/OpenConfigurationFile')}" />
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/Open')}">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            MaxWidth="9999"
+                            Background="Transparent"
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/OpenConfigurationFile')}"
+                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                    </ToolTipService.ToolTip>
+                </Button>
             </Grid>
         </Grid>
     </ScrollViewer>

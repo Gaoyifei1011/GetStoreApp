@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.Views.Windows.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
@@ -187,7 +188,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('Window/Store')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind WindowHomeText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
@@ -226,7 +229,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('Window/Store')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind WindowStoreText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
@@ -263,7 +268,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('Window/AppUpdate')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind WindowAppUpdateText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
@@ -302,7 +309,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('Window/WinGet')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind WindowWinGetText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
@@ -339,7 +348,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('Window/AppManager')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind WindowAppManagerText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
@@ -378,7 +389,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('Window/Download')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind WindowDownloadText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
@@ -415,7 +428,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('Window/Web')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind WindowWebText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
@@ -439,7 +454,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('Window/Settings')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind WindowSettingsText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>

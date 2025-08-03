@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.Views.Pages.WinGetUpgradePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
     xmlns:behavior="using:GetStoreApp.Extensions.Behaviors"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -87,7 +88,7 @@
                 </behavior:Interaction.Behaviors>
 
                 <CommandBar.PrimaryCommands>
-                    <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/Sort')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortToolTip')}">
+                    <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/Sort')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8CB;" />
@@ -130,6 +131,14 @@
                                 </MenuFlyoutSubItem>
                             </MenuFlyout>
                         </AppBarButton.Flyout>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortToolTip')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        </ToolTipService.ToolTip>
                     </AppBarButton>
 
                     <AppBarButton
@@ -151,34 +160,49 @@
                 </CommandBar.PrimaryCommands>
 
                 <CommandBar.SecondaryCommands>
-                    <AppBarButton
-                        Click="{x:Bind OnOpenTempFolderClicked}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/OpenTempFolder')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/OpenTempFolderToolTip')}">
+                    <AppBarButton Click="{x:Bind OnOpenTempFolderClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/OpenTempFolder')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8B7;" />
                         </AppBarButton.Icon>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/OpenTempFolderToolTip')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        </ToolTipService.ToolTip>
                     </AppBarButton>
 
-                    <AppBarButton
-                        Click="{x:Bind OnUseInstructionClicked}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/UseInstruction')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/UseInstructionToolTip')}">
+                    <AppBarButton Click="{x:Bind OnUseInstructionClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/UseInstruction')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE946;" />
                         </AppBarButton.Icon>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/UseInstructionToolTip')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        </ToolTipService.ToolTip>
                     </AppBarButton>
 
-                    <AppBarButton
-                        Click="{x:Bind OnDataSourceSettingsClicked}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/DataSourceSettings')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/DataSourceSettingsToolTip')}">
+                    <AppBarButton Click="{x:Bind OnDataSourceSettingsClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/DataSourceSettings')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE713;" />
                         </AppBarButton.Icon>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/DataSourceSettingsToolTip')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        </ToolTipService.ToolTip>
                     </AppBarButton>
                 </CommandBar.SecondaryCommands>
             </CommandBar>
@@ -203,8 +227,16 @@
                     VerticalAlignment="Center"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/NotCheckUpdate')}"
                     TextAlignment="Center"
-                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/NotCheckUpdate')}"
-                    Visibility="{x:Bind CheckUpgradableAppsState(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.NotCheckUpdate), Mode=OneWay}" />
+                    Visibility="{x:Bind CheckUpgradableAppsState(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.NotCheckUpdate), Mode=OneWay}">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            MaxWidth="9999"
+                            Background="Transparent"
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/NotCheckUpdate')}"
+                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                    </ToolTipService.ToolTip>
+                </TextBlock>
 
                 <!--  正在检查更新中  -->
                 <StackPanel
@@ -323,7 +355,11 @@
                             </StackPanel>
 
                             <ToolTipService.ToolTip>
-                                <ToolTip MaxWidth="9999">
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Background="Transparent"
+                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />

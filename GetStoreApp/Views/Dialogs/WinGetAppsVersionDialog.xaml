@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
@@ -74,8 +75,7 @@
                 VerticalAlignment="Center"
                 Click="{x:Bind OnBackClicked}"
                 IsEnabled="{x:Bind GetCanBack(BreadCollection.Count), Mode=OneWay}"
-                Style="{StaticResource AlternateCloseButtonStyle}"
-                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Back')}">
+                Style="{StaticResource AlternateCloseButtonStyle}">
 
                 <Button.Content>
                     <AnimatedIcon Margin="2">
@@ -87,6 +87,14 @@
                         </AnimatedIcon.FallbackIconSource>
                     </AnimatedIcon>
                 </Button.Content>
+
+                <ToolTipService.ToolTip>
+                    <ToolTip
+                        MaxWidth="9999"
+                        Background="Transparent"
+                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Back')}"
+                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                </ToolTipService.ToolTip>
             </Button>
 
             <BreadcrumbBar
@@ -108,8 +116,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Click="{x:Bind OnCloseClicked}"
-                Style="{StaticResource AlternateCloseButtonStyle}"
-                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Close')}">
+                Style="{StaticResource AlternateCloseButtonStyle}">
 
                 <Button.Content>
                     <FontIcon
@@ -117,6 +124,14 @@
                         FontSize="16"
                         Glyph="&#xE711;" />
                 </Button.Content>
+
+                <ToolTipService.ToolTip>
+                    <ToolTip
+                        MaxWidth="9999"
+                        Background="Transparent"
+                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Close')}"
+                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                </ToolTipService.ToolTip>
             </Button>
         </Grid>
 

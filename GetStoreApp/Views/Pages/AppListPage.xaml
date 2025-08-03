@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:applicationmodel="using:Windows.ApplicationModel"
+    xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
     xmlns:behavior="using:GetStoreApp.Extensions.Behaviors"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -113,10 +114,7 @@
                 </behavior:Interaction.Behaviors>
 
                 <CommandBar.PrimaryCommands>
-                    <AppBarButton
-                        IsEnabled="{x:Bind GetIsLoading(AppManagerResultKind), Mode=OneWay}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('AppList/Sort')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortToolTip')}">
+                    <AppBarButton IsEnabled="{x:Bind GetIsLoading(AppManagerResultKind), Mode=OneWay}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppList/Sort')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8CB;" />
@@ -166,12 +164,17 @@
                                 </MenuFlyoutSubItem>
                             </MenuFlyout>
                         </AppBarButton.Flyout>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortToolTip')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        </ToolTipService.ToolTip>
                     </AppBarButton>
 
-                    <AppBarButton
-                        IsEnabled="{x:Bind GetIsLoading(AppManagerResultKind), Mode=OneWay}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('AppList/Filter')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppList/FilterToolTip')}">
+                    <AppBarButton IsEnabled="{x:Bind GetIsLoading(AppManagerResultKind), Mode=OneWay}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppList/Filter')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE71C;" />
@@ -271,6 +274,14 @@
                                 </StackPanel>
                             </Flyout>
                         </AppBarButton.Flyout>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/FilterToolTip')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        </ToolTipService.ToolTip>
                     </AppBarButton>
 
                     <AppBarButton
@@ -430,7 +441,11 @@
                                 </TextBlock>
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip MaxWidth="9999">
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Background="Transparent"
+                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                         <StackPanel>
                                             <TextBlock>
                                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/DisplayName')}" />
@@ -460,8 +475,7 @@
                                 Grid.Column="2"
                                 Command="{StaticResource ViewInformationCommand}"
                                 CommandParameter="{x:Bind}"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/View')}"
-                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppList/ViewToolTip')}">
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/View')}">
 
                                 <SplitButton.Flyout>
                                     <MenuFlyout Placement="Bottom">
@@ -563,6 +577,14 @@
                                         </MenuFlyoutItem>
                                     </MenuFlyout>
                                 </SplitButton.Flyout>
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Background="Transparent"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/ViewToolTip')}"
+                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                </ToolTipService.ToolTip>
                             </SplitButton>
                         </Grid>
 

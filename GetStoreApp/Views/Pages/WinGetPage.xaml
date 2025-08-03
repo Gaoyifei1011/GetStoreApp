@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.Views.Pages.WinGetPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:deployment="using:Microsoft.Management.Deployment"
@@ -142,8 +143,7 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Click="{x:Bind OnCloseClicked}"
-                            Style="{StaticResource AlternateCloseButtonStyle}"
-                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Close')}">
+                            Style="{StaticResource AlternateCloseButtonStyle}">
 
                             <Button.Content>
                                 <FontIcon
@@ -151,6 +151,14 @@
                                     FontSize="16"
                                     Glyph="&#xE711;" />
                             </Button.Content>
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Background="Transparent"
+                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Close')}"
+                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                            </ToolTipService.ToolTip>
                         </Button>
                     </Grid>
 
@@ -273,8 +281,7 @@
                             VerticalAlignment="Center"
                             Click="{x:Bind OnRemoveFinishedTasklicked}"
                             IsEnabled="{x:Bind system:Convert.ToBoolean(PackageOperationCollection.Count), Mode=OneWay}"
-                            Style="{StaticResource AlternateCloseButtonStyle}"
-                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RemoveFinishedTask')}">
+                            Style="{StaticResource AlternateCloseButtonStyle}">
 
                             <Button.Content>
                                 <FontIcon
@@ -282,6 +289,14 @@
                                     FontSize="16"
                                     Glyph="&#xE74D;" />
                             </Button.Content>
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Background="Transparent"
+                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RemoveFinishedTask')}"
+                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                            </ToolTipService.ToolTip>
                         </Button>
 
                         <Button
@@ -289,8 +304,7 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Click="{x:Bind OnCloseClicked}"
-                            Style="{StaticResource AlternateCloseButtonStyle}"
-                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Close')}">
+                            Style="{StaticResource AlternateCloseButtonStyle}">
 
                             <Button.Content>
                                 <FontIcon
@@ -298,6 +312,14 @@
                                     FontSize="16"
                                     Glyph="&#xE711;" />
                             </Button.Content>
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Background="Transparent"
+                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/Close')}"
+                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                            </ToolTipService.ToolTip>
                         </Button>
                     </Grid>
 
@@ -405,7 +427,11 @@
                                                     <Run Text="{x:Bind AppVersion}" />
 
                                                     <ToolTipService.ToolTip>
-                                                        <ToolTip>
+                                                        <ToolTip
+                                                            MaxWidth="9999"
+                                                            Background="Transparent"
+                                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                             <Grid>
                                                                 <Grid.RowDefinitions>
                                                                     <RowDefinition Height="Auto" />
@@ -444,7 +470,11 @@
                                                         TextAlignment="Right">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip MaxWidth="9999">
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Background="Transparent"
+                                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                                 <TextBlock>
                                                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageOperationProgress')}" />
                                                                     <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
@@ -473,7 +503,11 @@
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Downloading, x:False), Mode=OneWay}">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip MaxWidth="9999">
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Background="Transparent"
+                                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                                 <TextBlock>
                                                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadedFileSize')}" />
                                                                     <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
@@ -500,7 +534,11 @@
                                                         TextAlignment="Right">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip MaxWidth="9999">
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Background="Transparent"
+                                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                                 <TextBlock>
                                                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/TotalFileSize')}" />
                                                                     <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
@@ -552,9 +590,11 @@
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}">
 
                                                     <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
-                                                            <TextBlock Text="{x:Bind PackageOperationFailedContent, Mode=OneWay}" />
-                                                        </ToolTip>
+                                                        <ToolTip
+                                                            MaxWidth="9999"
+                                                            Background="Transparent"
+                                                            Content="{x:Bind PackageOperationFailedContent, Mode=OneWay}"
+                                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
 
@@ -580,7 +620,6 @@
                                             CommandParameter="{x:Bind}"
                                             IsEnabled="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}"
                                             Style="{StaticResource AlternateCloseButtonStyle}"
-                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CancelTask')}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Finished, x:True), Mode=OneWay}">
 
                                             <Button.Content>
@@ -589,6 +628,14 @@
                                                     FontSize="16"
                                                     Glyph="&#xE711;" />
                                             </Button.Content>
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    MaxWidth="9999"
+                                                    Background="Transparent"
+                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CancelTask')}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                            </ToolTipService.ToolTip>
                                         </Button>
 
                                         <Button
@@ -601,7 +648,6 @@
                                             Command="{StaticResource RemoveTaskCommand}"
                                             CommandParameter="{x:Bind}"
                                             Style="{StaticResource AlternateCloseButtonStyle}"
-                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RemoveTask')}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Finished, x:False), Mode=OneWay}">
 
                                             <Button.Content>
@@ -610,6 +656,14 @@
                                                     FontSize="16"
                                                     Glyph="&#xE74D;" />
                                             </Button.Content>
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    MaxWidth="9999"
+                                                    Background="Transparent"
+                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RemoveTask')}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                            </ToolTipService.ToolTip>
                                         </Button>
                                     </Grid>
 
@@ -671,7 +725,11 @@
                                                     <Run Text="{x:Bind AppVersion}" />
 
                                                     <ToolTipService.ToolTip>
-                                                        <ToolTip>
+                                                        <ToolTip
+                                                            MaxWidth="9999"
+                                                            Background="Transparent"
+                                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                             <Grid>
                                                                 <Grid.RowDefinitions>
                                                                     <RowDefinition Height="Auto" />
@@ -710,7 +768,11 @@
                                                         TextAlignment="Right">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip MaxWidth="9999">
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Background="Transparent"
+                                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                                 <TextBlock>
                                                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageOperationProgress')}" />
                                                                     <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
@@ -738,7 +800,11 @@
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip MaxWidth="9999">
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Background="Transparent"
+                                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                                 <TextBlock>
                                                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadedFileSize')}" />
                                                                     <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
@@ -766,7 +832,11 @@
                                                         TextAlignment="Right">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip MaxWidth="9999">
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Background="Transparent"
+                                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                                 <TextBlock>
                                                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/TotalFileSize')}" />
                                                                     <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
@@ -830,9 +900,11 @@
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}">
 
                                                     <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
-                                                            <TextBlock Text="{x:Bind PackageOperationFailedContent, Mode=OneWay}" />
-                                                        </ToolTip>
+                                                        <ToolTip
+                                                            MaxWidth="9999"
+                                                            Background="Transparent"
+                                                            Content="{x:Bind PackageOperationFailedContent, Mode=OneWay}"
+                                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
 
@@ -858,7 +930,6 @@
                                             CommandParameter="{x:Bind}"
                                             IsEnabled="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}"
                                             Style="{StaticResource AlternateCloseButtonStyle}"
-                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CancelTask')}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:True), Mode=OneWay}">
 
                                             <Button.Content>
@@ -867,6 +938,14 @@
                                                     FontSize="16"
                                                     Glyph="&#xE711;" />
                                             </Button.Content>
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    MaxWidth="9999"
+                                                    Background="Transparent"
+                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CancelTask')}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                            </ToolTipService.ToolTip>
                                         </Button>
 
                                         <Button
@@ -879,7 +958,6 @@
                                             Command="{StaticResource RemoveTaskCommand}"
                                             CommandParameter="{x:Bind}"
                                             Style="{StaticResource AlternateCloseButtonStyle}"
-                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RemoveTask')}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:False), Mode=OneWay}">
 
                                             <Button.Content>
@@ -888,6 +966,14 @@
                                                     FontSize="16"
                                                     Glyph="&#xE74D;" />
                                             </Button.Content>
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    MaxWidth="9999"
+                                                    Background="Transparent"
+                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RemoveTask')}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                            </ToolTipService.ToolTip>
                                         </Button>
                                     </Grid>
 
@@ -927,7 +1013,11 @@
                                                 <Run Text="{x:Bind AppName}" />
 
                                                 <ToolTipService.ToolTip>
-                                                    <ToolTip>
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Background="Transparent"
+                                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                         <Grid>
                                                             <Grid.RowDefinitions>
                                                                 <RowDefinition Height="Auto" />
@@ -995,9 +1085,11 @@
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}">
 
                                                     <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
-                                                            <TextBlock Text="{x:Bind PackageOperationFailedContent, Mode=OneWay}" />
-                                                        </ToolTip>
+                                                        <ToolTip
+                                                            MaxWidth="9999"
+                                                            Background="Transparent"
+                                                            Content="{x:Bind PackageOperationFailedContent, Mode=OneWay}"
+                                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
 
@@ -1023,7 +1115,6 @@
                                             CommandParameter="{x:Bind}"
                                             IsEnabled="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}"
                                             Style="{StaticResource AlternateCloseButtonStyle}"
-                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CancelTask')}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.Finished, x:True), Mode=OneWay}">
 
                                             <Button.Content>
@@ -1032,6 +1123,14 @@
                                                     FontSize="16"
                                                     Glyph="&#xE711;" />
                                             </Button.Content>
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    MaxWidth="9999"
+                                                    Background="Transparent"
+                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CancelTask')}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                            </ToolTipService.ToolTip>
                                         </Button>
 
                                         <Button
@@ -1044,7 +1143,6 @@
                                             Command="{StaticResource RemoveTaskCommand}"
                                             CommandParameter="{x:Bind}"
                                             Style="{StaticResource AlternateCloseButtonStyle}"
-                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RemoveTask')}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.Finished, x:False), Mode=OneWay}">
 
                                             <Button.Content>
@@ -1053,6 +1151,14 @@
                                                     FontSize="16"
                                                     Glyph="&#xE74D;" />
                                             </Button.Content>
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    MaxWidth="9999"
+                                                    Background="Transparent"
+                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RemoveTask')}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                            </ToolTipService.ToolTip>
                                         </Button>
                                     </Grid>
 
@@ -1114,7 +1220,11 @@
                                                     <Run Text="{x:Bind AppVersion}" />
 
                                                     <ToolTipService.ToolTip>
-                                                        <ToolTip>
+                                                        <ToolTip
+                                                            MaxWidth="9999"
+                                                            Background="Transparent"
+                                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                             <Grid>
                                                                 <Grid.RowDefinitions>
                                                                     <RowDefinition Height="Auto" />
@@ -1145,7 +1255,11 @@
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}">
 
                                                     <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
+                                                        <ToolTip
+                                                            MaxWidth="9999"
+                                                            Background="Transparent"
+                                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                             <TextBlock>
                                                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageOperationProgress')}" />
                                                                 <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
@@ -1202,9 +1316,11 @@
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}">
 
                                                     <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
-                                                            <TextBlock Text="{x:Bind PackageOperationFailedContent, Mode=OneWay}" />
-                                                        </ToolTip>
+                                                        <ToolTip
+                                                            MaxWidth="9999"
+                                                            Background="Transparent"
+                                                            Content="{x:Bind PackageOperationFailedContent, Mode=OneWay}"
+                                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
 
@@ -1230,7 +1346,6 @@
                                             CommandParameter="{x:Bind}"
                                             IsEnabled="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}"
                                             Style="{StaticResource AlternateCloseButtonStyle}"
-                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CancelTask')}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.Finished, x:True), Mode=OneWay}">
 
                                             <Button.Content>
@@ -1239,6 +1354,14 @@
                                                     FontSize="16"
                                                     Glyph="&#xE711;" />
                                             </Button.Content>
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    MaxWidth="9999"
+                                                    Background="Transparent"
+                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CancelTask')}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                            </ToolTipService.ToolTip>
                                         </Button>
 
                                         <Button
@@ -1251,7 +1374,6 @@
                                             Command="{StaticResource RemoveTaskCommand}"
                                             CommandParameter="{x:Bind}"
                                             Style="{StaticResource AlternateCloseButtonStyle}"
-                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RemoveTask')}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.Finished, x:False), Mode=OneWay}">
 
                                             <Button.Content>
@@ -1260,6 +1382,14 @@
                                                     FontSize="16"
                                                     Glyph="&#xE74D;" />
                                             </Button.Content>
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    MaxWidth="9999"
+                                                    Background="Transparent"
+                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RemoveTask')}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                            </ToolTipService.ToolTip>
                                         </Button>
                                     </Grid>
 
@@ -1321,7 +1451,11 @@
                                                     <Run Text="{x:Bind AppVersion}" />
 
                                                     <ToolTipService.ToolTip>
-                                                        <ToolTip>
+                                                        <ToolTip
+                                                            MaxWidth="9999"
+                                                            Background="Transparent"
+                                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                             <Grid>
                                                                 <Grid.RowDefinitions>
                                                                     <RowDefinition Height="Auto" />
@@ -1360,7 +1494,11 @@
                                                         TextAlignment="Right">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip MaxWidth="9999">
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Background="Transparent"
+                                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                                 <TextBlock>
                                                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageOperationProgress')}" />
                                                                     <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
@@ -1389,7 +1527,11 @@
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip MaxWidth="9999">
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Background="Transparent"
+                                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                                 <TextBlock>
                                                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadedFileSize')}" />
                                                                     <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
@@ -1416,7 +1558,11 @@
                                                         TextAlignment="Right">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip MaxWidth="9999">
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Background="Transparent"
+                                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                                                 <TextBlock>
                                                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/TotalFileSize')}" />
                                                                     <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
@@ -1480,9 +1626,11 @@
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}">
 
                                                     <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
-                                                            <TextBlock Text="{x:Bind PackageOperationFailedContent, Mode=OneWay}" />
-                                                        </ToolTip>
+                                                        <ToolTip
+                                                            MaxWidth="9999"
+                                                            Background="Transparent"
+                                                            Content="{x:Bind PackageOperationFailedContent, Mode=OneWay}"
+                                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
 
@@ -1508,7 +1656,6 @@
                                             CommandParameter="{x:Bind}"
                                             IsEnabled="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}"
                                             Style="{StaticResource AlternateCloseButtonStyle}"
-                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CancelTask')}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:True), Mode=OneWay}">
 
                                             <Button.Content>
@@ -1517,6 +1664,14 @@
                                                     FontSize="16"
                                                     Glyph="&#xE711;" />
                                             </Button.Content>
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    MaxWidth="9999"
+                                                    Background="Transparent"
+                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/CancelTask')}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                            </ToolTipService.ToolTip>
                                         </Button>
 
                                         <Button
@@ -1529,7 +1684,6 @@
                                             Command="{StaticResource RemoveTaskCommand}"
                                             CommandParameter="{x:Bind}"
                                             Style="{StaticResource AlternateCloseButtonStyle}"
-                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RemoveTask')}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:False), Mode=OneWay}">
 
                                             <Button.Content>
@@ -1538,6 +1692,14 @@
                                                     FontSize="16"
                                                     Glyph="&#xE74D;" />
                                             </Button.Content>
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    MaxWidth="9999"
+                                                    Background="Transparent"
+                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/RemoveTask')}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                            </ToolTipService.ToolTip>
                                         </Button>
                                     </Grid>
                                 </Grid>

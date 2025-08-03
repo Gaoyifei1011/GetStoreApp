@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.Views.Pages.QueryLinksPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -259,7 +260,9 @@
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 MaxWidth="9999"
+                                                Background="Transparent"
                                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryAppName')}"
+                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                 Visibility="{x:Bind HistoryAppNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
@@ -277,7 +280,9 @@
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 MaxWidth="9999"
+                                                Background="Transparent"
                                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryType')}"
+                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                 Visibility="{x:Bind HistoryTypeHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
@@ -295,7 +300,9 @@
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 MaxWidth="9999"
+                                                Background="Transparent"
                                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryChannel')}"
+                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                 Visibility="{x:Bind HistoryChannelHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
@@ -313,7 +320,9 @@
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 MaxWidth="9999"
+                                                Background="Transparent"
                                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryLink')}"
+                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                 Visibility="{x:Bind HistoryLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
@@ -324,8 +333,16 @@
                                         Margin="10,0,0,0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Options')}"
-                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OptionsToolTip')}" />
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Options')}">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Background="Transparent"
+                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OptionsToolTip')}"
+                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
                                 </Grid>
                             </ListView.Header>
 
@@ -362,7 +379,9 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     MaxWidth="9999"
+                                                    Background="Transparent"
                                                     Content="{x:Bind HistoryAppName}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                     Visibility="{Binding ElementName=HistoryAppNameText, Path=IsTextTrimmed, Mode=OneWay}" />
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
@@ -384,7 +403,9 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     MaxWidth="9999"
+                                                    Background="Transparent"
                                                     Content="{x:Bind HistoryTypeName}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                     Visibility="{Binding ElementName=HistoryTypeText, Path=IsTextTrimmed, Mode=OneWay}" />
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
@@ -406,7 +427,9 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     MaxWidth="9999"
+                                                    Background="Transparent"
                                                     Content="{x:Bind HistoryChannelName}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                     Visibility="{Binding ElementName=HistoryChannelText, Path=IsTextTrimmed, Mode=OneWay}" />
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
@@ -428,7 +451,9 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     MaxWidth="9999"
+                                                    Background="Transparent"
                                                     Content="{x:Bind HistoryLink}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                     Visibility="{Binding ElementName=HistoryLinkText, Path=IsTextTrimmed, Mode=OneWay}" />
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
@@ -655,14 +680,19 @@
                         Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelectMode), Mode=OneWay}">
 
                         <CommandBar.PrimaryCommands>
-                            <AppBarButton
-                                Click="{x:Bind OnSelectClicked}"
-                                Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Select')}"
-                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/SelectToolTip')}">
+                            <AppBarButton Click="{x:Bind OnSelectClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Select')}">
 
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE762;" />
                                 </AppBarButton.Icon>
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Background="Transparent"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/SelectToolTip')}"
+                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                </ToolTipService.ToolTip>
                             </AppBarButton>
                         </CommandBar.PrimaryCommands>
                     </CommandBar>
@@ -676,7 +706,7 @@
                         Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
                         <CommandBar.PrimaryCommands>
-                            <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyOptions')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyOptionsToolTip')}">
+                            <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyOptions')}">
 
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE8C8;" />
@@ -684,17 +714,37 @@
 
                                 <AppBarButton.Flyout>
                                     <MenuFlyout Placement="Bottom">
-                                        <MenuFlyoutItem
-                                            Click="{x:Bind OnCopySelectedLinkClicked}"
-                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopySelectedLink')}"
-                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopySelectedLinkToolTip')}" />
+                                        <MenuFlyoutItem Click="{x:Bind OnCopySelectedLinkClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopySelectedLink')}">
 
-                                        <MenuFlyoutItem
-                                            Click="{x:Bind OnCopySelectedClicked}"
-                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopySelectedContent')}"
-                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopySelectedContentToolTip')}" />
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    MaxWidth="9999"
+                                                    Background="Transparent"
+                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopySelectedLinkToolTip')}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                            </ToolTipService.ToolTip>
+                                        </MenuFlyoutItem>
+
+                                        <MenuFlyoutItem Click="{x:Bind OnCopySelectedClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopySelectedContent')}">
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    MaxWidth="9999"
+                                                    Background="Transparent"
+                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopySelectedContentToolTip')}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                            </ToolTipService.ToolTip>
+                                        </MenuFlyoutItem>
                                     </MenuFlyout>
                                 </AppBarButton.Flyout>
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Background="Transparent"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyOptionsToolTip')}"
+                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                </ToolTipService.ToolTip>
                             </AppBarButton>
 
                             <AppBarButton Click="{x:Bind OnDownloadSelectedClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/DownloadSelected')}">
@@ -704,14 +754,19 @@
                                 </AppBarButton.Icon>
                             </AppBarButton>
 
-                            <AppBarButton
-                                Click="{x:Bind OnCancelClicked}"
-                                Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Cancel')}"
-                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CancelToolTip')}">
+                            <AppBarButton Click="{x:Bind OnCancelClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Cancel')}">
 
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE711;" />
                                 </AppBarButton.Icon>
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Background="Transparent"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CancelToolTip')}"
+                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                </ToolTipService.ToolTip>
                             </AppBarButton>
                         </CommandBar.PrimaryCommands>
                     </CommandBar>
@@ -766,8 +821,16 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Select')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap"
-                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/SelectHeader')}"
-                                Visibility="{x:Bind IsSelectMode, Mode=OneWay}" />
+                                Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Background="Transparent"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/SelectHeader')}"
+                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
 
                             <TextBlock
                                 x:Name="FileNameHeaderText"
@@ -781,7 +844,9 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
+                                        Background="Transparent"
                                         Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileName')}"
+                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                         Visibility="{x:Bind FileNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
@@ -798,7 +863,9 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
+                                        Background="Transparent"
                                         Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileSize')}"
+                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                         Visibility="{x:Bind FileSizeHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
@@ -808,8 +875,16 @@
                                 Margin="0,0,10,0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Options')}"
-                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OptionsToolTip')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Options')}">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Background="Transparent"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OptionsToolTip')}"
+                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
                         </Grid>
                     </ListView.Header>
 
@@ -840,7 +915,11 @@
                                     Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip MaxWidth="9999">
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Background="Transparent"
+                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                             <Grid>
                                                 <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Selected')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
                                                 <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/UnSelected')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
@@ -868,7 +947,9 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     MaxWidth="9999"
+                                                    Background="Transparent"
                                                     Content="{x:Bind FileName}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                     Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}" />
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
@@ -880,12 +961,19 @@
                                                 Command="{StaticResource CopyLinkCommand}"
                                                 CommandParameter="{x:Bind FileLink}"
                                                 IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyLink')}"
-                                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyLinkToolTip')}">
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyLink')}">
 
                                                 <MenuFlyoutItem.Icon>
                                                     <FontIcon Glyph="&#xE8C8;" />
                                                 </MenuFlyoutItem.Icon>
+
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Background="Transparent"
+                                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyLinkToolTip')}"
+                                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                                </ToolTipService.ToolTip>
                                             </MenuFlyoutItem>
                                         </MenuFlyout>
                                     </HyperlinkButton.ContextFlyout>
@@ -908,7 +996,9 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
+                                            Background="Transparent"
                                             Content="{x:Bind FileSize}"
+                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                             Visibility="{Binding ElementName=FileSizeText, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
@@ -921,8 +1011,16 @@
                                     Command="{StaticResource OpenLinkCommand}"
                                     CommandParameter="{x:Bind FileLink}"
                                     Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OpenLink')}"
-                                    IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OpenLinkToolTip')}" />
+                                    IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Background="Transparent"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OpenLinkToolTip')}"
+                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                    </ToolTipService.ToolTip>
+                                </HyperlinkButton>
 
                                 <Grid.ContextFlyout>
                                     <MenuFlyout Placement="Bottom">
@@ -930,12 +1028,19 @@
                                             Command="{StaticResource CopyInformationCommand}"
                                             CommandParameter="{x:Bind}"
                                             IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
-                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyInformation')}"
-                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyInformationToolTip')}">
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyInformation')}">
 
                                             <MenuFlyoutItem.Icon>
                                                 <FontIcon Glyph="&#xE8C8;" />
                                             </MenuFlyoutItem.Icon>
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    MaxWidth="9999"
+                                                    Background="Transparent"
+                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyInformationToolTip')}"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                            </ToolTipService.ToolTip>
                                         </MenuFlyoutItem>
                                     </MenuFlyout>
                                 </Grid.ContextFlyout>

@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.Views.Pages.SettingsDownloadPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:roothelper="using:GetStoreApp.Helpers.Root"
@@ -66,7 +67,11 @@
                         </Hyperlink>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip MaxWidth="9999">
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
                                 <StackPanel HorizontalAlignment="Stretch">
                                     <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/FileStoragePath')}" />
                                     <TextBlock Text="{x:Bind DownloadFolder.Path, Mode=OneWay}" />
@@ -172,7 +177,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DoEngineModeDescription')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind DoEngineModeDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -263,7 +270,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DeliveryOptimizationDescription')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind DeliveryOptimizationDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -321,7 +330,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Background="Transparent"
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/Aria2ConfigurationDescription')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                 Visibility="{x:Bind Aria2ConfigurationDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
