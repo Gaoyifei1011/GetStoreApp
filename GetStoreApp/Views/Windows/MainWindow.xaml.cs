@@ -63,14 +63,12 @@ namespace GetStoreApp.Views.Windows
         private readonly string NetworkError2String = ResourceService.GetLocalized("Window/NetworkError2");
         private readonly string RunningAdministratorString = ResourceService.GetLocalized("Window/RunningAdministrator");
         private readonly string TitleString = ResourceService.GetLocalized("Window/Title");
+        private readonly ContentIsland contentIsland;
+        private readonly InputKeyboardSource inputKeyboardSource;
         private readonly ContentCoordinateConverter contentCoordinateConverter;
         private readonly OverlappedPresenter overlappedPresenter;
         private readonly SUBCLASSPROC mainWindowSubClassProc;
         private bool isDialogOpening;
-        private ContentIsland contentIsland;
-        private DisplayInformation displayInformation;
-        private IDisplayInformation2 displayInformation2;
-        private InputKeyboardSource inputKeyboardSource;
         private ToolTip navigationViewBackButtonToolTip;
 
         public new static MainWindow Current { get; private set; }
@@ -201,21 +199,24 @@ namespace GetStoreApp.Views.Windows
             AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
             IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
-            displayInformation = DisplayInformation.CreateForWindowId(AppWindow.Id);
-            displayInformation2 = displayInformation.As<IDisplayInformation2>();
+            contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
+            inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
             ControlBackdropController.Initialize(Current);
-
-            // 标题栏和右键菜单设置
-            SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
 
             // 挂载相应的事件
             AppWindow.Changed += OnAppWindowChanged;
             AppWindow.Closing += OnAppWindowClosing;
+            contentIsland.StateChanged += OnStateChanged;
+            contentIsland.Environment.SettingChanged += OnSettingChanged;
+            inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
             NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
             ApplicationData.Current.DataChanged += OnDataChanged;
             ThemeService.PropertyChanged += OnServicePropertyChanged;
             BackdropService.PropertyChanged += OnServicePropertyChanged;
             TopMostService.PropertyChanged += OnServicePropertyChanged;
+
+            // 标题栏和右键菜单设置
+            SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
 
             // 为应用主窗口添加窗口过程
             mainWindowSubClassProc = new SUBCLASSPROC(MainWindowSubClassProc);
@@ -263,10 +264,10 @@ namespace GetStoreApp.Views.Windows
                 IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
             }
 
-            if (Content is not null && displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
+            if (contentIsland is not null)
             {
-                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1280 * rawPixelsPerViewPixel);
-                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(720 * rawPixelsPerViewPixel);
+                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1280 * contentIsland.RasterizationScale);
+                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(720 * contentIsland.RasterizationScale);
             }
         }
 
@@ -290,17 +291,6 @@ namespace GetStoreApp.Views.Windows
                 if (overlappedPresenter is not null)
                 {
                     IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
-                }
-
-                if (Content is not null && Content.XamlRoot is not null)
-                {
-                    // 窗口移动时，校对并纠正弹出窗口位置错误的问题
-                    foreach (Popup popup in VisualTreeHelper.GetOpenPopupsForXamlRoot(Content.XamlRoot))
-                    {
-                        ElementCompositeMode compositeMode = popup.CompositeMode;
-                        popup.CompositeMode = compositeMode is ElementCompositeMode.SourceOver ? ElementCompositeMode.MinBlend : ElementCompositeMode.SourceOver;
-                        popup.CompositeMode = compositeMode;
-                    }
                 }
             }
         }
@@ -337,9 +327,6 @@ namespace GetStoreApp.Views.Windows
 
                 if (result is ContentDialogResult.Primary)
                 {
-                    displayInformation.Dispose();
-                    displayInformation = null;
-                    displayInformation2 = null;
                     ControlBackdropController.UnInitialize();
                     AppWindow.Changed -= OnAppWindowChanged;
                     contentIsland.Environment.SettingChanged -= OnSettingChanged;
@@ -366,9 +353,6 @@ namespace GetStoreApp.Views.Windows
             }
             else
             {
-                displayInformation.Dispose();
-                displayInformation = null;
-                displayInformation2 = null;
                 ControlBackdropController.UnInitialize();
                 AppWindow.Changed -= OnAppWindowChanged;
                 contentIsland.Environment.SettingChanged -= OnSettingChanged;
@@ -383,6 +367,18 @@ namespace GetStoreApp.Views.Windows
                 }
                 Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0);
                 (Application.Current as WinUIApp).Dispose();
+            }
+        }
+
+        /// <summary>
+        /// 内容岛状态发生更改时触发的事件
+        /// </summary>
+        private void OnStateChanged(ContentIsland sender, ContentIslandStateChangedEventArgs args)
+        {
+            if (args.DidRasterizationScaleChange)
+            {
+                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1280 * contentIsland.RasterizationScale);
+                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(720 * contentIsland.RasterizationScale);
             }
         }
 
@@ -576,11 +572,6 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
-            contentIsland = Content.XamlRoot.ContentIsland;
-            contentIsland.Environment.SettingChanged += OnSettingChanged;
-            inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
-            inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
-
             // 设置标题栏主题
             SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
 
@@ -634,12 +625,6 @@ namespace GetStoreApp.Views.Windows
             // 初始化启动信息
             AppLaunchArguments appLaunchArguments = await AppLaunchService.ReadArgumentsAsync();
             await ParseAppLaunchArgumentsAsync(appLaunchArguments, true);
-
-            if (Content is not null && displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
-            {
-                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1280 * rawPixelsPerViewPixel);
-                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(720 * rawPixelsPerViewPixel);
-            }
         }
 
         /// <summary>
@@ -872,10 +857,10 @@ namespace GetStoreApp.Views.Windows
         public void Show(bool isFirstActivate = false)
         {
             // 默认直接显示到窗口中间
-            if (isFirstActivate && DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
+            if (isFirstActivate && DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
             {
                 RectInt32 workArea = displayArea.WorkArea;
-                AppWindow.Resize(new SizeInt32(Convert.ToInt32(1280 * rawPixelsPerViewPixel), Convert.ToInt32(720 * rawPixelsPerViewPixel)));
+                AppWindow.Resize(new SizeInt32(Convert.ToInt32(1280 * contentIsland.RasterizationScale), Convert.ToInt32(720 * contentIsland.RasterizationScale)));
                 AppWindow.Move(new PointInt32((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
             }
 
