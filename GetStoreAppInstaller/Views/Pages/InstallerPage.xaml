@@ -137,8 +137,7 @@
             Margin="2,2,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Click="{x:Bind OnOpenSettingsClicked}"
-            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Settings')}">
+            Click="{x:Bind OnOpenSettingsClicked}">
 
             <controls:AnimatedIcon>
                 <controls:AnimatedIcon.Source>
@@ -148,6 +147,10 @@
                     <controls:FontIconSource Glyph="&#xE713;" />
                 </controls:AnimatedIcon.FallbackIconSource>
             </controls:AnimatedIcon>
+
+            <ToolTipService.ToolTip>
+                <ToolTip MaxWidth="9999" Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Settings')}" />
+            </ToolTipService.ToolTip>
         </Button>
 
         <!--  空应用包  -->
@@ -347,12 +350,15 @@
                                         Height="34"
                                         Margin="0,0,3,0"
                                         Padding="0"
-                                        Click="{x:Bind OnOpenPackageClicked}"
-                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenPackage')}">
+                                        Click="{x:Bind OnOpenPackageClicked}">
 
                                         <Button.Content>
                                             <FontIcon FontSize="16" Glyph="&#xE8E5;" />
                                         </Button.Content>
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip MaxWidth="9999" Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenPackage')}" />
+                                        </ToolTipService.ToolTip>
                                     </Button>
 
                                     <Button
@@ -360,8 +366,7 @@
                                         Width="34"
                                         Height="34"
                                         Margin="0,0,3,0"
-                                        Padding="0"
-                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependency')}">
+                                        Padding="0">
 
                                         <Button.Content>
                                             <FontIcon FontSize="16" Glyph="&#xF003;" />
@@ -418,8 +423,7 @@
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center"
                                                             Click="{x:Bind OnAddDependencyClicked}"
-                                                            Style="{StaticResource AlternateCloseButtonStyle}"
-                                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependency')}">
+                                                            Style="{StaticResource AlternateCloseButtonStyle}">
 
                                                             <Button.Content>
                                                                 <FontIcon
@@ -427,6 +431,10 @@
                                                                     FontSize="16"
                                                                     Glyph="&#xE710;" />
                                                             </Button.Content>
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip MaxWidth="9999" Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependency')}" />
+                                                            </ToolTipService.ToolTip>
                                                         </Button>
 
                                                         <Button
@@ -436,8 +444,7 @@
                                                             VerticalAlignment="Center"
                                                             Click="{x:Bind OnClearDependencyClicked}"
                                                             IsEnabled="{x:Bind system:Convert.ToBoolean(InstallDependencyCollection.Count), Mode=OneWay}"
-                                                            Style="{StaticResource AlternateCloseButtonStyle}"
-                                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ClearDependency')}">
+                                                            Style="{StaticResource AlternateCloseButtonStyle}">
 
                                                             <Button.Content>
                                                                 <FontIcon
@@ -445,6 +452,10 @@
                                                                     FontSize="16"
                                                                     Glyph="&#xE74D;" />
                                                             </Button.Content>
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip MaxWidth="9999" Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ClearDependency')}" />
+                                                            </ToolTipService.ToolTip>
                                                         </Button>
 
                                                         <Button
@@ -454,8 +465,7 @@
                                                             VerticalAlignment="Center"
                                                             Click="{x:Bind OnCloseFlyoutClicked}"
                                                             Style="{StaticResource AlternateCloseButtonStyle}"
-                                                            Tag="{x:Bind AddDependencyFlyout}"
-                                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}">
+                                                            Tag="{x:Bind AddDependencyFlyout}">
 
                                                             <Button.Content>
                                                                 <FontIcon
@@ -463,6 +473,10 @@
                                                                     FontSize="16"
                                                                     Glyph="&#xE711;" />
                                                             </Button.Content>
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip MaxWidth="9999" Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}" />
+                                                            </ToolTipService.ToolTip>
                                                         </Button>
                                                     </Grid>
 
@@ -584,8 +598,7 @@
                                                                         VerticalAlignment="Center"
                                                                         Command="{StaticResource DeleteDependencyPackageCommand}"
                                                                         CommandParameter="{x:Bind DependencyFullName}"
-                                                                        Style="{StaticResource AlternateCloseButtonStyle}"
-                                                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DeleteDependencyPackage')}">
+                                                                        Style="{StaticResource AlternateCloseButtonStyle}">
 
                                                                         <Button.Content>
                                                                             <FontIcon
@@ -593,6 +606,10 @@
                                                                                 FontSize="16"
                                                                                 Glyph="&#xE711;" />
                                                                         </Button.Content>
+
+                                                                        <ToolTipService.ToolTip>
+                                                                            <ToolTip MaxWidth="9999" Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DeleteDependencyPackage')}" />
+                                                                        </ToolTipService.ToolTip>
                                                                     </Button>
                                                                 </Grid>
                                                             </DataTemplate>
@@ -601,6 +618,10 @@
                                                 </Grid>
                                             </Flyout>
                                         </Button.Flyout>
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip MaxWidth="9999" Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependency')}" />
+                                        </ToolTipService.ToolTip>
                                     </Button>
 
                                     <Button
@@ -611,12 +632,15 @@
                                         HorizontalContentAlignment="Stretch"
                                         VerticalContentAlignment="Stretch"
                                         Click="{x:Bind OnInstallAppClicked}"
-                                        Style="{StaticResource AccentButtonStyle}"
-                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/InstallApp')}">
+                                        Style="{StaticResource AccentButtonStyle}">
 
                                         <Button.Content>
                                             <FontIcon FontSize="16" Glyph="&#xE896;" />
                                         </Button.Content>
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip MaxWidth="9999" Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/InstallApp')}" />
+                                        </ToolTipService.ToolTip>
                                     </Button>
                                 </Grid>
                             </ContentControl>
@@ -631,10 +655,13 @@
                                 Click="{x:Bind OnCancelInstallClicked}"
                                 IsEnabled="{x:Bind IsCancelInstall, Mode=OneWay}"
                                 Style="{StaticResource AccentButtonStyle}"
-                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CancelInstall')}"
                                 Visibility="{x:Bind IsInstalling, Mode=OneWay}">
 
                                 <FontIcon FontSize="16" Glyph="&#xE711;" />
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip MaxWidth="9999" Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CancelInstall')}" />
+                                </ToolTipService.ToolTip>
                             </Button>
 
                             <Grid
@@ -662,7 +689,6 @@
                                     Width="32"
                                     Height="32"
                                     Padding="0"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ViewErrorInformation')}"
                                     Visibility="{x:Bind IsInstallFailed, Mode=OneWay}">
 
                                     <Button.Content>
@@ -720,8 +746,7 @@
                                                         VerticalAlignment="Center"
                                                         Click="{x:Bind OnCopyErrorInformationClicked}"
                                                         IsEnabled="{x:Bind converter:ValueConverterHelper.IsNotEmptyString(InstallFailedInformation), Mode=OneWay}"
-                                                        Style="{StaticResource AlternateCloseButtonStyle}"
-                                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CopyErrorInformation')}">
+                                                        Style="{StaticResource AlternateCloseButtonStyle}">
 
                                                         <Button.Content>
                                                             <FontIcon
@@ -729,6 +754,10 @@
                                                                 FontSize="16"
                                                                 Glyph="&#xE8C8;" />
                                                         </Button.Content>
+
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip MaxWidth="9999" Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CopyErrorInformation')}" />
+                                                        </ToolTipService.ToolTip>
                                                     </Button>
 
                                                     <Button
@@ -738,8 +767,7 @@
                                                         VerticalAlignment="Center"
                                                         Click="{x:Bind OnCloseFlyoutClicked}"
                                                         Style="{StaticResource AlternateCloseButtonStyle}"
-                                                        Tag="{x:Bind ViewErrorInformationFlyout}"
-                                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}">
+                                                        Tag="{x:Bind ViewErrorInformationFlyout}">
 
                                                         <Button.Content>
                                                             <FontIcon
@@ -747,6 +775,10 @@
                                                                 FontSize="16"
                                                                 Glyph="&#xE711;" />
                                                         </Button.Content>
+
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip MaxWidth="9999" Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}" />
+                                                        </ToolTipService.ToolTip>
                                                     </Button>
                                                 </Grid>
 
@@ -765,6 +797,10 @@
                                             </Grid>
                                         </Flyout>
                                     </Button.Flyout>
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip MaxWidth="9999" Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ViewErrorInformation')}" />
+                                    </ToolTipService.ToolTip>
                                 </Button>
                             </Grid>
                         </Grid>
