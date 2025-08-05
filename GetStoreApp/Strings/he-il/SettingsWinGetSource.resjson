@@ -36,6 +36,7 @@
   "Unknown": "[לא ידוע]",
   "UnSelected": "לא נבחר",
   "User": "משתמש",
+  "ViewMore": "הצג עוד",
   "WinGetDataSourceCountInfo": "ישנם {0} מקורות נתונים של WinGet שנוספו",
   "WinGetDataSourceRemoveAccessDenied": "הגישה נדחתה",
   "WinGetDataSourceRemoveCatalogError": "שגיאת מקור נתונים",

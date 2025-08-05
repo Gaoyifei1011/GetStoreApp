@@ -42,5 +42,6 @@
   "UninstallWithCmd": "使用命令卸载",
   "Unknown": "[未知]",
   "UseInstruction": "使用说明",
-  "UseInstructionToolTip": "点击了解WinGet 程序包的具体使用方法"
+  "UseInstructionToolTip": "点击了解WinGet 程序包的具体使用方法",
+  "ViewMore": "查看更多"
 }

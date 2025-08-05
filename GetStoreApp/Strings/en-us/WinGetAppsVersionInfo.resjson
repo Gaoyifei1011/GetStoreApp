@@ -28,5 +28,6 @@
   "Unknown": "[Unknown]",
   "Upgrade": "Upgrade",
   "Version": "Version: ",
+  "ViewMore": "View more",
   "WinGetAppsVersionCountInfo": "There are {0} versions"
 }

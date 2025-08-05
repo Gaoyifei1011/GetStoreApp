@@ -45,6 +45,7 @@
   "SupportedHardLinks": "Support hard link: ",
   "SystemVolume": "System volume: ",
   "Unknown": "[Unknown]",
+  "ViewMore": "View more",
   "VolumeSpace": "{0} available, total {1}",
   "Yes": "Yes"
 }

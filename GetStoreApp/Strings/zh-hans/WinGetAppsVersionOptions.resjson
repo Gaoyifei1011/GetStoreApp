@@ -59,5 +59,6 @@
   "Repair": "修复",
   "RepairWithCmd": "使用命令修复",
   "Upgrade": "更新",
-  "UpgradeWithCmd": "使用命令更新"
+  "UpgradeWithCmd": "使用命令更新",
+  "ViewMore": "查看更多"
 }

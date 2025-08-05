@@ -30,5 +30,6 @@
   "SelectToolTip": "进入多选模式",
   "UnSelected": "未选择",
   "UseInstruction": "使用说明",
-  "UseInstructionToolTip": "点击了解下载管理的的具体使用方法"
+  "UseInstructionToolTip": "点击了解下载管理的的具体使用方法",
+  "ViewMore": "查看更多"
 }
