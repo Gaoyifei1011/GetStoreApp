@@ -353,9 +353,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 了解 WinGet 程序包具体的使用说明
         /// </summary>
-        private async void OnUseInstructionClicked(object sender, RoutedEventArgs args)
+        private void OnUseInstructionClicked(object sender, RoutedEventArgs args)
         {
-            await WinGetPageInstance?.ShowUseInstructionAsync();
+            WinGetPageInstance?.ShowUseInstruction();
         }
 
         /// <summary>
@@ -380,9 +380,8 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 配置 WinGet 数据源
         /// </summary>
-        private async void OnDataSourceSettingsClicked(object sender, RoutedEventArgs args)
+        private void OnDataSourceSettingsClicked(object sender, RoutedEventArgs args)
         {
-            await Task.Delay(300);
             MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.WinGetDataSource);
         }
 

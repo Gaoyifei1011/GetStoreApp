@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
-    xmlns:behavior="using:GetStoreApp.Extensions.Behaviors"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
@@ -14,10 +13,6 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-        <SolidColorBrush x:Key="CommandBarOverflowPresenterBackground" Color="Transparent" />
-        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-
         <XamlUICommand x:Name="UpdateCommand" ExecuteRequested="{x:Bind OnUpdateExecuteRequested}" />
         <XamlUICommand x:Name="CancelCommand" ExecuteRequested="{x:Bind OnCancelExecuteRequested}" />
     </Page.Resources>
@@ -54,6 +49,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <FontIcon
@@ -86,10 +82,6 @@
 
             <CommandBar Grid.Column="4" DefaultLabelPosition="Right">
 
-                <behavior:Interaction.Behaviors>
-                    <behavior:CommandBarSecondaryCommandsBackdropBehavior />
-                </behavior:Interaction.Behaviors>
-
                 <CommandBar.PrimaryCommands>
                     <AppBarButton
                         Click="{x:Bind OnCheckUpdateClicked}"
@@ -111,39 +103,69 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
                 </CommandBar.PrimaryCommands>
-
-                <CommandBar.SecondaryCommands>
-                    <AppBarButton Click="{x:Bind OnOpenStoreClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/OpenStore')}">
-
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE719;" />
-                        </AppBarButton.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/OpenStoreToolTip')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                        </ToolTipService.ToolTip>
-                    </AppBarButton>
-
-                    <AppBarButton Click="{x:Bind OnInsiderProgramClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/InsiderProgram')}">
-
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xF1AD;" />
-                        </AppBarButton.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/InsiderProgramToolTip')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                        </ToolTipService.ToolTip>
-                    </AppBarButton>
-                </CommandBar.SecondaryCommands>
             </CommandBar>
+
+            <Button
+                Grid.Column="5"
+                MinHeight="{ThemeResource AppBarThemeCompactHeight}"
+                Margin="-6,3,0,0"
+                Padding="{ThemeResource CommandBarMoreButtonMargin}"
+                VerticalAlignment="Center"
+                Foreground="{ThemeResource CommandBarForeground}"
+                IsAccessKeyScope="True"
+                Style="{ThemeResource EllipsisButton}">
+
+                <Button.Content>
+                    <FontIcon
+                        Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
+                        VerticalAlignment="Center"
+                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                        FontSize="20"
+                        Glyph="&#xE712;" />
+                </Button.Content>
+
+                <ToolTipService.ToolTip>
+                    <ToolTip
+                        MaxWidth="9999"
+                        Background="Transparent"
+                        Content="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/ViewMore')}"
+                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                </ToolTipService.ToolTip>
+
+                <Button.Flyout>
+                    <MenuFlyout Placement="Bottom">
+                        <MenuFlyoutItem Click="{x:Bind OnOpenStoreClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/OpenStore')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE719;" />
+                            </MenuFlyoutItem.Icon>
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Background="Transparent"
+                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/OpenStoreToolTip')}"
+                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                            </ToolTipService.ToolTip>
+                        </MenuFlyoutItem>
+
+                        <MenuFlyoutItem Click="{x:Bind OnInsiderProgramClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/InsiderProgram')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xF1AD;" />
+                            </MenuFlyoutItem.Icon>
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Background="Transparent"
+                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/InsiderProgramToolTip')}"
+                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                            </ToolTipService.ToolTip>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
         </Grid>
 
         <!--  应用更新状态显示栏  -->

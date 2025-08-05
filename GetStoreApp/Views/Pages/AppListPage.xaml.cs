@@ -1051,9 +1051,8 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开应用包存储卷设置
         /// </summary>
-        private async void OnPackageVolumeConfigurationClicked(object sender, RoutedEventArgs args)
+        private void OnPackageVolumeConfigurationClicked(object sender, RoutedEventArgs args)
         {
-            await Task.Delay(300);
             MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.PackageVolume);
         }
 

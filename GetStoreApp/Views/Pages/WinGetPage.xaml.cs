@@ -2662,10 +2662,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 显示使用说明
         /// </summary>
-        public async Task ShowUseInstructionAsync()
+        public void ShowUseInstruction()
         {
             WinGetPaneKind = WinGetPaneKind.UseInstruction;
-            await Task.Delay(300);
             if (!WinGetSplitView.IsPaneOpen)
             {
                 WinGetSplitView.OpenPaneLength = 320;

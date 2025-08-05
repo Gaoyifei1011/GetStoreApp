@@ -473,11 +473,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 了解应用具体的使用说明
         /// </summary>
-        private async void OnUseInstructionClicked(object sender, RoutedEventArgs args)
+        private void OnUseInstructionClicked(object sender, RoutedEventArgs args)
         {
             if (MainWindow.Current.GetFrameContent() is DownloadPage downloadPage)
             {
-                await Task.Delay(300);
                 downloadPage.ShowUseInstruction();
             }
         }

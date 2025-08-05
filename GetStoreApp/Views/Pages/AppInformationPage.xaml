@@ -15,8 +15,6 @@
     <Page.Resources>
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="Transparent" />
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="Transparent" />
-        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
 
         <XamlUICommand x:Name="LaunchCommand" ExecuteRequested="{x:Bind OnLaunchExecuteRequested}" />
         <XamlUICommand x:Name="OpenFolderCommand" ExecuteRequested="{x:Bind OnOpenFolderExecuteRequested}" />

@@ -449,9 +449,8 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 设置说明
         /// </summary>
-        private async void OnSettingsInstructionClicked(object sender, RoutedEventArgs args)
+        private void OnSettingsInstructionClicked(object sender, RoutedEventArgs args)
         {
-            await Task.Delay(300);
             if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
             {
                 settingsPage.ShowSettingsInstruction();

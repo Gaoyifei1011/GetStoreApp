@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:applicationmodel="using:Windows.ApplicationModel"
     xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
-    xmlns:behavior="using:GetStoreApp.Extensions.Behaviors"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
@@ -17,9 +16,6 @@
     <Page.Resources>
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="Transparent" />
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="Transparent" />
-        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-        <SolidColorBrush x:Key="CommandBarOverflowPresenterBackground" Color="Transparent" />
-        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
 
         <XamlUICommand x:Name="OpenAppCommand" ExecuteRequested="{x:Bind OnOpenAppExecuteRequested}" />
         <XamlUICommand x:Name="OpenCacheFolderCommand" ExecuteRequested="{x:Bind OnOpenCacheFolderExecuteRequested}" />
@@ -56,6 +52,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
@@ -109,71 +106,7 @@
                 Background="Transparent"
                 DefaultLabelPosition="Right">
 
-                <behavior:Interaction.Behaviors>
-                    <behavior:CommandBarSecondaryCommandsBackdropBehavior />
-                </behavior:Interaction.Behaviors>
-
                 <CommandBar.PrimaryCommands>
-                    <AppBarButton IsEnabled="{x:Bind GetIsLoading(AppManagerResultKind), Mode=OneWay}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppList/Sort')}">
-
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE8CB;" />
-                        </AppBarButton.Icon>
-
-                        <AppBarButton.Flyout>
-                            <MenuFlyout Placement="Bottom">
-                                <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortWay')}">
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnSortWayClicked}"
-                                        GroupName="SortWayRadioGroup"
-                                        IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
-                                        Tag="True"
-                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortIncrease')}" />
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnSortWayClicked}"
-                                        GroupName="SortWayRadioGroup"
-                                        IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
-                                        Tag="False"
-                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortDecrease')}" />
-                                </MenuFlyoutSubItem>
-
-                                <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortRule')}">
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnSortRuleClicked}"
-                                        GroupName="SortRuleRadioGroup"
-                                        IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
-                                        Tag="{x:Bind enum:AppSortRuleKind.DisplayName}"
-                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortByDisplayName')}" />
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnSortRuleClicked}"
-                                        GroupName="SortRuleRadioGroup"
-                                        IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
-                                        Tag="{x:Bind enum:AppSortRuleKind.PublisherName}"
-                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortByPublisher')}" />
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnSortRuleClicked}"
-                                        GroupName="SortRuleRadioGroup"
-                                        IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.InstallDate), Mode=OneWay}"
-                                        Tag="{x:Bind enum:AppSortRuleKind.InstallDate}"
-                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortByInstalledDate')}" />
-                                </MenuFlyoutSubItem>
-                            </MenuFlyout>
-                        </AppBarButton.Flyout>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortToolTip')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                        </ToolTipService.ToolTip>
-                    </AppBarButton>
-
                     <AppBarButton IsEnabled="{x:Bind GetIsLoading(AppManagerResultKind), Mode=OneWay}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppList/Filter')}">
 
                         <AppBarButton.Icon>
@@ -294,27 +227,113 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
                 </CommandBar.PrimaryCommands>
-
-                <CommandBar.SecondaryCommands>
-                    <AppBarButton Click="{x:Bind OnInstalledAppsClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppList/InstalledApps')}">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE71D;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
-                    <AppBarButton Click="{x:Bind OnDeveloperOptionsClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppList/DeveloperOptions')}">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xEC7A;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
-                    <AppBarButton Click="{x:Bind OnPackageVolumeConfigurationClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppList/PackageVolumeConfiguration')}">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xEDA2;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                </CommandBar.SecondaryCommands>
             </CommandBar>
+
+            <Button
+                Grid.Column="6"
+                MinHeight="{ThemeResource AppBarThemeCompactHeight}"
+                Margin="-6,0,0,0"
+                Padding="{ThemeResource CommandBarMoreButtonMargin}"
+                VerticalAlignment="Center"
+                Foreground="{ThemeResource CommandBarForeground}"
+                IsAccessKeyScope="True"
+                Style="{ThemeResource EllipsisButton}">
+
+                <Button.Content>
+                    <FontIcon
+                        Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
+                        VerticalAlignment="Center"
+                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                        FontSize="20"
+                        Glyph="&#xE712;" />
+                </Button.Content>
+
+                <ToolTipService.ToolTip>
+                    <ToolTip
+                        MaxWidth="9999"
+                        Background="Transparent"
+                        Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/ViewMore')}"
+                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                </ToolTipService.ToolTip>
+
+                <Button.Flyout>
+                    <MenuFlyout Placement="Bottom">
+                        <MenuFlyoutSubItem IsEnabled="{x:Bind GetIsLoading(AppManagerResultKind), Mode=OneWay}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/Sort')}">
+
+                            <MenuFlyoutSubItem.Icon>
+                                <FontIcon Glyph="&#xE8CB;" />
+                            </MenuFlyoutSubItem.Icon>
+
+                            <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortWay')}">
+
+                                <RadioMenuFlyoutItem
+                                    Click="{x:Bind OnSortWayClicked}"
+                                    GroupName="SortWayRadioGroup"
+                                    IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
+                                    Tag="True"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortIncrease')}" />
+
+                                <RadioMenuFlyoutItem
+                                    Click="{x:Bind OnSortWayClicked}"
+                                    GroupName="SortWayRadioGroup"
+                                    IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
+                                    Tag="False"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortDecrease')}" />
+                            </MenuFlyoutSubItem>
+
+                            <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortRule')}">
+
+                                <RadioMenuFlyoutItem
+                                    Click="{x:Bind OnSortRuleClicked}"
+                                    GroupName="SortRuleRadioGroup"
+                                    IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
+                                    Tag="{x:Bind enum:AppSortRuleKind.DisplayName}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortByDisplayName')}" />
+
+                                <RadioMenuFlyoutItem
+                                    Click="{x:Bind OnSortRuleClicked}"
+                                    GroupName="SortRuleRadioGroup"
+                                    IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
+                                    Tag="{x:Bind enum:AppSortRuleKind.PublisherName}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortByPublisher')}" />
+
+                                <RadioMenuFlyoutItem
+                                    Click="{x:Bind OnSortRuleClicked}"
+                                    GroupName="SortRuleRadioGroup"
+                                    IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.InstallDate), Mode=OneWay}"
+                                    Tag="{x:Bind enum:AppSortRuleKind.InstallDate}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortByInstalledDate')}" />
+                            </MenuFlyoutSubItem>
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Background="Transparent"
+                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SortToolTip')}"
+                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                            </ToolTipService.ToolTip>
+                        </MenuFlyoutSubItem>
+
+                        <MenuFlyoutItem Click="{x:Bind OnInstalledAppsClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/InstalledApps')}">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE71D;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+
+                        <MenuFlyoutItem Click="{x:Bind OnDeveloperOptionsClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/DeveloperOptions')}">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xEC7A;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+
+                        <MenuFlyoutItem Click="{x:Bind OnPackageVolumeConfigurationClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/PackageVolumeConfiguration')}">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xEDA2;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
         </Grid>
 
         <!--  应用管理状态显示栏  -->

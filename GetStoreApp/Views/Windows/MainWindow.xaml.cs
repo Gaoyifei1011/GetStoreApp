@@ -266,8 +266,8 @@ namespace GetStoreApp.Views.Windows
 
             if (contentIsland is not null)
             {
-                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1280 * contentIsland.RasterizationScale);
-                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(720 * contentIsland.RasterizationScale);
+                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1000 * contentIsland.RasterizationScale);
+                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(600 * contentIsland.RasterizationScale);
             }
         }
 
@@ -377,8 +377,8 @@ namespace GetStoreApp.Views.Windows
         {
             if (args.DidRasterizationScaleChange)
             {
-                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1280 * contentIsland.RasterizationScale);
-                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(720 * contentIsland.RasterizationScale);
+                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1000 * contentIsland.RasterizationScale);
+                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(600 * contentIsland.RasterizationScale);
             }
         }
 
@@ -860,7 +860,7 @@ namespace GetStoreApp.Views.Windows
             if (isFirstActivate && DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
             {
                 RectInt32 workArea = displayArea.WorkArea;
-                AppWindow.Resize(new SizeInt32(Convert.ToInt32(1280 * contentIsland.RasterizationScale), Convert.ToInt32(720 * contentIsland.RasterizationScale)));
+                AppWindow.Resize(new SizeInt32(Convert.ToInt32(1000 * contentIsland.RasterizationScale), Convert.ToInt32(600 * contentIsland.RasterizationScale)));
                 AppWindow.Move(new PointInt32((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
             }
 

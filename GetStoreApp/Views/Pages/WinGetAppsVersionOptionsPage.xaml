@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
-    xmlns:behavior="using:GetStoreApp.Extensions.Behaviors"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
@@ -13,12 +12,6 @@
     xmlns:winrtsystem="using:Windows.System"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
-
-    <Page.Resources>
-        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-        <SolidColorBrush x:Key="CommandBarOverflowPresenterBackground" Color="Transparent" />
-        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-    </Page.Resources>
 
     <Grid>
         <!--  下载应用控件  -->
@@ -32,6 +25,7 @@
             <Grid Grid.Row="0" Padding="10,0,0,3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
@@ -48,10 +42,6 @@
                     Background="Transparent"
                     DefaultLabelPosition="Right">
 
-                    <behavior:Interaction.Behaviors>
-                        <behavior:CommandBarSecondaryCommandsBackdropBehavior />
-                    </behavior:Interaction.Behaviors>
-
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnDownloadClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/Download')}">
                             <AppBarButton.Icon>
@@ -59,21 +49,51 @@
                             </AppBarButton.Icon>
                         </AppBarButton>
                     </CommandBar.PrimaryCommands>
-
-                    <CommandBar.SecondaryCommands>
-                        <AppBarButton Click="{x:Bind OnCopyDownloadTextClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/CopyDownloadText')}">
-                            <AppBarButton.Icon>
-                                <FontIcon Glyph="&#xE8C8;" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-
-                        <AppBarButton Click="{x:Bind OnDownloadWithCmdClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/DownloadWithCmd')}">
-                            <AppBarButton.Icon>
-                                <FontIcon Glyph="&#xE756;" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                    </CommandBar.SecondaryCommands>
                 </CommandBar>
+
+                <Button
+                    Grid.Column="2"
+                    MinHeight="{ThemeResource AppBarThemeCompactHeight}"
+                    Margin="-6,0,0,0"
+                    Padding="{ThemeResource CommandBarMoreButtonMargin}"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource CommandBarForeground}"
+                    IsAccessKeyScope="True"
+                    Style="{ThemeResource EllipsisButton}">
+
+                    <Button.Content>
+                        <FontIcon
+                            Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
+                            VerticalAlignment="Center"
+                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                            FontSize="20"
+                            Glyph="&#xE712;" />
+                    </Button.Content>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            MaxWidth="9999"
+                            Background="Transparent"
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ViewMore')}"
+                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                    </ToolTipService.ToolTip>
+
+                    <Button.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem Click="{x:Bind OnCopyDownloadTextClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/CopyDownloadText')}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE8C8;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+
+                            <MenuFlyoutItem Click="{x:Bind OnDownloadWithCmdClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/DownloadWithCmd')}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE756;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
             </Grid>
 
             <MenuFlyoutSeparator Grid.Row="1" />
@@ -376,6 +396,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <TextBlock
@@ -391,10 +412,6 @@
                     Background="Transparent"
                     DefaultLabelPosition="Right">
 
-                    <behavior:Interaction.Behaviors>
-                        <behavior:CommandBarSecondaryCommandsBackdropBehavior />
-                    </behavior:Interaction.Behaviors>
-
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnInstallClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/Install')}">
                             <AppBarButton.Icon>
@@ -402,21 +419,51 @@
                             </AppBarButton.Icon>
                         </AppBarButton>
                     </CommandBar.PrimaryCommands>
-
-                    <CommandBar.SecondaryCommands>
-                        <AppBarButton Click="{x:Bind OnCopyInstallTextClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/CopyInstallText')}">
-                            <AppBarButton.Icon>
-                                <FontIcon Glyph="&#xE8C8;" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-
-                        <AppBarButton Click="{x:Bind OnInstallWithCmdClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/InstallWithCmd')}">
-                            <AppBarButton.Icon>
-                                <FontIcon Glyph="&#xE756;" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                    </CommandBar.SecondaryCommands>
                 </CommandBar>
+
+                <Button
+                    Grid.Column="2"
+                    MinHeight="{ThemeResource AppBarThemeCompactHeight}"
+                    Margin="-6,0,0,0"
+                    Padding="{ThemeResource CommandBarMoreButtonMargin}"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource CommandBarForeground}"
+                    IsAccessKeyScope="True"
+                    Style="{ThemeResource EllipsisButton}">
+
+                    <Button.Content>
+                        <FontIcon
+                            Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
+                            VerticalAlignment="Center"
+                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                            FontSize="20"
+                            Glyph="&#xE712;" />
+                    </Button.Content>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            MaxWidth="9999"
+                            Background="Transparent"
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ViewMore')}"
+                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                    </ToolTipService.ToolTip>
+
+                    <Button.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem Click="{x:Bind OnCopyInstallTextClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/CopyInstallText')}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE8C8;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+
+                            <MenuFlyoutItem Click="{x:Bind OnInstallWithCmdClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/InstallWithCmd')}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE756;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
             </Grid>
 
             <MenuFlyoutSeparator Grid.Row="1" />
@@ -900,6 +947,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <TextBlock
@@ -915,10 +963,6 @@
                     Background="Transparent"
                     DefaultLabelPosition="Right">
 
-                    <behavior:Interaction.Behaviors>
-                        <behavior:CommandBarSecondaryCommandsBackdropBehavior />
-                    </behavior:Interaction.Behaviors>
-
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnRepairClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/Repair')}">
                             <AppBarButton.Icon>
@@ -926,21 +970,51 @@
                             </AppBarButton.Icon>
                         </AppBarButton>
                     </CommandBar.PrimaryCommands>
-
-                    <CommandBar.SecondaryCommands>
-                        <AppBarButton Click="{x:Bind OnCopyRepairTextClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/CopyRepairText')}">
-                            <AppBarButton.Icon>
-                                <FontIcon Glyph="&#xE8C8;" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-
-                        <AppBarButton Click="{x:Bind OnRepairWithCmdClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/RepairWithCmd')}">
-                            <AppBarButton.Icon>
-                                <FontIcon Glyph="&#xE756;" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                    </CommandBar.SecondaryCommands>
                 </CommandBar>
+
+                <Button
+                    Grid.Column="2"
+                    MinHeight="{ThemeResource AppBarThemeCompactHeight}"
+                    Margin="-6,0,0,0"
+                    Padding="{ThemeResource CommandBarMoreButtonMargin}"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource CommandBarForeground}"
+                    IsAccessKeyScope="True"
+                    Style="{ThemeResource EllipsisButton}">
+
+                    <Button.Content>
+                        <FontIcon
+                            Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
+                            VerticalAlignment="Center"
+                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                            FontSize="20"
+                            Glyph="&#xE712;" />
+                    </Button.Content>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            MaxWidth="9999"
+                            Background="Transparent"
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ViewMore')}"
+                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                    </ToolTipService.ToolTip>
+
+                    <Button.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem Click="{x:Bind OnCopyRepairTextClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/CopyRepairText')}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE8C8;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+
+                            <MenuFlyoutItem Click="{x:Bind OnRepairWithCmdClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/RepairWithCmd')}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE756;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
             </Grid>
 
             <MenuFlyoutSeparator Grid.Row="1" />
@@ -1230,6 +1304,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <TextBlock
@@ -1245,10 +1320,6 @@
                     Background="Transparent"
                     DefaultLabelPosition="Right">
 
-                    <behavior:Interaction.Behaviors>
-                        <behavior:CommandBarSecondaryCommandsBackdropBehavior />
-                    </behavior:Interaction.Behaviors>
-
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnUpgradeClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/Upgrade')}">
                             <AppBarButton.Icon>
@@ -1256,21 +1327,51 @@
                             </AppBarButton.Icon>
                         </AppBarButton>
                     </CommandBar.PrimaryCommands>
-
-                    <CommandBar.SecondaryCommands>
-                        <AppBarButton Click="{x:Bind OnCopyUpgradeTextClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/CopyUpgradeText')}">
-                            <AppBarButton.Icon>
-                                <FontIcon Glyph="&#xE8C8;" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-
-                        <AppBarButton Click="{x:Bind OnUpgradeWithCmdClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/UpgradeWithCmd')}">
-                            <AppBarButton.Icon>
-                                <FontIcon Glyph="&#xE756;" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                    </CommandBar.SecondaryCommands>
                 </CommandBar>
+
+                <Button
+                    Grid.Column="2"
+                    MinHeight="{ThemeResource AppBarThemeCompactHeight}"
+                    Margin="-6,0,0,0"
+                    Padding="{ThemeResource CommandBarMoreButtonMargin}"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource CommandBarForeground}"
+                    IsAccessKeyScope="True"
+                    Style="{ThemeResource EllipsisButton}">
+
+                    <Button.Content>
+                        <FontIcon
+                            Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
+                            VerticalAlignment="Center"
+                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                            FontSize="20"
+                            Glyph="&#xE712;" />
+                    </Button.Content>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            MaxWidth="9999"
+                            Background="Transparent"
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ViewMore')}"
+                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                    </ToolTipService.ToolTip>
+
+                    <Button.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem Click="{x:Bind OnCopyUpgradeTextClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/CopyUpgradeText')}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE8C8;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+
+                            <MenuFlyoutItem Click="{x:Bind OnUpgradeWithCmdClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/UpgradeWithCmd')}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE756;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
             </Grid>
 
             <MenuFlyoutSeparator Grid.Row="1" />
