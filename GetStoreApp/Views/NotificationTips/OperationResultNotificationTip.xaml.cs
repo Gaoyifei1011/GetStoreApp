@@ -11,6 +11,9 @@ using System.ComponentModel;
 using System.Numerics;
 using System.Runtime.InteropServices.Marshalling;
 
+// 抑制 IDE0060 警告
+#pragma warning disable IDE0060
+
 namespace GetStoreApp.Views.NotificationTips
 {
     /// <summary>
@@ -293,8 +296,9 @@ namespace GetStoreApp.Views.NotificationTips
                     isConnected = true;
                     visualGrid = new();
                     Canvas.SetZIndex(visualGrid, -9999);
+                    grid.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    grid.VerticalAlignment = VerticalAlignment.Stretch;
                     grid.Children.Add(visualGrid);
-
                     contentExternalBackdropLink = ControlBackdropController.CreateContentExternalBackdropLink();
 
                     if (contentExternalBackdropLink is not null)

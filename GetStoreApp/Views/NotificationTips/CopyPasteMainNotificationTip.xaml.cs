@@ -90,8 +90,9 @@ namespace GetStoreApp.Views.NotificationTips
                     isConnected = true;
                     visualGrid = new();
                     Canvas.SetZIndex(visualGrid, -9999);
+                    grid.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    grid.VerticalAlignment = VerticalAlignment.Stretch;
                     grid.Children.Add(visualGrid);
-
                     contentExternalBackdropLink = ControlBackdropController.CreateContentExternalBackdropLink();
 
                     if (contentExternalBackdropLink is not null)
