@@ -65,6 +65,7 @@ namespace GetStoreApp.Views.Windows
         private readonly string TitleString = ResourceService.GetLocalized("Window/Title");
         private readonly ContentIsland contentIsland;
         private readonly InputKeyboardSource inputKeyboardSource;
+        private readonly InputPointerSource inputPointerSource;
         private readonly ContentCoordinateConverter contentCoordinateConverter;
         private readonly OverlappedPresenter overlappedPresenter;
         private readonly SUBCLASSPROC mainWindowSubClassProc;
@@ -201,6 +202,7 @@ namespace GetStoreApp.Views.Windows
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
             contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
             inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
+            inputPointerSource = InputPointerSource.GetForIsland(contentIsland);
             ControlBackdropController.Initialize(Current);
 
             // 挂载相应的事件
@@ -209,6 +211,7 @@ namespace GetStoreApp.Views.Windows
             contentIsland.StateChanged += OnStateChanged;
             contentIsland.Environment.SettingChanged += OnSettingChanged;
             inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
+            inputPointerSource.PointerReleased += OnPointerReleased;
             NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
             ApplicationData.Current.DataChanged += OnDataChanged;
             ThemeService.PropertyChanged += OnServicePropertyChanged;
@@ -331,6 +334,7 @@ namespace GetStoreApp.Views.Windows
                     AppWindow.Changed -= OnAppWindowChanged;
                     contentIsland.Environment.SettingChanged -= OnSettingChanged;
                     inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
+                    inputPointerSource.PointerReleased -= OnPointerReleased;
                     ApplicationData.Current.DataChanged -= OnDataChanged;
                     ThemeService.PropertyChanged -= OnServicePropertyChanged;
                     BackdropService.PropertyChanged -= OnServicePropertyChanged;
@@ -357,6 +361,7 @@ namespace GetStoreApp.Views.Windows
                 AppWindow.Changed -= OnAppWindowChanged;
                 contentIsland.Environment.SettingChanged -= OnSettingChanged;
                 inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
+                inputPointerSource.PointerReleased -= OnPointerReleased;
                 ApplicationData.Current.DataChanged -= OnDataChanged;
                 ThemeService.PropertyChanged -= OnServicePropertyChanged;
                 BackdropService.PropertyChanged -= OnServicePropertyChanged;
@@ -394,16 +399,17 @@ namespace GetStoreApp.Views.Windows
                     WindowTheme = Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
                 }
 
+                SetPopupControlTheme(WindowTheme);
                 StoreRegionService.UpdateDefaultRegion();
             });
         }
 
         /// <summary>
-        /// 处理键盘 Alt + Space 键弹出窗口右键菜单事件
+        /// 处理键盘系统按键事件
         /// </summary>
-        private void OnSystemKeyDown(InputKeyboardSource sender, KeyEventArgs args)
+        private async void OnSystemKeyDown(InputKeyboardSource sender, KeyEventArgs args)
         {
-            if (args.VirtualKey is global::Windows.System.VirtualKey.Space)
+            if (args.KeyStatus.IsMenuKeyDown && args.VirtualKey is global::Windows.System.VirtualKey.Space)
             {
                 args.Handled = true;
                 FlyoutShowOptions options = new()
@@ -412,6 +418,23 @@ namespace GetStoreApp.Views.Windows
                     ShowMode = FlyoutShowMode.Standard
                 };
                 TitlebarMenuFlyout.ShowAt(null, options);
+            }
+            else if (args.VirtualKey is global::Windows.System.VirtualKey.F10 && Content is not null && Content.XamlRoot is not null)
+            {
+                await Task.Delay(50);
+                SetPopupControlTheme(WindowTheme);
+            }
+        }
+
+        /// <summary>
+        /// 处理鼠标事件
+        /// </summary>
+        private async void OnPointerReleased(InputPointerSource sender, PointerEventArgs args)
+        {
+            if (args.CurrentPoint.Properties.PointerUpdateKind is PointerUpdateKind.RightButtonReleased && Content is not null && Content.XamlRoot is not null)
+            {
+                await Task.Delay(50);
+                SetPopupControlTheme(WindowTheme);
             }
         }
 
@@ -621,6 +644,7 @@ namespace GetStoreApp.Views.Windows
             }
 
             NavigateTo(typeof(HomePage));
+            SetPopupControlTheme(WindowTheme);
 
             // 初始化启动信息
             AppLaunchArguments appLaunchArguments = await AppLaunchService.ReadArgumentsAsync();
@@ -749,7 +773,7 @@ namespace GetStoreApp.Views.Windows
 
         #endregion 第六部分：自定义事件
 
-        #region 第七部分：窗口属性设置
+        #region 第七部分：窗口及内容属性设置
 
         /// <summary>
         /// 设置应用显示的主题
@@ -852,6 +876,28 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
+        /// 设置所有弹出控件主题
+        /// </summary>
+        private void SetPopupControlTheme(ElementTheme elementTheme)
+        {
+            foreach (Popup popup in VisualTreeHelper.GetOpenPopupsForXamlRoot(Content.XamlRoot))
+            {
+                ElementTheme actualTheme = (Content as FrameworkElement).ActualTheme;
+                popup.RequestedTheme = actualTheme;
+
+                if (popup.Child is FlyoutPresenter flyoutPresenter)
+                {
+                    flyoutPresenter.RequestedTheme = actualTheme;
+                }
+
+                if (popup.Child is Grid grid && grid.Name is "OuterOverflowContentRootV2")
+                {
+                    grid.RequestedTheme = actualTheme;
+                }
+            }
+        }
+
+        /// <summary>
         /// 显示窗口
         /// </summary>
         public void Show(bool isFirstActivate = false)
@@ -875,7 +921,7 @@ namespace GetStoreApp.Views.Windows
             overlappedPresenter.IsAlwaysOnTop = TopMostService.TopMostValue;
         }
 
-        #endregion 第七部分：窗口属性设置
+        #endregion 第七部分：窗口及内容属性设置
 
         #region 第八部分：窗口过程
 

@@ -34,6 +34,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Media;
 using WinRT;
 
 // 抑制 CA1806 警告
@@ -137,6 +138,8 @@ namespace GetStoreAppInstaller
             WindowsUILibrary.PrivateCreateCoreWindow(WINDOW_TYPE.IMMERSIVE_HOSTED, "XamlContentCoreWindow", 0, 0, 0, 0, 0, Win32Interop.GetWindowFromWindowId(MainAppWindow.Id), typeof(ICoreWindow).GUID, out nint coreWindowPtr);
             CoreWindow coreWindow = CoreWindow.FromAbi(coreWindowPtr);
             coreWindow.As<ICoreWindowInterop>().GetWindowHandle(out nint coreWindowHandle);
+            coreWindow.PointerReleased += OnPointerReleased;
+            coreWindow.Dispatcher.AcceleratorKeyActivated += OnAcceleratorKeyActivated;
             DisplayInformation = DisplayInformation.GetForCurrentView();
             MainAppWindow.Resize(new SizeInt32(Convert.ToInt32(800 * DisplayInformation.RawPixelsPerViewPixel), Convert.ToInt32(560 * DisplayInformation.RawPixelsPerViewPixel)));
             (MainAppWindow.Presenter as OverlappedPresenter).PreferredMinimumWidth = Convert.ToInt32(800 * DisplayInformation.RawPixelsPerViewPixel);
@@ -210,10 +213,10 @@ namespace GetStoreAppInstaller
                     (MainAppWindow.Presenter as OverlappedPresenter).PreferredMinimumHeight = Convert.ToInt32(560 * DisplayInformation.RawPixelsPerViewPixel);
                 }
 
-                if (Window.Current is not null && Window.Current.Content is InstallerPage mainPage)
+                if (Window.Current is not null && Window.Current.Content is InstallerPage installerPage)
                 {
                     CoreAppWindow.Resize(MainAppWindow.ClientSize);
-                    mainPage.IsWindowMaximized = (MainAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
+                    installerPage.IsWindowMaximized = (MainAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
                 }
 
                 if (DisplayInformation is not null)
@@ -234,6 +237,8 @@ namespace GetStoreAppInstaller
         {
             MainAppWindow.Changed -= OnAppWindowChanged;
             inputActivationListener.InputActivationChanged -= OnInputActivationChanged;
+            Window.Current.CoreWindow.PointerReleased -= OnPointerReleased;
+            Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= OnAcceleratorKeyActivated;
             Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(MainAppWindow.Id), mainWindowSubClassProc, 0);
 
             if (RuntimeHelper.IsElevated)
@@ -264,6 +269,43 @@ namespace GetStoreAppInstaller
         }
 
         /// <summary>
+        /// 处理鼠标事件
+        /// </summary>
+        private static async void OnPointerReleased(CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
+        {
+            if (args.CurrentPoint.Properties.PointerUpdateKind is Windows.UI.Input.PointerUpdateKind.RightButtonReleased && Window.Current.Content is InstallerPage installerPage)
+            {
+                await Task.Delay(50);
+                SetPopupControlTheme(installerPage.ActualTheme);
+            }
+        }
+
+        /// <summary>
+        /// 处理键盘系统按键事件
+        /// </summary>
+        private static async void OnAcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs args)
+        {
+            if (Window.Current is not null && Window.Current.Content is InstallerPage installerPage)
+            {
+                if (args.KeyStatus.IsMenuKeyDown && args.VirtualKey is global::Windows.System.VirtualKey.Space)
+                {
+                    args.Handled = true;
+                    FlyoutShowOptions options = new()
+                    {
+                        Position = new Point(0, 45),
+                        ShowMode = FlyoutShowMode.Standard
+                    };
+                    installerPage.TitlebarMenuFlyout.ShowAt(null, options);
+                }
+                else if (args.EventType is CoreAcceleratorKeyEventType.SystemKeyDown && args.VirtualKey is Windows.System.VirtualKey.F10)
+                {
+                    await Task.Delay(50);
+                    SetPopupControlTheme(installerPage.ActualTheme);
+                }
+            }
+        }
+
+        /// <summary>
         /// 应用主窗口消息处理
         /// </summary>
         private static nint MainWindowSubClassProc(nint hWnd, WindowMessage Msg, nuint wParam, nint lParam, uint uIdSubclass, nint dwRefData)
@@ -273,16 +315,16 @@ namespace GetStoreAppInstaller
                 // 当用户按下鼠标左键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCLBUTTONDOWN:
                     {
-                        if (Window.Current is not null && Window.Current.Content is InstallerPage mainPage && mainPage.TitlebarMenuFlyout.IsOpen)
+                        if (Window.Current is not null && Window.Current.Content is InstallerPage installerPage && installerPage.TitlebarMenuFlyout.IsOpen)
                         {
-                            mainPage.TitlebarMenuFlyout.Hide();
+                            installerPage.TitlebarMenuFlyout.Hide();
                         }
                         break;
                     }
                 // 当用户按下鼠标右键并释放时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONUP:
                     {
-                        if (wParam is 2 && Window.Current is not null && Window.Current.Content is InstallerPage mainPage && DisplayInformation is not null)
+                        if (wParam is 2 && Window.Current is not null && Window.Current.Content is InstallerPage installerPage && DisplayInformation is not null)
                         {
                             User32Library.GetCursorPos(out PointInt32 screenPoint);
                             Point localPoint = contentCoordinateConverter.ConvertScreenToLocal(screenPoint);
@@ -293,7 +335,7 @@ namespace GetStoreAppInstaller
                                 Position = new Point(localPoint.X / DisplayInformation.RawPixelsPerViewPixel, localPoint.Y / DisplayInformation.RawPixelsPerViewPixel)
                             };
 
-                            mainPage.TitlebarMenuFlyout.ShowAt(null, options);
+                            installerPage.TitlebarMenuFlyout.ShowAt(null, options);
                         }
                         return 0;
                     }
@@ -308,25 +350,10 @@ namespace GetStoreAppInstaller
                         }
                         break;
                     }
-                // 处理 Alt + space 按键弹出窗口右键菜单的消息
-                case WindowMessage.WM_SYSKEYDOWN:
-                    {
-                        if (Equals(wParam, (nuint)Windows.System.VirtualKey.Space) && ((lParam & 0x20000000) is not 0) && Window.Current is not null && Window.Current.Content is InstallerPage mainPage)
-                        {
-                            FlyoutShowOptions options = new()
-                            {
-                                Position = new Point(0, 45),
-                                ShowMode = FlyoutShowMode.Standard
-                            };
-                            mainPage.TitlebarMenuFlyout.ShowAt(null, options);
-                        }
-
-                        break;
-                    }
                 // 提升权限时允许应用接收拖放文件消息
                 case WindowMessage.WM_DROPFILES:
                     {
-                        if (Window.Current is not null && Window.Current.Content is InstallerPage mainPage && Window.Current.CoreWindow is CoreWindow coreWindow)
+                        if (Window.Current is not null && Window.Current.Content is InstallerPage installerPage && Window.Current.CoreWindow is CoreWindow coreWindow)
                         {
                             Task.Run(() =>
                             {
@@ -350,7 +377,7 @@ namespace GetStoreAppInstaller
                                 {
                                     coreWindow.DispatcherQueue.TryEnqueue(async () =>
                                     {
-                                        await mainPage.DealElevatedDragDropAsync(filesList[0]);
+                                        await installerPage.DealElevatedDragDropAsync(filesList[0]);
                                     });
                                 }
                             });
@@ -453,6 +480,28 @@ namespace GetStoreAppInstaller
             }
 
             UxthemeLibrary.FlushMenuThemes();
+        }
+
+        /// <summary>
+        /// 设置所有弹出控件主题
+        /// </summary>
+        public static void SetPopupControlTheme(ElementTheme elementTheme)
+        {
+            foreach (Popup popup in VisualTreeHelper.GetOpenPopups(Window.Current))
+            {
+                ElementTheme actualTheme = elementTheme;
+                popup.RequestedTheme = actualTheme;
+
+                if (popup.Child is FlyoutPresenter flyoutPresenter)
+                {
+                    flyoutPresenter.RequestedTheme = actualTheme;
+                }
+
+                if (popup.Child is Grid grid && grid.Name is "OuterOverflowContentRootV2")
+                {
+                    grid.RequestedTheme = actualTheme;
+                }
+            }
         }
 
         /// <summary>

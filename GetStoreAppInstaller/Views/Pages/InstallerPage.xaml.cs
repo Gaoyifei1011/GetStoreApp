@@ -1107,6 +1107,7 @@ namespace GetStoreAppInstaller.Views.Pages
         {
             Program.SetTitleBarTheme(sender.ActualTheme);
             Program.SetClassicMenuTheme(sender.ActualTheme);
+            Program.SetPopupControlTheme(sender.ActualTheme);
         }
 
         /// <summary>
