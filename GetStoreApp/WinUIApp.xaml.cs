@@ -39,8 +39,8 @@ namespace GetStoreApp
             base.OnLaunched(args);
 
             Window = new MainWindow();
-            MainWindow.Current.Show(true);
-            SetAppIcon(MainWindow.Current.AppWindow);
+            Window.Activate();
+            SetAppIcon(Window.AppWindow);
 
             if (JumpList.IsSupported())
             {

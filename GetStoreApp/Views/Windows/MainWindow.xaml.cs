@@ -11,11 +11,9 @@ using GetStoreApp.Services.Settings;
 using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Pages;
-using GetStoreApp.WindowsAPI.ComTypes;
 using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using GetStoreApp.WindowsAPI.PInvoke.Uxtheme;
-using Microsoft.Graphics.Display;
 using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Content;
@@ -45,7 +43,6 @@ using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
-using WinRT;
 using WinRT.Interop;
 
 // 抑制 IDE0060 警告
@@ -229,6 +226,13 @@ namespace GetStoreApp.Views.Windows
             SetSystemBackdrop();
             SetTopMost();
             CheckNetwork();
+
+            // 默认直接显示到窗口中间
+            if (DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
+            {
+                RectInt32 workArea = displayArea.WorkArea;
+                AppWindow.Move(new PointInt32((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
+            }
         }
 
         #region 第一部分：窗口类事件
@@ -323,7 +327,7 @@ namespace GetStoreApp.Views.Windows
             // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
             if (count > 0)
             {
-                Show();
+                Activate();
 
                 // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
                 ContentDialogResult result = await ShowDialogAsync(new ClosingWindowDialog());
@@ -898,22 +902,6 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 显示窗口
-        /// </summary>
-        public void Show(bool isFirstActivate = false)
-        {
-            // 默认直接显示到窗口中间
-            if (isFirstActivate && DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
-            {
-                RectInt32 workArea = displayArea.WorkArea;
-                AppWindow.Resize(new SizeInt32(Convert.ToInt32(1000 * contentIsland.RasterizationScale), Convert.ToInt32(600 * contentIsland.RasterizationScale)));
-                AppWindow.Move(new PointInt32((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
-            }
-
-            Activate();
-        }
-
-        /// <summary>
         /// 设置窗口的置顶状态
         /// </summary>
         private void SetTopMost()
@@ -1091,7 +1079,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private async Task ParseAppLaunchArgumentsAsync(AppLaunchArguments appLaunchArguments, bool isFirstLaunch)
         {
-            Show();
+            Activate();
 
             // 正常启动
             if (appLaunchArguments.AppLaunchKind is AppLaunchKind.Launch)
