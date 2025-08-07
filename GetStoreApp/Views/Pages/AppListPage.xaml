@@ -248,14 +248,6 @@
                         Glyph="&#xE712;" />
                 </Button.Content>
 
-                <ToolTipService.ToolTip>
-                    <ToolTip
-                        MaxWidth="9999"
-                        Background="Transparent"
-                        Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/ViewMore')}"
-                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                </ToolTipService.ToolTip>
-
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutSubItem IsEnabled="{x:Bind GetIsLoading(AppManagerResultKind), Mode=OneWay}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/Sort')}">
@@ -333,6 +325,14 @@
                         </MenuFlyoutItem>
                     </MenuFlyout>
                 </Button.Flyout>
+
+                <ToolTipService.ToolTip>
+                    <ToolTip
+                        MaxWidth="9999"
+                        Background="Transparent"
+                        Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/ViewMore')}"
+                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                </ToolTipService.ToolTip>
             </Button>
         </Grid>
 

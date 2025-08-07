@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.WindowsAPI.PInvoke.User32;
-using System;
 using System.Runtime.InteropServices;
 
 // 抑制 CA1401 警告

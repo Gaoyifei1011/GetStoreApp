@@ -124,14 +124,6 @@
                         Glyph="&#xE712;" />
                 </Button.Content>
 
-                <ToolTipService.ToolTip>
-                    <ToolTip
-                        MaxWidth="9999"
-                        Background="Transparent"
-                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/ViewMore')}"
-                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                </ToolTipService.ToolTip>
-
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutItem Click="{x:Bind OnSettingsInstructionClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/SettingsInstruction')}">
@@ -141,6 +133,14 @@
                         </MenuFlyoutItem>
                     </MenuFlyout>
                 </Button.Flyout>
+
+                <ToolTipService.ToolTip>
+                    <ToolTip
+                        MaxWidth="9999"
+                        Background="Transparent"
+                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/ViewMore')}"
+                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                </ToolTipService.ToolTip>
             </Button>
         </Grid>
 
@@ -300,7 +300,7 @@
                                 <Button
                                     Grid.Column="3"
                                     MinHeight="{ThemeResource AppBarThemeCompactHeight}"
-                                    Margin="-6,0,0,0"
+                                    Margin="-6,0,-15,0"
                                     Padding="{ThemeResource CommandBarMoreButtonMargin}"
                                     VerticalAlignment="Center"
                                     Foreground="{ThemeResource CommandBarForeground}"
@@ -315,14 +315,6 @@
                                             FontSize="20"
                                             Glyph="&#xE712;" />
                                     </Button.Content>
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Background="Transparent"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/ViewMore')}"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                                    </ToolTipService.ToolTip>
 
                                     <Button.Flyout>
                                         <MenuFlyout Placement="Bottom">
@@ -370,6 +362,14 @@
                                             </MenuFlyoutItem>
                                         </MenuFlyout>
                                     </Button.Flyout>
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Background="Transparent"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/ViewMore')}"
+                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                    </ToolTipService.ToolTip>
                                 </Button>
                             </Grid>
                         </Expander.Header>

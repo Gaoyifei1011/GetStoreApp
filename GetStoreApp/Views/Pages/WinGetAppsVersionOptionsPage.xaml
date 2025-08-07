@@ -70,14 +70,6 @@
                             Glyph="&#xE712;" />
                     </Button.Content>
 
-                    <ToolTipService.ToolTip>
-                        <ToolTip
-                            MaxWidth="9999"
-                            Background="Transparent"
-                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ViewMore')}"
-                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                    </ToolTipService.ToolTip>
-
                     <Button.Flyout>
                         <MenuFlyout Placement="Bottom">
                             <MenuFlyoutItem Click="{x:Bind OnCopyDownloadTextClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/CopyDownloadText')}">
@@ -93,6 +85,14 @@
                             </MenuFlyoutItem>
                         </MenuFlyout>
                     </Button.Flyout>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            MaxWidth="9999"
+                            Background="Transparent"
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ViewMore')}"
+                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                    </ToolTipService.ToolTip>
                 </Button>
             </Grid>
 
@@ -440,14 +440,6 @@
                             Glyph="&#xE712;" />
                     </Button.Content>
 
-                    <ToolTipService.ToolTip>
-                        <ToolTip
-                            MaxWidth="9999"
-                            Background="Transparent"
-                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ViewMore')}"
-                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                    </ToolTipService.ToolTip>
-
                     <Button.Flyout>
                         <MenuFlyout Placement="Bottom">
                             <MenuFlyoutItem Click="{x:Bind OnCopyInstallTextClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/CopyInstallText')}">
@@ -463,6 +455,14 @@
                             </MenuFlyoutItem>
                         </MenuFlyout>
                     </Button.Flyout>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            MaxWidth="9999"
+                            Background="Transparent"
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ViewMore')}"
+                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                    </ToolTipService.ToolTip>
                 </Button>
             </Grid>
 
@@ -991,14 +991,6 @@
                             Glyph="&#xE712;" />
                     </Button.Content>
 
-                    <ToolTipService.ToolTip>
-                        <ToolTip
-                            MaxWidth="9999"
-                            Background="Transparent"
-                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ViewMore')}"
-                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                    </ToolTipService.ToolTip>
-
                     <Button.Flyout>
                         <MenuFlyout Placement="Bottom">
                             <MenuFlyoutItem Click="{x:Bind OnCopyRepairTextClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/CopyRepairText')}">
@@ -1014,6 +1006,14 @@
                             </MenuFlyoutItem>
                         </MenuFlyout>
                     </Button.Flyout>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            MaxWidth="9999"
+                            Background="Transparent"
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ViewMore')}"
+                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                    </ToolTipService.ToolTip>
                 </Button>
             </Grid>
 
@@ -1348,14 +1348,6 @@
                             Glyph="&#xE712;" />
                     </Button.Content>
 
-                    <ToolTipService.ToolTip>
-                        <ToolTip
-                            MaxWidth="9999"
-                            Background="Transparent"
-                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ViewMore')}"
-                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                    </ToolTipService.ToolTip>
-
                     <Button.Flyout>
                         <MenuFlyout Placement="Bottom">
                             <MenuFlyoutItem Click="{x:Bind OnCopyUpgradeTextClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/CopyUpgradeText')}">
@@ -1371,6 +1363,14 @@
                             </MenuFlyoutItem>
                         </MenuFlyout>
                     </Button.Flyout>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            MaxWidth="9999"
+                            Background="Transparent"
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ViewMore')}"
+                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                    </ToolTipService.ToolTip>
                 </Button>
             </Grid>
 

@@ -18,7 +18,6 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
-using Windows.Foundation.Diagnostics;
 using Windows.UI.Text;
 
 // 抑制 CA1822，IDE0060 警告

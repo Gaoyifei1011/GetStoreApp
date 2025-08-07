@@ -276,14 +276,6 @@
                         Glyph="&#xE712;" />
                 </Button.Content>
 
-                <ToolTipService.ToolTip>
-                    <ToolTip
-                        MaxWidth="9999"
-                        Background="Transparent"
-                        Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/ViewMore')}"
-                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                </ToolTipService.ToolTip>
-
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/Sort')}">
@@ -368,6 +360,14 @@
                         </MenuFlyoutItem>
                     </MenuFlyout>
                 </Button.Flyout>
+
+                <ToolTipService.ToolTip>
+                    <ToolTip
+                        MaxWidth="9999"
+                        Background="Transparent"
+                        Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/ViewMore')}"
+                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                </ToolTipService.ToolTip>
             </Button>
         </Grid>
 

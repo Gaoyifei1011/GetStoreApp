@@ -2,7 +2,6 @@
 using GetStoreApp.Extensions.DataType.Enums;
 using Microsoft.Windows.AppNotifications;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;

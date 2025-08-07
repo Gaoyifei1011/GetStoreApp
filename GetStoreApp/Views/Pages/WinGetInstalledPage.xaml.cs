@@ -21,7 +21,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Store.Preview.InstallControl;
 using Windows.Foundation.Diagnostics;
 
 // 抑制 CA1822，IDE0060 警告

@@ -13,12 +13,12 @@ namespace GetStoreApp.Helpers.Backdrop
         /// <summary>
         /// 工具提示加载完成后触发的事件
         /// </summary>
-        public static void OnLoaded(object sender,RoutedEventArgs args)
+        public static void OnLoaded(object sender, RoutedEventArgs args)
         {
-            if(sender is ToolTip toolTip && toolTip.Parent is Popup popup)
+            if (sender is ToolTip toolTip && toolTip.Parent is Popup popup)
             {
                 popup.RequestedTheme = toolTip.RequestedTheme;
-                popup.SystemBackdrop ??= Application.Current.Resources["AcrylicBackgroundFillColorDefaultBackdrop"] as SystemBackdrop;  
+                popup.SystemBackdrop ??= Application.Current.Resources["AcrylicBackgroundFillColorDefaultBackdrop"] as SystemBackdrop;
             }
         }
     }

@@ -2,7 +2,6 @@
 using GetStoreApp.Extensions.DataType.Enums;
 using Microsoft.Windows.Storage;
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 

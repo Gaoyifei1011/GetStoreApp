@@ -11,7 +11,6 @@ using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
 using Windows.Storage;
-using Windows.System;
 using Windows.UI;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;

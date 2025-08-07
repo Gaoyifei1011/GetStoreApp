@@ -15,7 +15,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Store.Preview.InstallControl;
 using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
 using Windows.Storage;
