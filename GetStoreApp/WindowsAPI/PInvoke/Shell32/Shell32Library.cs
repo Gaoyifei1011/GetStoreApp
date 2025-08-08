@@ -10,6 +10,15 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         public const string Shell32 = "shell32.dll";
 
         /// <summary>
+        /// 分析 Unicode 命令行字符串，并返回指向命令行参数的指针数组，以及此类参数的计数，其方式类似于标准 C 运行时 argv 和 argc 值。
+        /// </summary>
+        /// <param name="lpCmdLine">指向包含完整命令行的 以 null 结尾的 Unicode 字符串的指针。 如果此参数为空字符串，则函数返回当前可执行文件的路径。</param>
+        /// <param name="pNumArgs">指向接收返回的数组元素数的 int 的指针，类似于 argc。</param>
+        /// <returns>指向 LPWSTR 值数组的指针，类似于 argv。如果函数失败，则返回值为 NULL。</returns>
+        [LibraryImport(Shell32, EntryPoint = "CommandLineToArgvW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
+        public static partial nint CommandLineToArgvW([MarshalAs(UnmanagedType.LPWStr)] string lpCmdLine, out int pNumArgs);
+
+        /// <summary>
         /// 对指定文件执行操作。
         /// </summary>
         /// <param name="hwnd">用于显示 UI 或错误消息的父窗口的句柄。 如果操作未与窗口关联，则此值可以为 NULL 。</param>

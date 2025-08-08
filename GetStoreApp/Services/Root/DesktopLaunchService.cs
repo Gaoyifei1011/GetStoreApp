@@ -1,29 +1,27 @@
 ﻿using GetStoreApp.Extensions.DataType.Classes;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
 using Windows.Foundation.Collections;
-using Windows.Foundation.Diagnostics;
-using Windows.Storage;
 using Windows.System;
+using WinRT;
 
 namespace GetStoreApp.Services.Root
 {
     /// <summary>
     /// 桌面应用启动服务
     /// </summary>
-    public static class DesktopLaunchService
+    public static partial class DesktopLaunchService
     {
-        private static bool isLaunched = false;
-        private static AppInstance currentInstance;
-
         private static List<TypeModel> TypeList { get; } =
         [
             new TypeModel { InternalName = "url", ShortName = "url" },
@@ -38,37 +36,49 @@ namespace GetStoreApp.Services.Root
             new ChannelModel { InternalName = "Retail", ShortName = "rt" }
         ];
 
+        public static AppLaunchArguments AppLaunchArguments { get; private set; }
+
+        public static event EventHandler<AppLaunchArguments> AppLaunchActivated;
+
         /// <summary>
         /// 处理桌面应用启动的方式
         /// </summary>
-        public static async Task InitializeLaunchAsync(AppActivationArguments appActivationArguments)
+        public static async Task InitializeLaunchAsync(AppActivationArguments appActivationArguments, bool isLaunched)
         {
-            currentInstance = AppInstance.FindOrRegisterForKey("GetStoreApp");
-            isLaunched = !currentInstance.IsCurrent;
-
             // 正常参数启动
             if (appActivationArguments.Kind is ExtendedActivationKind.Launch)
             {
+                string executableFileName = Path.GetFileName(Environment.ProcessPath);
                 List<string> argumentsList = [];
                 List<string> dataList = [];
                 AppLaunchArguments appLaunchArguments = new();
-                string[] argumentsArray = Environment.GetCommandLineArgs();
-                string executableFileName = Path.GetFileName(Environment.ProcessPath);
+                LaunchActivatedEventArgs launchActivatedEventArgs = appActivationArguments.Data is IInspectable inspectable ? LaunchActivatedEventArgs.FromAbi(inspectable.ThisPtr) : appActivationArguments.Data as LaunchActivatedEventArgs;
 
-                if (argumentsArray.Length > 0 && string.Equals(Path.GetExtension(argumentsArray[0]), ".dll", StringComparison.OrdinalIgnoreCase))
+                // 解析参数
+                IntPtr argv = Shell32Library.CommandLineToArgvW(launchActivatedEventArgs.Arguments, out int argc);
+                if (argv != IntPtr.Zero)
                 {
-                    argumentsArray[0] = argumentsArray[0].Replace(".dll", ".exe");
-                }
-
-                foreach (string arguments in argumentsArray)
-                {
-                    if (arguments.Contains(executableFileName) || string.IsNullOrEmpty(arguments))
+                    try
                     {
-                        continue;
+                        string[] parsedArgs = new string[argc];
+                        for (int i = 0; i < argc; i++)
+                        {
+                            IntPtr ptr = Marshal.ReadIntPtr(argv, i * IntPtr.Size);
+                            string arguments = Marshal.PtrToStringUni(ptr);
+
+                            if (arguments.Contains(executableFileName) || string.IsNullOrEmpty(arguments))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                argumentsList.Add(arguments);
+                            }
+                        }
                     }
-                    else
+                    finally
                     {
-                        argumentsList.Add(arguments);
+                        Marshal.FreeHGlobal(argv);
                     }
                 }
 
@@ -142,7 +152,7 @@ namespace GetStoreApp.Services.Root
                     }
                 }
 
-                await AppLaunchService.SaveArgumentsAsync(appLaunchArguments);
+                SignalAppLaunchActivated(appLaunchArguments);
             }
             // 通过共享目标启动
             else if (appActivationArguments.Kind is ExtendedActivationKind.ShareTarget)
@@ -160,7 +170,7 @@ namespace GetStoreApp.Services.Root
                         SubParameters = ["-1", "-1", Convert.ToString(await shareOperation.Data.GetUriAsync())]
                     };
 
-                    await AppLaunchService.SaveArgumentsAsync(appLaunchArguments);
+                    SignalAppLaunchActivated(appLaunchArguments);
                 }
                 else
                 {
@@ -182,7 +192,7 @@ namespace GetStoreApp.Services.Root
                     appLaunchArguments.SubParameters = [Convert.ToString(parameterobj)];
                 }
 
-                await AppLaunchService.SaveArgumentsAsync(appLaunchArguments);
+                SignalAppLaunchActivated(appLaunchArguments);
             }
             // 应用通知启动
             else if (appActivationArguments.Kind is ExtendedActivationKind.ToastNotification)
@@ -195,25 +205,12 @@ namespace GetStoreApp.Services.Root
             {
                 Environment.Exit(Environment.ExitCode);
             }
+        }
 
-            // 若应用程序已启动，将启动信息重定向到已启动的应用中
-            if (isLaunched)
-            {
-                ApplicationData.Current.SignalDataChanged();
-
-                try
-                {
-                    await currentInstance.RedirectActivationToAsync(appActivationArguments);
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Warning, nameof(GetStoreApp), nameof(DesktopLaunchService), nameof(InitializeLaunchAsync), 1, e);
-                }
-                finally
-                {
-                    Environment.Exit(Environment.ExitCode);
-                }
-            }
+        public static void SignalAppLaunchActivated(AppLaunchArguments appLaunchArguments)
+        {
+            AppLaunchArguments = appLaunchArguments;
+            AppLaunchActivated?.Invoke(null, AppLaunchArguments);
         }
     }
 }

@@ -64,7 +64,7 @@ namespace GetStoreApp.Services.Root
                     SubParameters = ["OpenApp"]
                 };
 
-                await AppLaunchService.SaveArgumentsAsync(appLaunchArguments);
+                DesktopLaunchService.SignalAppLaunchActivated(appLaunchArguments);
             }
             else if (notificationArgs.Contains("ViewDownloadPage"))
             {
@@ -75,7 +75,7 @@ namespace GetStoreApp.Services.Root
                     SubParameters = ["ViewDownloadPage"]
                 };
 
-                await AppLaunchService.SaveArgumentsAsync(appLaunchArguments);
+                DesktopLaunchService.SignalAppLaunchActivated(appLaunchArguments);
             }
         }
 

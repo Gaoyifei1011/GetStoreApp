@@ -39,7 +39,6 @@ using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
 using Windows.Graphics;
 using Windows.Networking.Connectivity;
-using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
@@ -210,10 +209,10 @@ namespace GetStoreApp.Views.Windows
             inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
             inputPointerSource.PointerReleased += OnPointerReleased;
             NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
-            ApplicationData.Current.DataChanged += OnDataChanged;
             ThemeService.PropertyChanged += OnServicePropertyChanged;
             BackdropService.PropertyChanged += OnServicePropertyChanged;
             TopMostService.PropertyChanged += OnServicePropertyChanged;
+            DesktopLaunchService.AppLaunchActivated += OnAppLaunchActivated;
 
             // 标题栏和右键菜单设置
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
@@ -339,10 +338,10 @@ namespace GetStoreApp.Views.Windows
                     contentIsland.Environment.SettingChanged -= OnSettingChanged;
                     inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
                     inputPointerSource.PointerReleased -= OnPointerReleased;
-                    ApplicationData.Current.DataChanged -= OnDataChanged;
                     ThemeService.PropertyChanged -= OnServicePropertyChanged;
                     BackdropService.PropertyChanged -= OnServicePropertyChanged;
                     TopMostService.PropertyChanged -= OnServicePropertyChanged;
+                    DesktopLaunchService.AppLaunchActivated -= OnAppLaunchActivated;
                     if (navigationViewBackButtonToolTip is not null)
                     {
                         navigationViewBackButtonToolTip.Loaded -= ToolTipBackdropHelper.OnLoaded;
@@ -366,10 +365,10 @@ namespace GetStoreApp.Views.Windows
                 contentIsland.Environment.SettingChanged -= OnSettingChanged;
                 inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
                 inputPointerSource.PointerReleased -= OnPointerReleased;
-                ApplicationData.Current.DataChanged -= OnDataChanged;
                 ThemeService.PropertyChanged -= OnServicePropertyChanged;
                 BackdropService.PropertyChanged -= OnServicePropertyChanged;
                 TopMostService.PropertyChanged -= OnServicePropertyChanged;
+                DesktopLaunchService.AppLaunchActivated -= OnAppLaunchActivated;
                 if (navigationViewBackButtonToolTip is not null)
                 {
                     navigationViewBackButtonToolTip.Loaded -= ToolTipBackdropHelper.OnLoaded;
@@ -651,7 +650,7 @@ namespace GetStoreApp.Views.Windows
             SetPopupControlTheme(WindowTheme);
 
             // 初始化启动信息
-            AppLaunchArguments appLaunchArguments = await AppLaunchService.ReadArgumentsAsync();
+            AppLaunchArguments appLaunchArguments = DesktopLaunchService.AppLaunchArguments;
             await ParseAppLaunchArgumentsAsync(appLaunchArguments, true);
         }
 
@@ -743,13 +742,12 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 同步漫游应用程序数据时发生的事件
         /// </summary>
-        private void OnDataChanged(ApplicationData sender, object args)
+        private void OnAppLaunchActivated(object sender, AppLaunchArguments args)
         {
             DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
             {
                 // 初始化启动信息
-                AppLaunchArguments appLaunchArguments = await AppLaunchService.ReadArgumentsAsync();
-                await ParseAppLaunchArgumentsAsync(appLaunchArguments, false);
+                await ParseAppLaunchArgumentsAsync(args, false);
             });
         }
 

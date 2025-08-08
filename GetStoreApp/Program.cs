@@ -29,6 +29,8 @@ namespace GetStoreApp
     /// </summary>
     public class Program
     {
+        public static Microsoft.Windows.AppLifecycle.AppInstance AppInstance { get; private set; }
+
         public static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
 
         /// <summary>
@@ -48,10 +50,31 @@ namespace GetStoreApp
 
             // 初始化应用启动参数
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-            AppActivationArguments appActivationArguments = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
+            AppInstance = Microsoft.Windows.AppLifecycle.AppInstance.FindOrRegisterForKey("GetStoreApp");
+            AppActivationArguments appActivationArguments = AppInstance.GetActivatedEventArgs();
+
+            // 检查是否是当前实例应用
+            if (AppInstance.IsCurrent)
+            {
+                AppInstance.Activated += OnActivated;
+            }
+            else
+            {
+                try
+                {
+                    AppInstance.RedirectActivationToAsync(appActivationArguments).Wait();
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+
+                return;
+            }
+
             InitializeResourcesAsync().Wait();
             DownloadSchedulerService.InitializeDownloadScheduler();
-            DesktopLaunchService.InitializeLaunchAsync(appActivationArguments).Wait();
+            DesktopLaunchService.InitializeLaunchAsync(appActivationArguments, false).Wait();
 
             // 使用 MSIX 动态依赖包 API，强行修改静态包图的依赖顺序，解决 WinUI 3 桌面应用程序加载时错误加载成 WinUI 2 程序集，导致程序启动失败的问题
             IReadOnlyList<Package> dependencyPackageList = Package.Current.Dependencies;
@@ -160,6 +183,15 @@ namespace GetStoreApp
         }
 
         /// <summary>
+        /// 重定向激活后触发的事件
+        /// </summary>
+        private static async void OnActivated(object sender, AppActivationArguments args)
+        {
+            // 若应用程序已启动，将启动信息重定向到已启动的应用中
+            await DesktopLaunchService.InitializeLaunchAsync(args, true);
+        }
+
+        /// <summary>
         /// 加载应用程序所需的资源
         /// </summary>
         private static async Task InitializeResourcesAsync()
@@ -167,7 +199,6 @@ namespace GetStoreApp
             // 初始化应用资源，应用使用的语言信息和启动参数
             LanguageService.InitializeLanguage();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
-            AppLaunchService.Initialize();
             StoreRegionService.InitializeStoreRegion();
             LinkFilterService.InitializeLinkFilter();
             QueryLinksModeService.InitializeQueryLinksMode();
