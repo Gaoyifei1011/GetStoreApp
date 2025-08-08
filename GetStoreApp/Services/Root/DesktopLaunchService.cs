@@ -50,38 +50,40 @@ namespace GetStoreApp.Services.Root
             {
                 string executableFileName = Path.GetFileName(Environment.ProcessPath);
                 List<string> argumentsList = [];
-                List<string> dataList = [];
                 AppLaunchArguments appLaunchArguments = new();
                 LaunchActivatedEventArgs launchActivatedEventArgs = appActivationArguments.Data is IInspectable inspectable ? LaunchActivatedEventArgs.FromAbi(inspectable.ThisPtr) : appActivationArguments.Data as LaunchActivatedEventArgs;
 
                 // 解析参数
-                IntPtr argv = Shell32Library.CommandLineToArgvW(launchActivatedEventArgs.Arguments, out int argc);
-                if (argv != IntPtr.Zero)
+                if(!string.IsNullOrEmpty(launchActivatedEventArgs.Arguments))
                 {
-                    try
+                    IntPtr argv = Shell32Library.CommandLineToArgvW(launchActivatedEventArgs.Arguments, out int argc);
+                    if (argv != IntPtr.Zero)
                     {
-                        string[] parsedArgs = new string[argc];
-                        for (int i = 0; i < argc; i++)
+                        try
                         {
-                            IntPtr ptr = Marshal.ReadIntPtr(argv, i * IntPtr.Size);
-                            string arguments = Marshal.PtrToStringUni(ptr);
+                            string[] parsedArgs = new string[argc];
+                            for (int i = 0; i < argc; i++)
+                            {
+                                IntPtr ptr = Marshal.ReadIntPtr(argv, i * IntPtr.Size);
+                                string arguments = Marshal.PtrToStringUni(ptr);
 
-                            if (arguments.Contains(executableFileName) || string.IsNullOrEmpty(arguments))
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                argumentsList.Add(arguments);
+                                if (arguments.Contains(executableFileName) || string.IsNullOrEmpty(arguments))
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    argumentsList.Add(arguments);
+                                }
                             }
                         }
-                    }
-                    finally
-                    {
-                        Marshal.FreeHGlobal(argv);
+                        finally
+                        {
+                            Marshal.FreeHGlobal(argv);
+                        }
                     }
                 }
-
+                
                 // 正常启动
                 if (argumentsList.Count is 0)
                 {
