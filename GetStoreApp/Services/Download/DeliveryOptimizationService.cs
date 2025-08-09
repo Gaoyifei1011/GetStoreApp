@@ -22,7 +22,7 @@ namespace GetStoreApp.Services.Download
     /// </summary>
     public static class DeliveryOptimizationService
     {
-        private static readonly string displayName = "GetStoreApp";
+        private static readonly string displayName = nameof(GetStoreApp);
         private static readonly Lock deliveryOptimizationLock = new();
         private static readonly Guid CLSID_DeliveryOptimization = new("5B99FA76-721C-423C-ADAC-56D03C8A8007");
 

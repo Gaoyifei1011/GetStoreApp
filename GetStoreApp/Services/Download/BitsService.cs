@@ -19,7 +19,7 @@ namespace GetStoreApp.Services.Download
     /// </summary>
     public static class BitsService
     {
-        private static readonly string displayName = "GetStoreApp";
+        private static readonly string displayName = nameof(GetStoreApp);
         private static readonly Lock bitsLock = new();
         private static readonly Guid CLSID_BackgroundCopyManager = new("4991D34B-80A1-4291-83B6-3328366B9097");
 

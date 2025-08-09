@@ -561,7 +561,7 @@ namespace GetStoreApp.Views.Windows
 
                     try
                     {
-                        SecondaryTile secondaryTile = new("GetStoreApp" + Convert.ToString(textBlock.Tag))
+                        SecondaryTile secondaryTile = new(nameof(GetStoreApp) + Convert.ToString(textBlock.Tag))
                         {
                             DisplayName = displayName,
                             Arguments = "SecondaryTile " + Convert.ToString(textBlock.Tag)

@@ -50,7 +50,7 @@ namespace GetStoreApp
 
             // 初始化应用启动参数
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-            AppInstance = Microsoft.Windows.AppLifecycle.AppInstance.FindOrRegisterForKey("GetStoreApp");
+            AppInstance = Microsoft.Windows.AppLifecycle.AppInstance.FindOrRegisterForKey(nameof(GetStoreApp));
             AppActivationArguments appActivationArguments = AppInstance.GetActivatedEventArgs();
 
             // 检查是否是当前实例应用
