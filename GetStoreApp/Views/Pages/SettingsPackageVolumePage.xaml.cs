@@ -58,7 +58,6 @@ namespace GetStoreApp.Views.Pages
         private readonly string UnknownString = ResourceService.GetLocalized("SettingsPackageVolume/Unknown");
         private readonly string VolumeSpaceString = ResourceService.GetLocalized("SettingsPackageVolume/VolumeSpace");
         private readonly string YesString = ResourceService.GetLocalized("SettingsPackageVolume/Yes");
-        private bool isInitialized;
         private PackageManager packageManager;
 
         private PackageVolumeResultKind _packageVolumeResultKind = PackageVolumeResultKind.Loading;
@@ -110,11 +109,7 @@ namespace GetStoreApp.Views.Pages
         protected override async void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
-            if (!isInitialized)
-            {
-                isInitialized = true;
-                await GetPackageVolumeInfoAsync();
-            }
+            await GetPackageVolumeInfoAsync();
         }
 
         #endregion 第一部分：重写父类事件
