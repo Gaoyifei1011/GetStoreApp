@@ -7,10 +7,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rootservice="using:GetStoreAppInstaller.Services.Root"
+    Background="{ThemeResource MenuFlyoutPresenterBackground}"
     CloseButtonContent="TeachingTip"
     IsLightDismissEnabled="False"
     PlacementMargin="0,20,0,0"
     PreferredPlacement="Bottom"
+    ShouldConstrainToRootBounds="False"
     mc:Ignorable="d">
 
     <controls:TeachingTip.CloseButtonStyle>
