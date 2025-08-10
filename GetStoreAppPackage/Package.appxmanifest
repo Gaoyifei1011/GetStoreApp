@@ -13,7 +13,7 @@
   <Identity
 	  Name="Gaoyifei1011.GetStoreApp"
 	  Publisher="CN=高怡飞"
-	  Version="6.3.705.0" />
+	  Version="6.4.810.0" />
 
   <Properties>
     <Description>ms-resource:PackageDescription</Description>

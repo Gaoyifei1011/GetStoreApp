@@ -183,7 +183,7 @@ namespace GetStoreAppInstaller
             {
                 User32Library.ChangeWindowMessageFilter(WindowMessage.WM_DROPFILES, ChangeFilterFlags.MSGFLT_ADD);
                 User32Library.ChangeWindowMessageFilter(WindowMessage.WM_COPYGLOBALDATA, ChangeFilterFlags.MSGFLT_ADD);
-                Shell32Library.DragAcceptFiles(coreWindowHandle, true);
+                Shell32Library.DragAcceptFiles((nint)MainAppWindow.Id.Value, true);
             }
 
             FrameworkView frameworkView = new();
