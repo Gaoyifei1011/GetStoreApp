@@ -377,7 +377,7 @@
 
                         <Expander.Content>
                             <Grid
-                                Margin="40,0,0,0"
+                                Margin="28,0,0,0"
                                 ColumnSpacing="15"
                                 RowSpacing="3">
                                 <Grid.RowDefinitions>
