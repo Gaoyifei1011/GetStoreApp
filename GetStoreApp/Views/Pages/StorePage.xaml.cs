@@ -217,9 +217,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开下载设置
         /// </summary>
-        private void OnDownloadSettingsClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        private async void OnDownloadSettingsClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             StoreSplitView.IsPaneOpen = false;
+            await Task.Delay(300);
             MainWindow.Current.NavigateTo(typeof(SettingsPage));
         }
 

@@ -393,7 +393,7 @@ namespace GetStoreApp.Views.Pages
             Task.Run(() =>
             {
                 // 计算时间戳
-                long timeStamp = Convert.ToInt64((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds);
+                long timeStamp = Convert.ToInt64((DateTimeOffset.UtcNow - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
                 string historyKey = HashAlgorithmHelper.GenerateHistoryKey(inputContent);
 
                 List<HistoryModel> historyList = [.. HistoryCollection];

@@ -54,7 +54,7 @@ namespace GetStoreApp.Helpers.Store
 
                 HttpStringContent httpStringContent = new(CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, CryptographicBuffer.CreateFromByteArray(cookieByteArray)));
                 httpStringContent.TryComputeLength(out ulong length);
-                httpStringContent.Headers.Expires = DateTime.Now;
+                httpStringContent.Headers.Expires = DateTimeOffset.Now;
                 httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
                 httpStringContent.Headers.ContentLength = length;
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
@@ -201,7 +201,7 @@ namespace GetStoreApp.Helpers.Store
 
                 HttpStringContent httpStringContent = new(fileListXml);
                 httpStringContent.TryComputeLength(out ulong length);
-                httpStringContent.Headers.Expires = DateTime.Now;
+                httpStringContent.Headers.Expires = DateTimeOffset.Now;
                 httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
                 httpStringContent.Headers.ContentLength = length;
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
@@ -352,7 +352,7 @@ namespace GetStoreApp.Helpers.Store
 
                 HttpStringContent httpContent = new(url);
                 httpContent.TryComputeLength(out ulong length);
-                httpContent.Headers.Expires = DateTime.Now;
+                httpContent.Headers.Expires = DateTimeOffset.Now;
                 httpContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
                 httpContent.Headers.ContentLength = length;
                 httpContent.Headers.ContentType.CharSet = "utf-8";

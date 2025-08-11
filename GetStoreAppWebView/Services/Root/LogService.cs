@@ -54,7 +54,7 @@ namespace GetStoreAppWebView.Services.Root
                         exceptionFields.AddString(logInformationItem.Key, logInformationItem.Value);
                     }
 
-                    string logFileName = string.Format("Logs-{0}-{1}-{2}-{3:D2}-{4}.etl", nameSpaceName, className, methodName, index, DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss.fff"));
+                    string logFileName = string.Format("Logs-{0}-{1}-{2}-{3:D2}-{4}.etl", nameSpaceName, className, methodName, index, DateTimeOffset.Now.ToString("yyyy-MM-dd HH-mm-ss.fff"));
                     exceptionChannel.LogEvent(logFileName, exceptionFields, logLevel, exceptionOptions);
                     await exceptionSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), logFileName);
                     exceptionSession.Dispose();
@@ -105,7 +105,7 @@ namespace GetStoreAppWebView.Services.Root
                     exceptionFields.AddString("Source", string.IsNullOrEmpty(exception.Source) ? unknown : exception.Source.Replace('\r', ' ').Replace('\n', ' '));
                     exceptionFields.AddString("StackTrace", string.IsNullOrEmpty(exception.StackTrace) ? unknown : exception.StackTrace.Replace('\r', ' ').Replace('\n', ' '));
 
-                    string logFileName = string.Format("Logs-{0}-{1}-{2}-{3:D2}-{4}.etl", nameSpaceName, className, methodName, index, DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss.fff"));
+                    string logFileName = string.Format("Logs-{0}-{1}-{2}-{3:D2}-{4}.etl", nameSpaceName, className, methodName, index, DateTimeOffset.Now.ToString("yyyy-MM-dd HH-mm-ss.fff"));
                     exceptionChannel.LogEvent(logFileName, exceptionFields, logLevel, exceptionOptions);
                     await exceptionSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), logFileName);
                     exceptionSession.Dispose();

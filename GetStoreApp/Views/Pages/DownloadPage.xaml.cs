@@ -132,9 +132,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 了解更多下载管理说明
         /// </summary>
-        private void OnLearnMoreClicked(object sender, RoutedEventArgs args)
+        private async void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
             DownloadSplitView.IsPaneOpen = false;
+            await Task.Delay(300);
             MainWindow.Current.NavigateTo(typeof(SettingsPage));
 
             if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
@@ -164,9 +165,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开应用“下载设置”
         /// </summary>
-        private void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
+        private async void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
         {
             DownloadSplitView.IsPaneOpen = false;
+            await Task.Delay(300);
             MainWindow.Current.NavigateTo(typeof(SettingsPage));
         }
 

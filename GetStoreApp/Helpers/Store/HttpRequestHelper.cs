@@ -40,7 +40,7 @@ namespace GetStoreApp.Helpers.Store
             {
                 HttpStringContent httpStringContent = new(content);
                 httpStringContent.TryComputeLength(out ulong length);
-                httpStringContent.Headers.Expires = DateTime.Now;
+                httpStringContent.Headers.Expires = DateTimeOffset.Now;
                 httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/x-www-form-urlencoded");
                 httpStringContent.Headers.ContentLength = length;
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
