@@ -179,7 +179,6 @@ namespace GetStoreApp
         private static void OnUnhandledException(object sender, System.UnhandledExceptionEventArgs args)
         {
             LogService.WriteLog(LoggingLevel.Warning, nameof(GetStoreApp), nameof(Program), nameof(OnUnhandledException), 1, args.ExceptionObject as Exception);
-            Environment.Exit(Environment.ExitCode);
         }
 
         /// <summary>

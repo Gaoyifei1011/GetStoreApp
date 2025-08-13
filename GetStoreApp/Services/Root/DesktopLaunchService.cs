@@ -54,7 +54,7 @@ namespace GetStoreApp.Services.Root
                 LaunchActivatedEventArgs launchActivatedEventArgs = appActivationArguments.Data is IInspectable inspectable ? LaunchActivatedEventArgs.FromAbi(inspectable.ThisPtr) : appActivationArguments.Data as LaunchActivatedEventArgs;
 
                 // 解析参数
-                if(!string.IsNullOrEmpty(launchActivatedEventArgs.Arguments))
+                if (!string.IsNullOrEmpty(launchActivatedEventArgs.Arguments))
                 {
                     IntPtr argv = Shell32Library.CommandLineToArgvW(launchActivatedEventArgs.Arguments, out int argc);
                     if (argv != IntPtr.Zero)
@@ -83,7 +83,7 @@ namespace GetStoreApp.Services.Root
                         }
                     }
                 }
-                
+
                 // 正常启动
                 if (argumentsList.Count is 0)
                 {
@@ -116,7 +116,10 @@ namespace GetStoreApp.Services.Root
                         if (argumentsList[1] is "Web")
                         {
                             await Launcher.LaunchUriAsync(new Uri("getstoreappwebbrowser:"));
-                            Environment.Exit(Environment.ExitCode);
+                            if (!isLaunched)
+                            {
+                                Environment.Exit(Environment.ExitCode);
+                            }
                         }
                         else
                         {
@@ -150,7 +153,10 @@ namespace GetStoreApp.Services.Root
                     }
                     else
                     {
-                        Environment.Exit(Environment.ExitCode);
+                        if (!isLaunched)
+                        {
+                            Environment.Exit(Environment.ExitCode);
+                        }
                     }
                 }
 
@@ -176,7 +182,10 @@ namespace GetStoreApp.Services.Root
                 }
                 else
                 {
-                    Environment.Exit(0);
+                    if (!isLaunched)
+                    {
+                        Environment.Exit(Environment.ExitCode);
+                    }
                 }
             }
             // 通过协议启动
@@ -202,10 +211,12 @@ namespace GetStoreApp.Services.Root
                 ToastNotificationActivatedEventArgs toastNotificationActivatedEventArgs = appActivationArguments.Data as ToastNotificationActivatedEventArgs;
                 await ToastNotificationService.HandleToastNotificationAsync(toastNotificationActivatedEventArgs.Argument, isLaunched);
             }
-            // 暂不支持以其他方式启动应用
             else
             {
-                Environment.Exit(Environment.ExitCode);
+                if (!isLaunched)
+                {
+                    Environment.Exit(Environment.ExitCode);
+                }
             }
         }
 

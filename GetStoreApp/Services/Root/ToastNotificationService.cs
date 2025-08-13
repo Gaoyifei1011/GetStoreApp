@@ -31,7 +31,10 @@ namespace GetStoreApp.Services.Root
             if (notificationArgs is "CheckNetWorkConnection")
             {
                 await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
-                Environment.Exit(Environment.ExitCode);
+                if (!isLaunched)
+                {
+                    Environment.Exit(Environment.ExitCode);
+                }
             }
             else if (notificationArgs.Contains("OpenDownloadFolder"))
             {
@@ -48,12 +51,18 @@ namespace GetStoreApp.Services.Root
                     }
                 }
 
-                Environment.Exit(Environment.ExitCode);
+                if (!isLaunched)
+                {
+                    Environment.Exit(Environment.ExitCode);
+                }
             }
             else if (notificationArgs is "OpenSettings")
             {
                 await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
-                Environment.Exit(Environment.ExitCode);
+                if (!isLaunched)
+                {
+                    Environment.Exit(Environment.ExitCode);
+                }
             }
             else if (notificationArgs.Contains("OpenApp"))
             {
