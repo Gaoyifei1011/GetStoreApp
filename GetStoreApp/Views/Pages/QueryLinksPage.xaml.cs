@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Net.Sockets;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
@@ -361,7 +362,7 @@ namespace GetStoreApp.Views.Pages
         {
             base.OnKeyDown(args);
 
-            if (args.Key is VirtualKey.Enter)
+            if (args.Key is VirtualKey.Enter && !IsQueryingLinks && !IsSelectMode)
             {
                 await QueryLinksAsync();
             }
@@ -1400,6 +1401,14 @@ namespace GetStoreApp.Views.Pages
                     });
                 }
             });
+        }
+
+        /// <summary>
+        /// 检查查询链接按钮可用状态
+        /// </summary>
+        private bool CheckQueryLinksState(bool isQueryingLinks, bool isSelectMode)
+        {
+            return !(isQueryingLinks || isSelectMode);
         }
     }
 }

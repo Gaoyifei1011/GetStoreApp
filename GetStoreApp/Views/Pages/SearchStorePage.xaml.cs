@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Net.Sockets;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.System;
@@ -84,7 +85,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isSearchingStore = false;
 
-        public bool IsSeachingStore
+        public bool IsSearchingStore
         {
             get { return _isSearchingStore; }
 
@@ -93,7 +94,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isSearchingStore, value))
                 {
                     _isSearchingStore = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSeachingStore)));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSearchingStore)));
                 }
             }
         }
@@ -203,7 +204,7 @@ namespace GetStoreApp.Views.Pages
         {
             base.OnKeyDown(args);
 
-            if (args.Key is VirtualKey.Enter)
+            if (args.Key is VirtualKey.Enter && !IsSearchingStore && !IsSelectMode)
             {
                 await SearchStoreAsync();
             }
@@ -309,9 +310,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         public async Task SearchStoreAsync()
         {
-            if (!IsSeachingStore)
+            if (!IsSearchingStore)
             {
-                IsSeachingStore = true;
+                IsSearchingStore = true;
                 SearchText = string.IsNullOrEmpty(SearchText) ? "Microsoft Corporation" : SearchText;
                 SetControlState(InfoBarSeverity.Informational);
                 foreach (HistoryModel historyItem in HistoryCollection)
@@ -332,7 +333,7 @@ namespace GetStoreApp.Views.Pages
                     // 搜索成功，有数据
                     if (searchStoreList.Count > 0)
                     {
-                        IsSeachingStore = false;
+                        IsSearchingStore = false;
                         SetControlState(InfoBarSeverity.Success);
                         ResultControlVisable = true;
                         UpdateHistory(SearchText);
@@ -350,7 +351,7 @@ namespace GetStoreApp.Views.Pages
                     // 搜索成功，没有数据
                     else
                     {
-                        IsSeachingStore = false;
+                        IsSearchingStore = false;
                         SetControlState(InfoBarSeverity.Warning);
                         ResultControlVisable = false;
                         foreach (HistoryModel historyItem in HistoryCollection)
@@ -362,7 +363,7 @@ namespace GetStoreApp.Views.Pages
                 // 搜索失败
                 else
                 {
-                    IsSeachingStore = false;
+                    IsSearchingStore = false;
                     SetControlState(InfoBarSeverity.Error);
                     ResultControlVisable = false;
                     foreach (HistoryModel historyItem in HistoryCollection)
@@ -443,6 +444,14 @@ namespace GetStoreApp.Views.Pages
                     });
                 }
             });
+        }
+
+        /// <summary>
+        /// 检查查询链接按钮可用状态
+        /// </summary>
+        private bool CheckSearchStoreState(bool isSearchingStore, bool isSelectMode)
+        {
+            return !(isSearchingStore || isSelectMode);
         }
     }
 }

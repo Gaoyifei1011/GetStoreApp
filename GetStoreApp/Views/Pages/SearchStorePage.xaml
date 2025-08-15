@@ -53,7 +53,7 @@
 
                 <TextBox
                     Grid.Column="0"
-                    IsEnabled="{x:Bind IsSeachingStore.Equals(x:False), Mode=OneWay}"
+                    IsEnabled="{x:Bind IsSearchingStore.Equals(x:False), Mode=OneWay}"
                     PlaceholderText="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/SearchPlaceHolderText')}"
                     Text="{x:Bind SearchText, Mode=OneWay}"
                     TextChanged="{x:Bind OnTextChanged}" />
@@ -64,7 +64,7 @@
                     VerticalAlignment="Bottom"
                     Click="{x:Bind OnSearchStoreClicked}"
                     Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/SearchStore')}"
-                    IsEnabled="{x:Bind IsSeachingStore.Equals(x:False), Mode=OneWay}"
+                    IsEnabled="{x:Bind CheckSearchStoreState(IsSearchingStore, IsSelectMode), Mode=OneWay}"
                     Style="{StaticResource AccentButtonStyle}" />
             </Grid>
 

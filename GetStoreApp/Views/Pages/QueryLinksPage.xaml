@@ -130,7 +130,7 @@
                     VerticalAlignment="Bottom"
                     Click="{x:Bind OnQueryLinksClicked}"
                     Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryLinks')}"
-                    IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}"
+                    IsEnabled="{x:Bind CheckQueryLinksState(IsQueryingLinks, IsSelectMode), Mode=OneWay}"
                     Style="{StaticResource AccentButtonStyle}" />
             </Grid>
 
