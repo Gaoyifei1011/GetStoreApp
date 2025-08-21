@@ -884,8 +884,7 @@ namespace GetStoreApp.Views.Windows
         {
             foreach (Popup popup in VisualTreeHelper.GetOpenPopupsForXamlRoot(Content.XamlRoot))
             {
-                ElementTheme actualTheme = (Content as FrameworkElement).ActualTheme;
-                popup.RequestedTheme = actualTheme;
+                popup.RequestedTheme = elementTheme;
 
                 if (popup.Child is FlyoutPresenter flyoutPresenter)
                 {
