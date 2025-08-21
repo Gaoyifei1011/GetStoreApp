@@ -54,8 +54,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using WinRT;
 
-// 抑制 CA1822，CS8305，IDE0060 警告
-#pragma warning disable CA1822,CS8305,IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreAppInstaller.Views.Pages
 {

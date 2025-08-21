@@ -8,8 +8,8 @@ using System.IO;
 using System.Threading.Tasks;
 using Windows.System;
 
-// 抑制 CS8305，IDE0060 警告
-#pragma warning disable CS8305,IDE0060
+// 抑制 IDE0060 警告
+#pragma warning disable IDE0060
 
 namespace GetStoreApp.Views.Pages
 {

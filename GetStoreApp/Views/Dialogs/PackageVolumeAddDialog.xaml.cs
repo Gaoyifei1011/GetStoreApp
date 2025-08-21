@@ -20,8 +20,8 @@ using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
 using Windows.Storage;
 
-// 抑制 CA1822，CS8305，IDE0028，IDE0060 警告
-#pragma warning disable CA1822,CS8305,IDE0028,IDE0060
+// 抑制 CA1822，IDE0028，IDE0060 警告
+#pragma warning disable CA1822,IDE0028,IDE0060
 
 namespace GetStoreApp.Views.Dialogs
 {

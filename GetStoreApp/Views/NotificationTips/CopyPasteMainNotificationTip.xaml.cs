@@ -9,6 +9,9 @@ using System.ComponentModel;
 using System.Numerics;
 using System.Runtime.InteropServices.Marshalling;
 
+// 抑制 IDE0060 警告
+#pragma warning disable IDE0060
+
 namespace GetStoreApp.Views.NotificationTips
 {
     /// <summary>

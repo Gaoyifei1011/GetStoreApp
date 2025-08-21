@@ -24,8 +24,8 @@ using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 using Windows.System;
 
-// 抑制 CA1822，CS8305，IDE0060 警告
-#pragma warning disable CA1822,CS8305,IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
