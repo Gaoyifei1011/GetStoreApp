@@ -26,7 +26,7 @@
     <Optimize>false</Optimize>
     <OutputType>WinExe</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>
-    <PublishAot>true</PublishAot>
+    <PublishAot>false</PublishAot>
     <RootNamespace>GetStoreApp</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
@@ -347,7 +347,7 @@
     <None Remove="WinUIApp.xaml" />
     
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4654" GeneratePathProperty="true" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4948" GeneratePathProperty="true" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250606001" />
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.11.430" GeneratePathProperty="true" />
     <PackageReference Include="Microsoft.WindowsPackageManager.InProcCom" Version="1.11.430" GeneratePathProperty="true" IncludeAssets="none" />

@@ -80,7 +80,7 @@
     </AppxManifest>
     <Content Include="$(ProjectDir)\Microsoft.Windows.Storage.Pickers.dll" CopyToOutputDirectory="Always" />
     <None Include="GetStoreAppPackage_SignKey.pfx" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4654" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4948" />
     <ProjectReference Include="..\GetStoreApp\GetStoreApp.csproj" />
     <ProjectReference Include="..\GetStoreAppInstaller\GetStoreAppInstaller.csproj" />
     <ProjectReference Include="..\GetStoreAppShellExtension\GetStoreAppShellExtension.csproj" />
