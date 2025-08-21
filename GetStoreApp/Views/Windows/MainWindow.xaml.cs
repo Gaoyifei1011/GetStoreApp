@@ -888,12 +888,12 @@ namespace GetStoreApp.Views.Windows
 
                 if (popup.Child is FlyoutPresenter flyoutPresenter)
                 {
-                    flyoutPresenter.RequestedTheme = actualTheme;
+                    flyoutPresenter.RequestedTheme = elementTheme;
                 }
 
                 if (popup.Child is Grid grid && grid.Name is "OuterOverflowContentRootV2")
                 {
-                    grid.RequestedTheme = actualTheme;
+                    grid.RequestedTheme = elementTheme;
                 }
             }
         }
