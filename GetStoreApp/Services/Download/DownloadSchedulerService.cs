@@ -18,11 +18,14 @@ namespace GetStoreApp.Services.Download
     /// </summary>
     public static class DownloadSchedulerService
     {
+        private static readonly Lock downloadSchedulerLock = new();
         private static bool isInitialized;
+        private static bool hasDownloadFailed;
         private static int badgeCount;
         private static string doEngineMode;
-        private static string DownloadCompleted1String;
-        private static string DownloadCompleted2String;
+        private static string DownloadCompletedString;
+        private static string DownloadFailedString;
+        private static string DownloadSuccessfullyString;
         private static string ViewDownloadPageString;
 
         public static bool IsDownloadingPageInitialized { get; set; }
@@ -80,7 +83,22 @@ namespace GetStoreApp.Services.Download
                     };
 
                     DownloadSchedulerList.Add(downloadScheduler);
-                    UpdateBadgeNotification(DownloadSchedulerList.Count, true);
+
+                    downloadSchedulerLock.Enter();
+
+                    try
+                    {
+                        UpdateBadgeAndToastNotification(DownloadSchedulerList.Count, true);
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
+                    finally
+                    {
+                        downloadSchedulerLock.Exit();
+                    }
+
                     DownloadProgress?.Invoke(new DownloadSchedulerModel()
                     {
                         DownloadID = downloadScheduler.DownloadID,
@@ -214,7 +232,22 @@ namespace GetStoreApp.Services.Download
                                 });
                             }
                             DownloadSchedulerList.Remove(downloadSchedulerItem);
-                            UpdateBadgeNotification(DownloadSchedulerList.Count, true);
+
+                            downloadSchedulerLock.Enter();
+
+                            try
+                            {
+                                hasDownloadFailed = true;
+                                UpdateBadgeAndToastNotification(DownloadSchedulerList.Count, true);
+                            }
+                            catch (Exception e)
+                            {
+                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                            }
+                            finally
+                            {
+                                downloadSchedulerLock.Exit();
+                            }
                             return;
                         }
                     }
@@ -255,7 +288,21 @@ namespace GetStoreApp.Services.Download
                             });
                             DownloadStorageService.AddDownloadData(downloadSchedulerItem);
                             DownloadSchedulerList.Remove(downloadSchedulerItem);
-                            UpdateBadgeNotification(DownloadSchedulerList.Count, true);
+
+                            downloadSchedulerLock.Enter();
+
+                            try
+                            {
+                                UpdateBadgeAndToastNotification(DownloadSchedulerList.Count, true);
+                            }
+                            catch (Exception e)
+                            {
+                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                            }
+                            finally
+                            {
+                                downloadSchedulerLock.Exit();
+                            }
                             return;
                         }
                     }
@@ -292,7 +339,22 @@ namespace GetStoreApp.Services.Download
                                 DownloadSpeed = downloadSchedulerItem.DownloadSpeed,
                             });
                             DownloadSchedulerList.Remove(downloadSchedulerItem);
-                            UpdateBadgeNotification(DownloadSchedulerList.Count, false);
+
+                            // 下载任务已完成
+                            downloadSchedulerLock.Enter();
+
+                            try
+                            {
+                                UpdateBadgeAndToastNotification(DownloadSchedulerList.Count, false);
+                            }
+                            catch (Exception e)
+                            {
+                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                            }
+                            finally
+                            {
+                                downloadSchedulerLock.Exit();
+                            }
                             return;
                         }
                     }
@@ -311,7 +373,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 集合的数量发生变化时修改任务栏徽标下载调度任务数量
         /// </summary>
-        private static void UpdateBadgeNotification(int count, bool needNotification)
+        private static void UpdateBadgeAndToastNotification(int count, bool needNotification)
         {
             // 当前下载任务数量发生变化时，更新当前下载任务数量通知
             if (badgeCount != count)
@@ -322,16 +384,34 @@ namespace GetStoreApp.Services.Download
 
             if (DownloadSchedulerList.Count is 0 && needNotification)
             {
-                // 显示下载文件完成通知
-                AppNotificationBuilder appNotificationBuilder = new();
-                appNotificationBuilder.AddArgument("action", "OpenApp");
-                appNotificationBuilder.AddText(DownloadCompleted1String);
-                appNotificationBuilder.AddText(DownloadCompleted2String);
-                AppNotificationButton viewDownloadPageButton = new(ViewDownloadPageString);
-                viewDownloadPageButton.Arguments.Add("action", "ViewDownloadPage");
-                appNotificationBuilder.AddButton(viewDownloadPageButton);
-                AppNotification appNotification = appNotificationBuilder.BuildNotification();
-                ToastNotificationService.Show(appNotification);
+                // 显示下载失败通知
+                if (hasDownloadFailed)
+                {
+                    AppNotificationBuilder appNotificationBuilder = new();
+                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                    appNotificationBuilder.AddText(DownloadCompletedString);
+                    appNotificationBuilder.AddText(DownloadFailedString);
+                    AppNotificationButton viewDownloadPageButton = new(ViewDownloadPageString);
+                    viewDownloadPageButton.Arguments.Add("action", "ViewDownloadPage");
+                    appNotificationBuilder.AddButton(viewDownloadPageButton);
+                    AppNotification appNotification = appNotificationBuilder.BuildNotification();
+                    ToastNotificationService.Show(appNotification);
+                }
+                // 显示下载成功通知
+                else
+                {
+                    AppNotificationBuilder appNotificationBuilder = new();
+                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                    appNotificationBuilder.AddText(DownloadCompletedString);
+                    appNotificationBuilder.AddText(DownloadSuccessfullyString);
+                    AppNotificationButton viewDownloadPageButton = new(ViewDownloadPageString);
+                    viewDownloadPageButton.Arguments.Add("action", "ViewDownloadPage");
+                    appNotificationBuilder.AddButton(viewDownloadPageButton);
+                    AppNotification appNotification = appNotificationBuilder.BuildNotification();
+                    ToastNotificationService.Show(appNotification);
+                }
+
+                hasDownloadFailed = false;
             }
         }
 
@@ -343,8 +423,9 @@ namespace GetStoreApp.Services.Download
             if (!isInitialized)
             {
                 isInitialized = true;
-                DownloadCompleted1String = ResourceService.GetLocalized("Application/DownloadCompleted1");
-                DownloadCompleted2String = ResourceService.GetLocalized("Application/DownloadCompleted2");
+                DownloadCompletedString = ResourceService.GetLocalized("Application/DownloadCompleted");
+                DownloadFailedString = ResourceService.GetLocalized("Application/DownloadFailed");
+                DownloadSuccessfullyString = ResourceService.GetLocalized("Application/DownloadSuccessfully");
                 ViewDownloadPageString = ResourceService.GetLocalized("Application/ViewDownloadPage");
 
                 // 获取当前下载引擎
