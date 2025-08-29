@@ -908,7 +908,7 @@
                                     Margin="10,0,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
-                                    IsChecked="{x:Bind IsSelected, Mode=OneWay}"
+                                    IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                                     IsThreeState="False"
                                     Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 

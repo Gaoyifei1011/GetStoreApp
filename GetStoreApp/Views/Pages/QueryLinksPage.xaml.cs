@@ -673,7 +673,6 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 全选 / 全部不选
         /// </summary>
-
         private void OnSelectTapped(object sender, TappedRoutedEventArgs args)
         {
             if (IsSelectMode)
@@ -837,6 +836,25 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnDownloadSelectedClicked(object sender, RoutedEventArgs args)
         {
+            IsSelectMode = false;
+            queryLinksLock.Enter();
+
+            try
+            {
+                foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                {
+                    queryLinksItem.IsSelectMode = false;
+                }
+            }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
+            finally
+            {
+                queryLinksLock.Exit();
+            }
+
             List<QueryLinksModel> selectedQueryLinksList = await Task.Run(() =>
             {
                 List<QueryLinksModel> selectedQueryLinksList = [];
@@ -955,24 +973,6 @@ namespace GetStoreApp.Views.Pages
 
                 // 显示下载任务创建成功消息
                 await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
-                IsSelectMode = false;
-                queryLinksLock.Enter();
-
-                try
-                {
-                    foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
-                    {
-                        queryLinksItem.IsSelectMode = false;
-                    }
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-                finally
-                {
-                    queryLinksLock.Exit();
-                }
             }
         }
 
