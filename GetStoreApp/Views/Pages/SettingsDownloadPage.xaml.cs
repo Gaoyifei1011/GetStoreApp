@@ -12,6 +12,7 @@ using Microsoft.Windows.Storage.Pickers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
@@ -33,9 +34,9 @@ namespace GetStoreApp.Views.Pages
         private readonly string DoEngineBitsString = ResourceService.GetLocalized("SettingsDownload/DoEngineBits");
         private readonly string DoEngineDoString = ResourceService.GetLocalized("SettingsDownload/DoEngineDo");
 
-        private StorageFolder _downloadFolder = DownloadOptionsService.DownloadFolder;
+        private string _downloadFolder = DownloadOptionsService.DownloadFolder;
 
-        public StorageFolder DownloadFolder
+        public string DownloadFolder
         {
             get { return _downloadFolder; }
 
@@ -45,6 +46,22 @@ namespace GetStoreApp.Views.Pages
                 {
                     _downloadFolder = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadFolder)));
+                }
+            }
+        }
+
+        private bool _manualSetDownloadFolder = DownloadOptionsService.ManualSetDownloadFolder;
+
+        public bool ManualSetDownloadFolder
+        {
+            get { return _manualSetDownloadFolder; }
+
+            set
+            {
+                if (!Equals(_manualSetDownloadFolder, value))
+                {
+                    _manualSetDownloadFolder = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ManualSetDownloadFolder)));
                 }
             }
         }
@@ -105,13 +122,13 @@ namespace GetStoreApp.Views.Pages
                         }
                     case "Download":
                         {
-                            DownloadFolder = await StorageFolder.GetFolderFromPathAsync(InfoHelper.UserDataPath.Downloads);
+                            DownloadFolder = InfoHelper.UserDataPath.Downloads;
                             DownloadOptionsService.SetFolder(DownloadFolder);
                             break;
                         }
                     case "Desktop":
                         {
-                            DownloadFolder = await StorageFolder.GetFolderFromPathAsync(InfoHelper.UserDataPath.Desktop);
+                            DownloadFolder = InfoHelper.UserDataPath.Desktop;
                             DownloadOptionsService.SetFolder(DownloadFolder);
                             break;
                         }
@@ -126,7 +143,7 @@ namespace GetStoreApp.Views.Pages
 
                                 if (await folderPicker.PickSingleFolderAsync() is PickFolderResult pickFolderResult)
                                 {
-                                    DownloadFolder = await StorageFolder.GetFolderFromPathAsync(pickFolderResult.Path);
+                                    DownloadFolder = pickFolderResult.Path;
                                     DownloadOptionsService.SetFolder(DownloadFolder);
                                 }
                             }
@@ -172,9 +189,20 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 设置手动设置下载目录
+        /// </summary>
+        private void OnManualSetDownloadFolderToggled(object sender, RoutedEventArgs args)
+        {
+            if (sender is ToggleSwitch toggleSwitch)
+            {
+                DownloadOptionsService.SetManualSetDownloadFolder(toggleSwitch.IsOn);
+                ManualSetDownloadFolder = toggleSwitch.IsOn;
+            }
+        }
+
+        /// <summary>
         /// 下载引擎方式设置
         /// </summary>
-
         private void OnDoEngineModeSelectClicked(object sender, RoutedEventArgs args)
         {
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)

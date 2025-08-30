@@ -18,22 +18,22 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 清空缓存文件夹
         /// </summary>
-        public static bool CleanFolder(StorageFolder folder)
+        public static bool CleanFolder(string folder)
         {
             try
             {
-                if (string.IsNullOrEmpty(folder.Path) || !Directory.Exists(folder.Path))
+                if (string.IsNullOrEmpty(folder) || !Directory.Exists(folder))
                 {
                     return true;
                 }
 
                 // 删除当前文件夹下所有文件
-                foreach (string strFile in Directory.GetFiles(folder.Path))
+                foreach (string strFile in Directory.GetFiles(folder))
                 {
                     File.Delete(strFile);
                 }
                 // 删除当前文件夹下所有子文件夹(递归)
-                foreach (string strDir in Directory.GetDirectories(folder.Path))
+                foreach (string strDir in Directory.GetDirectories(folder))
                 {
                     Directory.Delete(strDir, true);
                 }
@@ -56,8 +56,8 @@ namespace GetStoreApp.Helpers.Root
             {
                 HashAlgorithmProvider hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
 
-                StorageFile File = await StorageFile.GetFileFromPathAsync(filePath);
-                Stream stream = await File.OpenStreamForReadAsync();
+                StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
+                Stream stream = await file.OpenStreamForReadAsync();
                 IInputStream inputStream = stream.AsInputStream();
                 uint capacity = 100000000;
                 Windows.Storage.Streams.Buffer buffer = new(capacity);

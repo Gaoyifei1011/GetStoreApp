@@ -63,7 +63,7 @@
                         TextWrapping="NoWrap">
 
                         <Hyperlink Click="{x:Bind OnDownloadOpenFolderClicked}" UnderlineStyle="None">
-                            <Run Text="{x:Bind DownloadFolder.Path, Mode=OneWay}" />
+                            <Run Text="{x:Bind DownloadFolder, Mode=OneWay}" />
                         </Hyperlink>
 
                         <ToolTipService.ToolTip>
@@ -74,7 +74,7 @@
 
                                 <StackPanel HorizontalAlignment="Stretch">
                                     <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/FileStoragePath')}" />
-                                    <TextBlock Text="{x:Bind DownloadFolder.Path, Mode=OneWay}" />
+                                    <TextBlock Text="{x:Bind DownloadFolder, Mode=OneWay}" />
                                     <MenuFlyoutSeparator Margin="4,3" />
                                     <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/OpenFolder')}" />
                                 </StackPanel>

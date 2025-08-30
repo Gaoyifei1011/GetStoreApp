@@ -397,33 +397,40 @@ namespace GetStoreApp.Views.Pages
             {
                 Task.Run(async () =>
                 {
-                    if (File.Exists(filePath))
+                    try
                     {
-                        // 定位文件，若定位失败，则仅启动资源管理器并打开桌面目录
-                        if (!string.IsNullOrEmpty(filePath))
+                        if (File.Exists(filePath))
                         {
-                            try
+                            // 定位文件，若定位失败，则仅启动资源管理器并打开桌面目录
+                            if (!string.IsNullOrEmpty(filePath))
                             {
-                                StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
-                                StorageFolder folder = await file.GetParentAsync();
-                                FolderLauncherOptions options = new();
-                                options.ItemsToSelect.Add(file);
-                                await Launcher.LaunchFolderAsync(folder, options);
+                                try
+                                {
+                                    StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
+                                    StorageFolder folder = await file.GetParentAsync();
+                                    FolderLauncherOptions options = new();
+                                    options.ItemsToSelect.Add(file);
+                                    await Launcher.LaunchFolderAsync(folder, options);
+                                }
+                                catch (Exception e)
+                                {
+                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnOpenFolderExecuteRequested), 1, e);
+                                    await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
+                                }
                             }
-                            catch (Exception e)
+                            else
                             {
-                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnOpenFolderExecuteRequested), 1, e);
                                 await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
                             }
                         }
                         else
                         {
-                            await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
+                            await Launcher.LaunchFolderPathAsync(DownloadOptionsService.DownloadFolder);
                         }
                     }
-                    else
+                    catch (Exception e)
                     {
-                        await Launcher.LaunchFolderAsync(DownloadOptionsService.DownloadFolder);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnOpenFolderExecuteRequested), 1, e);
                     }
                 });
             }

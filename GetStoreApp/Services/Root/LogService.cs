@@ -141,7 +141,7 @@ namespace GetStoreApp.Services.Root
 
             if (Directory.Exists(logFolderPath))
             {
-                await Launcher.LaunchFolderAsync(await Windows.Storage.StorageFolder.GetFolderFromPathAsync(logFolderPath));
+                await Launcher.LaunchFolderPathAsync(logFolderPath);
             }
             else
             {

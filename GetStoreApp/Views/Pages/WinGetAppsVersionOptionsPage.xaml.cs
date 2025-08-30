@@ -388,7 +388,7 @@ namespace GetStoreApp.Views.Pages
                             AllowHashMismatch = false;
                             PackageArchitecture = PackageArchitectureList[0];
                             PackageInstallScope = PackageInstallScopeList[0];
-                            PackageDownloadPath = WinGetConfigService.DefaultDownloadFolder.Path;
+                            PackageDownloadPath = WinGetConfigService.DefaultDownloadFolder;
                             break;
                         }
                     case PackageOperationKind.Install:
@@ -644,17 +644,17 @@ namespace GetStoreApp.Views.Pages
                 {
                     case "AppCache":
                         {
-                            PackageDownloadPath = WinGetConfigService.DefaultDownloadFolder.Path;
+                            PackageDownloadPath = WinGetConfigService.DefaultDownloadFolder;
                             break;
                         }
                     case "Download":
                         {
-                            PackageDownloadPath = (await StorageFolder.GetFolderFromPathAsync(InfoHelper.UserDataPath.Downloads)).Path;
+                            PackageDownloadPath = InfoHelper.UserDataPath.Downloads;
                             break;
                         }
                     case "Desktop":
                         {
-                            PackageDownloadPath = (await StorageFolder.GetFolderFromPathAsync(InfoHelper.UserDataPath.Desktop)).Path;
+                            PackageDownloadPath = InfoHelper.UserDataPath.Desktop;
                             break;
                         }
                     case "Custom":

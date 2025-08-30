@@ -248,7 +248,14 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnOpenLogFolderClicked(object sender, RoutedEventArgs args)
         {
-            await LogService.OpenLogFolderAsync();
+            try
+            {
+                await LogService.OpenLogFolderAsync();
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAdvancedPage), nameof(OnOpenLogFolderClicked), 1, e);
+            }
         }
 
         /// <summary>

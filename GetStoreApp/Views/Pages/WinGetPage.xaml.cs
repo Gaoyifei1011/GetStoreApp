@@ -251,7 +251,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     try
                     {
-                        await Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(packagePath));
+                        await Launcher.LaunchFolderPathAsync(packagePath);
                     }
                     catch (Exception e)
                     {

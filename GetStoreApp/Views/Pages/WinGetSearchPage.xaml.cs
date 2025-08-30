@@ -181,7 +181,7 @@ namespace GetStoreApp.Views.Pages
                     AppID = searchApps.AppID,
                     AppName = searchApps.AppName,
                     AppVersion = searchApps.CatalogPackage.DefaultInstallVersion.Version,
-                    PackagePath = WinGetConfigService.DefaultDownloadFolder.Path,
+                    PackagePath = WinGetConfigService.DefaultDownloadFolder,
                     PackageOperationProgress = 0,
                     PackageDownloadProgressState = PackageDownloadProgressState.Queued,
                     PackageVersionId = null,

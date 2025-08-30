@@ -19,7 +19,7 @@ namespace GetStoreApp.Services.Settings
         private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.GetDefault().LocalSettings;
         private static ApplicationDataContainer wingetDataSourceContainer;
 
-        public static Windows.Storage.StorageFolder DefaultDownloadFolder { get; private set; }
+        public static string DefaultDownloadFolder { get; private set; }
 
         public static List<KeyValuePair<string, PredefinedPackageCatalog>> PredefinedPackageCatalogList { get; } = [];
 
@@ -29,7 +29,7 @@ namespace GetStoreApp.Services.Settings
         public static async Task InitializeWinGetConfigAsync()
         {
             wingetDataSourceContainer = localSettingsContainer.CreateContainer(WinetDataSource, ApplicationDataCreateDisposition.Always);
-            DefaultDownloadFolder = await ApplicationData.GetDefault().LocalCacheFolder.CreateFolderAsync("WinGet", Windows.Storage.CreationCollisionOption.OpenIfExists);
+            DefaultDownloadFolder = (await ApplicationData.GetDefault().LocalCacheFolder.CreateFolderAsync("WinGet", Windows.Storage.CreationCollisionOption.OpenIfExists)).Path;
 
             // 每次获取时读取已经添加的安装源，并去除掉已经被删除的值
             await Task.Run(() =>
