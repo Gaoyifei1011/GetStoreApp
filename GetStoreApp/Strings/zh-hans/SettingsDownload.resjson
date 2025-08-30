@@ -16,6 +16,10 @@
   "DownloadFolder": "下载",
   "FileStoragePath": "文件存放路径",
   "LearnDoEngine": "下载引擎说明",
+  "ManualSetDownloadFolder": "手动设置下载目录",
+  "ManualSetDownloadFolderDescription": "应用每次下载文件时手动设置下载目录",
+  "ManualSetDownloadFolderOffContent": "否",
+  "ManualSetDownloadFolderOnContent": "是",
   "Open": "打开",
   "OpenFolder": "单击访问该文件夹"
 }

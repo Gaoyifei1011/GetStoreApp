@@ -16,6 +16,10 @@
   "DownloadFolder": "Downloads",
   "FileStoragePath": "File storage path",
   "LearnDoEngine": "Download engine instruction",
+  "ManualSetDownloadFolder": "Manually set download folder",
+  "ManualSetDownloadFolderDescription": "The app manually sets the download directory each time a file is downloaded",
+  "ManualSetDownloadFolderOffContent": "No",
+  "ManualSetDownloadFolderOnContent": "Yes",
   "Open": "Open",
   "OpenFolder": "Click to access the folder"
 }

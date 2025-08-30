@@ -27,6 +27,8 @@
 
         public const string LanguageKey = "AppLanguage";
 
+        public const string ManualSetDownloadFolderKey = "ManualSetDownloadFolder";
+
         public const string NotificationKey = "AppNotification";
 
         public const string EncryptedPackageFilterKey = "EncryptedPackageFilterValue";

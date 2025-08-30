@@ -12,6 +12,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.Windows.Storage.Pickers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -431,82 +432,113 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is QueryLinksModel queryLinks)
             {
-                bool isDownloadSuccessfully = false;
-                await Task.Run(() =>
-                {
-                    List<DownloadSchedulerModel> downloadSchedulerList = [];
-                    DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
+                string downloadFolder = string.Empty;
 
+                // 手动设置下载目录
+                if (DownloadOptionsService.ManualSetDownloadFolder)
+                {
                     try
                     {
-                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadSchedulerList)
+                        FolderPicker folderPicker = new(MainWindow.Current.AppWindow.Id)
                         {
-                            downloadSchedulerList.Add(downloadSchedulerItem);
-                        }
+                            SuggestedStartLocation = PickerLocationId.Downloads
+                        };
 
-                        if (!DownloadSchedulerService.IsDownloadingPageInitialized)
+                        if (await folderPicker.PickSingleFolderAsync() is PickFolderResult pickFolderResult)
                         {
-                            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadFailedList)
-                            {
-                                downloadSchedulerList.Add(downloadSchedulerItem);
-                            }
-                        }
-
-                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
-                        {
-                            downloadSchedulerList.Add(downloadSchedulerItem);
+                            downloadFolder = pickFolderResult.Path;
                         }
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadExecuteRequested), 1, e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadSelectedClicked), 1, e);
+                        downloadFolder = DownloadOptionsService.DownloadFolder;
                     }
-                    finally
-                    {
-                        DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
-                    }
+                }
+                else
+                {
+                    downloadFolder = DownloadOptionsService.DownloadFolder;
+                }
 
-                    bool isExisted = false;
-                    string downloadFilePath = Path.Combine(DownloadOptionsService.DownloadFolder.Path, queryLinks.FileName);
-
-                    // 检查下载文件信息是否已存在
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in downloadSchedulerList)
+                if (!string.IsNullOrEmpty(downloadFolder))
+                {
+                    bool isDownloadSuccessfully = false;
+                    await Task.Run(() =>
                     {
-                        if (string.Equals(downloadFilePath, downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
-                        {
-                            isExisted = true;
-                            break;
-                        }
-                    }
+                        List<DownloadSchedulerModel> downloadSchedulerList = [];
+                        DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
 
-                    if (!isExisted)
-                    {
                         try
                         {
-                            // 检查下载目录是否存在
-                            if (!Directory.Exists(DownloadOptionsService.DownloadFolder.Path))
+                            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadSchedulerList)
                             {
-                                Directory.CreateDirectory(DownloadOptionsService.DownloadFolder.Path);
+                                downloadSchedulerList.Add(downloadSchedulerItem);
                             }
 
-                            // 检查是否已有重复文件，如果有，直接删除
-                            if (File.Exists(downloadFilePath))
+                            if (!DownloadSchedulerService.IsDownloadingPageInitialized)
                             {
-                                File.Delete(downloadFilePath);
+                                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadFailedList)
+                                {
+                                    downloadSchedulerList.Add(downloadSchedulerItem);
+                                }
+                            }
+
+                            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
+                            {
+                                downloadSchedulerList.Add(downloadSchedulerItem);
                             }
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadExecuteRequested), 2, e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadExecuteRequested), 1, e);
+                        }
+                        finally
+                        {
+                            DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
                         }
 
-                        DownloadSchedulerService.CreateDownload(queryLinks.FileLink, downloadFilePath);
-                        isDownloadSuccessfully = true;
-                    }
-                });
+                        bool isExisted = false;
+                        string downloadFilePath = Path.Combine(downloadFolder, queryLinks.FileName);
 
-                // 显示下载任务创建成功消息
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
+                        // 检查下载文件信息是否已存在
+                        foreach (DownloadSchedulerModel downloadSchedulerItem in downloadSchedulerList)
+                        {
+                            if (string.Equals(downloadFilePath, downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
+                            {
+                                isExisted = true;
+                                break;
+                            }
+                        }
+
+                        if (!isExisted)
+                        {
+                            try
+                            {
+                                // 检查下载目录是否存在
+                                if (!Directory.Exists(downloadFolder))
+                                {
+                                    Directory.CreateDirectory(downloadFolder);
+                                }
+
+                                // 检查是否已有重复文件，如果有，直接删除
+                                if (File.Exists(downloadFilePath))
+                                {
+                                    File.Delete(downloadFilePath);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadExecuteRequested), 2, e);
+                            }
+
+                            DownloadSchedulerService.CreateDownload(queryLinks.FileLink, downloadFilePath);
+                            isDownloadSuccessfully = true;
+                        }
+                    });
+
+                    // 显示下载任务创建成功消息
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
+                }
             }
         }
 
@@ -855,124 +887,155 @@ namespace GetStoreApp.Views.Pages
                 queryLinksLock.Exit();
             }
 
-            List<QueryLinksModel> selectedQueryLinksList = await Task.Run(() =>
-            {
-                List<QueryLinksModel> selectedQueryLinksList = [];
-                queryLinksLock.Enter();
+            string downloadFolder = string.Empty;
 
+            // 手动设置下载目录
+            if (DownloadOptionsService.ManualSetDownloadFolder)
+            {
                 try
                 {
-                    foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                    FolderPicker folderPicker = new(MainWindow.Current.AppWindow.Id)
                     {
-                        if (queryLinksItem.IsSelected)
-                        {
-                            selectedQueryLinksList.Add(queryLinksItem);
-                        }
+                        SuggestedStartLocation = PickerLocationId.Downloads
+                    };
+
+                    if (await folderPicker.PickSingleFolderAsync() is PickFolderResult pickFolderResult)
+                    {
+                        downloadFolder = pickFolderResult.Path;
                     }
                 }
                 catch (Exception e)
                 {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadSelectedClicked), 1, e);
+                    downloadFolder = DownloadOptionsService.DownloadFolder;
                 }
-                finally
-                {
-                    queryLinksLock.Exit();
-                }
-
-                return selectedQueryLinksList;
-            });
-
-            // 内容为空时显示空提示对话框
-            if (selectedQueryLinksList.Count is 0)
-            {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
-                return;
             }
             else
             {
-                bool isDownloadSuccessfully = false;
+                downloadFolder = DownloadOptionsService.DownloadFolder;
+            }
 
-                List<DownloadSchedulerModel> downloadSchedulerList = await Task.Run(() =>
+            if (!string.IsNullOrEmpty(downloadFolder))
+            {
+                List<QueryLinksModel> selectedQueryLinksList = await Task.Run(() =>
                 {
-                    List<DownloadSchedulerModel> downloadSchedulerList = [];
-                    DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
+                    List<QueryLinksModel> selectedQueryLinksList = [];
+                    queryLinksLock.Enter();
 
                     try
                     {
-                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadSchedulerList)
+                        foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                         {
-                            downloadSchedulerList.Add(downloadSchedulerItem);
-                        }
-
-                        if (!DownloadSchedulerService.IsDownloadingPageInitialized)
-                        {
-                            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadFailedList)
+                            if (queryLinksItem.IsSelected)
                             {
-                                downloadSchedulerList.Add(downloadSchedulerItem);
+                                selectedQueryLinksList.Add(queryLinksItem);
                             }
-                        }
-
-                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
-                        {
-                            downloadSchedulerList.Add(downloadSchedulerItem);
                         }
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadSelectedClicked), 1, e);
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                     }
                     finally
                     {
-                        DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+                        queryLinksLock.Exit();
                     }
 
-                    foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
-                    {
-                        bool isExisted = false;
-                        string downloadFilePath = Path.Combine(DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
-
-                        // 检查下载文件是否已存在
-                        foreach (DownloadSchedulerModel downloadSchedulerItem in downloadSchedulerList)
-                        {
-                            if (string.Equals(downloadFilePath, downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
-                            {
-                                isExisted = true;
-                                break;
-                            }
-                        }
-
-                        if (!isExisted)
-                        {
-                            try
-                            {
-                                // 检查下载目录是否存在
-                                if (!Directory.Exists(DownloadOptionsService.DownloadFolder.Path))
-                                {
-                                    Directory.CreateDirectory(DownloadOptionsService.DownloadFolder.Path);
-                                }
-
-                                // 检查是否已有重复文件，如果有，直接删除
-                                if (File.Exists(downloadFilePath))
-                                {
-                                    File.Delete(downloadFilePath);
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadSelectedClicked), 2, e);
-                                continue;
-                            }
-
-                            DownloadSchedulerService.CreateDownload(queryLinksItem.FileLink, downloadFilePath);
-                            isDownloadSuccessfully = true;
-                        }
-                    }
-
-                    return downloadSchedulerList;
+                    return selectedQueryLinksList;
                 });
 
-                // 显示下载任务创建成功消息
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
+                // 内容为空时显示空提示对话框
+                if (selectedQueryLinksList.Count is 0)
+                {
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
+                    return;
+                }
+                else
+                {
+                    bool isDownloadSuccessfully = false;
+
+                    List<DownloadSchedulerModel> downloadSchedulerList = await Task.Run(() =>
+                    {
+                        List<DownloadSchedulerModel> downloadSchedulerList = [];
+                        DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
+
+                        try
+                        {
+                            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadSchedulerList)
+                            {
+                                downloadSchedulerList.Add(downloadSchedulerItem);
+                            }
+
+                            if (!DownloadSchedulerService.IsDownloadingPageInitialized)
+                            {
+                                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadFailedList)
+                                {
+                                    downloadSchedulerList.Add(downloadSchedulerItem);
+                                }
+                            }
+
+                            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
+                            {
+                                downloadSchedulerList.Add(downloadSchedulerItem);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadSelectedClicked), 2, e);
+                        }
+                        finally
+                        {
+                            DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+                        }
+
+                        foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
+                        {
+                            bool isExisted = false;
+                            string downloadFilePath = Path.Combine(downloadFolder, queryLinksItem.FileName);
+
+                            // 检查下载文件是否已存在
+                            foreach (DownloadSchedulerModel downloadSchedulerItem in downloadSchedulerList)
+                            {
+                                if (string.Equals(downloadFilePath, downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    isExisted = true;
+                                    break;
+                                }
+                            }
+
+                            if (!isExisted)
+                            {
+                                try
+                                {
+                                    // 检查下载目录是否存在
+                                    if (!Directory.Exists(downloadFolder))
+                                    {
+                                        Directory.CreateDirectory(downloadFolder);
+                                    }
+
+                                    // 检查是否已有重复文件，如果有，直接删除
+                                    if (File.Exists(downloadFilePath))
+                                    {
+                                        File.Delete(downloadFilePath);
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadSelectedClicked), 3, e);
+                                    continue;
+                                }
+
+                                DownloadSchedulerService.CreateDownload(queryLinksItem.FileLink, downloadFilePath);
+                                isDownloadSuccessfully = true;
+                            }
+                        }
+
+                        return downloadSchedulerList;
+                    });
+
+                    // 显示下载任务创建成功消息
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
+                }
             }
         }
 

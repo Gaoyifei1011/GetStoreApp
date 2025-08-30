@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:roothelper="using:GetStoreApp.Helpers.Root"
@@ -18,6 +19,7 @@
 
         <Grid Margin="30,0,30,30">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -131,9 +133,87 @@
                 </DropDownButton>
             </Grid>
 
-            <!--  下载引擎方式设置  -->
+            <!--  每次下载时手动设置下载目录  -->
             <Grid
                 Grid.Row="1"
+                Height="60"
+                Margin="0,0,0,2"
+                Padding="16,0"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    FontSize="16"
+                    Glyph="&#xED25;" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/ManualSetDownloadFolder')}" />
+
+                    <TextBlock
+                        x:Name="ManualSetDownloadFolderDescription"
+                        HorizontalAlignment="Left"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/ManualSetDownloadFolderDescription')}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/ManualSetDownloadFolderDescription')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
+                                Visibility="{x:Bind ManualSetDownloadFolderDescription.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/ManualSetDownloadFolderOffContent')}"
+                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ManualSetDownloadFolder), Mode=OneWay}" />
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/ManualSetDownloadFolderOnContent')}"
+                        Visibility="{x:Bind ManualSetDownloadFolder, Mode=OneWay}" />
+
+                    <ToggleSwitch
+                        MinWidth="0"
+                        Margin="10,0,-10,-2"
+                        IsOn="{x:Bind ManualSetDownloadFolder, Mode=OneWay}"
+                        OffContent=""
+                        OnContent=""
+                        Toggled="{x:Bind OnManualSetDownloadFolderToggled}" />
+                </StackPanel>
+            </Grid>
+
+            <!--  下载引擎方式设置  -->
+            <Grid
+                Grid.Row="2"
                 Height="60"
                 Margin="0,0,0,2"
                 Padding="16,0"
@@ -227,7 +307,7 @@
 
             <!--  传递优化设置  -->
             <Grid
-                Grid.Row="2"
+                Grid.Row="3"
                 Height="60"
                 Margin="0,0,0,2"
                 Padding="16,0"
@@ -287,7 +367,7 @@
 
             <!--  Aria2 下载文件配置  -->
             <Grid
-                Grid.Row="3"
+                Grid.Row="4"
                 Height="60"
                 Margin="0,0,0,2"
                 Padding="16,0"

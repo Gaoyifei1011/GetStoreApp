@@ -16,6 +16,10 @@
   "DownloadFolder": "הורדות",
   "FileStoragePath": "נתיב אחסון קבצים",
   "LearnDoEngine": "הסבר על מנוע ההורדה",
+  "ManualSetDownloadFolder": "הגדר את ספריית ההורדות באופן ידני",
+  "ManualSetDownloadFolderDescription": "האפליקציה מגדירה באופן ידני את ספריית ההורדות בכל פעם שמתבצעת הורדה של קובץ",
+  "ManualSetDownloadFolderOffContent": "לא",
+  "ManualSetDownloadFolderOnContent": "להיות",
   "Open": "פתח",
   "OpenFolder": "לחץ לגישה לתיקייה זו"
 }
