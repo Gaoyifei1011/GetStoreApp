@@ -557,29 +557,35 @@
 
                         <MenuFlyoutSeparator Grid.Row="4" Margin="2,10" />
 
-                        <GridView
+                        <ListView
                             Grid.Row="5"
                             ItemsSource="{x:Bind TagCollection}"
                             SelectionMode="None">
 
-                            <GridView.ItemContainerStyle>
-                                <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
+                            <ListView.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
                                     <Setter Property="Background" Value="Transparent" />
                                     <Setter Property="Margin" Value="0" />
                                     <Setter Property="MinHeight" Value="0" />
                                     <Setter Property="Padding" Value="0" />
                                 </Style>
-                            </GridView.ItemContainerStyle>
+                            </ListView.ItemContainerStyle>
+
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
 
                             <ItemsControl.ItemContainerTransitions>
                                 <TransitionCollection />
                             </ItemsControl.ItemContainerTransitions>
 
-                            <GridView.Header>
+                            <ListView.Header>
                                 <TextBlock Margin="0,0,0,5" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Tag')}" />
-                            </GridView.Header>
+                            </ListView.Header>
 
-                            <GridView.ItemTemplate>
+                            <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="x:String">
                                     <Grid
                                         Width="110"
@@ -608,38 +614,44 @@
                                         </ToolTipService.ToolTip>
                                     </Grid>
                                 </DataTemplate>
-                            </GridView.ItemTemplate>
-                        </GridView>
+                            </ListView.ItemTemplate>
+                        </ListView>
 
                         <MenuFlyoutSeparator
                             Grid.Row="6"
                             Margin="2,10"
                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DocumentionCollection.Count), Mode=OneWay}" />
 
-                        <GridView
+                        <ListView
                             Grid.Row="7"
                             ItemsSource="{x:Bind DocumentionCollection}"
                             SelectionMode="None"
                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DocumentionCollection.Count), Mode=OneWay}">
 
-                            <GridView.ItemContainerStyle>
-                                <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
+                            <ListView.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
                                     <Setter Property="Background" Value="Transparent" />
                                     <Setter Property="Margin" Value="0" />
                                     <Setter Property="MinHeight" Value="0" />
                                     <Setter Property="Padding" Value="0" />
                                 </Style>
-                            </GridView.ItemContainerStyle>
+                            </ListView.ItemContainerStyle>
+
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
 
                             <ItemsControl.ItemContainerTransitions>
                                 <TransitionCollection />
                             </ItemsControl.ItemContainerTransitions>
 
-                            <GridView.Header>
+                            <ListView.Header>
                                 <TextBlock Margin="0,0,0,5" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Documention')}" />
-                            </GridView.Header>
+                            </ListView.Header>
 
-                            <GridView.ItemTemplate>
+                            <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="text:ContentLinkInfo">
                                     <TextBlock
                                         Margin="0,0,10,0"
@@ -653,8 +665,8 @@
                                         </Hyperlink>
                                     </TextBlock>
                                 </DataTemplate>
-                            </GridView.ItemTemplate>
-                        </GridView>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Grid>
                 </ScrollViewer>
             </Grid>

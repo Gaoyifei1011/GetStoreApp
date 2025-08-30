@@ -2,6 +2,7 @@
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.Marshalling;
@@ -74,9 +75,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 点击条目时进入条目对应的页面
         /// </summary>
-        private void OnItemClick(object sender, ItemClickEventArgs args)
+        private void OnControlItemClickExcecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.ClickedItem is ControlItemModel controlItem)
+            if (args.Parameter is ControlItemModel controlItem)
             {
                 if (MainWindow.Current.PageList[MainWindow.Current.PageList.FindIndex(item => string.Equals(item.Key, controlItem.Tag))].Key is "Web")
                 {

@@ -27,6 +27,8 @@
                     </LinearGradientBrush>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
+
+            <XamlUICommand x:Name="ControlItemClickCommand" ExecuteRequested="{x:Bind OnControlItemClickExcecuteRequested}" />
         </ResourceDictionary>
     </Page.Resources>
 
@@ -101,115 +103,101 @@
             </Grid>
 
             <!--  选择栏  -->
-            <GridView
+            <ListView
                 Margin="0,10,0,0"
-                IsItemClickEnabled="True"
                 IsSwipeEnabled="False"
-                ItemClick="{x:Bind OnItemClick}"
                 ItemsSource="{x:Bind HomeList}"
                 SelectionMode="None"
                 TabIndex="1">
 
-                <GridView.Header>
+                <ListView.Header>
                     <TextBlock
                         Margin="0,0,0,16"
                         FontSize="22"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('Home/FunctionSummary')}" />
-                </GridView.Header>
+                </ListView.Header>
 
-                <GridView.ItemContainerStyle>
-                    <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
-                        <Setter Property="Margin" Value="0,0,12,12" />
+                <ListView.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                        <Setter Property="Margin" Value="0,0,10,10" />
+                        <Setter Property="Padding" Value="0" />
                     </Style>
-                </GridView.ItemContainerStyle>
+                </ListView.ItemContainerStyle>
+
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
 
                 <ItemsControl.ItemContainerTransitions>
                     <TransitionCollection />
                 </ItemsControl.ItemContainerTransitions>
 
-                <GridView.ItemTemplate>
+                <ListView.ItemTemplate>
                     <DataTemplate x:DataType="model:ControlItemModel">
-                        <Grid
+                        <Button
                             Width="300"
                             Height="90"
-                            Padding="8"
-                            HorizontalAlignment="Stretch"
-                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                            BorderThickness="1"
-                            CornerRadius="{StaticResource ControlCornerRadius}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                            Padding="0"
+                            HorizontalContentAlignment="Stretch"
+                            Command="{StaticResource ControlItemClickCommand}"
+                            CommandParameter="{x:Bind}">
 
-                            <Grid
-                                Grid.Column="0"
-                                Width="72"
-                                CornerRadius="{ThemeResource ControlCornerRadius}">
-                                <Image
-                                    Width="48"
+                            <Grid Margin="8,0,0,0" HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid
+                                    Grid.Column="0"
+                                    Width="72"
+                                    CornerRadius="{ThemeResource ControlCornerRadius}">
+                                    <Image
+                                        Width="48"
+                                        VerticalAlignment="Center"
+                                        AutomationProperties.Name="{x:Bind Title}"
+                                        Source="{x:Bind ImagePath}"
+                                        Stretch="Uniform" />
+                                </Grid>
+
+                                <StackPanel
+                                    Grid.Column="1"
+                                    Margin="16,0,0,0"
                                     VerticalAlignment="Center"
-                                    AutomationProperties.Name="{x:Bind Title}"
-                                    Source="{x:Bind ImagePath}"
-                                    Stretch="Uniform" />
+                                    Orientation="Vertical"
+                                    Spacing="2">
+
+                                    <TextBlock
+                                        Style="{StaticResource BodyStrongTextBlockStyle}"
+                                        Text="{x:Bind Title}"
+                                        TextLineBounds="TrimToCapHeight"
+                                        TextWrapping="NoWrap" />
+
+                                    <TextBlock
+                                        x:Name="DescriptionText"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        RelativePanel.Below="titleText"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind Description}"
+                                        TextTrimming="CharacterEllipsis">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Background="Transparent"
+                                                Content="{x:Bind Description}"
+                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
+                                                Visibility="{Binding ElementName=DescriptionText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </StackPanel>
                             </Grid>
-
-                            <StackPanel
-                                Grid.Column="1"
-                                Margin="16,0,0,0"
-                                VerticalAlignment="Center"
-                                Orientation="Vertical"
-                                Spacing="2">
-
-                                <TextBlock
-                                    Style="{StaticResource BodyStrongTextBlockStyle}"
-                                    Text="{x:Bind Title}"
-                                    TextLineBounds="TrimToCapHeight"
-                                    TextWrapping="NoWrap" />
-
-                                <TextBlock
-                                    x:Name="DescriptionText"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    RelativePanel.Below="titleText"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind Description}"
-                                    TextTrimming="CharacterEllipsis">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Background="Transparent"
-                                            Content="{x:Bind Description}"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                            Visibility="{Binding ElementName=DescriptionText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
-                            </StackPanel>
-
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="LayoutVisualStates">
-                                    <VisualState x:Name="WideLayout">
-                                        <VisualState.StateTriggers>
-                                            <AdaptiveTrigger MinWindowWidth="641" />
-                                        </VisualState.StateTriggers>
-                                        <VisualState.Setters />
-                                    </VisualState>
-                                    <VisualState x:Name="NarrowLayout">
-                                        <VisualState.StateTriggers>
-                                            <AdaptiveTrigger MinWindowWidth="0" />
-                                        </VisualState.StateTriggers>
-                                        <VisualState.Setters>
-                                            <Setter Target="controlRoot.Width" Value="Auto" />
-                                            <Setter Target="controlRoot.Height" Value="120" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                        </Grid>
+                        </Button>
                     </DataTemplate>
-                </GridView.ItemTemplate>
-            </GridView>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
     </ScrollViewer>
 </Page>

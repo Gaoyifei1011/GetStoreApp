@@ -2106,61 +2106,65 @@
                                     </controls:Expander.Header>
 
                                     <controls:Expander.Content>
-                                        <GridView
-                                            Margin="10,4,10,-4"
+                                        <ListView
+                                            Margin="16,2,10,2"
                                             ItemsSource="{x:Bind CapabilitiesCollection}"
                                             SelectionMode="None">
 
-                                            <GridView.ItemContainerStyle>
-                                                <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
-                                                    <Setter Property="Margin" Value="0" />
+                                            <ListView.ItemContainerStyle>
+                                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                                    <Setter Property="Margin" Value="0,0,2,0" />
                                                     <Setter Property="MinHeight" Value="0" />
+                                                    <Setter Property="Padding" Value="0,0,0,0" />
                                                 </Style>
-                                            </GridView.ItemContainerStyle>
+                                            </ListView.ItemContainerStyle>
 
-                                            <GridView.ItemTemplate>
+                                            <ListView.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <ItemsWrapGrid Orientation="Horizontal" />
+                                                </ItemsPanelTemplate>
+                                            </ListView.ItemsPanel>
+
+                                            <ListView.ItemTemplate>
                                                 <DataTemplate x:DataType="model:CapabilityModel">
-                                                    <GridViewItem
-                                                        Width="230"
+                                                    <Grid
+                                                        Width="220"
                                                         Height="30"
-                                                        HorizontalContentAlignment="Left">
+                                                        HorizontalAlignment="Left">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
 
-                                                        <Grid Margin="6,0,0,0" HorizontalAlignment="Left">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="Auto" />
-                                                                <ColumnDefinition Width="*" />
-                                                            </Grid.ColumnDefinitions>
+                                                        <FontIcon
+                                                            Grid.Column="0"
+                                                            Margin="0,0,12,0"
+                                                            FontSize="12"
+                                                            Glyph="&#xE915;" />
 
-                                                            <FontIcon
-                                                                Grid.Column="0"
-                                                                Margin="0,0,12,0"
-                                                                FontSize="12"
-                                                                Glyph="&#xE915;" />
+                                                        <TextBlock
+                                                            Grid.Column="1"
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Center"
+                                                            IsTextSelectionEnabled="True"
+                                                            Text="{x:Bind CapabilityLocalizedName}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
 
-                                                            <TextBlock
-                                                                Grid.Column="1"
-                                                                HorizontalAlignment="Left"
-                                                                VerticalAlignment="Center"
-                                                                IsTextSelectionEnabled="True"
-                                                                Text="{x:Bind CapabilityLocalizedName}"
-                                                                TextAlignment="Left"
-                                                                TextTrimming="CharacterEllipsis"
-                                                                TextWrapping="NoWrap">
-
-                                                                <ToolTipService.ToolTip>
-                                                                    <ToolTip MaxWidth="9999">
-                                                                        <StackPanel>
-                                                                            <TextBlock Text="{x:Bind CapabilityLocalizedName}" />
-                                                                            <TextBlock Text="{x:Bind CapabilityName}" />
-                                                                        </StackPanel>
-                                                                    </ToolTip>
-                                                                </ToolTipService.ToolTip>
-                                                            </TextBlock>
-                                                        </Grid>
-                                                    </GridViewItem>
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip MaxWidth="9999">
+                                                                    <StackPanel>
+                                                                        <TextBlock Text="{x:Bind CapabilityLocalizedName}" />
+                                                                        <TextBlock Text="{x:Bind CapabilityName}" />
+                                                                    </StackPanel>
+                                                                </ToolTip>
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+                                                    </Grid>
                                                 </DataTemplate>
-                                            </GridView.ItemTemplate>
-                                        </GridView>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
                                     </controls:Expander.Content>
                                 </controls:Expander>
 
@@ -2469,63 +2473,68 @@
                                     </controls:Expander.Header>
 
                                     <controls:Expander.Content>
-                                        <GridView
-                                            Margin="16,4,16,-4"
+                                        <ListView
+                                            Margin="16,2,10,2"
                                             ItemsSource="{x:Bind LanguageCollection}"
                                             SelectionMode="None">
 
-                                            <GridView.ItemContainerStyle>
-                                                <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
-                                                    <Setter Property="Margin" Value="0" />
+                                            <ListView.ItemContainerStyle>
+                                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                                    <Setter Property="Margin" Value="0,0,2,0" />
                                                     <Setter Property="MinHeight" Value="0" />
+                                                    <Setter Property="Padding" Value="0,0,0,0" />
                                                 </Style>
-                                            </GridView.ItemContainerStyle>
+                                            </ListView.ItemContainerStyle>
 
-                                            <GridView.ItemTemplate>
+                                            <ListView.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <ItemsWrapGrid Orientation="Horizontal" />
+                                                </ItemsPanelTemplate>
+                                            </ListView.ItemsPanel>
+
+                                            <ListView.ItemTemplate>
                                                 <DataTemplate x:DataType="globalization:Language">
-                                                    <GridViewItem
-                                                        Width="230"
+                                                    <Grid
+                                                        Width="220"
                                                         Height="30"
-                                                        HorizontalContentAlignment="Left">
-                                                        <Grid HorizontalAlignment="Left">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="Auto" />
-                                                                <ColumnDefinition Width="*" />
-                                                            </Grid.ColumnDefinitions>
+                                                        HorizontalAlignment="Left">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
 
-                                                            <FontIcon
-                                                                Grid.Column="0"
-                                                                Margin="0,0,12,0"
-                                                                FontSize="12"
-                                                                Glyph="&#xE915;" />
+                                                        <FontIcon
+                                                            Grid.Column="0"
+                                                            Margin="0,0,12,0"
+                                                            FontSize="12"
+                                                            Glyph="&#xE915;" />
 
-                                                            <TextBlock
-                                                                Grid.Column="1"
-                                                                HorizontalAlignment="Left"
-                                                                VerticalAlignment="Center"
-                                                                IsTextSelectionEnabled="True"
-                                                                Text="{x:Bind DisplayName}"
-                                                                TextAlignment="Left"
-                                                                TextTrimming="CharacterEllipsis"
-                                                                TextWrapping="NoWrap">
+                                                        <TextBlock
+                                                            Grid.Column="1"
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Center"
+                                                            IsTextSelectionEnabled="True"
+                                                            Text="{x:Bind DisplayName}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
 
-                                                                <ToolTipService.ToolTip>
-                                                                    <ToolTip MaxWidth="9999">
-                                                                        <ToolTip.Content>
-                                                                            <TextBlock>
-                                                                                <Run Text="{x:Bind DisplayName}" />
-                                                                                <Run Text=" - " />
-                                                                                <Run Text="{x:Bind LanguageTag}" />
-                                                                            </TextBlock>
-                                                                        </ToolTip.Content>
-                                                                    </ToolTip>
-                                                                </ToolTipService.ToolTip>
-                                                            </TextBlock>
-                                                        </Grid>
-                                                    </GridViewItem>
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip MaxWidth="9999">
+                                                                    <ToolTip.Content>
+                                                                        <TextBlock>
+                                                                            <Run Text="{x:Bind DisplayName}" />
+                                                                            <Run Text=" - " />
+                                                                            <Run Text="{x:Bind LanguageTag}" />
+                                                                        </TextBlock>
+                                                                    </ToolTip.Content>
+                                                                </ToolTip>
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+                                                    </Grid>
                                                 </DataTemplate>
-                                            </GridView.ItemTemplate>
-                                        </GridView>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
                                     </controls:Expander.Content>
                                 </controls:Expander>
                             </StackPanel>

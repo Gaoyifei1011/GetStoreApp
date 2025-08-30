@@ -80,11 +80,25 @@
             </Grid>
 
             <!--  快捷操作栏  -->
-            <GridView
+            <ListView
                 Grid.Row="1"
                 Padding="0"
                 SelectionMode="None">
-                <GridViewItem>
+
+                <ListView.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                        <Setter Property="Margin" Value="0,0,4,4" />
+                        <Setter Property="Padding" Value="0,0,0,0" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListViewItem>
                     <Button
                         Width="240"
                         Height="60"
@@ -113,9 +127,9 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ProjectHomePage')}" />
                         </Grid>
                     </Button>
-                </GridViewItem>
+                </ListViewItem>
 
-                <GridViewItem>
+                <ListViewItem>
                     <Button
                         Width="240"
                         Height="60"
@@ -144,9 +158,9 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/SendFeedback')}" />
                         </Grid>
                     </Button>
-                </GridViewItem>
+                </ListViewItem>
 
-                <GridViewItem>
+                <ListViewItem>
                     <Button
                         Width="240"
                         Height="60"
@@ -181,9 +195,9 @@
                                 Visibility="{x:Bind IsChecking, Mode=OneWay}" />
                         </Grid>
                     </Button>
-                </GridViewItem>
+                </ListViewItem>
 
-                <GridViewItem>
+                <ListViewItem>
                     <Button
                         Width="240"
                         Height="60"
@@ -212,9 +226,9 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/HelpTranslate')}" />
                         </Grid>
                     </Button>
-                </GridViewItem>
+                </ListViewItem>
 
-                <GridViewItem>
+                <ListViewItem>
                     <Button
                         Width="240"
                         Height="60"
@@ -243,9 +257,9 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ShowLicense')}" />
                         </Grid>
                     </Button>
-                </GridViewItem>
+                </ListViewItem>
 
-                <GridViewItem>
+                <ListViewItem>
                     <Button
                         Width="240"
                         Height="60"
@@ -274,9 +288,9 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ShowReleaseNotes')}" />
                         </Grid>
                     </Button>
-                </GridViewItem>
+                </ListViewItem>
 
-                <GridViewItem>
+                <ListViewItem>
                     <Button
                         Width="240"
                         Height="60"
@@ -305,9 +319,9 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/AppInformation')}" />
                         </Grid>
                     </Button>
-                </GridViewItem>
+                </ListViewItem>
 
-                <GridViewItem>
+                <ListViewItem>
                     <Button
                         Width="240"
                         Height="60"
@@ -336,8 +350,8 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/SystemInformation')}" />
                         </Grid>
                     </Button>
-                </GridViewItem>
-            </GridView>
+                </ListViewItem>
+            </ListView>
 
             <!--  应用简介信息  -->
             <Expander
@@ -440,7 +454,7 @@
                 </Expander.Header>
 
                 <Expander.Content>
-                    <GridView
+                    <ListView
                         Margin="26,0,16,0"
                         Padding="5"
                         HorizontalAlignment="Stretch"
@@ -448,20 +462,26 @@
                         ItemsSource="{x:Bind ReferenceList}"
                         SelectionMode="None">
 
-                        <GridView.ItemContainerStyle>
-                            <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
+                        <ListView.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
                                 <Setter Property="Background" Value="Transparent" />
-                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="Margin" Value="0,0,2,2" />
                                 <Setter Property="MinHeight" Value="0" />
                                 <Setter Property="Padding" Value="0" />
                             </Style>
-                        </GridView.ItemContainerStyle>
+                        </ListView.ItemContainerStyle>
+
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsWrapGrid Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
 
                         <ItemsControl.ItemContainerTransitions>
                             <TransitionCollection />
                         </ItemsControl.ItemContainerTransitions>
 
-                        <GridView.ItemTemplate>
+                        <ListView.ItemTemplate>
                             <DataTemplate x:DataType="text:ContentLinkInfo">
                                 <TextBlock
                                     Width="320"
@@ -491,8 +511,8 @@
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
                             </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Expander.Content>
             </Expander>
 
@@ -523,7 +543,7 @@
 
                         <MenuFlyoutSeparator />
 
-                        <GridView
+                        <ListView
                             Margin="26,0,16,0"
                             Padding="5"
                             HorizontalAlignment="Stretch"
@@ -531,20 +551,26 @@
                             ItemsSource="{x:Bind ThanksList}"
                             SelectionMode="None">
 
-                            <GridView.ItemContainerStyle>
-                                <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
+                            <ListView.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
                                     <Setter Property="Background" Value="Transparent" />
-                                    <Setter Property="Margin" Value="0" />
+                                    <Setter Property="Margin" Value="0,0,2,2" />
                                     <Setter Property="MinHeight" Value="0" />
                                     <Setter Property="Padding" Value="0" />
                                 </Style>
-                            </GridView.ItemContainerStyle>
+                            </ListView.ItemContainerStyle>
+
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
 
                             <ItemsControl.ItemContainerTransitions>
                                 <TransitionCollection />
                             </ItemsControl.ItemContainerTransitions>
 
-                            <GridView.ItemTemplate>
+                            <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="text:ContentLinkInfo">
                                     <TextBlock
                                         Width="150"
@@ -574,8 +600,8 @@
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
                                 </DataTemplate>
-                            </GridView.ItemTemplate>
-                        </GridView>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </StackPanel>
                 </Expander.Content>
             </Expander>
