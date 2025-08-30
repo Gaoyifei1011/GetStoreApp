@@ -103,7 +103,7 @@
 
                     <ToggleSwitch
                         MinWidth="0"
-                        Margin="10,-2,-10,0"
+                        Margin="10,0,-10,-2"
                         IsEnabled="{x:Bind NotificationEnabled, Mode=OneWay}"
                         IsOn="{x:Bind NotificationValue, Mode=OneWay}"
                         OffContent=""
@@ -286,7 +286,7 @@
 
                     <ToggleSwitch
                         MinWidth="0"
-                        Margin="10,-2,-10,0"
+                        Margin="10,0,-10,-2"
                         IsOn="{x:Bind ShellMenuValue, Mode=OneWay}"
                         OffContent=""
                         OnContent=""

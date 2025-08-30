@@ -225,7 +225,7 @@
 
                             <ToggleSwitch
                                 MinWidth="0"
-                                Margin="10,-2,-10,0"
+                                Margin="10,0,-10,-2"
                                 IsEnabled="{x:Bind IsSaving.Equals(x:False), Mode=OneWay}"
                                 IsOn="{x:Bind Explicit, Mode=OneWay}"
                                 OffContent=""

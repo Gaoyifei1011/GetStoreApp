@@ -153,7 +153,7 @@
 
                             <ToggleSwitch
                                 MinWidth="0"
-                                Margin="10,-2,-10,0"
+                                Margin="10,0,-10,-2"
                                 IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
                                 OffContent=""
                                 OnContent=""
@@ -528,7 +528,7 @@
 
                             <ToggleSwitch
                                 MinWidth="0"
-                                Margin="10,-2,-10,0"
+                                Margin="10,0,-10,-2"
                                 IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
                                 OffContent=""
                                 OnContent=""
@@ -576,7 +576,7 @@
 
                             <ToggleSwitch
                                 MinWidth="0"
-                                Margin="10,-2,-10,0"
+                                Margin="10,0,-10,-2"
                                 IsOn="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}"
                                 OffContent=""
                                 OnContent=""
@@ -624,7 +624,7 @@
 
                             <ToggleSwitch
                                 MinWidth="0"
-                                Margin="10,-2,-10,0"
+                                Margin="10,0,-10,-2"
                                 IsOn="{x:Bind AllowUpgradeToUnknownVersion, Mode=OneWay}"
                                 OffContent=""
                                 OnContent=""
@@ -672,7 +672,7 @@
 
                             <ToggleSwitch
                                 MinWidth="0"
-                                Margin="10,-2,-10,0"
+                                Margin="10,0,-10,-2"
                                 IsOn="{x:Bind Force, Mode=OneWay}"
                                 OffContent=""
                                 OnContent=""
@@ -1076,7 +1076,7 @@
 
                             <ToggleSwitch
                                 MinWidth="0"
-                                Margin="10,-2,-10,0"
+                                Margin="10,0,-10,-2"
                                 IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
                                 OffContent=""
                                 OnContent=""
@@ -1124,7 +1124,7 @@
 
                             <ToggleSwitch
                                 MinWidth="0"
-                                Margin="10,-2,-10,0"
+                                Margin="10,0,-10,-2"
                                 IsOn="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}"
                                 OffContent=""
                                 OnContent=""
@@ -1172,7 +1172,7 @@
 
                             <ToggleSwitch
                                 MinWidth="0"
-                                Margin="10,-2,-10,0"
+                                Margin="10,0,-10,-2"
                                 IsOn="{x:Bind Force, Mode=OneWay}"
                                 OffContent=""
                                 OnContent=""
@@ -1436,7 +1436,7 @@
 
                             <ToggleSwitch
                                 MinWidth="0"
-                                Margin="10,-2,-10,0"
+                                Margin="10,0,-10,-2"
                                 IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
                                 OffContent=""
                                 OnContent=""
@@ -1484,7 +1484,7 @@
 
                             <ToggleSwitch
                                 MinWidth="0"
-                                Margin="10,-2,-10,0"
+                                Margin="10,0,-10,-2"
                                 IsOn="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}"
                                 OffContent=""
                                 OnContent=""
@@ -1532,7 +1532,7 @@
 
                             <ToggleSwitch
                                 MinWidth="0"
-                                Margin="10,-2,-10,0"
+                                Margin="10,0,-10,-2"
                                 IsOn="{x:Bind AllowUpgradeToUnknownVersion, Mode=OneWay}"
                                 OffContent=""
                                 OnContent=""
@@ -1580,7 +1580,7 @@
 
                             <ToggleSwitch
                                 MinWidth="0"
-                                Margin="10,-2,-10,0"
+                                Margin="10,0,-10,-2"
                                 IsOn="{x:Bind Force, Mode=OneWay}"
                                 OffContent=""
                                 OnContent=""
