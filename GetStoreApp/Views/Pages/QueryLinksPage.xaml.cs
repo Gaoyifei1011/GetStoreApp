@@ -497,43 +497,29 @@ namespace GetStoreApp.Views.Pages
                             DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
                         }
 
-                        bool isExisted = false;
                         string downloadFilePath = Path.Combine(downloadFolder, queryLinks.FileName);
 
-                        // 检查下载文件信息是否已存在
-                        foreach (DownloadSchedulerModel downloadSchedulerItem in downloadSchedulerList)
+                        try
                         {
-                            if (string.Equals(downloadFilePath, downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
+                            // 检查下载目录是否存在
+                            if (!Directory.Exists(downloadFolder))
                             {
-                                isExisted = true;
-                                break;
+                                Directory.CreateDirectory(downloadFolder);
+                            }
+
+                            // 检查是否已有重复文件，如果有，保存文件名重复，追加(1)(2)......
+                            if (File.Exists(downloadFilePath))
+                            {
+                                downloadFilePath = RenameDuplicatedFile(downloadFilePath);
                             }
                         }
-
-                        if (!isExisted)
+                        catch (Exception e)
                         {
-                            try
-                            {
-                                // 检查下载目录是否存在
-                                if (!Directory.Exists(downloadFolder))
-                                {
-                                    Directory.CreateDirectory(downloadFolder);
-                                }
-
-                                // 检查是否已有重复文件，如果有，直接删除
-                                if (File.Exists(downloadFilePath))
-                                {
-                                    File.Delete(downloadFilePath);
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadExecuteRequested), 2, e);
-                            }
-
-                            DownloadSchedulerService.CreateDownload(queryLinks.FileLink, downloadFilePath);
-                            isDownloadSuccessfully = true;
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadExecuteRequested), 2, e);
                         }
+
+                        DownloadSchedulerService.CreateDownload(queryLinks.FileLink, downloadFilePath);
+                        isDownloadSuccessfully = true;
                     });
 
                     // 显示下载任务创建成功消息
@@ -990,42 +976,32 @@ namespace GetStoreApp.Views.Pages
 
                         foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
                         {
-                            bool isExisted = false;
                             string downloadFilePath = Path.Combine(downloadFolder, queryLinksItem.FileName);
 
-                            // 检查下载文件是否已存在
-                            foreach (DownloadSchedulerModel downloadSchedulerItem in downloadSchedulerList)
+                            try
                             {
-                                if (string.Equals(downloadFilePath, downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
+                                // 检查下载目录是否存在
+                                if (!Directory.Exists(downloadFolder))
                                 {
-                                    isExisted = true;
-                                    break;
+                                    Directory.CreateDirectory(downloadFolder);
+                                }
+
+                                // 检查是否已有重复文件，如果有，保存文件名重复，追加(1)(2)......
+                                if (File.Exists(downloadFilePath))
+                                {
+                                    downloadFilePath = RenameDuplicatedFile(downloadFilePath);
                                 }
                             }
-
-                            if (!isExisted)
+                            catch (Exception e)
                             {
-                                try
-                                {
-                                    // 检查下载目录是否存在
-                                    if (!Directory.Exists(downloadFolder))
-                                    {
-                                        Directory.CreateDirectory(downloadFolder);
-                                    }
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadSelectedClicked), 3, e);
+                                continue;
+                            }
 
-                                    // 检查是否已有重复文件，如果有，直接删除
-                                    if (File.Exists(downloadFilePath))
-                                    {
-                                        File.Delete(downloadFilePath);
-                                    }
-                                }
-                                catch (Exception e)
-                                {
-                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksPage), nameof(OnDownloadSelectedClicked), 3, e);
-                                    continue;
-                                }
+                            DownloadSchedulerService.CreateDownload(queryLinksItem.FileLink, downloadFilePath);
 
-                                DownloadSchedulerService.CreateDownload(queryLinksItem.FileLink, downloadFilePath);
+                            if (!isDownloadSuccessfully)
+                            {
                                 isDownloadSuccessfully = true;
                             }
                         }
@@ -1471,6 +1447,27 @@ namespace GetStoreApp.Views.Pages
         private bool CheckQueryLinksState(bool isQueryingLinks, bool isSelectMode)
         {
             return !(isQueryingLinks || isSelectMode);
+        }
+
+        /// <summary>
+        /// 重命名重复文件
+        /// </summary>
+        private string RenameDuplicatedFile(string filePath)
+        {
+            string directory = Path.GetDirectoryName(filePath);
+            string filename = Path.GetFileNameWithoutExtension(filePath);
+            string extension = Path.GetExtension(filePath);
+            int counter = 1;
+            string newFilename = string.Format("{0}{1}", filename, extension);
+            string newFullPath = Path.Combine(directory, newFilename);
+            while (File.Exists(newFullPath))
+            {
+                newFilename = string.Format("{0}({1}){2}", filename, counter, extension);
+                newFullPath = Path.Combine(directory, newFilename);
+                counter++;
+            }
+            filePath = newFullPath;
+            return filePath;
         }
     }
 }
