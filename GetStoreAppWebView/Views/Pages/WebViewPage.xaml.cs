@@ -178,21 +178,21 @@ namespace GetStoreAppWebView.Views.Pages
             if (ApiInformation.IsMethodPresent(typeof(Compositor).FullName, nameof(Compositor.TryCreateBlurredWallpaperBackdropBrush)))
             {
                 EnableBackdropMaterial = true;
-                VisualStateManager.GoToState(WebViewPageRoot, "MicaBackdrop", false);
+                VisualStateManager.GoToState(WebViewRoot, "MicaBackdrop", false);
             }
             else
             {
                 EnableBackdropMaterial = false;
-                VisualStateManager.GoToState(WebViewPageRoot, "DesktopAcrylicBackdrop", false);
+                VisualStateManager.GoToState(WebViewRoot, "DesktopAcrylicBackdrop", false);
             }
 
             if (Window.Current.CoreWindow.ActivationMode is CoreWindowActivationMode.ActivatedInForeground)
             {
-                VisualStateManager.GoToState(WebViewPageRoot, "TitleBarActivated", false);
+                VisualStateManager.GoToState(WebViewRoot, "TitleBarActivated", false);
             }
             else if (Window.Current.CoreWindow.ActivationMode is CoreWindowActivationMode.Deactivated)
             {
-                VisualStateManager.GoToState(WebViewPageRoot, "TitleBarDeactivated", false);
+                VisualStateManager.GoToState(WebViewRoot, "TitleBarDeactivated", false);
             }
 
             windowPositionChangedEventHandler = new EventHandler(OnWindowPositionChanged);
@@ -209,11 +209,11 @@ namespace GetStoreAppWebView.Views.Pages
         {
             if (args.WindowActivationState is CoreWindowActivationState.PointerActivated || args.WindowActivationState is CoreWindowActivationState.CodeActivated)
             {
-                VisualStateManager.GoToState(WebViewPageRoot, "TitleBarActivated", false);
+                VisualStateManager.GoToState(WebViewRoot, "TitleBarActivated", false);
             }
             else if (args.WindowActivationState is CoreWindowActivationState.Deactivated)
             {
-                VisualStateManager.GoToState(WebViewPageRoot, "TitleBarDeactivated", false);
+                VisualStateManager.GoToState(WebViewRoot, "TitleBarDeactivated", false);
             }
         }
 

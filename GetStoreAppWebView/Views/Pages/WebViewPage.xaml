@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rootservice="using:GetStoreAppWebView.Services.Root"
     xmlns:settingsservice="using:GetStoreAppWebView.Services.Settings"
-    x:Name="WebViewPageRoot"
+    x:Name="WebViewRoot"
     controls:BackdropMaterial.ApplyToRootOrPageBackground="{x:Bind EnableBackdropMaterial, Mode=OneWay}"
     ActualThemeChanged="{x:Bind OnActualThemeChanged}"
     FlowDirection="{x:Bind settingsservice:LanguageService.FlowDirection}"
@@ -252,12 +252,12 @@
             <VisualStateGroup>
                 <VisualState x:Name="MicaBackdrop">
                     <VisualState.Setters>
-                        <Setter Target="WebViewPageRoot.Background" Value="Transparent" />
+                        <Setter Target="WebViewRoot.Background" Value="Transparent" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="DesktopAcrylicBackdrop">
                     <VisualState.Setters>
-                        <Setter Target="WebViewPageRoot.Background" Value="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
+                        <Setter Target="WebViewRoot.Background" Value="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

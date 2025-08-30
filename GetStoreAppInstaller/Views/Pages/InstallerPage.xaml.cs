@@ -1122,12 +1122,12 @@ namespace GetStoreAppInstaller.Views.Pages
             if (ApiInformation.IsMethodPresent(typeof(Compositor).FullName, nameof(Compositor.TryCreateBlurredWallpaperBackdropBrush)))
             {
                 EnableBackdropMaterial = true;
-                VisualStateManager.GoToState(MainPageRoot, "MicaBackdrop", false);
+                VisualStateManager.GoToState(MainRoot, "MicaBackdrop", false);
             }
             else
             {
                 EnableBackdropMaterial = false;
-                VisualStateManager.GoToState(MainPageRoot, "DesktopAcrylicBackdrop", false);
+                VisualStateManager.GoToState(MainRoot, "DesktopAcrylicBackdrop", false);
             }
 
             // 正常启动

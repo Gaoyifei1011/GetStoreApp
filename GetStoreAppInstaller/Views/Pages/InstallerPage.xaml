@@ -13,7 +13,7 @@
     xmlns:rootservice="using:GetStoreAppInstaller.Services.Root"
     xmlns:settingsservice="using:GetStoreAppInstaller.Services.Settings"
     xmlns:system="using:System"
-    x:Name="MainPageRoot"
+    x:Name="MainRoot"
     controls:BackdropMaterial.ApplyToRootOrPageBackground="{x:Bind EnableBackdropMaterial, Mode=OneWay}"
     ActualThemeChanged="{x:Bind OnActualThemeChanged}"
     AllowDrop="{x:Bind CanDragFile, Mode=OneWay}"
@@ -385,7 +385,7 @@
                                                     </Style>
                                                 </Flyout.FlyoutPresenterStyle>
 
-                                                <Grid DataContext="{x:Bind MainPageRoot}">
+                                                <Grid DataContext="{x:Bind MainRoot}">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="40" />
                                                         <RowDefinition Height="*" />
@@ -2572,12 +2572,12 @@
             <VisualStateGroup>
                 <VisualState x:Name="MicaBackdrop">
                     <VisualState.Setters>
-                        <Setter Target="MainPageRoot.Background" Value="Transparent" />
+                        <Setter Target="MainRoot.Background" Value="Transparent" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="DesktopAcrylicBackdrop">
                     <VisualState.Setters>
-                        <Setter Target="MainPageRoot.Background" Value="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
+                        <Setter Target="MainRoot.Background" Value="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
