@@ -44,7 +44,6 @@ namespace GetStoreApp.Services.Settings
         public static void SetAlwaysShowBackdropValue(bool alwaysShowBackdropValue)
         {
             AlwaysShowBackdropValue = alwaysShowBackdropValue;
-
             LocalSettingsService.SaveSetting(settingsKey, alwaysShowBackdropValue);
         }
     }

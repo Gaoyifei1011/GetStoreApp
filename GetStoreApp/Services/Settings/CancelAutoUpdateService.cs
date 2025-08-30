@@ -62,7 +62,6 @@ namespace GetStoreApp.Services.Settings
         public static void SetCancelAutoUpdateValue(bool cancelAutoUpdateValue)
         {
             CancelAutoUpdateValue = cancelAutoUpdateValue;
-
             LocalSettingsService.SaveSetting(settingsKey, cancelAutoUpdateValue);
         }
     }

@@ -86,7 +86,6 @@ namespace GetStoreApp.Services.Settings
         public static void SetAllowUnsignedPackageValue(bool allowUnsignedPackageValue)
         {
             AllowUnsignedPackageValue = allowUnsignedPackageValue;
-
             LocalSettingsService.SaveSetting(allowUnsignedPackageKey, allowUnsignedPackageValue);
         }
 
@@ -96,7 +95,6 @@ namespace GetStoreApp.Services.Settings
         public static void SetForceAppShutdownValue(bool forceAppShutdownValue)
         {
             ForceAppShutdownValue = forceAppShutdownValue;
-
             LocalSettingsService.SaveSetting(forceAppShutdownKey, forceAppShutdownValue);
         }
 

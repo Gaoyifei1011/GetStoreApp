@@ -130,7 +130,6 @@ namespace GetStoreApp.Services.Settings
         public static void SetRegion(GeographicRegion region)
         {
             StoreRegion = region;
-
             LocalSettingsService.SaveSetting(storeRegionKey, region.CodeTwoLetter);
         }
 

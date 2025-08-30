@@ -64,7 +64,6 @@ namespace GetStoreApp.Services.Settings
         public static void SetEncryptedPackageFilterValue(bool encryptedPackageFilterValue)
         {
             EncryptedPackageFilterValue = encryptedPackageFilterValue;
-
             LocalSettingsService.SaveSetting(encryptedPackageSettingsKey, encryptedPackageFilterValue);
         }
 
@@ -74,7 +73,6 @@ namespace GetStoreApp.Services.Settings
         public static void SetBlockMapFilterValue(bool blockMapFilterValue)
         {
             BlockMapFilterValue = blockMapFilterValue;
-
             LocalSettingsService.SaveSetting(blockMapSettingsKey, blockMapFilterValue);
         }
     }

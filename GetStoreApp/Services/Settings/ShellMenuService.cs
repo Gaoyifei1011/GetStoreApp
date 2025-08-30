@@ -44,7 +44,6 @@ namespace GetStoreApp.Services.Settings
         public static void SetShellMenuValue(bool shellMenuValue)
         {
             ShellMenuValue = shellMenuValue;
-
             LocalSettingsService.SaveSetting(settingsKey, shellMenuValue);
         }
     }

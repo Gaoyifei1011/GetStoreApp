@@ -66,7 +66,6 @@ namespace GetStoreApp.Services.Settings
         public static void SetNotification(bool appNotification)
         {
             AppNotification = appNotification;
-
             LocalSettingsService.SaveSetting(settingsKey, appNotification);
         }
 
