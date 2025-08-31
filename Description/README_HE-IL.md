@@ -194,17 +194,19 @@
 
 ### תודות (ממוין לפי סדר אלפביתי)
 
-> * [AndromedaMelody](https://github.com/AndromedaMelody) 
-> * [cnbluefire](https://github.com/cnbluefire) 
-> * [driver1998](https://github.com/driver1998) 
-> * [GreenShadeZhang](https://github.com/GreenShadeZhang) 
-> * [hez2010](https://github.com/hez2010) 
-> * [飞翔](https://fionlen.azurewebsites.net) 
-> * [MouriNaruto](https://github.com/MouriNaruto) 
-> * [muhammadbahaa2001](https://github.com/muhammadbahaa2001) 
-> * [TaylorShi](https://github.com/TaylorShi) 
-> * [wherewhere](https://github.com/wherewhere) 
-> * [Y-PLONI](https://github.com/Y-PLONI) 
+> * [AndromedaMelody](https://github.com/AndromedaMelody)&emsp;
+> * [cnbluefire](https://github.com/cnbluefire)&emsp;
+> * [driver1998](https://github.com/driver1998)&emsp;
+> * [Goo-aw233](https://github.com/Goo-aw233)&emsp;
+> * [GreenShadeZhang](https://github.com/GreenShadeZhang)&emsp;
+> * [hez2010](https://github.com/hez2010)&emsp;
+> * [飞翔](https://fionlen.azurewebsites.net)&emsp;
+> * [Mahantor](https://github.com/Mahantor)&emsp;
+> * [MouriNaruto](https://github.com/MouriNaruto)&emsp;
+> * [muhammadbahaa2001](https://github.com/muhammadbahaa2001)&emsp;
+> * [TaylorShi](https://github.com/TaylorShi)&emsp;
+> * [wherewhere](https://github.com/wherewhere)&emsp;
+> * [Y-PLONI](https://github.com/Y-PLONI)&emsp;
 
 ------
 
