@@ -181,6 +181,7 @@ namespace GetStoreApp.Views.Pages
             //返回值大于 32 代表函数执行成功
             if (result > 32)
             {
+                Program.AppInstance.UnregisterKey();
                 (Application.Current as WinUIApp).Dispose();
             }
         }
