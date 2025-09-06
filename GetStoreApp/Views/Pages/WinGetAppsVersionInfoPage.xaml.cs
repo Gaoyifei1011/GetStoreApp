@@ -38,6 +38,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string LicenseLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/LicenseLink");
         private readonly string LicenseString = ResourceService.GetLocalized("WinGetAppsVersionInfo/License");
         private readonly string LocaleString = ResourceService.GetLocalized("WinGetAppsVersionInfo/Locale");
+        private readonly string NoSpecificLocaleString = ResourceService.GetLocalized("WinGetAppsVersionInfo/NoSpecificLocale");
         private readonly string PackageLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/PackageLink");
         private readonly string PrivacyLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/PrivacyLink");
         private readonly string PublisherLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/PublisherLink");
@@ -558,6 +559,8 @@ namespace GetStoreApp.Views.Pages
                 {
                     if (SearchApps is not null)
                     {
+                        bool hasDefaultVersion = false;
+
                         // 获取当前应用可用版本
                         List<AvailableVersionModel> availableVersionList = await Task.Run(() =>
                         {
@@ -575,6 +578,10 @@ namespace GetStoreApp.Views.Pages
                                     if (SearchApps.CatalogPackage.DefaultInstallVersion.CompareToVersion(packageVersionId.Version) is CompareResult.Equal)
                                     {
                                         isDefaultVersion = true;
+                                        if (!hasDefaultVersion)
+                                        {
+                                            hasDefaultVersion = true;
+                                        }
                                     }
 
                                     // 添加所有已经获取到的所有版本
@@ -582,9 +589,21 @@ namespace GetStoreApp.Views.Pages
                                     {
                                         IsDefaultVersion = isDefaultVersion,
                                         Version = packageVersionId.Version,
-                                        PackageVersionId = packageVersionId,
+                                        PackageVersionId = packageVersionId
                                     });
                                 }
+                            }
+
+                            // 没有默认版本，把默认版本添加在第一项
+                            if (!hasDefaultVersion)
+                            {
+                                availableVersionList.Insert(0, new AvailableVersionModel()
+                                {
+                                    IsDefaultVersion = true,
+                                    Version = SearchApps.CatalogPackage.DefaultInstallVersion.Version,
+                                    PackageVersionId = null,
+                                    PackageVersionInfo = SearchApps.CatalogPackage.DefaultInstallVersion
+                                });
                             }
 
                             return availableVersionList;
@@ -603,6 +622,8 @@ namespace GetStoreApp.Views.Pages
                     }
                     else if (UpgradableApps is not null)
                     {
+                        bool hasDefaultVersion = false;
+
                         // 获取当前应用可用版本
                         List<AvailableVersionModel> availableVersionList = await Task.Run(() =>
                         {
@@ -623,6 +644,10 @@ namespace GetStoreApp.Views.Pages
                                         if (UpgradableApps.CatalogPackage.DefaultInstallVersion.CompareToVersion(packageVersionId.Version) is CompareResult.Equal)
                                         {
                                             isDefaultVersion = true;
+                                            if (!hasDefaultVersion)
+                                            {
+                                                hasDefaultVersion = true;
+                                            }
                                         }
 
                                         // 添加所有已经获取到的所有版本
@@ -630,16 +655,26 @@ namespace GetStoreApp.Views.Pages
                                         {
                                             IsDefaultVersion = isDefaultVersion,
                                             Version = packageVersionId.Version,
-                                            PackageVersionId = packageVersionId,
+                                            PackageVersionId = packageVersionId
                                         });
                                     }
                                 }
                             }
 
+                            // 没有默认版本，把默认版本添加在第一项
+                            if (!hasDefaultVersion)
+                            {
+                                availableVersionList.Insert(0, new AvailableVersionModel()
+                                {
+                                    IsDefaultVersion = true,
+                                    Version = SearchApps.CatalogPackage.DefaultInstallVersion.Version,
+                                    PackageVersionId = null,
+                                    PackageVersionInfo = SearchApps.CatalogPackage.DefaultInstallVersion
+                                });
+                            }
+
                             return availableVersionList;
                         });
-
-                        bool isDefaultVersionSelected = false;
 
                         foreach (AvailableVersionModel availableVersionItem in availableVersionList)
                         {
@@ -647,16 +682,9 @@ namespace GetStoreApp.Views.Pages
 
                             if (availableVersionItem.IsDefaultVersion)
                             {
-                                isDefaultVersionSelected = true;
                                 SelectedItem = availableVersionItem;
                                 await InitializeVersionInformationAsync(availableVersionItem);
                             }
-                        }
-
-                        if (!isDefaultVersionSelected && WinGetAppsVersionCollection.Count > 0)
-                        {
-                            SelectedItem = WinGetAppsVersionCollection[0];
-                            await InitializeVersionInformationAsync(WinGetAppsVersionCollection[0]);
                         }
                     }
                 }
@@ -827,15 +855,23 @@ namespace GetStoreApp.Views.Pages
                 PackageVersionInfo packageVersionInfo = null;
                 CatalogPackageMetadata catalogPackageMetadata = null;
 
-                if (SearchApps is not null && availableVersion.PackageVersionId is not null)
+                if (SearchApps is not null)
                 {
-                    packageVersionInfo = SearchApps.CatalogPackage.GetPackageVersionInfo(availableVersion.PackageVersionId);
-                    catalogPackageMetadata = packageVersionInfo.GetCatalogPackageMetadata();
+                    packageVersionInfo = availableVersion.PackageVersionId is not null ? SearchApps.CatalogPackage.GetPackageVersionInfo(availableVersion.PackageVersionId) : availableVersion.PackageVersionInfo;
+
+                    if (packageVersionInfo is not null)
+                    {
+                        catalogPackageMetadata = packageVersionInfo.GetCatalogPackageMetadata();
+                    }
                 }
-                else if (UpgradableApps is not null && availableVersion.PackageVersionId is not null)
+                else if (UpgradableApps is not null)
                 {
-                    packageVersionInfo = UpgradableApps.CatalogPackage.GetPackageVersionInfo(availableVersion.PackageVersionId);
-                    catalogPackageMetadata = packageVersionInfo.GetCatalogPackageMetadata();
+                    packageVersionInfo = availableVersion.PackageVersionId is not null ? SearchApps.CatalogPackage.GetPackageVersionInfo(availableVersion.PackageVersionId) : availableVersion.PackageVersionInfo;
+
+                    if (packageVersionInfo is not null)
+                    {
+                        catalogPackageMetadata = packageVersionInfo.GetCatalogPackageMetadata();
+                    }
                 }
 
                 return ValueTuple.Create(packageVersionInfo, catalogPackageMetadata);
@@ -845,7 +881,6 @@ namespace GetStoreApp.Views.Pages
             {
                 DisplayName = string.IsNullOrEmpty(catalogPackageMetadata.PackageName) ? UnknownString : catalogPackageMetadata.PackageName;
                 Description = string.IsNullOrEmpty(catalogPackageMetadata.Description) ? UnknownString : catalogPackageMetadata.Description;
-
                 Version = string.IsNullOrEmpty(packageVersionInfo.Version) ? UnknownString : packageVersionInfo.Version;
                 if (Uri.TryCreate(catalogPackageMetadata.PackageUrl, new UriCreationOptions(), out Uri packageLinkUri))
                 {
@@ -887,7 +922,15 @@ namespace GetStoreApp.Views.Pages
                 {
                     try
                     {
-                        Locale = new CultureInfo(catalogPackageMetadata.Locale).DisplayName;
+                        // 无特定区域
+                        if (catalogPackageMetadata.Locale.Contains("Neutral", StringComparison.OrdinalIgnoreCase))
+                        {
+                            Locale = NoSpecificLocaleString;
+                        }
+                        else
+                        {
+                            Locale = new CultureInfo(catalogPackageMetadata.Locale).DisplayName;
+                        }
                     }
                     catch (Exception e)
                     {
@@ -964,6 +1007,36 @@ namespace GetStoreApp.Views.Pages
                         DocumentionCollection.Add(new ContentLinkInfo() { DisplayText = documentation.DocumentLabel, Uri = documentUrlUri });
                     }
                 }
+            }
+            else
+            {
+                DisplayName = UnknownString;
+                Description = UnknownString;
+                Version = UnknownString;
+                PackageLink = null;
+                IsPackageLinkExisted = false;
+                Author = UnknownString;
+                Publisher = UnknownString;
+                PublisherLink = null;
+                IsPublisherLinkExisted = false;
+                PublisherSupportLink = null;
+                IsPublisherLinkExisted = false;
+                Locale = UnknownString;
+                CopyRight = UnknownString;
+                CopyRightLink = null;
+                IsCopyRightLinkExisted = false;
+                License = UnknownString;
+                LicenseLink = null;
+                IsLicenseLinkExisted = false;
+                PrivacyLink = null;
+                IsPrivacyLinkExisted = false;
+                PurchaseLink = null;
+                IsPrivacyLinkExisted = false;
+                ReleaseNotes = UnknownString;
+                ReleaseNotesLink = null;
+                IsReleaseNotesLinkExisted = false;
+                TagCollection.Clear();
+                DocumentionCollection.Clear();
             }
         }
 

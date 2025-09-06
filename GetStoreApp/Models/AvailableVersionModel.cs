@@ -21,5 +21,10 @@ namespace GetStoreApp.Models
         /// 版本所有信息
         /// </summary>
         public PackageVersionId PackageVersionId { get; set; }
+
+        /// <summary>
+        /// 仅当 PackageVersionId 为空时，使用默认安装版本信息
+        /// </summary>
+        public PackageVersionInfo PackageVersionInfo { get; set; }
     }
 }

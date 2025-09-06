@@ -555,12 +555,16 @@
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsReleaseNotesLinkExisted), Mode=OneWay}" />
                         </Grid>
 
-                        <MenuFlyoutSeparator Grid.Row="4" Margin="2,10" />
+                        <MenuFlyoutSeparator
+                            Grid.Row="4"
+                            Margin="2,10"
+                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(TagCollection.Count), Mode=OneWay}" />
 
                         <ListView
                             Grid.Row="5"
                             ItemsSource="{x:Bind TagCollection}"
-                            SelectionMode="None">
+                            SelectionMode="None"
+                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(TagCollection.Count), Mode=OneWay}">
 
                             <ListView.ItemContainerStyle>
                                 <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
