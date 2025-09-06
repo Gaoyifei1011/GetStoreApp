@@ -483,33 +483,37 @@
 
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="text:ContentLinkInfo">
-                                <TextBlock
+                                <StackPanel
                                     Width="320"
                                     Padding="0,8"
-                                    HorizontalAlignment="Center"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                                    HorizontalAlignment="Left"
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
 
-                                    <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
-                                        <Run Text="{x:Bind DisplayText}" />
-                                    </Hyperlink>
+                                        <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
+                                            <Run Text="{x:Bind DisplayText}" />
+                                        </Hyperlink>
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Background="Transparent"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Background="Transparent"
+                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
 
-                                            <StackPanel>
-                                                <TextBlock>
-                                                    <Run Text="{x:Bind DisplayText}" />
-                                                    <LineBreak />
-                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ReferenceToolTip')}" />
-                                                </TextBlock>
-                                            </StackPanel>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                                <StackPanel>
+                                                    <TextBlock>
+                                                        <Run Text="{x:Bind DisplayText}" />
+                                                        <LineBreak />
+                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ReferenceToolTip')}" />
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
@@ -572,33 +576,37 @@
 
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="text:ContentLinkInfo">
-                                    <TextBlock
+                                    <StackPanel
                                         Width="150"
                                         Padding="0,8"
-                                        HorizontalAlignment="Center"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
+                                        HorizontalAlignment="Left"
+                                        Orientation="Horizontal">
+                                        <TextBlock
+                                            HorizontalAlignment="Left"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
 
-                                        <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
-                                            <Run Text="{x:Bind DisplayText}" />
-                                        </Hyperlink>
+                                            <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
+                                                <Run Text="{x:Bind DisplayText}" />
+                                            </Hyperlink>
 
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                MaxWidth="9999"
-                                                Background="Transparent"
-                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    MaxWidth="9999"
+                                                    Background="Transparent"
+                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
 
-                                                <StackPanel>
-                                                    <TextBlock>
-                                                        <Run Text="{x:Bind DisplayText}" />
-                                                        <LineBreak />
-                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ThanksToolTip')}" />
-                                                    </TextBlock>
-                                                </StackPanel>
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
+                                                    <StackPanel>
+                                                        <TextBlock>
+                                                            <Run Text="{x:Bind DisplayText}" />
+                                                            <LineBreak />
+                                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ThanksToolTip')}" />
+                                                        </TextBlock>
+                                                    </StackPanel>
+                                                </ToolTip>
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
+                                    </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
