@@ -37,7 +37,7 @@
     <WindowsAppSDKBackgroundTask>false</WindowsAppSDKBackgroundTask>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>
-    <WindowsSdkPackageVersion>10.0.26100.71</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.75</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 

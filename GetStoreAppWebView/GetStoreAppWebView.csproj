@@ -35,7 +35,7 @@
     <WebView2NeverCopyLoaderDllToOutputDirectory>true</WebView2NeverCopyLoaderDllToOutputDirectory>
     <WebView2EnableCsWinRTProjection>true</WebView2EnableCsWinRTProjection>
     <Win32Resource>GetStoreAppWebView.res</Win32Resource>
-    <WindowsSdkPackageVersion>10.0.26100.71</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.75</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 

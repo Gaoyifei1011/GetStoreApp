@@ -34,7 +34,7 @@
     <UseUwp>true</UseUwp>
     <Win32Resource>GetStoreAppInstaller.res</Win32Resource>
     <WindowsAppSDKBackgroundTask>false</WindowsAppSDKBackgroundTask>
-    <WindowsSdkPackageVersion>10.0.26100.71</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.75</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 
