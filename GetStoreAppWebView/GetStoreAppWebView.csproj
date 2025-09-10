@@ -4,7 +4,6 @@
     <AnalysisLevel>latest</AnalysisLevel>
     <AssemblyName>GetStoreAppWebView</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
-    <CompileProcessorArchitecture>X64</CompileProcessorArchitecture>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
     <DefaultLanguage>en-US</DefaultLanguage>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>

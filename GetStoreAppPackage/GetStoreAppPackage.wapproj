@@ -78,8 +78,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <Content Include="$(ProjectDir)\Microsoft.Windows.Storage.Pickers.dll" CopyToOutputDirectory="Always" />
-    <Content Include="$(ProjectDir)\Microsoft.WindowsAppRuntime.pri" CopyToOutputDirectory="Always" />
     <None Include="GetStoreAppPackage_SignKey.pfx" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4948" />
     <ProjectReference Include="..\GetStoreApp\GetStoreApp.csproj" />
@@ -101,7 +99,6 @@
     </ItemGroup>
   </Target>
   <Target Name="CopyFilesToTargetDir" BeforeTargets="BeforeBuild">
-    <Copy SourceFiles="$(ProjectDir)\Platforms\$(Platform)\Microsoft.Windows.Storage.Pickers.dll" DestinationFolder="$(ProjectDir)" />
     <Copy SourceFiles="$(ProjectDir)\Platforms\$(Platform)\Microsoft.WindowsAppRuntime.pri" DestinationFolder="$(ProjectDir)" />
   </Target>
   <!--

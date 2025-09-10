@@ -186,15 +186,6 @@
         <desktop2:Rule Direction="in" IPProtocol="UDP" Profile="all" />
       </desktop2:FirewallRules>
     </desktop2:Extension>
-
-    <Extension Category="windows.activatableClass.inProcessServer">
-      <InProcessServer>
-        <Path>Microsoft.Windows.Storage.Pickers.dll</Path>
-        <ActivatableClass ActivatableClassId="Microsoft.Windows.Storage.Pickers.FileOpenPicker" ThreadingModel="both" />
-        <ActivatableClass ActivatableClassId="Microsoft.Windows.Storage.Pickers.FileSavePicker" ThreadingModel="both" />
-        <ActivatableClass ActivatableClassId="Microsoft.Windows.Storage.Pickers.FolderPicker" ThreadingModel="both" />
-      </InProcessServer>
-    </Extension>
   </Extensions>
   <Capabilities>
     <Capability Name="internetClient" />
