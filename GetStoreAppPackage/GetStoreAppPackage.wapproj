@@ -98,9 +98,6 @@
       </_FilteredNonWapProjProjectOutput>
     </ItemGroup>
   </Target>
-  <Target Name="CopyFilesToTargetDir" BeforeTargets="BeforeBuild">
-    <Copy SourceFiles="$(ProjectDir)\Platforms\$(Platform)\Microsoft.WindowsAppRuntime.pri" DestinationFolder="$(ProjectDir)" />
-  </Target>
   <!--
     Workaround for bug https://devdiv.visualstudio.com/DevDiv/_workitems/edit/1149545
 
