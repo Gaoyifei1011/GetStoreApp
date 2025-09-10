@@ -1,0 +1,60 @@
+<Solution>
+  <Configurations>
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/解决方案项/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+    <Project Path="signtool.exe">
+      <BuildType Project="Release" />
+      <Properties Name="DebuggerProjectSystem">
+        <Property Name="AttachLaunchAction" Value="No" />
+        <Property Name="Environment" Value="默认值" />
+        <Property Name="Executable" Value="D:\Github\GetStoreApp\signtool.exe" />
+        <Property Name="IORedirection" Value="Auto" />
+        <Property Name="LaunchingEngine" Value="00000000-0000-0000-0000-000000000000" />
+        <Property Name="LaunchSQLEngine" Value="No" />
+        <Property Name="PortSupplier" Value="00000000-0000-0000-0000-000000000000" />
+        <Property Name="RemoteMachine" Value="DESKTOP-D7B6T3H" />
+        <Property Name="StartingDirectory" Value="D:\Github\GetStoreApp" />
+        <Property Name="UseLegacyDebugEngines" Value="No" />
+      </Properties>
+    </Project>
+  </Folder>
+  <Folder Name="/解决方案项/Description/">
+    <File Path="Description/AuxiliaryTools.md" />
+    <File Path="Description/README_EN-US.md" />
+    <File Path="Description/README_HE-IL.md" />
+    <File Path="Description/README_ZH-CN.md" />
+    <File Path="Description/StudyReferenceCode.md" />
+  </Folder>
+  <Project Path="GetStoreApp/GetStoreApp.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+  <Project Path="GetStoreAppInstaller/GetStoreAppInstaller.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+  <Project Path="GetStoreAppPackage/GetStoreAppPackage.wapproj" Type="c7167f0d-bc9f-4e6e-afe1-012c56b48db5">
+    <Deploy />
+  </Project>
+  <Project Path="GetStoreAppShellExtension/GetStoreAppShellExtension.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+  <Project Path="GetStoreAppWebView/GetStoreAppWebView.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+</Solution>
