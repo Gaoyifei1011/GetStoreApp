@@ -10,7 +10,7 @@
   "GetStoreAppDescription": "离线下载 Microsoft Store 商店应用",
   "Store": "微软商店",
   "StoreDescription": "搜索并下载微软商店应用",
-  "Web": "打开网页",
+  "Web": "商店网页版",
   "WebDescription": "使用网页下载应用",
   "WinGet": "WinGet 程序包",
   "WinGetDescription": "管理 WinGet 应用程序包"

@@ -10,7 +10,7 @@
   "GetStoreAppDescription": "Download the Microsoft Store app offline",
   "Store": "Microsoft Store",
   "StoreDescription": "Search for and download Microsoft Store apps",
-  "Web": "Open Browser",
+  "Web": "Store web",
   "WebDescription": "Download the app using the web page",
   "WinGet": "WinGet Package",
   "WinGetDescription": "Manage the WinGet app package"
