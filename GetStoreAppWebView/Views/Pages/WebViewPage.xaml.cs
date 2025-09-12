@@ -173,7 +173,7 @@ namespace GetStoreAppWebView.Views.Pages
             SetTitleBarTheme(ActualTheme);
 
             // 设置网页
-            Source = new Uri("https://store.rg-adguard.net");
+            Source = new Uri("https://apps.microsoft.com");
 
             if (ApiInformation.IsMethodPresent(typeof(Compositor).FullName, nameof(Compositor.TryCreateBlurredWallpaperBackdropBrush)))
             {
@@ -321,7 +321,7 @@ namespace GetStoreAppWebView.Views.Pages
         /// </summary>
         private async void OnOpenWithBrowserClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://store.rg-adguard.net"));
+            await Launcher.LaunchUriAsync(new Uri("https://apps.microsoft.com"));
         }
 
         /// <summary>
