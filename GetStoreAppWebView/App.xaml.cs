@@ -1,6 +1,4 @@
-﻿using GetStoreAppWebView.Extensions.DataType.Classes;
-using GetStoreAppWebView.Extensions.DataType.Enums;
-using GetStoreAppWebView.Services.Root;
+﻿using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.Views.Pages;
 using System;
 using System.Collections.Generic;
@@ -10,7 +8,6 @@ using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
-using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
@@ -112,14 +109,6 @@ namespace GetStoreAppWebView
                             }
                             finally
                             {
-                                AppLaunchArguments appLaunchArguments = new()
-                                {
-                                    AppLaunchKind = AppLaunchKind.Pinner,
-                                    IsLaunched = false,
-                                    SubParameters = [nameof(SecondaryTile), Convert.ToString(isPinnedSuccessfully)]
-                                };
-                                await AppLaunchService.SaveArgumentsAsync(appLaunchArguments);
-                                ApplicationData.Current.SignalDataChanged();
                                 await appWindow.CloseAsync();
                                 appWindowList.Remove(appWindow.UIContext);
                             }
@@ -149,14 +138,6 @@ namespace GetStoreAppWebView
                             }
                             finally
                             {
-                                AppLaunchArguments appLaunchArguments = new()
-                                {
-                                    AppLaunchKind = AppLaunchKind.Pinner,
-                                    IsLaunched = false,
-                                    SubParameters = [nameof(TaskbarManager), Convert.ToString(isPinnedSuccessfully)]
-                                };
-                                await AppLaunchService.SaveArgumentsAsync(appLaunchArguments);
-                                ApplicationData.Current.SignalDataChanged();
                                 await appWindow.CloseAsync();
                                 appWindowList.Remove(appWindow.UIContext);
                             }
