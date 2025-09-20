@@ -25,7 +25,7 @@
     <Optimize>false</Optimize>
     <OutputType>WinExe</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>
-    <PublishAot>false</PublishAot>
+    <PublishAot>true</PublishAot>
     <RootNamespace>GetStoreApp</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>

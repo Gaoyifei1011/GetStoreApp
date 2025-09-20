@@ -117,7 +117,6 @@ namespace GetStoreApp
             foreach (Package dependencyPacakge in dependencyPackageList)
             {
                 // 系统版本大于 Windows 11（24H1，26100），使用 Windows App SDK 包装好的 API。不是则直接调用系统的 API
-
                 if (dependencyPacakge.DisplayName.Contains("WindowsAppRuntime"))
                 {
                     if (InfoHelper.IsWindows11_24H1OrGreater)
