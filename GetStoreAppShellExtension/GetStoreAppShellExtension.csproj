@@ -62,10 +62,4 @@
     <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Publish" />
     <Copy SourceFiles="$(NativeOutputPath)$(AssemblyName).dll" DestinationFiles="$(ProjectDir)bin\$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\$(AssemblyName).dll" />
   </Target>
-
-  <!-- 捆绑前对二进制文件进行后处理 -->
-  <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="'$(Configuration)|$(PublishAot)' == 'Release|true'">
-    <!-- 对生成的 GetStoreAppShellExtension.dll 文件进行数字签名 -->
-    <Exec Command="$(PkgMicrosoft_Windows_SDK_BuildTools)\bin\10.0.26100.0\$(CompileProcessorArchitecture)\signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(NativeOutputPath)$(AssemblyName).dll" />
-  </Target>
 </Project>
