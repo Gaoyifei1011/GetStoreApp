@@ -11,105 +11,105 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="com uap uap3 desktop desktop2 desktop4 rescap">
 
-  <Identity
-	  Name="Gaoyifei1011.GetStoreApp"
-	  Publisher="CN=高怡飞"
-	  Version="6.4.810.0" />
+	<Identity
+	  Name="055B5CA4.GetStoreApp"
+	  Publisher="CN=ABAA73FA-E48C-48D6-8060-D6B3A4EA70B6"
+	  Version="6.5.920.0" />
 
-  <Properties>
-    <Description>ms-resource:PackageDescription</Description>
-    <DisplayName>ms-resource:PackageDisplayName</DisplayName>
-    <PublisherDisplayName>高怡飞</PublisherDisplayName>
-    <Logo>Assets\StoreLogo.png</Logo>
-  </Properties>
+	<Properties>
+		<Description>ms-resource:PackageDescription</Description>
+		<DisplayName>ms-resource:PackageDisplayName</DisplayName>
+		<PublisherDisplayName>高怡飞</PublisherDisplayName>
+		<Logo>Assets\StoreLogo.png</Logo>
+	</Properties>
 
-  <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.22000.0" MaxVersionTested="10.0.26100.0" />
-    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.22000.0" MaxVersionTested="10.0.26100.0" />
-  </Dependencies>
+	<Dependencies>
+		<TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.22000.0" MaxVersionTested="10.0.26100.0" />
+		<TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.22000.0" MaxVersionTested="10.0.26100.0" />
+	</Dependencies>
 
-  <Resources>
-    <Resource Language="HE-IL" />
-    <Resource Language="EN-US" />
-    <Resource Language="ZH-HANS" />
-  </Resources>
+	<Resources>
+		<Resource Language="HE-IL" />
+		<Resource Language="EN-US" />
+		<Resource Language="ZH-HANS" />
+	</Resources>
 
-  <Applications>
-    <Application Id="GetStoreApp"
+	<Applications>
+		<Application Id="GetStoreApp"
 		  Executable="GetStoreApp.exe"
 		  EntryPoint="Windows.FullTrustApplication">
 
-      <uap:VisualElements
+			<uap:VisualElements
 			  DisplayName="ms-resource:MainAppDisplayName"
 			  Description="ms-resource:MainAppDescription"
 			  BackgroundColor="transparent"
 			  Square150x150Logo="Assets\MainApp\Square150x150Logo.png"
 			  Square44x44Logo="Assets\MainApp\Square44x44Logo.png">
 
-        <uap:DefaultTile ShortName="ms-resource:MainAppShortDisplayName" Wide310x150Logo="Assets\MainApp\Wide310x150Logo.png" Square71x71Logo="Assets\MainApp\SmallTile.png" Square310x310Logo="Assets\MainApp\LargeTile.png">
-          <uap:ShowNameOnTiles>
-            <uap:ShowOn Tile="wide310x150Logo" />
-            <uap:ShowOn Tile="square310x310Logo" />
-            <uap:ShowOn Tile="square150x150Logo" />
-          </uap:ShowNameOnTiles>
-        </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\MainApp\SplashScreen.png" />
-      </uap:VisualElements>
+				<uap:DefaultTile ShortName="ms-resource:MainAppShortDisplayName" Wide310x150Logo="Assets\MainApp\Wide310x150Logo.png" Square71x71Logo="Assets\MainApp\SmallTile.png" Square310x310Logo="Assets\MainApp\LargeTile.png">
+					<uap:ShowNameOnTiles>
+						<uap:ShowOn Tile="wide310x150Logo" />
+						<uap:ShowOn Tile="square310x310Logo" />
+						<uap:ShowOn Tile="square150x150Logo" />
+					</uap:ShowNameOnTiles>
+				</uap:DefaultTile>
+				<uap:SplashScreen Image="Assets\MainApp\SplashScreen.png" />
+			</uap:VisualElements>
 
-      <Extensions>
-        <com:Extension Category="windows.comServer">
-          <com:ComServer>
-            <com:SurrogateServer AppId="C098FAB9-A297-5829-B47E-07EBB207E64A" DisplayName="GetStoreAppShellExtension">
-              <com:Class Id="C098FAB9-A297-5829-B47E-07EBB207E64A" Path="GetStoreAppShellExtension.dll" ThreadingModel="Both" />
-            </com:SurrogateServer>
-          </com:ComServer>
-        </com:Extension>
+			<Extensions>
+				<com:Extension Category="windows.comServer">
+					<com:ComServer>
+						<com:SurrogateServer AppId="C098FAB9-A297-5829-B47E-07EBB207E64A" DisplayName="GetStoreAppShellExtension">
+							<com:Class Id="C098FAB9-A297-5829-B47E-07EBB207E64A" Path="GetStoreAppShellExtension.dll" ThreadingModel="Both" />
+						</com:SurrogateServer>
+					</com:ComServer>
+				</com:Extension>
 
-        <desktop4:Extension Category="windows.fileExplorerContextMenus">
-          <desktop4:FileExplorerContextMenus>
-            <desktop4:ItemType Type="*">
-              <desktop4:Verb Id="CGetStoreAppCommand" Clsid="C098FAB9-A297-5829-B47E-07EBB207E64A" />
-            </desktop4:ItemType>
-          </desktop4:FileExplorerContextMenus>
-        </desktop4:Extension>
+				<desktop4:Extension Category="windows.fileExplorerContextMenus">
+					<desktop4:FileExplorerContextMenus>
+						<desktop4:ItemType Type="*">
+							<desktop4:Verb Id="CGetStoreAppCommand" Clsid="C098FAB9-A297-5829-B47E-07EBB207E64A" />
+						</desktop4:ItemType>
+					</desktop4:FileExplorerContextMenus>
+				</desktop4:Extension>
 
-        <uap:Extension Category="windows.protocol" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
-          <uap:Protocol Name="getstoreapp">
-            <uap:DisplayName>ms-resource:MainProtocolName</uap:DisplayName>
-          </uap:Protocol>
-        </uap:Extension>
+				<uap:Extension Category="windows.protocol" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
+					<uap:Protocol Name="getstoreapp">
+						<uap:DisplayName>ms-resource:MainProtocolName</uap:DisplayName>
+					</uap:Protocol>
+				</uap:Extension>
 
-        <uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="GetStoreAppWebView.App">
-          <uap:Protocol Name="getstoreapppinner">
-            <uap:DisplayName>ms-resource:PinnerProtocolName</uap:DisplayName>
-          </uap:Protocol>
-        </uap:Extension>
+				<uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="GetStoreAppWebView.App">
+					<uap:Protocol Name="getstoreapppinner">
+						<uap:DisplayName>ms-resource:PinnerProtocolName</uap:DisplayName>
+					</uap:Protocol>
+				</uap:Extension>
 
-        <uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="GetStoreAppWebView.App">
-          <uap:Protocol Name="getstoreappwebbrowser">
-            <uap:DisplayName>ms-resource:WebBrowserProtocolName</uap:DisplayName>
-          </uap:Protocol>
-        </uap:Extension>
+				<uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="GetStoreAppWebView.App">
+					<uap:Protocol Name="getstoreappwebbrowser">
+						<uap:DisplayName>ms-resource:WebBrowserProtocolName</uap:DisplayName>
+					</uap:Protocol>
+				</uap:Extension>
 
-        <uap:Extension Category="windows.shareTarget" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
-          <uap:ShareTarget>
-            <uap:DataFormat>Uri</uap:DataFormat>
-          </uap:ShareTarget>
-        </uap:Extension>
+				<uap:Extension Category="windows.shareTarget" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
+					<uap:ShareTarget>
+						<uap:DataFormat>Uri</uap:DataFormat>
+					</uap:ShareTarget>
+				</uap:Extension>
 
-        <uap3:Extension Category="windows.appExecutionAlias" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
-          <uap3:AppExecutionAlias>
-            <desktop:ExecutionAlias Alias="GetStoreApp.exe" />
-          </uap3:AppExecutionAlias>
-        </uap3:Extension>
-      </Extensions>
-    </Application>
+				<uap3:Extension Category="windows.appExecutionAlias" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
+					<uap3:AppExecutionAlias>
+						<desktop:ExecutionAlias Alias="GetStoreApp.exe" />
+					</uap3:AppExecutionAlias>
+				</uap3:Extension>
+			</Extensions>
+		</Application>
 
-    <Application Id="GetStoreAppInstaller"
+		<Application Id="GetStoreAppInstaller"
       Executable="GetStoreAppInstaller.exe"
       EntryPoint="Windows.FullTrustApplication">
 
-      <uap:VisualElements
+			<uap:VisualElements
         AppListEntry="none"
         DisplayName="ms-resource:InstallerAppDisplayName"
         Description="ms-resource:InstallerAppDescription"
@@ -117,79 +117,79 @@
         Square150x150Logo="Assets\Installer\Square150x150Logo.png"
         Square44x44Logo="Assets\Installer\Square44x44Logo.png">
 
-        <uap:DefaultTile ShortName="ms-resource:InstallerAppShortDisplayName" Wide310x150Logo="Assets\Installer\Wide310x150Logo.png" Square71x71Logo="Assets\Installer\SmallTile.png" Square310x310Logo="Assets\Installer\LargeTile.png">
-          <uap:ShowNameOnTiles>
-            <uap:ShowOn Tile="wide310x150Logo" />
-            <uap:ShowOn Tile="square310x310Logo" />
-            <uap:ShowOn Tile="square150x150Logo" />
-          </uap:ShowNameOnTiles>
-        </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\Installer\SplashScreen.png" />
-      </uap:VisualElements>
+				<uap:DefaultTile ShortName="ms-resource:InstallerAppShortDisplayName" Wide310x150Logo="Assets\Installer\Wide310x150Logo.png" Square71x71Logo="Assets\Installer\SmallTile.png" Square310x310Logo="Assets\Installer\LargeTile.png">
+					<uap:ShowNameOnTiles>
+						<uap:ShowOn Tile="wide310x150Logo" />
+						<uap:ShowOn Tile="square310x310Logo" />
+						<uap:ShowOn Tile="square150x150Logo" />
+					</uap:ShowNameOnTiles>
+				</uap:DefaultTile>
+				<uap:SplashScreen Image="Assets\Installer\SplashScreen.png" />
+			</uap:VisualElements>
 
-      <Extensions>
-        <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation Name="appinstaller">
-            <uap:Logo>Assets\Icon\Installer\Package.png</uap:Logo>
-            <uap:SupportedFileTypes>
-              <uap:FileType>.appinstaller</uap:FileType>
-            </uap:SupportedFileTypes>
-            <uap:InfoTip>ms-resource:AppInstaller</uap:InfoTip>
-          </uap:FileTypeAssociation>
-        </uap:Extension>
+			<Extensions>
+				<uap:Extension Category="windows.fileTypeAssociation">
+					<uap:FileTypeAssociation Name="appinstaller">
+						<uap:Logo>Assets\Icon\Installer\Package.png</uap:Logo>
+						<uap:SupportedFileTypes>
+							<uap:FileType>.appinstaller</uap:FileType>
+						</uap:SupportedFileTypes>
+						<uap:InfoTip>ms-resource:AppInstaller</uap:InfoTip>
+					</uap:FileTypeAssociation>
+				</uap:Extension>
 
-        <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation Name="package">
-            <uap:Logo>Assets\Icon\Installer\Package.png</uap:Logo>
-            <uap:SupportedFileTypes>
-              <uap:FileType>.appx</uap:FileType>
-              <uap:FileType>.msix</uap:FileType>
-            </uap:SupportedFileTypes>
-            <uap:InfoTip>ms-resource:Package</uap:InfoTip>
-          </uap:FileTypeAssociation>
-        </uap:Extension>
+				<uap:Extension Category="windows.fileTypeAssociation">
+					<uap:FileTypeAssociation Name="package">
+						<uap:Logo>Assets\Icon\Installer\Package.png</uap:Logo>
+						<uap:SupportedFileTypes>
+							<uap:FileType>.appx</uap:FileType>
+							<uap:FileType>.msix</uap:FileType>
+						</uap:SupportedFileTypes>
+						<uap:InfoTip>ms-resource:Package</uap:InfoTip>
+					</uap:FileTypeAssociation>
+				</uap:Extension>
 
-        <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation Name="packagebundle">
-            <uap:Logo>Assets\Icon\Installer\Package.png</uap:Logo>
-            <uap:SupportedFileTypes>
-              <uap:FileType>.appxbundle</uap:FileType>
-              <uap:FileType>.msixbundle</uap:FileType>
-            </uap:SupportedFileTypes>
-            <uap:InfoTip>ms-resource:PackageBundle</uap:InfoTip>
-          </uap:FileTypeAssociation>
-        </uap:Extension>
+				<uap:Extension Category="windows.fileTypeAssociation">
+					<uap:FileTypeAssociation Name="packagebundle">
+						<uap:Logo>Assets\Icon\Installer\Package.png</uap:Logo>
+						<uap:SupportedFileTypes>
+							<uap:FileType>.appxbundle</uap:FileType>
+							<uap:FileType>.msixbundle</uap:FileType>
+						</uap:SupportedFileTypes>
+						<uap:InfoTip>ms-resource:PackageBundle</uap:InfoTip>
+					</uap:FileTypeAssociation>
+				</uap:Extension>
 
-        <uap:Extension Category="windows.shareTarget" Executable="GetStoreAppInstaller.exe" EntryPoint="Windows.FullTrustApplication">
-          <uap:ShareTarget>
-            <uap:SupportedFileTypes>
-              <uap:FileType>.appx</uap:FileType>
-              <uap:FileType>.msix</uap:FileType>
-              <uap:FileType>.appxbundle</uap:FileType>
-              <uap:FileType>.msixbundle</uap:FileType>
-            </uap:SupportedFileTypes>
-          </uap:ShareTarget>
-        </uap:Extension>
+				<uap:Extension Category="windows.shareTarget" Executable="GetStoreAppInstaller.exe" EntryPoint="Windows.FullTrustApplication">
+					<uap:ShareTarget>
+						<uap:SupportedFileTypes>
+							<uap:FileType>.appx</uap:FileType>
+							<uap:FileType>.msix</uap:FileType>
+							<uap:FileType>.appxbundle</uap:FileType>
+							<uap:FileType>.msixbundle</uap:FileType>
+						</uap:SupportedFileTypes>
+					</uap:ShareTarget>
+				</uap:Extension>
 
-        <uap3:Extension Category="windows.appExecutionAlias" Executable="GetStoreAppInstaller.exe" EntryPoint="Windows.FullTrustApplication">
-          <uap3:AppExecutionAlias>
-            <desktop:ExecutionAlias Alias="GetStoreAppInstaller.exe" />
-          </uap3:AppExecutionAlias>
-        </uap3:Extension>
-      </Extensions>
-    </Application>
-  </Applications>
-  <Extensions>
-    <desktop2:Extension Category="windows.firewallRules">
-      <desktop2:FirewallRules Executable="Mile.Aria2.exe">
-        <desktop2:Rule Direction="in" IPProtocol="TCP" Profile="all" />
-        <desktop2:Rule Direction="in" IPProtocol="UDP" Profile="all" />
-      </desktop2:FirewallRules>
-    </desktop2:Extension>
-  </Extensions>
-  <Capabilities>
-    <Capability Name="internetClient" />
-    <rescap:Capability Name="packageQuery" />
-    <rescap:Capability Name="runFullTrust" />
-  </Capabilities>
+				<uap3:Extension Category="windows.appExecutionAlias" Executable="GetStoreAppInstaller.exe" EntryPoint="Windows.FullTrustApplication">
+					<uap3:AppExecutionAlias>
+						<desktop:ExecutionAlias Alias="GetStoreAppInstaller.exe" />
+					</uap3:AppExecutionAlias>
+				</uap3:Extension>
+			</Extensions>
+		</Application>
+	</Applications>
+	<Extensions>
+		<desktop2:Extension Category="windows.firewallRules">
+			<desktop2:FirewallRules Executable="Mile.Aria2.exe">
+				<desktop2:Rule Direction="in" IPProtocol="TCP" Profile="all" />
+				<desktop2:Rule Direction="in" IPProtocol="UDP" Profile="all" />
+			</desktop2:FirewallRules>
+		</desktop2:Extension>
+	</Extensions>
+	<Capabilities>
+		<Capability Name="internetClient" />
+		<rescap:Capability Name="packageQuery" />
+		<rescap:Capability Name="runFullTrust" />
+	</Capabilities>
 </Package>
