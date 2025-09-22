@@ -4,6 +4,14 @@
 
 # <p align="center">欢迎访问 获取商店应用</p>
 
+<a href="https://apps.microsoft.com/detail/9MV67V21H386?referrer=appbadge&mode=direct">
+  <div align=center>
+    <img src="https://get.microsoft.com/images/zh-cn%20dark.svg" width="200"/>
+  </div>
+</a>
+
+> * 商店版本和侧载版本同步更新
+   
 ### 应用简介
 
 微软商店提供了对已上架商店应用的分发，下载和更新通道。但是在最新的微软商店中，微软要求用户下载商店的应用需要使用在线账户。这对一些从不使用微软账户且应用必须依赖商店下载的用户带来了困扰。因此我开发了这一款获取商店应用的桌面应用 ，该应用使用了微软商店提供的获取接口，绕开了微软商店官方提供的应用下载渠道。用户可以离线下载所需的应用安装包，进行独立部署。

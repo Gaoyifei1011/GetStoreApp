@@ -4,6 +4,14 @@
 
 # <p align="center">欢迎访问 获取商店应用</p>
 
+<a href="https://apps.microsoft.com/detail/9MV67V21H386?referrer=appbadge&mode=direct">
+  <div align=center>
+    <img src="https://get.microsoft.com/images/zh-cn%20dark.svg" width="200"/>
+  </div>
+</a>
+
+> * 商店版本和侧载版本同步更新
+
 ### 语言选择（Language selection）
 
 > * [简体中文](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/README_ZH-CN.md)&emsp;

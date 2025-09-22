@@ -4,6 +4,14 @@
 
 # <p align="center">ברוכים הבאים ל־GetStoreApp</p>
 
+<a href="https://apps.microsoft.com/detail/9MV67V21H386?referrer=appbadge&mode=direct">
+  <div align=center>
+    <img src="https://get.microsoft.com/images/he%20dark.svg" width="200"/>
+  </div>
+</a>
+
+> * עדכון שווה בין גרסת החנות לגרסה שהותקנה באופן צדדי 
+
 ### סקירה כללית של האפליקציה
 
 חנות Microsoft Store מספקת ערוץ להפצה, הורדה ועדכון של אפליקציות שכבר פורסמו בה. אך בגרסאות האחרונות של החנות, מיקרוסופט דורשת שימוש בחשבון מקוון לצורך הורדת אפליקציות. דרישה זו יוצרת קושי עבור משתמשים שאינם עובדים עם חשבון Microsoft, אך נדרשים להתקין אפליקציות מהחנות. אפליקציה זו עושה שימוש בממשק ה־API של Microsoft Store (השגת מידע), ועוקפת את ערוץ ההורדה הרשמי של החנות. המשתמשים יכולים להוריד חבילות התקנה של אפליקציות במצב לא מקוון ולהתקינן באופן עצמאי.
@@ -27,87 +35,87 @@
 
 #### <p align="center">הביתה</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/Home.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/Home.png" />
 </div>
 
 #### <p align="center">Microsoft Store</p>
 ##### <p align="center">קישורי שאילתה</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/Querylinks.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/Querylinks.png" />
 </div>
 
 ##### <p align="center">חפש חנות</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/SearchStore.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/SearchStore.png" />
 </div>
 
 #### <p align="center">עדכון אפליקציה</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/AppUpdate.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/AppUpdate.png" />
 </div>
 
 #### <p align="center">ניהול חבילות WinGet</p>
 ##### <p align="center">חיפוש אפליקציות</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/WinGetSearchApps.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/WinGetSearchApps.png" />
 </div>
 
 ##### <p align="center">אפליקציות מותקנות</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/WinGetInstalledApps.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/WinGetInstalledApps.png" />
 </div>
 
 ##### <p align="center">אפליקציות הניתנות לשדרוג</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/WinGetUpgradeApps.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/WinGetUpgradeApps.png" />
 </div>
 
 #### <p align="center">מנהל אפליקציות</p>
 ##### <p align="center">רשימת אפליקציות</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/AppList.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/AppList.png" />
 </div>
 
 ##### <p align="center">מידע על האפליקציה</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/AppInformation.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/AppInformation.png" />
 </div>
 
 #### <p align="center">ניהול הורדות</p>
 ##### <p align="center">הורדת</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/Downloading.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/Downloading.png" />
 </div>
 
 ##### <p align="center">הושלמה</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/Completed.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/Completed.png" />
 </div>
 
 #### <p align="center">ממשק אינטרנט</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/WebBrowser.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/WebBrowser.png" />
 </div>
 
 #### <p align="center">הגדרות</p>
 ##### <p align="center">תצורת נפח חבילה</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/PackageVolume.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/PackageVolume.png" />
 </div>
 
 ##### <p align="center">תצורת מקור הנתונים של WinGet</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/WinGetDataSource.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/WinGetDataSource.png" />
 </div>
 
 #### <p align="center">על</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/About.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/About.png" />
 </div>
 
 #### <p align="center">מתקין אפליקציות</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/AppInstaller.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/AppInstaller.png" />
 </div>
 
 

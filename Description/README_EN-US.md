@@ -4,6 +4,14 @@
 
 # <p align="center">Welcome to GetStoreApp</p>
 
+<a href="https://apps.microsoft.com/detail/9MV67V21H386?referrer=appbadge&mode=direct">
+  <div align=center>
+    <img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
+  </div>
+</a>
+
+> * The store version and the side-loaded version are updated synchronously
+
 ### Application brief introduction
 
 The Microsoft Store provides a distribution, download, and update channel for apps that are already on the shelves. But in the latest Microsoft Store, Microsoft requires users to use an online account to download apps from the store. This has plagued some users who never use a Microsoft account and whose apps must rely on store downloads. The app uses the acquisition interface provided by Microsoft Store, bypassing the official App Download Channel provided by the Microsoft Store. Users can download the required app installation packages offline for standalone deployment.
