@@ -4,13 +4,17 @@
 
 # <p align="center">欢迎访问 获取商店应用</p>
 
-<a href="https://apps.microsoft.com/detail/9N6D71Z5X6MM?referrer=appbadge&mode=direct">
-  <div align=center>
-    <img src="https://get.microsoft.com/images/zh-cn%20dark.svg" width="200"/>
-  </div>
-</a>
+<div align="center">
+  <a href="https://apps.microsoft.com/detail/9N6D71Z5X6MM?referrer=appbadge&mode=direct">
+    <img src="https://get.microsoft.com/images/zh-cn%20dark.svg" width="200" />
+  </a>
+  &nbsp;
+  <a href="https://github.com/Gaoyifei1011/GetStoreApp/releases">
+    <img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/Logo/Github.png" width="220" align="top"/>
+  </a>
+</div>
 
-> * 商店版本和侧载版本同步更新
+> * 商店应用和侧载应用同步更新
    
 ### 应用简介
 

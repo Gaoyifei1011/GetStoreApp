@@ -4,13 +4,17 @@
 
 # <p align="center">Welcome to GetStoreApp</p>
 
-<a href="https://apps.microsoft.com/detail/9N6D71Z5X6MM?referrer=appbadge&mode=direct">
-  <div align=center>
-    <img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
-  </div>
-</a>
+<div align="center">
+  <a href="https://apps.microsoft.com/detail/9N6D71Z5X6MM?referrer=appbadge&mode=direct">
+    <img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200" />
+  </a>
+  &nbsp;
+  <a href="https://github.com/Gaoyifei1011/GetStoreApp/releases">
+    <img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/Logo/Github.png" width="220" align="top"/>
+  </a>
+</div>
 
-> * The store version and the side-loaded version are updated synchronously
+> * The store apps and the side-loaded apps are updated synchronously
 
 ### Application brief introduction
 
