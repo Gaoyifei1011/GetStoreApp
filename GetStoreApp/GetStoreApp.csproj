@@ -61,7 +61,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ApplicationDefinition Include="WinUIApp.xaml" SubType="Designer" />
+    <ApplicationDefinition Include="MainApp.xaml" SubType="Designer" />
 
     <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="SourceItemGroup" />
 
@@ -343,9 +343,9 @@
     <None Remove="Views\Pages\WinGetSearchPage.xaml" />
     <None Remove="Views\Pages\WinGetUpgradePage.xaml" />
     <None Remove="Views\Windows\MainWindow.xaml" />
-    <None Remove="WinUIApp.xaml" />
-    
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
+		<None Remove="MainApp.xaml" />
+
+		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4948" GeneratePathProperty="true" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.7.20250829.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.250907003" />
@@ -398,7 +398,7 @@
     <Page Update="Views\Pages\WinGetSearchPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\WinGetUpgradePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Windows\MainWindow.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Remove="WinUIApp.xaml" />
+    <Page Remove="MainApp.xaml" />
 
     <PRIResource Include="Strings\he-il\AppInformation.resjson" />
     <PRIResource Include="Strings\he-il\Application.resjson" />

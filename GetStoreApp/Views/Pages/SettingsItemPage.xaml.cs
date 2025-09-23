@@ -182,7 +182,7 @@ namespace GetStoreApp.Views.Pages
             if (result > 32)
             {
                 Program.AppInstance.UnregisterKey();
-                (Application.Current as WinUIApp).Dispose();
+                (Application.Current as MainApp).Dispose();
             }
         }
 

@@ -348,7 +348,7 @@ namespace GetStoreApp.Views.Windows
                     }
                     DownloadSchedulerService.TerminateDownload();
                     Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0);
-                    (Application.Current as WinUIApp).Dispose();
+                    (Application.Current as MainApp).Dispose();
                 }
                 else if (result is ContentDialogResult.Secondary)
                 {
@@ -374,7 +374,7 @@ namespace GetStoreApp.Views.Windows
                     navigationViewBackButtonToolTip.Loaded -= ToolTipBackdropHelper.OnLoaded;
                 }
                 Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0);
-                (Application.Current as WinUIApp).Dispose();
+                (Application.Current as MainApp).Dispose();
             }
         }
 
@@ -724,7 +724,7 @@ namespace GetStoreApp.Views.Windows
         {
             args.Handled = true;
             LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(OnNavigationFailed), 1, args.Exception);
-            (Application.Current as WinUIApp).Dispose();
+            (Application.Current as MainApp).Dispose();
         }
 
         #endregion 第五部分：导航控件及其内容挂载的事件

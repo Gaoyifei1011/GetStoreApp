@@ -16,15 +16,15 @@ using Windows.UI.StartScreen;
 namespace GetStoreApp
 {
     /// <summary>
-    /// 获取商店应用程序
+    /// 获取商店应用主程序
     /// </summary>
-    public partial class WinUIApp : Application, IDisposable
+    public partial class MainApp : Application, IDisposable
     {
         private bool isDisposed;
 
         public Window Window { get; private set; }
 
-        public WinUIApp()
+        public MainApp()
         {
             InitializeComponent();
             DispatcherShutdownMode = DispatcherShutdownMode.OnExplicitShutdown;
@@ -89,7 +89,7 @@ namespace GetStoreApp
         private void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
         {
             args.Handled = true;
-            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinUIApp), nameof(OnUnhandledException), 1, args.Exception);
+            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainApp), nameof(OnUnhandledException), 1, args.Exception);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace GetStoreApp
             GC.SuppressFinalize(this);
         }
 
-        ~WinUIApp()
+        ~MainApp()
         {
             Dispose(false);
         }

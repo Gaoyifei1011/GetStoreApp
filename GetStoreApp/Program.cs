@@ -168,7 +168,7 @@ namespace GetStoreApp
             Application.Start((param) =>
             {
                 SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread()));
-                new WinUIApp();
+                new MainApp();
             });
         }
 
