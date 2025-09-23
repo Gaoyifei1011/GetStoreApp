@@ -4,7 +4,7 @@
 
 # <p align="center">ברוכים הבאים ל־GetStoreApp</p>
 
-<a href="https://apps.microsoft.com/detail/9MV67V21H386?referrer=appbadge&mode=direct">
+<a href="https://apps.microsoft.com/detail/9N6D71Z5X6MM?referrer=appbadge&mode=direct">
   <div align=center>
     <img src="https://get.microsoft.com/images/he%20dark.svg" width="200"/>
   </div>
