@@ -77,12 +77,8 @@ namespace GetStoreApp.Extensions.Backdrop
         protected override void OnTargetDisconnected(ICompositionSupportsSystemBackdrop disconnectedTarget)
         {
             base.OnTargetDisconnected(disconnectedTarget);
-
-            if (systemBackdropController is not null)
-            {
-                systemBackdropController.RemoveSystemBackdropTarget(disconnectedTarget);
-                systemBackdropController = null;
-            }
+            systemBackdropController?.RemoveSystemBackdropTarget(disconnectedTarget);
+            systemBackdropController = null;
         }
     }
 }
