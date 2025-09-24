@@ -1,5 +1,4 @@
 ﻿using System.Runtime.InteropServices;
-using Windows.Graphics;
 
 // 抑制 CA1401 警告
 #pragma warning disable CA1401
@@ -22,35 +21,6 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         [LibraryImport(User32, EntryPoint = "ChangeWindowMessageFilter", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool ChangeWindowMessageFilter(WindowMessage message, ChangeFilterFlags dwFlag);
-
-        /// <summary>
-        /// 检索鼠标光标的位置（以屏幕坐标为单位）。
-        /// </summary>
-        /// <param name="lpPoint">指向接收光标屏幕坐标的 POINT 结构的指针。</param>
-        /// <returns>如果成功，则返回非零值，否则返回零。 要获得更多的错误信息，请调用 GetLastError。</returns>
-        [LibraryImport(User32, EntryPoint = "GetCursorPos", SetLastError = false), PreserveSig]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool GetCursorPos(out PointInt32 lpPoint);
-
-        /// <summary>
-        /// 检索有关指定窗口的信息。 该函数还会检索 32 位 (DWORD) 值，该值位于指定偏移量处，并进入额外的窗口内存。
-        /// </summary>
-        /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类。</param>
-        /// <param name="nIndex">要检索的值的从零开始的偏移量。 有效值在 0 到额外窗口内存的字节数中，减去 4 个;例如，如果指定了 12 个或更多字节的额外内存，则值 8 将是第三个 32 位整数的索引。
-        /// </param>
-        /// <returns>如果函数成功，则返回值是请求的值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(User32, EntryPoint = "GetWindowLongW", SetLastError = false), PreserveSig]
-        public static partial int GetWindowLong(nint hWnd, WindowLongIndexFlags nIndex);
-
-        /// <summary>
-        /// 检索有关指定窗口的信息。 该函数还会检索 64 位 (DWORD) 值，该值位于指定偏移量处，并进入额外的窗口内存。
-        /// </summary>
-        /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类。</param>
-        /// <param name="nIndex">要检索的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去 LONG_PTR的大小。
-        /// </param>
-        /// <returns>如果函数成功，则返回值是请求的值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(User32, EntryPoint = "GetWindowLongPtrW", SetLastError = false), PreserveSig]
-        public static partial int GetWindowLongPtr(nint hWnd, WindowLongIndexFlags nIndex);
 
         /// <summary>
         /// 创建从指定文件中提取的图标的句柄数组。
@@ -85,34 +55,5 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
         [LibraryImport(User32, EntryPoint = "SendMessageW", SetLastError = false), PreserveSig]
         public static partial nint SendMessage(nint hWnd, WindowMessage wMsg, nuint wParam, nint lParam);
-
-        /// <summary>
-        /// 更改指定子窗口的父窗口。
-        /// </summary>
-        /// <param name="hWndChild">子窗口的句柄。</param>
-        /// <param name="hWndNewParent">新父窗口的句柄。 如果此参数为 NULL，桌面窗口将成为新的父窗口。 如果此参数 HWND_MESSAGE，则子窗口将成为仅消息窗口。</param>
-        /// <returns>如果函数成功，则返回值是上一个父窗口的句柄。如果函数失败，则返回值为 NULL。</returns>
-        [LibraryImport(User32, EntryPoint = "SetParent", SetLastError = false), PreserveSig]
-        public static partial uint SetParent(nint hWndChild, nint hWndNewParent);
-
-        /// <summary>
-        /// 更改指定窗口的属性。 该函数还将指定偏移量处的32位（long类型）值设置到额外的窗口内存中。
-        /// </summary>
-        /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类</param>
-        /// <param name="nIndex">要设置的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去整数的大小。</param>
-        /// <param name="newProc">新事件处理函数（回调函数）</param>
-        /// <returns>如果函数成功，则返回值是指定 32 位整数的上一个值。如果函数失败，则返回值为零。 </returns>
-        [LibraryImport(User32, EntryPoint = "SetWindowLongW", SetLastError = false), PreserveSig]
-        public static partial nint SetWindowLong(nint hWnd, WindowLongIndexFlags nIndex, nint dwNewLong);
-
-        /// <summary>
-        /// 更改指定窗口的属性。 该函数还将指定偏移量处的64位（long类型）值设置到额外的窗口内存中。
-        /// </summary>
-        /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类</param>
-        /// <param name="nIndex">要设置的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去整数的大小。</param>
-        /// <param name="newProc">新事件处理函数（回调函数）</param>
-        /// <returns>如果函数成功，则返回值是指定偏移量的上一个值。如果函数失败，则返回值为零。 </returns>
-        [LibraryImport(User32, EntryPoint = "SetWindowLongPtrW", SetLastError = false), PreserveSig]
-        public static partial nint SetWindowLongPtr(nint hWnd, WindowLongIndexFlags nIndex, nint dwNewLong);
     }
 }

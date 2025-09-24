@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.UI.Xaml;
+using System;
 using System.Collections.Generic;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation.Diagnostics;
-using Windows.UI.Xaml;
 
 namespace GetStoreAppInstaller.Services.Root
 {

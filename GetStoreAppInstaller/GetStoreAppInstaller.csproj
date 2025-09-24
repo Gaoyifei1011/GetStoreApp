@@ -30,10 +30,12 @@
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.22000.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
-    <UseUwp>true</UseUwp>
+		<WebView2NeverCopyLoaderDllToOutputDirectory>true</WebView2NeverCopyLoaderDllToOutputDirectory>
     <Win32Resource>GetStoreAppInstaller.res</Win32Resource>
-    <WindowsAppSDKBackgroundTask>false</WindowsAppSDKBackgroundTask>
-    <WindowsSdkPackageVersion>10.0.26100.75</WindowsSdkPackageVersion>
+		<WindowsAppSDKBackgroundTask>false</WindowsAppSDKBackgroundTask>
+		<WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
+		<WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>
+		<WindowsSdkPackageVersion>10.0.26100.75</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 
@@ -58,26 +60,16 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <ApplicationDefinition Include="XamlIslandsApp.xaml" SubType="Designer" />
+    <ApplicationDefinition Include="InstallerApp.xaml" SubType="Designer" />
     
     <Manifest Include="$(ApplicationManifest)" />
     
-    <None Remove="XamlIslandsApp.xaml" />
     <None Remove="Views\NotificationTips\CopyPasteInstallerNotificationTip.xaml" />
-    <None Remove="Views\Pages\InstallerPage.xaml" />
+		<None Remove="Views\Windows\InstallerWindow.xaml" />
 
-    <Page Remove="XamlIslandsApp.xaml" />
     <Page Update="Views\NotificationTips\CopyPasteInstallerNotificationTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Views\Pages\InstallerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    
-    <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4948" GeneratePathProperty="true" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.7.20250829.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.8.250906002" />
-    <PackageReference Include="Microsoft.WindowsAppSDK.InteractiveExperiences" Version="1.8.250906004" />
-    <PackageReference Include="Microsoft.WindowsAppSDK.Runtime" Version="1.8.250907003" />
-  </ItemGroup>
+		<Page Update="Views\Windows\InstallerWindow.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+	</ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->
   <Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Debug|true|true'">

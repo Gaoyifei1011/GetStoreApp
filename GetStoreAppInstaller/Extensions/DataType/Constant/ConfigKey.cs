@@ -7,6 +7,10 @@
     {
         public const string AllowUnsignedPackageKey = "AllowUnsignedPackage";
 
+        public const string AlwaysShowBackdropKey = "AlwaysShowBackdrop";
+
+        public const string BackdropKey = "AppBackdrop";
+
         public const string ForceAppShutdownKey = "ForceAppShutdown";
 
         public const string ForceTargetAppShutdownKey = "ForceTargetAppShutdown";

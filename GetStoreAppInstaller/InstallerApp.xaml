@@ -1,8 +1,7 @@
 ﻿<Application
-    x:Class="GetStoreAppInstaller.XamlIslandsApp"
+    x:Class="GetStoreAppInstaller.InstallerApp"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:Microsoft.UI.Xaml.Controls">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
         <ResourceDictionary>
             <x:Double x:Key="TeachingTipMinWidth">0</x:Double>
@@ -10,7 +9,7 @@
             <Thickness x:Key="TeachingTipButtonPanelMargin">0,0,0,0</Thickness>
 
             <ResourceDictionary.MergedDictionaries>
-                <controls:XamlControlsResources />
+                <XamlControlsResources />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

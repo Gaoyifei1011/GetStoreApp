@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Windows.Globalization;
-using Windows.UI.Xaml;
+using Microsoft.UI.Xaml;
 
 namespace GetStoreAppInstaller.Services.Settings
 {

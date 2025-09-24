@@ -1,9 +1,8 @@
 ﻿using GetStoreAppInstaller.Extensions.DataType.Constant;
 using GetStoreAppInstaller.Services.Root;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using Windows.UI.Xaml;
 
 namespace GetStoreAppInstaller.Services.Settings
 {
@@ -16,25 +15,9 @@ namespace GetStoreAppInstaller.Services.Settings
 
         private static string defaultAppTheme;
 
-        private static string _appTheme;
-
-        public static string AppTheme
-        {
-            get { return _appTheme; }
-
-            private set
-            {
-                if (!string.Equals(_appTheme, value))
-                {
-                    _appTheme = value;
-                    PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(AppTheme)));
-                }
-            }
-        }
+        public static string AppTheme { get; set; }
 
         public static List<string> ThemeList { get; private set; }
-
-        public static event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// 应用在初始化前获取设置存储的主题值
