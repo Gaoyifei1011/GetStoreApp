@@ -1,6 +1,7 @@
 ﻿using GetStoreAppInstaller.Helpers.Root;
 using GetStoreAppInstaller.Services.Root;
 using GetStoreAppInstaller.Services.Settings;
+using GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -12,9 +13,7 @@ using System.IO;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using Windows.ApplicationModel;
-using Windows.ApplicationModel.Core;
 using Windows.Foundation.Diagnostics;
-using Windows.Management.Deployment;
 using Windows.System;
 using WinRT;
 
@@ -43,25 +42,7 @@ namespace GetStoreAppInstaller
 
             if (!RuntimeHelper.IsMSIX)
             {
-                PackageManager packageManager = new();
-                foreach (Package package in packageManager.FindPackagesForUser(string.Empty))
-                {
-                    if (package.Id.FullName.Contains("055B5CA4.GetStoreApp"))
-                    {
-                        IReadOnlyList<AppListEntry> appListEntryList = package.GetAppListEntries();
-
-                        foreach (AppListEntry appListEntry in appListEntryList)
-                        {
-                            if (appListEntry.AppUserModelId.Contains("GetStoreAppInstaller"))
-                            {
-                                appListEntry.LaunchAsync().Wait();
-                                break;
-                            }
-                        }
-
-                        break;
-                    }
-                }
+                Shell32Library.ShellExecute(nint.Zero, "open", "GetStoreAppInstaller.exe", null, null, WindowShowStyle.SW_SHOWNORMAL);
                 return;
             }
 
