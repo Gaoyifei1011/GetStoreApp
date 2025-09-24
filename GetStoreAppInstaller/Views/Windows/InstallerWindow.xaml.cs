@@ -940,13 +940,6 @@ namespace GetStoreAppInstaller.Views.Windows
             SetWindowTheme();
             SetSystemBackdrop();
 
-            // 默认直接显示到窗口中间
-            if (DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
-            {
-                RectInt32 workArea = displayArea.WorkArea;
-                AppWindow.Move(new PointInt32((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
-            }
-
             if (RuntimeHelper.IsElevated)
             {
                 User32Library.ChangeWindowMessageFilter(WindowMessage.WM_DROPFILES, ChangeFilterFlags.MSGFLT_ADD);
@@ -966,6 +959,13 @@ namespace GetStoreAppInstaller.Views.Windows
 
             rasterizationScale = contentIsland.RasterizationScale;
             AppWindow.Resize(new SizeInt32(Convert.ToInt32(800 * contentIsland.RasterizationScale), Convert.ToInt32(560 * contentIsland.RasterizationScale)));
+
+            // 默认直接显示到窗口中间
+            if (DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
+            {
+                RectInt32 workArea = displayArea.WorkArea;
+                AppWindow.Move(new PointInt32((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
+            }
         }
 
         #region 第一部分：窗口类事件
