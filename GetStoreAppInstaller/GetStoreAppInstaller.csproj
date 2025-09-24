@@ -67,6 +67,12 @@
     <None Remove="Views\NotificationTips\CopyPasteInstallerNotificationTip.xaml" />
 		<None Remove="Views\Windows\InstallerWindow.xaml" />
 
+		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.6584" GeneratePathProperty="true" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.7.20250829.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.250916003" />
+		
+		<Page Remove="InstallerApp.xaml" />
     <Page Update="Views\NotificationTips\CopyPasteInstallerNotificationTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
 		<Page Update="Views\Windows\InstallerWindow.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
 	</ItemGroup>
