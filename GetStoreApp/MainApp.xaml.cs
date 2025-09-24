@@ -22,7 +22,7 @@ namespace GetStoreApp
     {
         private bool isDisposed;
 
-        public Window Window { get; private set; }
+        public Window MainWindow { get; private set; }
 
         public MainApp()
         {
@@ -38,9 +38,9 @@ namespace GetStoreApp
         {
             base.OnLaunched(args);
 
-            Window = new MainWindow();
-            Window.Activate();
-            SetAppIcon(Window.AppWindow);
+            MainWindow = new MainWindow();
+            MainWindow.Activate();
+            SetAppIcon(MainWindow.AppWindow);
 
             if (JumpList.IsSupported())
             {
