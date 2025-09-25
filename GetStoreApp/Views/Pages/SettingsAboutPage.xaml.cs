@@ -46,7 +46,6 @@ namespace GetStoreApp.Views.Pages
         //项目引用信息
         private List<ContentLinkInfo> ReferenceList { get; } =
         [
-            new ContentLinkInfo() { DisplayText = "Microsoft.UI.Xaml",Uri = new Uri("https://github.com/microsoft/microsoft-ui-xaml") },
             new ContentLinkInfo() { DisplayText = "Microsoft.Web.WebView2",Uri = new Uri("https://aka.ms/webview") },
             new ContentLinkInfo() { DisplayText = "Microsoft.Windows.CsWinRT",Uri = new Uri("https://github.com/microsoft/cswinrt") },
             new ContentLinkInfo() { DisplayText = "Microsoft.Windows.SDK.BuildTools",Uri = new Uri("https://aka.ms/WinSDKProjectURL") },
