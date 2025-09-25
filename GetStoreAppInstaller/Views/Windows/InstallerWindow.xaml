@@ -20,7 +20,7 @@
     mc:Ignorable="d">
 
     <Page
-        x:Name="MainPage"
+        x:Name="InstallerPage"
         ActualThemeChanged="{x:Bind OnActualThemeChanged}"
         AllowDrop="{x:Bind CanDragFile, Mode=OneWay}"
         Background="Transparent"
@@ -405,7 +405,7 @@
                                                         </Style>
                                                     </Flyout.FlyoutPresenterStyle>
 
-                                                    <Grid DataContext="{x:Bind MainPage}">
+                                                    <Grid DataContext="{x:Bind InstallerPage}">
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="40" />
                                                             <RowDefinition Height="*" />
@@ -2654,12 +2654,12 @@
                 <VisualStateGroup>
                     <VisualState x:Name="BackgroundDefault">
                         <VisualState.Setters>
-                            <Setter Target="MainPage.Background" Value="{ThemeResource DefaultBackgroundColorBrush}" />
+                            <Setter Target="InstallerPage.Background" Value="{ThemeResource DefaultBackgroundColorBrush}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="BackgroundTransparent">
                         <VisualState.Setters>
-                            <Setter Target="MainPage.Background" Value="Transparent" />
+                            <Setter Target="InstallerPage.Background" Value="Transparent" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>

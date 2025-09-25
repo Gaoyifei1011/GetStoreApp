@@ -1433,10 +1433,10 @@ namespace GetStoreAppInstaller.Views.Windows
                     {
                         TargetApplicationPackageFamilyName = global::Windows.ApplicationModel.Package.Current.Id.FamilyName
                     },
-                        new ValueSet()
-                        {
-                            { "Parameter", "Settings" }
-                        });
+                    new ValueSet()
+                    {
+                        { "Parameter", "Settings" }
+                    });
                 }
                 catch (Exception e)
                 {
@@ -2025,32 +2025,32 @@ namespace GetStoreAppInstaller.Views.Windows
             if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[1]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(MicaKind.Base);
-                VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
+                VisualStateManager.GoToState(InstallerPage, "BackgroundTransparent", false);
             }
             else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[2]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(MicaKind.BaseAlt);
-                VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
+                VisualStateManager.GoToState(InstallerPage, "BackgroundTransparent", false);
             }
             else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[3]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Default);
-                VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
+                VisualStateManager.GoToState(InstallerPage, "BackgroundTransparent", false);
             }
             else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[4]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Base);
-                VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
+                VisualStateManager.GoToState(InstallerPage, "BackgroundTransparent", false);
             }
             else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[5]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Thin);
-                VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
+                VisualStateManager.GoToState(InstallerPage, "BackgroundTransparent", false);
             }
             else
             {
                 WindowSystemBackdrop = null;
-                VisualStateManager.GoToState(MainPage, "BackgroundDefault", false);
+                VisualStateManager.GoToState(InstallerPage, "BackgroundDefault", false);
             }
         }
 
@@ -2225,7 +2225,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         public async Task ShowNotificationAsync(TeachingTip teachingTip, int duration = 2000)
         {
-            if (teachingTip is not null && MainPage.Content is Grid grid)
+            if (teachingTip is not null && InstallerPage.Content is Grid grid)
             {
                 try
                 {
