@@ -146,7 +146,6 @@
 
 ### פרויקטים בשימוש (ממוין לפי סדר אלפביתי)
 
-> * [Microsoft.UI.Xaml](https://github.com/microsoft/microsoft-ui-xaml) 
 > * [Microsoft.Web.WebView2](https://aka.ms/webview) 
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt) 
 > * [Microsoft.Windows.SDK.BuildTools](https://aka.ms/WinSDKProjectURL) 
