@@ -1,10 +1,11 @@
 ﻿using GetStoreAppInstaller.Extensions.DataType.Constant;
 using GetStoreAppInstaller.Services.Root;
+using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Windows.Globalization;
-using Microsoft.UI.Xaml;
 
 namespace GetStoreAppInstaller.Services.Settings
 {
@@ -45,7 +46,9 @@ namespace GetStoreAppInstaller.Services.Settings
             }
 
             ApplicationLanguages.PrimaryLanguageOverride = AppLanguage;
-            FlowDirection = CultureInfo.GetCultureInfo(AppLanguage).TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+            CultureInfo cultureInfo = CultureInfo.GetCultureInfo(AppLanguage);
+            FlowDirection = cultureInfo.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+            User32Library.SetProcessDefaultLayout(Convert.ToUInt32(cultureInfo.TextInfo.IsRightToLeft));
         }
     }
 }

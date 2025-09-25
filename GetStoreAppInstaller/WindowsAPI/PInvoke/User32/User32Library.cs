@@ -55,5 +55,14 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
         [LibraryImport(User32, EntryPoint = "SendMessageW", SetLastError = false), PreserveSig]
         public static partial nint SendMessage(nint hWnd, WindowMessage wMsg, nuint wParam, nint lParam);
+
+        /// <summary>
+        /// 当仅针对当前正在运行的进程创建没有父级或所有者的窗口时，更改默认布局。
+        /// </summary>
+        /// <param name="dwDefaultLayout">默认进程布局。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [LibraryImport(User32, EntryPoint = "SetProcessDefaultLayout", SetLastError = false), PreserveSig]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool SetProcessDefaultLayout(uint dwDefaultLayout);
     }
 }
