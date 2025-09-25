@@ -11,6 +11,8 @@
   "AvailablePackageVolume": "Available volume",
   "AvailablePackageVolumeEmptyDescription": "There are no available storage volumes",
   "Back": "Back",
+  "BrowserInformation": "Browser information",
+  "BrowserRuntimeVersion": "Browser runtime version: ",
   "Cancel": "Cancel",
   "CatalogTrustLevel": "Data source trust level",
   "CatalogTrustLevelNone": "Distrust",

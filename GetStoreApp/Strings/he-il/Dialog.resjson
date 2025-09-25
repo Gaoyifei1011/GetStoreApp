@@ -11,6 +11,8 @@
   "AvailablePackageVolume": "נפח זמין",
   "AvailablePackageVolumeEmptyDescription": "אין התקני אחסון זמינים",
   "Back": "חזור",
+  "BrowserInformation": "מידע על דפדפן",
+  "BrowserRuntimeVersion": "גרסת ריצה בדפדפן:",
   "Cancel": "ביטול",
   "CatalogTrustLevel": "רמת אמון במקור נתונים",
   "CatalogTrustLevelNone": "לא מהימן",

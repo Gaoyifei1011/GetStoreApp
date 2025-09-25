@@ -303,6 +303,16 @@
                                     <FontIcon Glyph="&#xE713;" />
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
+
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnBrowserInformationClicked}"
+                                IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WebView/BrowserInformation')}">
+
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE946;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
                         </MenuFlyout>
                     </Button.Flyout>
 

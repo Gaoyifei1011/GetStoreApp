@@ -11,6 +11,8 @@
   "AvailablePackageVolume": "可用卷",
   "AvailablePackageVolumeEmptyDescription": "没有可用的存储卷",
   "Back": "返回",
+  "BrowserInformation": "浏览器信息",
+  "BrowserRuntimeVersion": "浏览器运行时版本：",
   "Cancel": "取消",
   "CatalogTrustLevel": "数据源信任等级",
   "CatalogTrustLevelNone": "不信任",

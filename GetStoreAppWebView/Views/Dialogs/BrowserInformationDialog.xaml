@@ -1,0 +1,19 @@
+<ContentDialog
+    x:Class="GetStoreAppWebView.Views.Dialogs.BrowserInformationDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:rootservice="using:GetStoreAppWebView.Services.Root"
+    Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/BrowserInformation')}"
+    BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
+    CloseButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Close')}"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    mc:Ignorable="d">
+
+    <TextBlock>
+        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/BrowserRuntimeVersion')}" />
+        <!--    -->
+        <Run Text="{x:Bind BrowserRuntimeVersion}" />
+    </TextBlock>
+</ContentDialog>

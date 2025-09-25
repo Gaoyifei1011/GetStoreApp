@@ -605,6 +605,17 @@ namespace GetStoreAppWebView.Views.Windows
         }
 
         /// <summary>
+        /// 查看浏览器内核信息
+        /// </summary>
+        private async void OnBrowserInformationClicked(object sender, RoutedEventArgs args)
+        {
+            if (WebViewBrowser is not null && WebViewBrowser.CoreWebView2 is not null)
+            {
+                await ShowDialogAsync(new BrowserInformationDialog(WebViewBrowser.CoreWebView2.Environment.BrowserVersionString));
+            }
+        }
+
+        /// <summary>
         /// 进程异常退出时触发的事件
         /// </summary>
         private async void OnCoreProcessFailed(WebView2 sender, CoreWebView2ProcessFailedEventArgs args)
