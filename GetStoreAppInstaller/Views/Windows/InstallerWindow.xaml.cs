@@ -53,7 +53,6 @@ using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
 using Windows.Globalization;
 using Windows.Graphics;
-using Windows.Management.Core;
 using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.Storage.Streams;
@@ -1850,7 +1849,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 {
                     try
                     {
-                        if (ApplicationDataManager.CreateForPackageFamily(PackageFamilyName) is ApplicationData applicationData)
+                        if (Microsoft.Windows.Storage.ApplicationData.GetForPackageFamily(PackageFamilyName) is Microsoft.Windows.Storage.ApplicationData applicationData)
                         {
                             await Launcher.LaunchFolderAsync(applicationData.LocalFolder);
                         }

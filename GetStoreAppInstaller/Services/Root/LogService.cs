@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Windows.Storage;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
@@ -6,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
-using Windows.Storage;
 
 namespace GetStoreAppInstaller.Services.Root
 {
@@ -16,7 +16,7 @@ namespace GetStoreAppInstaller.Services.Root
     public static class LogService
     {
         private static readonly string unknown = "unknown";
-        private static readonly string exceptionFolderPath = Path.Combine([ApplicationData.Current.LocalCacheFolder.Path, "Logs", "Exception"]);
+        private static readonly string exceptionFolderPath = Path.Combine([ApplicationData.GetDefault().LocalCacheFolder.Path, "Logs", "Exception"]);
         private static readonly LoggingChannelOptions channelOptions = new();
         private static SemaphoreSlim logSemaphoreSlim = new(1, 1);
 
@@ -56,7 +56,7 @@ namespace GetStoreAppInstaller.Services.Root
 
                     string logFileName = string.Format("Logs-{0}-{1}-{2}-{3:D2}-{4}.etl", nameSpaceName, className, methodName, index, DateTimeOffset.Now.ToString("yyyy-MM-dd HH-mm-ss.fff"));
                     exceptionChannel.LogEvent(logFileName, exceptionFields, logLevel, exceptionOptions);
-                    await exceptionSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), logFileName);
+                    await exceptionSession.SaveToFileAsync(await Windows.Storage.StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), logFileName);
                     exceptionSession.Dispose();
                 }
                 catch (Exception e)
@@ -107,7 +107,7 @@ namespace GetStoreAppInstaller.Services.Root
 
                     string logFileName = string.Format("Logs-{0}-{1}-{2}-{3:D2}-{4}.etl", nameSpaceName, className, methodName, index, DateTimeOffset.Now.ToString("yyyy-MM-dd HH-mm-ss.fff"));
                     exceptionChannel.LogEvent(logFileName, exceptionFields, logLevel, exceptionOptions);
-                    await exceptionSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), logFileName);
+                    await exceptionSession.SaveToFileAsync(await Windows.Storage.StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), logFileName);
                     exceptionSession.Dispose();
                 }
                 catch (Exception e)
