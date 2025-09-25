@@ -1,7 +1,10 @@
-﻿using Microsoft.Web.WebView2.Core;
+﻿using GetStoreAppWebView.Extensions.DataType.Enums;
+using Microsoft.Web.WebView2.Core;
 using System;
+using System.IO;
 using System.Runtime.InteropServices.Marshalling;
 using Windows.ApplicationModel;
+using Windows.Storage;
 
 namespace GetStoreAppWebView.Helpers.Root
 {
@@ -12,12 +15,14 @@ namespace GetStoreAppWebView.Helpers.Root
     {
         public static bool IsMSIX { get; private set; }
 
-        public static bool IsWebView2Installed { get; private set; }
+        public static bool IsElevated { get; } = Environment.IsPrivilegedProcess;
+
+        public static WebView2Type WebView2Type { get; private set; }
 
         static RuntimeHelper()
         {
             IsInMsixContainer();
-            GetWebView2State();
+            GetWebView2Type();
         }
 
         /// <summary>
@@ -37,19 +42,27 @@ namespace GetStoreAppWebView.Helpers.Root
         }
 
         /// <summary>
-        /// 判断 WebView2 运行时是否已安装
+        /// 获取 WebView2 运行时安装的类型
         /// </summary>
-        private static void GetWebView2State()
+        private static void GetWebView2Type()
         {
             try
             {
                 string webViewVersion = CoreWebView2Environment.GetAvailableBrowserVersionString();
-                IsWebView2Installed = !string.IsNullOrEmpty(webViewVersion);
+                if (!string.IsNullOrEmpty(webViewVersion))
+                {
+                    WebView2Type = WebView2Type.User;
+                }
+                else
+                {
+                    string systemWebView2Path = Path.Combine(SystemDataPaths.GetDefault().System, "Microsoft-Edge-WebView");
+                    string systemWebViewVersion = CoreWebView2Environment.GetAvailableBrowserVersionString(systemWebView2Path);
+                    WebView2Type = !string.IsNullOrEmpty(systemWebViewVersion) ? WebView2Type.System : WebView2Type.None;
+                }
             }
             catch (Exception e)
             {
                 ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                IsWebView2Installed = false;
             }
         }
     }

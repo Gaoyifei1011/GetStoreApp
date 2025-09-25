@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Windows.ApplicationModel.Resources.Core;
+﻿using Microsoft.Windows.ApplicationModel.Resources;
+using System;
 using Windows.Foundation.Diagnostics;
-using Windows.UI.Xaml;
 
 namespace GetStoreAppWebView.Services.Root
 {
@@ -16,11 +14,10 @@ namespace GetStoreAppWebView.Services.Root
         private static string _defaultAppLanguage;
         private static string _currentAppLanguage;
 
-        private static readonly ResourceContext defaultResourceContext = new();
-        private static readonly ResourceContext currentResourceContext = new();
-        private static readonly ResourceMap resourceMap = ResourceManager.Current.MainResourceMap;
-
-        public static List<string> ThemeList { get; } = [];
+        private static readonly ResourceManager resourceManager = new();
+        private static ResourceContext defaultResourceContext;
+        private static ResourceContext currentResourceContext;
+        private static ResourceMap resourceMap;
 
         /// <summary>
         /// 初始化应用本地化资源
@@ -32,28 +29,14 @@ namespace GetStoreAppWebView.Services.Root
             _defaultAppLanguage = defaultAppLanguage;
             _currentAppLanguage = currentAppLanguage;
 
-            defaultResourceContext.QualifierValues["Language"] = _defaultAppLanguage;
-            currentResourceContext.QualifierValues["Language"] = _currentAppLanguage;
+            defaultResourceContext = resourceManager.CreateResourceContext();
+            currentResourceContext = resourceManager.CreateResourceContext();
+            resourceMap = resourceManager.MainResourceMap;
+
+            defaultResourceContext.QualifierValues["Language"] = Convert.ToString(_defaultAppLanguage);
+            currentResourceContext.QualifierValues["Language"] = Convert.ToString(_currentAppLanguage);
 
             isInitialized = true;
-        }
-
-        /// <summary>
-        /// 初始化应用本地化信息
-        /// </summary>
-        public static void LocalizeReosurce()
-        {
-            InitializeThemeList();
-        }
-
-        /// <summary>
-        /// 初始化应用主题信息列表
-        /// </summary>
-        private static void InitializeThemeList()
-        {
-            ThemeList.Add(nameof(ElementTheme.Default));
-            ThemeList.Add(nameof(ElementTheme.Light));
-            ThemeList.Add(nameof(ElementTheme.Dark));
         }
 
         /// <summary>

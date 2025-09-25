@@ -1,12 +1,13 @@
+using GetStoreAppWebView.Extensions.DataType.Enums;
 using GetStoreAppWebView.Helpers.Root;
 using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.Services.Settings;
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using System;
-using System.IO;
 using System.Threading;
-using Windows.Storage;
+using Windows.Foundation.Diagnostics;
 using Windows.System;
-using Windows.UI.Xaml;
 using WinRT;
 
 // 抑制 CA1806 警告
@@ -22,7 +23,7 @@ namespace GetStoreAppWebView
         /// <summary>
         /// 应用程序的主入口点
         /// </summary>
-        [MTAThread]
+        [STAThread]
         public static void Main()
         {
             ComWrappersSupport.InitializeComWrappers();
@@ -33,25 +34,28 @@ namespace GetStoreAppWebView
                 return;
             }
 
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             InitializeResources();
 
-            if (string.Equals(WebKernelService.WebKernel, WebKernelService.WebKernelList[1]))
+            if (RuntimeHelper.WebView2Type is WebView2Type.None)
             {
-                Environment.SetEnvironmentVariable("WEBVIEW2_USE_VISUAL_HOSTING_FOR_OWNED_WINDOWS", "1");
-
-                string systemWebView2Path = Path.Combine(SystemDataPaths.GetDefault().System, "msedgewebview2.exe");
-
-                if (Directory.Exists(systemWebView2Path) && File.Exists(Path.Combine(systemWebView2Path, "WebView2.exe")))
-                {
-                    Environment.SetEnvironmentVariable("WEBVIEW2_BROWSER_EXECUTABLE_FOLDER", Path.Combine(SystemDataPaths.GetDefault().System, "Microsoft-Edge-WebView"));
-                }
+                Launcher.LaunchUriAsync(new Uri("https://apps.microsoft.com")).Wait();
+                return;
             }
 
             Application.Start((param) =>
             {
-                SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread()));
-                new App();
+                SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread()));
+                new WebViewApp();
             });
+        }
+
+        /// <summary>
+        /// 处理应用程序未知异常处理
+        /// </summary>
+        private static void OnUnhandledException(object sender, System.UnhandledExceptionEventArgs args)
+        {
+            LogService.WriteLog(LoggingLevel.Warning, nameof(GetStoreAppWebView), nameof(Program), nameof(OnUnhandledException), 1, args.ExceptionObject as Exception);
         }
 
         /// <summary>
@@ -61,10 +65,10 @@ namespace GetStoreAppWebView
         {
             LanguageService.InitializeLanguage();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
-            ResourceService.LocalizeReosurce();
 
+            AlwaysShowBackdropService.InitializeAlwaysShowBackdrop();
+            BackdropService.InitializeBackdrop();
             ThemeService.InitializeTheme();
-            WebKernelService.InitializeWebKernel();
         }
     }
 }

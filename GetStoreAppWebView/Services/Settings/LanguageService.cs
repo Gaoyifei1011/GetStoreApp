@@ -1,10 +1,11 @@
 ﻿using GetStoreAppWebView.Extensions.DataType.Constant;
 using GetStoreAppWebView.Services.Root;
+using GetStoreAppWebView.WindowsAPI.PInvoke.User32;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Windows.Globalization;
-using Windows.UI.Xaml;
 
 namespace GetStoreAppWebView.Services.Settings
 {
@@ -45,7 +46,9 @@ namespace GetStoreAppWebView.Services.Settings
             }
 
             ApplicationLanguages.PrimaryLanguageOverride = AppLanguage;
-            FlowDirection = CultureInfo.GetCultureInfo(AppLanguage).TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+            CultureInfo cultureInfo = CultureInfo.GetCultureInfo(AppLanguage);
+            FlowDirection = cultureInfo.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+            User32Library.SetProcessDefaultLayout(Convert.ToUInt32(cultureInfo.TextInfo.IsRightToLeft));
         }
     }
 }

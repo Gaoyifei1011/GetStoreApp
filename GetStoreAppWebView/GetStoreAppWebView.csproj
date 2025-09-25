@@ -30,11 +30,13 @@
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.22000.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
-    <UseUwp>true</UseUwp>
     <WebView2NeverCopyLoaderDllToOutputDirectory>true</WebView2NeverCopyLoaderDllToOutputDirectory>
     <WebView2EnableCsWinRTProjection>true</WebView2EnableCsWinRTProjection>
     <Win32Resource>GetStoreAppWebView.res</Win32Resource>
-    <WindowsSdkPackageVersion>10.0.26100.75</WindowsSdkPackageVersion>
+		<WindowsAppSDKBackgroundTask>false</WindowsAppSDKBackgroundTask>
+		<WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
+		<WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>
+		<WindowsSdkPackageVersion>10.0.26100.75</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 
@@ -58,23 +60,23 @@
     <DebugType>none</DebugType>
   </PropertyGroup>
 
-  <ItemGroup>    
-    <Content Remove="Assets\GetStoreAppWebView.ico" />
-    <Manifest Include="$(ApplicationManifest)" />
+  <ItemGroup>
+		<ApplicationDefinition Include="WebViewApp.xaml" SubType="Designer" />
+
+		<Manifest Include="$(ApplicationManifest)" />
 
     <None Remove="Views\Dialogs\ProcessFailedDialog.xaml" />
-    <None Remove="Views\Pages\PinnerPage.xaml" />
-    <None Remove="Views\Pages\WebViewPage.xaml" />
+    <None Remove="Views\Windows\WebViewWindow.xaml" />
     
-    <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3485.44" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.6584" GeneratePathProperty="true" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.7.20250829.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    
-    <Page Update="Views\Dialogs\ProcessFailedDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Views\Pages\PinnerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Views\Pages\WebViewPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.250916003" />
+
+		<Page Remove="WebViewApp.xaml" />
+		<Page Update="Views\Dialogs\ProcessFailedDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+		<Page Update="Views\Windows\WebViewWindow.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->

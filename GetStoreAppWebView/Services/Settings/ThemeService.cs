@@ -1,9 +1,8 @@
 ﻿using GetStoreAppWebView.Extensions.DataType.Constant;
 using GetStoreAppWebView.Services.Root;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using Windows.UI.Xaml;
 
 namespace GetStoreAppWebView.Services.Settings
 {
@@ -12,39 +11,23 @@ namespace GetStoreAppWebView.Services.Settings
     /// </summary>
     public static class ThemeService
     {
-        private static readonly string themeSettingsKey = ConfigKey.ThemeKey;
+        private static readonly string settingsKey = ConfigKey.ThemeKey;
 
         private static string defaultAppTheme;
 
-        private static string _appTheme;
+        public static string AppTheme { get; set; }
 
-        public static string AppTheme
-        {
-            get { return _appTheme; }
-
-            private set
-            {
-                if (!string.Equals(_appTheme, value))
-                {
-                    _appTheme = value;
-                    PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(AppTheme)));
-                }
-            }
-        }
-
-        public static List<string> ThemeList { get; private set; }
-
-        public static event PropertyChangedEventHandler PropertyChanged;
+        public static List<string> ThemeList { get; } = [];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的主题值
         /// </summary>
         public static void InitializeTheme()
         {
-            ThemeList = ResourceService.ThemeList;
-
+            ThemeList.Add(nameof(ElementTheme.Default));
+            ThemeList.Add(nameof(ElementTheme.Light));
+            ThemeList.Add(nameof(ElementTheme.Dark));
             defaultAppTheme = ThemeList.Find(item => string.Equals(item, nameof(ElementTheme.Default), StringComparison.OrdinalIgnoreCase));
-
             AppTheme = GetTheme();
         }
 
@@ -53,7 +36,7 @@ namespace GetStoreAppWebView.Services.Settings
         /// </summary>
         private static string GetTheme()
         {
-            string theme = LocalSettingsService.ReadSetting<string>(themeSettingsKey);
+            string theme = LocalSettingsService.ReadSetting<string>(settingsKey);
 
             if (string.IsNullOrEmpty(theme))
             {
