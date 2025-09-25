@@ -12,7 +12,6 @@ using Microsoft.Windows.Storage.Pickers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;

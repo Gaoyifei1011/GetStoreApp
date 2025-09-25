@@ -21,7 +21,6 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Foundation.Diagnostics;
-using Windows.Storage;
 using Windows.System;
 
 // 抑制 CA1822，IDE0060 警告

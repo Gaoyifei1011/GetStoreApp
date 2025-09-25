@@ -11,12 +11,12 @@
 
         public const string BackdropKey = "AppBackdrop";
 
-        public const string ForceAppShutdownKey = "ForceAppShutdown";
-
-        public const string ForceTargetAppShutdownKey = "ForceTargetAppShutdown";
-
         public const string LanguageKey = "AppLanguage";
 
         public const string ThemeKey = "AppTheme";
+
+        public const string ForceAppShutdownKey = "ForceAppShutdown";
+
+        public const string ForceTargetAppShutdownKey = "ForceTargetAppShutdown";
     }
 }
