@@ -22,7 +22,6 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <!--  应用通知设置  -->
@@ -112,96 +111,9 @@
                 </StackPanel>
             </Grid>
 
-            <!--  浏览器内核设置  -->
-            <Grid
-                Grid.Row="1"
-                Height="60"
-                Margin="0,0,0,2"
-                Padding="16,0"
-                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                BorderThickness="1"
-                CornerRadius="{StaticResource ControlCornerRadius}">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <FontIcon
-                    Grid.Column="0"
-                    Margin="0,0,12,0"
-                    FontSize="16"
-                    Glyph="&#xE774;" />
-
-                <StackPanel
-                    Grid.Column="1"
-                    VerticalAlignment="Center"
-                    Orientation="Vertical">
-
-                    <TextBlock
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Style="{StaticResource BodyTextBlockStyle}"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/WebKernel')}" />
-
-                    <TextBlock
-                        x:Name="WebKernelDescription"
-                        HorizontalAlignment="Left"
-                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                        Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/WebKernelDescription')}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="NoWrap">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/WebKernelDescription')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                Visibility="{x:Bind WebKernelDescription.IsTextTrimmed, Mode=OneWay}" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
-                </StackPanel>
-
-                <HyperlinkButton
-                    Grid.Column="2"
-                    Margin="0,0,6,0"
-                    VerticalAlignment="Center"
-                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/DownloadWebView2')}"
-                    NavigateUri="https://developer.microsoft.com/microsoft-edge/webview2" />
-
-                <DropDownButton
-                    Grid.Column="3"
-                    VerticalAlignment="Center"
-                    Content="{x:Bind WebKernel.Value, Mode=OneWay}">
-
-                    <DropDownButton.Flyout>
-                        <MenuFlyout Placement="Bottom">
-                            <RadioMenuFlyoutItem
-                                Click="{x:Bind OnWebKernelSelectClicked}"
-                                GroupName="WebKernelRadioGroup"
-                                IsChecked="{x:Bind x:String.Equals(WebKernel.Key, WebKernelList[0].Key), Mode=OneWay}"
-                                Tag="0"
-                                Text="{x:Bind WebKernelList[0].Value}" />
-
-                            <RadioMenuFlyoutItem
-                                Click="{x:Bind OnWebKernelSelectClicked}"
-                                GroupName="WebKernelRadioGroup"
-                                IsChecked="{x:Bind x:String.Equals(WebKernel.Key, WebKernelList[1].Key), Mode=OneWay}"
-                                Tag="1"
-                                Text="{x:Bind WebKernelList[1].Value}" />
-                        </MenuFlyout>
-                    </DropDownButton.Flyout>
-                </DropDownButton>
-            </Grid>
-
             <!--  文件右键菜单设置  -->
             <Grid
-                Grid.Row="2"
+                Grid.Row="1"
                 Height="60"
                 Margin="0,0,0,2"
                 Padding="16,0"
@@ -296,7 +208,7 @@
 
             <!--  痕迹清理  -->
             <Grid
-                Grid.Row="3"
+                Grid.Row="2"
                 Height="60"
                 Margin="0,0,0,2"
                 Padding="16,0"
@@ -356,7 +268,7 @@
 
             <!--  日志记录设置  -->
             <Expander
-                Grid.Row="4"
+                Grid.Row="3"
                 Margin="0,0,0,2"
                 Padding="0"
                 HorizontalAlignment="Stretch"

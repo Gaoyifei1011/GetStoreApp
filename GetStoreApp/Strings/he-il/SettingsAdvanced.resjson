@@ -2,7 +2,6 @@
   "Clear": "נקה",
   "ClearLog": "נקה רשומות יומן",
   "ClearLogDescription": "נקה את כל תוכן יומני היישום",
-  "DownloadWebView2": "הורד את WebView2",
   "LogFolder": "נתיב אחסון יומנים",
   "LogFolderDescription": "נהל את תוכן יומני היישום",
   "LogRecord": "רשומות יומן",
@@ -21,9 +20,5 @@
   "ShellMenuOnContent": "הצג",
   "SystemNotificationSettings": "הגדרות התראות מערכת",
   "TraceCleanup": "ניקוי עקבות",
-  "TraceCleanupDescription": "נקה את כל עקבות השימוש בתוך היישום",
-  "WebKernel": "בחירת ליבת דפדפן",
-  "WebKernelDescription": "בחר את הליבה המשמשת את דפדפן האינטרנט לעיבוד הדף",
-  "WebKernelWebView": "WebView",
-  "WebKernelWebView2": "WebView2"
+  "TraceCleanupDescription": "נקה את כל עקבות השימוש בתוך היישום"
 }

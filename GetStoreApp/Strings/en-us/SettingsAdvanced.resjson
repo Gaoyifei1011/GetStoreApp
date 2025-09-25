@@ -2,7 +2,6 @@
   "Clear": "Clear",
   "ClearLog": "Clear log record",
   "ClearLogDescription": "Clear all log contents of the app",
-  "DownloadWebView2": "Download WebView2",
   "LogFolder": "Log storage path",
   "LogFolderDescription": "Manage the log content of the app",
   "LogRecord": "Log record",
@@ -21,9 +20,5 @@
   "ShellMenuOnContent": "Show",
   "SystemNotificationSettings": "System notification settings",
   "TraceCleanup": "Trace cleanup",
-  "TraceCleanupDescription": "Clean up all traces of use within the app",
-  "WebKernel": "Browser kernel selection",
-  "WebKernelDescription": "Select the kernel used by the web browser to render the page",
-  "WebKernelWebView": "WebView",
-  "WebKernelWebView2": "WebView2"
+  "TraceCleanupDescription": "Clean up all traces of use within the app"
 }

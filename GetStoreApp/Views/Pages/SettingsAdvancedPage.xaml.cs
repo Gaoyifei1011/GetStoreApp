@@ -30,9 +30,6 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsAdvancedPage : Page, INotifyPropertyChanged
     {
-        private readonly string WebKernelWebViewString = ResourceService.GetLocalized("SettingsAdvanced/WebKernelWebView");
-        private readonly string WebKernelWebView2String = ResourceService.GetLocalized("SettingsAdvanced/WebKernelWebView2");
-
         private bool _notificationValue = NotificationService.AppNotification;
 
         public bool NotificationValue
@@ -61,22 +58,6 @@ namespace GetStoreApp.Views.Pages
                 {
                     _notificationEnabled = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NotificationEnabled)));
-                }
-            }
-        }
-
-        private KeyValuePair<string, string> _webKernel;
-
-        public KeyValuePair<string, string> WebKernel
-        {
-            get { return _webKernel; }
-
-            set
-            {
-                if (!Equals(_webKernel, value))
-                {
-                    _webKernel = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WebKernel)));
                 }
             }
         }
@@ -113,16 +94,11 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<KeyValuePair<string, string>> WebKernelList { get; } = [];
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public SettingsAdvancedPage()
         {
             InitializeComponent();
-            WebKernelList.Add(KeyValuePair.Create(WebKernelService.WebKernelList[0], WebKernelWebViewString));
-            WebKernelList.Add(KeyValuePair.Create(WebKernelService.WebKernelList[1], WebKernelWebView2String));
-            WebKernel = WebKernelList.Find(item => string.Equals(item.Key, WebKernelService.WebKernel, StringComparison.OrdinalIgnoreCase));
             NotificationService.PropertyChanged += OnServicePropertyChanged;
             GlobalNotificationService.ApplicationExit += OnApplicationExit;
         }
@@ -145,18 +121,6 @@ namespace GetStoreApp.Views.Pages
                     ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 }
             });
-        }
-
-        /// <summary>
-        /// 选择网页浏览器渲染网页使用的内核
-        /// </summary>
-        private void OnWebKernelSelectClicked(object sender, RoutedEventArgs args)
-        {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
-            {
-                WebKernel = WebKernelList[Convert.ToInt32(tag)];
-                WebKernelService.SetWebKernel(WebKernel.Key);
-            }
         }
 
         /// <summary>

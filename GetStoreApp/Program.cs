@@ -125,7 +125,6 @@ namespace GetStoreApp
             TopMostService.InitializeTopMost();
 
             CancelAutoUpdateService.InitializeCancelAutoUpdate();
-            WebKernelService.InitializeWebKernel();
             ShellMenuService.InitializeShellMenu();
             NotificationService.InitializeNotification();
             await WinGetConfigService.InitializeWinGetConfigAsync();

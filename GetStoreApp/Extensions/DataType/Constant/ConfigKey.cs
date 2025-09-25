@@ -43,8 +43,6 @@
 
         public const string TopMostKey = "TopMostValue";
 
-        public const string WebKernelKey = "WebKernel";
-
         public const string UseSystemRegionKey = "UseSystemRegion";
     }
 }
