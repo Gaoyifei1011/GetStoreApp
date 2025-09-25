@@ -98,7 +98,6 @@
   "WebViewProcessFailed": "Web process failed",
   "WebViewProcessFailedContent": "The browser process is abnormal and the program is about to exit",
   "WindowsAppSDKVersion": "Windows App SDK version：",
-  "WindowsUIVersion": "Windows UI version:",
   "WinGetAppsDownloadOption": "Download options",
   "WinGetAppsInstallOption": "Install options",
   "WinGetAppsRepairOption": "Repair options",
@@ -122,7 +121,6 @@
   "WinGetDataSourceEditInvalidOptions": "Invalid options",
   "WinGetDataSourceEditSuccess": "WinGet data source modify successfully",
   "WinGetDataSourceSavingContent": "Saving, please wait...",
-  "WinUI2Version": "WinUI 2 version:",
-  "WinUI3Version": "WinUI 3 version:",
+  "WinUIVersion": "WinUI version:",
   "Yes": "Yes"
 }

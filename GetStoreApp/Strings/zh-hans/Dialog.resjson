@@ -98,7 +98,6 @@
   "WebViewProcessFailed": "浏览器进程异常",
   "WebViewProcessFailedContent": "浏览器进程发生了异常，程序即将退出",
   "WindowsAppSDKVersion": "Windows 应用 SDK 版本：",
-  "WindowsUIVersion": "Windows UI 版本：",
   "WinGetAppsDownloadOption": "下载选项",
   "WinGetAppsInstallOption": "安装选项",
   "WinGetAppsRepairOption": "修复选项",
@@ -122,7 +121,6 @@
   "WinGetDataSourceEditInvalidOptions": "无效选项",
   "WinGetDataSourceEditSuccess": "WinGet 数据源修改成功",
   "WinGetDataSourceSavingContent": "正在保存中，请稍候...",
-  "WinUI2Version": "WinUI 2 版本：",
-  "WinUI3Version": "WinUI 3 版本：",
+  "WinUIVersion": "WinUI 版本：",
   "Yes": "是"
 }
