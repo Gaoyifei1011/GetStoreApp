@@ -161,7 +161,7 @@ All the content of the program has been developed
 
 ### Download and installation considerations
 
-> * The program is built using the Windows Apps SDK, and it is recommended that your system version be Windows 11 (codename 21H2 / build 22000) or later, and the minimum version is Windows 11 (codename 21H2 / build 22000) or later.
+> * The program is built using the Windows Apps SDK, and it is recommended that your system version be Windows 10 (codename 2004 / build 19041) or later, and the minimum version is Windows 11 (codename 21H2 / build 22000) or later.
 > * If your system is Windows 10, there are some limitations to app functionality:
     Setting the mica/mica alt background color is not supported
 > * [Release](https://github.com/Gaoyifei1011/GetStoreApp/releases) The binary installation file for the page has been packaged into a compressed package. Unzip the package and run the install.ps1 file in Powershell admin mode (if necessary) for a quick installation.
