@@ -115,7 +115,7 @@ namespace GetStoreApp.Services.Root
                     {
                         if (argumentsList[1] is "Web")
                         {
-                            await Launcher.LaunchUriAsync(new Uri("getstoreappwebbrowser:"));
+                            await Launcher.LaunchUriAsync(new Uri("getstoreappwebview:"));
                             if (!isLaunched)
                             {
                                 Environment.Exit(Environment.ExitCode);

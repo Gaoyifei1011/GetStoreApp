@@ -30,7 +30,7 @@ namespace GetStoreAppWebView
 
             if (!RuntimeHelper.IsMSIX)
             {
-                Launcher.LaunchUriAsync(new Uri("getstoreapp:")).Wait();
+                Launcher.LaunchUriAsync(new Uri("getstoreappwebview:")).Wait();
                 return;
             }
 

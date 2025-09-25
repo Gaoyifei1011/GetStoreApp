@@ -690,7 +690,7 @@ namespace GetStoreApp.Views.Windows
                         {
                             try
                             {
-                                await global::Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreappwebbrowser:"));
+                                await global::Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreappwebview:"));
                             }
                             catch (Exception e)
                             {

@@ -85,7 +85,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         try
                         {
-                            await Launcher.LaunchUriAsync(new Uri("getstoreappwebbrowser:"));
+                            await Launcher.LaunchUriAsync(new Uri("getstoreappwebview:"));
                         }
                         catch (Exception e)
                         {

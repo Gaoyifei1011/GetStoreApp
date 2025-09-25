@@ -12,5 +12,5 @@
   "PackageDescription": "הורד את אפליקציית Microsoft Store במצב לא מקוון",
   "PackageDisplayName": "קבל יישום מהחנות",
   "PinnerProtocolName": "תוכנית עזר להצמדה",
-  "WebBrowserProtocolName": "דפדפן אינטרנט"
+  "WebViewProtocolName": "דפדפן אינטרנט"
 }

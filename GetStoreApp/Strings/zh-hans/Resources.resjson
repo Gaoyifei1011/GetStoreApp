@@ -12,5 +12,5 @@
   "PackageDescription": "离线下载 Microsoft Store 商店应用",
   "PackageDisplayName": "获取商店应用",
   "PinnerProtocolName": "固定辅助程序",
-  "WebBrowserProtocolName": "网页浏览器"
+  "WebViewProtocolName": "网页浏览器"
 }

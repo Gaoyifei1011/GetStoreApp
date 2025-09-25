@@ -12,5 +12,5 @@
   "PackageDescription": "Download the Microsoft Store app offline",
   "PackageDisplayName": "GetStoreApp",
   "PinnerProtocolName": "Pinner auxiliary program",
-  "WebBrowserProtocolName": "Web Browser"
+  "WebViewProtocolName": "Web Browser"
 }
