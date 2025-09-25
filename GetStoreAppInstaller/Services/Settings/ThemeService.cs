@@ -17,14 +17,16 @@ namespace GetStoreAppInstaller.Services.Settings
 
         public static string AppTheme { get; set; }
 
-        public static List<string> ThemeList { get; private set; }
+        public static List<string> ThemeList { get; } = [];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的主题值
         /// </summary>
         public static void InitializeTheme()
         {
-            ThemeList = ResourceService.ThemeList;
+            ThemeList.Add(nameof(ElementTheme.Default));
+            ThemeList.Add(nameof(ElementTheme.Light));
+            ThemeList.Add(nameof(ElementTheme.Dark));
             defaultAppTheme = ThemeList.Find(item => string.Equals(item, nameof(ElementTheme.Default), StringComparison.OrdinalIgnoreCase));
             AppTheme = GetTheme();
         }
