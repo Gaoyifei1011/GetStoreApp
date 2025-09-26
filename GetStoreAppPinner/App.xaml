@@ -1,0 +1,24 @@
+﻿<Application
+    x:Class="GetStoreAppPinner.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <Color x:Key="DefaultBackgroundColor">#141414</Color>
+                    <SolidColorBrush x:Key="DefaultBackgroundColorBrush" Color="{ThemeResource DefaultBackgroundColor}" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="HighConstract">
+                    <Color x:Key="DefaultBackgroundColor">#FF0000</Color>
+                    <SolidColorBrush x:Key="DefaultBackgroundColorBrush" Color="{ThemeResource DefaultBackgroundColor}" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <Color x:Key="DefaultBackgroundColor">#F0F3F9</Color>
+                    <SolidColorBrush x:Key="DefaultBackgroundColorBrush" Color="{ThemeResource DefaultBackgroundColor}" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,74 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AnalysisLevel>latest</AnalysisLevel>
+		<AssemblyName>GetStoreAppPinner</AssemblyName>
+		<CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+		<CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
+		<DefaultLanguage>en-US</DefaultLanguage>
+		<DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+		<Deterministic>true</Deterministic>
+		<DesktopCompatible>true</DesktopCompatible>
+		<DisableXbfLineInfo>false</DisableXbfLineInfo>
+		<ForceAotCompile>true</ForceAotCompile>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<IncludeAllContentForSelfExtract>false</IncludeAllContentForSelfExtract>
+		<IncludeSymbols>false</IncludeSymbols>
+		<IsAotCompatible>true</IsAotCompatible>
+		<LangVersion>latest</LangVersion>
+		<MetadataUpdaterSupport>false</MetadataUpdaterSupport>
+		<MetricsSupport>false</MetricsSupport>
+		<OptimizationPreference>Size</OptimizationPreference>
+		<Optimize>false</Optimize>
+		<OutputType>WinExe</OutputType>
+		<Platforms>x86;x64;ARM64</Platforms>
+		<PublishAot>true</PublishAot>
+		<RootNamespace>GetStoreAppPinner</RootNamespace>
+		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+		<TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
+		<TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+		<TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
+		<UseUWP>true</UseUWP>
+		<WebView2NeverCopyLoaderDllToOutputDirectory>true</WebView2NeverCopyLoaderDllToOutputDirectory>
+		<Win32Resource>GetStoreAppPinner.res</Win32Resource>
+		<WindowsSdkPackageVersion>10.0.26100.75</WindowsSdkPackageVersion>
+		<XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
+  </PropertyGroup>
+
+	<PropertyGroup Condition="'$(Platform)'=='x86'">
+		<RuntimeIdentifier>win-x86</RuntimeIdentifier>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Platform)'=='x64'">
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Platform)'=='ARM64'">
+		<RuntimeIdentifier>win-arm64</RuntimeIdentifier>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
+		<DebuggerSupport>true</DebuggerSupport>
+		<DebugType>pdbonly</DebugType>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<DebuggerSupport>false</DebuggerSupport>
+		<DebugType>none</DebugType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="Views\Pages\PinnerPage.xaml" />
+		
+		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.7.20250829.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+
+		<Page Update="Views\Pages\PinnerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+	</ItemGroup>
+
+	<!-- 测试 AOT 发布后的文件 -->
+	<Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Debug|true|true'">
+		<MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Publish" />
+		<Copy SourceFiles="$(NativeOutputPath)$(AssemblyName).exe" DestinationFiles="$(ProjectDir)obj\$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\apphost.exe" />
+	</Target>
+</Project>
