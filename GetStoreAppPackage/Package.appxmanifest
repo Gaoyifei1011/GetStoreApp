@@ -79,11 +79,11 @@
 					</uap:Protocol>
 				</uap:Extension>
 
-				<!--<uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="GetStoreAppWebView.App">
+				<uap:Extension Category="windows.protocol" Executable="GetStoreAppPinner.exe" EntryPoint="GetStoreAppPinner.App">
 					<uap:Protocol Name="getstoreapppinner">
 						<uap:DisplayName>ms-resource:PinnerProtocolName</uap:DisplayName>
 					</uap:Protocol>
-				</uap:Extension>-->
+				</uap:Extension>
 
 				<uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="Windows.FullTrustApplication">
 					<uap:Protocol Name="getstoreappwebview">
