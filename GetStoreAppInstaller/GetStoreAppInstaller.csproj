@@ -62,8 +62,6 @@
   <ItemGroup>
     <ApplicationDefinition Include="InstallerApp.xaml" SubType="Designer" />
     
-    <Manifest Include="$(ApplicationManifest)" />
-    
     <None Remove="Views\NotificationTips\CopyPasteInstallerNotificationTip.xaml" />
 		<None Remove="Views\Windows\InstallerWindow.xaml" />
 

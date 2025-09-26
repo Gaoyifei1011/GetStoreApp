@@ -179,8 +179,6 @@
     <Content Remove="Assets\Embed\url.xml" />
     <Content Remove="Assets\Embed\wu.xml" />
 
-    <Manifest Include="$(ApplicationManifest)" />
-
     <MainAppEmbeddedItem Include="Assets\Embed\cookie.xml" />
     <MainAppEmbeddedItem Include="Assets\Embed\LICENSE" />
     <MainAppEmbeddedItem Include="Assets\Embed\Mile.Aria2.conf" />
