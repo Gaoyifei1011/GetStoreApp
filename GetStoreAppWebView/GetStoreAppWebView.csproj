@@ -64,7 +64,6 @@
 		<ApplicationDefinition Include="WebViewApp.xaml" SubType="Designer" />
 
 		<None Remove="Views\Dialogs\BrowserInformationDialog.xaml" />
-
     <None Remove="Views\Dialogs\ProcessFailedDialog.xaml" />
     <None Remove="Views\Windows\WebViewWindow.xaml" />
     
@@ -75,10 +74,7 @@
 		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.250916003" />
 
 		<Page Remove="WebViewApp.xaml" />
-
-		<Page Update="Views\Dialogs\BrowserInformationDialog.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		</Page>
+		<Page Update="Views\Dialogs\BrowserInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
 		<Page Update="Views\Dialogs\ProcessFailedDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
 		<Page Update="Views\Windows\WebViewWindow.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
   </ItemGroup>
