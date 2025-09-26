@@ -61,6 +61,7 @@
 		<None Remove="Views\Pages\PinnerPage.xaml" />
 		
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.6584" GeneratePathProperty="true" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.7.20250829.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
 
 		<Page Update="Views\Pages\PinnerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

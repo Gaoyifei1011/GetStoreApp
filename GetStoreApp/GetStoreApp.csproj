@@ -346,9 +346,13 @@
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.6584" GeneratePathProperty="true" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.7.20250829.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.250916003" />
-    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.11.460" GeneratePathProperty="true" />
-    <PackageReference Include="Microsoft.WindowsPackageManager.InProcCom" Version="1.11.460" GeneratePathProperty="true" IncludeAssets="none" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.Base" Version="1.8.250831001" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.8.250906002" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.InteractiveExperiences" Version="1.8.250906004" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.Runtime" Version="1.8.250916003" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="1.8.250906003" />
+    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.11.510" GeneratePathProperty="true" />
+    <PackageReference Include="Microsoft.WindowsPackageManager.InProcCom" Version="1.11.510" GeneratePathProperty="true" IncludeAssets="none" />
     <PackageReference Include="Mile.Aria2" Version="1.0.230" />
 
     <Page Update="Views\Dialogs\AppInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
