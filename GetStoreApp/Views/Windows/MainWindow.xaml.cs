@@ -548,11 +548,21 @@ namespace GetStoreApp.Views.Windows
 
                 if (RuntimeHelper.IsElevated)
                 {
-                    await global::Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new global::Windows.System.LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                    await Task.Run(async () =>
                     {
-                        {"Type", nameof(SecondaryTile) },
-                        { "DisplayName", displayName },
-                        { "Tag", Convert.ToString(textBlock.Tag) },
+                        try
+                        {
+                            await global::Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new global::Windows.System.LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                            {
+                                {"Type", nameof(SecondaryTile) },
+                                { "DisplayName", displayName },
+                                { "Tag", Convert.ToString(textBlock.Tag) },
+                            });
+                        }
+                        catch (Exception e)
+                        {
+                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                        }
                     });
                 }
                 else
