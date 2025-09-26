@@ -8,6 +8,7 @@
     xmlns:rootservice="using:GetStoreAppInstaller.Services.Root"
     Background="{ThemeResource MenuFlyoutPresenterBackground}"
     CloseButtonContent="TeachingTip"
+    Closed="{x:Bind OnClosed}"
     IsLightDismissEnabled="False"
     PlacementMargin="0,20,0,0"
     PreferredPlacement="Bottom"
