@@ -1,4 +1,4 @@
-﻿using Windows.Storage;
+﻿using Microsoft.Windows.Storage;
 
 namespace GetStoreAppPinner.Services.Root
 {
@@ -7,7 +7,7 @@ namespace GetStoreAppPinner.Services.Root
     /// </summary>
     public static class LocalSettingsService
     {
-        private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
+        private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.GetDefault().LocalSettings;
 
         /// <summary>
         /// 读取设置选项存储信息

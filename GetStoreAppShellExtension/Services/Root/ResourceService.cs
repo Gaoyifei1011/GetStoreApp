@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Windows.ApplicationModel.Resources;
+using System;
 using System.Runtime.InteropServices.Marshalling;
-using Windows.ApplicationModel.Resources.Core;
 
 namespace GetStoreAppShellExtension.Services.Root
 {
@@ -14,9 +14,10 @@ namespace GetStoreAppShellExtension.Services.Root
         private static string _defaultAppLanguage;
         private static string _currentAppLanguage;
 
-        private static readonly ResourceContext defaultResourceContext = new();
-        private static readonly ResourceContext currentResourceContext = new();
-        private static readonly ResourceMap resourceMap = ResourceManager.Current.MainResourceMap;
+        private static readonly ResourceManager resourceManager = new();
+        private static ResourceContext defaultResourceContext;
+        private static ResourceContext currentResourceContext;
+        private static ResourceMap resourceMap;
 
         /// <summary>
         /// 初始化应用本地化资源
@@ -28,8 +29,12 @@ namespace GetStoreAppShellExtension.Services.Root
             _defaultAppLanguage = defaultAppLanguage;
             _currentAppLanguage = currentAppLanguage;
 
-            defaultResourceContext.QualifierValues["Language"] = _defaultAppLanguage;
-            currentResourceContext.QualifierValues["Language"] = _currentAppLanguage;
+            defaultResourceContext = resourceManager.CreateResourceContext();
+            currentResourceContext = resourceManager.CreateResourceContext();
+            resourceMap = resourceManager.MainResourceMap;
+
+            defaultResourceContext.QualifierValues["Language"] = Convert.ToString(_defaultAppLanguage);
+            currentResourceContext.QualifierValues["Language"] = Convert.ToString(_currentAppLanguage);
 
             isInitialized = true;
         }

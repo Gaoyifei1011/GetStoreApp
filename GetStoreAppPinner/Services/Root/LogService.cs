@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Microsoft.Windows.Storage;
+using System;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
-using Windows.Storage;
 
 namespace GetStoreAppPinner.Services.Root
 {
@@ -15,7 +15,7 @@ namespace GetStoreAppPinner.Services.Root
     public static class LogService
     {
         private static readonly string unknown = "unknown";
-        private static readonly string exceptionFolderPath = Path.Combine([ApplicationData.Current.LocalCacheFolder.Path, "Logs", "Exception"]);
+        private static readonly string exceptionFolderPath = Path.Combine([ApplicationData.GetDefault().LocalCacheFolder.Path, "Logs", "Exception"]);
         private static readonly LoggingChannelOptions channelOptions = new();
         private static SemaphoreSlim logSemaphoreSlim = new(1, 1);
 
