@@ -37,7 +37,7 @@
     <AppxBundleAutoResourcePackageQualifiers>DXFeatureLevel</AppxBundleAutoResourcePackageQualifiers>
     <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
     <AppxDefaultResourceQualifiers>Language=HE-IL;EN-US;ZH-HANS</AppxDefaultResourceQualifiers>
-    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxPackageSigningTimestampServerUrl>http://timestamp.digicert.com</AppxPackageSigningTimestampServerUrl>
     <AppxSymbolPackageEnabled>true</AppxSymbolPackageEnabled>
@@ -46,7 +46,6 @@
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <GenerateTestArtifacts>False</GenerateTestArtifacts>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <PackageCertificateKeyFile>GetStoreAppPackage_SignKey.pfx</PackageCertificateKeyFile>
     <ProjectGuid>CA6C2DC4-C96D-4C23-AE18-FC7150BEF554</ProjectGuid>
     <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
     <TargetFrameworkMoniker>.NETCoreApp,Version=v9.0</TargetFrameworkMoniker>
@@ -108,14 +107,9 @@
   -->
   <Target Name="_RemoveFilesFromPayload" AfterTargets="_CalculateInputsForGenerateAppxPackageRecipe">
     <ItemGroup>
-      <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="'%(FileName)%(Extension)'=='Microsoft.Management.Deployment.winmd'" />
-      <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="'%(FileName)%(Extension)'=='Microsoft.UI.Xaml.winmd'" />
-      <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="'%(FileName)%(Extension)'=='Microsoft.UI.Xaml.Projection.pri'" />
       <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="'%(FileName)%(Extension)'=='Microsoft.Web.WebView2.Core.Projection.dll'" />
       <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="'%(FileName)%(Extension)'=='Microsoft.WindowsAppRuntime.Bootstrap.dll'" />
       <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="'%(FileName)%(Extension)'=='Microsoft.Windows.ApplicationModel.Background.UniversalBGTask.dll'" />
-      <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="$([System.String]::new('%(Identity)').EndsWith('.xr.xml'))" />
-      <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="$([System.String]::new('%(Identity)').EndsWith('.Projection.xml'))" />
       <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="$([System.String]::new('%(Identity)').EndsWith('WebView2Loader.dll'))" />
     </ItemGroup>
   </Target>

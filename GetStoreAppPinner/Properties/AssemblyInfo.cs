@@ -7,11 +7,11 @@ using System.Runtime.Versioning;
 [assembly: AssemblyCompany("高怡飞")]
 [assembly: AssemblyCopyright("Copyright 2022-2025 高怡飞 版权所有")]
 [assembly: AssemblyDescription("固定辅助程序")]
-[assembly: AssemblyFileVersion("6.5.920.0")]
-[assembly: AssemblyInformationalVersion("6.5.920.0")]
+[assembly: AssemblyFileVersion("6.6.928.0")]
+[assembly: AssemblyInformationalVersion("6.6.928.0")]
 [assembly: AssemblyProduct("固定辅助程序")]
 [assembly: AssemblyTitle("固定辅助程序")]
-[assembly: AssemblyVersion("6.5.920.0")]
+[assembly: AssemblyVersion("6.6.928.0")]
 
 // 应用程序默认区域性的资源控制器设置
 [assembly: NeutralResourcesLanguage("en-us")]
