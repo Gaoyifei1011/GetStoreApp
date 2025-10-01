@@ -14,7 +14,7 @@ namespace GetStoreApp.Services.Settings
     /// </summary>
     public static class WinGetConfigService
     {
-        private const string WinetDataSource = "WinetDataSource";
+        private const string WinGetDataSource = "WinGetDataSource";
         private static readonly Lock wingetDataSourceLock = new();
         private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.GetDefault().LocalSettings;
         private static ApplicationDataContainer wingetDataSourceContainer;
@@ -28,7 +28,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         public static async Task InitializeWinGetConfigAsync()
         {
-            wingetDataSourceContainer = localSettingsContainer.CreateContainer(WinetDataSource, ApplicationDataCreateDisposition.Always);
+            wingetDataSourceContainer = localSettingsContainer.CreateContainer(WinGetDataSource, ApplicationDataCreateDisposition.Always);
             DefaultDownloadFolder = (await ApplicationData.GetDefault().LocalCacheFolder.CreateFolderAsync("WinGet", Windows.Storage.CreationCollisionOption.OpenIfExists)).Path;
 
             // 每次获取时读取已经添加的安装源，并去除掉已经被删除的值
@@ -39,7 +39,7 @@ namespace GetStoreApp.Services.Settings
 
                 try
                 {
-                    if (wingetDataSourceContainer.Values.TryGetValue(WinetDataSource, out object value) && value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
+                    if (wingetDataSourceContainer.Values.TryGetValue(WinGetDataSource, out object value) && value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                     {
                         KeyValuePair<string, bool> winGetDataSourceName = KeyValuePair.Create(Convert.ToString(compositeValue["Name"]), Convert.ToBoolean(compositeValue["IsInternal"]));
                         wingetDataSourceContainer.Values.Clear();
@@ -58,7 +58,7 @@ namespace GetStoreApp.Services.Settings
                         {
                             if (string.Equals(winGetDataSourceName.Key, predefinedPackageCatalogReferenceName.Key) && winGetDataSourceName.Value)
                             {
-                                wingetDataSourceContainer.Values[WinetDataSource] = compositeValue;
+                                wingetDataSourceContainer.Values[WinGetDataSource] = compositeValue;
                                 isModified = true;
                                 break;
                             }
@@ -79,7 +79,7 @@ namespace GetStoreApp.Services.Settings
                             {
                                 if (string.Equals(winGetDataSourceName.Key, packageCatalogReferenceName) && !winGetDataSourceName.Value)
                                 {
-                                    wingetDataSourceContainer.Values[WinetDataSource] = compositeValue;
+                                    wingetDataSourceContainer.Values[WinGetDataSource] = compositeValue;
                                     break;
                                 }
                             }
@@ -107,7 +107,7 @@ namespace GetStoreApp.Services.Settings
 
             try
             {
-                if (wingetDataSourceContainer.Values.TryGetValue(WinetDataSource, out object value) && value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
+                if (wingetDataSourceContainer.Values.TryGetValue(WinGetDataSource, out object value) && value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                 {
                     winGetDataSourceName = KeyValuePair.Create(Convert.ToString(compositeValue["Name"]), Convert.ToBoolean(compositeValue["IsInternal"]));
                 }
@@ -139,7 +139,7 @@ namespace GetStoreApp.Services.Settings
                     ["IsInternal"] = winGetDataSourceName.Value
                 };
 
-                wingetDataSourceContainer.Values[WinetDataSource] = compositeValue;
+                wingetDataSourceContainer.Values[WinGetDataSource] = compositeValue;
             }
             catch (Exception e)
             {
@@ -160,9 +160,9 @@ namespace GetStoreApp.Services.Settings
 
             try
             {
-                if (wingetDataSourceContainer.Values.TryGetValue(WinetDataSource, out object value) && value is Windows.Storage.ApplicationDataCompositeValue compositeValue && compositeValue.TryGetValue("Name", out object nameValue) && string.Equals(Convert.ToString(nameValue), winGetDataSourceName.Key) && compositeValue.TryGetValue("IsInternal", out object isInternalValue) && Equals(Convert.ToBoolean(isInternalValue), winGetDataSourceName.Value))
+                if (wingetDataSourceContainer.Values.TryGetValue(WinGetDataSource, out object value) && value is Windows.Storage.ApplicationDataCompositeValue compositeValue && compositeValue.TryGetValue("Name", out object nameValue) && string.Equals(Convert.ToString(nameValue), winGetDataSourceName.Key) && compositeValue.TryGetValue("IsInternal", out object isInternalValue) && Equals(Convert.ToBoolean(isInternalValue), winGetDataSourceName.Value))
                 {
-                    wingetDataSourceContainer.Values.Remove(WinetDataSource);
+                    wingetDataSourceContainer.Values.Remove(WinGetDataSource);
                 }
             }
             catch (Exception e)
