@@ -39,7 +39,7 @@ namespace GetStoreAppInstaller
 
             // 初始化应用启动参数
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-            AppActivationArguments = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
+            AppActivationArguments = AppInstance.GetCurrent().GetActivatedEventArgs();
 
             if (AppActivationArguments.Kind is ExtendedActivationKind.Launch)
             {
