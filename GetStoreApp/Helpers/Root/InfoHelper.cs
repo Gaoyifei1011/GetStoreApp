@@ -18,9 +18,6 @@ namespace GetStoreApp.Helpers.Root
             Package.Current.Id.Version.Revision
             );
 
-        // 系统范围文件夹位置
-        public static SystemDataPaths SystemDataPath { get; } = SystemDataPaths.GetDefault();
-
         // 常见用户数据文件夹的完整路径
         public static UserDataPaths UserDataPath { get; } = UserDataPaths.GetDefault();
 

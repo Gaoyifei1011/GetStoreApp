@@ -5,6 +5,7 @@ using GetStoreAppShellExtension.WindowsAPI.PInvoke.Shell32;
 using System;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
+using Windows.ApplicationModel;
 
 namespace GetStoreAppShellExtension.Commands
 {
@@ -78,7 +79,7 @@ namespace GetStoreAppShellExtension.Commands
             if (psiItemArray is not null && psiItemArray.GetCount(out uint count) is 0 && count >= 1 && psiItemArray.GetItemAt(0, out IShellItem shellItem) is 0)
             {
                 shellItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string filePath);
-                Shell32Library.ShellExecute(nint.Zero, "runas", "GetStoreAppInstaller.exe", string.Join(' ', filePath, "--elevated"), Path.GetDirectoryName(filePath), WindowShowStyle.SW_SHOWNORMAL);
+                Shell32Library.ShellExecute(nint.Zero, "runas", Path.Combine(InfoHelper.UserDataPath.LocalAppData, @"Microsoft\WindowsApps", Package.Current.Id.FamilyName, "GetStoreAppInstaller.exe"), filePath, Path.GetDirectoryName(filePath), WindowShowStyle.SW_SHOWNORMAL);
             }
             return 0;
         }
