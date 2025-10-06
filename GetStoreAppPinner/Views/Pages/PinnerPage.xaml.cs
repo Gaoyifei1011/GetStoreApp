@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel;
 using Windows.UI;
-using Windows.UI.ViewManagement;
+using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -16,7 +16,7 @@ namespace GetStoreAppPinner.Views.Pages
     /// </summary>
     public sealed partial class PinnerPage : Page, INotifyPropertyChanged
     {
-        private readonly ApplicationView applicationView = ApplicationView.GetForCurrentView();
+        private AppWindow AppWindow { get; }
 
         private ElementTheme _windowTheme;
 
@@ -36,14 +36,11 @@ namespace GetStoreAppPinner.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public PinnerPage()
+        public PinnerPage(AppWindow appWindow)
         {
             InitializeComponent();
-            applicationView.TitleBar.ButtonBackgroundColor = Colors.Transparent;
-            applicationView.TitleBar.InactiveBackgroundColor = Colors.Transparent;
+            AppWindow = appWindow;
             WindowTheme = Enum.TryParse(ThemeService.AppTheme, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
-
-            // 标题栏设置
             SetTitleBarTheme(ActualTheme);
         }
 
@@ -60,7 +57,7 @@ namespace GetStoreAppPinner.Views.Pages
         /// </summary>
         private void SetTitleBarTheme(ElementTheme theme)
         {
-            ApplicationViewTitleBar titleBar = applicationView.TitleBar;
+            AppWindowTitleBar titleBar = AppWindow.TitleBar;
 
             titleBar.BackgroundColor = Colors.Transparent;
             titleBar.ForegroundColor = Colors.Transparent;

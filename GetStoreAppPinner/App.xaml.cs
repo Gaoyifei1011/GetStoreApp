@@ -1,6 +1,7 @@
 ﻿using GetStoreAppPinner.Services.Root;
 using GetStoreAppPinner.Views.Pages;
 using System;
+using System.Collections.Generic;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -11,8 +12,9 @@ using Windows.UI;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
 using Windows.UI.ViewManagement;
+using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Hosting;
 
 namespace GetStoreAppPinner
 {
@@ -24,7 +26,7 @@ namespace GetStoreAppPinner
         private bool isDisposed;
         private readonly string PinningAppString = ResourceService.GetLocalized("Pinner/PinningApp");
         private ApplicationView applicationView;
-        private CoreApplicationView coreApplicationView;
+        private readonly Dictionary<UIContext, AppWindow> appWindowList = [];
 
         public App()
         {
@@ -39,21 +41,20 @@ namespace GetStoreAppPinner
         {
             base.OnActivated(args);
             applicationView = ApplicationView.GetForCurrentView();
-            coreApplicationView = CoreApplication.GetCurrentView();
 
             if (args.Kind is ActivationKind.Protocol && args is ProtocolActivatedEventArgs protocolActivatedEventArgs)
             {
                 if (protocolActivatedEventArgs.Uri.AbsoluteUri is "getstoreapppinner:")
                 {
-                    Window.Current.Content = new PinnerPage();
-                    coreApplicationView.TitleBar.ExtendViewIntoTitleBar = true;
-                    applicationView.Title = PinningAppString;
-                    ViewModePreferences viewModePreferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
-                    viewModePreferences.CustomSize = new Size(300, 200);
-                    await applicationView.TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, viewModePreferences);
-                    Window.Current.Activate();
-
-                    bool isPinnedSuccessfully = false;
+                    AppWindow appWindow = await AppWindow.TryCreateAsync();
+                    appWindowList.Add(appWindow.UIContext, appWindow);
+                    appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+                    ElementCompositionPreview.SetAppWindowContent(appWindow, new PinnerPage(appWindow));
+                    appWindow.Title = PinningAppString;
+                    await appWindow.TryShowAsync();
+                    await applicationView.TryConsolidateAsync();
+                    appWindow.Presenter.RequestPresentation(AppWindowPresentationKind.CompactOverlay);
+                    appWindow.RequestSize(new Size(400, 200));
 
                     if (protocolActivatedEventArgs.Data.Count is 3)
                     {
@@ -75,15 +76,11 @@ namespace GetStoreAppPinner
                                 secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
                                 secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
                                 secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
-                                isPinnedSuccessfully = await secondaryTile.RequestCreateAsync();
+                                await secondaryTile.RequestCreateAsync();
                             }
                             catch (Exception e)
                             {
                                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppPinner), nameof(App), nameof(OnActivated), 1, e);
-                            }
-                            finally
-                            {
-                                //await applicationView.TryConsolidateAsync();
                             }
                         }
                         else if (protocolActivatedEventArgs.Data["Type"] is nameof(TaskbarManager))
@@ -99,7 +96,7 @@ namespace GetStoreAppPinner
                                     {
                                         if (Equals(appListEntryItem.AppUserModelId, protocolActivatedEventArgs.Data["AppUserModelId"]))
                                         {
-                                            isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinAppListEntryAsync(appListEntryItem);
+                                            await TaskbarManager.GetDefault().RequestPinAppListEntryAsync(appListEntryItem);
                                             break;
                                         }
                                     }
@@ -109,35 +106,20 @@ namespace GetStoreAppPinner
                             {
                                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppPinner), nameof(App), nameof(OnActivated), 2, e);
                             }
-                            finally
-                            {
-                                //await applicationView.TryConsolidateAsync();
-                            }
-                        }
-                        else
-                        {
-                            //await applicationView.TryConsolidateAsync();
                         }
                     }
-                    else
-                    {
-                        //await applicationView.TryConsolidateAsync();
-                    }
+
+                    await appWindow.CloseAsync();
+                    appWindowList.Remove(appWindow.UIContext);
                 }
                 else
                 {
-                    if (Window.Current.Content is not Page)
-                    {
-                        //await applicationView.TryConsolidateAsync();
-                    }
+                    await applicationView.TryConsolidateAsync();
                 }
             }
             else
             {
-                if (Window.Current.Content is not Page)
-                {
-                    //await applicationView.TryConsolidateAsync();
-                }
+                await applicationView.TryConsolidateAsync();
             }
         }
 
