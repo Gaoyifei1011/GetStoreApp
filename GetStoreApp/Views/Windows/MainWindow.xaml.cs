@@ -545,6 +545,7 @@ namespace GetStoreApp.Views.Windows
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is TextBlock textBlock)
             {
                 string displayName = textBlock.Text;
+                string tag = Convert.ToString(textBlock.Tag);
 
                 if (RuntimeHelper.IsElevated)
                 {
@@ -556,7 +557,7 @@ namespace GetStoreApp.Views.Windows
                             {
                                 {"Type", nameof(SecondaryTile) },
                                 { "DisplayName", displayName },
-                                { "Tag", Convert.ToString(textBlock.Tag) },
+                                { "Tag", tag },
                             });
                         }
                         catch (Exception e)
