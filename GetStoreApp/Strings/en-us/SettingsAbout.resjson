@@ -24,5 +24,5 @@
   "ThanksDescription": "The road to development is long and obstructive. Thank you very much for the support of these friends",
   "ThanksToolTip": "Click Learn about the thank-your's personal information",
   "UpdatePath": "Update path",
-  "UpdatePathDescription": "Currently, this application is not yet available on the Microsoft Store. You can open the project's release page by selecting \"Check for Updates\" to find the latest version of the application, and download the MSIXBUNDLE format installation package for the update."
+  "UpdatePathDescription": "Apps downloaded from the store should be updated directly through the Microsoft Store, while sideloaded apps should be updated by downloading the installation package from GitHub"
 }

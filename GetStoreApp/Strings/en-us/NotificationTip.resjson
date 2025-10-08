@@ -13,7 +13,7 @@
   "LogCleanSuccessfully": "All log records were cleaned up successfully",
   "NewestVersion": "The application is the latest version",
   "NotElevated": "Current operation needs to be executed in elevation mode",
-  "NotNewestVersion": "The app is not the latest version, click on the project home page to get an update",
+  "NotNewestVersion": "The app is not the latest version",
   "SelectEmpty": "You have not selected anything, please select it before proceeding",
   "SelectFolderEmpty": "Selected folder is empty",
   "SelectPackageVolumeEmpty": "Please select a volume",
@@ -26,5 +26,6 @@
   "TaskbarFailed": "App pinning to taskbar failed. Please pin manually",
   "TaskbarSuccessfully": "The app was successfully pinned to the taskbar",
   "TerminateFailed": "Terminate the browser process failed, please terminate it manually",
-  "TerminateSuccess": "Terminate the browser process successfully"
+  "TerminateSuccess": "Terminate the browser process successfully",
+  "UpdateCheckFailed": "Update check failed"
 }

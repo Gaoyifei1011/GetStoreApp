@@ -13,6 +13,8 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Foundation.Diagnostics;
+using Windows.Networking.Connectivity;
+using Windows.Services.Store;
 using Windows.System;
 using Windows.UI.Text;
 using Windows.Web.Http;
@@ -197,51 +199,86 @@ namespace GetStoreApp.Views.Pages
             if (!IsChecking)
             {
                 IsChecking = true;
-
-                bool? isNewest = await Task.Run<bool?>(async () =>
+                if (NetWorkHelper.IsNetWorkConnected())
                 {
-                    try
+                    if (RuntimeHelper.IsStoreVersion)
                     {
-                        // 默认超时时间是 20 秒
-                        HttpClient httpClient = new();
-                        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36");
-                        HttpRequestResult httpRequestResult = await httpClient.TryGetAsync(new Uri("https://api.github.com/repos/Gaoyifei1011/GetStoreApp/releases/latest"));
-                        httpClient.Dispose();
+                        bool isNewest = false;
 
-                        // 请求成功
-                        if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
+                        try
                         {
-                            string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
-
-                            if (!string.IsNullOrEmpty(responseString))
+                            IsChecking = true;
+                            StoreContext storeContext = StoreContext.GetDefault();
+                            IReadOnlyList<StorePackageUpdate> packageUpdateList = await storeContext.GetAppAndOptionalStorePackageUpdatesAsync();
+                            isNewest = packageUpdateList.Count is 0;
+                            IsChecking = false;
+                            DispatcherQueue.TryEnqueue(async () =>
                             {
-                                if (JsonObject.TryParse(responseString, out JsonObject responseStringObject) && new Version(responseStringObject.GetNamedString("tag_name")[1..]) is Version tagVersion)
-                                {
-                                    return InfoHelper.AppVersion >= tagVersion;
-                                }
-                            }
+                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, Convert.ToInt32(isNewest)));
+                            });
                         }
-                        // 请求失败
-                        else
+                        catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(OnCheckUpdateClicked), 1, httpRequestResult.ExtendedError);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(OnCheckUpdateClicked), 1, e);
+                            IsChecking = false;
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, 2));
                         }
 
-                        httpRequestResult.Dispose();
+                        if (!isNewest)
+                        {
+                            await MainWindow.Current.ShowDialogAsync(new UpdateAppDialog());
+                        }
                     }
-                    // 其他异常
-                    catch (Exception e)
+                    else
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(OnCheckUpdateClicked), 2, e);
+                        bool? isNewest = await Task.Run<bool?>(async () =>
+                        {
+                            try
+                            {
+                                // 默认超时时间是 20 秒
+                                HttpClient httpClient = new();
+                                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36");
+                                HttpRequestResult httpRequestResult = await httpClient.TryGetAsync(new Uri("https://api.github.com/repos/Gaoyifei1011/GetStoreApp/releases/latest"));
+                                httpClient.Dispose();
+
+                                // 请求成功
+                                if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
+                                {
+                                    string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
+
+                                    if (!string.IsNullOrEmpty(responseString))
+                                    {
+                                        if (JsonObject.TryParse(responseString, out JsonObject responseStringObject) && new Version(responseStringObject.GetNamedString("tag_name")[1..]) is Version tagVersion)
+                                        {
+                                            return InfoHelper.AppVersion >= tagVersion;
+                                        }
+                                    }
+                                }
+                                // 请求失败
+                                else
+                                {
+                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(OnCheckUpdateClicked), 1, httpRequestResult.ExtendedError);
+                                }
+
+                                httpRequestResult.Dispose();
+                            }
+                            // 其他异常
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(OnCheckUpdateClicked), 2, e);
+                            }
+
+                            return null;
+                        });
+
+                        IsChecking = false;
+                        await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, isNewest.HasValue ? Convert.ToInt32(isNewest.Value) : 2));
                     }
-
-                    return null;
-                });
-
-                IsChecking = false;
-                if (isNewest.HasValue)
+                }
+                else
                 {
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, isNewest.Value));
+                    IsChecking = false;
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, 2));
                 }
             }
         }

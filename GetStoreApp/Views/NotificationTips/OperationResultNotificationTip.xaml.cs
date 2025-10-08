@@ -120,20 +120,7 @@ namespace GetStoreApp.Views.NotificationTips
         {
             InitializeComponent();
 
-            if (operationKind is OperationKind.CheckUpdate)
-            {
-                if (operationResult)
-                {
-                    IsSuccessOperation = true;
-                    OperationContent = ResourceService.GetLocalized("NotificationTip/NewestVersion");
-                }
-                else
-                {
-                    IsSuccessOperation = false;
-                    OperationContent = ResourceService.GetLocalized("NotificationTip/NotNewestVersion");
-                }
-            }
-            else if (operationKind is OperationKind.Desktop)
+            if (operationKind is OperationKind.Desktop)
             {
                 if (operationResult)
                 {
@@ -228,6 +215,30 @@ namespace GetStoreApp.Views.NotificationTips
                 {
                     IsSuccessOperation = false;
                     OperationContent = ResourceService.GetLocalized("NotificationTip/ShareFailed");
+                }
+            }
+        }
+
+        public OperationResultNotificationTip(OperationKind operationKind, int statusKind)
+        {
+            InitializeComponent();
+
+            if (operationKind is OperationKind.CheckUpdate)
+            {
+                if (statusKind is 0)
+                {
+                    IsSuccessOperation = false;
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/NotNewestVersion");
+                }
+                else if (statusKind is 1)
+                {
+                    IsSuccessOperation = true;
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/NewestVersion");
+                }
+                else if (statusKind is 2)
+                {
+                    IsSuccessOperation = false;
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/UpdateCheckFailed");
                 }
             }
         }

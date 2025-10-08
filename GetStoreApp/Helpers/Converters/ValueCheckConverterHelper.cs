@@ -155,5 +155,13 @@ namespace GetStoreApp.Helpers.Converters
         {
             return Equals(packageOperationResultKind, comparedPackageOperationResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        /// <summary>
+        /// 检查更新应用状态
+        /// </summary>
+        public static Visibility CheckUpdateAppResultKind(UpdateAppResultKind updateAppReusltKind, UpdateAppResultKind comparedUpdateAppReusltKind)
+        {
+            return Equals(updateAppReusltKind, comparedUpdateAppReusltKind) ? Visibility.Visible : Visibility.Collapsed;
+        }
     }
 }

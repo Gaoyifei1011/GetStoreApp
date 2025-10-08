@@ -1,0 +1,128 @@
+﻿<ContentDialog
+    x:Class="GetStoreApp.Views.Dialogs.UpdateAppDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:rootservice="using:GetStoreApp.Services.Root"
+    xmlns:window="using:GetStoreApp.Views.Windows"
+    Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UpdateApp')}"
+    Closed="{x:Bind OnClosed}"
+    DefaultButton="Primary"
+    FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
+    IsPrimaryButtonEnabled="{x:Bind GetIsNotUpdating(UpdateAppResultKind), Mode=OneWay}"
+    IsSecondaryButtonEnabled="{x:Bind GetIsNotCanceling(UpdateAppResultKind), Mode=OneWay}"
+    PrimaryButtonClick="{x:Bind OnUpdateClicked}"
+    PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
+    PrimaryButtonText="{x:Bind PrimaryText, Mode=OneWay}"
+    RequestedTheme="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).RequestedTheme, Mode=OneWay}"
+    SecondaryButtonClick="{x:Bind OnCancelOrCloseClicked}"
+    SecondaryButtonText="{x:Bind CloseText, Mode=OneWay}"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    mc:Ignorable="d">
+
+    <ContentDialog.Resources>
+        <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="Transparent" />
+        <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="Transparent" />
+    </ContentDialog.Resources>
+
+    <Grid Width="450">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,0,0,5"
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UpdateInitialize')}"
+            TextWrapping="Wrap"
+            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckUpdateAppResultKind(UpdateAppResultKind, enum:UpdateAppResultKind.Initialize), Mode=OneWay}" />
+
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,0,0,5"
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UpdatePending')}"
+            TextWrapping="Wrap"
+            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckUpdateAppResultKind(UpdateAppResultKind, enum:UpdateAppResultKind.Pending), Mode=OneWay}" />
+
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,0,0,5"
+            Text="{x:Bind UpdateDownloadString, Mode=OneWay}"
+            TextWrapping="Wrap"
+            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckUpdateAppResultKind(UpdateAppResultKind, enum:UpdateAppResultKind.Downloading), Mode=OneWay}" />
+
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,0,0,5"
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UpdateCanceling')}"
+            TextWrapping="Wrap"
+            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckUpdateAppResultKind(UpdateAppResultKind, enum:UpdateAppResultKind.Canceling), Mode=OneWay}" />
+
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,0,0,5"
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UpdateCanceled')}"
+            TextWrapping="Wrap"
+            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckUpdateAppResultKind(UpdateAppResultKind, enum:UpdateAppResultKind.Canceled), Mode=OneWay}" />
+
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,0,0,5"
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UpdateFailed')}"
+            TextWrapping="Wrap"
+            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckUpdateAppResultKind(UpdateAppResultKind, enum:UpdateAppResultKind.Failed), Mode=OneWay}" />
+
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,0,0,5"
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UpdateDeploying')}"
+            TextWrapping="Wrap"
+            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckUpdateAppResultKind(UpdateAppResultKind, enum:UpdateAppResultKind.Deploying), Mode=OneWay}" />
+
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,0,0,5"
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UpdateSuccessfully')}"
+            TextWrapping="Wrap"
+            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckUpdateAppResultKind(UpdateAppResultKind, enum:UpdateAppResultKind.Successfully), Mode=OneWay}" />
+
+        <TextBlock
+            Grid.Row="1"
+            Margin="0,0,0,5"
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UpdateErrorLowBattery')}"
+            TextWrapping="Wrap"
+            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckUpdateAppResultKind(UpdateAppResultKind, enum:UpdateAppResultKind.Failed), Mode=OneWay}" />
+
+        <TextBlock
+            Grid.Row="2"
+            Margin="0,0,0,5"
+            Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UpdateErrorWiFiNotConnected')}"
+            TextWrapping="Wrap"
+            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckUpdateAppResultKind(UpdateAppResultKind, enum:UpdateAppResultKind.Failed), Mode=OneWay}" />
+
+        <controls:ProgressBar
+            Grid.Row="3"
+            Margin="0,7,0,5"
+            IsIndeterminate="True"
+            ShowPaused="{x:Bind x:Object.Equals(UpdateAppResultKind, enum:UpdateAppResultKind.Canceling), Mode=OneWay}"
+            Visibility="{x:Bind GetUpdateProgressState(UpdateAppResultKind), Mode=OneWay}" />
+
+        <MenuFlyoutSeparator Grid.Row="4" Margin="4,5,4,0" />
+
+        <HyperlinkButton
+            Grid.Row="5"
+            Margin="0,5,0,-15"
+            Padding="0"
+            Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UpdateFromMicrosoftStore')}"
+            NavigateUri="https://apps.microsoft.com/detail/9MV67V21H386" />
+    </Grid>
+</ContentDialog>

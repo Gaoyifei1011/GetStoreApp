@@ -13,7 +13,7 @@
   "LogCleanSuccessfully": "所有日志记录清除成功",
   "NewestVersion": "应用已是最新版本",
   "NotElevated": "当前操作需要在提权模式下进行",
-  "NotNewestVersion": "应用不是最新版本，点击项目主页以获取更新",
+  "NotNewestVersion": "应用不是最新版本",
   "SelectEmpty": "您没有选择任何内容，请选中后再进行操作",
   "SelectFolderEmpty": "选择的文件夹为空",
   "SelectPackageVolumeEmpty": "请选择一个存储卷",
@@ -26,5 +26,6 @@
   "TaskbarFailed": "应用固定到任务栏失败，请手动固定",
   "TaskbarSuccessfully": "已成功将应用固定到任务栏",
   "TerminateFailed": "浏览器进程关闭失败，请手动关闭",
-  "TerminateSuccess": "浏览器进程关闭成功"
+  "TerminateSuccess": "浏览器进程关闭成功",
+  "UpdateCheckFailed": "更新检测失败"
 }
