@@ -1239,11 +1239,7 @@ namespace GetStoreApp.Views.Windows
         {
             try
             {
-                ConnectionProfile connectionProfile = NetworkInformation.GetInternetConnectionProfile();
-                NetworkConnectivityLevel networkConnectivityLevel = connectionProfile.GetNetworkConnectivityLevel();
-                bool isConnected = networkConnectivityLevel is NetworkConnectivityLevel.LocalAccess || networkConnectivityLevel is NetworkConnectivityLevel.ConstrainedInternetAccess || networkConnectivityLevel is NetworkConnectivityLevel.InternetAccess;
-
-                if (!isConnected)
+                if (!NetWorkHelper.IsNetWorkConnected())
                 {
                     Task.Run(() =>
                     {
