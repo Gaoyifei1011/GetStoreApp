@@ -9,28 +9,47 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     public static class RuntimeHelper
     {
-        public static bool IsMSIX { get; private set; }
+        public static bool IsMSIX { get; }
 
         public static bool IsElevated { get; } = Environment.IsPrivilegedProcess;
 
+        public static bool IsStoreVersion { get; private set; }
+
         static RuntimeHelper()
         {
-            IsInMsixContainer();
+            IsMSIX = IsInMsixContainerApp();
+            IsStoreVersion = IsStoreApp();
         }
 
         /// <summary>
         /// 判断应用是否在 Msix 容器中运行
         /// </summary>
-        private static void IsInMsixContainer()
+        private static bool IsInMsixContainerApp()
         {
             try
             {
-                IsMSIX = Package.Current is not null;
+                return Package.Current is not null;
             }
             catch (Exception e)
             {
                 ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                IsMSIX = false;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 判断应用是否为商店版本
+        /// </summary>
+        private static bool IsStoreApp()
+        {
+            try
+            {
+                return Package.Current.Id.FamilyName.StartsWith("055B5CA4.");
+            }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                return false;
             }
         }
     }
