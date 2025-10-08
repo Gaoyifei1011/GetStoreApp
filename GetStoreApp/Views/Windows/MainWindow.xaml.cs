@@ -1103,7 +1103,11 @@ namespace GetStoreApp.Views.Windows
             {
                 if (appLaunchArguments.SubParameters is not null && appLaunchArguments.SubParameters.Count >= 1)
                 {
-                    if (appLaunchArguments.SubParameters[0] is "Store" && !Equals(GetCurrentPageType(), typeof(StorePage)))
+                    if (appLaunchArguments.SubParameters[0] is "Home" && !Equals(GetCurrentPageType(), typeof(HomePage)))
+                    {
+                        NavigateTo(typeof(HomePage));
+                    }
+                    else if (appLaunchArguments.SubParameters[0] is "Store" && !Equals(GetCurrentPageType(), typeof(StorePage)))
                     {
                         NavigateTo(typeof(StorePage));
                     }
@@ -1130,7 +1134,11 @@ namespace GetStoreApp.Views.Windows
             {
                 if (appLaunchArguments.SubParameters is not null && appLaunchArguments.SubParameters.Count >= 1)
                 {
-                    if (appLaunchArguments.SubParameters[0] is "Store" && !Equals(GetCurrentPageType(), typeof(StorePage)))
+                    if (appLaunchArguments.SubParameters[0] is "Home" && !Equals(GetCurrentPageType(), typeof(HomePage)))
+                    {
+                        NavigateTo(typeof(HomePage));
+                    }
+                    else if (appLaunchArguments.SubParameters[0] is "Store" && !Equals(GetCurrentPageType(), typeof(StorePage)))
                     {
                         NavigateTo(typeof(StorePage));
                     }
