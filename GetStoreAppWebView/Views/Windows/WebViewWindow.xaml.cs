@@ -24,9 +24,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
 using Windows.Graphics;
 using Windows.System;
@@ -581,27 +579,6 @@ namespace GetStoreAppWebView.Views.Windows
                 await WebViewBrowser.CoreWebView2.Profile.ClearBrowsingDataAsync();
                 await WebViewBrowser.CoreWebView2.ClearServerCertificateErrorActionsAsync();
             }
-        }
-
-        /// <summary>
-        /// 打开设置
-        /// </summary>
-        private void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
-        {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new Uri("getstoreapp:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
-                    {
-                        { "Parameter", "Settings" }
-                    });
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
         }
 
         /// <summary>
