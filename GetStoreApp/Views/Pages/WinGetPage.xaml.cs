@@ -163,7 +163,7 @@ namespace GetStoreApp.Views.Pages
             // 第一次导航
             if (GetCurrentPageType() is null)
             {
-                NavigateTo(PageList[0], this, null);
+                NavigateTo(PageList[0], this);
             }
         }
 

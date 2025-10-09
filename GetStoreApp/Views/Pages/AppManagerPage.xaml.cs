@@ -39,10 +39,10 @@ namespace GetStoreApp.Views.Pages
             base.OnNavigatedTo(args);
             AppManagerFrame.ContentTransitions = SuppressNavigationTransitionCollection;
 
-            // 第一次导航
-            if (GetCurrentPageType() is null)
+            // 第一次导航或者再次导航时不在应用列表页面
+            if (GetCurrentPageType() is null || GetCurrentPageType() != PageList[0])
             {
-                NavigateTo(PageList[0], null, null);
+                NavigateTo(PageList[0]);
             }
         }
 

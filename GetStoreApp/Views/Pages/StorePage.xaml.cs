@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
@@ -6,6 +7,8 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.Windows.AppNotifications;
+using Microsoft.Windows.AppNotifications.Builder;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -62,7 +65,7 @@ namespace GetStoreApp.Views.Pages
             // 第一次导航
             if (GetCurrentPageType() is null)
             {
-                NavigateTo(PageList[0], args.Parameter, null);
+                NavigateTo(PageList[0], args.Parameter);
             }
             else
             {
@@ -221,7 +224,7 @@ namespace GetStoreApp.Views.Pages
         {
             StoreSplitView.IsPaneOpen = false;
             await Task.Delay(300);
-            MainWindow.Current.NavigateTo(typeof(SettingsPage));
+            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.Download);
         }
 
         #endregion 第二部分：应用商店页面——挂载的事件
@@ -258,7 +261,6 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 初始化查询链接内容
         /// </summary>
-
         public void InitializeQueryLinksContent(List<string> dataList)
         {
             if (!Equals(GetCurrentPageType(), PageList[0]))

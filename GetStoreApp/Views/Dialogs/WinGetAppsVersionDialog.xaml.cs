@@ -54,7 +54,7 @@ namespace GetStoreApp.Views.Dialogs
             // 第一次导航
             if (GetCurrentPageType() is null)
             {
-                NavigateTo(PageList[0], new List<object>() { WinGetPage, this, WinGetApps }, null);
+                NavigateTo(PageList[0], new List<object>() { WinGetPage, this, WinGetApps });
             }
         }
 

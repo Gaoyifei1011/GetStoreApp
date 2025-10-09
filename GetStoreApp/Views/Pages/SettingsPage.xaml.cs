@@ -51,7 +51,7 @@ namespace GetStoreApp.Views.Pages
                 // 导航到 WinGet 数据源配置页面
                 if (!Equals(GetCurrentPageType(), PageList[1]))
                 {
-                    NavigateTo(PageList[1], null, null);
+                    NavigateTo(PageList[1]);
                 }
             }
             else if (args.Parameter is AppNaviagtionArgs.PackageVolume)
@@ -59,7 +59,45 @@ namespace GetStoreApp.Views.Pages
                 // 导航到应用包存储卷配置页面
                 if (!Equals(GetCurrentPageType(), PageList[2]))
                 {
-                    NavigateTo(PageList[2], null, null);
+                    NavigateTo(PageList[2]);
+                }
+            }
+            else if (args.Parameter is AppNaviagtionArgs.Download)
+            {
+                if (!Equals(GetCurrentPageType(), PageList[0]))
+                {
+                    NavigateTo(PageList[0], args.Parameter);
+                }
+                else if (GetFrameContent() is SettingsItemPage itemPage && !Equals(itemPage.GetCurrentPageType(), itemPage.PageList[3]))
+                {
+                    if (itemPage.IsLoaded)
+                    {
+                        int currentIndex = itemPage.PageList.FindIndex(item => Equals(item, itemPage.GetCurrentPageType()));
+                        itemPage.NavigateTo(itemPage.PageList[3], null, 3 > currentIndex);
+                    }
+                    else
+                    {
+                        itemPage.SetNavigateContent(true, itemPage.PageList[3]);
+                    }
+                }
+            }
+            else if (args.Parameter is AppNaviagtionArgs.AppInstall)
+            {
+                if (!Equals(GetCurrentPageType(), PageList[0]))
+                {
+                    NavigateTo(PageList[0], args.Parameter);
+                }
+                else if (GetFrameContent() is SettingsItemPage itemPage && !Equals(itemPage.GetCurrentPageType(), itemPage.PageList[4]))
+                {
+                    if (itemPage.IsLoaded)
+                    {
+                        int currentIndex = itemPage.PageList.FindIndex(item => Equals(item, itemPage.GetCurrentPageType()));
+                        itemPage.NavigateTo(itemPage.PageList[4], null, 4 > currentIndex);
+                    }
+                    else
+                    {
+                        itemPage.SetNavigateContent(true, itemPage.PageList[4]);
+                    }
                 }
             }
             else
@@ -67,7 +105,7 @@ namespace GetStoreApp.Views.Pages
                 // 第一次导航
                 if (GetCurrentPageType() is null)
                 {
-                    NavigateTo(PageList[0], null, null);
+                    NavigateTo(PageList[0]);
                 }
             }
 
@@ -281,7 +319,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取当前导航到的页
         /// </summary>
-        private Type GetCurrentPageType()
+        public Type GetCurrentPageType()
         {
             return SettingsFrame.CurrentSourcePageType;
         }
@@ -289,7 +327,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取当前导航控件内容对应的页面
         /// </summary>
-        private object GetFrameContent()
+        public object GetFrameContent()
         {
             return SettingsFrame.Content;
         }

@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -22,6 +23,11 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class DownloadPage : Page, INotifyPropertyChanged
     {
+        private bool needNavigate;
+        private Type navigateType;
+        private object navigateParameter;
+        private bool? slideDirection;
+
         private SelectorBarItem _selectedItem;
 
         public SelectorBarItem SelectedItem
@@ -57,16 +63,38 @@ namespace GetStoreApp.Views.Pages
             base.OnNavigatedTo(args);
             DownloadFrame.ContentTransitions = SuppressNavigationTransitionCollection;
 
-            // 第一次导航
-            if (GetCurrentPageType() is null)
+            if (args.Parameter is AppNaviagtionArgs.Completed)
             {
-                NavigateTo(PageList[0], args.Parameter, null);
+                NavigateTo(PageList[1]);
+            }
+            else
+            {
+                // 第一次导航
+                if (GetCurrentPageType() is null)
+                {
+                    NavigateTo(PageList[0]);
+                }
             }
         }
 
         #endregion 第一部分：重写父类事件
 
         #region 第二部分：下载页面——挂载的事件
+
+        /// <summary>
+        /// 下载页面加载完成后触发的事件
+        /// </summary>
+        private void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            if (needNavigate)
+            {
+                NavigateTo(navigateType, navigateParameter, slideDirection);
+                needNavigate = false;
+                navigateType = null;
+                navigateParameter = null;
+                slideDirection = null;
+            }
+        }
 
         /// <summary>
         /// 点击选择器栏发生的事件
@@ -136,7 +164,7 @@ namespace GetStoreApp.Views.Pages
         {
             DownloadSplitView.IsPaneOpen = false;
             await Task.Delay(300);
-            MainWindow.Current.NavigateTo(typeof(SettingsPage));
+            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.Download);
 
             if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
             {
@@ -169,7 +197,7 @@ namespace GetStoreApp.Views.Pages
         {
             DownloadSplitView.IsPaneOpen = false;
             await Task.Delay(300);
-            MainWindow.Current.NavigateTo(typeof(SettingsPage));
+            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.Download);
         }
 
         #endregion 第二部分：下载页面——挂载的事件
@@ -177,7 +205,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 页面向前导航
         /// </summary>
-        private void NavigateTo(Type navigationPageType, object parameter = null, bool? slideDirection = null)
+        public void NavigateTo(Type navigationPageType, object parameter = null, bool? slideDirection = null)
         {
             try
             {
@@ -198,7 +226,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取当前导航到的页
         /// </summary>
-        private Type GetCurrentPageType()
+        public Type GetCurrentPageType()
         {
             return DownloadFrame.CurrentSourcePageType;
         }
@@ -212,6 +240,17 @@ namespace GetStoreApp.Views.Pages
             {
                 DownloadSplitView.IsPaneOpen = true;
             }
+        }
+
+        /// <summary>
+        /// 设置要导航的内容
+        /// </summary>
+        public void SetNavigateContent(bool needNavigate, Type navigateType, object navigateParameter = null, bool? slideDirection = null)
+        {
+            this.needNavigate = needNavigate;
+            this.navigateType = navigateType;
+            this.navigateParameter = navigateParameter;
+            this.slideDirection = slideDirection;
         }
     }
 }

@@ -34,6 +34,11 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsItemPage : Page, INotifyPropertyChanged
     {
+        private bool needNavigate;
+        private Type navigateType;
+        private object navigateParameter;
+        private bool? slideDirection;
+
         private SelectorBarItem _selectedItem;
 
         public SelectorBarItem SelectedItem
@@ -50,13 +55,28 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<Type> PageList { get; } = [typeof(SettingsGeneralPage), typeof(SettingsStoreAndUpdatePage), typeof(SettingsWinGetPage), typeof(SettingsDownloadPage), typeof(SettingsAppInstallPage), typeof(SettingsAdvancedPage), typeof(SettingsAboutPage)];
+        public List<Type> PageList { get; } = [typeof(SettingsGeneralPage), typeof(SettingsStoreAndUpdatePage), typeof(SettingsWinGetPage), typeof(SettingsDownloadPage), typeof(SettingsAppInstallPage), typeof(SettingsAdvancedPage), typeof(SettingsAboutPage)];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public SettingsItemPage()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// 设置项页面加载完成后触发的事件
+        /// </summary>
+        private void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            if (needNavigate)
+            {
+                NavigateTo(navigateType, navigateParameter, slideDirection);
+                needNavigate = false;
+                navigateType = null;
+                navigateParameter = null;
+                slideDirection = null;
+            }
         }
 
         #region 第一部分：重写父类事件
@@ -69,10 +89,27 @@ namespace GetStoreApp.Views.Pages
             base.OnNavigatedTo(args);
             SettingsItemFrame.ContentTransitions = SuppressNavigationTransitionCollection;
 
-            // 第一次导航
-            if (GetCurrentPageType() is null)
+            if (args.Parameter is AppNaviagtionArgs.Download)
             {
-                NavigateTo(PageList[0], args.Parameter, null);
+                if (!Equals(GetCurrentPageType(), PageList[3]))
+                {
+                    NavigateTo(PageList[3]);
+                }
+            }
+            else if (args.Parameter is AppNaviagtionArgs.AppInstall)
+            {
+                if (!Equals(GetCurrentPageType(), PageList[4]))
+                {
+                    NavigateTo(PageList[4]);
+                }
+            }
+            else
+            {
+                // 第一次导航
+                if (GetCurrentPageType() is null)
+                {
+                    NavigateTo(PageList[0]);
+                }
             }
         }
 
@@ -321,7 +358,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取当前导航到的页
         /// </summary>
-        private Type GetCurrentPageType()
+        public Type GetCurrentPageType()
         {
             return SettingsItemFrame.CurrentSourcePageType;
         }
@@ -332,6 +369,17 @@ namespace GetStoreApp.Views.Pages
         public void ResetFrameTransition()
         {
             SettingsItemFrame.ContentTransitions = SuppressNavigationTransitionCollection;
+        }
+
+        /// <summary>
+        /// 设置要导航的内容
+        /// </summary>
+        public void SetNavigateContent(bool needNavigate, Type navigateType, object navigateParameter = null, bool? slideDirection = null)
+        {
+            this.needNavigate = needNavigate;
+            this.navigateType = navigateType;
+            this.navigateParameter = navigateParameter;
+            this.slideDirection = slideDirection;
         }
     }
 }

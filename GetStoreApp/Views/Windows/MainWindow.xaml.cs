@@ -582,9 +582,7 @@ namespace GetStoreApp.Views.Windows
                         secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", Convert.ToString(textBlock.Tag)));
                         secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", Convert.ToString(textBlock.Tag)));
                         secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", Convert.ToString(textBlock.Tag)));
-
                         secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
-
                         InitializeWithWindow.Initialize(secondaryTile, Win32Interop.GetWindowFromWindowId(AppWindow.Id));
                         isPinnedSuccessfully = await secondaryTile.RequestCreateAsync();
                     }
@@ -1187,9 +1185,31 @@ namespace GetStoreApp.Views.Windows
                 }
                 else
                 {
-                    if (appLaunchArguments.SubParameters.Count > 0 && appLaunchArguments.SubParameters[0] is "Settings" && !Equals(GetCurrentPageType(), typeof(SettingsPage)))
+                    if (appLaunchArguments.SubParameters.Count > 0 && appLaunchArguments.SubParameters[0] is "AppInstallSettings")
                     {
-                        NavigateTo(typeof(SettingsPage));
+                        if (!Equals(GetCurrentPageType(), typeof(SettingsPage)))
+                        {
+                            NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.AppInstall);
+                        }
+                        else if (GetFrameContent() is SettingsPage settingsPage)
+                        {
+                            if (!Equals(settingsPage.GetCurrentPageType(), settingsPage.PageList[0]))
+                            {
+                                settingsPage.NavigateTo(settingsPage.PageList[0], AppNaviagtionArgs.AppInstall);
+                            }
+                            else if (settingsPage.GetFrameContent() is SettingsItemPage settingsItemPage && !Equals(settingsItemPage.GetCurrentPageType(), settingsItemPage.PageList[4]))
+                            {
+                                if (settingsItemPage.IsLoaded)
+                                {
+                                    int currentIndex = settingsItemPage.PageList.FindIndex(item => Equals(item, settingsItemPage.GetCurrentPageType()));
+                                    settingsItemPage.NavigateTo(settingsItemPage.PageList[4], null, 4 > currentIndex);
+                                }
+                                else
+                                {
+                                    settingsItemPage.SetNavigateContent(true, settingsItemPage.PageList[4]);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1206,7 +1226,19 @@ namespace GetStoreApp.Views.Windows
                     {
                         if (!Equals(GetCurrentPageType(), typeof(DownloadPage)))
                         {
-                            NavigateTo(typeof(DownloadPage));
+                            NavigateTo(typeof(DownloadPage), AppNaviagtionArgs.Completed);
+                        }
+                        else if (GetFrameContent() is DownloadPage downloadPage && !Equals(downloadPage.GetCurrentPageType(), downloadPage.PageList[1]))
+                        {
+                            if (downloadPage.IsLoaded)
+                            {
+                                int currentIndex = downloadPage.PageList.FindIndex(item => Equals(item, downloadPage.GetCurrentPageType()));
+                                downloadPage.NavigateTo(downloadPage.PageList[1], null, 1 > currentIndex);
+                            }
+                            else
+                            {
+                                downloadPage.SetNavigateContent(true, downloadPage.PageList[1]);
+                            }
                         }
                     }
                 }
