@@ -481,6 +481,8 @@ namespace GetStoreAppWebView.Views.Windows
             {
                 await WebViewBrowser.EnsureCoreWebView2Async(coreWebView2Environment);
                 WebViewBrowser.CoreWebView2.Navigate("https://apps.microsoft.com");
+                CoreWebView2Profile coreWebView2Profile = WebViewBrowser.CoreWebView2.Profile;
+                coreWebView2Profile.DefaultDownloadFolderPath = DownloadOptionsService.DownloadFolder;
             }
         }
 

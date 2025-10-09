@@ -6,6 +6,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
 using WinRT;
@@ -35,7 +36,7 @@ namespace GetStoreAppWebView
             }
 
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-            InitializeResources();
+            InitializeResourcesAsync().Wait();
 
             if (RuntimeHelper.WebView2Type is WebView2Type.None)
             {
@@ -61,10 +62,11 @@ namespace GetStoreAppWebView
         /// <summary>
         /// 加载应用程序所需的资源
         /// </summary>
-        private static void InitializeResources()
+        private static async Task InitializeResourcesAsync()
         {
             LanguageService.InitializeLanguage();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
+            await DownloadOptionsService.InitializeDownloadOptionsAsync();
 
             AlwaysShowBackdropService.InitializeAlwaysShowBackdrop();
             BackdropService.InitializeBackdrop();
