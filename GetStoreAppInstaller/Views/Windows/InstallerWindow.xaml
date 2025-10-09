@@ -1309,8 +1309,8 @@
                                                 <HyperlinkButton
                                                     Grid.Column="2"
                                                     Margin="0,0,-15,0"
-                                                    Click="{x:Bind OnLearnUpdateSettingsClicked}"
-                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/LearnUpdateSettings')}" />
+                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/LearnUpdateSettings')}"
+                                                    NavigateUri="https://learn.microsoft.com/windows/msix/app-installer/how-to-create-appinstaller-file" />
                                             </Grid>
                                         </Expander.Header>
 
@@ -1496,8 +1496,8 @@
                                                 <HyperlinkButton
                                                     Grid.Column="2"
                                                     Margin="0,0,-15,0"
-                                                    Click="{x:Bind OnLearnTargetDeviceFamilyClicked}"
-                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/LearnTargetDeviceFamily')}" />
+                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/LearnTargetDeviceFamily')}"
+                                                    NavigateUri="https://learn.microsoft.com/uwp/extension-sdks/device-families-overview" />
                                             </Grid>
                                         </Expander.Header>
 
@@ -1704,8 +1704,8 @@
                                                 <HyperlinkButton
                                                     Grid.Column="2"
                                                     Margin="0,0,-15,0"
-                                                    Click="{x:Bind OnLearnPackageDependencyClicked}"
-                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/LearnPackageDependency')}" />
+                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/LearnPackageDependency')}"
+                                                    NavigateUri="https://learn.microsoft.com/uwp/schemas/appxpackage/uapmanifestschema/element-packagedependency" />
                                             </Grid>
                                         </Expander.Header>
 
@@ -2172,8 +2172,8 @@
                                                 <HyperlinkButton
                                                     Grid.Column="2"
                                                     Margin="0,0,-15,0"
-                                                    Click="{x:Bind OnLearnPackageCapabilityClicked}"
-                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/LearnPackageCapability')}" />
+                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/LearnPackageCapability')}"
+                                                    NavigateUri="https://learn.microsoft.com/windows/uwp/packaging/app-capability-declarations" />
                                             </Grid>
                                         </Expander.Header>
 

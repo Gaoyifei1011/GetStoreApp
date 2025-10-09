@@ -1435,7 +1435,7 @@ namespace GetStoreAppInstaller.Views.Windows
                     },
                     new ValueSet()
                     {
-                        { "Parameter", "Settings" }
+                        { "Parameter", "AppInstallSettings" }
                     });
                 }
                 catch (Exception e)
@@ -1900,78 +1900,6 @@ namespace GetStoreAppInstaller.Views.Windows
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                     }
-                }
-            });
-        }
-
-        /// <summary>
-        /// 了解目标设备系列
-        /// </summary>
-        private void OnLearnTargetDeviceFamilyClicked(object sender, RoutedEventArgs args)
-        {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new Uri("https://learn.microsoft.com/uwp/extension-sdks/device-families-overview"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
-        }
-
-        /// <summary>
-        /// 了解更新设置
-        /// </summary>
-        private void OnLearnUpdateSettingsClicked(object sender, RoutedEventArgs args)
-        {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new Uri("https://learn.microsoft.com/windows/msix/app-installer/how-to-create-appinstaller-file"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
-        }
-
-        /// <summary>
-        /// 了解应用包依赖
-        /// </summary>
-        private void OnLearnPackageDependencyClicked(object sender, RoutedEventArgs args)
-        {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new Uri("https://learn.microsoft.com/uwp/schemas/appxpackage/uapmanifestschema/element-packagedependency"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
-        }
-
-        /// <summary>
-        /// 了解应用包功能
-        /// </summary>
-        private void OnLearnPackageCapabilityClicked(object sender, RoutedEventArgs args)
-        {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new Uri("https://learn.microsoft.com/windows/uwp/packaging/app-capability-declarations"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 }
             });
         }
