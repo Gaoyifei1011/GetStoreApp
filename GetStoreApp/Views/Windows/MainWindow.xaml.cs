@@ -1185,28 +1185,57 @@ namespace GetStoreApp.Views.Windows
                 }
                 else
                 {
-                    if (appLaunchArguments.SubParameters.Count > 0 && appLaunchArguments.SubParameters[0] is "AppInstallSettings")
+                    if (appLaunchArguments.SubParameters.Count > 0)
                     {
-                        if (!Equals(GetCurrentPageType(), typeof(SettingsPage)))
+                        if (appLaunchArguments.SubParameters[0] is "DownloadSettings")
                         {
-                            NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.AppInstall);
-                        }
-                        else if (GetFrameContent() is SettingsPage settingsPage)
-                        {
-                            if (!Equals(settingsPage.GetCurrentPageType(), settingsPage.PageList[0]))
+                            if (!Equals(GetCurrentPageType(), typeof(SettingsPage)))
                             {
-                                settingsPage.NavigateTo(settingsPage.PageList[0], AppNaviagtionArgs.AppInstall);
+                                NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.Download);
                             }
-                            else if (settingsPage.GetFrameContent() is SettingsItemPage settingsItemPage && !Equals(settingsItemPage.GetCurrentPageType(), settingsItemPage.PageList[4]))
+                            else if (GetFrameContent() is SettingsPage settingsPage)
                             {
-                                if (settingsItemPage.IsLoaded)
+                                if (!Equals(settingsPage.GetCurrentPageType(), settingsPage.PageList[0]))
                                 {
-                                    int currentIndex = settingsItemPage.PageList.FindIndex(item => Equals(item, settingsItemPage.GetCurrentPageType()));
-                                    settingsItemPage.NavigateTo(settingsItemPage.PageList[4], null, 4 > currentIndex);
+                                    settingsPage.NavigateTo(settingsPage.PageList[0], AppNaviagtionArgs.Download);
                                 }
-                                else
+                                else if (settingsPage.GetFrameContent() is SettingsItemPage settingsItemPage && !Equals(settingsItemPage.GetCurrentPageType(), settingsItemPage.PageList[3]))
                                 {
-                                    settingsItemPage.SetNavigateContent(true, settingsItemPage.PageList[4]);
+                                    if (settingsItemPage.IsLoaded)
+                                    {
+                                        int currentIndex = settingsItemPage.PageList.FindIndex(item => Equals(item, settingsItemPage.GetCurrentPageType()));
+                                        settingsItemPage.NavigateTo(settingsItemPage.PageList[3], null, 3 > currentIndex);
+                                    }
+                                    else
+                                    {
+                                        settingsItemPage.SetNavigateContent(true, settingsItemPage.PageList[3]);
+                                    }
+                                }
+                            }
+                        }
+                        else if (appLaunchArguments.SubParameters[0] is "AppInstallSettings")
+                        {
+                            if (!Equals(GetCurrentPageType(), typeof(SettingsPage)))
+                            {
+                                NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.AppInstall);
+                            }
+                            else if (GetFrameContent() is SettingsPage settingsPage)
+                            {
+                                if (!Equals(settingsPage.GetCurrentPageType(), settingsPage.PageList[0]))
+                                {
+                                    settingsPage.NavigateTo(settingsPage.PageList[0], AppNaviagtionArgs.AppInstall);
+                                }
+                                else if (settingsPage.GetFrameContent() is SettingsItemPage settingsItemPage && !Equals(settingsItemPage.GetCurrentPageType(), settingsItemPage.PageList[4]))
+                                {
+                                    if (settingsItemPage.IsLoaded)
+                                    {
+                                        int currentIndex = settingsItemPage.PageList.FindIndex(item => Equals(item, settingsItemPage.GetCurrentPageType()));
+                                        settingsItemPage.NavigateTo(settingsItemPage.PageList[4], null, 4 > currentIndex);
+                                    }
+                                    else
+                                    {
+                                        settingsItemPage.SetNavigateContent(true, settingsItemPage.PageList[4]);
+                                    }
                                 }
                             }
                         }

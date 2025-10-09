@@ -297,6 +297,15 @@
 
                             <MenuFlyoutSeparator />
 
+                            <MenuFlyoutItem Click="{x:Bind OnOpenSettingsClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Settings')}">
+
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE713;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+
+                            <MenuFlyoutSeparator />
+
                             <MenuFlyoutItem
                                 Click="{x:Bind OnBrowserInformationClicked}"
                                 IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
