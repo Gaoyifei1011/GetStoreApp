@@ -87,7 +87,6 @@
                             MinHeight="36"
                             VerticalAlignment="Center"
                             Click="{x:Bind OnCheckUpdateClicked}"
-                            IsEnabled="{x:Bind IsCheckingUpdate.Equals(x:False), Mode=OneWay}"
                             Style="{StaticResource SubtleButtonStyle}">
 
                             <Button.Content>
