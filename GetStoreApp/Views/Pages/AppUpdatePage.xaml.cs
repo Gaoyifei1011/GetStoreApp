@@ -598,10 +598,17 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取是否正在检查更新中
         /// </summary>
-
         private bool GetIsCheckingUpdate(AppUpdateResultKind appUpdateResultKind)
         {
             return appUpdateResultKind is not AppUpdateResultKind.Querying;
+        }
+
+        /// <summary>
+        /// 获取能否进行更新
+        /// </summary>
+        private bool GetCanUpdate(AppUpdateResultKind appUpdateResultKind, int count)
+        {
+            return appUpdateResultKind is not AppUpdateResultKind.Querying && count > 0;
         }
     }
 }

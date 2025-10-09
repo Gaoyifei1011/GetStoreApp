@@ -95,7 +95,7 @@
 
                     <AppBarButton
                         Click="{x:Bind OnUpdateAllClicked}"
-                        IsEnabled="{x:Bind GetIsCheckingUpdate(AppUpdateResultKind), Mode=OneWay}"
+                        IsEnabled="{x:Bind GetCanUpdate(AppUpdateResultKind, AppUpdateCollection.Count), Mode=OneWay}"
                         Label="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/UpdateAll')}">
 
                         <AppBarButton.Icon>
