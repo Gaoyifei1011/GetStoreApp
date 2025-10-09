@@ -142,7 +142,6 @@ namespace GetStoreApp.Views.Pages
                     DownloadStorageService.StorageDataAdded += OnStorageDataAdded;
                     DownloadStorageService.StorageDataDeleted += OnStorageDataDeleted;
                     DownloadStorageService.StorageDataCleared += OnStorageDataCleared;
-
                     DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
                 });
 
@@ -167,44 +166,39 @@ namespace GetStoreApp.Views.Pages
                 }
                 else
                 {
-                    await Task.Run(() =>
-                    {
-                        DownloadStorageService.DeleteDownloadData(completed.DownloadKey);
-                    });
-                }
-            }
-        }
+                    DeleteFileDialog deleteFileDialog = new();
+                    ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(deleteFileDialog);
 
-        /// <summary>
-        /// 删除当前任务（包括文件）
-        /// </summary>
-        private async void OnDeleteWithFileExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is CompletedModel completed)
-            {
-                if (completed.IsInstalling)
-                {
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.InstallingNotify));
-                }
-                else
-                {
-                    await Task.Run(() =>
+                    if (contentDialogResult is ContentDialogResult.Primary)
                     {
-                        // 删除文件
-                        try
+                        // 同时删除文件
+                        if (deleteFileDialog.DeleteFileSameTime)
                         {
-                            if (File.Exists(completed.FilePath))
+                            await Task.Run(() =>
                             {
-                                File.Delete(completed.FilePath);
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnDeleteWithFileExecuteRequested), 1, e);
-                        }
+                                try
+                                {
+                                    if (File.Exists(completed.FilePath))
+                                    {
+                                        File.Delete(completed.FilePath);
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnDeleteExecuteRequested), 1, e);
+                                }
 
-                        DownloadStorageService.DeleteDownloadData(completed.DownloadKey);
-                    });
+                                DownloadStorageService.DeleteDownloadData(completed.DownloadKey);
+                            });
+                        }
+                        else
+                        {
+                            await Task.Run(() =>
+                            {
+                                DownloadStorageService.DeleteDownloadData(completed.DownloadKey);
+                            });
+                        }
+                    }
                 }
             }
         }
@@ -556,93 +550,59 @@ namespace GetStoreApp.Views.Pages
             }
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await MainWindow.Current.ShowDialogAsync(new DeletePromptDialog(DeleteKind.Download));
+            DeleteFileDialog deleteFileDialog = new();
+            ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(deleteFileDialog);
 
-            if (result is ContentDialogResult.Primary)
+            if (contentDialogResult is ContentDialogResult.Primary)
             {
                 IsSelectMode = false;
 
-                for (int index = CompletedCollection.Count - 1; index >= 0; index--)
+                // 同时删除文件
+                if (deleteFileDialog.DeleteFileSameTime)
                 {
-                    CompletedModel completedItem = CompletedCollection[index];
-                    completedItem.IsSelectMode = false;
-
-                    if (completedItem.IsSelected)
+                    for (int index = CompletedCollection.Count - 1; index >= 0; index--)
                     {
-                        await Task.Run(() =>
+                        CompletedModel completedItem = CompletedCollection[index];
+                        completedItem.IsSelectMode = false;
+
+                        if (completedItem.IsSelected)
                         {
-                            DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
-                        });
-                    }
-                }
-
-                CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
-            }
-        }
-
-        /// <summary>
-        /// 删除选中的任务（包括文件）
-        /// </summary>
-        private async void OnDeleteSelectedWithFileClicked(object sender, RoutedEventArgs args)
-        {
-            List<CompletedModel> selectedCompletedDataList = [];
-
-            foreach (CompletedModel completedItem in CompletedCollection)
-            {
-                if (completedItem.IsSelected)
-                {
-                    selectedCompletedDataList.Add(completedItem);
-                }
-            }
-
-            // 没有选中任何内容时显示空提示对话框
-            if (selectedCompletedDataList.Count is 0)
-            {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
-                return;
-            }
-
-            // 当前任务正在安装时，不进行其他任何操作
-            if (selectedCompletedDataList.Exists(item => item.IsInstalling))
-            {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
-                return;
-            }
-
-            // 删除时显示删除确认对话框
-            ContentDialogResult result = await MainWindow.Current.ShowDialogAsync(new DeletePromptDialog(DeleteKind.Download));
-
-            if (result is ContentDialogResult.Primary)
-            {
-                IsSelectMode = false;
-
-                for (int index = CompletedCollection.Count - 1; index >= 0; index--)
-                {
-                    CompletedModel completedItem = CompletedCollection[index];
-                    completedItem.IsSelectMode = false;
-
-                    if (completedItem.IsSelected)
-                    {
-                        await Task.Run(() =>
-                        {
-                            // 删除文件
-                            try
+                            await Task.Run(() =>
                             {
-                                if (File.Exists(completedItem.FilePath))
+                                // 删除文件
+                                try
                                 {
-                                    File.Delete(completedItem.FilePath);
+                                    if (File.Exists(completedItem.FilePath))
+                                    {
+                                        File.Delete(completedItem.FilePath);
+                                    }
                                 }
-                            }
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnDeleteSelectedWithFileClicked), 1, e);
-                            }
+                                catch (Exception e)
+                                {
+                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnDeleteSelectedClicked), 1, e);
+                                }
 
-                            DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
-                        });
+                                DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
+                            });
+                        }
                     }
                 }
+                else
+                {
+                    for (int index = CompletedCollection.Count - 1; index >= 0; index--)
+                    {
+                        CompletedModel completedItem = CompletedCollection[index];
+                        completedItem.IsSelectMode = false;
 
+                        if (completedItem.IsSelected)
+                        {
+                            await Task.Run(() =>
+                            {
+                                DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
+                            });
+                        }
+                    }
+                }
                 CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
             }
         }

@@ -329,9 +329,9 @@ namespace GetStoreApp.Views.Windows
                 Activate();
 
                 // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
-                ContentDialogResult result = await ShowDialogAsync(new ClosingWindowDialog());
+                ContentDialogResult contentDialogResult = await ShowDialogAsync(new ClosingWindowDialog());
 
-                if (result is ContentDialogResult.Primary)
+                if (contentDialogResult is ContentDialogResult.Primary)
                 {
                     ControlBackdropController.UnInitialize();
                     AppWindow.Changed -= OnAppWindowChanged;
@@ -350,7 +350,7 @@ namespace GetStoreApp.Views.Windows
                     Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0);
                     (Application.Current as MainApp).Dispose();
                 }
-                else if (result is ContentDialogResult.Secondary)
+                else if (contentDialogResult is ContentDialogResult.Secondary)
                 {
                     if (!Equals(GetCurrentPageType(), typeof(DownloadPage)))
                     {

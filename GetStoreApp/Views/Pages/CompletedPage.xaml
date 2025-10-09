@@ -16,7 +16,6 @@
 
     <Page.Resources>
         <XamlUICommand x:Name="DeleteCommand" ExecuteRequested="{x:Bind OnDeleteExecuteRequested}" />
-        <XamlUICommand x:Name="DeleteWithFileCommand" ExecuteRequested="{x:Bind OnDeleteWithFileExecuteRequested}" />
         <XamlUICommand x:Name="FileInformationCommand" ExecuteRequested="{x:Bind OnFileInformationExecuteRequested}" />
         <XamlUICommand x:Name="InstallCommand" ExecuteRequested="{x:Bind OnInstallExecuteRequested}" />
         <XamlUICommand x:Name="OpenFolderCommand" ExecuteRequested="{x:Bind OnOpenFolderExecuteRequested}" />
@@ -126,45 +125,20 @@
                     </AppBarButton>
 
                     <AppBarButton
+                        Click="{x:Bind OnDeleteSelectedClicked}"
                         IsEnabled="{x:Bind GetIsLoading(CompletedResultKind), Mode=OneWay}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DeleteOptions')}"
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DeleteSelected')}"
                         Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE74D;" />
                         </AppBarButton.Icon>
 
-                        <AppBarButton.Flyout>
-                            <MenuFlyout Placement="Bottom">
-                                <MenuFlyoutItem Click="{x:Bind OnDeleteSelectedClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DeleteSelected')}">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Background="Transparent"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DeleteSelectedToolTip')}"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                                    </ToolTipService.ToolTip>
-                                </MenuFlyoutItem>
-
-                                <MenuFlyoutItem Click="{x:Bind OnDeleteSelectedWithFileClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DeleteSelectedWithFile')}">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Background="Transparent"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DeleteSelectedWithFileToolTip')}"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                                    </ToolTipService.ToolTip>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </AppBarButton.Flyout>
-
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
                                 Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DeleteOptionsToolTip')}"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DeleteSelectedToolTip')}"
                                 Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                         </ToolTipService.ToolTip>
                     </AppBarButton>
@@ -578,26 +552,6 @@
                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                                 </ToolTipService.ToolTip>
                                             </MenuFlyoutItem>
-
-                                            <MenuFlyoutItem
-                                                Command="{StaticResource DeleteWithFileCommand}"
-                                                CommandParameter="{x:Bind}"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DeleteWithFile')}">
-
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE74D;" />
-                                                </MenuFlyoutItem.Icon>
-
-                                                <ToolTipService.ToolTip>
-                                                    <ToolTip
-                                                        MaxWidth="9999"
-                                                        Background="Transparent"
-                                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DeleteWithFileToolTip')}"
-                                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                                                </ToolTipService.ToolTip>
-                                            </MenuFlyoutItem>
-
-                                            <MenuFlyoutSeparator />
 
                                             <MenuFlyoutItem
                                                 Command="{StaticResource ShareFileCommand}"

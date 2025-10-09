@@ -3,7 +3,6 @@ using GetStoreApp.Models;
 using GetStoreApp.Services.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
-using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
@@ -288,31 +287,25 @@ namespace GetStoreApp.Views.Pages
                 return;
             }
 
-            // 删除时显示删除确认对话框
-            ContentDialogResult result = await MainWindow.Current.ShowDialogAsync(new DeletePromptDialog(DeleteKind.Download));
+            IsSelectMode = false;
 
-            if (result is ContentDialogResult.Primary)
+            for (int index = DownloadingCollection.Count - 1; index >= 0; index--)
             {
-                IsSelectMode = false;
+                DownloadingModel downloadingItem = DownloadingCollection[index];
+                downloadingItem.IsSelectMode = false;
 
-                for (int index = DownloadingCollection.Count - 1; index >= 0; index--)
+                if (downloadingItem.IsSelected)
                 {
-                    DownloadingModel downloadingItem = DownloadingCollection[index];
-                    downloadingItem.IsSelectMode = false;
+                    downloadingItem.IsSelected = false;
+                    downloadingItem.IsOperating = true;
 
-                    if (downloadingItem.IsSelected)
+                    if (downloadingItem.DownloadProgressState is DownloadProgressState.Queued || downloadingItem.DownloadProgressState is DownloadProgressState.Downloading || downloadingItem.DownloadProgressState is DownloadProgressState.Paused)
                     {
-                        downloadingItem.IsSelected = false;
-                        downloadingItem.IsOperating = true;
-
-                        if (downloadingItem.DownloadProgressState is DownloadProgressState.Queued || downloadingItem.DownloadProgressState is DownloadProgressState.Downloading || downloadingItem.DownloadProgressState is DownloadProgressState.Paused)
-                        {
-                            DownloadSchedulerService.DeleteDownload(downloadingItem.DownloadID);
-                        }
-                        else
-                        {
-                            DownloadingCollection.RemoveAt(index);
-                        }
+                        DownloadSchedulerService.DeleteDownload(downloadingItem.DownloadID);
+                    }
+                    else
+                    {
+                        DownloadingCollection.RemoveAt(index);
                     }
                 }
             }
