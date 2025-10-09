@@ -81,21 +81,58 @@
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppUpdateCollection.Count), Mode=OneWay}" />
 
             <CommandBar Grid.Column="4" DefaultLabelPosition="Right">
-
                 <CommandBar.PrimaryCommands>
-                    <AppBarButton
-                        Click="{x:Bind OnCheckUpdateClicked}"
-                        IsEnabled="{x:Bind GetIsCheckingUpdate(AppUpdateResultKind), Mode=OneWay}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/CheckUpdate')}">
+                    <AppBarElementContainer VerticalContentAlignment="Center">
+                        <Button
+                            MinHeight="36"
+                            VerticalAlignment="Center"
+                            Click="{x:Bind OnCheckUpdateClicked}"
+                            IsEnabled="{x:Bind IsCheckingUpdate.Equals(x:False), Mode=OneWay}"
+                            Style="{StaticResource SubtleButtonStyle}">
 
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE8CB;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
+                            <Button.Content>
+                                <Grid>
+                                    <Grid ColumnSpacing="8" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsCheckingUpdate), Mode=OneWay}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <FontIcon
+                                            Grid.Column="0"
+                                            FontSize="16"
+                                            Glyph="&#xE8CB;" />
+
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            FontSize="12"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/CheckUpdate')}" />
+                                    </Grid>
+
+                                    <Grid ColumnSpacing="8" Visibility="{x:Bind IsCheckingUpdate, Mode=OneWay}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <ProgressRing
+                                            Grid.Column="0"
+                                            Width="16"
+                                            Height="16" />
+
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            FontSize="12"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/CheckingUpdate')}" />
+                                    </Grid>
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                    </AppBarElementContainer>
 
                     <AppBarButton
                         Click="{x:Bind OnUpdateAllClicked}"
-                        IsEnabled="{x:Bind GetCanUpdate(AppUpdateResultKind, AppUpdateCollection.Count), Mode=OneWay}"
+                        IsEnabled="{x:Bind GetCanUpdate(IsCheckingUpdate, AppUpdateCollection.Count), Mode=OneWay}"
                         Label="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/UpdateAll')}">
 
                         <AppBarButton.Icon>
@@ -187,23 +224,6 @@
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/NotCheckUpdate')}"
                     TextAlignment="Center"
                     Visibility="{x:Bind CheckAppUpdateState(AppUpdateResultKind, enum:AppUpdateResultKind.NotCheckUpdate), Mode=OneWay}" />
-
-                <!--  正在检查更新中  -->
-                <StackPanel
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal"
-                    Spacing="10"
-                    Visibility="{x:Bind CheckAppUpdateState(AppUpdateResultKind, enum:AppUpdateResultKind.Querying), Mode=OneWay}">
-
-                    <ProgressRing IsActive="True" IsEnabled="True" />
-
-                    <TextBlock
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/LoadingAppUpdate')}"
-                        TextAlignment="Center" />
-                </StackPanel>
 
                 <!--  检查更新失败  -->
                 <TextBlock

@@ -68,6 +68,22 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        private bool _isCheckingUpdate;
+
+        public bool IsCheckingUpdate
+        {
+            get { return _isCheckingUpdate; }
+
+            set
+            {
+                if (!Equals(_isCheckingUpdate, value))
+                {
+                    _isCheckingUpdate = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCheckingUpdate)));
+                }
+            }
+        }
+
         private string _appUpdateFailedContent;
 
         public string AppUpdateFailedContent
@@ -275,9 +291,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
         {
-            AppUpdateResultKind = AppUpdateResultKind.Querying;
-            AppUpdateCollection.Clear();
-
+            IsCheckingUpdate = true;
             List<AppUpdateModel> appUpdateList = await Task.Run(async () =>
             {
                 List<AppUpdateModel> appUpdateList = [];
@@ -359,7 +373,6 @@ namespace GetStoreApp.Views.Pages
                                         PercentComplete = appInstallStatus.PercentComplete,
                                         ProductId = upgradableAppItem.ProductId
                                     });
-
                                     break;
                                 }
                             }
@@ -385,7 +398,7 @@ namespace GetStoreApp.Views.Pages
                 }
 
                 AppUpdateList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
-
+                AppUpdateCollection.Clear();
                 foreach (AppUpdateModel appUpdateItem in AppUpdateList)
                 {
                     AppUpdateCollection.Add(appUpdateItem);
@@ -408,6 +421,7 @@ namespace GetStoreApp.Views.Pages
                 AppUpdateResultKind = AppUpdateResultKind.Failed;
                 AppUpdateFailedContent = AppUpdateEmptyString;
             }
+            IsCheckingUpdate = false;
         }
 
         /// <summary>
@@ -599,19 +613,11 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 获取是否正在检查更新中
-        /// </summary>
-        private bool GetIsCheckingUpdate(AppUpdateResultKind appUpdateResultKind)
-        {
-            return appUpdateResultKind is not AppUpdateResultKind.Querying;
-        }
-
-        /// <summary>
         /// 获取能否进行更新
         /// </summary>
-        private bool GetCanUpdate(AppUpdateResultKind appUpdateResultKind, int count)
+        private bool GetCanUpdate(bool isCheckingUpdate, int count)
         {
-            return appUpdateResultKind is not AppUpdateResultKind.Querying && count > 0;
+            return !isCheckingUpdate && count > 0;
         }
     }
 }

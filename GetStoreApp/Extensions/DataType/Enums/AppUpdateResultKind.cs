@@ -6,8 +6,7 @@
     public enum AppUpdateResultKind
     {
         NotCheckUpdate = 0,
-        Querying = 1,
-        Failed = 2,
-        Successfully = 3,
+        Failed = 1,
+        Successfully = 2,
     }
 }
