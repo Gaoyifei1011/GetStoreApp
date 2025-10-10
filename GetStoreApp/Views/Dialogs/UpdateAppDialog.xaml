@@ -118,11 +118,14 @@
 
         <MenuFlyoutSeparator Grid.Row="4" Margin="4,5,4,0" />
 
-        <HyperlinkButton
+        <TextBlock
             Grid.Row="5"
             Margin="0,5,0,-15"
-            Padding="0"
-            Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UpdateFromMicrosoftStore')}"
-            NavigateUri="https://apps.microsoft.com/detail/9MV67V21H386" />
+            Padding="0">
+
+            <Hyperlink NavigateUri="https://apps.microsoft.com/detail/9MV67V21H386" UnderlineStyle="None">
+                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UpdateFromMicrosoftStore')}" />
+            </Hyperlink>
+        </TextBlock>
     </Grid>
 </ContentDialog>
