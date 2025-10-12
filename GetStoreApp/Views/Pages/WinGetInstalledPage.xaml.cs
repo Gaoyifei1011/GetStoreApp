@@ -109,34 +109,34 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private PackageUninstallScope _selectedPackageUninstallScope = PackageUninstallScope.Any;
+        private int _selectedPackageUninstallScopeIndex = 0;
 
-        public PackageUninstallScope SelectedPackageUninstallScope
+        public int SelectedPackageUninstallScopeIndex
         {
-            get { return _selectedPackageUninstallScope; }
+            get { return _selectedPackageUninstallScopeIndex; }
 
             set
             {
-                if (!Equals(_selectedPackageUninstallScope, value))
+                if (!Equals(_selectedPackageUninstallScopeIndex, value))
                 {
-                    _selectedPackageUninstallScope = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedPackageUninstallScope)));
+                    _selectedPackageUninstallScopeIndex = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedPackageUninstallScopeIndex)));
                 }
             }
         }
 
-        private PackageUninstallMode _selectedPackageUninstallMode = PackageUninstallMode.Default;
+        private int _selectedPackageUninstallModeIndex = 0;
 
-        public PackageUninstallMode SelectedPackageUninstallMode
+        public int SelectedPackageUninstallModeIndex
         {
-            get { return _selectedPackageUninstallMode; }
+            get { return _selectedPackageUninstallModeIndex; }
 
             set
             {
-                if (!Equals(_selectedPackageUninstallScope, value))
+                if (!Equals(_selectedPackageUninstallModeIndex, value))
                 {
-                    _selectedPackageUninstallMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedPackageUninstallMode)));
+                    _selectedPackageUninstallModeIndex = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedPackageUninstallModeIndex)));
                 }
             }
         }
@@ -232,25 +232,24 @@ namespace GetStoreApp.Views.Pages
                         argsList.Add("--force");
                     }
 
-                    if (Equals(SelectedPackageUninstallMode, PackageUninstallMode.Interactive))
+                    if (Enum.IsDefined(typeof(PackageUninstallMode), SelectedPackageUninstallModeIndex) && (PackageUninstallMode)SelectedPackageUninstallModeIndex is PackageUninstallMode.Interactive)
                     {
                         argsList.Add("--interactive");
                     }
+                    else if (Enum.IsDefined(typeof(PackageUninstallMode), SelectedPackageUninstallModeIndex) && (PackageUninstallMode)SelectedPackageUninstallModeIndex is PackageUninstallMode.Silent)
+                    {
+                        argsList.Add("--silent");
+                    }
 
-                    if (Equals(SelectedPackageUninstallScope, PackageUninstallScope.User))
+                    if (Enum.IsDefined(typeof(PackageUninstallScope), SelectedPackageUninstallScopeIndex) && (PackageUninstallScope)SelectedPackageUninstallScopeIndex is PackageUninstallScope.User)
                     {
                         argsList.Add("--scope");
                         argsList.Add("user");
                     }
-                    else if (Equals(SelectedPackageUninstallScope, PackageUninstallScope.System))
+                    else if (Enum.IsDefined(typeof(PackageUninstallScope), SelectedPackageUninstallScopeIndex) && (PackageUninstallScope)SelectedPackageUninstallScopeIndex is PackageUninstallScope.System)
                     {
                         argsList.Add("--scope");
                         argsList.Add("machine");
-                    }
-
-                    if (Equals(SelectedPackageUninstallMode, PackageUninstallMode.Silent))
-                    {
-                        argsList.Add("--silent");
                     }
 
                     return string.Join(' ', argsList);
@@ -277,25 +276,24 @@ namespace GetStoreApp.Views.Pages
                         argsList.Add("--force");
                     }
 
-                    if (Equals(SelectedPackageUninstallMode, PackageUninstallMode.Interactive))
+                    if (Enum.IsDefined(typeof(PackageUninstallMode), SelectedPackageUninstallModeIndex) && (PackageUninstallMode)SelectedPackageUninstallModeIndex is PackageUninstallMode.Interactive)
                     {
                         argsList.Add("--interactive");
                     }
+                    else if (Enum.IsDefined(typeof(PackageUninstallMode), SelectedPackageUninstallModeIndex) && (PackageUninstallMode)SelectedPackageUninstallModeIndex is PackageUninstallMode.Silent)
+                    {
+                        argsList.Add("--silent");
+                    }
 
-                    if (Equals(SelectedPackageUninstallScope, PackageUninstallScope.User))
+                    if (Enum.IsDefined(typeof(PackageUninstallScope), SelectedPackageUninstallScopeIndex) && (PackageUninstallScope)SelectedPackageUninstallScopeIndex is PackageUninstallScope.User)
                     {
                         argsList.Add("--scope");
                         argsList.Add("user");
                     }
-                    else if (Equals(SelectedPackageUninstallScope, PackageUninstallScope.System))
+                    else if (Enum.IsDefined(typeof(PackageUninstallScope), SelectedPackageUninstallScopeIndex) && (PackageUninstallScope)SelectedPackageUninstallScopeIndex is PackageUninstallScope.System)
                     {
                         argsList.Add("--scope");
                         argsList.Add("machine");
-                    }
-
-                    if (Equals(SelectedPackageUninstallMode, PackageUninstallMode.Silent))
-                    {
-                        argsList.Add("--silent");
                     }
 
                     return string.Join(' ', argsList);
@@ -336,8 +334,8 @@ namespace GetStoreApp.Views.Pages
                     {
                         Force = Force,
                         LogOutputPath = LogService.WinGetFolderPath,
-                        PackageUninstallScope = SelectedPackageUninstallScope,
-                        PackageUninstallMode = SelectedPackageUninstallMode,
+                        PackageUninstallScope = Enum.IsDefined(typeof(PackageUninstallScope), SelectedPackageUninstallScopeIndex) ? (PackageUninstallScope)SelectedPackageUninstallModeIndex : PackageUninstallScope.Any,
+                        PackageUninstallMode = Enum.IsDefined(typeof(PackageUninstallMode), SelectedPackageUninstallModeIndex) ? (PackageUninstallMode)SelectedPackageUninstallModeIndex : PackageUninstallMode.Default,
                     };
                 });
 
@@ -407,22 +405,19 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用卸载范围发生更改时触发的事件
         /// </summary>
-        private void OnPackageUninstallScopeClicked(object sender, RoutedEventArgs args)
+        private void OnPackageUninstallScopeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender is ToggleButton toggleButton && toggleButton.Tag is PackageUninstallScope packageUninstallScope)
+            if (sender is RadioButtons radioButtons && radioButtons.SelectedIndex > 0)
             {
-                SelectedPackageUninstallScope = packageUninstallScope;
+                SelectedPackageUninstallScopeIndex = radioButtons.SelectedIndex;
             }
         }
 
-        /// <summary>
-        /// 应用卸载模式发生更改时触发的事件
-        /// </summary>
-        private void OnPackageUninstallModeClicked(object sender, RoutedEventArgs args)
+        private void OnPackageUninstallModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender is ToggleButton toggleButton && toggleButton.Tag is PackageUninstallMode packageUninstallMode)
+            if (sender is RadioButtons radioButtons && radioButtons.SelectedIndex > 0)
             {
-                SelectedPackageUninstallMode = packageUninstallMode;
+                SelectedPackageUninstallModeIndex = radioButtons.SelectedIndex;
             }
         }
 
