@@ -407,15 +407,18 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageUninstallScopeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender is RadioButtons radioButtons && radioButtons.SelectedIndex > 0)
+            if (sender is RadioButtons radioButtons && radioButtons.SelectedIndex >= 0)
             {
                 SelectedPackageUninstallScopeIndex = radioButtons.SelectedIndex;
             }
         }
 
+        /// <summary>
+        /// 应用卸载模式发生更改时触发的事件
+        /// </summary>
         private void OnPackageUninstallModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender is RadioButtons radioButtons && radioButtons.SelectedIndex > 0)
+            if (sender is RadioButtons radioButtons && radioButtons.SelectedIndex >= 0)
             {
                 SelectedPackageUninstallModeIndex = radioButtons.SelectedIndex;
             }
