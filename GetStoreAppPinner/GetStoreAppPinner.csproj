@@ -33,7 +33,7 @@
 		<UseUWP>true</UseUWP>
 		<WebView2NeverCopyLoaderDllToOutputDirectory>true</WebView2NeverCopyLoaderDllToOutputDirectory>
 		<Win32Resource>GetStoreAppPinner.res</Win32Resource>
-		<WindowsSdkPackageVersion>10.0.26100.75</WindowsSdkPackageVersion>
+		<WindowsSdkPackageVersion>10.0.26100.78</WindowsSdkPackageVersion>
 		<XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 
