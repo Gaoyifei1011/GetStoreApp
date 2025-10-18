@@ -1331,6 +1331,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
+            AppWindow.Resize(new SizeInt32(Convert.ToInt32(800 * contentIsland.RasterizationScale), Convert.ToInt32(560 * contentIsland.RasterizationScale)));
             IsParseEmpty = true;
             CanDragFile = true;
             fileName = string.Empty;
