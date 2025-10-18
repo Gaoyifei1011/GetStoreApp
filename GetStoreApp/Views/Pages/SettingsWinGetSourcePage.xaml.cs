@@ -95,7 +95,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 搜索时是否使用本数据源
         /// </summary>
-        private void OnCheckBoxClickExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnRadioButtonClickExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is WinGetSourceModel winGetSource)
             {

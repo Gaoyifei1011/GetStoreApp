@@ -12,7 +12,7 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <XamlUICommand x:Name="CheckBoxClickCommand" ExecuteRequested="{x:Bind OnCheckBoxClickExecuteRequested}" />
+        <XamlUICommand x:Name="RadioButtonClickCommand" ExecuteRequested="{x:Bind OnRadioButtonClickExecuteRequested}" />
         <XamlUICommand x:Name="EditCommand" ExecuteRequested="{x:Bind OnEditExecuteRequested}" />
         <XamlUICommand x:Name="RemoveDataSourceCommand" ExecuteRequested="{x:Bind OnRemoveDataSourceExecuteRequested}" />
         <XamlUICommand x:Name="RemoveDataSourcePreserveDataCommand" ExecuteRequested="{x:Bind OnRemoveDataSourcePreserveDataExecuteRequested}" />
@@ -268,11 +268,11 @@
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
 
-                                            <CheckBox
+                                            <RadioButton
                                                 Grid.Column="0"
                                                 MinWidth="0"
                                                 Margin="0,0,12,0"
-                                                Command="{StaticResource CheckBoxClickCommand}"
+                                                Command="{StaticResource RadioButtonClickCommand}"
                                                 CommandParameter="{x:Bind}"
                                                 IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                                                 IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}">
@@ -289,7 +289,7 @@
                                                         </Grid>
                                                     </ToolTip>
                                                 </ToolTipService.ToolTip>
-                                            </CheckBox>
+                                            </RadioButton>
 
                                             <StackPanel
                                                 Grid.Column="1"
@@ -634,11 +634,11 @@
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
 
-                                            <CheckBox
+                                            <RadioButton
                                                 Grid.Column="0"
                                                 MinWidth="0"
                                                 Margin="0,0,12,0"
-                                                Command="{StaticResource CheckBoxClickCommand}"
+                                                Command="{StaticResource RadioButtonClickCommand}"
                                                 CommandParameter="{x:Bind}"
                                                 IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                                                 IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}">
@@ -655,7 +655,7 @@
                                                         </Grid>
                                                     </ToolTip>
                                                 </ToolTipService.ToolTip>
-                                            </CheckBox>
+                                            </RadioButton>
 
                                             <StackPanel
                                                 Grid.Column="1"
