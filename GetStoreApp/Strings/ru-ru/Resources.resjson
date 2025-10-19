@@ -1,0 +1,16 @@
+﻿{
+  "AppInstaller": "Файл установщика приложения",
+  "InstallerAppDescription": "Установщик приложения",
+  "InstallerAppDisplayName": "Установщик приложения",
+  "InstallerAppShortDisplayName": "Установщик приложения",
+  "MainAppDescription": "GetStoreApp",
+  "MainAppDisplayName": "GetStoreApp",
+  "MainAppShortDisplayName": "GetStoreApp",
+  "MainProtocolName": "GetStoreApp",
+  "Package": "Пакет приложения Windows",
+  "PackageBundle": "Сборка пакета приложения Windows",
+  "PackageDescription": "Скачивание приложения Microsoft Store в автономном режиме",
+  "PackageDisplayName": "GetStoreApp",
+  "PinnerProtocolName": "Вспомогательная программа Pinner",
+  "WebViewProtocolName": "Веб-браузер"
+}

@@ -1,0 +1,10 @@
+﻿{
+  "Configuration": "Конфигурация",
+  "LearnConfig": "Изучить конфигурацию",
+  "Open": "Открыть",
+  "OpenConfigurationFile": "Открыть файл конфигурации пакета WinGet",
+  "WinGetSettings": "Настройки WinGet",
+  "WinGetSettingsDescription": "Настройка функций пакета WinGet",
+  "WinGetSourceConfiguration": "Конфигурация источника данных WinGet",
+  "WinGetSourceConfigurationDescription": "Настроить источник данных winget, требуется режим администратора"
+}
