@@ -1,0 +1,22 @@
+﻿{
+  "AppManager": "Менеджер приложений",
+  "AppUpdate": "Обновление приложения",
+  "CheckNetWorkConnection": "Проверить сетевое подключение",
+  "Close": "Закрыть",
+  "Download": "Управление скачиваниями",
+  "Home": "Главная",
+  "Maximize": "Развернуть",
+  "Minimize": "Свернуть",
+  "Move": "Переместить",
+  "NetworkError1": "Сетевое подключение ненормальное",
+  "NetworkError2": "Сетевое подключение ненормальное, проверьте сетевое подключение",
+  "PinToStartScreen": "Закрепить на начальном экране",
+  "Restore": "Восстановить",
+  "RunningAdministrator": "(Администратор)",
+  "Settings": "Настройки",
+  "Size": "Размер",
+  "Store": "Microsoft Store",
+  "Title": "GetStoreApp",
+  "Web": "Веб-версия магазина",
+  "WinGet": "Пакет WinGet"
+}

@@ -1,0 +1,22 @@
+{
+  "Back": "Назад",
+  "BrowserInformation": "Информация о браузере",
+  "ClearWebCache": "Очистить веб-кэш",
+  "Close": "Закрыть",
+  "Download": "Скачивание",
+  "Forward": "Вперед",
+  "Loading": "(Загрузка)",
+  "Maximize": "Развернуть",
+  "Minimize": "Свернуть",
+  "Move": "Переместить",
+  "OpenCacheFolder": "Открыть папку кэша",
+  "OpenWithBrowser": "Открыть в браузере",
+  "Refresh": "Обновить",
+  "Restore": "Восстановить",
+  "RunningAdministrator": "(Администратор)",
+  "Settings": "Настройки скачивания",
+  "Size": "Размер",
+  "Title": "Веб-браузер",
+  "ViewMore": "Показать больше",
+  "WebTitle": "Веб-версия магазина"
+}

@@ -1,0 +1,20 @@
+﻿{
+  "AllowUnsignedPackage": "Неподписанный пакет",
+  "AllowUnsignedPackageDescription": "Разрешает установку неподписанных установочных пакетов",
+  "AllowUnsignedPackageOffContent": "Нет",
+  "AllowUnsignedPackageOnContent": "Да",
+  "Configuration": "Конфигурация",
+  "DeveloperOptions": "Параметры разработчика",
+  "ForceAppShutdown": "Принудительное завершение приложения",
+  "ForceAppShutdownDescription": "Принудительно завершать процесс, связанный с пакетом во время установки приложения",
+  "ForceAppShutdownOffContent": "Нет",
+  "ForceAppShutdownOnContent": "Да",
+  "ForceTargetAppShutdown": "Принудительное завершение целевого приложения",
+  "ForceTargetAppShutdownDescription": "Принудительно завершать процесс, связанный с пакетом во время установки приложения",
+  "ForceTargetAppShutdownOffContent": "Нет",
+  "ForceTargetAppShutdownOnContent": "Да",
+  "PackageVolume": "Настройки тома пакета",
+  "PackageVolumeDescription": "Настроить, добавить, удалить или изменить том хранения пакета",
+  "PackageVolumeOffContent": "Нет",
+  "PackageVolumeOnContent": "Да"
+}
