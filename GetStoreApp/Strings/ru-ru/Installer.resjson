@@ -180,7 +180,7 @@
   "CapabilityWalletSystem": "Кошелек",
   "CapabilityWebCam": "Веб-камера",
   "CapabilityWifiControl": "Сети Wi-Fi",
-  "CapabilityXboxAccessory": "Аксессуар Xbox",
+  "CapabilityXboxAccessoryManagement": "Аксессуар Xbox",
   "ClearDependency": "Очистить пакет зависимостей",
   "Close": "Закрыть",
   "CloseFlyout": "Закрыть всплывающее окно",

@@ -29,8 +29,9 @@
 	</Dependencies>
 
 	<Resources>
-		<Resource Language="HE-IL" />
 		<Resource Language="EN-US" />
+		<Resource Language="HE-IL" />
+		<Resource Language="RU-RU" />
 		<Resource Language="ZH-HANS" />
 	</Resources>
 
