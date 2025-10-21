@@ -1,6 +1,6 @@
 ﻿{
-  "BlockMap": "Файлы с расширением BlockMap не отображаются",
-  "BlockMapDescription": "Файлы BlockMap создаются автоматически makeappx.exe при упаковке",
+  "BlockMap": "Не отображать файлы с расширением BlockMap",
+  "BlockMapDescription": "Файлы BlockMap создаются автоматически при упаковке makeappx.exe",
   "BlockMapOffContent": "Не фильтровать",
   "BlockMapOnContent": "фильтр",
   "CancelAutoUpdate": "Отменить автоматическое обновление",
@@ -8,7 +8,7 @@
   "CancelAutoUpdateOffContent": "Нет",
   "CancelAutoUpdateOnContent": "Да",
   "CurrentCountryOrRegion": "Текущая страна или регион:",
-  "EncryptedPackage": "Зашифрованный файл пакета не отображается",
+  "EncryptedPackage": "Не отображать зашифрованные пакеты файлов",
   "EncryptedPackageDescription": "Этот тип файла - зашифрованный пакет приложения",
   "EncryptedPackageOffContent": "Не фильтровать",
   "EncryptedPackageOnContent": "фильтр",

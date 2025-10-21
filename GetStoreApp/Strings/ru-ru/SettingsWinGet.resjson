@@ -2,9 +2,9 @@
   "Configuration": "Конфигурация",
   "LearnConfig": "Изучить конфигурацию",
   "Open": "Открыть",
-  "OpenConfigurationFile": "Открыть файл конфигурации пакета WinGet",
+  "OpenConfigurationFile": "Открыть файл конфигурации WinGet",
   "WinGetSettings": "Настройки WinGet",
-  "WinGetSettingsDescription": "Настройка функций пакета WinGet",
+  "WinGetSettingsDescription": "Настройка функций WinGet",
   "WinGetSourceConfiguration": "Конфигурация источника данных WinGet",
   "WinGetSourceConfigurationDescription": "Настроить источник данных winget, требуется режим администратора"
 }

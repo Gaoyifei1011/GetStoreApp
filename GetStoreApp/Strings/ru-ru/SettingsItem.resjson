@@ -1,7 +1,7 @@
 ﻿{
   "About": "О программе",
   "Advanced": "Дополнительно",
-  "AppInstaller": "Установка приложения",
+  "AppInstaller": "Установщик приложений",
   "Download": "Управление скачиваниями",
   "General": "Общие",
   "PinToDesktop": "Закрепить на рабочем столе",
@@ -16,5 +16,5 @@
   "SettingsInstruction": "Инструкции по настройкам",
   "StoreAndUpdate": "Магазин и обновления",
   "ViewMore": "Показать больше",
-  "WinGet": "Пакет программ WinGet"
+  "WinGet": "Программы WinGet"
 }

@@ -14,7 +14,7 @@
   "EntryDescription": "Описание записи: ",
   "EntryDisplayName": "Имя записи: ",
   "InstalledDate": "Дата установки",
-  "IsBundle": "Пакет приложений",
+  "IsBundle": "Пакет приложения",
   "IsDevelopmentMode": "Установка в режиме разработки",
   "IsFramework": "Фреймворк",
   "IsOptional": "Необязательный",
