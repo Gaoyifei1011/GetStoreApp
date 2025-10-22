@@ -44,7 +44,7 @@
   "WinGetDataSourceRemoveGroupPolicyError": "Ошибка групповой политики",
   "WinGetDataSourceRemoveInternalError": "Внутренняя ошибка",
   "WinGetDataSourceRemoveInvalidOptions": "Неверные параметры",
-  "WinGetDataSourceRemoveSuccess": "Источник данных WinGet успешно удален",
+  "WinGetDataSourceRemoveSuccess": "Источник данных WinGet успешно удалён",
   "WinGetSourceCountEmpty": "Нет добавленных источников данных WinGet",
   "Yes": "Да"
 }

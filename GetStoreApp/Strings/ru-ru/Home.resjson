@@ -3,15 +3,15 @@
   "AppManagerDescription": "Управление всеми приложениями на устройстве",
   "AppUpdate": "Обновление приложений",
   "AppUpdateDescription": "Проверка и автоматическое обновление приложений устройства",
-  "Download": "Управление скачиванием",
+  "Download": "Управление загрузками",
   "DownloadDescription": "Управление приложениями в очереди скачивания",
   "FunctionSummary": "Обзор функций",
   "GetStoreApp": "GetStoreApp",
-  "GetStoreAppDescription": "Скачивание приложения Microsoft Store в автономном режиме",
+  "GetStoreAppDescription": "Скачивание приложений Microsoft Store в автономном режиме",
   "Store": "Microsoft Store",
   "StoreDescription": "Поиск и скачивание приложений Microsoft Store",
   "Web": "Веб-версия магазина",
-  "WebDescription": "Скачивание приложения с помощью веб-страницы",
-  "WinGet": "Пакет WinGet",
-  "WinGetDescription": "Управление пакетом приложения WinGet"
+  "WebDescription": "Скачивание приложений с помощью веб-страницы",
+  "WinGet": "Пакеты WinGet",
+  "WinGetDescription": "Управление приложениями с помощью WinGet"
 }

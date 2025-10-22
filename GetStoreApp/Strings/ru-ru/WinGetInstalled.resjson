@@ -42,6 +42,6 @@
   "UninstallWithCmd": "Удалить с помощью команды",
   "Unknown": "[Неизвестно]",
   "UseInstruction": "Инструкция по использованию",
-  "UseInstructionToolTip": "Нажмите, чтобы узнать, как использовать пакет WinGet",
+  "UseInstructionToolTip": "Нажмите, чтобы узнать, как использовать WinGet",
   "ViewMore": "Показать больше"
 }
