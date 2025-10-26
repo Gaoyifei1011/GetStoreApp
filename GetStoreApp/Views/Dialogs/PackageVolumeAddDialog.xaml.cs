@@ -35,7 +35,7 @@ namespace GetStoreApp.Views.Dialogs
         private readonly string CreateFailed3String = ResourceService.GetLocalized("Dialog/CreateFailed3");
         private readonly string CreateFailed4String = ResourceService.GetLocalized("Dialog/CreateFailed4");
         private readonly string CreateSuccessfullyString = ResourceService.GetLocalized("Dialog/CreateSuccessfully");
-        private readonly string UnknownString = ResourceService.GetLocalized("Dialog/Unknown");
+        private readonly string NotAvailableString = ResourceService.GetLocalized("Dialog/NotAvailable");
         private readonly string VolumeSpaceString = ResourceService.GetLocalized("Dialog/VolumeSpace");
         private readonly PackageManager PackageManager;
 
@@ -337,7 +337,7 @@ namespace GetStoreApp.Views.Dialogs
                             appNotificationBuilder.AddText(CreateFailed2String);
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
-                            string.Format(CreateFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : UnknownString),
+                            string.Format(CreateFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
                             string.Format(CreateFailed4String, exception.Message)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());

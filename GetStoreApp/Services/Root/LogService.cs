@@ -16,7 +16,7 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class LogService
     {
-        private static readonly string unknown = "unknown";
+        private static readonly string notavailable = "N/A";
         private static readonly string httpRequestFolderPath = Path.Combine([ApplicationData.GetDefault().LocalCacheFolder.Path, "Logs", "HttpRequest"]);
         private static readonly string exceptionFolderPath = Path.Combine([ApplicationData.GetDefault().LocalCacheFolder.Path, "Logs", "Exception"]);
         private static readonly LoggingChannelOptions channelOptions = new();
@@ -110,11 +110,11 @@ namespace GetStoreApp.Services.Root
                     exceptionFields.AddString("Class", className);
                     exceptionFields.AddString("Method", methodName);
                     exceptionFields.AddString("Index", Convert.ToString(index));
-                    exceptionFields.AddString("HelpLink", string.IsNullOrEmpty(exception.HelpLink) ? unknown : exception.HelpLink.Replace('\r', ' ').Replace('\n', ' '));
-                    exceptionFields.AddString("Message", string.IsNullOrEmpty(exception.Message) ? unknown : exception.Message.Replace('\r', ' ').Replace('\n', ' '));
+                    exceptionFields.AddString("HelpLink", string.IsNullOrEmpty(exception.HelpLink) ? notavailable : exception.HelpLink.Replace('\r', ' ').Replace('\n', ' '));
+                    exceptionFields.AddString("Message", string.IsNullOrEmpty(exception.Message) ? notavailable : exception.Message.Replace('\r', ' ').Replace('\n', ' '));
                     exceptionFields.AddString("HResult", "0x" + Convert.ToString(exception.HResult, 16).ToUpper());
-                    exceptionFields.AddString("Source", string.IsNullOrEmpty(exception.Source) ? unknown : exception.Source.Replace('\r', ' ').Replace('\n', ' '));
-                    exceptionFields.AddString("StackTrace", string.IsNullOrEmpty(exception.StackTrace) ? unknown : exception.StackTrace.Replace('\r', ' ').Replace('\n', ' '));
+                    exceptionFields.AddString("Source", string.IsNullOrEmpty(exception.Source) ? notavailable : exception.Source.Replace('\r', ' ').Replace('\n', ' '));
+                    exceptionFields.AddString("StackTrace", string.IsNullOrEmpty(exception.StackTrace) ? notavailable : exception.StackTrace.Replace('\r', ' ').Replace('\n', ' '));
 
                     string logFileName = string.Format("Logs-{0}-{1}-{2}-{3:D2}-{4}.etl", nameSpaceName, className, methodName, index, DateTimeOffset.Now.ToString("yyyy-MM-dd HH-mm-ss.fff"));
                     exceptionChannel.LogEvent(logFileName, exceptionFields, logLevel, exceptionOptions);

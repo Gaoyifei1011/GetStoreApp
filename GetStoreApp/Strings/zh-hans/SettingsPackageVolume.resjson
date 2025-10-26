@@ -20,6 +20,7 @@
   "MountPoint": "挂载点：",
   "MountSuccessfully": "{0}存储卷挂载成功",
   "No": "否",
+  "NotAvailable": "N/A",
   "Offline": "脱机状态：",
   "Operation": "操作",
   "PackageVolumeCountEmpty": "没有可用的存储卷",
@@ -44,7 +45,6 @@
   "SettingsInstruction": "设置说明",
   "SupportedHardLinks": "支持硬链接：",
   "SystemVolume": "系统卷：",
-  "Unknown": "[未知]",
   "ViewMore": "查看更多",
   "VolumeSpace": "{0} 可用，共 {1}",
   "Yes": "是"

@@ -51,8 +51,8 @@ namespace GetStoreApp.Views.Pages
         private readonly string PrepareInstallString = ResourceService.GetLocalized("Completed/PrepareInstall");
         private readonly string InstallSuccessfullyString = ResourceService.GetLocalized("Completed/InstallSuccessfully");
         private readonly string InstallSuccessfully1String = ResourceService.GetLocalized("Completed/InstallSuccessfully1");
+        private readonly string NotAvailableString = ResourceService.GetLocalized("Completed/NotAvailable");
         private readonly string WaitInstallString = ResourceService.GetLocalized("Completed/WaitInstall");
-        private readonly string UnknownString = ResourceService.GetLocalized("Completed/Unknown");
         private bool isInitialized;
         private PackageDeploymentManager packageDeploymentManager;
         private global::Windows.Management.Deployment.PackageManager packageManager;
@@ -327,7 +327,7 @@ namespace GetStoreApp.Views.Pages
 
                                         await Task.Run(() =>
                                         {
-                                            string errorCode = packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : UnknownString;
+                                            string errorCode = packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : NotAvailableString;
                                             string errorMessage = packageDeploymentResult.ErrorText;
 
                                             // 显示安装失败通知
@@ -349,8 +349,8 @@ namespace GetStoreApp.Views.Pages
 
                                     await Task.Run(() =>
                                     {
-                                        string errorCode = exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : UnknownString;
-                                        string errorMessage = exception is not null ? exception.Message : UnknownString;
+                                        string errorCode = exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString;
+                                        string errorMessage = exception is not null ? exception.Message : NotAvailableString;
 
                                         // 显示安装失败通知
                                         AppNotificationBuilder appNotificationBuilder = new();

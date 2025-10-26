@@ -39,7 +39,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string InstalledCatalogReferenceFailedString = ResourceService.GetLocalized("WinGetInstalled/InstalledCatalogReferenceFailed");
         private readonly string InstalledFindAppsFailedString = ResourceService.GetLocalized("WinGetInstalled/InstalledFindAppsFailed");
         private readonly string InstalledNotSelectSourceString = ResourceService.GetLocalized("WinGetInstalled/InstalledNotSelectSource");
-        private readonly string UnknownString = ResourceService.GetLocalized("WinGetInstalled/Unknown");
+        private readonly string NotAvailableString = ResourceService.GetLocalized("WinGetInstalled/NotAvailable");
         private readonly Guid CLSID_OpenControlPanel = new("06622D85-6856-4460-8DE1-A81921B41C4B");
         private readonly Lock InstalledAppsLock = new();
         private IOpenControlPanel openControlPanel;
@@ -679,13 +679,13 @@ namespace GetStoreApp.Views.Pages
                     else
                     {
                         InstalledAppsResultKind = InstalledAppsResultKind.Failed;
-                        InstalledFailedContent = string.Format(InstalledAppsFailedString, InstalledFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString);
+                        InstalledFailedContent = string.Format(InstalledAppsFailedString, InstalledFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpper() : NotAvailableString);
                     }
                 }
                 else
                 {
                     InstalledAppsResultKind = InstalledAppsResultKind.Failed;
-                    InstalledFailedContent = string.Format(InstalledAppsFailedString, InstalledCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString);
+                    InstalledFailedContent = string.Format(InstalledAppsFailedString, InstalledCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpper() : NotAvailableString);
                 }
             }
             else
@@ -810,9 +810,9 @@ namespace GetStoreApp.Views.Pages
                                 installedAppsList.Add(new InstalledAppsModel()
                                 {
                                     AppID = matchItem.CatalogPackage.InstalledVersion.Id,
-                                    AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.DisplayName) ? UnknownString : matchItem.CatalogPackage.InstalledVersion.DisplayName,
-                                    AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? UnknownString : matchItem.CatalogPackage.InstalledVersion.Publisher,
-                                    AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? UnknownString : matchItem.CatalogPackage.InstalledVersion.Version,
+                                    AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.DisplayName) ? NotAvailableString : matchItem.CatalogPackage.InstalledVersion.DisplayName,
+                                    AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? NotAvailableString : matchItem.CatalogPackage.InstalledVersion.Publisher,
+                                    AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? NotAvailableString : matchItem.CatalogPackage.InstalledVersion.Version,
                                     IsUninstalling = isUninstalling,
                                     CatalogPackage = matchItem.CatalogPackage,
                                 });

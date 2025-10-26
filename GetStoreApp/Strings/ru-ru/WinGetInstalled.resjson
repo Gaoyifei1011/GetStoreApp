@@ -18,6 +18,7 @@
   "InstalledFindAppsFailed": "Не удалось найти приложения",
   "InstalledNotSelectSource": "Источник данных не выбран, выберите источник данных в настройках",
   "LoadingInstalledApps": "Подождите, загружается список установленных приложений...",
+  "NotAvailable": "N/A",
   "Operation": "Операция",
   "PackageUninstallMode": "Режим удаления",
   "PackageUninstallModeDefault": "По умолчанию",
@@ -40,7 +41,6 @@
   "Uninstall": "Удалить",
   "UninstallOptions": "Параметры удаления",
   "UninstallWithCmd": "Удалить с помощью команды",
-  "Unknown": "[Неизвестно]",
   "UseInstruction": "Инструкция по использованию",
   "UseInstructionToolTip": "Нажмите, чтобы узнать, как использовать WinGet",
   "ViewMore": "Показать больше"

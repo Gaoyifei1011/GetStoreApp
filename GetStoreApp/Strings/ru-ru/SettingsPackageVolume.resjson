@@ -20,6 +20,7 @@
   "MountPoint": "Точка подключения: ",
   "MountSuccessfully": "Том {0} успешно подключен",
   "No": "Нет",
+  "NotAvailable": "N/A",
   "Offline": "Автономное состояние: ",
   "Operation": "Операция",
   "PackageVolumeCountEmpty": "Нет доступных томов пакета",
@@ -44,7 +45,6 @@
   "SettingsInstruction": "Инструкции по настройкам",
   "SupportedHardLinks": "Поддержка жестких ссылок: ",
   "SystemVolume": "Системный том: ",
-  "Unknown": "[Неизвестно]",
   "ViewMore": "Показать больше",
   "VolumeSpace": "Доступно {0}, всего {1}",
   "Yes": "Да"

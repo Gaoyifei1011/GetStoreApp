@@ -20,6 +20,7 @@
   "MountPoint": "Mount point: ",
   "MountSuccessfully": "{0} volume mount successfully",
   "No": "No",
+  "NotAvailable": "N/A",
   "Offline": "Offline state: ",
   "Operation": "Operation",
   "PackageVolumeCountEmpty": "There are no available package volumes",
@@ -44,7 +45,6 @@
   "SettingsInstruction": "Settings instruction",
   "SupportedHardLinks": "Support hard link: ",
   "SystemVolume": "System volume: ",
-  "Unknown": "[Unknown]",
   "ViewMore": "View more",
   "VolumeSpace": "{0} available, total {1}",
   "Yes": "Yes"

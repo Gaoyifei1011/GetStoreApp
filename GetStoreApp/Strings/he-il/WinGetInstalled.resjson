@@ -18,6 +18,7 @@
   "InstalledFindAppsFailed": "חיפוש יישומים נכשל",
   "InstalledNotSelectSource": "לא נבחר מקור נתונים, אנא בחר מקור נתונים בהגדרות",
   "LoadingInstalledApps": "טוען רשימת יישומים מותקנים, אנא המתן...",
+  "NotAvailable": "N/A",
   "Operation": "פעולה",
   "PackageUninstallMode": "מצב הסרה",
   "PackageUninstallModeDefault": "ברירת מחדל",
@@ -40,7 +41,6 @@
   "Uninstall": "הסר התקנה",
   "UninstallOptions": "אפשרויות הסרה",
   "UninstallWithCmd": "הסר התקנה באמצעות פקודה",
-  "Unknown": "[לא ידוע]",
   "UseInstruction": "הוראות שימוש",
   "UseInstructionToolTip": "לחץ כדי ללמוד על אופן השימוש הספציפי בחבילת WinGet",
   "ViewMore": "הצג עוד"

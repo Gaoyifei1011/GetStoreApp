@@ -45,6 +45,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string MountFailed3String = ResourceService.GetLocalized("SettingsPackageVolume/MountFailed3");
         private readonly string MountFailed4String = ResourceService.GetLocalized("SettingsPackageVolume/MountFailed4");
         private readonly string MountSuccessfullyString = ResourceService.GetLocalized("SettingsPackageVolume/MountSuccessfully");
+        private readonly string NotAvailableString = ResourceService.GetLocalized("SettingsPackageVolume/NotAvailable");
         private readonly string RemoveFailed1String = ResourceService.GetLocalized("SettingsPackageVolume/RemoveFailed1");
         private readonly string RemoveFailed2String = ResourceService.GetLocalized("SettingsPackageVolume/RemoveFailed2");
         private readonly string RemoveFailed3String = ResourceService.GetLocalized("SettingsPackageVolume/RemoveFailed3");
@@ -55,7 +56,6 @@ namespace GetStoreApp.Views.Pages
         private readonly string SetDefaultFailed3String = ResourceService.GetLocalized("SettingsPackageVolume/SetDefaultFailed3");
         private readonly string SetDefaultFailed4String = ResourceService.GetLocalized("SettingsPackageVolume/SetDefaultFailed4");
         private readonly string SetDefaultSuccessfullyString = ResourceService.GetLocalized("SettingsPackageVolume/SetDefaultSuccessfully");
-        private readonly string UnknownString = ResourceService.GetLocalized("SettingsPackageVolume/Unknown");
         private readonly string VolumeSpaceString = ResourceService.GetLocalized("SettingsPackageVolume/VolumeSpace");
         private readonly string YesString = ResourceService.GetLocalized("SettingsPackageVolume/Yes");
         private PackageManager packageManager;
@@ -170,7 +170,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(SetDefaultFailed2String);
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                            string.Format(SetDefaultFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : UnknownString),
+                            string.Format(SetDefaultFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
                             string.Format(SetDefaultFailed4String, exception.Message)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -230,7 +230,7 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(MountFailed2String);
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
-                                string.Format(MountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : UnknownString),
+                                string.Format(MountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
                                 string.Format(MountFailed4String, exception.Message)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -249,7 +249,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(MountFailed2String);
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                            string.Format(MountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : UnknownString),
+                            string.Format(MountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
                                 string.Format(MountFailed4String, exception.Message)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -309,7 +309,7 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(DismountFailed2String);
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
-                                string.Format(DismountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : UnknownString),
+                                string.Format(DismountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
                                 string.Format(DismountFailed4String, exception.Message)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -328,7 +328,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(DismountFailed2String);
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                            string.Format(DismountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : UnknownString),
+                            string.Format(DismountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
                                 string.Format(DismountFailed4String, exception.Message)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -387,7 +387,7 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(RemoveFailed2String);
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
-                                string.Format(RemoveFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : UnknownString),
+                                string.Format(RemoveFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
                                 string.Format(RemoveFailed4String, exception.Message)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -406,7 +406,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(RemoveFailed2String);
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                            string.Format(RemoveFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : UnknownString),
+                            string.Format(RemoveFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
                                 string.Format(RemoveFailed4String, exception.Message)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -569,7 +569,7 @@ namespace GetStoreApp.Views.Pages
             else
             {
                 PackageVolumeResultKind = PackageVolumeResultKind.Failed;
-                PackageVolumeFailedContent = string.Format(PackageVolumeFailedString, exception is not null ? exception.Message : UnknownString, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : UnknownString);
+                PackageVolumeFailedContent = string.Format(PackageVolumeFailedString, exception is not null ? exception.Message : NotAvailableString, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString);
             }
         }
 

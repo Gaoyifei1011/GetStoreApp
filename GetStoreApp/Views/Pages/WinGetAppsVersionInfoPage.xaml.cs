@@ -39,6 +39,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string LicenseString = ResourceService.GetLocalized("WinGetAppsVersionInfo/License");
         private readonly string LocaleString = ResourceService.GetLocalized("WinGetAppsVersionInfo/Locale");
         private readonly string NoSpecificLocaleString = ResourceService.GetLocalized("WinGetAppsVersionInfo/NoSpecificLocale");
+        private readonly string NotAvailableString = ResourceService.GetLocalized("WinGetAppsVersionInfo/NotAvailable");
         private readonly string PackageLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/PackageLink");
         private readonly string PrivacyLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/PrivacyLink");
         private readonly string PublisherLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/PublisherLink");
@@ -47,7 +48,6 @@ namespace GetStoreApp.Views.Pages
         private readonly string PurchaseLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/PurchaseLink");
         private readonly string ReleaseNotesLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/ReleaseNotesLink");
         private readonly string ReleaseNotesString = ResourceService.GetLocalized("WinGetAppsVersionInfo/ReleaseNotes");
-        private readonly string UnknownString = ResourceService.GetLocalized("WinGetAppsVersionInfo/Unknown");
         private readonly string VersionString = ResourceService.GetLocalized("WinGetAppsVersionInfo/Version");
         private readonly string WinGetAppsVersionCountInfoString = ResourceService.GetLocalized("WinGetAppsVersionInfo/WinGetAppsVersionCountInfo");
 
@@ -529,29 +529,29 @@ namespace GetStoreApp.Views.Pages
                     UpgradableApps = upgradableApps;
                 }
 
-                DisplayName = UnknownString;
-                Description = UnknownString;
-                Version = UnknownString;
+                DisplayName = NotAvailableString;
+                Description = NotAvailableString;
+                Version = NotAvailableString;
                 PackageLink = null;
                 IsPackageLinkExisted = false;
-                Author = UnknownString;
-                Publisher = UnknownString;
+                Author = NotAvailableString;
+                Publisher = NotAvailableString;
                 PublisherLink = null;
                 IsPublisherLinkExisted = false;
                 PublisherSupportLink = null;
                 IsPublisherLinkExisted = false;
-                Locale = UnknownString;
-                CopyRight = UnknownString;
+                Locale = NotAvailableString;
+                CopyRight = NotAvailableString;
                 CopyRightLink = null;
                 IsCopyRightLinkExisted = false;
-                License = UnknownString;
+                License = NotAvailableString;
                 LicenseLink = null;
                 IsLicenseLinkExisted = false;
                 PrivacyLink = null;
                 IsPrivacyLinkExisted = false;
                 PurchaseLink = null;
                 IsPrivacyLinkExisted = false;
-                ReleaseNotes = UnknownString;
+                ReleaseNotes = NotAvailableString;
                 ReleaseNotesLink = null;
                 IsReleaseNotesLinkExisted = false;
 
@@ -879,9 +879,9 @@ namespace GetStoreApp.Views.Pages
 
             if (packageVersionInfo is not null && catalogPackageMetadata is not null)
             {
-                DisplayName = string.IsNullOrEmpty(catalogPackageMetadata.PackageName) ? UnknownString : catalogPackageMetadata.PackageName;
-                Description = string.IsNullOrEmpty(catalogPackageMetadata.Description) ? UnknownString : catalogPackageMetadata.Description;
-                Version = string.IsNullOrEmpty(packageVersionInfo.Version) ? UnknownString : packageVersionInfo.Version;
+                DisplayName = string.IsNullOrEmpty(catalogPackageMetadata.PackageName) ? NotAvailableString : catalogPackageMetadata.PackageName;
+                Description = string.IsNullOrEmpty(catalogPackageMetadata.Description) ? NotAvailableString : catalogPackageMetadata.Description;
+                Version = string.IsNullOrEmpty(packageVersionInfo.Version) ? NotAvailableString : packageVersionInfo.Version;
                 if (Uri.TryCreate(catalogPackageMetadata.PackageUrl, new UriCreationOptions(), out Uri packageLinkUri))
                 {
                     IsPackageLinkExisted = true;
@@ -892,8 +892,8 @@ namespace GetStoreApp.Views.Pages
                     IsPackageLinkExisted = false;
                     PackageLink = null;
                 }
-                Author = string.IsNullOrEmpty(catalogPackageMetadata.Author) ? UnknownString : catalogPackageMetadata.Author;
-                Publisher = string.IsNullOrEmpty(catalogPackageMetadata.Publisher) ? UnknownString : packageVersionInfo.Publisher;
+                Author = string.IsNullOrEmpty(catalogPackageMetadata.Author) ? NotAvailableString : catalogPackageMetadata.Author;
+                Publisher = string.IsNullOrEmpty(catalogPackageMetadata.Publisher) ? NotAvailableString : packageVersionInfo.Publisher;
                 if (Uri.TryCreate(catalogPackageMetadata.PublisherUrl, new UriCreationOptions(), out Uri publisherLinkUri))
                 {
                     IsPublisherLinkExisted = true;
@@ -916,7 +916,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 if (string.IsNullOrEmpty(catalogPackageMetadata.Locale))
                 {
-                    Locale = UnknownString;
+                    Locale = NotAvailableString;
                 }
                 else
                 {
@@ -934,11 +934,11 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        Locale = UnknownString;
+                        Locale = NotAvailableString;
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                     }
                 }
-                CopyRight = string.IsNullOrEmpty(catalogPackageMetadata.Copyright) ? UnknownString : catalogPackageMetadata.Copyright;
+                CopyRight = string.IsNullOrEmpty(catalogPackageMetadata.Copyright) ? NotAvailableString : catalogPackageMetadata.Copyright;
                 if (Uri.TryCreate(catalogPackageMetadata.CopyrightUrl, new UriCreationOptions(), out Uri copyRightLinkUri))
                 {
                     IsCopyRightLinkExisted = true;
@@ -949,7 +949,7 @@ namespace GetStoreApp.Views.Pages
                     IsCopyRightLinkExisted = false;
                     CopyRightLink = null;
                 }
-                License = string.IsNullOrEmpty(catalogPackageMetadata.License) ? UnknownString : catalogPackageMetadata.License;
+                License = string.IsNullOrEmpty(catalogPackageMetadata.License) ? NotAvailableString : catalogPackageMetadata.License;
                 if (Uri.TryCreate(catalogPackageMetadata.LicenseUrl, new UriCreationOptions(), out Uri licenseLinkUri))
                 {
                     IsLicenseLinkExisted = true;
@@ -980,7 +980,7 @@ namespace GetStoreApp.Views.Pages
                     IsPurchaseLinkExisted = false;
                     PurchaseLink = null;
                 }
-                ReleaseNotes = string.IsNullOrEmpty(catalogPackageMetadata.ReleaseNotes) ? UnknownString : catalogPackageMetadata.ReleaseNotes;
+                ReleaseNotes = string.IsNullOrEmpty(catalogPackageMetadata.ReleaseNotes) ? NotAvailableString : catalogPackageMetadata.ReleaseNotes;
                 if (Uri.TryCreate(catalogPackageMetadata.ReleaseNotesUrl, new UriCreationOptions(), out Uri releaseNotesLinkUri))
                 {
                     IsReleaseNotesLinkExisted = true;
@@ -1010,29 +1010,29 @@ namespace GetStoreApp.Views.Pages
             }
             else
             {
-                DisplayName = UnknownString;
-                Description = UnknownString;
-                Version = UnknownString;
+                DisplayName = NotAvailableString;
+                Description = NotAvailableString;
+                Version = NotAvailableString;
                 PackageLink = null;
                 IsPackageLinkExisted = false;
-                Author = UnknownString;
-                Publisher = UnknownString;
+                Author = NotAvailableString;
+                Publisher = NotAvailableString;
                 PublisherLink = null;
                 IsPublisherLinkExisted = false;
                 PublisherSupportLink = null;
                 IsPublisherLinkExisted = false;
-                Locale = UnknownString;
-                CopyRight = UnknownString;
+                Locale = NotAvailableString;
+                CopyRight = NotAvailableString;
                 CopyRightLink = null;
                 IsCopyRightLinkExisted = false;
-                License = UnknownString;
+                License = NotAvailableString;
                 LicenseLink = null;
                 IsLicenseLinkExisted = false;
                 PrivacyLink = null;
                 IsPrivacyLinkExisted = false;
                 PurchaseLink = null;
                 IsPrivacyLinkExisted = false;
-                ReleaseNotes = UnknownString;
+                ReleaseNotes = NotAvailableString;
                 ReleaseNotesLink = null;
                 IsReleaseNotesLinkExisted = false;
                 TagCollection.Clear();

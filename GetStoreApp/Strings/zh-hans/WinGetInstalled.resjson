@@ -18,6 +18,7 @@
   "InstalledFindAppsFailed": "查找应用失败",
   "InstalledNotSelectSource": "未选择数据源，请在设置中选择一个数据源",
   "LoadingInstalledApps": "正在加载已安装应用列表，请稍候...",
+  "NotAvailable": "N/A",
   "Operation": "操作",
   "PackageUninstallMode": "卸载模式",
   "PackageUninstallModeDefault": "默认",
@@ -40,7 +41,6 @@
   "Uninstall": "卸载",
   "UninstallOptions": "卸载选项",
   "UninstallWithCmd": "使用命令卸载",
-  "Unknown": "[未知]",
   "UseInstruction": "使用说明",
   "UseInstructionToolTip": "点击了解WinGet 程序包的具体使用方法",
   "ViewMore": "查看更多"

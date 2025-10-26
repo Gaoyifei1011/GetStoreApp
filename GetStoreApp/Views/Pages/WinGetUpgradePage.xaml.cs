@@ -31,13 +31,13 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class WinGetUpgradePage : Page, INotifyPropertyChanged
     {
+        private readonly string NotAvailableString = ResourceService.GetLocalized("WinGetUpgrade/NotAvailable");
         private readonly string UpgradableAppsCountInfoString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableAppsCountInfo");
         private readonly string UpgradableAppsEmptyDescriptionString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableAppsEmptyDescription");
         private readonly string UpgradableAppsFailedString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableAppsFailed");
         private readonly string UpgradableCatalogReferenceFailedString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableCatalogReferenceFailed");
         private readonly string UpgradableFindAppsFailedString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableFindAppsFailed");
         private readonly string UpgradableNotSelectSourceString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableNotSelectSource");
-        private readonly string UnknownString = ResourceService.GetLocalized("WinGetUpgrade/Unknown");
         private readonly Lock UpgradableAppsLock = new();
         private WinGetPage WinGetPageInstance;
 
@@ -446,13 +446,13 @@ namespace GetStoreApp.Views.Pages
                     else
                     {
                         UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
-                        UpgradableFailedContent = string.Format(UpgradableAppsFailedString, UpgradableFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString);
+                        UpgradableFailedContent = string.Format(UpgradableAppsFailedString, UpgradableFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpper() : NotAvailableString);
                     }
                 }
                 else
                 {
                     UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
-                    UpgradableFailedContent = string.Format(UpgradableAppsFailedString, UpgradableCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString);
+                    UpgradableFailedContent = string.Format(UpgradableAppsFailedString, UpgradableCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpper() : NotAvailableString);
                 }
             }
             else
@@ -553,10 +553,10 @@ namespace GetStoreApp.Views.Pages
                                 upgradableAppsList.Add(new UpgradableAppsModel()
                                 {
                                     AppID = matchItem.CatalogPackage.DefaultInstallVersion.Id,
-                                    AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) ? UnknownString : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
-                                    AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Publisher) ? UnknownString : matchItem.CatalogPackage.DefaultInstallVersion.Publisher,
-                                    AppCurrentVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? UnknownString : matchItem.CatalogPackage.InstalledVersion.Version,
-                                    AppNewestVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) ? UnknownString : matchItem.CatalogPackage.DefaultInstallVersion.Version,
+                                    AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) ? NotAvailableString : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
+                                    AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Publisher) ? NotAvailableString : matchItem.CatalogPackage.DefaultInstallVersion.Publisher,
+                                    AppCurrentVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? NotAvailableString : matchItem.CatalogPackage.InstalledVersion.Version,
+                                    AppNewestVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) ? NotAvailableString : matchItem.CatalogPackage.DefaultInstallVersion.Version,
                                     IsUpgrading = isUpgrading,
                                     CatalogPackage = matchItem.CatalogPackage,
                                 });

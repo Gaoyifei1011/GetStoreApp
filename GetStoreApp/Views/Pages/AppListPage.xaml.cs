@@ -48,6 +48,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string MoveFailed4String = ResourceService.GetLocalized("AppList/MoveFailed4");
         private readonly string MoveFailed5String = ResourceService.GetLocalized("AppList/MoveFailed5");
         private readonly string MoveSuccessfullyString = ResourceService.GetLocalized("AppList/MoveSuccessfully");
+        private readonly string NotAvailableString = ResourceService.GetLocalized("AppList/NotAvailable");
         private readonly string RepairFailed1String = ResourceService.GetLocalized("AppList/RepairFailed1");
         private readonly string RepairFailed2String = ResourceService.GetLocalized("AppList/RepairFailed2");
         private readonly string RepairFailed3String = ResourceService.GetLocalized("AppList/RepairFailed3");
@@ -66,7 +67,6 @@ namespace GetStoreApp.Views.Pages
         private readonly string UninstallFailed4String = ResourceService.GetLocalized("AppList/UninstallFailed4");
         private readonly string UninstallFailed5String = ResourceService.GetLocalized("AppList/UninstallFailed5");
         private readonly string UninstallSuccessfullyString = ResourceService.GetLocalized("AppList/UninstallSuccessfully");
-        private readonly string UnknownString = ResourceService.GetLocalized("AppList/Unknown");
         private readonly string YesString = ResourceService.GetLocalized("AppList/Yes");
 
         private bool isInitialized;
@@ -458,7 +458,7 @@ namespace GetStoreApp.Views.Pages
                                     appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                                     {
                                         MoveFailed3String,
-                                        string.Format(MoveFailed4String, deploymentResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(deploymentResult.ExtendedErrorCode.HResult, 16).ToUpper() : UnknownString),
+                                        string.Format(MoveFailed4String, deploymentResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(deploymentResult.ExtendedErrorCode.HResult, 16).ToUpper() : NotAvailableString),
                                         string.Format(MoveFailed5String, deploymentResult.ErrorText)
                                     }));
                                     AppNotificationButton openSettingsButton = new(OpenSettingsString);
@@ -483,7 +483,7 @@ namespace GetStoreApp.Views.Pages
                                 appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                                 {
                                     MoveFailed3String,
-                                    string.Format(MoveFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : UnknownString),
+                                    string.Format(MoveFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
                                     string.Format(MoveFailed5String, exception.Message)
                                 }));
                                 AppNotificationButton openSettingsButton = new(OpenSettingsString);
@@ -562,7 +562,7 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
                                 RepairFailed3String,
-                                string.Format(RepairFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : UnknownString),
+                                string.Format(RepairFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : NotAvailableString),
                                 string.Format(RepairFailed5String, packageDeploymentResult.ErrorText)
                             }));
                             AppNotificationButton openSettingsButton = new(OpenSettingsString);
@@ -587,7 +587,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
                             RepairFailed3String,
-                            string.Format(RepairFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : UnknownString),
+                            string.Format(RepairFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
                             string.Format(RepairFailed5String, exception.Message)
                         }));
                         AppNotificationButton openSettingsButton = new(OpenSettingsString);
@@ -659,7 +659,7 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
                                 ResetFailed3String,
-                                string.Format(ResetFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : UnknownString),
+                                string.Format(ResetFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : NotAvailableString),
                                 string.Format(ResetFailed5String, packageDeploymentResult.ErrorText)
                             }));
                             AppNotificationButton openSettingsButton = new(OpenSettingsString);
@@ -684,7 +684,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
                             ResetFailed3String,
-                            string.Format(ResetFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : UnknownString),
+                            string.Format(ResetFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
                             string.Format(ResetFailed5String, exception.Message)
                         }));
                         AppNotificationButton openSettingsButton = new(OpenSettingsString);
@@ -760,7 +760,7 @@ namespace GetStoreApp.Views.Pages
                                 appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                                 {
                                     UninstallFailed3String,
-                                    string.Format(UninstallFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : UnknownString),
+                                    string.Format(UninstallFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : NotAvailableString),
                                     string.Format(UninstallFailed5String, packageDeploymentResult.ErrorText)
                                 }));
                                 AppNotificationButton openSettingsButton = new(OpenSettingsString);
@@ -785,7 +785,7 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
                                 UninstallFailed3String,
-                                string.Format(UninstallFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : UnknownString),
+                                string.Format(UninstallFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
                                 string.Format(UninstallFailed5String, exception.Message)
                             }));
                             AppNotificationButton openSettingsButton = new(OpenSettingsString);
@@ -821,44 +821,44 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        appInformation.PackageFamilyName = string.IsNullOrEmpty(package.Package.Id.FamilyName) ? UnknownString : package.Package.Id.FamilyName;
+                        appInformation.PackageFamilyName = string.IsNullOrEmpty(package.Package.Id.FamilyName) ? NotAvailableString : package.Package.Id.FamilyName;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.PackageFamilyName = UnknownString;
+                        appInformation.PackageFamilyName = NotAvailableString;
                     }
 
                     try
                     {
-                        appInformation.PackageFullName = string.IsNullOrEmpty(package.Package.Id.FullName) ? UnknownString : package.Package.Id.FullName;
+                        appInformation.PackageFullName = string.IsNullOrEmpty(package.Package.Id.FullName) ? NotAvailableString : package.Package.Id.FullName;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.PackageFullName = UnknownString;
+                        appInformation.PackageFullName = NotAvailableString;
                     }
 
                     try
                     {
-                        appInformation.Description = string.IsNullOrEmpty(package.Package.Description) ? UnknownString : package.Package.Description;
+                        appInformation.Description = string.IsNullOrEmpty(package.Package.Description) ? NotAvailableString : package.Package.Description;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.Description = UnknownString;
+                        appInformation.Description = NotAvailableString;
                     }
 
                     appInformation.PublisherDisplayName = package.PublisherDisplayName;
 
                     try
                     {
-                        appInformation.PublisherId = string.IsNullOrEmpty(package.Package.Id.PublisherId) ? UnknownString : package.Package.Id.PublisherId;
+                        appInformation.PublisherId = string.IsNullOrEmpty(package.Package.Id.PublisherId) ? NotAvailableString : package.Package.Id.PublisherId;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.PublisherId = UnknownString;
+                        appInformation.PublisherId = NotAvailableString;
                     }
 
                     appInformation.Version = package.Version;
@@ -866,24 +866,24 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        appInformation.Architecture = string.IsNullOrEmpty(Convert.ToString(package.Package.Id.Architecture)) ? UnknownString : Convert.ToString(package.Package.Id.Architecture);
+                        appInformation.Architecture = string.IsNullOrEmpty(Convert.ToString(package.Package.Id.Architecture)) ? NotAvailableString : Convert.ToString(package.Package.Id.Architecture);
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.Architecture = UnknownString;
+                        appInformation.Architecture = NotAvailableString;
                     }
 
                     appInformation.SignatureKind = ResourceService.GetLocalized(string.Format(SignatureString, Convert.ToString(package.SignatureKind)));
 
                     try
                     {
-                        appInformation.ResourceId = string.IsNullOrEmpty(package.Package.Id.ResourceId) ? UnknownString : package.Package.Id.ResourceId;
+                        appInformation.ResourceId = string.IsNullOrEmpty(package.Package.Id.ResourceId) ? NotAvailableString : package.Package.Id.ResourceId;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.ResourceId = UnknownString;
+                        appInformation.ResourceId = NotAvailableString;
                     }
 
                     try
@@ -893,7 +893,7 @@ namespace GetStoreApp.Views.Pages
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.IsBundle = UnknownString;
+                        appInformation.IsBundle = NotAvailableString;
                     }
 
                     try
@@ -903,7 +903,7 @@ namespace GetStoreApp.Views.Pages
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.IsDevelopmentMode = UnknownString;
+                        appInformation.IsDevelopmentMode = NotAvailableString;
                     }
 
                     appInformation.IsFramework = package.IsFramework ? YesString : NoString;
@@ -915,7 +915,7 @@ namespace GetStoreApp.Views.Pages
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.IsOptional = UnknownString;
+                        appInformation.IsOptional = NotAvailableString;
                     }
 
                     try
@@ -925,7 +925,7 @@ namespace GetStoreApp.Views.Pages
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.IsResourcePackage = UnknownString;
+                        appInformation.IsResourcePackage = NotAvailableString;
                     }
 
                     try
@@ -935,7 +935,7 @@ namespace GetStoreApp.Views.Pages
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.IsStub = UnknownString;
+                        appInformation.IsStub = NotAvailableString;
                     }
 
                     try
@@ -945,7 +945,7 @@ namespace GetStoreApp.Views.Pages
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.VertifyIsOK = UnknownString;
+                        appInformation.VertifyIsOK = NotAvailableString;
                     }
 
                     try
@@ -2132,12 +2132,12 @@ namespace GetStoreApp.Views.Pages
         {
             try
             {
-                return string.IsNullOrEmpty(package.DisplayName) ? UnknownString : package.DisplayName;
+                return string.IsNullOrEmpty(package.DisplayName) ? NotAvailableString : package.DisplayName;
             }
             catch (Exception e)
             {
                 ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                return UnknownString;
+                return NotAvailableString;
             }
         }
 
@@ -2148,12 +2148,12 @@ namespace GetStoreApp.Views.Pages
         {
             try
             {
-                return string.IsNullOrEmpty(package.PublisherDisplayName) ? UnknownString : package.PublisherDisplayName;
+                return string.IsNullOrEmpty(package.PublisherDisplayName) ? NotAvailableString : package.PublisherDisplayName;
             }
             catch (Exception e)
             {
                 ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                return UnknownString;
+                return NotAvailableString;
             }
         }
 

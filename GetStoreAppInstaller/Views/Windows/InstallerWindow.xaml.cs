@@ -86,6 +86,7 @@ namespace GetStoreAppInstaller.Views.Windows
         private readonly string InstallProgressString = ResourceService.GetLocalized("Installer/InstallProgress");
         private readonly string NoneString = ResourceService.GetLocalized("Installer/None");
         private readonly string NoString = ResourceService.GetLocalized("Installer/No");
+        private readonly string NotAvailableString = ResourceService.GetLocalized("Installer/NotAvailable");
         private readonly string OpenInstallerFileString = ResourceService.GetLocalized("Installer/OpenInstallerFile");
         private readonly string OpenPackageString = ResourceService.GetLocalized("Installer/OpenPackage");
         private readonly string PackageBundleString = ResourceService.GetLocalized("Installer/PackageBundle");
@@ -93,7 +94,6 @@ namespace GetStoreAppInstaller.Views.Windows
         private readonly string PrepareInstallString = ResourceService.GetLocalized("Installer/PrepareInstall");
         private readonly string RunningAdministratorString = ResourceService.GetLocalized("Installer/RunningAdministrator");
         private readonly string TitleString = ResourceService.GetLocalized("Installer/Title");
-        private readonly string UnknownString = ResourceService.GetLocalized("Installer/Unknown");
         private readonly string UnsupportedFileTypeString = ResourceService.GetLocalized("Installer/UnsupportedFileType");
         private readonly string UnsupportedMultiFilesString = ResourceService.GetLocalized("Installer/UnsupportedMultiFiles");
         private readonly string WaitInstallString = ResourceService.GetLocalized("Installer/WaitInstall");
@@ -1570,7 +1570,7 @@ namespace GetStoreAppInstaller.Views.Windows
                             {
                                 DependencyName = Path.GetFileName(pickFileResult.Path),
                                 DependencyVersion = dependencyAppInformation.Version is Version version ? version : new Version(),
-                                DependencyPublisher = string.IsNullOrEmpty(dependencyAppInformation.PublisherDisplayName) ? UnknownString : dependencyAppInformation.PublisherDisplayName,
+                                DependencyPublisher = string.IsNullOrEmpty(dependencyAppInformation.PublisherDisplayName) ? NotAvailableString : dependencyAppInformation.PublisherDisplayName,
                                 DependencyFullName = string.IsNullOrEmpty(dependencyAppInformation.PackageFullName) ? Convert.ToString(GuidHelper.CreateNewGuid()) : dependencyAppInformation.PackageFullName,
                                 DependencyPath = pickFileResult.Path
                             });
@@ -1713,7 +1713,7 @@ namespace GetStoreAppInstaller.Views.Windows
                     }
                     else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                     {
-                        string errorCode = packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : UnknownString;
+                        string errorCode = packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : NotAvailableString;
                         string errorMessage = packageDeploymentResult.ErrorText;
 
                         // 更新应用安装状态
@@ -1740,8 +1740,8 @@ namespace GetStoreAppInstaller.Views.Windows
                 }
                 else
                 {
-                    string errorCode = exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : UnknownString;
-                    string errorMessage = exception is not null ? exception.Message : UnknownString;
+                    string errorCode = exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString;
+                    string errorMessage = exception is not null ? exception.Message : NotAvailableString;
 
                     // 更新应用安装状态
                     CanDragFile = true;
@@ -2274,7 +2274,7 @@ namespace GetStoreAppInstaller.Views.Windows
                         }
                         else
                         {
-                            packageInformation.AppInstalledState = UnknownString;
+                            packageInformation.AppInstalledState = NotAvailableString;
                         }
                     }
 
@@ -2418,7 +2418,7 @@ namespace GetStoreAppInstaller.Views.Windows
                         }
                         else
                         {
-                            packageInformation.AppInstalledState = UnknownString;
+                            packageInformation.AppInstalledState = NotAvailableString;
                         }
                     }
 
@@ -2570,7 +2570,7 @@ namespace GetStoreAppInstaller.Views.Windows
                                 }
                                 else
                                 {
-                                    dependencyInformation.ProcessorArchitecture = UnknownString;
+                                    dependencyInformation.ProcessorArchitecture = NotAvailableString;
                                 }
 
                                 if (packageNode.Attributes.GetNamedItem("Uri") is IXmlNode uriNode)
@@ -2683,11 +2683,11 @@ namespace GetStoreAppInstaller.Views.Windows
 
                     ApplicationModel application = new()
                     {
-                        AppDescription = string.IsNullOrEmpty(description) ? UnknownString : description,
-                        EntryPoint = string.IsNullOrEmpty(entryPoint) ? UnknownString : entryPoint,
-                        Executable = string.IsNullOrEmpty(executable) ? UnknownString : executable,
-                        AppID = string.IsNullOrEmpty(id) ? UnknownString : id,
-                        AppUserModelId = string.IsNullOrEmpty(appUserModelId) ? UnknownString : appUserModelId
+                        AppDescription = string.IsNullOrEmpty(description) ? NotAvailableString : description,
+                        EntryPoint = string.IsNullOrEmpty(entryPoint) ? NotAvailableString : entryPoint,
+                        Executable = string.IsNullOrEmpty(executable) ? NotAvailableString : executable,
+                        AppID = string.IsNullOrEmpty(id) ? NotAvailableString : id,
+                        AppUserModelId = string.IsNullOrEmpty(appUserModelId) ? NotAvailableString : appUserModelId
                     };
 
                     applicationList.Add(application);
@@ -3312,7 +3312,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
             if (string.IsNullOrEmpty(architecture))
             {
-                architecture = UnknownString;
+                architecture = NotAvailableString;
             }
 
             return string.Format(BundleHeaderString, architecture);
@@ -3904,14 +3904,14 @@ namespace GetStoreAppInstaller.Views.Windows
                 PackageInformation packageInformation = resultDict.packageInformation;
 
                 PackageFileType = packageInformation.PackageFileType;
-                PackageName = string.IsNullOrEmpty(packageInformation.DisplayName) ? UnknownString : packageInformation.DisplayName;
-                PublisherDisplayName = string.IsNullOrEmpty(packageInformation.PublisherDisplayName) ? UnknownString : packageInformation.PublisherDisplayName;
+                PackageName = string.IsNullOrEmpty(packageInformation.DisplayName) ? NotAvailableString : packageInformation.DisplayName;
+                PublisherDisplayName = string.IsNullOrEmpty(packageInformation.PublisherDisplayName) ? NotAvailableString : packageInformation.PublisherDisplayName;
                 Version = packageInformation.Version is not null ? packageInformation.Version : new Version();
                 PackageDescription = string.IsNullOrEmpty(packageInformation.Description) ? NoneString : packageInformation.Description;
-                PackageFamilyName = string.IsNullOrEmpty(packageInformation.PackageFamilyName) ? UnknownString : packageInformation.PackageFamilyName;
-                PackageFullName = string.IsNullOrEmpty(packageInformation.PackageFullName) ? UnknownString : packageInformation.PackageFullName;
-                SupportedArchitecture = string.IsNullOrEmpty(packageInformation.ProcessorArchitecture) ? UnknownString : packageInformation.ProcessorArchitecture;
-                IsFramework = packageInformation.IsFramework.HasValue ? packageInformation.IsFramework.Value ? YesString : NoString : UnknownString;
+                PackageFamilyName = string.IsNullOrEmpty(packageInformation.PackageFamilyName) ? NotAvailableString : packageInformation.PackageFamilyName;
+                PackageFullName = string.IsNullOrEmpty(packageInformation.PackageFullName) ? NotAvailableString : packageInformation.PackageFullName;
+                SupportedArchitecture = string.IsNullOrEmpty(packageInformation.ProcessorArchitecture) ? NotAvailableString : packageInformation.ProcessorArchitecture;
+                IsFramework = packageInformation.IsFramework.HasValue ? packageInformation.IsFramework.Value ? YesString : NoString : NotAvailableString;
                 AppInstalledState = string.IsNullOrEmpty(packageInformation.AppInstalledState) ? string.Empty : packageInformation.AppInstalledState;
                 AppInstallerSourceLink = string.IsNullOrEmpty(packageInformation.AppInstallerSourceLink) ? string.Empty : packageInformation.AppInstallerSourceLink;
                 IsAppInstallerSourceLinkExisted = packageInformation.IsAppInstallerSourceLinkExisted;

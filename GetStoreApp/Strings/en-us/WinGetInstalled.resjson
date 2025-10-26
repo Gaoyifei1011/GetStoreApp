@@ -18,6 +18,7 @@
   "InstalledFindAppsFailed": "Find apps failed",
   "InstalledNotSelectSource": "No data source is selected, please select a data source in the settings",
   "LoadingInstalledApps": "Please wait while loading the list of installed applications...",
+  "NotAvailable": "N/A",
   "Operation": "Operation",
   "PackageUninstallMode": "Uninstall mode",
   "PackageUninstallModeDefault": "Default",
@@ -40,7 +41,6 @@
   "Uninstall": "Uninstall",
   "UninstallOptions": "Uninstall options",
   "UninstallWithCmd": "Uninstall with command",
-  "Unknown": "[Unknown]",
   "UseInstruction": "Use instruction",
   "UseInstructionToolTip": "Click to learn how to use the WinGet package",
   "ViewMore": "View more"
