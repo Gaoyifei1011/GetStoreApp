@@ -49,7 +49,7 @@
     <PackageCertificateKeyFile>GetStoreAppNonStorePackage_SignKey.pfx</PackageCertificateKeyFile>
     <ProjectGuid>CA6C2DC4-C96D-4C23-AE18-FC7150BEF554</ProjectGuid>
     <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
-    <TargetFrameworkMoniker>.NETCoreApp,Version=v9.0</TargetFrameworkMoniker>
+    <TargetFrameworkMoniker>.NETCoreApp,Version=v10.0</TargetFrameworkMoniker>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TargetPlatformVersion>10.0.26100.0</TargetPlatformVersion>
     <UserSecretsId>FF1007A3-37E5-4856-A3D5-765555830F81</UserSecretsId>
