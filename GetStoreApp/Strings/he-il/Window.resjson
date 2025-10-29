@@ -11,6 +11,7 @@
   "NetworkError1": "היישום במצב לא מקוון",
   "NetworkError2": "חיבור הרשת אינו תקין, היישום במצב לא מקוון. אנא בדוק את חיבור הרשת שלך",
   "PinToStartScreen": "הצמד למסך 'התחל'",
+  "PinToTaskbar": "נעוץ בשורת המשימות",
   "Restore": "שחזר",
   "RunningAdministrator": "(מנהל מערכת)",
   "Settings": "הגדרות",

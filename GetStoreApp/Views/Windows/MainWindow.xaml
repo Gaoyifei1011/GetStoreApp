@@ -182,6 +182,16 @@
                                         <FontIcon Glyph="&#xE8FC;" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
+
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnPinToTaskbarClicked}"
+                                    Tag="{x:Bind WindowHomeText}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToTaskbar')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE75B;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
                             </MenuFlyout>
                         </NavigationViewItem.ContextFlyout>
 
@@ -223,6 +233,16 @@
                                         <FontIcon Glyph="&#xE8FC;" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
+
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnPinToTaskbarClicked}"
+                                    Tag="{x:Bind WindowStoreText}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToTaskbar')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE75B;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
                             </MenuFlyout>
                         </NavigationViewItem.ContextFlyout>
 
@@ -260,6 +280,16 @@
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xE8FC;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnPinToTaskbarClicked}"
+                                    Tag="{x:Bind WindowAppUpdateText}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToTaskbar')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE75B;" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
                             </MenuFlyout>
@@ -303,6 +333,16 @@
                                         <FontIcon Glyph="&#xE8FC;" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
+
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnPinToTaskbarClicked}"
+                                    Tag="{x:Bind WindowWinGetText}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToTaskbar')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE75B;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
                             </MenuFlyout>
                         </NavigationViewItem.ContextFlyout>
 
@@ -340,6 +380,16 @@
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xE8FC;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnPinToTaskbarClicked}"
+                                    Tag="{x:Bind WindowAppManagerText}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToTaskbar')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE75B;" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
                             </MenuFlyout>
@@ -383,6 +433,16 @@
                                         <FontIcon Glyph="&#xE8FC;" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
+
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnPinToTaskbarClicked}"
+                                    Tag="{x:Bind WindowDownloadText}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToTaskbar')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE75B;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
                             </MenuFlyout>
                         </NavigationViewItem.ContextFlyout>
 
@@ -420,6 +480,16 @@
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xE8FC;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnPinToTaskbarClicked}"
+                                    Tag="{x:Bind WindowWebText}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToTaskbar')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE75B;" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
                             </MenuFlyout>

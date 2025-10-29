@@ -1,4 +1,5 @@
-﻿using GetStoreAppPinner.Services.Root;
+﻿using GetStoreAppPinner.Helpers.Root;
+using GetStoreAppPinner.Services.Root;
 using GetStoreAppPinner.Views.Pages;
 using System;
 using System.Collections.Generic;
@@ -56,26 +57,27 @@ namespace GetStoreAppPinner
                     appWindow.Presenter.RequestPresentation(AppWindowPresentationKind.CompactOverlay);
                     appWindow.RequestSize(new Size(400, 200));
 
-                    if (protocolActivatedEventArgs.Data.Count is 3)
+                    if (protocolActivatedEventArgs.Data.Count is 4 && protocolActivatedEventArgs.Data["Type"] is nameof(SecondaryTile))
                     {
-                        if (protocolActivatedEventArgs.Data["Type"] is nameof(SecondaryTile))
+                        string tag = Convert.ToString(protocolActivatedEventArgs.Data["Tag"]);
+                        string displayName = Convert.ToString(protocolActivatedEventArgs.Data["DisplayName"]);
+                        string position = Convert.ToString(protocolActivatedEventArgs.Data["Position"]);
+                        SecondaryTile secondaryTile = new("GetStoreApp" + tag)
                         {
-                            string tag = Convert.ToString(protocolActivatedEventArgs.Data["Tag"]);
-                            string displayName = Convert.ToString(protocolActivatedEventArgs.Data["DisplayName"]);
+                            DisplayName = displayName,
+                            Arguments = "SecondaryTile " + tag
+                        };
 
+                        secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
+                        secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                        secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                        secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                        secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
+
+                        if (position is "StartScreen")
+                        {
                             try
                             {
-                                SecondaryTile secondaryTile = new("GetStoreApp" + tag)
-                                {
-                                    DisplayName = displayName,
-                                    Arguments = "SecondaryTile " + tag
-                                };
-
-                                secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
-                                secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                                secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                                secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                                secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
                                 await secondaryTile.RequestCreateAsync();
                             }
                             catch (Exception e)
@@ -83,29 +85,42 @@ namespace GetStoreAppPinner
                                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppPinner), nameof(App), nameof(OnActivated), 1, e);
                             }
                         }
-                        else if (protocolActivatedEventArgs.Data["Type"] is nameof(TaskbarManager))
+                        else if (position is "Taskbar")
                         {
-                            try
-                            {
-                                PackageManager packageManager = new();
-                                Package package = packageManager.FindPackageForUser(string.Empty, protocolActivatedEventArgs.Data["PackageFullName"] as string);
+                            string featureId = "com.microsoft.windows.taskbar.requestPinSecondaryTile";
+                            string token = FeatureAccessHelper.GenerateTokenFromFeatureId(featureId);
+                            string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
+                            LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
+                            LimitedAccessFeatureStatus limitedAccessFeatureStatus = accessResult.Status;
 
-                                if (package is not null)
+                            if (limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available)
+                            {
+                                await TaskbarManager.GetDefault().RequestPinSecondaryTileAsync(secondaryTile);
+                            }
+                        }
+                    }
+                    else if (protocolActivatedEventArgs.Data.Count is 3 && protocolActivatedEventArgs.Data["Type"] is nameof(TaskbarManager))
+                    {
+                        try
+                        {
+                            PackageManager packageManager = new();
+                            Package package = packageManager.FindPackageForUser(string.Empty, protocolActivatedEventArgs.Data["PackageFullName"] as string);
+
+                            if (package is not null)
+                            {
+                                foreach (AppListEntry appListEntryItem in package.GetAppListEntries())
                                 {
-                                    foreach (AppListEntry appListEntryItem in package.GetAppListEntries())
+                                    if (Equals(appListEntryItem.AppUserModelId, protocolActivatedEventArgs.Data["AppUserModelId"]))
                                     {
-                                        if (Equals(appListEntryItem.AppUserModelId, protocolActivatedEventArgs.Data["AppUserModelId"]))
-                                        {
-                                            await TaskbarManager.GetDefault().RequestPinAppListEntryAsync(appListEntryItem);
-                                            break;
-                                        }
+                                        await TaskbarManager.GetDefault().RequestPinAppListEntryAsync(appListEntryItem);
+                                        break;
                                     }
                                 }
                             }
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppPinner), nameof(App), nameof(OnActivated), 2, e);
-                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppPinner), nameof(App), nameof(OnActivated), 2, e);
                         }
                     }
 

@@ -547,7 +547,7 @@ namespace GetStoreApp.Views.Windows
                 string displayName = textBlock.Text;
                 string tag = Convert.ToString(textBlock.Tag);
 
-                if (RuntimeHelper.IsElevated)
+                if (!RuntimeHelper.IsElevated)
                 {
                     await Task.Run(async () =>
                     {
@@ -558,6 +558,7 @@ namespace GetStoreApp.Views.Windows
                                 {"Type", nameof(SecondaryTile) },
                                 { "DisplayName", displayName },
                                 { "Tag", tag },
+                                { "Position", "StartScreen" }
                             });
                         }
                         catch (Exception e)
@@ -572,16 +573,16 @@ namespace GetStoreApp.Views.Windows
 
                     try
                     {
-                        SecondaryTile secondaryTile = new(nameof(GetStoreApp) + Convert.ToString(textBlock.Tag))
+                        SecondaryTile secondaryTile = new(nameof(GetStoreApp) + tag)
                         {
                             DisplayName = displayName,
-                            Arguments = "SecondaryTile " + Convert.ToString(textBlock.Tag)
+                            Arguments = "SecondaryTile " + tag
                         };
 
                         secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
-                        secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", Convert.ToString(textBlock.Tag)));
-                        secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", Convert.ToString(textBlock.Tag)));
-                        secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", Convert.ToString(textBlock.Tag)));
+                        secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                        secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                        secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
                         secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
                         InitializeWithWindow.Initialize(secondaryTile, Win32Interop.GetWindowFromWindowId(AppWindow.Id));
                         isPinnedSuccessfully = await secondaryTile.RequestCreateAsync();
@@ -594,6 +595,85 @@ namespace GetStoreApp.Views.Windows
                     {
                         await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.StartScreen, isPinnedSuccessfully));
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 固定到任务栏
+        /// </summary>
+        private async void OnPinToTaskbarClicked(object sender, RoutedEventArgs args)
+        {
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is TextBlock textBlock)
+            {
+                string displayName = textBlock.Text;
+                string tag = Convert.ToString(textBlock.Tag);
+
+                await global::Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new global::Windows.System.LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                            {
+                                {"Type", nameof(SecondaryTile) },
+                                { "DisplayName", displayName },
+                                { "Tag", tag },
+                                { "Position", "Taskbar" }
+                            });
+
+                return;
+
+                (LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully) pinnedRsult = await Task.Run(async () =>
+                {
+                    LimitedAccessFeatureStatus limitedAccessFeatureStatus = LimitedAccessFeatureStatus.Unknown;
+                    bool isPinnedSuccessfully = false;
+
+                    if (!RuntimeHelper.IsElevated)
+                    {
+                        try
+                        {
+                            SecondaryTile secondaryTile = new(nameof(GetStoreApp) + tag)
+                            {
+                                DisplayName = displayName,
+                                Arguments = "SecondaryTile " + tag
+                            };
+
+                            secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
+                            secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                            secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                            secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                            secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
+
+                            string featureId = "com.microsoft.windows.taskbar.requestPinSecondaryTile";
+                            string token = FeatureAccessHelper.GenerateTokenFromFeatureId(featureId);
+                            string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
+                            LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
+                            limitedAccessFeatureStatus = accessResult.Status;
+
+                            if (limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available)
+                            {
+                                isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinSecondaryTileAsync(secondaryTile);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(OnPinToStartScreenClicked), 1, e);
+                        }
+
+                        if ((limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unavailable || limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unknown) && !isPinnedSuccessfully)
+                        {
+                            await global::Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new global::Windows.System.LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                            {
+                                {"Type", nameof(SecondaryTile) },
+                                { "DisplayName", displayName },
+                                { "Tag", tag },
+                                { "Position", "Taskbar" }
+                            });
+                        }
+                    }
+
+                    return ValueTuple.Create(limitedAccessFeatureStatus, isPinnedSuccessfully);
+                });
+
+                if (pinnedRsult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available || pinnedRsult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.AvailableWithoutToken)
+                {
+                    await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedRsult.isPinnedSuccessfully));
                 }
             }
         }

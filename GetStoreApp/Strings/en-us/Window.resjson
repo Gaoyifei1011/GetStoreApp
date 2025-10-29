@@ -11,6 +11,7 @@
   "NetworkError1": "The network connection is abnormal",
   "NetworkError2": "The network connection is abnormal, please check your network connection",
   "PinToStartScreen": "Pin to start screen",
+  "PinToTaskbar": "Pin to taskbar",
   "Restore": "Restore",
   "RunningAdministrator": "(Administrator)",
   "Settings": "Settings",
