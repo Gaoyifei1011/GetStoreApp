@@ -547,7 +547,7 @@ namespace GetStoreApp.Views.Windows
                 string displayName = textBlock.Text;
                 string tag = Convert.ToString(textBlock.Tag);
 
-                if (!RuntimeHelper.IsElevated)
+                if (RuntimeHelper.IsElevated)
                 {
                     await Task.Run(async () =>
                     {
@@ -608,16 +608,6 @@ namespace GetStoreApp.Views.Windows
             {
                 string displayName = textBlock.Text;
                 string tag = Convert.ToString(textBlock.Tag);
-
-                await global::Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new global::Windows.System.LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
-                            {
-                                {"Type", nameof(SecondaryTile) },
-                                { "DisplayName", displayName },
-                                { "Tag", tag },
-                                { "Position", "Taskbar" }
-                            });
-
-                return;
 
                 (LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully) pinnedRsult = await Task.Run(async () =>
                 {
