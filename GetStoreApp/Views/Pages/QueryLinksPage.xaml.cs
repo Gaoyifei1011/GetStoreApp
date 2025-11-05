@@ -470,23 +470,14 @@ namespace GetStoreApp.Views.Pages
 
                         try
                         {
-                            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadSchedulerList)
-                            {
-                                downloadSchedulerList.Add(downloadSchedulerItem);
-                            }
+                            downloadSchedulerList.AddRange(DownloadSchedulerService.DownloadSchedulerList);
 
                             if (!DownloadSchedulerService.IsDownloadingPageInitialized)
                             {
-                                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadFailedList)
-                                {
-                                    downloadSchedulerList.Add(downloadSchedulerItem);
-                                }
+                                downloadSchedulerList.AddRange(DownloadSchedulerService.DownloadFailedList);
                             }
 
-                            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
-                            {
-                                downloadSchedulerList.Add(downloadSchedulerItem);
-                            }
+                            downloadSchedulerList.AddRange(DownloadStorageService.GetDownloadData());
                         }
                         catch (Exception e)
                         {
@@ -947,23 +938,14 @@ namespace GetStoreApp.Views.Pages
 
                         try
                         {
-                            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadSchedulerList)
-                            {
-                                downloadSchedulerList.Add(downloadSchedulerItem);
-                            }
+                            downloadSchedulerList.AddRange(DownloadSchedulerService.DownloadSchedulerList);
 
                             if (!DownloadSchedulerService.IsDownloadingPageInitialized)
                             {
-                                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadFailedList)
-                                {
-                                    downloadSchedulerList.Add(downloadSchedulerItem);
-                                }
+                                downloadSchedulerList.AddRange(DownloadSchedulerService.DownloadFailedList);
                             }
 
-                            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
-                            {
-                                downloadSchedulerList.Add(downloadSchedulerItem);
-                            }
+                            downloadSchedulerList.AddRange(DownloadStorageService.GetDownloadData());
                         }
                         catch (Exception e)
                         {
@@ -1113,11 +1095,7 @@ namespace GetStoreApp.Views.Pages
                             if (string.IsNullOrEmpty(appInformationResult.appInfo.CategoryID))
                             {
                                 queryLinksResult.isPackagedApp = false;
-                                List<QueryLinksModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
-                                foreach (QueryLinksModel nonAppxPackage in nonAppxPackagesList)
-                                {
-                                    queryLinksList.Add(nonAppxPackage);
-                                }
+                                queryLinksList.AddRange(await QueryLinksHelper.GetNonAppxPackagesAsync(productId));
                             }
                             // 解析商店应用数据
                             else
@@ -1260,11 +1238,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 queryLinksResult.isPackagedApp = false;
                                 List<QueryLinksModel> nonPackagedAppsList = HtmlParseHelper.HtmlParseNonPackagedAppLinks();
-
-                                foreach (QueryLinksModel queryLinksItem in nonPackagedAppsList)
-                                {
-                                    queryLinksList.Add(queryLinksItem);
-                                }
+                                queryLinksList.AddRange(HtmlParseHelper.HtmlParseNonPackagedAppLinks());
                             }
                             else
                             {
@@ -1287,10 +1261,7 @@ namespace GetStoreApp.Views.Pages
                                     packagedAppsList.RemoveAll(item => string.Equals(Path.GetExtension(item.FileName), ".blockmap", StringComparison.OrdinalIgnoreCase));
                                 }
 
-                                foreach (QueryLinksModel queryLinksItem in packagedAppsList)
-                                {
-                                    queryLinksList.Add(queryLinksItem);
-                                }
+                                queryLinksList.AddRange(packagedAppsList);
                             }
 
                             // 排序

@@ -394,11 +394,7 @@ namespace GetStoreApp.Views.Pages
 
                 try
                 {
-                    foreach (AppUpdateModel appUpdateItem in appUpdateList)
-                    {
-                        AppUpdateList.Add(appUpdateItem);
-                    }
-
+                    AppUpdateList.AddRange(appUpdateList);
                     AppUpdateList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
                     AppUpdateCollection.Clear();
                     foreach (AppUpdateModel appUpdateItem in AppUpdateList)

@@ -641,10 +641,7 @@ namespace GetStoreApp.Views.Pages
                             InstalledAppsLock.Enter();
                             try
                             {
-                                foreach (InstalledAppsModel installedAppsItem in upgradableAppsList)
-                                {
-                                    InstalledAppsList.Add(installedAppsItem);
-                                }
+                                InstalledAppsList.AddRange(upgradableAppsList);
 
                                 if (string.IsNullOrEmpty(SearchText))
                                 {
