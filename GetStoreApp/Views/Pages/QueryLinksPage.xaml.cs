@@ -1151,16 +1151,16 @@ namespace GetStoreApp.Views.Pages
                             if (LinkFilterService.EncryptedPackageFilterValue)
                             {
                                 queryLinksList.RemoveAll(item =>
-                                item.FileName.EndsWith(".eappx", StringComparison.OrdinalIgnoreCase) ||
-                                item.FileName.EndsWith(".emsix", StringComparison.OrdinalIgnoreCase) ||
-                                item.FileName.EndsWith(".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
-                                item.FileName.EndsWith(".emsixbundle", StringComparison.OrdinalIgnoreCase)
+                                string.Equals(Path.GetExtension(item.FileName), ".eappx", StringComparison.OrdinalIgnoreCase) ||
+                                string.Equals(Path.GetExtension(item.FileName), ".emsix", StringComparison.OrdinalIgnoreCase) ||
+                                string.Equals(Path.GetExtension(item.FileName), ".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
+                                string.Equals(Path.GetExtension(item.FileName), ".emsixbundle", StringComparison.OrdinalIgnoreCase)
                                 );
                             }
 
                             if (LinkFilterService.BlockMapFilterValue)
                             {
-                                queryLinksList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
+                                queryLinksList.RemoveAll(item => string.Equals(Path.GetExtension(item.FileName), ".blockmap", StringComparison.OrdinalIgnoreCase));
                             }
 
                             // 排序
@@ -1274,17 +1274,17 @@ namespace GetStoreApp.Views.Pages
                                 // 按设置选项设置的内容过滤列表
                                 if (LinkFilterService.EncryptedPackageFilterValue)
                                 {
-                                    queryLinksList.RemoveAll(item =>
-                                    item.FileName.EndsWith(".eappx", StringComparison.OrdinalIgnoreCase) ||
-                                    item.FileName.EndsWith(".emsix", StringComparison.OrdinalIgnoreCase) ||
-                                    item.FileName.EndsWith(".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
-                                    item.FileName.EndsWith(".emsixbundle", StringComparison.OrdinalIgnoreCase)
+                                    packagedAppsList.RemoveAll(item =>
+                                    string.Equals(Path.GetExtension(item.FileName), ".eappx", StringComparison.OrdinalIgnoreCase) ||
+                                    string.Equals(Path.GetExtension(item.FileName), ".emsix", StringComparison.OrdinalIgnoreCase) ||
+                                    string.Equals(Path.GetExtension(item.FileName), ".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
+                                    string.Equals(Path.GetExtension(item.FileName), ".emsixbundle", StringComparison.OrdinalIgnoreCase)
                                     );
                                 }
 
                                 if (LinkFilterService.BlockMapFilterValue)
                                 {
-                                    queryLinksList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
+                                    packagedAppsList.RemoveAll(item => string.Equals(Path.GetExtension(item.FileName), ".blockmap", StringComparison.OrdinalIgnoreCase));
                                 }
 
                                 foreach (QueryLinksModel queryLinksItem in packagedAppsList)
