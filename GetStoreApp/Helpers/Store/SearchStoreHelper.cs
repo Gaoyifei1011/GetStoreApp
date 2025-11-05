@@ -105,13 +105,13 @@ namespace GetStoreApp.Helpers.Store
                         JsonArray dataArray = responseStringObject.GetNamedArray("Data");
                         foreach (IJsonValue jsonValue in dataArray)
                         {
-                            JsonObject jobject = jsonValue.GetObject();
+                            JsonObject jsonObject = jsonValue.GetObject();
 
                             searchStoreList.Add(new SearchStoreModel()
                             {
-                                StoreAppLink = string.Format(storeLink, jobject.GetNamedString("PackageIdentifier")),
-                                StoreAppName = jobject.GetNamedString("PackageName"),
-                                StoreAppPublisher = jobject.GetNamedString("Publisher")
+                                StoreAppLink = string.Format(storeLink, jsonObject.GetNamedString("PackageIdentifier")),
+                                StoreAppName = jsonObject.GetNamedString("PackageName"),
+                                StoreAppPublisher = jsonObject.GetNamedString("Publisher")
                             });
                         }
                     }
