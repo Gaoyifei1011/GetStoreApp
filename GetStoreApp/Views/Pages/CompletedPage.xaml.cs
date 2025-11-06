@@ -176,19 +176,10 @@ namespace GetStoreApp.Views.Pages
                         {
                             await Task.Run(() =>
                             {
-                                try
+                                if (!File.Exists(completed.FilePath) || DeleteFileHelper.DeleteFileToRecycleBin(completed.FilePath))
                                 {
-                                    if (File.Exists(completed.FilePath))
-                                    {
-                                        File.Delete(completed.FilePath);
-                                    }
+                                    DownloadStorageService.DeleteDownloadData(completed.DownloadKey);
                                 }
-                                catch (Exception e)
-                                {
-                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnDeleteExecuteRequested), 1, e);
-                                }
-
-                                DownloadStorageService.DeleteDownloadData(completed.DownloadKey);
                             });
                         }
                         else
@@ -569,20 +560,10 @@ namespace GetStoreApp.Views.Pages
                         {
                             await Task.Run(() =>
                             {
-                                // 删除文件
-                                try
+                                if (!File.Exists(completedItem.FilePath) || DeleteFileHelper.DeleteFileToRecycleBin(completedItem.FilePath))
                                 {
-                                    if (File.Exists(completedItem.FilePath))
-                                    {
-                                        File.Delete(completedItem.FilePath);
-                                    }
+                                    DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
                                 }
-                                catch (Exception e)
-                                {
-                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnDeleteSelectedClicked), 1, e);
-                                }
-
-                                DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
                             });
                         }
                     }

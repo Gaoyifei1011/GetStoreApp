@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using GetStoreApp.WindowsAPI.ComTypes;
+using System;
+using System.Runtime.InteropServices;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
 {
@@ -17,6 +19,21 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// <returns>指向 LPWSTR 值数组的指针，类似于 argv。如果函数失败，则返回值为 NULL。</returns>
         [LibraryImport(Shell32, EntryPoint = "CommandLineToArgvW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
         public static partial nint CommandLineToArgvW([MarshalAs(UnmanagedType.LPWStr)] string lpCmdLine, out int pNumArgs);
+
+        /// <summary>
+        /// 从分析名称创建和初始化 Shell 项对象。
+        /// </summary>
+        /// <param name="pszPath">指向显示名称的指针。</param>
+        /// <param name="pbc">
+        /// 可选。 指向绑定上下文的指针，用于将参数作为输入和输出传递给分析函数。 这些传递的参数通常特定于数据源，并由数据源所有者记录。 例如，文件系统数据源使用STR_FILE_SYS_BIND_DATA绑定上下文参数接受要分析的名称（作为WIN32_FIND_DATA结构）。
+        /// 可以传递STR_PARSE_PREFER_FOLDER_BROWSING以指示尽可能使用文件系统数据源分析 URL。 使用 CreateBindCtx 构造绑定上下文对象，并使用 IBindCtx：：RegisterObjectParam 填充值。 有关这些内容的完整列表，请参阅 绑定上下文字符串键 。 有关使用此参数的示例，请参阅 “使用参数分析 示例”。
+        /// 如果未向分析函数传递或接收任何数据，则此值可以为 NULL。
+        /// </param>
+        /// <param name="riid">对通过 ppv 检索的接口的 IID 的引用，通常 IID_IShellItem 或 IID_IShellItem2。</param>
+        /// <param name="ppv">此方法成功返回时，包含 riid 中请求的接口指针。 这通常是 IShellItem 或 IShellItem2。</param>
+        /// <returns>如果此函数成功，它将返回 S_OK。 否则，它将返回 HRESULT 错误代码。</returns>
+        [LibraryImport(Shell32, EntryPoint = "SHCreateItemFromParsingName", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
+        public static partial int SHCreateItemFromParsingName([MarshalAs(UnmanagedType.LPWStr)] string pszPath, nint pbc, Guid riid, out IShellItem ppv);
 
         /// <summary>
         /// 对指定文件执行操作。

@@ -30,12 +30,12 @@ namespace GetStoreApp.Helpers.Root
                 // 删除当前文件夹下所有文件
                 foreach (string strFile in Directory.GetFiles(folder))
                 {
-                    File.Delete(strFile);
+                    DeleteFileHelper.DeleteFileToRecycleBin(strFile);
                 }
-                // 删除当前文件夹下所有子文件夹(递归)
+                // 删除当前文件夹下所有子文件夹
                 foreach (string strDir in Directory.GetDirectories(folder))
                 {
-                    Directory.Delete(strDir, true);
+                    DeleteFileHelper.DeleteFileToRecycleBin(strDir);
                 }
 
                 return true;

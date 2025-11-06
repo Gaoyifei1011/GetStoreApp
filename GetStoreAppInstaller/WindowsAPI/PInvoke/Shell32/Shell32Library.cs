@@ -51,7 +51,7 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32
         /// 描述已删除的文件的结构的标识符。 此句柄是从WM_DROPFILES消息的 wParam 参数检索的。
         /// </summary>
         /// <param name="hDrop">释放系统分配用于将文件名传输到应用程序的内存。</param>
-        [LibraryImport(Shell32, EntryPoint = "DragFinish", SetLastError = false)]
+        [LibraryImport(Shell32, EntryPoint = "DragFinish", SetLastError = false), PreserveSig]
         public static partial void DragFinish(nuint hDrop);
 
         /// <summary>

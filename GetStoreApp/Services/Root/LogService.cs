@@ -1,4 +1,5 @@
-﻿using Microsoft.Windows.Storage;
+﻿using GetStoreApp.Helpers.Root;
+using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -164,7 +165,7 @@ namespace GetStoreApp.Services.Root
 
                         foreach (string httpRequestLogFile in httpRequestLogFiles)
                         {
-                            File.Delete(httpRequestLogFile);
+                            DeleteFileHelper.DeleteFileToRecycleBin(httpRequestLogFile);
                         }
                     }
 
@@ -174,7 +175,7 @@ namespace GetStoreApp.Services.Root
 
                         foreach (string exceptionLogFile in exceptionLogFiles)
                         {
-                            File.Delete(exceptionLogFile);
+                            DeleteFileHelper.DeleteFileToRecycleBin(exceptionLogFile);
                         }
                     }
                 });
