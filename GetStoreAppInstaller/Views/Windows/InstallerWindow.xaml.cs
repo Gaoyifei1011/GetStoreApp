@@ -948,12 +948,12 @@ namespace GetStoreAppInstaller.Views.Windows
 
             if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory3).GUID, out nint appxFactoryPtr) is 0)
             {
-                appxFactory = (IAppxFactory3)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxFactoryPtr, CreateObjectFlags.Unwrap);
+                appxFactory = (IAppxFactory3)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxFactoryPtr, CreateObjectFlags.None);
             }
 
             if (Ole32Library.CoCreateInstance(CLSID_AppxBundleFactory, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxBundleFactory2).GUID, out nint appxBundleFactoryPtr) is 0)
             {
-                appxBundleFactory = (IAppxBundleFactory2)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxBundleFactoryPtr, CreateObjectFlags.Unwrap);
+                appxBundleFactory = (IAppxBundleFactory2)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxBundleFactoryPtr, CreateObjectFlags.None);
             }
 
             rasterizationScale = contentIsland.RasterizationScale;

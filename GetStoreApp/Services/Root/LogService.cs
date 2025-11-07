@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Helpers.Root;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
@@ -161,22 +162,12 @@ namespace GetStoreApp.Services.Root
                 {
                     if (Directory.Exists(httpRequestFolderPath))
                     {
-                        string[] httpRequestLogFiles = Directory.GetFiles(httpRequestFolderPath, "*.etl");
-
-                        foreach (string httpRequestLogFile in httpRequestLogFiles)
-                        {
-                            DeleteFileHelper.DeleteFileToRecycleBin(httpRequestLogFile);
-                        }
+                        DeleteFileHelper.DeleteFilesToRecycleBin([.. Directory.GetFiles(httpRequestFolderPath, "*.etl")]);
                     }
 
                     if (Directory.Exists(exceptionFolderPath))
                     {
-                        string[] exceptionLogFiles = Directory.GetFiles(exceptionFolderPath, "*.etl");
-
-                        foreach (string exceptionLogFile in exceptionLogFiles)
-                        {
-                            DeleteFileHelper.DeleteFileToRecycleBin(exceptionLogFile);
-                        }
+                        DeleteFileHelper.DeleteFilesToRecycleBin([.. Directory.GetFiles(exceptionFolderPath, "*.etl")]);
                     }
                 });
                 return true;

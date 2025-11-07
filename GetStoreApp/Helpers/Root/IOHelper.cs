@@ -27,17 +27,9 @@ namespace GetStoreApp.Helpers.Root
                     return true;
                 }
 
-                // 删除当前文件夹下所有文件
-                foreach (string strFile in Directory.GetFiles(folder))
-                {
-                    DeleteFileHelper.DeleteFileToRecycleBin(strFile);
-                }
-                // 删除当前文件夹下所有子文件夹
-                foreach (string strDir in Directory.GetDirectories(folder))
-                {
-                    DeleteFileHelper.DeleteFileToRecycleBin(strDir);
-                }
-
+                // 删除当前文件夹下所有文件和子文件夹
+                DeleteFileHelper.DeleteFilesToRecycleBin([.. Directory.GetFiles(folder)]);
+                DeleteFileHelper.DeleteFilesToRecycleBin([.. Directory.GetDirectories(folder)]);
                 return true;
             }
             catch (Exception e)

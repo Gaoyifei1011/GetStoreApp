@@ -56,15 +56,15 @@ namespace GetStoreApp.Services.Root
                 // 解析参数
                 if (!string.IsNullOrEmpty(launchActivatedEventArgs.Arguments))
                 {
-                    IntPtr argv = Shell32Library.CommandLineToArgvW(launchActivatedEventArgs.Arguments, out int argc);
-                    if (argv != IntPtr.Zero)
+                    nint argv = Shell32Library.CommandLineToArgvW(launchActivatedEventArgs.Arguments, out int argc);
+                    if (argv != nint.Zero)
                     {
                         try
                         {
                             string[] parsedArgs = new string[argc];
-                            for (int i = 0; i < argc; i++)
+                            for (int index = 0; index < argc; index++)
                             {
-                                IntPtr ptr = Marshal.ReadIntPtr(argv, i * IntPtr.Size);
+                                nint ptr = Marshal.ReadIntPtr(argv, index * nint.Size);
                                 string arguments = Marshal.PtrToStringUni(ptr);
 
                                 if (arguments.Contains(executableFileName) || string.IsNullOrEmpty(arguments))

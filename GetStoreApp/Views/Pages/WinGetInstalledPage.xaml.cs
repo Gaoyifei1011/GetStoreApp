@@ -189,7 +189,7 @@ namespace GetStoreApp.Views.Pages
 
                 if (createResult is 0)
                 {
-                    openControlPanel = (IOpenControlPanel)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.Unwrap);
+                    openControlPanel = (IOpenControlPanel)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.None);
                 }
             });
         }
