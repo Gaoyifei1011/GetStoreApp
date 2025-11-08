@@ -1,7 +1,9 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Helpers.WinGet;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Settings;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.ComTypes;
@@ -10,7 +12,6 @@ using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
@@ -330,13 +331,25 @@ namespace GetStoreApp.Views.Pages
 
                 UninstallOptions uninstallOptions = await Task.Run(() =>
                 {
-                    return new UninstallOptions()
+                    if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
                     {
-                        Force = Force,
-                        LogOutputPath = LogService.WinGetFolderPath,
-                        PackageUninstallScope = Enum.IsDefined(typeof(PackageUninstallScope), SelectedPackageUninstallScopeIndex) ? (PackageUninstallScope)SelectedPackageUninstallModeIndex : PackageUninstallScope.Any,
-                        PackageUninstallMode = Enum.IsDefined(typeof(PackageUninstallMode), SelectedPackageUninstallModeIndex) ? (PackageUninstallMode)SelectedPackageUninstallModeIndex : PackageUninstallMode.Default,
-                    };
+                        return new()
+                        {
+                            Force = Force,
+                            LogOutputPath = LogService.WinGetFolderPath,
+                            PackageUninstallScope = Enum.IsDefined(typeof(PackageUninstallScope), SelectedPackageUninstallScopeIndex) ? (PackageUninstallScope)SelectedPackageUninstallModeIndex : PackageUninstallScope.Any,
+                            PackageUninstallMode = Enum.IsDefined(typeof(PackageUninstallMode), SelectedPackageUninstallModeIndex) ? (PackageUninstallMode)SelectedPackageUninstallModeIndex : PackageUninstallMode.Default,
+                        };
+                    }
+                    else
+                    {
+                        UninstallOptions uninstallOptions = WinGetFactoryHelper.CreateUninstallOptions();
+                        uninstallOptions.Force = Force;
+                        uninstallOptions.LogOutputPath = LogService.WinGetFolderPath;
+                        uninstallOptions.PackageUninstallScope = Enum.IsDefined(typeof(PackageUninstallScope), SelectedPackageUninstallScopeIndex) ? (PackageUninstallScope)SelectedPackageUninstallModeIndex : PackageUninstallScope.Any;
+                        uninstallOptions.PackageUninstallMode = Enum.IsDefined(typeof(PackageUninstallMode), SelectedPackageUninstallModeIndex) ? (PackageUninstallMode)SelectedPackageUninstallModeIndex : PackageUninstallMode.Default;
+                        return uninstallOptions;
+                    }
                 });
 
                 await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
@@ -616,7 +629,7 @@ namespace GetStoreApp.Views.Pages
 
             PackageCatalogReference packageCatalogReference = await Task.Run(() =>
             {
-                PackageManager packageManager = new();
+                PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
                 return packageManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
             });
 
@@ -768,7 +781,7 @@ namespace GetStoreApp.Views.Pages
 
                 if (connectResult is not null && connectResult.Status is ConnectResultStatus.Ok)
                 {
-                    FindPackagesOptions findPackagesOptions = new();
+                    FindPackagesOptions findPackagesOptions = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreateFindPackagesOptions();
                     FindPackagesResult findPackagesResult = await connectResult.PackageCatalog.FindPackagesAsync(findPackagesOptions);
                     installedAppsResult.findPackagesResult = findPackagesResult;
 

@@ -44,5 +44,7 @@
         public const string TopMostKey = "TopMostValue";
 
         public const string UseSystemRegionKey = "UseSystemRegion";
+
+        public const string WinGetSourceKey = "WinGetSource";
     }
 }

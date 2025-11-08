@@ -1,9 +1,13 @@
-﻿using GetStoreApp.Views.Windows;
+﻿using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Settings;
+using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.Storage;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.System;
@@ -16,11 +20,43 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 设置 WinGet 程序包选项页面
     /// </summary>
-    public sealed partial class SettingsWinGetPage : Page
+    public sealed partial class SettingsWinGetPage : Page, INotifyPropertyChanged
     {
+        private readonly string AppInstallerString = ResourceService.GetLocalized("SettingsWinGet/AppInstaller");
+        private readonly string BuiltInAppString = ResourceService.GetLocalized("SettingsWinGet/BuiltInApp");
+
+        private KeyValuePair<string, string> _winGetSource;
+
+        public KeyValuePair<string, string> WinGetSource
+        {
+            get { return _winGetSource; }
+
+            set
+            {
+                if (!Equals(_winGetSource, value))
+                {
+                    _winGetSource = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WinGetSource)));
+                }
+            }
+        }
+
+        private List<KeyValuePair<string, string>> WinGetSourceList { get; } = [];
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public SettingsWinGetPage()
         {
             InitializeComponent();
+            WinGetSourceList.Add(KeyValuePair.Create(WinGetConfigService.WinGetSourceList[0], BuiltInAppString));
+            WinGetSourceList.Add(KeyValuePair.Create(WinGetConfigService.WinGetSourceList[1], AppInstallerString));
+        }
+
+        /// <summary>
+        /// 设置 WinGet 来源
+        /// </summary>
+        private void OnWinGetSourceSelectClicked(object sender, RoutedEventArgs args)
+        {
         }
 
         /// <summary>

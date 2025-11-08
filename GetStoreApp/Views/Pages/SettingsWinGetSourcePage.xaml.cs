@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Classes;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Helpers.WinGet;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
@@ -172,12 +173,22 @@ namespace GetStoreApp.Views.Pages
 
                 RemovePackageCatalogResult removePackageCatalogResult = await Task.Run(async () =>
                 {
-                    PackageManager packageManager = new();
-                    RemovePackageCatalogOptions removePackageCatalogOptions = new()
+                    PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
+                    RemovePackageCatalogOptions removePackageCatalogOptions = null;
+                    if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
                     {
-                        Name = winGetSource.Name,
-                        PreserveData = false
-                    };
+                        removePackageCatalogOptions = new()
+                        {
+                            Name = winGetSource.Name,
+                            PreserveData = false
+                        };
+                    }
+                    else
+                    {
+                        removePackageCatalogOptions = WinGetFactoryHelper.CreateRemovePackageCatalogOptions();
+                        removePackageCatalogOptions.Name = winGetSource.Name;
+                        removePackageCatalogOptions.PreserveData = false;
+                    }
 
                     return await packageManager.RemovePackageCatalogAsync(removePackageCatalogOptions);
                 });
@@ -299,12 +310,22 @@ namespace GetStoreApp.Views.Pages
 
                 RemovePackageCatalogResult removePackageCatalogResult = await Task.Run(async () =>
                 {
-                    PackageManager packageManager = new();
-                    RemovePackageCatalogOptions removePackageCatalogOptions = new()
+                    PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
+                    RemovePackageCatalogOptions removePackageCatalogOptions = null;
+                    if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
                     {
-                        Name = winGetSource.Name,
-                        PreserveData = true
-                    };
+                        removePackageCatalogOptions = new()
+                        {
+                            Name = winGetSource.Name,
+                            PreserveData = true
+                        };
+                    }
+                    else
+                    {
+                        removePackageCatalogOptions = WinGetFactoryHelper.CreateRemovePackageCatalogOptions();
+                        removePackageCatalogOptions.Name = winGetSource.Name;
+                        removePackageCatalogOptions.PreserveData = true;
+                    }
 
                     return await packageManager.RemovePackageCatalogAsync(removePackageCatalogOptions);
                 });
@@ -468,7 +489,7 @@ namespace GetStoreApp.Views.Pages
 
             List<WinGetSourceModel> winGetSourceInternalList = await Task.Run(() =>
             {
-                PackageManager packageManager = new();
+                PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
                 List<WinGetSourceModel> winGetSourceInternalList = [];
                 KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
 
@@ -531,7 +552,7 @@ namespace GetStoreApp.Views.Pages
 
             List<WinGetSourceModel> wingetSourceCustomList = await Task.Run(() =>
             {
-                PackageManager packageManager = new();
+                PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
                 List<WinGetSourceModel> wingetSourceCustomList = [];
                 KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
 

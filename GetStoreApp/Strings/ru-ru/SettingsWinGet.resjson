@@ -1,10 +1,14 @@
 ﻿{
+  "AppInstaller": "Мастер установки приложения",
+  "BuiltInApp": "встроенное в приложение",
   "Configuration": "Конфигурация",
   "LearnConfig": "Изучить конфигурацию",
   "Open": "Открыть",
   "OpenConfigurationFile": "Открыть файл конфигурации WinGet",
   "WinGetSettings": "Настройки WinGet",
   "WinGetSettingsDescription": "Настройка функций WinGet",
+  "WinGetSource": "Настройки источников WinGet",
+  "WinGetSourceDescription": "Для настройки источников, предоставляющих возможность установки пакетов WinGet, требуется перезагрузка.",
   "WinGetSourceConfiguration": "Конфигурация источника данных WinGet",
   "WinGetSourceConfigurationDescription": "Настроить источник данных winget, требуется режим администратора"
 }

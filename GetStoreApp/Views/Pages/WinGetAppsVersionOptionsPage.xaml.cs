@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Helpers.WinGet;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
@@ -447,16 +448,31 @@ namespace GetStoreApp.Views.Pages
         {
             PackageOperation.DownloadOptions = await Task.Run(() =>
             {
-                return new DownloadOptions()
+                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
                 {
-                    AcceptPackageAgreements = true,
-                    AllowHashMismatch = AllowHashMismatch,
-                    Architecture = PackageArchitecture.Key,
-                    DownloadDirectory = PackageDownloadPath,
-                    PackageVersionId = PackageOperation.PackageVersionId,
-                    Scope = PackageInstallScope.Key,
-                    SkipDependencies = false,
-                };
+                    return new()
+                    {
+                        AcceptPackageAgreements = true,
+                        AllowHashMismatch = AllowHashMismatch,
+                        Architecture = PackageArchitecture.Key,
+                        DownloadDirectory = PackageDownloadPath,
+                        PackageVersionId = PackageOperation.PackageVersionId,
+                        Scope = PackageInstallScope.Key,
+                        SkipDependencies = false,
+                    };
+                }
+                else
+                {
+                    DownloadOptions downloadOptions = WinGetFactoryHelper.CreateDownloadOptions();
+                    downloadOptions.AcceptPackageAgreements = true;
+                    downloadOptions.AllowHashMismatch = AllowHashMismatch;
+                    downloadOptions.Architecture = PackageArchitecture.Key;
+                    downloadOptions.DownloadDirectory = PackageDownloadPath;
+                    downloadOptions.PackageVersionId = PackageOperation.PackageVersionId;
+                    downloadOptions.Scope = PackageInstallScope.Key;
+                    downloadOptions.SkipDependencies = false;
+                    return downloadOptions;
+                }
             });
 
             WinGetAppsVersionDialog.Hide();
@@ -689,21 +705,41 @@ namespace GetStoreApp.Views.Pages
         {
             PackageOperation.InstallOptions = await Task.Run(() =>
             {
-                InstallOptions installOptions = new()
+                InstallOptions installOptions = null;
+                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
                 {
-                    AcceptPackageAgreements = true,
-                    AdditionalInstallerArguments = AdditionalInstallerArguments,
-                    AllowHashMismatch = AllowHashMismatch,
-                    AllowUpgradeToUnknownVersion = AllowUpgradeToUnknownVersion,
-                    BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck,
-                    Force = Force,
-                    LogOutputPath = LogService.WinGetFolderPath,
-                    PackageInstallMode = PackageInstallMode.Key,
-                    PackageInstallScope = PackageInstallScope.Key,
-                    PackageVersionId = PackageOperation.PackageVersionId,
-                    PreferredInstallLocation = PackageInstallPath,
-                    SkipDependencies = false,
-                };
+                    installOptions = new()
+                    {
+                        AcceptPackageAgreements = true,
+                        AdditionalInstallerArguments = AdditionalInstallerArguments,
+                        AllowHashMismatch = AllowHashMismatch,
+                        AllowUpgradeToUnknownVersion = AllowUpgradeToUnknownVersion,
+                        BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck,
+                        Force = Force,
+                        LogOutputPath = LogService.WinGetFolderPath,
+                        PackageInstallMode = PackageInstallMode.Key,
+                        PackageInstallScope = PackageInstallScope.Key,
+                        PackageVersionId = PackageOperation.PackageVersionId,
+                        PreferredInstallLocation = PackageInstallPath,
+                        SkipDependencies = false,
+                    };
+                }
+                else
+                {
+                    installOptions = WinGetFactoryHelper.CreateInstallOptions();
+                    installOptions.AcceptPackageAgreements = true;
+                    installOptions.AdditionalInstallerArguments = AdditionalInstallerArguments;
+                    installOptions.AllowHashMismatch = AllowHashMismatch;
+                    installOptions.AllowUpgradeToUnknownVersion = AllowUpgradeToUnknownVersion;
+                    installOptions.BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck;
+                    installOptions.Force = Force;
+                    installOptions.LogOutputPath = LogService.WinGetFolderPath;
+                    installOptions.PackageInstallMode = PackageInstallMode.Key;
+                    installOptions.PackageInstallScope = PackageInstallScope.Key;
+                    installOptions.PackageVersionId = PackageOperation.PackageVersionId;
+                    installOptions.PreferredInstallLocation = PackageInstallPath;
+                    installOptions.SkipDependencies = false;
+                }
 
                 installOptions.AllowedArchitectures.Clear();
                 if (IsX86ProcessorArchitecture)
@@ -1006,17 +1042,33 @@ namespace GetStoreApp.Views.Pages
         {
             PackageOperation.RepairOptions = await Task.Run(() =>
             {
-                return new RepairOptions()
+                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
                 {
-                    AcceptPackageAgreements = true,
-                    AllowHashMismatch = AllowHashMismatch,
-                    BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck,
-                    Force = Force,
-                    LogOutputPath = LogService.WinGetFolderPath,
-                    PackageRepairMode = PackageRepairMode.Key,
-                    PackageRepairScope = PackageRepairScope.Key,
-                    PackageVersionId = PackageOperation.PackageVersionId,
-                };
+                    return new()
+                    {
+                        AcceptPackageAgreements = true,
+                        AllowHashMismatch = AllowHashMismatch,
+                        BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck,
+                        Force = Force,
+                        LogOutputPath = LogService.WinGetFolderPath,
+                        PackageRepairMode = PackageRepairMode.Key,
+                        PackageRepairScope = PackageRepairScope.Key,
+                        PackageVersionId = PackageOperation.PackageVersionId,
+                    };
+                }
+                else
+                {
+                    RepairOptions repairOptions = WinGetFactoryHelper.CreateRepairOptions();
+                    repairOptions.AcceptPackageAgreements = true;
+                    repairOptions.AllowHashMismatch = AllowHashMismatch;
+                    repairOptions.BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck;
+                    repairOptions.Force = Force;
+                    repairOptions.LogOutputPath = LogService.WinGetFolderPath;
+                    repairOptions.PackageRepairMode = PackageRepairMode.Key;
+                    repairOptions.PackageRepairScope = PackageRepairScope.Key;
+                    repairOptions.PackageVersionId = PackageOperation.PackageVersionId;
+                    return repairOptions;
+                }
             });
 
             WinGetAppsVersionDialog.Hide();

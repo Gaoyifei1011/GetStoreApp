@@ -1,7 +1,9 @@
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Helpers.WinGet;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Settings;
 using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.Windows;
 using Microsoft.Management.Deployment;
@@ -764,7 +766,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 try
                                 {
-                                    PackageManager packageManager = new();
+                                    PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
                                     IAsyncOperationWithProgress<DownloadResult, PackageDownloadProgress> downloadPackageWithProgress = packageManager.DownloadPackageAsync(packageOperation.SearchApps.CatalogPackage, packageOperation.DownloadOptions);
 
                                     PackageOperationLock.Enter();
@@ -1131,7 +1133,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 try
                                 {
-                                    PackageManager packageManager = new();
+                                    PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
                                     IAsyncOperationWithProgress<InstallResult, InstallProgress> installPackageWithProgress = packageManager.InstallPackageAsync(packageOperation.SearchApps.CatalogPackage, packageOperation.InstallOptions);
 
                                     PackageOperationLock.Enter();
@@ -1543,7 +1545,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 try
                                 {
-                                    PackageManager packageManager = new();
+                                    PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
                                     IAsyncOperationWithProgress<UninstallResult, UninstallProgress> uninstallPackageWithProgress = packageManager.UninstallPackageAsync(packageOperation.InstalledApps.CatalogPackage, packageOperation.UninstallOptions);
 
                                     PackageOperationLock.Enter();
@@ -1853,7 +1855,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 try
                                 {
-                                    PackageManager packageManager = new();
+                                    PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
                                     IAsyncOperationWithProgress<RepairResult, RepairProgress> repairPackageWithProgress = packageManager.RepairPackageAsync(packageOperation.SearchApps.CatalogPackage, packageOperation.RepairOptions);
 
                                     PackageOperationLock.Enter();
@@ -2217,7 +2219,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 try
                                 {
-                                    PackageManager packageManager = new();
+                                    PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
                                     IAsyncOperationWithProgress<InstallResult, InstallProgress> upgradePackageWithProgress = packageManager.UpgradePackageAsync(packageOperation.UpgradableApps.CatalogPackage, packageOperation.InstallOptions);
 
                                     PackageOperationLock.Enter();

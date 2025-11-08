@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Helpers.WinGet;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
@@ -172,7 +173,7 @@ namespace GetStoreApp.Views.Pages
             {
                 DownloadOptions downloadOptions = await Task.Run(() =>
                 {
-                    return new DownloadOptions();
+                    return Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreateDownloadOptions();
                 });
 
                 await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
@@ -203,7 +204,7 @@ namespace GetStoreApp.Views.Pages
             {
                 InstallOptions installOptions = await Task.Run(() =>
                 {
-                    return new InstallOptions();
+                    return Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreateInstallOptions();
                 });
 
                 await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
@@ -234,7 +235,7 @@ namespace GetStoreApp.Views.Pages
             {
                 RepairOptions repairOptions = await Task.Run(() =>
                 {
-                    return new RepairOptions();
+                    return Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreateRepairOptions();
                 });
 
                 await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
@@ -458,7 +459,7 @@ namespace GetStoreApp.Views.Pages
         {
             PackageManager packageManager = await Task.Run(() =>
             {
-                return new PackageManager();
+                return Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
             });
 
             PackageCatalogReference packageCatalogReference = await Task.Run(() =>
@@ -525,17 +526,26 @@ namespace GetStoreApp.Views.Pages
 
                 if (connectResult is not null && connectResult.Status is ConnectResultStatus.Ok)
                 {
-                    FindPackagesOptions findPackagesOptions = new();
-
-                    PackageMatchFilter packageMatchFilter = new()
+                    FindPackagesOptions findPackagesOptions = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreateFindPackagesOptions();
+                    PackageMatchFilter packageMatchFilter = null;
+                    if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
                     {
-                        Field = PackageMatchField,
-                        Option = PackageFieldMatchOption,
-                        Value = cachedSearchText
-                    };
+                        packageMatchFilter = new()
+                        {
+                            Field = PackageMatchField,
+                            Option = PackageFieldMatchOption,
+                            Value = cachedSearchText
+                        };
+                    }
+                    else
+                    {
+                        packageMatchFilter = WinGetFactoryHelper.CreatePackageMatchFilter();
+                        packageMatchFilter.Field = PackageMatchField;
+                        packageMatchFilter.Option = PackageFieldMatchOption;
+                        packageMatchFilter.Value = cachedSearchText;
+                    }
 
                     findPackagesOptions.Filters.Add(packageMatchFilter);
-
                     FindPackagesResult findPackagesResult = await connectResult.PackageCatalog.FindPackagesAsync(findPackagesOptions);
                     searchAppsResult.findPackagesResult = findPackagesResult;
 

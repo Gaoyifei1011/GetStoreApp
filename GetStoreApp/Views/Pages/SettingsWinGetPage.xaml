@@ -19,11 +19,90 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+
+            <!--  WinGet 来源  -->
+            <Grid
+                Grid.Row="0"
+                Height="60"
+                Margin="0,0,0,2"
+                Padding="16,0"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    FontSize="16"
+                    Glyph="&#xEA42;" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSource')}" />
+
+                    <TextBlock
+                        x:Name="WinGetSourceDescription"
+                        HorizontalAlignment="Left"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceDescription')}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceDescription')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
+                                Visibility="{x:Bind WinGetSourceDescription.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+                </StackPanel>
+
+                <DropDownButton
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Content="{x:Bind WinGetSource.Value, Mode=OneWay}">
+
+                    <DropDownButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <RadioMenuFlyoutItem
+                                Click="{x:Bind OnWinGetSourceSelectClicked}"
+                                GroupName="WinGetSourceRadioGroup"
+                                IsChecked="{x:Bind x:String.Equals(WinGetSource.Key, WinGetSourceList[0].Key), Mode=OneWay}"
+                                Tag="0"
+                                Text="{x:Bind WinGetSourceList[0].Value}" />
+
+                            <RadioMenuFlyoutItem
+                                Click="{x:Bind OnWinGetSourceSelectClicked}"
+                                GroupName="WinGetSourceRadioGroup"
+                                IsChecked="{x:Bind x:String.Equals(WinGetSource.Key, WinGetSourceList[1].Key), Mode=OneWay}"
+                                Tag="1"
+                                Text="{x:Bind WinGetSourceList[1].Value}" />
+                        </MenuFlyout>
+                    </DropDownButton.Flyout>
+                </DropDownButton>
+            </Grid>
 
             <!--  WinGet 数据源配置  -->
             <Grid
-                Grid.Row="0"
+                Grid.Row="1"
                 Height="60"
                 Margin="0,0,0,2"
                 Padding="16,0"
@@ -83,7 +162,7 @@
 
             <!--  WinGet 设置  -->
             <Grid
-                Grid.Row="1"
+                Grid.Row="2"
                 Height="60"
                 Margin="0,0,0,2"
                 Padding="16,0"

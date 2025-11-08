@@ -1,10 +1,14 @@
 {
+  "AppInstaller": "מתקין תוכנה",
+  "BuiltInApp": "מובנה באפליקציה",
   "Configuration": "תצורה",
   "LearnConfig": "למד על התצורה",
   "Open": "פתח",
   "OpenConfigurationFile": "פתח את קובץ התצורה של חבילת WinGet",
   "WinGetSettings": "הגדרות WinGet",
   "WinGetSettingsDescription": "התאמה אישית של הפונקציות של חבילת WinGet",
+  "WinGetSource": "הגדרות מקור WinGet",
+  "WinGetSourceDescription": "הגדר את המקור המספק את פונקציית חבילות WinGet, נדרש הפעלה מחדש",
   "WinGetSourceConfiguration": "תצורת מקור נתונים של WinGet",
   "WinGetSourceConfigurationDescription": "הגדר מקור אחזור נתונים של WinGet, נדרש מצב מנהל מערכת"
 }

@@ -1,6 +1,8 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.WinGet;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Settings;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.Management.Deployment;
@@ -282,19 +284,33 @@ namespace GetStoreApp.Views.Dialogs
 
                 if (WinGetSourceEditKind is WinGetSourceEditKind.Add)
                 {
+                    PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
                     AddPackageCatalogResult addPackageCatalogResult = await Task.Run(async () =>
                     {
-                        AddPackageCatalogOptions addPackageCatalogOptions = new()
+                        AddPackageCatalogOptions addPackageCatalogOptions = null;
+                        if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
                         {
-                            Name = SourceName,
-                            SourceUri = SourceUri,
-                            Explicit = Explicit,
-                            TrustLevel = SelectedCatalogTrustLevel.Key,
-                            CustomHeader = string.IsNullOrEmpty(CustomHeader) ? string.Empty : CustomHeader,
-                            Type = string.IsNullOrEmpty(SourceType) ? string.Empty : SourceType
-                        };
+                            addPackageCatalogOptions = new()
+                            {
+                                Name = SourceName,
+                                SourceUri = SourceUri,
+                                Explicit = Explicit,
+                                TrustLevel = SelectedCatalogTrustLevel.Key,
+                                CustomHeader = string.IsNullOrEmpty(CustomHeader) ? string.Empty : CustomHeader,
+                                Type = string.IsNullOrEmpty(SourceType) ? string.Empty : SourceType
+                            };
+                        }
+                        else
+                        {
+                            addPackageCatalogOptions = WinGetFactoryHelper.CreateAddPackageCatalogOptions();
+                            addPackageCatalogOptions.Name = SourceName;
+                            addPackageCatalogOptions.SourceUri = SourceUri;
+                            addPackageCatalogOptions.Explicit = Explicit;
+                            addPackageCatalogOptions.TrustLevel = SelectedCatalogTrustLevel.Key;
+                            addPackageCatalogOptions.CustomHeader = string.IsNullOrEmpty(CustomHeader) ? string.Empty : CustomHeader;
+                            addPackageCatalogOptions.Type = string.IsNullOrEmpty(SourceType) ? string.Empty : SourceType;
+                        }
 
-                        PackageManager packageManager = new();
                         return await packageManager.AddPackageCatalogAsync(addPackageCatalogOptions);
                     });
 
@@ -350,13 +366,23 @@ namespace GetStoreApp.Views.Dialogs
                 {
                     RemovePackageCatalogResult removePackageCatalogResult = await Task.Run(async () =>
                     {
-                        RemovePackageCatalogOptions removePackageCatalogOptions = new()
+                        PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
+                        RemovePackageCatalogOptions removePackageCatalogOptions = null;
+                        if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
                         {
-                            Name = SourceName,
-                            PreserveData = true,
-                        };
+                            removePackageCatalogOptions = new()
+                            {
+                                Name = SourceName,
+                                PreserveData = true,
+                            };
+                        }
+                        else
+                        {
+                            removePackageCatalogOptions = WinGetFactoryHelper.CreateRemovePackageCatalogOptions();
+                            removePackageCatalogOptions.Name = SourceName;
+                            removePackageCatalogOptions.PreserveData = true;
+                        }
 
-                        PackageManager packageManager = new();
                         return await packageManager.RemovePackageCatalogAsync(removePackageCatalogOptions);
                     });
 
@@ -364,17 +390,31 @@ namespace GetStoreApp.Views.Dialogs
                     {
                         AddPackageCatalogResult addPackageCatalogResult = await Task.Run(async () =>
                         {
-                            AddPackageCatalogOptions addPackageCatalogOptions = new()
+                            PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
+                            AddPackageCatalogOptions addPackageCatalogOptions = null;
+                            if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
                             {
-                                Name = SourceName,
-                                SourceUri = SourceUri,
-                                Explicit = Explicit,
-                                TrustLevel = SelectedCatalogTrustLevel.Key,
-                                CustomHeader = string.IsNullOrEmpty(CustomHeader) ? string.Empty : CustomHeader,
-                                Type = string.IsNullOrEmpty(SourceType) ? string.Empty : SourceType
-                            };
+                                addPackageCatalogOptions = new()
+                                {
+                                    Name = SourceName,
+                                    SourceUri = SourceUri,
+                                    Explicit = Explicit,
+                                    TrustLevel = SelectedCatalogTrustLevel.Key,
+                                    CustomHeader = string.IsNullOrEmpty(CustomHeader) ? string.Empty : CustomHeader,
+                                    Type = string.IsNullOrEmpty(SourceType) ? string.Empty : SourceType
+                                };
+                            }
+                            else
+                            {
+                                addPackageCatalogOptions = WinGetFactoryHelper.CreateAddPackageCatalogOptions();
+                                addPackageCatalogOptions.Name = SourceName;
+                                addPackageCatalogOptions.SourceUri = SourceUri;
+                                addPackageCatalogOptions.Explicit = Explicit;
+                                addPackageCatalogOptions.TrustLevel = SelectedCatalogTrustLevel.Key;
+                                addPackageCatalogOptions.CustomHeader = string.IsNullOrEmpty(CustomHeader) ? string.Empty : CustomHeader;
+                                addPackageCatalogOptions.Type = string.IsNullOrEmpty(SourceType) ? string.Empty : SourceType;
+                            }
 
-                            PackageManager packageManager = new();
                             return await packageManager.AddPackageCatalogAsync(addPackageCatalogOptions);
                         });
 
