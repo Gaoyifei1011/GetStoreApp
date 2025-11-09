@@ -25,6 +25,22 @@ namespace GetStoreApp.Views.Pages
         private readonly string AppInstallerString = ResourceService.GetLocalized("SettingsWinGet/AppInstaller");
         private readonly string BuiltInAppString = ResourceService.GetLocalized("SettingsWinGet/BuiltInApp");
 
+        private KeyValuePair<string, string> _currentWinGetSource;
+
+        public KeyValuePair<string, string> CurrentWinGetSource
+        {
+            get { return _currentWinGetSource; }
+
+            set
+            {
+                if (!Equals(_currentWinGetSource, value))
+                {
+                    _currentWinGetSource = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentWinGetSource)));
+                }
+            }
+        }
+
         private KeyValuePair<string, string> _winGetSource;
 
         public KeyValuePair<string, string> WinGetSource
@@ -50,6 +66,8 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
             WinGetSourceList.Add(KeyValuePair.Create(WinGetConfigService.WinGetSourceList[0], BuiltInAppString));
             WinGetSourceList.Add(KeyValuePair.Create(WinGetConfigService.WinGetSourceList[1], AppInstallerString));
+            WinGetSource = WinGetSourceList.Find(item => string.Equals(item.Key, WinGetConfigService.WinGetSource, StringComparison.OrdinalIgnoreCase));
+            CurrentWinGetSource = WinGetSourceList.Find(item => string.Equals(item.Key, WinGetConfigService.CurrentWinGetSource, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
@@ -57,6 +75,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnWinGetSourceSelectClicked(object sender, RoutedEventArgs args)
         {
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
+            {
+                WinGetSource = WinGetSourceList[Convert.ToInt32(tag)];
+                WinGetConfigService.SetWinGetSource(WinGetSource.Key);
+            }
         }
 
         /// <summary>

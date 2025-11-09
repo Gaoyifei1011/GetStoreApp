@@ -32,5 +32,6 @@
   "WinGetConfig": "WinGet 配置选项说明",
   "WinGetConfigDescription1": "通过自定义 WinGet 的配置文件可以自定义 Windows 程序包管理器客户端体验。 你可以更改默认值，并体验已在客户端中实现的试验性功能",
   "WinGetConfigDescription2": "添加或删除 WinGet 数据源需要在管理员模式下进行",
+  "WinGetConfigDescription3": "外部 WinGet 来源初始化失败时，自动切换到应用内置的 WinGet 来源",
   "WinGetSourceConfiguration": "WinGet 数据源配置"
 }

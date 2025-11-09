@@ -2,6 +2,7 @@
 using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using Microsoft.Management.Deployment;
 using System;
+using System.Runtime.InteropServices;
 using Windows.Foundation.Diagnostics;
 using WinRT.Interop;
 
@@ -30,7 +31,7 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                return Ole32Library.CoCreateInstance(CLSID_Server_PackageManager, IntPtr.Zero, CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0;
+                return Ole32Library.CoCreateInstance(CLSID_Server_PackageManager, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0;
             }
             catch (Exception e)
             {
@@ -46,7 +47,7 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                return Ole32Library.CoCreateInstance(CLSID_Server_PackageManager, IntPtr.Zero, CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? PackageManager.FromAbi(obj) : null;
+                return Ole32Library.CoCreateInstance(CLSID_Server_PackageManager, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? PackageManager.FromAbi(obj) : null;
             }
             catch (Exception e)
             {
@@ -62,7 +63,7 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                return Ole32Library.CoCreateInstance(CLSID_Server_FindPackagesOptions, IntPtr.Zero, CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? FindPackagesOptions.FromAbi(obj) : null;
+                return Ole32Library.CoCreateInstance(CLSID_Server_FindPackagesOptions, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? FindPackagesOptions.FromAbi(obj) : null;
             }
             catch (Exception e)
             {
@@ -78,7 +79,7 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                return Ole32Library.CoCreateInstance(CLSID_Server_CreateCompositePackageCatalogOptions, IntPtr.Zero, CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? CreateCompositePackageCatalogOptions.FromAbi(obj) : null;
+                return Ole32Library.CoCreateInstance(CLSID_Server_CreateCompositePackageCatalogOptions, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? CreateCompositePackageCatalogOptions.FromAbi(obj) : null;
             }
             catch (Exception e)
             {
@@ -94,7 +95,7 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                return Ole32Library.CoCreateInstance(CLSID_Server_InstallOptions, IntPtr.Zero, CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? InstallOptions.FromAbi(obj) : null;
+                return Ole32Library.CoCreateInstance(CLSID_Server_InstallOptions, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? InstallOptions.FromAbi(obj) : null;
             }
             catch (Exception e)
             {
@@ -110,7 +111,7 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                return Ole32Library.CoCreateInstance(CLSID_Server_UninstallOptions, IntPtr.Zero, CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? UninstallOptions.FromAbi(obj) : null;
+                return Ole32Library.CoCreateInstance(CLSID_Server_UninstallOptions, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? UninstallOptions.FromAbi(obj) : null;
             }
             catch (Exception e)
             {
@@ -126,7 +127,7 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                return Ole32Library.CoCreateInstance(CLSID_Server_PackageMatchFilter, IntPtr.Zero, CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? PackageMatchFilter.FromAbi(obj) : null;
+                return Ole32Library.CoCreateInstance(CLSID_Server_PackageMatchFilter, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? PackageMatchFilter.FromAbi(obj) : null;
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                return Ole32Library.CoCreateInstance(CLSID_Server_DownloadOptions, IntPtr.Zero, CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? DownloadOptions.FromAbi(obj) : null;
+                return Ole32Library.CoCreateInstance(CLSID_Server_DownloadOptions, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? DownloadOptions.FromAbi(obj) : null;
             }
             catch (Exception e)
             {
@@ -158,7 +159,7 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                return Ole32Library.CoCreateInstance(CLSID_Server_RepairOptions, IntPtr.Zero, CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? RepairOptions.FromAbi(obj) : null;
+                return Ole32Library.CoCreateInstance(CLSID_Server_RepairOptions, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? RepairOptions.FromAbi(obj) : null;
             }
             catch (Exception e)
             {
@@ -174,7 +175,7 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                return Ole32Library.CoCreateInstance(CLSID_Server_AddPackageCatalogOptions, IntPtr.Zero, CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? AddPackageCatalogOptions.FromAbi(obj) : null;
+                return Ole32Library.CoCreateInstance(CLSID_Server_AddPackageCatalogOptions, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? AddPackageCatalogOptions.FromAbi(obj) : null;
             }
             catch (Exception e)
             {
@@ -190,7 +191,7 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                return Ole32Library.CoCreateInstance(CLSID_Server_RemovePackageCatalogOptions, IntPtr.Zero, CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? RemovePackageCatalogOptions.FromAbi(obj) : null;
+                return Ole32Library.CoCreateInstance(CLSID_Server_RemovePackageCatalogOptions, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out IntPtr obj) is 0 ? RemovePackageCatalogOptions.FromAbi(obj) : null;
             }
             catch (Exception e)
             {

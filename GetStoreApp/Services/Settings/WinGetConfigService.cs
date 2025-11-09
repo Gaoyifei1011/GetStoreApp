@@ -40,12 +40,7 @@ namespace GetStoreApp.Services.Settings
         {
             defaultWinGetSource = WinGetSourceList[0];
             WinGetSource = GetWinGetSource();
-            if (!WinGetFactoryHelper.IsExisted())
-            {
-                WinGetSource = defaultWinGetSource;
-            }
-
-            CurrentWinGetSource = WinGetSource;
+            CurrentWinGetSource = Equals(WinGetSource, WinGetSourceList[0]) ? WinGetSource : WinGetFactoryHelper.IsExisted() ? WinGetSource : defaultWinGetSource;
             wingetDataSourceContainer = localSettingsContainer.CreateContainer(WinGetDataSource, ApplicationDataCreateDisposition.Always);
             DefaultDownloadFolder = (await ApplicationData.GetDefault().LocalCacheFolder.CreateFolderAsync("WinGet", Windows.Storage.CreationCollisionOption.OpenIfExists)).Path;
 

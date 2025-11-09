@@ -37,6 +37,7 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <FontIcon
@@ -75,8 +76,32 @@
                     </TextBlock>
                 </StackPanel>
 
-                <DropDownButton
+                <Button
                     Grid.Column="2"
+                    Width="30"
+                    Height="30"
+                    Margin="0,0,6,0"
+                    Padding="0"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource AlternateCloseButtonStyle}">
+                    <FontIcon FontSize="18" Glyph="&#xE82F;" />
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            MaxWidth="9999"
+                            Background="Transparent"
+                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+
+                            <TextBlock>
+                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/CurrentWinGetSource')}" />
+                                <Run Text="{x:Bind CurrentWinGetSource.Value, Mode=OneWay}" />
+                            </TextBlock>
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                </Button>
+
+                <DropDownButton
+                    Grid.Column="3"
                     VerticalAlignment="Center"
                     Content="{x:Bind WinGetSource.Value, Mode=OneWay}">
 

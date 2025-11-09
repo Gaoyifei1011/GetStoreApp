@@ -2,6 +2,7 @@
   "AppInstaller": "מתקין תוכנה",
   "BuiltInApp": "מובנה באפליקציה",
   "Configuration": "תצורה",
+  "CurrentWinGetSource": "מקור WinGet הנוכחי: ",
   "LearnConfig": "למד על התצורה",
   "Open": "פתח",
   "OpenConfigurationFile": "פתח את קובץ התצורה של חבילת WinGet",

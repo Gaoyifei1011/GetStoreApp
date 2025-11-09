@@ -32,5 +32,6 @@
   "WinGetConfig": "WinGet config options description",
   "WinGetConfigDescription1": "The Windows package Manager client experience can be customized by customizing WinGet's configuration file. You can change the default values and experiment with the experimental features already implemented in the client",
   "WinGetConfigDescription2": "Adding or removing WinGet data source needs to be done in administrator mode",
+  "WinGetConfigDescription3": "When the external WinGet source fails to initialize, automatically switch to the built-in WinGet source in the application",
   "WinGetSourceConfiguration": "WinGet data source configuration"
 }

@@ -2,6 +2,7 @@
   "AppInstaller": "Мастер установки приложения",
   "BuiltInApp": "встроенное в приложение",
   "Configuration": "Конфигурация",
+  "CurrentWinGetSource": "Текущий источник WinGet: ",
   "LearnConfig": "Изучить конфигурацию",
   "Open": "Открыть",
   "OpenConfigurationFile": "Открыть файл конфигурации WinGet",

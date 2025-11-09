@@ -2,6 +2,7 @@
   "AppInstaller": "App installer",
   "BuiltInApp": "Built-in app",
   "Configuration": "Configuration",
+  "CurrentWinGetSource": "Current WinGet source: ",
   "LearnConfig": "Learn config",
   "Open": "Open",
   "OpenConfigurationFile": "Open the WinGet package configuration file",

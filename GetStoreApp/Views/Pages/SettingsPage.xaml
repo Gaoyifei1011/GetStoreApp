@@ -316,8 +316,17 @@
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
-                        <StackPanel
+                        <TextBlock
                             Grid.Row="16"
+                            Margin="16,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/WinGetConfigDescription3')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+
+                        <StackPanel
+                            Grid.Row="17"
                             Margin="16,0,16,5"
                             Spacing="5">
 
@@ -331,10 +340,10 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <MenuFlyoutSeparator Grid.Row="17" />
+                        <MenuFlyoutSeparator Grid.Row="18" />
 
                         <TextBlock
-                            Grid.Row="18"
+                            Grid.Row="19"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -342,7 +351,7 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="19"
+                            Grid.Row="20"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -351,7 +360,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="20"
+                            Grid.Row="21"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -360,7 +369,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="21"
+                            Grid.Row="22"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -369,7 +378,7 @@
                             TextWrapping="Wrap" />
 
                         <StackPanel
-                            Grid.Row="22"
+                            Grid.Row="23"
                             Margin="16,0,16,5"
                             Spacing="5">
 
@@ -398,10 +407,10 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <MenuFlyoutSeparator Grid.Row="23" />
+                        <MenuFlyoutSeparator Grid.Row="24" />
 
                         <TextBlock
-                            Grid.Row="24"
+                            Grid.Row="25"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -409,7 +418,7 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="25"
+                            Grid.Row="26"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -418,7 +427,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="26"
+                            Grid.Row="27"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -427,7 +436,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="27"
+                            Grid.Row="28"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -436,7 +445,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="28"
+                            Grid.Row="29"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -444,10 +453,10 @@
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
-                        <MenuFlyoutSeparator Grid.Row="29" />
+                        <MenuFlyoutSeparator Grid.Row="30" />
 
                         <TextBlock
-                            Grid.Row="30"
+                            Grid.Row="31"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -455,7 +464,7 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="31"
+                            Grid.Row="32"
                             Margin="16,0,16,10"
                             FontSize="14"
                             FontWeight="Normal"
