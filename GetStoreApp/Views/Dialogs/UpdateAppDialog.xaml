@@ -123,7 +123,7 @@
             Margin="0,5,0,-15"
             Padding="0">
 
-            <Hyperlink NavigateUri="https://apps.microsoft.com/detail/9MV67V21H386" UnderlineStyle="None">
+            <Hyperlink NavigateUri="https://apps.microsoft.com/detail/9N6D71Z5X6MM" UnderlineStyle="None">
                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UpdateFromMicrosoftStore')}" />
             </Hyperlink>
         </TextBlock>
