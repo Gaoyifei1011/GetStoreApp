@@ -2,7 +2,6 @@
 using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using Microsoft.Management.Deployment;
 using System;
-using System.Runtime.InteropServices;
 using Windows.Foundation.Diagnostics;
 using WinRT.Interop;
 
