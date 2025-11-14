@@ -2301,7 +2301,10 @@ namespace GetStoreAppInstaller.Views.Windows
                                         foreach (KeyValuePair<string, string> languageResourceItem in packageManifestInformation.LanguageResourceDict)
                                         {
                                             // 获取安装包支持的语言
-                                            languageList.Add(languageResourceItem.Key);
+                                            if (!languageList.Contains(languageResourceItem.Key))
+                                            {
+                                                languageList.Add(languageResourceItem.Key);
+                                            }
                                         }
 
                                         // 获取特定语言的资源文件
@@ -2374,7 +2377,10 @@ namespace GetStoreAppInstaller.Views.Windows
                                             packageInformation.DependencyList = manifestInformation.DependencyList;
                                             packageInformation.TargetDeviceFamilyList = manifestInformation.TargetDeviceFamilyList;
                                             packageInformation.ApplicationList = manifestInformation.ApplicationList;
-                                            packageInformation.LanguageList = manifestInformation.LanguageList;
+                                            if (manifestInformation.LanguageList is not null)
+                                            {
+                                                packageInformation.LanguageList = manifestInformation.LanguageList;
+                                            }
                                         }
                                     }
 
@@ -2825,7 +2831,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
                     if (!isBundle)
                     {
-                        // 获取应用包定义的限定资源
+                        // 获取应用包定义的语言资源
                         List<string> languageList = ParsePackageLanguage(appxManifestReader);
                         manifestInformation.LanguageList = languageList;
                     }
@@ -2872,7 +2878,7 @@ namespace GetStoreAppInstaller.Views.Windows
             {
                 while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
-                    if (appxManifestQualifiedResourcesEnumerator.GetCurrent(out IAppxManifestQualifiedResource appxManifestQualifiedResource) is 0 && appxManifestQualifiedResource.GetLanguage(out string language) is 0 && !string.IsNullOrEmpty(language))
+                    if (appxManifestQualifiedResourcesEnumerator.GetCurrent(out IAppxManifestQualifiedResource appxManifestQualifiedResource) is 0 && appxManifestQualifiedResource.GetLanguage(out string language) is 0 && !string.IsNullOrEmpty(language) && !languageList.Contains(language))
                     {
                         languageList.Add(language);
                     }
