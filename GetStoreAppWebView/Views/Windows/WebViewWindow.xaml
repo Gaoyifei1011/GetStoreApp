@@ -321,6 +321,7 @@
                     <ToolTipService.ToolTip>
                         <ToolTip
                             MaxWidth="9999"
+                            Background="Transparent"
                             Content="{x:Bind rootservice:ResourceService.GetLocalized('WebView/ViewMore')}"
                             Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                     </ToolTipService.ToolTip>
