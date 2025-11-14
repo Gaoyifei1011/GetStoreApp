@@ -49,25 +49,28 @@ namespace GetStoreApp.Services.Root
             {
                 try
                 {
-                    return resourceMap.GetValue(resource, currentResourceContext).ValueAsString;
-                }
-                catch (Exception currentResourceException)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(ResourceService), nameof(GetLocalized), 1, currentResourceException);
-                    try
+                    if (resourceMap.TryGetValue(resource, currentResourceContext) is ResourceCandidate currentCandidate && currentCandidate.Kind is ResourceCandidateKind.String)
                     {
-                        return resourceMap.GetValue(resource, defaultResourceContext).ValueAsString;
+                        return currentCandidate.ValueAsString;
                     }
-                    catch (Exception defaultResourceException)
+                    else if (resourceMap.TryGetValue(resource, defaultResourceContext) is ResourceCandidate defaultCandidate && defaultCandidate.Kind is ResourceCandidateKind.String)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(ResourceService), nameof(GetLocalized), 2, defaultResourceException);
+                        return defaultCandidate.ValueAsString;
+                    }
+                    else
+                    {
                         return resource;
                     }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(ResourceService), nameof(GetLocalized), 1, e);
+                    return resource;
                 }
             }
             else
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(ResourceService), nameof(GetLocalized), 3, new Exception());
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(ResourceService), nameof(GetLocalized), 2, new Exception());
                 return resource;
             }
         }

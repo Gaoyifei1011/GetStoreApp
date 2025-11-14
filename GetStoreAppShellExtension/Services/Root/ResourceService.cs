@@ -1,6 +1,7 @@
 ﻿using Microsoft.Windows.ApplicationModel.Resources;
 using System;
 using System.Runtime.InteropServices.Marshalling;
+using Windows.Foundation.Diagnostics;
 
 namespace GetStoreAppShellExtension.Services.Root
 {
@@ -48,21 +49,23 @@ namespace GetStoreAppShellExtension.Services.Root
             {
                 try
                 {
-                    return resourceMap.GetValue(resource, currentResourceContext).ValueAsString;
-                }
-                catch (Exception currentResourceException)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(currentResourceException);
-
-                    try
+                    if (resourceMap.TryGetValue(resource, currentResourceContext) is ResourceCandidate currentCandidate && currentCandidate.Kind is ResourceCandidateKind.String)
                     {
-                        return resourceMap.GetValue(resource, defaultResourceContext).ValueAsString;
+                        return currentCandidate.ValueAsString;
                     }
-                    catch (Exception defaultResourceException)
+                    else if (resourceMap.TryGetValue(resource, defaultResourceContext) is ResourceCandidate defaultCandidate && defaultCandidate.Kind is ResourceCandidateKind.String)
                     {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(defaultResourceException);
+                        return defaultCandidate.ValueAsString;
+                    }
+                    else
+                    {
                         return resource;
                     }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    return resource;
                 }
             }
             else
