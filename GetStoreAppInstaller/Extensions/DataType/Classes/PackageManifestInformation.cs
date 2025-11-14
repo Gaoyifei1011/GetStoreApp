@@ -13,7 +13,7 @@ namespace GetStoreAppInstaller.Extensions.DataType.Classes
         /// <summary>
         /// 语言信息
         /// </summary>
-        public Dictionary<string, string> LanguageResourceDict { get; set; }
+        public List<string> LanguageList { get; set; }
 
         /// <summary>
         /// 规模信息

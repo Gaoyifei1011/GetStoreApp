@@ -159,6 +159,7 @@
                 <ToolTipService.ToolTip>
                     <ToolTip
                         MaxWidth="9999"
+                        Background="Transparent"
                         Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Settings')}"
                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                 </ToolTipService.ToolTip>
@@ -275,6 +276,7 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
+                                            Background="Transparent"
                                             Content="{x:Bind PackageName, Mode=OneWay}"
                                             Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                             Visibility="{Binding ElementName=PackageNameText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -293,6 +295,7 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
+                                            Background="Transparent"
                                             Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                             Visibility="{Binding ElementName=PublisherText, Path=IsTextTrimmed, Mode=OneWay}">
                                             <TextBlock Grid.Row="1">
@@ -315,6 +318,7 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
+                                            Background="Transparent"
                                             Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                             Visibility="{Binding ElementName=PackageVersionText, Path=IsTextTrimmed, Mode=OneWay}">
                                             <TextBlock Grid.Row="1">
@@ -376,6 +380,7 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     MaxWidth="9999"
+                                                    Background="Transparent"
                                                     Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenPackage')}"
                                                     Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                             </ToolTipService.ToolTip>
@@ -455,6 +460,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependency')}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                                                 </ToolTipService.ToolTip>
@@ -479,6 +485,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ClearDependency')}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                                                 </ToolTipService.ToolTip>
@@ -503,6 +510,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                                                 </ToolTipService.ToolTip>
@@ -585,6 +593,7 @@
                                                                                 <ToolTipService.ToolTip>
                                                                                     <ToolTip
                                                                                         MaxWidth="9999"
+                                                                                        Background="Transparent"
                                                                                         Content="{x:Bind DependencyName}"
                                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                                         Visibility="{Binding ElementName=DependencyNameText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -610,6 +619,7 @@
                                                                                 <ToolTipService.ToolTip>
                                                                                     <ToolTip
                                                                                         MaxWidth="9999"
+                                                                                        Background="Transparent"
                                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                                         Visibility="{Binding ElementName=DependencyInfoText, Path=IsTextTrimmed, Mode=OneWay}">
                                                                                         <TextBlock>
@@ -643,6 +653,7 @@
                                                                             <ToolTipService.ToolTip>
                                                                                 <ToolTip
                                                                                     MaxWidth="9999"
+                                                                                    Background="Transparent"
                                                                                     Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DeleteDependencyPackage')}"
                                                                                     Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                                                             </ToolTipService.ToolTip>
@@ -658,6 +669,7 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     MaxWidth="9999"
+                                                    Background="Transparent"
                                                     Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependency')}"
                                                     Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                             </ToolTipService.ToolTip>
@@ -680,6 +692,7 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     MaxWidth="9999"
+                                                    Background="Transparent"
                                                     Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/InstallApp')}"
                                                     Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                             </ToolTipService.ToolTip>
@@ -704,6 +717,7 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
+                                            Background="Transparent"
                                             Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CancelInstall')}"
                                             Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                     </ToolTipService.ToolTip>
@@ -803,6 +817,7 @@
                                                             <ToolTipService.ToolTip>
                                                                 <ToolTip
                                                                     MaxWidth="9999"
+                                                                    Background="Transparent"
                                                                     Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CopyErrorInformation')}"
                                                                     Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                                             </ToolTipService.ToolTip>
@@ -827,6 +842,7 @@
                                                             <ToolTipService.ToolTip>
                                                                 <ToolTip
                                                                     MaxWidth="9999"
+                                                                    Background="Transparent"
                                                                     Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}"
                                                                     Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                                             </ToolTipService.ToolTip>
@@ -852,6 +868,7 @@
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 MaxWidth="9999"
+                                                Background="Transparent"
                                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ViewErrorInformation')}"
                                                 Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                         </ToolTipService.ToolTip>
@@ -1192,7 +1209,10 @@
                                                         </Hyperlink>
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip MaxWidth="9999" Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Background="Transparent"
+                                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
                                                                 <StackPanel>
                                                                     <TextBlock Text="{x:Bind AppInstallerSourceLink, Mode=OneWay}" />
                                                                     <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenLink')}" />
@@ -1238,7 +1258,10 @@
                                                         </Hyperlink>
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip MaxWidth="9999" Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Background="Transparent"
+                                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
                                                                 <StackPanel Orientation="Vertical">
                                                                     <TextBlock Text="{x:Bind PackageSourceLink, Mode=OneWay}" />
                                                                     <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenLink')}" />
@@ -1543,6 +1566,7 @@
                                                             <ToolTipService.ToolTip>
                                                                 <ToolTip
                                                                     MaxWidth="9999"
+                                                                    Background="Transparent"
                                                                     Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/TargetDeviceName')}"
                                                                     Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                     Visibility="{x:Bind TargetDeviceNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -1562,6 +1586,7 @@
                                                             <ToolTipService.ToolTip>
                                                                 <ToolTip
                                                                     MaxWidth="9999"
+                                                                    Background="Transparent"
                                                                     Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MinVersion')}"
                                                                     Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                     Visibility="{x:Bind MinVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -1581,6 +1606,7 @@
                                                             <ToolTipService.ToolTip>
                                                                 <ToolTip
                                                                     MaxWidth="9999"
+                                                                    Background="Transparent"
                                                                     Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MaxVersionTested')}"
                                                                     Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                     Visibility="{x:Bind MaxVersionTestedHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -1618,6 +1644,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind TargetDeviceName}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                         Visibility="{Binding ElementName=TargetDeviceNameText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -1639,6 +1666,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind system:Convert.ToString(MinVersion)}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                         Visibility="{Binding ElementName=MinVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -1660,6 +1688,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind system:Convert.ToString(MaxVersionTested)}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                         Visibility="{Binding ElementName=MaxVersionTestedText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -1756,6 +1785,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                         Visibility="{x:Bind PackageDependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -1775,6 +1805,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                         Visibility="{x:Bind PackageDependencyPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -1794,6 +1825,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyMinVersion')}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                         Visibility="{x:Bind PackageDependencyMinVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -1831,6 +1863,7 @@
                                                                     <ToolTipService.ToolTip>
                                                                         <ToolTip
                                                                             MaxWidth="9999"
+                                                                            Background="Transparent"
                                                                             Content="{x:Bind DependencyName}"
                                                                             Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                             Visibility="{Binding ElementName=PackageDependencyNameText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -1852,6 +1885,7 @@
                                                                     <ToolTipService.ToolTip>
                                                                         <ToolTip
                                                                             MaxWidth="9999"
+                                                                            Background="Transparent"
                                                                             Content="{x:Bind DependencyPublisher}"
                                                                             Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                             Visibility="{Binding ElementName=PackageDependencyPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -1873,6 +1907,7 @@
                                                                     <ToolTipService.ToolTip>
                                                                         <ToolTip
                                                                             MaxWidth="9999"
+                                                                            Background="Transparent"
                                                                             Content="{x:Bind system:Convert.ToString(DependencyMinVersion)}"
                                                                             Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                             Visibility="{Binding ElementName=PackageDependencyMinVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -1930,6 +1965,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                         Visibility="{x:Bind AppInstallerDependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -1949,6 +1985,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                         Visibility="{x:Bind AppInstallerDependencyPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -1968,6 +2005,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyVersion')}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                         Visibility="{x:Bind AppInstallerDependencyVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -1987,6 +2025,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyProcessorArchitecture')}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                         Visibility="{x:Bind AppInstallerDependencyProcessorArchitectureHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -2006,6 +2045,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyOperation')}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                         Visibility="{x:Bind AppInstallerDependencyOperationHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -2045,6 +2085,7 @@
                                                                     <ToolTipService.ToolTip>
                                                                         <ToolTip
                                                                             MaxWidth="9999"
+                                                                            Background="Transparent"
                                                                             Content="{x:Bind DependencyName}"
                                                                             Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                             Visibility="{Binding ElementName=AppInstallerDependencyNameText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -2066,6 +2107,7 @@
                                                                     <ToolTipService.ToolTip>
                                                                         <ToolTip
                                                                             MaxWidth="9999"
+                                                                            Background="Transparent"
                                                                             Content="{x:Bind DependencyPublisher}"
                                                                             Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                             Visibility="{Binding ElementName=AppInstallerDependencyPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -2087,6 +2129,7 @@
                                                                     <ToolTipService.ToolTip>
                                                                         <ToolTip
                                                                             MaxWidth="9999"
+                                                                            Background="Transparent"
                                                                             Content="{x:Bind system:Convert.ToString(DependencyVersion)}"
                                                                             Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                             Visibility="{Binding ElementName=AppInstallerDependencyVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -2108,6 +2151,7 @@
                                                                     <ToolTipService.ToolTip>
                                                                         <ToolTip
                                                                             MaxWidth="9999"
+                                                                            Background="Transparent"
                                                                             Content="{x:Bind ProcessorArchitecture}"
                                                                             Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                             Visibility="{Binding ElementName=AppInstallerDependencyProcessorArchitectureText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -2128,6 +2172,7 @@
                                                                     <ToolTipService.ToolTip>
                                                                         <ToolTip
                                                                             MaxWidth="9999"
+                                                                            Background="Transparent"
                                                                             Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenLink')}"
                                                                             Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
                                                                     </ToolTipService.ToolTip>
@@ -2225,7 +2270,10 @@
                                                                 TextWrapping="NoWrap">
 
                                                                 <ToolTipService.ToolTip>
-                                                                    <ToolTip MaxWidth="9999" Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                                                                    <ToolTip
+                                                                        MaxWidth="9999"
+                                                                        Background="Transparent"
+                                                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
                                                                         <StackPanel>
                                                                             <TextBlock Text="{x:Bind CapabilityLocalizedName}" />
                                                                             <TextBlock Text="{x:Bind CapabilityName}" />
@@ -2314,6 +2362,7 @@
                                                             <ToolTipService.ToolTip>
                                                                 <ToolTip
                                                                     MaxWidth="9999"
+                                                                    Background="Transparent"
                                                                     Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppID')}"
                                                                     Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                     Visibility="{x:Bind AppIDHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -2333,6 +2382,7 @@
                                                             <ToolTipService.ToolTip>
                                                                 <ToolTip
                                                                     MaxWidth="9999"
+                                                                    Background="Transparent"
                                                                     Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppDescription')}"
                                                                     Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                     Visibility="{x:Bind AppDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -2352,6 +2402,7 @@
                                                             <ToolTipService.ToolTip>
                                                                 <ToolTip
                                                                     MaxWidth="9999"
+                                                                    Background="Transparent"
                                                                     Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Executable')}"
                                                                     Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                     Visibility="{x:Bind ExecutableHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -2371,6 +2422,7 @@
                                                             <ToolTipService.ToolTip>
                                                                 <ToolTip
                                                                     MaxWidth="9999"
+                                                                    Background="Transparent"
                                                                     Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/EntryPoint')}"
                                                                     Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                     Visibility="{x:Bind EntryPointHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -2390,6 +2442,7 @@
                                                             <ToolTipService.ToolTip>
                                                                 <ToolTip
                                                                     MaxWidth="9999"
+                                                                    Background="Transparent"
                                                                     Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppUserModelId')}"
                                                                     Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                     Visibility="{x:Bind AppUserModelIdHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -2429,6 +2482,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind AppID}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                         Visibility="{Binding ElementName=AppIDText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -2450,6 +2504,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind AppDescription}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                         Visibility="{Binding ElementName=AppDescriptionText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -2471,6 +2526,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind Executable}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                         Visibility="{Binding ElementName=ExecutableText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -2492,6 +2548,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind EntryPoint}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                         Visibility="{Binding ElementName=EntryPointText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -2513,6 +2570,7 @@
                                                                 <ToolTipService.ToolTip>
                                                                     <ToolTip
                                                                         MaxWidth="9999"
+                                                                        Background="Transparent"
                                                                         Content="{x:Bind AppUserModelId}"
                                                                         Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                                                         Visibility="{Binding ElementName=AppUserModelIdText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -2602,7 +2660,10 @@
                                                                 TextWrapping="NoWrap">
 
                                                                 <ToolTipService.ToolTip>
-                                                                    <ToolTip MaxWidth="9999" Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                                                                    <ToolTip
+                                                                        MaxWidth="9999"
+                                                                        Background="Transparent"
+                                                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
                                                                         <ToolTip.Content>
                                                                             <TextBlock>
                                                                                 <Run Text="{x:Bind DisplayName}" />

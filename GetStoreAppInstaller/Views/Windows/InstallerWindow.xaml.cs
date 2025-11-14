@@ -1,8 +1,6 @@
 ﻿using GetStoreAppInstaller.Extensions.Backdrop;
 using GetStoreAppInstaller.Extensions.DataType.Classes;
 using GetStoreAppInstaller.Extensions.DataType.Enums;
-using GetStoreAppInstaller.Extensions.DataType.Methods;
-using GetStoreAppInstaller.Extensions.PriExtract;
 using GetStoreAppInstaller.Helpers.Root;
 using GetStoreAppInstaller.Models;
 using GetStoreAppInstaller.Services.Root;
@@ -28,6 +26,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.Windows.ApplicationModel.DynamicDependency;
+using Microsoft.Windows.ApplicationModel.Resources;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications.Builder;
 using Microsoft.Windows.Management.Deployment;
@@ -40,8 +39,8 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
-using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -2207,22 +2206,8 @@ namespace GetStoreAppInstaller.Views.Windows
                                 // 解析安装包所有文件
                                 Dictionary<string, IAppxFile> appxFileDict = ParsePackagePayloadFiles(appxPackageReader);
 
-                                // 获取并解析本地资源文件
-                                IStream resourceFileStream = GetPackageResourceFileStream(appxFileDict);
-                                Dictionary<string, Dictionary<string, string>> resourceDict = null;
-
-                                if (resourceFileStream is not null)
-                                {
-                                    resourceDict = ParsePackageResources(resourceFileStream);
-                                    Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(resourceFileStream, CreateComInterfaceFlags.None));
-                                    resourceFileStream = null;
-                                }
-
-                                // 从资源文件中查找符合的语言
-                                Dictionary<string, string> specifiedLanguageResourceDict = GetSpecifiedLanguageResource(resourceDict);
-
                                 // 解析资源包清单文件
-                                ManifestInformation manifestInformation = ParsePackageManifest(appxPackageReader, false, specifiedLanguageResourceDict);
+                                ManifestInformation manifestInformation = ParsePackageManifest(appxPackageReader, false, null);
 
                                 packageInformation.PackageFileType = PackageFileType.Package;
                                 packageInformation.CapabilitiesList = manifestInformation.CapabilitiesList;
@@ -2241,7 +2226,7 @@ namespace GetStoreAppInstaller.Views.Windows
                                 packageInformation.LanguageList = manifestInformation.LanguageList;
 
                                 // 获取应用包图标
-                                if (!string.IsNullOrEmpty(packageInformation.Logo))
+                                if (appxFileDict.Count > 0 && !string.IsNullOrEmpty(packageInformation.Logo))
                                 {
                                     IStream imageFileStream = GetPackageLogo(packageInformation.Logo, appxFileDict);
                                     packageInformation.ImageLogo = imageFileStream;
@@ -2287,99 +2272,42 @@ namespace GetStoreAppInstaller.Views.Windows
                             if (appxBundleFactory is not null && appxBundleFactory.CreateBundleReader2(fileStream, null, out IAppxBundleReader appxBundleReader) is 0 && appxBundleReader.GetManifest(out IAppxBundleManifestReader appxBundleManifestReader) is 0)
                             {
                                 PackageManifestInformation packageManifestInformation = ParsePackageBundleManifestInfo(appxBundleManifestReader);
-                                Dictionary<string, Dictionary<string, string>> resourceDict = [];
 
                                 if (appxFactory is not null)
                                 {
                                     parseResult = true;
 
-                                    // 从资源文件中查找符合的语言
-                                    if (packageManifestInformation.LanguageResourceDict is not null)
-                                    {
-                                        List<string> languageList = [];
-
-                                        foreach (KeyValuePair<string, string> languageResourceItem in packageManifestInformation.LanguageResourceDict)
-                                        {
-                                            // 获取安装包支持的语言
-                                            if (!languageList.Contains(languageResourceItem.Key))
-                                            {
-                                                languageList.Add(languageResourceItem.Key);
-                                            }
-                                        }
-
-                                        // 获取特定语言的资源文件
-                                        List<KeyValuePair<string, string>> specifiedLanguageResourceList = GetPackageBundleSpecifiedLanguageResource(packageManifestInformation.LanguageResourceDict);
-
-                                        foreach (KeyValuePair<string, string> specifiedLanguageResource in specifiedLanguageResourceList)
-                                        {
-                                            // 解析应用捆绑包对应符合的资源包
-                                            appxBundleReader.GetPayloadPackage(specifiedLanguageResource.Value, out IAppxFile specifiedLanguageResourceFile);
-
-                                            if (specifiedLanguageResourceFile.GetStream(out IStream specifiedLanguageResourceFileStream) is 0 && appxFactory.CreatePackageReader2(specifiedLanguageResourceFileStream, null, out IAppxPackageReader appxPackageReader) is 0)
-                                            {
-                                                Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(specifiedLanguageResourceFileStream, CreateComInterfaceFlags.None));
-
-                                                // 解析资源包所有文件
-                                                Dictionary<string, IAppxFile> fileDict = ParsePackagePayloadFiles(appxPackageReader);
-
-                                                // 获取并解析本地资源文件
-                                                IStream resourceFileStream = GetPackageResourceFileStream(fileDict);
-
-                                                if (resourceFileStream is not null)
-                                                {
-                                                    Dictionary<string, Dictionary<string, string>> parseResourceDict = ParsePackageResources(resourceFileStream);
-                                                    Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(resourceFileStream, CreateComInterfaceFlags.None));
-
-                                                    foreach (KeyValuePair<string, Dictionary<string, string>> parseResourceItem in parseResourceDict)
-                                                    {
-                                                        if (string.Equals(parseResourceItem.Key, specifiedLanguageResource.Key, StringComparison.OrdinalIgnoreCase))
-                                                        {
-                                                            resourceDict.TryAdd(specifiedLanguageResource.Key, parseResourceItem.Value);
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-
-                                        languageList.Sort();
-                                        packageInformation.LanguageList = languageList;
-                                    }
-
-                                    // 从资源文件中查找符合的语言
-                                    Dictionary<string, string> specifiedLanguageResourceDict = GetSpecifiedLanguageResource(resourceDict);
-
                                     // 解析应用
                                     if (packageManifestInformation.ApplicationDict is not null)
                                     {
+                                        packageInformation.LanguageList = packageManifestInformation.LanguageList;
                                         string applicationFileName = ParsePacakgeBundleCompatibleFile(packageManifestInformation.ApplicationDict);
                                         string architecture = ParsePackageBundleArchitecture(packageManifestInformation.ApplicationDict);
                                         packageInformation.ProcessorArchitecture = architecture;
 
-                                        appxBundleReader.GetPayloadPackage(applicationFileName, out IAppxFile applicationFile);
-
-                                        if (applicationFile.GetStream(out IStream applicationFileStream) is 0 && appxFactory.CreatePackageReader2(applicationFileStream, null, out IAppxPackageReader appxPackageReader) is 0)
+                                        if (!string.IsNullOrEmpty(applicationFileName))
                                         {
-                                            Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(applicationFileStream, CreateComInterfaceFlags.None));
+                                            appxBundleReader.GetPayloadPackage(applicationFileName, out IAppxFile applicationFile);
 
-                                            Dictionary<string, IAppxFile> appxFileDict = ParsePackagePayloadFiles(appxPackageReader);
-                                            ManifestInformation manifestInformation = ParsePackageManifest(appxPackageReader, true, specifiedLanguageResourceDict);
-
-                                            packageInformation.PackageFileType = PackageFileType.Package;
-                                            packageInformation.CapabilitiesList = manifestInformation.CapabilitiesList;
-                                            packageInformation.PackageFamilyName = manifestInformation.PackageFamilyName;
-                                            packageInformation.PackageFullName = manifestInformation.PackageFullName;
-                                            packageInformation.Version = manifestInformation.Version;
-                                            packageInformation.IsFramework = manifestInformation.IsFramework;
-                                            packageInformation.Description = manifestInformation.Description;
-                                            packageInformation.DisplayName = manifestInformation.DisplayName;
-                                            packageInformation.Logo = manifestInformation.Logo;
-                                            packageInformation.PublisherDisplayName = manifestInformation.PublisherDisplayName;
-                                            packageInformation.DependencyList = manifestInformation.DependencyList;
-                                            packageInformation.TargetDeviceFamilyList = manifestInformation.TargetDeviceFamilyList;
-                                            packageInformation.ApplicationList = manifestInformation.ApplicationList;
-                                            if (manifestInformation.LanguageList is not null)
+                                            if (applicationFile.GetStream(out IStream applicationFileStream) is 0 && appxFactory.CreatePackageReader2(applicationFileStream, null, out IAppxPackageReader appxPackageReader) is 0)
                                             {
-                                                packageInformation.LanguageList = manifestInformation.LanguageList;
+                                                Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(applicationFileStream, CreateComInterfaceFlags.None));
+
+                                                ManifestInformation manifestInformation = ParsePackageManifest(appxPackageReader, true, packageInformation.LanguageList);
+
+                                                packageInformation.PackageFileType = PackageFileType.Package;
+                                                packageInformation.CapabilitiesList = manifestInformation.CapabilitiesList;
+                                                packageInformation.PackageFamilyName = manifestInformation.PackageFamilyName;
+                                                packageInformation.PackageFullName = manifestInformation.PackageFullName;
+                                                packageInformation.Version = manifestInformation.Version;
+                                                packageInformation.IsFramework = manifestInformation.IsFramework;
+                                                packageInformation.Description = manifestInformation.Description;
+                                                packageInformation.DisplayName = manifestInformation.DisplayName;
+                                                packageInformation.Logo = manifestInformation.Logo;
+                                                packageInformation.PublisherDisplayName = manifestInformation.PublisherDisplayName;
+                                                packageInformation.DependencyList = manifestInformation.DependencyList;
+                                                packageInformation.TargetDeviceFamilyList = manifestInformation.TargetDeviceFamilyList;
+                                                packageInformation.ApplicationList = manifestInformation.ApplicationList;
                                             }
                                         }
                                     }
@@ -2391,7 +2319,7 @@ namespace GetStoreAppInstaller.Views.Windows
                                         if (!string.IsNullOrEmpty(packageInformation.Logo))
                                         {
                                             Dictionary<string, IAppxFile> scaleBundleFileDict = ParsePacakgeBundleScaleFiles(appxBundleReader, packageManifestInformation.ScaleResourceList);
-                                            IStream imageFileStream = GetPackageBundleLogo(packageInformation.Logo, scaleBundleFileDict);
+                                            IStream imageFileStream = await GetPackageBundleLogoAsync(packageInformation.Logo, scaleBundleFileDict);
                                             packageInformation.ImageLogo = imageFileStream;
                                         }
                                     }
@@ -2670,7 +2598,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 获取应用程序入口信息
         /// </summary>
-        private List<ApplicationModel> ParsePackageApplication(IAppxManifestReader3 appxManifestReader, Dictionary<string, string> specifiedLanguageResourceDict)
+        private List<ApplicationModel> ParsePackageApplication(IAppxManifestReader3 appxManifestReader, ResourceManagement resourceManagement)
         {
             List<ApplicationModel> applicationList = [];
 
@@ -2685,7 +2613,7 @@ namespace GetStoreAppInstaller.Views.Windows
                     appxManifestApplication.GetStringValue("ID", out string id);
                     appxManifestApplication.GetAppUserModelId(out string appUserModelId);
 
-                    description = GetLocalizedString(description, specifiedLanguageResourceDict);
+                    description = GetLocalizedString(description, resourceManagement);
 
                     ApplicationModel application = new()
                     {
@@ -2767,7 +2695,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 解析应用包清单
         /// </summary>
-        private ManifestInformation ParsePackageManifest(IAppxPackageReader appxPackageReader, bool isBundle, Dictionary<string, string> specifiedLanguageResourceDict)
+        private ManifestInformation ParsePackageManifest(IAppxPackageReader appxPackageReader, bool isBundle, List<string> bundleLanguageList)
         {
             ManifestInformation manifestInformation = new();
 
@@ -2805,8 +2733,62 @@ namespace GetStoreAppInstaller.Views.Windows
                     // 获取包的目标设备系列
                     manifestInformation.TargetDeviceFamilyList = ParsePackageTargetDeviceFamily(appxManifestReader);
 
+                    // 查找符合显示的语言
+                    if (!isBundle)
+                    {
+                        // 获取应用包定义的语言资源
+                        List<string> languageList = ParsePackageLanguage(appxManifestReader);
+                        manifestInformation.LanguageList = languageList;
+                    }
+                    else
+                    {
+                        manifestInformation.LanguageList = bundleLanguageList;
+                    }
+
+                    string currentLanguage = GetSpecifiedLanguage(manifestInformation.LanguageList);
+
+                    // 获取包的所有文件信息
+                    Dictionary<string, IAppxFile> appxFileDict = ParsePackagePayloadFiles(appxPackageReader);
+                    ResourceManagement resourceManagement = null;
+
+                    if (appxFileDict.Count > 0 && GetPackageResourceFileStream(appxFileDict) is IStream resourceFileStream)
+                    {
+                        ShCoreLibrary.CreateRandomAccessStreamOverStream(resourceFileStream, BSOS_OPTIONS.BSOS_DEFAULT, typeof(IRandomAccessStream).GUID, out nint ppv);
+                        RandomAccessStreamOverStream randomAccessStreamOverStream = RandomAccessStreamOverStream.FromAbi(ppv);
+                        Stream resourceStream = randomAccessStreamOverStream.AsStream();
+                        string tempFilename = Path.GetTempFileName();
+                        using (FileStream fileStream = new(tempFilename, FileMode.OpenOrCreate, FileAccess.Write))
+                        {
+                            resourceStream.CopyTo(fileStream);
+                        }
+                        randomAccessStreamOverStream.Dispose();
+                        Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(resourceFileStream, CreateComInterfaceFlags.None));
+
+                        // 获取包的资源信息
+                        ResourceManager resourceManager = new(tempFilename);
+                        ResourceContext defaultResourceContext = resourceManager.CreateResourceContext();
+                        ResourceContext currentResourceContext = resourceManager.CreateResourceContext();
+                        defaultResourceContext.QualifierValues["Language"] = Convert.ToString(LanguageService.DefaultAppLanguage);
+                        currentResourceContext.QualifierValues["Language"] = Convert.ToString(currentLanguage);
+                        resourceManagement = new()
+                        {
+                            ResourceMap = resourceManager.MainResourceMap,
+                            DefaultResourceContext = defaultResourceContext,
+                            CurrentResourceContext = currentResourceContext
+                        };
+
+                        try
+                        {
+                            File.Delete(tempFilename);
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(ParsePackageManifest), 1, e);
+                        }
+                    }
+
                     // 获取应用入口信息
-                    manifestInformation.ApplicationList = ParsePackageApplication(appxManifestReader, specifiedLanguageResourceDict);
+                    manifestInformation.ApplicationList = ParsePackageApplication(appxManifestReader, resourceManagement);
 
                     // 获取应用包的属性
                     if (appxManifestReader.GetProperties(out IAppxManifestProperties packageProperties) is 0)
@@ -2818,9 +2800,9 @@ namespace GetStoreAppInstaller.Views.Windows
                         packageProperties.GetStringValue("Logo", out string logo);
                         packageProperties.GetStringValue("PublisherDisplayName", out string publisherDisplayName);
 
-                        description = GetLocalizedString(description, specifiedLanguageResourceDict);
-                        displayName = GetLocalizedString(displayName, specifiedLanguageResourceDict);
-                        publisherDisplayName = GetLocalizedString(publisherDisplayName, specifiedLanguageResourceDict);
+                        description = GetLocalizedString(description, resourceManagement);
+                        displayName = GetLocalizedString(displayName, resourceManagement);
+                        publisherDisplayName = GetLocalizedString(publisherDisplayName, resourceManagement);
 
                         manifestInformation.IsFramework = isFramework;
                         manifestInformation.Description = description;
@@ -2828,18 +2810,11 @@ namespace GetStoreAppInstaller.Views.Windows
                         manifestInformation.Logo = logo;
                         manifestInformation.PublisherDisplayName = publisherDisplayName;
                     }
-
-                    if (!isBundle)
-                    {
-                        // 获取应用包定义的语言资源
-                        List<string> languageList = ParsePackageLanguage(appxManifestReader);
-                        manifestInformation.LanguageList = languageList;
-                    }
                 }
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(ParsePackageManifest), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(ParsePackageManifest), 2, e);
             }
 
             return manifestInformation;
@@ -2889,285 +2864,6 @@ namespace GetStoreAppInstaller.Views.Windows
 
             languageList.Sort();
             return languageList;
-        }
-
-        /// <summary>
-        /// 解析应用包的所有资源
-        /// </summary>
-        private Dictionary<string, Dictionary<string, string>> ParsePackageResources(IStream resourceFileStream)
-        {
-            Dictionary<string, Dictionary<string, string>> resourceDict = [];
-
-            try
-            {
-                // 分段 3 ：解析资源文件
-                if (resourceFileStream is not null)
-                {
-                    ShCoreLibrary.CreateRandomAccessStreamOverStream(resourceFileStream, BSOS_OPTIONS.BSOS_DEFAULT, typeof(IRandomAccessStream).GUID, out nint ppv);
-                    RandomAccessStreamOverStream randomAccessStreamOverStream = RandomAccessStreamOverStream.FromAbi(ppv);
-                    Stream resourceStream = randomAccessStreamOverStream.AsStream();
-
-                    if (resourceStream is not null)
-                    {
-                        // 读取并检查文件类型
-                        BinaryReader priBinaryReader = new(resourceStream, Encoding.ASCII, true);
-                        long fileStartOffset = priBinaryReader.BaseStream.Position;
-                        string priType = new(priBinaryReader.ReadChars(8));
-
-                        if (priType is "mrm_pri0" || priType is "mrm_pri1" || priType is "mrm_pri2" || priType is "mrm_prif")
-                        {
-                            priBinaryReader.ExpectUInt16(0);
-                            priBinaryReader.ExpectUInt16(1);
-                            uint totalFileSize = priBinaryReader.ReadUInt32();
-                            uint tocOffset = priBinaryReader.ReadUInt32();
-                            uint sectionStartOffset = priBinaryReader.ReadUInt32();
-                            uint numSections = priBinaryReader.ReadUInt16();
-                            priBinaryReader.ExpectUInt16(0xFFFF);
-                            priBinaryReader.ExpectUInt32(0);
-                            priBinaryReader.BaseStream.Seek(fileStartOffset + totalFileSize - 16, SeekOrigin.Begin);
-                            priBinaryReader.ExpectUInt32(0xDEFFFADE);
-                            priBinaryReader.ExpectUInt32(totalFileSize);
-                            priBinaryReader.ExpectString(priType);
-                            priBinaryReader.BaseStream.Seek(tocOffset, SeekOrigin.Begin);
-
-                            // 读取内容列表
-                            List<TocEntry> tocList = new((int)numSections);
-
-                            for (int index = 0; index < numSections; index++)
-                            {
-                                tocList.Add(new TocEntry()
-                                {
-                                    SectionIdentifier = new(priBinaryReader.ReadChars(16)),
-                                    Flags = priBinaryReader.ReadUInt16(),
-                                    SectionFlags = priBinaryReader.ReadUInt16(),
-                                    SectionQualifier = priBinaryReader.ReadUInt32(),
-                                    SectionOffset = priBinaryReader.ReadUInt32(),
-                                    SectionLength = priBinaryReader.ReadUInt32(),
-                                });
-                            }
-
-                            // 读取分段列表
-                            object[] sectionArray = new object[numSections];
-
-                            for (int index = 0; index < sectionArray.Length; index++)
-                            {
-                                if (sectionArray[index] is null)
-                                {
-                                    priBinaryReader.BaseStream.Seek(sectionStartOffset + tocList[index].SectionOffset, SeekOrigin.Begin);
-
-                                    switch (tocList[index].SectionIdentifier)
-                                    {
-                                        case "[mrm_pridescex]\0":
-                                            {
-                                                PriDescriptorSection section = new("[mrm_pridescex]\0", priBinaryReader);
-                                                sectionArray[index] = section;
-                                                break;
-                                            }
-                                        case "[mrm_hschema]  \0":
-                                            {
-                                                HierarchicalSchemaSection section = new("[mrm_hschema]  \0", priBinaryReader, false);
-                                                sectionArray[index] = section;
-                                                break;
-                                            }
-                                        case "[mrm_hschemaex] ":
-                                            {
-                                                HierarchicalSchemaSection section = new("[mrm_hschemaex] ", priBinaryReader, true);
-                                                sectionArray[index] = section;
-                                                break;
-                                            }
-                                        case "[mrm_decn_info]\0":
-                                            {
-                                                DecisionInfoSection section = new("[mrm_decn_info]\0", priBinaryReader);
-                                                sectionArray[index] = section;
-                                                break;
-                                            }
-                                        case "[mrm_res_map__]\0":
-                                            {
-                                                ResourceMapSection section = new("[mrm_res_map__]\0", priBinaryReader, false, ref sectionArray);
-                                                sectionArray[index] = section;
-                                                break;
-                                            }
-                                        case "[mrm_res_map2_]\0":
-                                            {
-                                                ResourceMapSection section = new("[mrm_res_map2_]\0", priBinaryReader, true, ref sectionArray);
-                                                sectionArray[index] = section;
-                                                break;
-                                            }
-                                        case "[mrm_dataitem] \0":
-                                            {
-                                                DataItemSection section = new("[mrm_dataitem] \0", priBinaryReader);
-                                                sectionArray[index] = section;
-                                                break;
-                                            }
-                                        case "[mrm_rev_map]  \0":
-                                            {
-                                                ReverseMapSection section = new("[mrm_rev_map]  \0", priBinaryReader);
-                                                sectionArray[index] = section;
-                                                break;
-                                            }
-                                        case "[def_file_list]\0":
-                                            {
-                                                ReferencedFileSection section = new("[def_file_list]\0", priBinaryReader);
-                                                sectionArray[index] = section;
-                                                break;
-                                            }
-                                        default:
-                                            {
-                                                UnknownSection section = new(null, priBinaryReader);
-                                                sectionArray[index] = section;
-                                                break;
-                                            }
-                                    }
-                                }
-                            }
-
-                            // 根据分段列表获取相应的内容
-                            List<PriDescriptorSection> priDescriptorSectionList = [];
-
-                            foreach (object section in sectionArray)
-                            {
-                                if (section is PriDescriptorSection priDescriptorSection)
-                                {
-                                    priDescriptorSectionList.Add(priDescriptorSection);
-                                }
-                            }
-
-                            foreach (PriDescriptorSection priDescriptorSection in priDescriptorSectionList)
-                            {
-                                foreach (int resourceMapIndex in priDescriptorSection.ResourceMapSectionsList)
-                                {
-                                    if (sectionArray[resourceMapIndex] is ResourceMapSection resourceMapSection)
-                                    {
-                                        if (resourceMapSection.HierarchicalSchemaReference is not null)
-                                        {
-                                            continue;
-                                        }
-
-                                        DecisionInfoSection decisionInfoSection = sectionArray[resourceMapSection.DecisionInfoSectionIndex] as DecisionInfoSection;
-
-                                        foreach (CandidateSet candidateSet in resourceMapSection.CandidateSetsDict.Values)
-                                        {
-                                            if (sectionArray[candidateSet.ResourceMapSectionAndIndex.SchemaSectionIndex] is HierarchicalSchemaSection hierarchicalSchemaSection)
-                                            {
-                                                ResourceMapScopeAndItem resourceMapScopeAndItem = hierarchicalSchemaSection.ItemsList[candidateSet.ResourceMapSectionAndIndex.ResourceMapItemIndex];
-
-                                                string key = string.Empty;
-
-                                                if (resourceMapScopeAndItem.Name is not null && resourceMapScopeAndItem.Parent is not null)
-                                                {
-                                                    key = Path.Combine(resourceMapScopeAndItem.Parent.Name, resourceMapScopeAndItem.Name);
-                                                }
-                                                else if (resourceMapScopeAndItem.Name is not null)
-                                                {
-                                                    key = resourceMapScopeAndItem.Name;
-                                                }
-
-                                                if (string.IsNullOrEmpty(key))
-                                                {
-                                                    continue;
-                                                }
-
-                                                foreach (Candidate candidate in candidateSet.CandidatesList)
-                                                {
-                                                    string value = string.Empty;
-
-                                                    if (candidate.SourceFileIndex is null)
-                                                    {
-                                                        ByteSpan byteSpan = null;
-
-                                                        if (candidate.DataItemSectionAndIndex != default)
-                                                        {
-                                                            DataItemSection dataItemSection = sectionArray[candidate.DataItemSectionAndIndex.DataItemSection] as DataItemSection;
-                                                            byteSpan = dataItemSection is not null ? dataItemSection.DataItemsList[candidate.DataItemSectionAndIndex.DataItemIndex] : candidate.Data;
-                                                        }
-
-                                                        if (byteSpan is not null)
-                                                        {
-                                                            resourceStream.Seek(byteSpan.Offset, SeekOrigin.Begin);
-                                                            using BinaryReader binaryReader = new(resourceStream, Encoding.Default, true);
-                                                            byte[] data = binaryReader.ReadBytes((int)byteSpan.Length);
-                                                            binaryReader.Dispose();
-
-                                                            switch (candidate.Type)
-                                                            {
-                                                                // ASCII 格式字符串内容
-                                                                case ResourceValueType.AsciiString:
-                                                                    {
-                                                                        string content = Encoding.ASCII.GetString(data).TrimEnd('\0');
-                                                                        string language = decisionInfoSection.QualifierSetsList[candidate.QualifierSet].QualifiersList.Count > 0 ? decisionInfoSection.QualifierSetsList[candidate.QualifierSet].QualifiersList[0].Value : "Neutral";
-
-                                                                        if (resourceDict.TryGetValue(language, out Dictionary<string, string> stringContentDict))
-                                                                        {
-                                                                            stringContentDict.TryAdd(key, content);
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            Dictionary<string, string> stringDict = [];
-                                                                            stringDict.TryAdd(key, content);
-                                                                            resourceDict.TryAdd(language, stringDict);
-                                                                        }
-
-                                                                        break;
-                                                                    }
-                                                                // UTF8 格式字符串内容
-                                                                case ResourceValueType.Utf8String:
-                                                                    {
-                                                                        string content = Encoding.UTF8.GetString(data).TrimEnd('\0');
-                                                                        string language = decisionInfoSection.QualifierSetsList[candidate.QualifierSet].QualifiersList.Count > 0 ? decisionInfoSection.QualifierSetsList[candidate.QualifierSet].QualifiersList[0].Value : "Neutral";
-
-                                                                        if (resourceDict.TryGetValue(language, out Dictionary<string, string> stringContentDict))
-                                                                        {
-                                                                            stringContentDict.TryAdd(key, content);
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            Dictionary<string, string> stringDict = [];
-                                                                            stringDict.TryAdd(key, content);
-                                                                            resourceDict.TryAdd(language, stringDict);
-                                                                        }
-                                                                        break;
-                                                                    }
-                                                                // Unicode 格式字符串内容
-                                                                case ResourceValueType.UnicodeString:
-                                                                    {
-                                                                        string content = Encoding.Unicode.GetString(data).TrimEnd('\0');
-                                                                        string language = decisionInfoSection.QualifierSetsList[candidate.QualifierSet].QualifiersList.Count > 0 ? decisionInfoSection.QualifierSetsList[candidate.QualifierSet].QualifiersList[0].Value : "Neutral";
-
-                                                                        if (resourceDict.TryGetValue(language, out Dictionary<string, string> stringContentDict))
-                                                                        {
-                                                                            stringContentDict.TryAdd(key, content);
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            Dictionary<string, string> stringDict = [];
-                                                                            stringDict.TryAdd(key, content);
-                                                                            resourceDict.TryAdd(language, stringDict);
-                                                                        }
-                                                                        break;
-                                                                    }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        priBinaryReader.Dispose();
-                    }
-
-                    randomAccessStreamOverStream?.Dispose();
-                }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(ParsePackageResources), 1, e);
-            }
-
-            return resourceDict;
         }
 
         /// <summary>
@@ -3331,6 +3027,10 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             Architecture osArchitecture = RuntimeInformation.ProcessArchitecture;
             string appxFile = null;
+            if (applicationDict.Count is 0)
+            {
+                return null;
+            }
 
             if (osArchitecture is Architecture.X86)
             {
@@ -3357,6 +3057,14 @@ namespace GetStoreAppInstaller.Views.Windows
                 }
             }
 
+            if (string.IsNullOrEmpty(appxFile))
+            {
+                foreach (KeyValuePair<ProcessorArchitecture, string> applicationItem in applicationDict)
+                {
+                    appxFile = applicationItem.Value;
+                    break;
+                }
+            }
             return appxFile;
         }
 
@@ -3367,7 +3075,8 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             PackageManifestInformation packageManifestInformation = new();
             Dictionary<ProcessorArchitecture, string> applicationDict = [];
-            Dictionary<string, string> languageResourceDict = [];
+            Dictionary<string, Dictionary<ProcessorArchitecture, string>> bundleFileDict = [];
+            List<string> languageList = [];
             List<string> scaleResourceList = [];
 
             if (appxBundleManifestReader.GetPackageInfoItems(out IAppxBundleManifestPackageInfoEnumerator appxBundleManifestPackageInfoEnumerator) is 0)
@@ -3379,13 +3088,23 @@ namespace GetStoreAppInstaller.Views.Windows
                     appxBundleManifestPackageInfo.GetFileName(out string fileName);
                     appxBundleManifestPackageInfo.GetPackageType(out APPX_BUNDLE_PAYLOAD_PACKAGE_TYPE packageType);
 
-                    // 获取应用捆绑包中的所有资源包
+                    // 获取应用捆绑包中的所有资源包（暂不支持解析分割 resources.pri 的解析）
                     if (packageType is APPX_BUNDLE_PAYLOAD_PACKAGE_TYPE.APPX_BUNDLE_PAYLOAD_PACKAGE_TYPE_APPLICATION)
                     {
                         appxBundleManifestPackageInfo.GetPackageId(out IAppxManifestPackageId appxManifestPackageId);
                         appxManifestPackageId.GetArchitecture(out ProcessorArchitecture architecture);
                         applicationDict.TryAdd(architecture, fileName);
                         scaleResourceList.Add(fileName);
+
+                        List<string> languageBundleList = GetPackageBundleLanguage(appxBundleManifestPackageInfo);
+
+                        foreach (string languageBundleItem in languageBundleList)
+                        {
+                            if (languageList.Contains(languageBundleItem))
+                            {
+                                languageList.Add(languageBundleItem);
+                            }
+                        }
                     }
                     else
                     {
@@ -3397,19 +3116,12 @@ namespace GetStoreAppInstaller.Views.Windows
                         }
                     }
 
-                    List<string> languageResourceList = GetPackageBundleLanguage(appxBundleManifestPackageInfo);
-
-                    foreach (string languageResourceItem in languageResourceList)
-                    {
-                        languageResourceDict.TryAdd(languageResourceItem, fileName);
-                    }
-
                     appxBundleManifestPackageInfoEnumerator.MoveNext(out _);
                 }
             }
 
             packageManifestInformation.ApplicationDict = applicationDict;
-            packageManifestInformation.LanguageResourceDict = languageResourceDict;
+            packageManifestInformation.LanguageList = languageList;
             packageManifestInformation.ScaleResourceList = scaleResourceList;
             return packageManifestInformation;
         }
@@ -3448,9 +3160,9 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 获取本地化字符串
         /// </summary>
-        private string GetLocalizedString(string resource, Dictionary<string, string> resourceDict)
+        private string GetLocalizedString(string resource, ResourceManagement resourceManagement)
         {
-            if (!string.IsNullOrEmpty(resource) && resourceDict is not null)
+            if (!string.IsNullOrEmpty(resource) && resourceManagement is not null)
             {
                 if (resource.StartsWith(msresource))
                 {
@@ -3470,13 +3182,25 @@ namespace GetStoreAppInstaller.Views.Windows
                         resourceKey = string.Format(@"Resources\{0}", splitedResource);
                     }
 
-                    foreach (KeyValuePair<string, string> resourceItem in resourceDict)
+                    try
                     {
-                        if (string.Equals(resourceItem.Key, resourceKey, StringComparison.OrdinalIgnoreCase))
+                        if (resourceManagement.ResourceMap.TryGetValue(resourceKey, resourceManagement.CurrentResourceContext) is ResourceCandidate currentCandidate && currentCandidate.Kind is ResourceCandidateKind.String)
                         {
-                            resource = resourceItem.Value;
-                            break;
+                            return currentCandidate.ValueAsString;
                         }
+                        else if (resourceManagement.ResourceMap.TryGetValue(resourceKey, resourceManagement.DefaultResourceContext) is ResourceCandidate defaultCandidate && defaultCandidate.Kind is ResourceCandidateKind.String)
+                        {
+                            return defaultCandidate.ValueAsString;
+                        }
+                        else
+                        {
+                            return resourceKey;
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(ResourceService), nameof(GetLocalizedString), 1, exception);
+                        return resourceKey;
                     }
                 }
             }
@@ -3510,7 +3234,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 获取应用捆绑包图标
         /// </summary>
-        private IStream GetPackageBundleLogo(string logo, Dictionary<string, IAppxFile> scaleBundleFileDict)
+        private async Task<IStream> GetPackageBundleLogoAsync(string logo, Dictionary<string, IAppxFile> scaleBundleFileDict)
         {
             List<KeyValuePair<string, IAppxFile>> logoList = [];
             Dictionary<string, IAppxFile> logoDict = [];
@@ -3518,27 +3242,46 @@ namespace GetStoreAppInstaller.Views.Windows
             string logoFileName = logo[..^logoExtensionName.Length];
 
             Regex logoRegex = new(string.Format("""{0}(.scale-\d{{3}}){{0,1}}{1}""", logoFileName.Replace(@"\", @"\\"), logoExtensionName), RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            Lock logoLock = new();
+            List<Task> logoTaskList = [];
 
             // 读取应用包图标
             foreach (KeyValuePair<string, IAppxFile> scaleBundleItem in scaleBundleFileDict)
             {
-                scaleBundleItem.Value.GetStream(out IStream bundleFileStream);
-
-                if (appxFactory is not null && appxFactory.CreatePackageReader2(bundleFileStream, null, out IAppxPackageReader appxPackageReader) is 0)
+                logoTaskList.Add(Task.Run(() =>
                 {
-                    // 解析安装包所有文件
-                    Dictionary<string, IAppxFile> appxFileDict = ParsePackagePayloadFiles(appxPackageReader);
+                    scaleBundleItem.Value.GetStream(out IStream bundleFileStream);
 
-                    // 读取应用包图标
-                    foreach (KeyValuePair<string, IAppxFile> appxFileItem in appxFileDict)
+                    if (appxFactory is not null && appxFactory.CreatePackageReader2(bundleFileStream, null, out IAppxPackageReader appxPackageReader) is 0)
                     {
-                        if (appxFileItem.Value.GetName(out string packageFileName) is 0 && logoRegex.IsMatch(packageFileName))
+                        // 解析安装包所有文件
+                        Dictionary<string, IAppxFile> appxFileDict = ParsePackagePayloadFiles(appxPackageReader);
+
+                        // 读取应用包图标
+                        foreach (KeyValuePair<string, IAppxFile> appxFileItem in appxFileDict)
                         {
-                            logoDict.TryAdd(packageFileName, appxFileItem.Value);
+                            if (appxFileItem.Value.GetName(out string packageFileName) is 0 && logoRegex.IsMatch(packageFileName))
+                            {
+                                logoLock.Enter();
+                                try
+                                {
+                                    logoDict.TryAdd(packageFileName, appxFileItem.Value);
+                                }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
+                                finally
+                                {
+                                    logoLock.Exit();
+                                }
+                            }
                         }
                     }
-                }
+                }));
             }
+
+            await Task.WhenAll(logoTaskList);
 
             foreach (KeyValuePair<string, IAppxFile> logoItem in logoDict)
             {
@@ -3570,9 +3313,9 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 获取特定语言的资源
         /// </summary>
-        private Dictionary<string, string> GetSpecifiedLanguageResource(Dictionary<string, Dictionary<string, string>> resourceDict)
+        private string GetSpecifiedLanguage(List<string> languageList)
         {
-            if (resourceDict is null || resourceDict.Count is 0)
+            if (languageList is null || languageList.Count is 0)
             {
                 return null;
             }
@@ -3584,11 +3327,11 @@ namespace GetStoreAppInstaller.Views.Windows
             // 查找符合当前应用显示界面的语言资源信息
             while (!string.IsNullOrEmpty(appCultureInfo.Name))
             {
-                foreach (KeyValuePair<string, Dictionary<string, string>> resourceItem in resourceDict)
+                foreach (string language in languageList)
                 {
-                    if (string.Equals(resourceItem.Key, appCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(language, appCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
                     {
-                        return resourceItem.Value;
+                        return language;
                     }
                 }
 
@@ -3598,11 +3341,11 @@ namespace GetStoreAppInstaller.Views.Windows
             // 查找符合当前系统显示界面的语言资源信息
             while (!string.IsNullOrEmpty(systemCultureInfo.Name))
             {
-                foreach (KeyValuePair<string, Dictionary<string, string>> resourceItem in resourceDict)
+                foreach (string language in languageList)
                 {
-                    if (string.Equals(resourceItem.Key, systemCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(language, systemCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
                     {
-                        return resourceItem.Value;
+                        return language;
                     }
                 }
 
@@ -3612,33 +3355,19 @@ namespace GetStoreAppInstaller.Views.Windows
             // 查找默认语言的资源信息
             while (!string.IsNullOrEmpty(defaultCultureInfo.Name))
             {
-                foreach (KeyValuePair<string, Dictionary<string, string>> resourceItem in resourceDict)
+                foreach (string language in languageList)
                 {
-                    if (string.Equals(resourceItem.Key, defaultCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(language, defaultCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
                     {
-                        return resourceItem.Value;
+                        return language;
                     }
                 }
 
                 defaultCultureInfo = systemCultureInfo.Parent;
             }
 
-            // 不符合，如果存在未指定的语言，返回未指定的语言资源信息
-            foreach (KeyValuePair<string, Dictionary<string, string>> resourceItem in resourceDict)
-            {
-                if (string.Equals(resourceItem.Key, "Neutral", StringComparison.OrdinalIgnoreCase))
-                {
-                    return resourceItem.Value;
-                }
-            }
-
             // 不符合，如果存在资源信息，则返回第一个
-            foreach (KeyValuePair<string, Dictionary<string, string>> resourceItem in resourceDict)
-            {
-                return resourceItem.Value;
-            }
-
-            return null;
+            return languageList[0];
         }
 
         /// <summary>
@@ -3714,90 +3443,6 @@ namespace GetStoreAppInstaller.Views.Windows
             }
 
             return imageFileStream;
-        }
-
-        /// <summary>
-        /// 获取特定语言的资源文件
-        /// </summary>
-        private List<KeyValuePair<string, string>> GetPackageBundleSpecifiedLanguageResource(Dictionary<string, string> resourceDict)
-        {
-            List<KeyValuePair<string, string>> specifiedLanguageResourceList = [];
-
-            if (resourceDict is null || resourceDict.Count is 0)
-            {
-                return null;
-            }
-
-            CultureInfo appCultureInfo = CultureInfo.GetCultureInfo(LanguageService.AppLanguage);
-            CultureInfo systemCultureInfo = CultureInfo.CurrentCulture;
-            CultureInfo defaultCultureInfo = CultureInfo.GetCultureInfo(LanguageService.DefaultAppLanguage);
-
-            // 查找符合当前应用显示界面的语言资源信息
-            while (!string.IsNullOrEmpty(appCultureInfo.Name))
-            {
-                foreach (KeyValuePair<string, string> resourceItem in resourceDict)
-                {
-                    if (string.Equals(resourceItem.Key, appCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
-                    {
-                        specifiedLanguageResourceList.Add(resourceItem);
-                        break;
-                    }
-                }
-
-                appCultureInfo = appCultureInfo.Parent;
-            }
-
-            // 查找符合当前系统显示界面的语言资源信息
-            while (!string.IsNullOrEmpty(systemCultureInfo.Name))
-            {
-                foreach (KeyValuePair<string, string> resourceItem in resourceDict)
-                {
-                    if (string.Equals(resourceItem.Key, systemCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
-                    {
-                        specifiedLanguageResourceList.Add(resourceItem);
-                        break;
-                    }
-                }
-
-                systemCultureInfo = systemCultureInfo.Parent;
-            }
-
-            // 查找默认语言的资源信息
-            while (!string.IsNullOrEmpty(defaultCultureInfo.Name))
-            {
-                foreach (KeyValuePair<string, string> resourceItem in resourceDict)
-                {
-                    if (string.Equals(resourceItem.Key, defaultCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
-                    {
-                        specifiedLanguageResourceList.Add(resourceItem);
-                        break;
-                    }
-                }
-
-                defaultCultureInfo = systemCultureInfo.Parent;
-            }
-
-            // 不符合，如果存在未指定的语言，返回未指定的语言资源信息
-            foreach (KeyValuePair<string, string> resourceItem in resourceDict)
-            {
-                if (string.Equals(resourceItem.Key, "Neutral", StringComparison.OrdinalIgnoreCase))
-                {
-                    specifiedLanguageResourceList.Add(resourceItem);
-                    break;
-                }
-            }
-
-            // 不符合，如果存在资源信息，则返回第一个
-            if (specifiedLanguageResourceList.Count is 0)
-            {
-                foreach (KeyValuePair<string, string> resourceItem in resourceDict)
-                {
-                    specifiedLanguageResourceList.Add(resourceItem);
-                    break;
-                }
-            }
-
-            return specifiedLanguageResourceList;
         }
 
         /// <summary>
