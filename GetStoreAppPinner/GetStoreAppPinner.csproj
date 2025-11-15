@@ -20,6 +20,7 @@
 		<LangVersion>latest</LangVersion>
 		<MetadataUpdaterSupport>false</MetadataUpdaterSupport>
 		<MetricsSupport>false</MetricsSupport>
+    <Optimize>false</Optimize>
 		<OptimizationPreference>Size</OptimizationPreference>
 		<OutputType>WinExe</OutputType>
 		<Platforms>x86;x64;ARM64</Platforms>
