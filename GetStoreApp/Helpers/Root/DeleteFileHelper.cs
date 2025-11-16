@@ -4,6 +4,7 @@ using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using Windows.Foundation.Diagnostics;
@@ -37,7 +38,7 @@ namespace GetStoreApp.Helpers.Root
 
             try
             {
-                if (fileOperation is not null)
+                if (fileOperation is not null && File.Exists(filePath))
                 {
                     fileOperation.SetOperationFlags(FileOperationFlags.FOF_ALLOWUNDO);
                     if (Shell32Library.SHCreateItemFromParsingName(filePath, nint.Zero, typeof(IShellItem).GUID, out IShellItem shellItem) is 0)
@@ -45,6 +46,10 @@ namespace GetStoreApp.Helpers.Root
                         fileOperation.DeleteItem(shellItem, nint.Zero);
                         deleteResult = fileOperation.PerformOperations() is 0 || fileOperation.GetAnyOperationsAborted(out bool isAborted) is 0 && !isAborted;
                     }
+                }
+                else
+                {
+                    deleteResult = true;
                 }
             }
             catch (Exception e)
@@ -60,22 +65,27 @@ namespace GetStoreApp.Helpers.Root
         public static bool DeleteFilesToRecycleBin(List<string> filePathList)
         {
             bool deleteResult = false;
-            IFileOperation fileOperation = null;
 
             try
             {
                 if (fileOperation is not null)
                 {
-                    fileOperation.SetOperationFlags(FileOperationFlags.FOF_ALLOWUNDO);
-                    foreach (string filePath in filePathList)
+                    if(filePathList.Count > 0)
                     {
-                        if (Shell32Library.SHCreateItemFromParsingName(filePath, nint.Zero, typeof(IShellItem).GUID, out IShellItem shellItem) is 0)
+                        fileOperation.SetOperationFlags(FileOperationFlags.FOF_ALLOWUNDO);
+                        foreach (string filePath in filePathList)
                         {
-                            fileOperation.DeleteItem(shellItem, nint.Zero);
+                            if (Shell32Library.SHCreateItemFromParsingName(filePath, nint.Zero, typeof(IShellItem).GUID, out IShellItem shellItem) is 0)
+                            {
+                                fileOperation.DeleteItem(shellItem, nint.Zero);
+                            }
                         }
+                        deleteResult = fileOperation.PerformOperations() is 0 || fileOperation.GetAnyOperationsAborted(out bool isAborted) is 0 && !isAborted;
                     }
-
-                    deleteResult = fileOperation.PerformOperations() is 0 || fileOperation.GetAnyOperationsAborted(out bool isAborted) is 0 && !isAborted;
+                    else
+                    {
+                        deleteResult = true;
+                    }
                 }
             }
             catch (Exception e)

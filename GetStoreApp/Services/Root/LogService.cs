@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Helpers.Root;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
@@ -160,15 +159,18 @@ namespace GetStoreApp.Services.Root
             {
                 await Task.Run(() =>
                 {
+                    List<string> cleanList = [];
                     if (Directory.Exists(httpRequestFolderPath))
                     {
-                        DeleteFileHelper.DeleteFilesToRecycleBin([.. Directory.GetFiles(httpRequestFolderPath, "*.etl")]);
+                        cleanList.AddRange(Directory.GetFiles(httpRequestFolderPath, "*.etl"));
                     }
 
                     if (Directory.Exists(exceptionFolderPath))
                     {
-                        DeleteFileHelper.DeleteFilesToRecycleBin([.. Directory.GetFiles(exceptionFolderPath, "*.etl")]);
+                        cleanList.AddRange(Directory.GetFiles(exceptionFolderPath, "*.etl"));
                     }
+
+                    DeleteFileHelper.DeleteFilesToRecycleBin(cleanList);
                 });
                 return true;
             }

@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Services.Root;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -27,9 +28,15 @@ namespace GetStoreApp.Helpers.Root
                     return true;
                 }
 
+                List<string> cleanList = [];
+                if(Directory.Exists(folder))
+                {
+                    cleanList.AddRange(Directory.GetFiles(folder));
+                    cleanList.AddRange(Directory.GetDirectories(folder));
+                }
+
                 // 删除当前文件夹下所有文件和子文件夹
-                DeleteFileHelper.DeleteFilesToRecycleBin([.. Directory.GetFiles(folder)]);
-                DeleteFileHelper.DeleteFilesToRecycleBin([.. Directory.GetDirectories(folder)]);
+                DeleteFileHelper.DeleteFilesToRecycleBin(cleanList);
                 return true;
             }
             catch (Exception e)
