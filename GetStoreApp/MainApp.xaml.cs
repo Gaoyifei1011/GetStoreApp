@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Services.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
+using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
@@ -143,7 +144,11 @@ namespace GetStoreApp
                 isDisposed = true;
             }
 
-            Exit();
+            // 因为 WinGet package manager 调用了 PackageCatalog.PackageUpdating 事件，该事件会导致应用程序在退出时直接触发异常，故直接使用 TerminateProcess
+            // 待 WinGet 真正修复了这一问题后继续使用 Application.Current.Exit()
+            nint processHandle = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_TERMINATE | EDesiredAccess.PROCESS_QUERY_INFORMATION, false, Environment.ProcessId);
+            Kernel32Library.TerminateProcess(processHandle, 0);
+            //Exit();
         }
     }
 }

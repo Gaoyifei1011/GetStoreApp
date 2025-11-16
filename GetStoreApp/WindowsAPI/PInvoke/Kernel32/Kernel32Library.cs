@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 // 抑制 CA1401 警告
 #pragma warning disable CA1401
@@ -28,7 +29,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>
         /// 如果函数成功，它将返回指定快照的打开句柄。如果函数失败，它将返回 INVALID_HANDLE_VALUE。 要获得更多的错误信息，请调用 GetLastError。 可能的错误代码包括 ERROR_BAD_LENGTH。
         /// </returns>
-        [LibraryImport(Kernel32, EntryPoint = "CreateToolhelp32Snapshot", SetLastError = true)]
+        [LibraryImport(Kernel32, EntryPoint = "CreateToolhelp32Snapshot", SetLastError = true), PreserveSig]
         public static partial nint CreateToolhelp32Snapshot(CreateToolhelp32SnapshotFlags dwFlags, uint th32ProcessID);
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 最后一个错误代码是因为它们的访问限制阻止用户级代码打开它们。ERROR_INVALID_PARAMETERERROR_ACCESS_DENIED
         /// </param>
         /// <returns>如果函数成功，则返回值是指定进程的打开句柄。如果函数失败，则返回值为 NULL。</returns>
-        [LibraryImport(Kernel32, EntryPoint = "OpenProcess", SetLastError = false)]
+        [LibraryImport(Kernel32, EntryPoint = "OpenProcess", SetLastError = false), PreserveSig]
         public static partial nint OpenProcess(EDesiredAccess dwDesiredAccess, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandle, int dwProcessId);
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>
         /// 如果进程列表的第一个条目已复制到缓冲区或 FALSE，则返回 TRUE。 如果不存在进程或快照不包含进程信息，则 GetLastError 函数将返回ERROR_NO_MORE_FILES错误值。
         /// </returns>
-        [LibraryImport(Kernel32, EntryPoint = "Process32FirstW", SetLastError = false)]
+        [LibraryImport(Kernel32, EntryPoint = "Process32FirstW", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool Process32First(nint snapshot, ref PROCESSENTRY32 lppe);
 
@@ -99,8 +100,18 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>
         /// 如果进程列表的下一个条目已复制到缓冲区，则返回 TRUE，否则返回 FALSE。如果不存在任何进程或快照不包含进程信息，则 GetLastError 函数将返回ERROR_NO_MORE_FILES错误值。
         /// </returns>
-        [LibraryImport(Kernel32, EntryPoint = "Process32NextW", SetLastError = false)]
+        [LibraryImport(Kernel32, EntryPoint = "Process32NextW", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool Process32Next(nint snapshot, ref PROCESSENTRY32 lppe);
+
+        /// <summary>
+        /// 终止指定的进程及其所有线程。
+        /// </summary>
+        /// <param name="hProcess">句柄必须具有 PROCESS_TERMINATE 访问权限。 有关详细信息，请参阅 进程安全性和访问权限。</param>
+        /// <param name="uExitCode">进程和线程将使用的退出代码，由于此调用而终止。 使用 GetExitCodeProcess 函数检索进程的退出值。 使用 GetExitCodeThread 函数检索线程的退出值。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [LibraryImport(Kernel32, EntryPoint = "TerminateProcess", SetLastError = false), PreserveSig]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool TerminateProcess(nint hProcess, uint uExitCode);
     }
 }
