@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 using Windows.System;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -109,7 +110,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnDownloadChangeFolderClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is string tag)
+            if (sender.As<MenuFlyoutItem>().Tag is string tag)
             {
                 switch (tag)
                 {
@@ -192,7 +193,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnManualSetDownloadFolderToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
             {
                 DownloadOptionsService.SetManualSetDownloadFolder(toggleSwitch.IsOn);
                 ManualSetDownloadFolder = toggleSwitch.IsOn;
@@ -204,7 +205,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnDoEngineModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
             {
                 DoEngineMode = DoEngineModeList[Convert.ToInt32(tag)];
                 DownloadOptionsService.SetDoEngineMode(DoEngineMode.Key);

@@ -7,8 +7,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
-using Microsoft.Windows.AppNotifications;
-using Microsoft.Windows.AppNotifications.Builder;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +14,7 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -85,7 +84,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectorBarTapped(object sender, TappedRoutedEventArgs args)
         {
-            if (sender is SelectorBarItem selectorBarItem && selectorBarItem.Tag is Type pageType)
+            if (sender.As<SelectorBarItem>().Tag is Type pageType)
             {
                 int index = PageList.IndexOf(pageType);
                 int currentIndex = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));

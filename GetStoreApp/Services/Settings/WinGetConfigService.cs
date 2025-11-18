@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
+using WinRT;
 
 namespace GetStoreApp.Services.Settings
 {
@@ -59,7 +60,7 @@ namespace GetStoreApp.Services.Settings
                         PredefinedPackageCatalogList.Add(KeyValuePair.Create(packageCatalogReference.Info.Name, predefinedPackageCatalog));
                     }
 
-                    if (wingetDataSourceContainer.Values.TryGetValue(CurrentWinGetSource, out object value) && value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
+                    if (wingetDataSourceContainer.Values.TryGetValue(CurrentWinGetSource, out object value) && value.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                     {
                         KeyValuePair<string, bool> winGetDataSourceName = KeyValuePair.Create(Convert.ToString(compositeValue["Name"]), Convert.ToBoolean(compositeValue["IsInternal"]));
                         wingetDataSourceContainer.Values.Remove(CurrentWinGetSource);
@@ -136,7 +137,7 @@ namespace GetStoreApp.Services.Settings
 
             try
             {
-                if (wingetDataSourceContainer.Values.TryGetValue(CurrentWinGetSource, out object value) && value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
+                if (wingetDataSourceContainer.Values.TryGetValue(CurrentWinGetSource, out object value) && value.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                 {
                     winGetDataSourceName = KeyValuePair.Create(Convert.ToString(compositeValue["Name"]), Convert.ToBoolean(compositeValue["IsInternal"]));
                 }
@@ -198,7 +199,7 @@ namespace GetStoreApp.Services.Settings
 
             try
             {
-                if (wingetDataSourceContainer.Values.TryGetValue(CurrentWinGetSource, out object value) && value is Windows.Storage.ApplicationDataCompositeValue compositeValue && compositeValue.TryGetValue("Name", out object nameValue) && string.Equals(Convert.ToString(nameValue), winGetDataSourceName.Key) && compositeValue.TryGetValue("IsInternal", out object isInternalValue) && Equals(Convert.ToBoolean(isInternalValue), winGetDataSourceName.Value))
+                if (wingetDataSourceContainer.Values.TryGetValue(CurrentWinGetSource, out object value) && value.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue && compositeValue.TryGetValue("Name", out object nameValue) && string.Equals(Convert.ToString(nameValue), winGetDataSourceName.Key) && compositeValue.TryGetValue("IsInternal", out object isInternalValue) && Equals(Convert.ToBoolean(isInternalValue), winGetDataSourceName.Value))
                 {
                     wingetDataSourceContainer.Values.Remove(CurrentWinGetSource);
                 }

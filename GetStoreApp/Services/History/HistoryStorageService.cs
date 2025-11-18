@@ -4,8 +4,10 @@ using GetStoreApp.Services.Root;
 using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using Windows.Foundation.Diagnostics;
+using WinRT;
 
 namespace GetStoreApp.Services.History
 {
@@ -71,20 +73,27 @@ namespace GetStoreApp.Services.History
                 {
                     for (int index = 1; index <= 3; index++)
                     {
-                        if (queryLinksContainer.Values.TryGetValue(QueryLinks + Convert.ToString(index), out object value) && value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
+                        try
                         {
-                            TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
-                            ChannelModel channel = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
-
-                            queryLinksHistoryList.Add(new HistoryModel()
+                            if (queryLinksContainer.Values.TryGetValue(QueryLinks + Convert.ToString(index), out object value) && value.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                             {
-                                CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
-                                HistoryKey = Convert.ToString(compositeValue[HistoryKey]),
-                                HistoryAppName = Convert.ToString(compositeValue[HistoryAppName]),
-                                HistoryType = type.InternalName,
-                                HistoryChannel = channel.InternalName,
-                                HistoryLink = Convert.ToString(compositeValue[HistoryLink])
-                            });
+                                TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
+                                ChannelModel channel = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
+
+                                queryLinksHistoryList.Add(new HistoryModel()
+                                {
+                                    CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
+                                    HistoryKey = Convert.ToString(compositeValue[HistoryKey]),
+                                    HistoryAppName = Convert.ToString(compositeValue[HistoryAppName]),
+                                    HistoryType = type.InternalName,
+                                    HistoryChannel = channel.InternalName,
+                                    HistoryLink = Convert.ToString(compositeValue[HistoryLink])
+                                });
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         }
                     }
                 }
@@ -116,17 +125,24 @@ namespace GetStoreApp.Services.History
                 {
                     if (searchStoreContainer.Values.TryGetValue(SearchStore + Convert.ToString(index), out object value))
                     {
-                        if (value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
+                        try
                         {
-                            TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryType"] as string, StringComparison.OrdinalIgnoreCase));
-                            ChannelModel channelItem = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryChannel"] as string, StringComparison.OrdinalIgnoreCase));
-
-                            searchStoreHistoryList.Add(new HistoryModel()
+                            if (value.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                             {
-                                CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
-                                HistoryKey = Convert.ToString(compositeValue[HistoryKey]),
-                                HistoryContent = Convert.ToString(compositeValue[HistoryContent]),
-                            });
+                                TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryType"] as string, StringComparison.OrdinalIgnoreCase));
+                                ChannelModel channelItem = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryChannel"] as string, StringComparison.OrdinalIgnoreCase));
+
+                                searchStoreHistoryList.Add(new HistoryModel()
+                                {
+                                    CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
+                                    HistoryKey = Convert.ToString(compositeValue[HistoryKey]),
+                                    HistoryContent = Convert.ToString(compositeValue[HistoryContent]),
+                                });
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         }
                     }
                 }

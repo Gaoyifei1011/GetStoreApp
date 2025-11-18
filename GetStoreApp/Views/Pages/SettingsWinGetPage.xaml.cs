@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.System;
+using WinRT;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -75,7 +76,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnWinGetSourceSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
             {
                 WinGetSource = WinGetSourceList[Convert.ToInt32(tag)];
                 WinGetConfigService.SetWinGetSource(WinGetSource.Key);

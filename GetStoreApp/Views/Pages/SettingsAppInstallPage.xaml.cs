@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.System;
+using WinRT;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -98,7 +99,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnAllowUnsignedPackageToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
             {
                 AppInstallService.SetAllowUnsignedPackageValue(toggleSwitch.IsOn);
                 AllowUnsignedPackageValue = toggleSwitch.IsOn;
@@ -110,7 +111,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnForceAppShutdownToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
             {
                 AppInstallService.SetForceAppShutdownValue(toggleSwitch.IsOn);
                 ForceAppShutdownValue = toggleSwitch.IsOn;
@@ -122,7 +123,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnForceTargetAppShutdownToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
             {
                 AppInstallService.SetForceTargetAppShutdownValue(toggleSwitch.IsOn);
                 ForceTargetAppShutdownValue = toggleSwitch.IsOn;

@@ -909,7 +909,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
             // 窗口部分初始化
             WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
-            overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
+            overlappedPresenter = AppWindow.Presenter.As<OverlappedPresenter>();
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
             AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
@@ -929,7 +929,7 @@ namespace GetStoreAppInstaller.Views.Windows
             inputPointerSource.PointerReleased += OnPointerReleased;
 
             // 标题栏和右键菜单设置
-            SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
+            SetClassicMenuTheme(Content.As<FrameworkElement>().ActualTheme);
 
             // 为应用主窗口添加窗口过程
             installerWindowSubClassProc = new SUBCLASSPROC(InstallerWindowSubClassProc);
@@ -1133,7 +1133,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnMoveClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
+            if (sender.As<MenuFlyoutItem>().Tag.As<MenuFlyout>() is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
                 User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MOVE, 0);
@@ -1145,7 +1145,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnSizeClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
+            if (sender.As<MenuFlyoutItem>().Tag.As<MenuFlyout>() is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
                 User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_SIZE, 0);
@@ -1367,7 +1367,7 @@ namespace GetStoreAppInstaller.Views.Windows
             // 从文件处启动
             else if (Program.AppActivationArguments.Kind is ExtendedActivationKind.File)
             {
-                FileActivatedEventArgs fileActivatedEventArgs = Program.AppActivationArguments.Data as FileActivatedEventArgs;
+                FileActivatedEventArgs fileActivatedEventArgs = Program.AppActivationArguments.Data.As<FileActivatedEventArgs>();
 
                 // 只解析读取到的第一个文件
                 if (fileActivatedEventArgs.Files.Count > 0)
@@ -1391,7 +1391,7 @@ namespace GetStoreAppInstaller.Views.Windows
             // 从共享目标处启动
             else if (Program.AppActivationArguments.Kind is ExtendedActivationKind.ShareTarget)
             {
-                ShareTargetActivatedEventArgs shareTargetActivatedEventArgs = Program.AppActivationArguments.Data as ShareTargetActivatedEventArgs;
+                ShareTargetActivatedEventArgs shareTargetActivatedEventArgs = Program.AppActivationArguments.Data.As<ShareTargetActivatedEventArgs>();
                 ShareOperation shareOperation = shareTargetActivatedEventArgs.ShareOperation;
                 shareOperation.ReportCompleted();
 
@@ -1418,6 +1418,9 @@ namespace GetStoreAppInstaller.Views.Windows
                     }
                 }
             }
+
+            // 设置标题栏主题
+            SetTitleBarTheme(Content.As<FrameworkElement>().ActualTheme);
         }
 
         /// <summary>
@@ -1614,7 +1617,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnCloseFlyoutClicked(object sender, RoutedEventArgs args)
         {
-            if ((sender as Button).Tag is Flyout flyout && flyout.IsOpen)
+            if (sender.As<Button>().Tag.As<Flyout>() is Flyout flyout && flyout.IsOpen)
             {
                 flyout.Hide();
             }
@@ -1788,7 +1791,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnStartClicked(object sender, RoutedEventArgs args)
         {
-            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
+            FlyoutBase.ShowAttachedFlyout(sender.As<FrameworkElement>());
         }
 
         /// <summary>
@@ -2040,20 +2043,37 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 设置所有弹出控件主题
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(FlyoutPresenter)), DynamicWindowsRuntimeCast(typeof(Grid))]
         private void SetPopupControlTheme(ElementTheme elementTheme)
         {
             foreach (Popup popup in VisualTreeHelper.GetOpenPopupsForXamlRoot(Content.XamlRoot))
             {
                 popup.RequestedTheme = elementTheme;
 
-                if (popup.Child is FlyoutPresenter flyoutPresenter)
+                try
                 {
-                    flyoutPresenter.RequestedTheme = elementTheme;
+                    if (popup.Child is FlyoutPresenter flyoutPresenter)
+                    {
+                        flyoutPresenter.RequestedTheme = elementTheme;
+                        continue;
+                    }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 }
 
-                if (popup.Child is Grid grid && grid.Name is "OuterOverflowContentRootV2")
+                try
                 {
-                    grid.RequestedTheme = elementTheme;
+                    if (popup.Child is Grid grid && grid.Name is "OuterOverflowContentRootV2")
+                    {
+                        grid.RequestedTheme = elementTheme;
+                        continue;
+                    }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 }
             }
         }
@@ -2153,9 +2173,9 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         public async Task ShowNotificationAsync(TeachingTip teachingTip, int duration = 2000)
         {
-            if (teachingTip is not null && InstallerPage.Content is Grid grid)
+            try
             {
-                try
+                if (teachingTip is not null && InstallerPage.Content.As<Grid>() is Grid grid)
                 {
                     grid.Children.Add(teachingTip);
 
@@ -2167,10 +2187,10 @@ namespace GetStoreAppInstaller.Views.Windows
                     await Task.Delay(300);
                     grid.Children.Remove(teachingTip);
                 }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
+            }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
             }
         }
 
@@ -3075,7 +3095,6 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             PackageManifestInformation packageManifestInformation = new();
             Dictionary<ProcessorArchitecture, string> applicationDict = [];
-            Dictionary<string, Dictionary<ProcessorArchitecture, string>> bundleFileDict = [];
             List<string> languageList = [];
             List<string> scaleResourceList = [];
 

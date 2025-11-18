@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Windows.Foundation.Diagnostics;
+using WinRT;
 
 namespace GetStoreApp.Services.Download
 {
@@ -121,11 +122,11 @@ namespace GetStoreApp.Services.Download
 
             if (downloadStorageContainer is not null)
             {
-                try
+                foreach (KeyValuePair<string, object> downloadStorageItem in downloadStorageContainer.Values)
                 {
-                    foreach (KeyValuePair<string, object> downloadStorageItem in downloadStorageContainer.Values)
+                    try
                     {
-                        if (downloadStorageItem.Value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
+                        if (downloadStorageItem.Value.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                         {
                             downloadSchedulerList.Add(new DownloadSchedulerModel()
                             {
@@ -136,10 +137,10 @@ namespace GetStoreApp.Services.Download
                             });
                         }
                     }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(GetDownloadData), 1, e);
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(GetDownloadData), 1, e);
+                    }
                 }
             }
 

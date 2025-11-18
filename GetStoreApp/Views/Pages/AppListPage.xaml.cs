@@ -25,6 +25,7 @@ using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
 using Windows.System;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -289,7 +290,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenAppExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is Package package)
+            if (args.Parameter.As<Package>() is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -310,7 +311,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenCacheFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is Package package)
+            if (args.Parameter.As<Package>() is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -334,7 +335,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenInstalledFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is Package package)
+            if (args.Parameter.As<Package>() is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -355,7 +356,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenManifestExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is Package package)
+            if (args.Parameter.As<Package>() is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -379,7 +380,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is Package package)
+            if (args.Parameter.As<Package>() is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -1342,7 +1343,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string increase)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is string increase)
             {
                 IsIncrease = Convert.ToBoolean(increase);
 
@@ -1489,7 +1490,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is AppSortRuleKind appSortRuleKind)
             {
                 SelectedAppSortRuleKind = appSortRuleKind;
 
@@ -1650,9 +1651,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSignatureRuleClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleButton toggleButton && toggleButton.Tag is not null)
+            if (sender.As<ToggleButton>() is ToggleButton toggleButton && toggleButton.Tag is not null)
             {
-                PackageSignatureKind signatureKind = (PackageSignatureKind)toggleButton.Tag;
+                PackageSignatureKind signatureKind = toggleButton.Tag.As<PackageSignatureKind>();
 
                 if (signatureKind is PackageSignatureKind.Store)
                 {

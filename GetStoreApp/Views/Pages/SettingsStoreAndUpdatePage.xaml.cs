@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.Globalization;
 using Windows.System;
+using WinRT;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -238,7 +239,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnQueryLinksModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
             {
                 QueryLinksMode = QueryLinksModeList[Convert.ToInt32(tag)];
                 QueryLinksModeService.SetQueryLinksMode(QueryLinksMode.Key);
@@ -250,7 +251,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
             {
                 InstallMode = InstallModeList[Convert.ToInt32(tag)];
                 InstallModeService.SetInstallMode(InstallMode.Key);
@@ -262,7 +263,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnCancelAutoUpdateToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
             {
                 CancelAutoUpdateService.SetCancelAutoUpdateValue(toggleSwitch.IsOn);
                 CancelAutoUpdateValue = toggleSwitch.IsOn;
@@ -292,7 +293,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnUseSystemRegionToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
             {
                 StoreRegionService.SetUseSystemRegionValue(toggleSwitch.IsOn);
                 UseSystemRegionValue = toggleSwitch.IsOn;
@@ -335,7 +336,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnEncryptedPackageToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
             {
                 LinkFilterService.SetEncryptedPackageFilterValue(toggleSwitch.IsOn);
                 EncryptedPackageFilterValue = toggleSwitch.IsOn;
@@ -347,7 +348,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnBlockMapToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
             {
                 LinkFilterService.SetBlockMapFilterValue(toggleSwitch.IsOn);
                 BlockMapFilterValue = toggleSwitch.IsOn;

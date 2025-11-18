@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
+using WinRT;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -207,7 +208,7 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private void OnTextChanged(object sender, TextChangedEventArgs args)
         {
-            if (sender is TextBox textBox)
+            if (sender.As<TextBox>() is TextBox textBox)
             {
                 switch (Convert.ToString(textBox.Tag))
                 {
@@ -240,7 +241,7 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private void OnExplicitToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
             {
                 Explicit = toggleSwitch.IsOn;
             }
@@ -251,7 +252,7 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private void OnCatalogTrustLevelClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
             {
                 SelectedCatalogTrustLevel = CatalogTrustLevelList[Convert.ToInt32(tag)];
             }

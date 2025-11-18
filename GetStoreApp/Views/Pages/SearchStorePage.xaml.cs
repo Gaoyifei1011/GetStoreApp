@@ -16,6 +16,7 @@ using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.System;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -291,7 +292,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnTextChanged(object sender, TextChangedEventArgs args)
         {
-            SearchText = (sender as TextBox).Text;
+            SearchText = sender.As<TextBox>().Text;
         }
 
         /// <summary>

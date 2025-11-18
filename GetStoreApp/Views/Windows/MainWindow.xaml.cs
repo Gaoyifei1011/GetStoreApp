@@ -42,6 +42,7 @@ using Windows.Networking.Connectivity;
 using Windows.UI;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
+using WinRT;
 using WinRT.Interop;
 
 // 抑制 IDE0060 警告
@@ -189,7 +190,7 @@ namespace GetStoreApp.Views.Windows
 
             // 窗口部分初始化
             WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
-            overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
+            overlappedPresenter = AppWindow.Presenter.As<OverlappedPresenter>();
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
             AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
@@ -215,7 +216,7 @@ namespace GetStoreApp.Views.Windows
             DesktopLaunchService.AppLaunchActivated += OnAppLaunchActivated;
 
             // 标题栏和右键菜单设置
-            SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
+            SetClassicMenuTheme(Content.As<FrameworkElement>().ActualTheme);
 
             // 为应用主窗口添加窗口过程
             mainWindowSubClassProc = new SUBCLASSPROC(MainWindowSubClassProc);
@@ -458,7 +459,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnMoveClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
+            if (sender.As<MenuFlyoutItem>().Tag.As<MenuFlyout>() is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
                 User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MOVE, 0);
@@ -470,7 +471,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnSizeClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
+            if (sender.As<MenuFlyoutItem>().Tag.As<MenuFlyout>() is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
                 User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_SIZE, 0);
@@ -542,7 +543,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private async void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is TextBlock textBlock)
+            if (sender.As<MenuFlyoutItem>().Tag.As<TextBlock>() is TextBlock textBlock)
             {
                 string displayName = textBlock.Text;
                 string tag = Convert.ToString(textBlock.Tag);
@@ -604,7 +605,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private async void OnPinToTaskbarClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is TextBlock textBlock)
+            if (sender.As<MenuFlyoutItem>().Tag.As<TextBlock>() is TextBlock textBlock)
             {
                 string displayName = textBlock.Text;
                 string tag = Convert.ToString(textBlock.Tag);
@@ -675,17 +676,18 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 导航控件加载完成后初始化内容，初始化导航控件属性、屏幕缩放比例值和应用的背景色
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(NavigationViewItem))]
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
             // 设置标题栏主题
-            SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
+            SetTitleBarTheme(Content.As<FrameworkElement>().ActualTheme);
 
             // 导航控件加载完成后初始化内容
-            if (sender is NavigationView navigationView)
+            if (sender.As<NavigationView>() is NavigationView navigationView)
             {
                 if (XamlTreeHelper.FindDescendant<Button>(navigationView, "NavigationViewBackButton") is Button navigationViewBackButton)
                 {
-                    navigationViewBackButtonToolTip = ToolTipService.GetToolTip(navigationViewBackButton) as ToolTip;
+                    navigationViewBackButtonToolTip = ToolTipService.GetToolTip(navigationViewBackButton).As<ToolTip>();
 
                     if (navigationViewBackButtonToolTip is not null)
                     {
@@ -696,31 +698,45 @@ namespace GetStoreApp.Views.Windows
 
                 foreach (object menuItem in navigationView.MenuItems)
                 {
-                    if (menuItem is NavigationViewItem navigationViewItem && navigationViewItem.Tag is string tag)
+                    try
                     {
-                        int tagIndex = PageList.FindIndex(item => string.Equals(item.Key, tag));
-
-                        NavigationItemList.Add(new NavigationModel()
+                        if (menuItem is NavigationViewItem navigationViewItem && navigationViewItem.Tag is string tag)
                         {
-                            NavigationTag = PageList[tagIndex].Key,
-                            NavigationItem = navigationViewItem,
-                            NavigationPage = PageList[tagIndex].Value,
-                        });
+                            int tagIndex = PageList.FindIndex(item => string.Equals(item.Key, tag));
+
+                            NavigationItemList.Add(new NavigationModel()
+                            {
+                                NavigationTag = PageList[tagIndex].Key,
+                                NavigationItem = navigationViewItem,
+                                NavigationPage = PageList[tagIndex].Value,
+                            });
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                     }
                 }
 
                 foreach (object footerMenuItem in navigationView.FooterMenuItems)
                 {
-                    if (footerMenuItem is NavigationViewItem navigationViewItem && navigationViewItem.Tag is string tag)
+                    try
                     {
-                        int tagIndex = PageList.FindIndex(item => string.Equals(item.Key, tag));
-
-                        NavigationItemList.Add(new NavigationModel()
+                        if (footerMenuItem is NavigationViewItem navigationViewItem && navigationViewItem.Tag is string tag)
                         {
-                            NavigationTag = PageList[tagIndex].Key,
-                            NavigationItem = navigationViewItem,
-                            NavigationPage = PageList[tagIndex].Value,
-                        });
+                            int tagIndex = PageList.FindIndex(item => string.Equals(item.Key, tag));
+
+                            NavigationItemList.Add(new NavigationModel()
+                            {
+                                NavigationTag = PageList[tagIndex].Key,
+                                NavigationItem = navigationViewItem,
+                                NavigationPage = PageList[tagIndex].Value,
+                            });
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                     }
                 }
             }
@@ -959,20 +975,37 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 设置所有弹出控件主题
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(FlyoutPresenter)), DynamicWindowsRuntimeCast(typeof(Grid))]
         private void SetPopupControlTheme(ElementTheme elementTheme)
         {
             foreach (Popup popup in VisualTreeHelper.GetOpenPopupsForXamlRoot(Content.XamlRoot))
             {
                 popup.RequestedTheme = elementTheme;
 
-                if (popup.Child is FlyoutPresenter flyoutPresenter)
+                try
                 {
-                    flyoutPresenter.RequestedTheme = elementTheme;
+                    if (popup.Child is FlyoutPresenter flyoutPresenter)
+                    {
+                        flyoutPresenter.RequestedTheme = elementTheme;
+                        continue;
+                    }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 }
 
-                if (popup.Child is Grid grid && grid.Name is "OuterOverflowContentRootV2")
+                try
                 {
-                    grid.RequestedTheme = elementTheme;
+                    if (popup.Child is Grid grid && grid.Name is "OuterOverflowContentRootV2")
+                    {
+                        grid.RequestedTheme = elementTheme;
+                        continue;
+                    }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 }
             }
         }
@@ -1127,9 +1160,9 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public async Task ShowNotificationAsync(TeachingTip teachingTip, int duration = 2000)
         {
-            if (teachingTip is not null && MainPage.Content is Grid grid)
+            try
             {
-                try
+                if (teachingTip is not null && MainPage.Content.As<Grid>() is Grid grid)
                 {
                     grid.Children.Add(teachingTip);
 
@@ -1141,10 +1174,10 @@ namespace GetStoreApp.Views.Windows
                     await Task.Delay(300);
                     grid.Children.Remove(teachingTip);
                 }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
+            }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
             }
         }
 

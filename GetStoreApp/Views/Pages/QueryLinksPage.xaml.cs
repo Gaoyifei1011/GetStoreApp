@@ -23,6 +23,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -578,7 +579,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnTextChanged(object sender, TextChangedEventArgs args)
         {
-            LinkText = (sender as TextBox).Text;
+            LinkText = sender.As<TextBox>().Text;
         }
 
         /// <summary>
@@ -586,7 +587,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnTypeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is TypeModel type)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is TypeModel type)
             {
                 SelectedType = type;
                 sampleLink = SampleLinkList[TypeList.FindIndex(item => string.Equals(item.InternalName, SelectedType.InternalName))];
@@ -600,7 +601,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnChannelSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is ChannelModel channel)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is ChannelModel channel)
             {
                 SelectedChannel = channel;
             }

@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -602,7 +603,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnAllowHashMismatchToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
             {
                 AllowHashMismatch = toggleSwitch.IsOn;
             }
@@ -613,7 +614,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageArchitectureSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
             {
                 PackageArchitecture = PackageArchitectureList[Convert.ToInt32(tag)];
             }
@@ -624,7 +625,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageInstallScopeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
             {
                 PackageInstallScope = PackageInstallScopeList[Convert.ToInt32(tag)];
             }
@@ -653,7 +654,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnChangePackageDownloadPathClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is string tag)
+            if (sender.As<MenuFlyoutItem>().Tag is string tag)
             {
                 switch (tag)
                 {
@@ -915,10 +916,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnBypassIsStoreClientBlockedPolicyCheckToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
-            {
-                BypassIsStoreClientBlockedPolicyCheck = toggleSwitch.IsOn;
-            }
+            BypassIsStoreClientBlockedPolicyCheck = sender.As<ToggleSwitch>().IsOn;
         }
 
         /// <summary>
@@ -926,10 +924,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnAllowUpgradeToUnknownVersionToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
-            {
-                AllowUpgradeToUnknownVersion = toggleSwitch.IsOn;
-            }
+            AllowUpgradeToUnknownVersion = sender.As<ToggleSwitch>().IsOn;
         }
 
         /// <summary>
@@ -937,10 +932,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnForceToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
-            {
-                Force = toggleSwitch.IsOn;
-            }
+            Force = sender.As<ToggleSwitch>().IsOn;
         }
 
         /// <summary>
@@ -948,7 +940,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
             {
                 PackageInstallMode = PackageInstallModeList[Convert.ToInt32(tag)];
             }
@@ -959,7 +951,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnAdditionalInstallerArgumentsTextChanged(object sender, TextChangedEventArgs args)
         {
-            if (sender is TextBox textBox)
+            if (sender.As<TextBox>() is TextBox textBox)
             {
                 AdditionalInstallerArguments = textBox.Text;
             }
@@ -1012,7 +1004,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnProcessorArchitectureClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleButton toggleButton && toggleButton.Tag is ProcessorArchitecture processorArchitecture)
+            if (sender.As<ToggleButton>().Tag.As<ProcessorArchitecture>() is ProcessorArchitecture processorArchitecture)
             {
                 switch (processorArchitecture)
                 {
@@ -1200,7 +1192,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageRepairScopeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
             {
                 PackageRepairScope = PackageRepairScopeList[Convert.ToInt32(tag)];
             }
@@ -1211,7 +1203,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageRepairModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
             {
                 PackageRepairMode = PackageRepairModeList[Convert.ToInt32(tag)];
             }

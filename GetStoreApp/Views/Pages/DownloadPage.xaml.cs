@@ -12,6 +12,7 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
+using WinRT;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -101,7 +102,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectorBarTapped(object sender, TappedRoutedEventArgs args)
         {
-            if (sender is SelectorBarItem selectorBarItem && selectorBarItem.Tag is Type pageType)
+            if (sender.As<SelectorBarItem>().Tag is Type pageType)
             {
                 int index = PageList.IndexOf(pageType);
                 int currentIndex = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));

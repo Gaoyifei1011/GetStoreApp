@@ -19,6 +19,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -278,7 +279,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string increase && SearchAppsResultKind is SearchAppsResultKind.Successfully)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is string increase && SearchAppsResultKind is SearchAppsResultKind.Successfully)
             {
                 IsIncrease = Convert.ToBoolean(increase);
                 SearchAppsResultKind = SearchAppsResultKind.Searching;
@@ -306,7 +307,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageMatchFieldClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is PackageMatchField packageMatchField)
+            if (sender.As<RadioMenuFlyoutItem>().Tag.As<PackageMatchField>() is PackageMatchField packageMatchField)
             {
                 PackageMatchField = packageMatchField;
             }
@@ -317,7 +318,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageFieldMatchOptionClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is PackageFieldMatchOption packageFieldMatchOption)
+            if (sender.As<RadioMenuFlyoutItem>().Tag.As<PackageFieldMatchOption>() is PackageFieldMatchOption packageFieldMatchOption)
             {
                 PackageFieldMatchOption = packageFieldMatchOption;
             }

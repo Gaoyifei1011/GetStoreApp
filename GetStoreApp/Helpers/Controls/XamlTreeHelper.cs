@@ -1,5 +1,8 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
+using System;
+using System.Runtime.InteropServices.Marshalling;
+using WinRT;
 
 namespace GetStoreApp.Helpers.Controls
 {
@@ -19,9 +22,16 @@ namespace GetStoreApp.Helpers.Controls
                 {
                     DependencyObject child = VisualTreeHelper.GetChild(parent, index);
 
-                    if (child is T result && (childName is null || child is FrameworkElement frameworkElement && string.Equals(frameworkElement.Name, childName)))
+                    try
                     {
-                        return result;
+                        if (child is T result && (childName is null || child.As<FrameworkElement>() is FrameworkElement frameworkElement && string.Equals(frameworkElement.Name, childName)))
+                        {
+                            return result;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                     }
 
                     T foundChild = FindDescendant<T>(child, childName);

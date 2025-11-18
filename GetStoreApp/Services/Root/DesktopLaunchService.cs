@@ -51,7 +51,7 @@ namespace GetStoreApp.Services.Root
                 string executableFileName = Path.GetFileName(Environment.ProcessPath);
                 List<string> argumentsList = [];
                 AppLaunchArguments appLaunchArguments = new();
-                LaunchActivatedEventArgs launchActivatedEventArgs = appActivationArguments.Data is IInspectable inspectable ? LaunchActivatedEventArgs.FromAbi(inspectable.ThisPtr) : appActivationArguments.Data as LaunchActivatedEventArgs;
+                LaunchActivatedEventArgs launchActivatedEventArgs = appActivationArguments.Data is IInspectable inspectable ? LaunchActivatedEventArgs.FromAbi(inspectable.ThisPtr) : appActivationArguments.Data.As<LaunchActivatedEventArgs>();
 
                 // 解析参数
                 if (!string.IsNullOrEmpty(launchActivatedEventArgs.Arguments))
@@ -165,7 +165,7 @@ namespace GetStoreApp.Services.Root
             // 通过共享目标启动
             else if (appActivationArguments.Kind is ExtendedActivationKind.ShareTarget)
             {
-                ShareTargetActivatedEventArgs shareTargetActivatedEventArgs = appActivationArguments.Data as ShareTargetActivatedEventArgs;
+                ShareTargetActivatedEventArgs shareTargetActivatedEventArgs = appActivationArguments.Data.As<ShareTargetActivatedEventArgs>();
                 ShareOperation shareOperation = shareTargetActivatedEventArgs.ShareOperation;
                 shareOperation.ReportCompleted();
 
@@ -191,7 +191,7 @@ namespace GetStoreApp.Services.Root
             // 通过协议启动
             else if (appActivationArguments.Kind is ExtendedActivationKind.Protocol)
             {
-                ProtocolActivatedEventArgs protocolActivatedEventArgs = appActivationArguments.Data as ProtocolActivatedEventArgs;
+                ProtocolActivatedEventArgs protocolActivatedEventArgs = appActivationArguments.Data.As<ProtocolActivatedEventArgs>();
                 AppLaunchArguments appLaunchArguments = new()
                 {
                     AppLaunchKind = AppLaunchKind.Protocol,
@@ -208,7 +208,7 @@ namespace GetStoreApp.Services.Root
             // 应用通知启动
             else if (appActivationArguments.Kind is ExtendedActivationKind.ToastNotification)
             {
-                ToastNotificationActivatedEventArgs toastNotificationActivatedEventArgs = appActivationArguments.Data as ToastNotificationActivatedEventArgs;
+                ToastNotificationActivatedEventArgs toastNotificationActivatedEventArgs = appActivationArguments.Data.As<ToastNotificationActivatedEventArgs>();
                 await ToastNotificationService.HandleToastNotificationAsync(toastNotificationActivatedEventArgs.Argument, isLaunched);
             }
             else

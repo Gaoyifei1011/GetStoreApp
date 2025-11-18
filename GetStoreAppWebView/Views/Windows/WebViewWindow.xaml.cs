@@ -31,6 +31,7 @@ using Windows.Foundation.Diagnostics;
 using Windows.Graphics;
 using Windows.System;
 using Windows.UI;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -206,7 +207,7 @@ namespace GetStoreAppWebView.Views.Windows
 
             // 窗口部分初始化
             WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
-            overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
+            overlappedPresenter = AppWindow.Presenter.As<OverlappedPresenter>();
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
             AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
@@ -225,7 +226,7 @@ namespace GetStoreAppWebView.Views.Windows
             inputPointerSource.PointerReleased += OnPointerReleased;
 
             // 标题栏和右键菜单设置
-            SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
+            SetClassicMenuTheme(Content.As<FrameworkElement>().ActualTheme);
 
             // 为应用主窗口添加窗口过程
             webViewWindowSubClassProc = new SUBCLASSPROC(WebViewWindowSubClassProc);
@@ -402,7 +403,7 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void OnMoveClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
+            if (sender.As<MenuFlyoutItem>().Tag.As<MenuFlyout>() is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
                 User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MOVE, 0);
@@ -414,7 +415,7 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void OnSizeClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
+            if (sender.As<MenuFlyoutItem>().Tag.As<MenuFlyout>() is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
                 User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_SIZE, 0);
@@ -486,6 +487,9 @@ namespace GetStoreAppWebView.Views.Windows
                 CoreWebView2Profile coreWebView2Profile = WebViewBrowser.CoreWebView2.Profile;
                 coreWebView2Profile.DefaultDownloadFolderPath = DownloadOptionsService.DownloadFolder;
             }
+
+            // 设置标题栏主题
+            SetTitleBarTheme(Content.As<FrameworkElement>().ActualTheme);
         }
 
         /// <summary>
@@ -792,20 +796,37 @@ namespace GetStoreAppWebView.Views.Windows
         /// <summary>
         /// 设置所有弹出控件主题
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(FlyoutPresenter)), DynamicWindowsRuntimeCast(typeof(Grid))]
         private void SetPopupControlTheme(ElementTheme elementTheme)
         {
             foreach (Popup popup in VisualTreeHelper.GetOpenPopupsForXamlRoot(Content.XamlRoot))
             {
                 popup.RequestedTheme = elementTheme;
 
-                if (popup.Child is FlyoutPresenter flyoutPresenter)
+                try
                 {
-                    flyoutPresenter.RequestedTheme = elementTheme;
+                    if (popup.Child is FlyoutPresenter flyoutPresenter)
+                    {
+                        flyoutPresenter.RequestedTheme = elementTheme;
+                        continue;
+                    }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 }
 
-                if (popup.Child is Grid grid && grid.Name is "OuterOverflowContentRootV2")
+                try
                 {
-                    grid.RequestedTheme = elementTheme;
+                    if (popup.Child is Grid grid && grid.Name is "OuterOverflowContentRootV2")
+                    {
+                        grid.RequestedTheme = elementTheme;
+                        continue;
+                    }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 }
             }
         }

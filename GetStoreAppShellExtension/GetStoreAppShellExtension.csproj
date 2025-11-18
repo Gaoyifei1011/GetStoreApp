@@ -4,7 +4,6 @@
     <AnalysisLevel>latest</AnalysisLevel>
     <AssemblyName>GetStoreAppShellExtension</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
-    <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
     <DefaultLanguage>en-US</DefaultLanguage>
     <Deterministic>true</Deterministic>
     <DisableXbfLineInfo>false</DisableXbfLineInfo>
@@ -13,12 +12,11 @@
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <ImplicitUsings>disable</ImplicitUsings>
     <IncludeAllContentForSelfExtract>false</IncludeAllContentForSelfExtract>
-    <IncludeSymbols>false</IncludeSymbols>
+    <IncludeSymbols>true</IncludeSymbols>
     <IsAotCompatible>true</IsAotCompatible>
     <LangVersion>latest</LangVersion>
     <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
     <MetricsSupport>false</MetricsSupport>
-    <Optimize>false</Optimize>
     <OptimizationPreference>Size</OptimizationPreference>
     <OutputType>Library</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>
@@ -26,9 +24,9 @@
     <RootNamespace>GetStoreAppShellExtension</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <SelfContained>true</SelfContained>
-    <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
+    <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
-    <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
+    <TrimmerRemoveSymbols>false</TrimmerRemoveSymbols>
     <WindowsSdkPackageVersion>10.0.26100.81</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
@@ -49,12 +47,12 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <DebuggerSupport>false</DebuggerSupport>
-    <DebugType>none</DebugType>
+    <DebuggerSupport>true</DebuggerSupport>
+    <DebugType>full</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.0-prerelease.251115.2" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.6901" GeneratePathProperty="true" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.7.20250829.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
 		<PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.8.251104000" />
@@ -62,7 +60,7 @@
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->
-  <Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Debug|true|true'">
+  <Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Release|true|true'">
     <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Publish" />
     <Copy SourceFiles="$(NativeOutputPath)$(AssemblyName).dll" DestinationFiles="$(ProjectDir)bin\$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\$(AssemblyName).dll" />
   </Target>

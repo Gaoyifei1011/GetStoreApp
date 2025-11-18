@@ -16,6 +16,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Hosting;
+using WinRT;
 
 namespace GetStoreAppPinner
 {
@@ -43,7 +44,7 @@ namespace GetStoreAppPinner
             base.OnActivated(args);
             applicationView = ApplicationView.GetForCurrentView();
 
-            if (args.Kind is ActivationKind.Protocol && args is ProtocolActivatedEventArgs protocolActivatedEventArgs)
+            if (args.Kind is ActivationKind.Protocol && args.As<ProtocolActivatedEventArgs>() is ProtocolActivatedEventArgs protocolActivatedEventArgs)
             {
                 if (protocolActivatedEventArgs.Uri.AbsoluteUri is "getstoreapppinner:")
                 {

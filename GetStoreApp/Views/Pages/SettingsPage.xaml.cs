@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
 using Windows.UI.Text;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -124,7 +125,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
         {
-            if (args.Item is ContentLinkInfo contentLinkInfo && BreadCollection.Count is 2 && string.Equals(contentLinkInfo.SecondaryText, BreadCollection[0].SecondaryText))
+            if (args.Item.As<ContentLinkInfo>() is ContentLinkInfo contentLinkInfo && BreadCollection.Count is 2 && string.Equals(contentLinkInfo.SecondaryText, BreadCollection[0].SecondaryText))
             {
                 NavigateTo(PageList[0], null, false);
             }

@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
 using Windows.UI.ViewManagement;
+using WinRT;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -260,7 +261,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnThemeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
             {
                 Theme = ThemeList[Convert.ToInt32(tag)];
                 ThemeService.SetTheme(Theme.Key);
@@ -272,7 +273,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnBackdropSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
             {
                 Backdrop = BackdropList[Convert.ToInt32(tag)];
                 BackdropService.SetBackdrop(Backdrop.Key);
@@ -327,7 +328,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnAlwaysShowBackdropToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
             {
                 AlwaysShowBackdropService.SetAlwaysShowBackdropValue(toggleSwitch.IsOn);
                 AlwaysShowBackdropValue = toggleSwitch.IsOn;
@@ -354,7 +355,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnTopMostToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
             {
                 TopMostService.SetTopMostValue(toggleSwitch.IsOn);
                 TopMostValue = toggleSwitch.IsOn;

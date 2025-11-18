@@ -19,6 +19,7 @@ using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
 using Windows.Storage;
+using WinRT;
 
 // 抑制 CA1822，IDE0028，IDE0060 警告
 #pragma warning disable CA1822,IDE0028,IDE0060
@@ -237,7 +238,7 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private void OnUseWindowsAppsFolderToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
             {
                 UseWindowsAppsFolderValue = toggleSwitch.IsOn;
                 if (SelectedPackageVolume is not null && SelectedPackageVolume.WinRTPackageVolume is not null)
@@ -253,10 +254,7 @@ namespace GetStoreApp.Views.Dialogs
 
         private void OnSetDefaultVolumeToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
-            {
-                SetDefaultVolumeValue = toggleSwitch.IsOn;
-            }
+            SetDefaultVolumeValue = sender.As<ToggleSwitch>().IsOn;
         }
 
         /// <summary>

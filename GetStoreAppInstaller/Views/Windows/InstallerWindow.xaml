@@ -401,11 +401,13 @@
                                                 <Flyout
                                                     x:Name="AddDependencyFlyout"
                                                     Placement="Bottom"
-                                                    ShouldConstrainToRootBounds="False">
+                                                    ShouldConstrainToRootBounds="False"
+                                                    SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
 
                                                     <Flyout.FlyoutPresenterStyle>
                                                         <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
                                                             <Setter Property="Padding" Value="0" />
+                                                            <Setter Property="Background" Value="Transparent" />
                                                             <Setter Property="MinWidth" Value="0" />
                                                         </Style>
                                                     </Flyout.FlyoutPresenterStyle>
@@ -758,11 +760,13 @@
                                             <Flyout
                                                 x:Name="ViewErrorInformationFlyout"
                                                 Placement="Bottom"
-                                                ShouldConstrainToRootBounds="False">
+                                                ShouldConstrainToRootBounds="False"
+                                                SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
 
                                                 <Flyout.FlyoutPresenterStyle>
                                                     <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
                                                         <Setter Property="Padding" Value="0" />
+                                                        <Setter Property="Background" Value="Transparent" />
                                                         <Setter Property="MinWidth" Value="0" />
                                                     </Style>
                                                 </Flyout.FlyoutPresenterStyle>

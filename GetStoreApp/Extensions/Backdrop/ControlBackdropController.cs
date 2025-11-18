@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.Marshalling;
 using Windows.Foundation.Diagnostics;
+using WinRT;
 
 namespace GetStoreApp.Extensions.Backdrop
 {
@@ -32,7 +33,7 @@ namespace GetStoreApp.Extensions.Backdrop
         /// </summary>
         public static void Initialize(MainWindow mainWindow)
         {
-            if (desktopAcrylicController is null && DesktopAcrylicController.IsSupported() && mainWindow is not null && mainWindow.Content is FrameworkElement frameworkElement)
+            if (desktopAcrylicController is null && DesktopAcrylicController.IsSupported() && mainWindow is not null && mainWindow.Content.As<FrameworkElement>() is FrameworkElement frameworkElement)
             {
                 mainWindow.DispatcherQueue.EnsureSystemDispatcherQueue();
                 compositor = mainWindow.Compositor;

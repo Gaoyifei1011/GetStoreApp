@@ -23,6 +23,7 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -379,7 +380,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string increase && (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult))
+            if (sender.As<RadioMenuFlyoutItem>().Tag is string increase && (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult))
             {
                 IsIncrease = Convert.ToBoolean(increase);
                 if (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult)
@@ -394,7 +395,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind && (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult))
+            if (sender.As<RadioMenuFlyoutItem>().Tag is AppSortRuleKind appSortRuleKind && (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult))
             {
                 SelectedAppSortRuleKind = appSortRuleKind;
                 if (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult)
@@ -409,10 +410,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnForceToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
-            {
-                Force = toggleSwitch.IsOn;
-            }
+            Force = sender.As<ToggleSwitch>().IsOn;
         }
 
         /// <summary>
@@ -420,7 +418,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageUninstallScopeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender is RadioButtons radioButtons && radioButtons.SelectedIndex >= 0)
+            if (sender.As<RadioButtons>() is RadioButtons radioButtons && radioButtons.SelectedIndex >= 0)
             {
                 SelectedPackageUninstallScopeIndex = radioButtons.SelectedIndex;
             }
@@ -431,7 +429,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageUninstallModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender is RadioButtons radioButtons && radioButtons.SelectedIndex >= 0)
+            if (sender.As<RadioButtons>() is RadioButtons radioButtons && radioButtons.SelectedIndex >= 0)
             {
                 SelectedPackageUninstallModeIndex = radioButtons.SelectedIndex;
             }

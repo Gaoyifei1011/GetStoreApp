@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Media;
+using WinRT;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -18,10 +19,10 @@ namespace GetStoreAppWebView.Helpers.Backdrop
         /// </summary>
         public static void OnLoaded(object sender, RoutedEventArgs args)
         {
-            if (sender is ToolTip toolTip && toolTip.Parent is Popup popup)
+            if (sender.As<ToolTip>() is ToolTip toolTip && toolTip.Parent.As<Popup>() is Popup popup)
             {
                 popup.RequestedTheme = toolTip.RequestedTheme;
-                popup.SystemBackdrop ??= Application.Current.Resources["AcrylicBackgroundFillColorDefaultBackdrop"] as SystemBackdrop;
+                popup.SystemBackdrop ??= Application.Current.Resources["AcrylicBackgroundFillColorDefaultBackdrop"].As<SystemBackdrop>();
             }
         }
     }

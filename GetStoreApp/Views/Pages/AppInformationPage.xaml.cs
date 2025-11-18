@@ -21,6 +21,7 @@ using Windows.Foundation.Diagnostics;
 using Windows.System;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -424,7 +425,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is Package package)
+            if (args.Parameter.As<Package>() is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -445,7 +446,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is Package package)
+            if (args.Parameter.As<Package>() is Package package)
             {
                 Task.Run(async () =>
                 {

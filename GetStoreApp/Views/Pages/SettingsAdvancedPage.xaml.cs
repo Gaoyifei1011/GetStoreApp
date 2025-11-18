@@ -19,6 +19,7 @@ using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
 using Windows.UI.Notifications;
+using WinRT;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -180,7 +181,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnShellMenuToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
             {
                 ShellMenuService.SetShellMenuValue(toggleSwitch.IsOn);
                 ShellMenuValue = toggleSwitch.IsOn;
@@ -192,7 +193,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnNotificationToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
             {
                 NotificationService.SetNotification(toggleSwitch.IsOn);
                 NotificationValue = toggleSwitch.IsOn;

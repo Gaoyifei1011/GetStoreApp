@@ -108,7 +108,7 @@ namespace Microsoft.UI.Content
 
         public override bool Equals(object obj)
         {
-            return obj is ContentExternalBackdropLink that && this == that;
+            return obj.As<ContentExternalBackdropLink>() is ContentExternalBackdropLink that && this == that;
         }
 
         public override int GetHashCode()

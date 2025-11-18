@@ -8,6 +8,7 @@ using System;
 using System.ComponentModel;
 using System.Numerics;
 using System.Runtime.InteropServices.Marshalling;
+using WinRT;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -54,7 +55,7 @@ namespace GetStoreApp.Views.NotificationTips
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            nonHeroContentRootGrid = GetTemplateChild("NonHeroContentRootGrid") as Grid;
+            nonHeroContentRootGrid = GetTemplateChild("NonHeroContentRootGrid").As<Grid>();
             if (nonHeroContentRootGrid is not null)
             {
                 nonHeroContentRootGrid.Loaded += OnLoaded;
@@ -86,7 +87,7 @@ namespace GetStoreApp.Views.NotificationTips
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            if (ControlBackdropController.IsLoaded && sender is Grid grid)
+            if (ControlBackdropController.IsLoaded && sender.As<Grid>() is Grid grid)
             {
                 if (!isConnected)
                 {

@@ -21,6 +21,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -203,7 +204,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string increase && UpgradableAppsResultKind is UpgradableAppsResultKind.Successfully)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is string increase && UpgradableAppsResultKind is UpgradableAppsResultKind.Successfully)
             {
                 IsIncrease = Convert.ToBoolean(increase);
                 InitializeMatchedUpgradableApps();
@@ -215,7 +216,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind && UpgradableAppsResultKind is UpgradableAppsResultKind.Successfully)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is AppSortRuleKind appSortRuleKind && UpgradableAppsResultKind is UpgradableAppsResultKind.Successfully)
             {
                 SelectedAppSortRuleKind = appSortRuleKind;
                 InitializeMatchedUpgradableApps();
