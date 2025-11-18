@@ -3119,7 +3119,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
                         foreach (string languageBundleItem in languageBundleList)
                         {
-                            if (languageList.Contains(languageBundleItem))
+                            if (!languageList.Contains(languageBundleItem))
                             {
                                 languageList.Add(languageBundleItem);
                             }
