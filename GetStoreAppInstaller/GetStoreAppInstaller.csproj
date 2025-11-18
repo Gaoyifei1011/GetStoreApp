@@ -14,12 +14,13 @@
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <ImplicitUsings>disable</ImplicitUsings>
     <IncludeAllContentForSelfExtract>false</IncludeAllContentForSelfExtract>
-    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSymbols>false</IncludeSymbols>
     <IsAotCompatible>true</IsAotCompatible>
     <LangVersion>latest</LangVersion>
     <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
     <MetricsSupport>false</MetricsSupport>
     <OptimizationPreference>Size</OptimizationPreference>
+    <Optimize>true</Optimize>
     <OutputType>WinExe</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>
     <PublishAot>true</PublishAot>
@@ -28,7 +29,7 @@
     <SelfContained>true</SelfContained>
     <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
-    <TrimmerRemoveSymbols>false</TrimmerRemoveSymbols>
+    <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <WebView2NeverCopyLoaderDllToOutputDirectory>true</WebView2NeverCopyLoaderDllToOutputDirectory>
     <Win32Resource>GetStoreAppInstaller.res</Win32Resource>
 		<WindowsAppSDKBackgroundTask>false</WindowsAppSDKBackgroundTask>
@@ -54,8 +55,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <DebuggerSupport>true</DebuggerSupport>
-    <DebugType>full</DebugType>
+    <DebuggerSupport>false</DebuggerSupport>
+    <DebugType>none</DebugType>
   </PropertyGroup>
   
   <ItemGroup>
@@ -65,7 +66,7 @@
 		<None Remove="Views\Windows\InstallerWindow.xaml" />
 
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.0-prerelease.251115.2" />
-		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.6901" GeneratePathProperty="true" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7175" GeneratePathProperty="true" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.7.20250829.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
 		<PackageReference Include="Microsoft.WindowsAppSDK.Base" Version="1.8.250831001" />
 		<PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.8.251104000" />
@@ -79,7 +80,7 @@
 	</ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->
-  <Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Release|true|true'">
+  <Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Debug|true|true'">
     <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Publish" />
     <Copy SourceFiles="$(NativeOutputPath)$(AssemblyName).exe" DestinationFiles="$(ProjectDir)obj\$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\apphost.exe" />
   </Target>

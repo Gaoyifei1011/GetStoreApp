@@ -175,7 +175,7 @@
 #### <p align="center">כלים שיש להתקין</p>
 
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com) 
-> * פיתוח שולחן עבודה NET. (מותקן ב-Visual Studio Installer, גרסת NET SDK 9.0.)
+> * פיתוח שולחן עבודה NET. (מותקן ב-Visual Studio Installer, גרסת NET SDK 10.0.)
 > * [מנהל החבילות WinGet](https://apps.microsoft.com/store/detail/9NBLGGH4NNS1) (מומלץ להתקין)
 > * [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2) (מומלץ להתקין)
 

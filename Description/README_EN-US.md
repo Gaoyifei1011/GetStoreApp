@@ -174,7 +174,7 @@ All the content of the program has been developed
 #### <p align="center">Tools that must be installed</p>
 
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com) 
-> * . NET Desktop Development (Installed in Visual Studio Installer, .NET SDK Version 9.0)
+> * . NET Desktop Development (Installed in Visual Studio Installer, .NET SDK Version 10.0)
 > * [WinGet package manager](https://apps.microsoft.com/store/detail/9NBLGGH4NNS1) (install recommendedly)
 > * [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2) (install recommendedly)
 
