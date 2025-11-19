@@ -48,7 +48,7 @@ namespace GetStoreApp.Services.Settings
             // 每次获取时读取已经添加的安装源，并去除掉已经被删除的值
             await Task.Run(() =>
             {
-                PackageManager packageManager = Equals(CurrentWinGetSource, WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
+                PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
                 wingetDataSourceLock.Enter();
 
                 try

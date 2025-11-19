@@ -159,10 +159,7 @@ namespace GetStoreApp.Views.Pages
                     UpgradableAppsLock.Exit();
                 }
 
-                InstallOptions installOptions = await Task.Run(() =>
-                {
-                    return Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreateInstallOptions();
-                });
+                InstallOptions installOptions = await Task.Run(WinGetFactoryHelper.CreateInstallOptions);
 
                 await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
                 {
@@ -364,20 +361,8 @@ namespace GetStoreApp.Views.Pages
                             if (string.Equals(winGetDataSourceName.Key, predefinedPackageCatalog.Key))
                             {
                                 packageCatalogReference = packageManager.GetPredefinedPackageCatalog(predefinedPackageCatalog.Value);
-                                CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = null;
-                                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
-                                {
-                                    createCompositePackageCatalogOptions = new()
-                                    {
-                                        CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs
-                                    };
-                                }
-                                else
-                                {
-                                    createCompositePackageCatalogOptions = WinGetFactoryHelper.CreateCreateCompositePackageCatalogOptions();
-                                    createCompositePackageCatalogOptions.CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs;
-                                }
-
+                                CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = WinGetFactoryHelper.CreateCreateCompositePackageCatalogOptions();
+                                createCompositePackageCatalogOptions.CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs;
                                 createCompositePackageCatalogOptions.Catalogs.Add(packageCatalogReference);
                                 packageCatalogReference = packageManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
                                 break;
@@ -391,19 +376,8 @@ namespace GetStoreApp.Views.Pages
 
                         if (packageCatalogReference is not null)
                         {
-                            CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = null;
-                            if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
-                            {
-                                createCompositePackageCatalogOptions = new()
-                                {
-                                    CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs
-                                };
-                            }
-                            else
-                            {
-                                createCompositePackageCatalogOptions = WinGetFactoryHelper.CreateCreateCompositePackageCatalogOptions();
-                                createCompositePackageCatalogOptions.CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs;
-                            }
+                            CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = WinGetFactoryHelper.CreateCreateCompositePackageCatalogOptions();
+                            createCompositePackageCatalogOptions.CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs;
                             createCompositePackageCatalogOptions.Catalogs.Add(packageCatalogReference);
                             packageCatalogReference = packageManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
                         }
@@ -427,10 +401,7 @@ namespace GetStoreApp.Views.Pages
             UpgradableAppsResultKind = UpgradableAppsResultKind.Querying;
             UpgradableAppsCollection.Clear();
 
-            PackageManager packageManager = await Task.Run(() =>
-            {
-                return Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
-            });
+            PackageManager packageManager = await Task.Run(WinGetFactoryHelper.CreatePackageManager);
 
             PackageCatalogReference packageCatalogReference = await Task.Run(() =>
             {
@@ -534,7 +505,7 @@ namespace GetStoreApp.Views.Pages
 
                 if (connectResult is not null && connectResult.Status is ConnectResultStatus.Ok)
                 {
-                    FindPackagesOptions findPackagesOptions = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreateFindPackagesOptions();
+                    FindPackagesOptions findPackagesOptions = WinGetFactoryHelper.CreateFindPackagesOptions();
                     FindPackagesResult findPackagesResult = await connectResult.PackageCatalog.FindPackagesAsync(findPackagesOptions);
                     upgradableAppsResult.findPackagesResult = findPackagesResult;
 

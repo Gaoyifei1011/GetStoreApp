@@ -172,10 +172,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is SearchAppsModel searchApps && searchApps.CatalogPackage.DefaultInstallVersion is not null && WinGetPageInstance is not null)
             {
-                DownloadOptions downloadOptions = await Task.Run(() =>
-                {
-                    return Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreateDownloadOptions();
-                });
+                DownloadOptions downloadOptions = await Task.Run(WinGetFactoryHelper.CreateDownloadOptions);
 
                 await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
                 {
@@ -203,10 +200,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
             {
-                InstallOptions installOptions = await Task.Run(() =>
-                {
-                    return Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreateInstallOptions();
-                });
+                InstallOptions installOptions = await Task.Run(WinGetFactoryHelper.CreateInstallOptions);
 
                 await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
                 {
@@ -234,10 +228,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
             {
-                RepairOptions repairOptions = await Task.Run(() =>
-                {
-                    return Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreateRepairOptions();
-                });
+                RepairOptions repairOptions = await Task.Run(WinGetFactoryHelper.CreateRepairOptions);
 
                 await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
                 {
@@ -458,10 +449,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task InitializeSearchAppsDataAsync()
         {
-            PackageManager packageManager = await Task.Run(() =>
-            {
-                return Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
-            });
+            PackageManager packageManager = await Task.Run(WinGetFactoryHelper.CreatePackageManager);
 
             PackageCatalogReference packageCatalogReference = await Task.Run(() =>
             {
@@ -527,24 +515,11 @@ namespace GetStoreApp.Views.Pages
 
                 if (connectResult is not null && connectResult.Status is ConnectResultStatus.Ok)
                 {
-                    FindPackagesOptions findPackagesOptions = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreateFindPackagesOptions();
-                    PackageMatchFilter packageMatchFilter = null;
-                    if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
-                    {
-                        packageMatchFilter = new()
-                        {
-                            Field = PackageMatchField,
-                            Option = PackageFieldMatchOption,
-                            Value = cachedSearchText
-                        };
-                    }
-                    else
-                    {
-                        packageMatchFilter = WinGetFactoryHelper.CreatePackageMatchFilter();
-                        packageMatchFilter.Field = PackageMatchField;
-                        packageMatchFilter.Option = PackageFieldMatchOption;
-                        packageMatchFilter.Value = cachedSearchText;
-                    }
+                    FindPackagesOptions findPackagesOptions = WinGetFactoryHelper.CreateFindPackagesOptions();
+                    PackageMatchFilter packageMatchFilter = WinGetFactoryHelper.CreatePackageMatchFilter();
+                    packageMatchFilter.Field = PackageMatchField;
+                    packageMatchFilter.Option = PackageFieldMatchOption;
+                    packageMatchFilter.Value = cachedSearchText;
 
                     findPackagesOptions.Filters.Add(packageMatchFilter);
                     FindPackagesResult findPackagesResult = await connectResult.PackageCatalog.FindPackagesAsync(findPackagesOptions);

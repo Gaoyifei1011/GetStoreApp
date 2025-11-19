@@ -767,7 +767,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 try
                                 {
-                                    PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
+                                    PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
                                     IAsyncOperationWithProgress<DownloadResult, PackageDownloadProgress> downloadPackageWithProgress = packageManager.DownloadPackageAsync(packageOperation.SearchApps.CatalogPackage, packageOperation.DownloadOptions);
 
                                     PackageOperationLock.Enter();
@@ -1134,7 +1134,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 try
                                 {
-                                    PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
+                                    PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
                                     IAsyncOperationWithProgress<InstallResult, InstallProgress> installPackageWithProgress = packageManager.InstallPackageAsync(packageOperation.SearchApps.CatalogPackage, packageOperation.InstallOptions);
 
                                     PackageOperationLock.Enter();
@@ -1546,7 +1546,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 try
                                 {
-                                    PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
+                                    PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
                                     IAsyncOperationWithProgress<UninstallResult, UninstallProgress> uninstallPackageWithProgress = packageManager.UninstallPackageAsync(packageOperation.InstalledApps.CatalogPackage, packageOperation.UninstallOptions);
 
                                     PackageOperationLock.Enter();
@@ -1856,7 +1856,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 try
                                 {
-                                    PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
+                                    PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
                                     IAsyncOperationWithProgress<RepairResult, RepairProgress> repairPackageWithProgress = packageManager.RepairPackageAsync(packageOperation.SearchApps.CatalogPackage, packageOperation.RepairOptions);
 
                                     PackageOperationLock.Enter();
@@ -2220,7 +2220,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 try
                                 {
-                                    PackageManager packageManager = Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]) ? new() : WinGetFactoryHelper.CreatePackageManager();
+                                    PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
                                     IAsyncOperationWithProgress<InstallResult, InstallProgress> upgradePackageWithProgress = packageManager.UpgradePackageAsync(packageOperation.UpgradableApps.CatalogPackage, packageOperation.InstallOptions);
 
                                     PackageOperationLock.Enter();
