@@ -2397,7 +2397,7 @@ namespace GetStoreAppInstaller.Views.Windows
                             if (appInstallerNodeList.Count > 0 && appInstallerNodeList[0].Attributes.GetNamedItem("Uri") is IXmlNode appInstallerUriNode)
                             {
                                 packageInformation.AppInstallerSourceLink = appInstallerUriNode.InnerText;
-                                packageInformation.IsAppInstallerSourceLinkExisted = true;
+                                packageInformation.IsAppInstallerSourceLinkExisted = !string.IsNullOrEmpty(appInstallerUriNode.InnerText);
                             }
 
                             XmlNodeList mainPackageNodeList = xmlDocument.GetElementsByTagName("MainPackage");
@@ -2452,7 +2452,7 @@ namespace GetStoreAppInstaller.Views.Windows
                                 if (mainBundleNodeList[0].Attributes.GetNamedItem("Uri") is IXmlNode packageUriNode)
                                 {
                                     packageInformation.PackageSourceLink = packageUriNode.InnerText;
-                                    packageInformation.IsPackageSourceLinkExisted = true;
+                                    packageInformation.IsPackageSourceLinkExisted = !string.IsNullOrEmpty(packageUriNode.InnerText);
                                 }
                             }
 
@@ -3582,10 +3582,10 @@ namespace GetStoreAppInstaller.Views.Windows
                 PackageFullName = string.IsNullOrEmpty(packageInformation.PackageFullName) ? NotAvailableString : packageInformation.PackageFullName;
                 SupportedArchitecture = string.IsNullOrEmpty(packageInformation.ProcessorArchitecture) ? NotAvailableString : packageInformation.ProcessorArchitecture;
                 IsFramework = packageInformation.IsFramework.HasValue ? packageInformation.IsFramework.Value ? YesString : NoString : NotAvailableString;
-                AppInstalledState = string.IsNullOrEmpty(packageInformation.AppInstalledState) ? string.Empty : packageInformation.AppInstalledState;
-                AppInstallerSourceLink = string.IsNullOrEmpty(packageInformation.AppInstallerSourceLink) ? string.Empty : packageInformation.AppInstallerSourceLink;
+                AppInstalledState = string.IsNullOrEmpty(packageInformation.AppInstalledState) ? NotAvailableString : packageInformation.AppInstalledState;
+                AppInstallerSourceLink = string.IsNullOrEmpty(packageInformation.AppInstallerSourceLink) ? NotAvailableString : packageInformation.AppInstallerSourceLink;
                 IsAppInstallerSourceLinkExisted = packageInformation.IsAppInstallerSourceLinkExisted;
-                PackageSourceLink = string.IsNullOrEmpty(packageInformation.PackageSourceLink) ? string.Empty : packageInformation.PackageSourceLink;
+                PackageSourceLink = string.IsNullOrEmpty(packageInformation.PackageSourceLink) ? NotAvailableString : packageInformation.PackageSourceLink;
                 IsPackageSourceLinkExisted = packageInformation.IsPackageSourceLinkExisted;
                 PackageType = packageInformation.PackageType;
                 HoursBetweenUpdateChecks = string.Format(HoursString, packageInformation.HoursBetweenUpdateChecks);
