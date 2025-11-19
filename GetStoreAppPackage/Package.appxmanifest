@@ -14,7 +14,7 @@
 	<Identity
 	  Name="055B5CA4.GetStoreApp"
 	  Publisher="CN=ABAA73FA-E48C-48D6-8060-D6B3A4EA70B6"
-	  Version="6.11.1118.0" />
+	  Version="6.12.1120.0" />
 
 	<Properties>
 		<Description>ms-resource:PackageDescription</Description>
@@ -168,6 +168,7 @@
 							<uap:FileType>.msix</uap:FileType>
 							<uap:FileType>.appxbundle</uap:FileType>
 							<uap:FileType>.msixbundle</uap:FileType>
+              <uap:FileType>.appinstaller</uap:FileType>
 						</uap:SupportedFileTypes>
 					</uap:ShareTarget>
 				</uap:Extension>
