@@ -892,24 +892,34 @@ namespace GetStoreAppWebView.Views.Windows
         /// <summary>
         /// 显示内容对话框
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ContentDialog))]
         public async Task<ContentDialogResult> ShowDialogAsync(ContentDialog contentDialog)
         {
             ContentDialogResult dialogResult = ContentDialogResult.None;
-            if (!isDialogOpening && contentDialog is not null && Content is not null)
+            bool isDialogOpening = false;
+            if (contentDialog is not null && Content is not null)
             {
-                isDialogOpening = true;
-
-                try
+                foreach (Popup popup in VisualTreeHelper.GetOpenPopupsForXamlRoot(Content.XamlRoot))
                 {
-                    contentDialog.XamlRoot = Content.XamlRoot;
-                    dialogResult = await contentDialog.ShowAsync();
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    if (popup.Child is ContentDialog)
+                    {
+                        isDialogOpening = true;
+                        break;
+                    }
                 }
 
-                isDialogOpening = false;
+                if (!isDialogOpening)
+                {
+                    try
+                    {
+                        contentDialog.XamlRoot = Content.XamlRoot;
+                        dialogResult = await contentDialog.ShowAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppWebView), nameof(WebViewWindow), nameof(ShowDialogAsync), 1, e);
+                    }
+                }
             }
 
             return dialogResult;
