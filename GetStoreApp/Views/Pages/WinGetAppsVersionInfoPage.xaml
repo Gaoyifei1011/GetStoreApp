@@ -310,7 +310,7 @@
                             <TextBlock
                                 Grid.Row="1"
                                 Grid.Column="1"
-                                Text="{x:Bind NotAvailableString}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/NotAvailable')}"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPackageLinkExisted), Mode=OneWay}" />
 
@@ -358,7 +358,7 @@
                             <TextBlock
                                 Grid.Row="4"
                                 Grid.Column="1"
-                                Text="{x:Bind NotAvailableString}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/NotAvailable')}"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPublisherLinkExisted), Mode=OneWay}" />
 
@@ -382,7 +382,7 @@
                             <TextBlock
                                 Grid.Row="5"
                                 Grid.Column="1"
-                                Text="{x:Bind NotAvailableString}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/NotAvailable')}"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPublisherSupportLinkExisted), Mode=OneWay}" />
 
@@ -430,7 +430,7 @@
                             <TextBlock
                                 Grid.Row="8"
                                 Grid.Column="1"
-                                Text="{x:Bind NotAvailableString}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/NotAvailable')}"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsCopyRightLinkExisted), Mode=OneWay}" />
 
@@ -466,7 +466,7 @@
                             <TextBlock
                                 Grid.Row="10"
                                 Grid.Column="1"
-                                Text="{x:Bind NotAvailableString}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/NotAvailable')}"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsLicenseLinkExisted), Mode=OneWay}" />
 
@@ -490,7 +490,7 @@
                             <TextBlock
                                 Grid.Row="11"
                                 Grid.Column="1"
-                                Text="{x:Bind NotAvailableString}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/NotAvailable')}"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPrivacyLinkExisted), Mode=OneWay}" />
 
@@ -514,7 +514,7 @@
                             <TextBlock
                                 Grid.Row="12"
                                 Grid.Column="1"
-                                Text="{x:Bind NotAvailableString}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/NotAvailable')}"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPurchaseLinkExisted), Mode=OneWay}" />
 
@@ -550,7 +550,7 @@
                             <TextBlock
                                 Grid.Row="14"
                                 Grid.Column="1"
-                                Text="{x:Bind NotAvailableString}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/NotAvailable')}"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsReleaseNotesLinkExisted), Mode=OneWay}" />
                         </Grid>

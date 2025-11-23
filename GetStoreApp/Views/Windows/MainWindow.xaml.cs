@@ -66,7 +66,6 @@ namespace GetStoreApp.Views.Windows
         private readonly ContentCoordinateConverter contentCoordinateConverter;
         private readonly OverlappedPresenter overlappedPresenter;
         private readonly SUBCLASSPROC mainWindowSubClassProc;
-        private bool isDialogOpening;
         private ToolTip navigationViewBackButtonToolTip;
 
         public new static MainWindow Current { get; private set; }

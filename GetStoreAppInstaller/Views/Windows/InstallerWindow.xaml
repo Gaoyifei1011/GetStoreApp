@@ -1197,7 +1197,7 @@
                                                         Grid.Column="2"
                                                         Margin="0,0,0,3"
                                                         HorizontalAlignment="Left"
-                                                        Text="{x:Bind NotAvailableString}"
+                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/NotAvailable')}"
                                                         Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsAppInstallerSourceLinkExisted), Mode=OneWay}" />
 
                                                     <TextBlock
@@ -1246,7 +1246,7 @@
                                                         Grid.Row="1"
                                                         Grid.Column="2"
                                                         Margin="0,0,0,3"
-                                                        Text="{x:Bind NotAvailableString}"
+                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/NotAvailable')}"
                                                         Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPackageSourceLinkExisted), Mode=OneWay}" />
 
                                                     <TextBlock

@@ -143,44 +143,8 @@
                     VerticalScrollBarVisibility="Visible"
                     VerticalScrollMode="Enabled">
 
-                    <Grid Margin="0,0,0,30">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
+                    <StackPanel Margin="0,0,0,30">
                         <TextBlock
-                            Grid.Row="0"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -188,7 +152,6 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="1"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -196,10 +159,7 @@
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
-                        <StackPanel
-                            Grid.Row="2"
-                            Margin="16,0,16,5"
-                            Spacing="5">
+                        <StackPanel Margin="16,0,16,5" Spacing="5">
 
                             <TextBlock HorizontalAlignment="Left">
                                 <Hyperlink Click="{x:Bind OnAppSettingsClicked}" UnderlineStyle="None">
@@ -208,10 +168,9 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <MenuFlyoutSeparator Grid.Row="3" />
+                        <MenuFlyoutSeparator />
 
                         <TextBlock
-                            Grid.Row="4"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -219,7 +178,6 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="5"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -228,7 +186,6 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="6"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -236,10 +193,9 @@
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
-                        <MenuFlyoutSeparator Grid.Row="7" />
+                        <MenuFlyoutSeparator />
 
                         <TextBlock
-                            Grid.Row="8"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -247,7 +203,6 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="9"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -256,7 +211,6 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="10"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -264,10 +218,7 @@
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
-                        <StackPanel
-                            Grid.Row="11"
-                            Margin="16,0,16,5"
-                            Spacing="5">
+                        <StackPanel Margin="16,0,16,5" Spacing="5">
 
                             <TextBlock>
                                 <Hyperlink
@@ -288,10 +239,9 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <MenuFlyoutSeparator Grid.Row="12" />
+                        <MenuFlyoutSeparator />
 
                         <TextBlock
-                            Grid.Row="13"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -299,7 +249,6 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="14"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -308,7 +257,6 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="15"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -317,7 +265,6 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="16"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -325,10 +272,7 @@
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
-                        <StackPanel
-                            Grid.Row="17"
-                            Margin="16,0,16,5"
-                            Spacing="5">
+                        <StackPanel Margin="16,0,16,5" Spacing="5">
 
                             <TextBlock>
                                 <Hyperlink
@@ -340,10 +284,9 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <MenuFlyoutSeparator Grid.Row="18" />
+                        <MenuFlyoutSeparator />
 
                         <TextBlock
-                            Grid.Row="19"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -351,7 +294,6 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="20"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -360,7 +302,6 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="21"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -369,7 +310,6 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="22"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -377,10 +317,7 @@
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
-                        <StackPanel
-                            Grid.Row="23"
-                            Margin="16,0,16,5"
-                            Spacing="5">
+                        <StackPanel Margin="16,0,16,5" Spacing="5">
 
                             <TextBlock>
                                 <Hyperlink
@@ -407,10 +344,9 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <MenuFlyoutSeparator Grid.Row="24" />
+                        <MenuFlyoutSeparator />
 
                         <TextBlock
-                            Grid.Row="25"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -418,7 +354,6 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="26"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -427,7 +362,6 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="27"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -436,7 +370,6 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="28"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -445,7 +378,6 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="29"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -453,10 +385,9 @@
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
-                        <MenuFlyoutSeparator Grid.Row="30" />
+                        <MenuFlyoutSeparator />
 
                         <TextBlock
-                            Grid.Row="31"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -464,14 +395,13 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="32"
                             Margin="16,0,16,10"
                             FontSize="14"
                             FontWeight="Normal"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/OtherOptionDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
-                    </Grid>
+                    </StackPanel>
                 </ScrollViewer>
             </Grid>
         </SplitView.Pane>
