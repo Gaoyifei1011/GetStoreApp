@@ -747,6 +747,20 @@ namespace GetStoreApp.Views.Pages
                             package.IsOperating = false;
                             AppManagerList.Remove(package);
                             AppManagerCollection.Remove(package);
+
+                            AppManagerResultKind = AppManagerCollection.Count is 0 ? AppManagerResultKind.Failed : AppManagerResultKind.Successfully;
+                            if (AppManagerList.Count is 0)
+                            {
+                                AppManagerFailedContent = PackageEmptyDescriptionString;
+                            }
+                            else if (AppManagerCollection.Count is 0)
+                            {
+                                AppManagerFailedContent = PackageEmptyWithConditionDescriptionString;
+                            }
+                            else
+                            {
+                                AppManagerFailedContent = string.Empty;
+                            }
                         }
                         // 卸载失败
                         else

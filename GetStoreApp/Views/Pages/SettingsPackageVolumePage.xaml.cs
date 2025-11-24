@@ -367,6 +367,17 @@ namespace GetStoreApp.Views.Pages
                     {
                         PackageVolumeCollection.Remove(packageVolume);
 
+                        if (PackageVolumeCollection.Count is 0)
+                        {
+                            PackageVolumeResultKind = PackageVolumeResultKind.Failed;
+                            PackageVolumeFailedContent = PackageVolumeEmptyString;
+                        }
+                        else
+                        {
+                            PackageVolumeResultKind = PackageVolumeResultKind.Successfully;
+                            PackageVolumeFailedContent = string.Empty;
+                        }
+
                         // 显示应用包存储卷移除成功通知
                         await Task.Run(() =>
                         {

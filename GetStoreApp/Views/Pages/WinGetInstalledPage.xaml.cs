@@ -564,6 +564,16 @@ namespace GetStoreApp.Views.Pages
                                 break;
                             }
                         }
+
+                        if (InstalledAppsList.Count is 0)
+                        {
+                            InstalledAppsResultKind = InstalledAppsResultKind.Failed;
+                            InstalledFailedContent = InstalledAppsEmptyDescriptionString;
+                        }
+                        else
+                        {
+                            InstalledAppsResultKind = string.IsNullOrEmpty(SearchText) ? InstalledAppsResultKind.Successfully : InstalledAppsResultKind.SearchResult;
+                        }
                     }
                     else
                     {

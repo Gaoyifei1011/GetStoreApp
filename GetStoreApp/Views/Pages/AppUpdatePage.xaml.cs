@@ -548,7 +548,12 @@ namespace GetStoreApp.Views.Pages
                                     AppUpdateList.Remove(appUpdateItem);
                                     AppUpdateCollection.Remove(appUpdateItem);
 
-                                    if (AppUpdateList.Count is 0)
+                                    if (AppUpdateList.Count > 0)
+                                    {
+                                        AppUpdateResultKind = AppUpdateResultKind.Successfully;
+                                        AppUpdateFailedContent = string.Empty;
+                                    }
+                                    else
                                     {
                                         AppUpdateResultKind = AppUpdateResultKind.Failed;
                                         AppUpdateFailedContent = AppUpdateEmptyString;

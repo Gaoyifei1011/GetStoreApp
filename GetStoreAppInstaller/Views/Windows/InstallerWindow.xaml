@@ -525,6 +525,7 @@
                                                             Height="100"
                                                             Padding="20"
                                                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(InstallDependencyCollection.Count), Mode=OneWay}">
+
                                                             <TextBlock
                                                                 HorizontalAlignment="Center"
                                                                 VerticalAlignment="Center"

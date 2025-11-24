@@ -313,6 +313,16 @@ namespace GetStoreApp.Views.Pages
                                 break;
                             }
                         }
+
+                        if (UpgradableAppsCollection.Count is 0)
+                        {
+                            UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
+                            UpgradableFailedContent = UpgradableAppsEmptyDescriptionString;
+                        }
+                        else
+                        {
+                            UpgradableAppsResultKind = UpgradableAppsResultKind.Successfully;
+                        }
                     }
                     else
                     {
