@@ -13,7 +13,6 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Foundation.Diagnostics;
-using Windows.Networking.Connectivity;
 using Windows.Services.Store;
 using Windows.System;
 using Windows.UI.Text;

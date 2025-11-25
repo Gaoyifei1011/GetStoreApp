@@ -47,7 +47,7 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                if(Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
+                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
                 {
                     return new PackageManager();
                 }

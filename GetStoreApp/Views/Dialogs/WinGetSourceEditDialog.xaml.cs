@@ -2,7 +2,6 @@
 using GetStoreApp.Helpers.WinGet;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Services.Settings;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.Management.Deployment;

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Windows.ApplicationModel.Resources;
 using System;
 using System.Runtime.InteropServices.Marshalling;
-using Windows.Foundation.Diagnostics;
 
 namespace GetStoreAppShellExtension.Services.Root
 {
