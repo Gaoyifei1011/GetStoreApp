@@ -833,7 +833,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageDownloadFailedContentList = [];
                                                     packageDownloadFailedContentList.Add(PackageDownloadFailedContent1String);
                                                     packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent2String, WinGetPackageDownloadBlockedByPolicyString) : string.Format(PackageDownloadFailedContent3String, WinGetPackageDownloadBlockedByPolicyString, downloadResult.ExtendedErrorCode.Message));
-                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(downloadResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(downloadResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageDownloadFailedContentList);
                                                 });
 
@@ -861,7 +861,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageDownloadFailedContentList = [];
                                                     packageDownloadFailedContentList.Add(PackageDownloadFailedContent1String);
                                                     packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent2String, WinGetPackageDownloadCatalogErrorString) : string.Format(PackageDownloadFailedContent3String, WinGetPackageDownloadCatalogErrorString, downloadResult.ExtendedErrorCode.Message));
-                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(downloadResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(downloadResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageDownloadFailedContentList);
                                                 });
 
@@ -889,7 +889,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageDownloadFailedContentList = [];
                                                     packageDownloadFailedContentList.Add(PackageDownloadFailedContent1String);
                                                     packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent2String, WinGetPackageDownloadInternalErrorString) : string.Format(PackageDownloadFailedContent3String, WinGetPackageDownloadInternalErrorString, downloadResult.ExtendedErrorCode.Message));
-                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(downloadResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(downloadResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageDownloadFailedContentList);
                                                 });
 
@@ -917,7 +917,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageDownloadFailedContentList = [];
                                                     packageDownloadFailedContentList.Add(PackageDownloadFailedContent1String);
                                                     packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent2String, WinGetPackageDownloadInvalidOptionsString) : string.Format(PackageDownloadFailedContent3String, WinGetPackageDownloadInvalidOptionsString, downloadResult.ExtendedErrorCode.Message));
-                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(downloadResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(downloadResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageDownloadFailedContentList);
                                                 });
 
@@ -945,7 +945,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageDownloadFailedContentList = [];
                                                     packageDownloadFailedContentList.Add(PackageDownloadFailedContent1String);
                                                     packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent2String, WinGetPackageDownloadErrorString) : string.Format(PackageDownloadFailedContent3String, WinGetPackageDownloadErrorString, downloadResult.ExtendedErrorCode.Message));
-                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(downloadResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(downloadResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageDownloadFailedContentList);
                                                 });
 
@@ -973,7 +973,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageDownloadFailedContentList = [];
                                                     packageDownloadFailedContentList.Add(PackageDownloadFailedContent1String);
                                                     packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent2String, WinGetPackageDownloadManifestErrorString) : string.Format(PackageDownloadFailedContent3String, WinGetPackageDownloadManifestErrorString, downloadResult.ExtendedErrorCode.Message));
-                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(downloadResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(downloadResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageDownloadFailedContentList);
                                                 });
 
@@ -1001,7 +1001,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageDownloadFailedContentList = [];
                                                     packageDownloadFailedContentList.Add(PackageDownloadFailedContent1String);
                                                     packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent2String, WinGetPackageDownloadNoApplicableInstallersString) : string.Format(PackageDownloadFailedContent3String, WinGetPackageDownloadNoApplicableInstallersString, downloadResult.ExtendedErrorCode.Message));
-                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(downloadResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(downloadResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageDownloadFailedContentList);
                                                 });
 
@@ -1029,7 +1029,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageDownloadFailedContentList = [];
                                                     packageDownloadFailedContentList.Add(PackageDownloadFailedContent1String);
                                                     packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent2String, WinGetPackageDownloadAgreementsNotAcceptedString) : string.Format(PackageDownloadFailedContent3String, WinGetPackageDownloadAgreementsNotAcceptedString, downloadResult.ExtendedErrorCode.Message));
-                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(downloadResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(downloadResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageDownloadFailedContentList);
                                                 });
 
@@ -1097,7 +1097,7 @@ namespace GetStoreApp.Views.Pages
                                         List<string> packageDownloadFailedContentList = [];
                                         packageDownloadFailedContentList.Add(PackageDownloadFailedContent1String);
                                         packageDownloadFailedContentList.Add(exception is not null ? string.Format(PackageDownloadFailedContent2String, WinGetPackageDownloadOtherErrorString) : string.Format(PackageDownloadFailedContent3String, WinGetPackageDownloadOtherErrorString, exception.Message));
-                                        packageDownloadFailedContentList.Add(exception is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(exception.HResult, 16).ToUpper()) : NotAvailableString);
+                                        packageDownloadFailedContentList.Add(exception is not null ? string.Format(PackageDownloadFailedContent4String, "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                         return string.Join(Environment.NewLine, packageDownloadFailedContentList);
                                     });
 
@@ -1216,7 +1216,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageInstallFailedContentList = [];
                                                     packageInstallFailedContentList.Add(PackageInstallFailedContent1String);
                                                     packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2String, WinGetPackageInstallBlockedByPolicyString) : string.Format(PackageInstallFailedContent3String, WinGetPackageInstallBlockedByPolicyString, installResult.ExtendedErrorCode.Message));
-                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageInstallFailedContentList);
                                                 });
 
@@ -1244,7 +1244,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageInstallFailedContentList = [];
                                                     packageInstallFailedContentList.Add(PackageInstallFailedContent1String);
                                                     packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2String, WinGetPackageInstallCatalogErrorString) : string.Format(PackageInstallFailedContent3String, WinGetPackageInstallCatalogErrorString, installResult.ExtendedErrorCode.Message));
-                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageInstallFailedContentList);
                                                 });
 
@@ -1272,7 +1272,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageInstallFailedContentList = [];
                                                     packageInstallFailedContentList.Add(PackageInstallFailedContent1String);
                                                     packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2String, WinGetPackageInstallInternalErrorString) : string.Format(PackageInstallFailedContent3String, WinGetPackageInstallInternalErrorString, installResult.ExtendedErrorCode.Message));
-                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageInstallFailedContentList);
                                                 });
 
@@ -1300,7 +1300,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageInstallFailedContentList = [];
                                                     packageInstallFailedContentList.Add(PackageInstallFailedContent1String);
                                                     packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2String, WinGetPackageInstallInvalidOptionsString) : string.Format(PackageInstallFailedContent3String, WinGetPackageInstallInvalidOptionsString, installResult.ExtendedErrorCode.Message));
-                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageInstallFailedContentList);
                                                 });
 
@@ -1328,7 +1328,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageInstallFailedContentList = [];
                                                     packageInstallFailedContentList.Add(PackageInstallFailedContent1String);
                                                     packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2String, WinGetPackageInstallDownloadErrorString) : string.Format(PackageInstallFailedContent3String, WinGetPackageInstallDownloadErrorString, installResult.ExtendedErrorCode.Message));
-                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageInstallFailedContentList);
                                                 });
 
@@ -1356,7 +1356,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageInstallFailedContentList = [];
                                                     packageInstallFailedContentList.Add(PackageInstallFailedContent1String);
                                                     packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2String, WinGetPackageInstallErrorString) : string.Format(PackageInstallFailedContent3String, WinGetPackageInstallErrorString, installResult.ExtendedErrorCode.Message));
-                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageInstallFailedContentList);
                                                 });
 
@@ -1384,7 +1384,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageInstallFailedContentList = [];
                                                     packageInstallFailedContentList.Add(PackageInstallFailedContent1String);
                                                     packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2String, WinGetPackageInstallManifestErrorString) : string.Format(PackageInstallFailedContent3String, WinGetPackageInstallManifestErrorString, installResult.ExtendedErrorCode.Message));
-                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageInstallFailedContentList);
                                                 });
 
@@ -1412,7 +1412,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageInstallFailedContentList = [];
                                                     packageInstallFailedContentList.Add(PackageInstallFailedContent1String);
                                                     packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2String, WinGetPackageInstallNoApplicableInstallersString) : string.Format(PackageInstallFailedContent3String, WinGetPackageInstallNoApplicableInstallersString, installResult.ExtendedErrorCode.Message));
-                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageInstallFailedContentList);
                                                 });
 
@@ -1440,7 +1440,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageInstallFailedContentList = [];
                                                     packageInstallFailedContentList.Add(PackageInstallFailedContent1String);
                                                     packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2String, WinGetPackageInstallAgreementsNotAcceptedString) : string.Format(PackageInstallFailedContent3String, WinGetPackageInstallAgreementsNotAcceptedString, installResult.ExtendedErrorCode.Message));
-                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageInstallFailedContentList);
                                                 });
 
@@ -1509,7 +1509,7 @@ namespace GetStoreApp.Views.Pages
                                         List<string> packageInstallFailedContentList = [];
                                         packageInstallFailedContentList.Add(PackageInstallFailedContent1String);
                                         packageInstallFailedContentList.Add(exception is not null ? string.Format(PackageInstallFailedContent2String, WinGetPackageInstallOtherErrorString) : string.Format(PackageInstallFailedContent3String, WinGetPackageInstallOtherErrorString, exception.Message));
-                                        packageInstallFailedContentList.Add(exception is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(exception.HResult, 16).ToUpper()) : NotAvailableString);
+                                        packageInstallFailedContentList.Add(exception is not null ? string.Format(PackageInstallFailedContent4String, "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                         return string.Join(Environment.NewLine, packageInstallFailedContentList);
                                     });
 
@@ -1631,7 +1631,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageUninstallFailedContentList = [];
                                                     packageUninstallFailedContentList.Add(PackageUninstallFailedContent1String);
                                                     packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent2String, WinGetPackageUninstallBlockedByPolicyString) : string.Format(PackageUninstallFailedContent3String, WinGetPackageUninstallBlockedByPolicyString, uninstallResult.ExtendedErrorCode.Message));
-                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4String, "0x" + Convert.ToString(uninstallResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4String, "0x" + Convert.ToString(uninstallResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageUninstallFailedContentList);
                                                 });
 
@@ -1659,7 +1659,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageUninstallFailedContentList = [];
                                                     packageUninstallFailedContentList.Add(PackageUninstallFailedContent1String);
                                                     packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent2String, WinGetPackageUninstallCatalogErrorString) : string.Format(PackageUninstallFailedContent3String, WinGetPackageUninstallCatalogErrorString, uninstallResult.ExtendedErrorCode.Message));
-                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4String, "0x" + Convert.ToString(uninstallResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4String, "0x" + Convert.ToString(uninstallResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageUninstallFailedContentList);
                                                 });
 
@@ -1687,7 +1687,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageUninstallFailedContentList = [];
                                                     packageUninstallFailedContentList.Add(PackageUninstallFailedContent1String);
                                                     packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent2String, WinGetPackageUninstallInternalErrorString) : string.Format(PackageUninstallFailedContent3String, WinGetPackageUninstallInternalErrorString, uninstallResult.ExtendedErrorCode.Message));
-                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4String, "0x" + Convert.ToString(uninstallResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4String, "0x" + Convert.ToString(uninstallResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageUninstallFailedContentList);
                                                 });
 
@@ -1715,7 +1715,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageUninstallFailedContentList = [];
                                                     packageUninstallFailedContentList.Add(PackageUninstallFailedContent1String);
                                                     packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent2String, WinGetPackageUninstallInvalidOptionsString) : string.Format(PackageUninstallFailedContent3String, WinGetPackageUninstallInvalidOptionsString, uninstallResult.ExtendedErrorCode.Message));
-                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4String, "0x" + Convert.ToString(uninstallResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4String, "0x" + Convert.ToString(uninstallResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageUninstallFailedContentList);
                                                 });
 
@@ -1743,7 +1743,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageUninstallFailedContentList = [];
                                                     packageUninstallFailedContentList.Add(PackageUninstallFailedContent1String);
                                                     packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent2String, WinGetPackageUninstallErrorString) : string.Format(PackageUninstallFailedContent3String, WinGetPackageUninstallErrorString, uninstallResult.ExtendedErrorCode.Message));
-                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4String, "0x" + Convert.ToString(uninstallResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4String, "0x" + Convert.ToString(uninstallResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageUninstallFailedContentList);
                                                 });
 
@@ -1771,7 +1771,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageUninstallFailedContentList = [];
                                                     packageUninstallFailedContentList.Add(PackageUninstallFailedContent1String);
                                                     packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent2String, WinGetPackageUninstallManifestErrorString) : string.Format(PackageUninstallFailedContent3String, WinGetPackageUninstallManifestErrorString, uninstallResult.ExtendedErrorCode.Message));
-                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4String, "0x" + Convert.ToString(uninstallResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4String, "0x" + Convert.ToString(uninstallResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageUninstallFailedContentList);
                                                 });
 
@@ -1820,7 +1820,7 @@ namespace GetStoreApp.Views.Pages
                                     List<string> packageUninstallFailedContentList = [];
                                     packageUninstallFailedContentList.Add(PackageUninstallFailedContent1String);
                                     packageUninstallFailedContentList.Add(exception is not null ? string.Format(PackageUninstallFailedContent2String, WinGetPackageUninstallOtherErrorString) : string.Format(PackageUninstallFailedContent3String, WinGetPackageUninstallOtherErrorString, exception.Message));
-                                    packageUninstallFailedContentList.Add(exception is not null ? string.Format(PackageUninstallFailedContent4String, "0x" + Convert.ToString(exception.HResult, 16).ToUpper()) : NotAvailableString);
+                                    packageUninstallFailedContentList.Add(exception is not null ? string.Format(PackageUninstallFailedContent4String, "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                     return string.Join(Environment.NewLine, packageUninstallFailedContentList);
                                 });
 
@@ -1939,7 +1939,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageRepairFailedContentList = [];
                                                     packageRepairFailedContentList.Add(PackageRepairFailedContent1String);
                                                     packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent2String, WinGetPackageRepairBlockedByPolicyString) : string.Format(PackageRepairFailedContent3String, WinGetPackageRepairBlockedByPolicyString, repairResult.ExtendedErrorCode.Message));
-                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(repairResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(repairResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageRepairFailedContentList);
                                                 });
 
@@ -1967,7 +1967,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageRepairFailedContentList = [];
                                                     packageRepairFailedContentList.Add(PackageRepairFailedContent1String);
                                                     packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent2String, WinGetPackageRepairCatalogErrorString) : string.Format(PackageRepairFailedContent3String, WinGetPackageRepairCatalogErrorString, repairResult.ExtendedErrorCode.Message));
-                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(repairResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(repairResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageRepairFailedContentList);
                                                 });
 
@@ -1995,7 +1995,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageRepairFailedContentList = [];
                                                     packageRepairFailedContentList.Add(PackageRepairFailedContent1String);
                                                     packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent2String, WinGetPackageRepairInternalErrorString) : string.Format(PackageRepairFailedContent3String, WinGetPackageRepairInternalErrorString, repairResult.ExtendedErrorCode.Message));
-                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(repairResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(repairResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageRepairFailedContentList);
                                                 });
 
@@ -2023,7 +2023,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageRepairFailedContentList = [];
                                                     packageRepairFailedContentList.Add(PackageRepairFailedContent1String);
                                                     packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent2String, WinGetPackageRepairInvalidOptionsString) : string.Format(PackageRepairFailedContent3String, WinGetPackageRepairInvalidOptionsString, repairResult.ExtendedErrorCode.Message));
-                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(repairResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(repairResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageRepairFailedContentList);
                                                 });
 
@@ -2051,7 +2051,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageRepairFailedContentList = [];
                                                     packageRepairFailedContentList.Add(PackageRepairFailedContent1String);
                                                     packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent2String, WinGetPackageRepairErrorString) : string.Format(PackageRepairFailedContent3String, WinGetPackageRepairErrorString, repairResult.ExtendedErrorCode.Message));
-                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(repairResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(repairResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageRepairFailedContentList);
                                                 });
 
@@ -2079,7 +2079,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageRepairFailedContentList = [];
                                                     packageRepairFailedContentList.Add(PackageRepairFailedContent1String);
                                                     packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent2String, WinGetPackageRepairManifestErrorString) : string.Format(PackageRepairFailedContent3String, WinGetPackageRepairManifestErrorString, repairResult.ExtendedErrorCode.Message));
-                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(repairResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(repairResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageRepairFailedContentList);
                                                 });
 
@@ -2107,7 +2107,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageRepairFailedContentList = [];
                                                     packageRepairFailedContentList.Add(PackageRepairFailedContent1String);
                                                     packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent2String, WinGetPackageRepairNoApplicableRepairerString) : string.Format(PackageRepairFailedContent3String, WinGetPackageRepairNoApplicableRepairerString, repairResult.ExtendedErrorCode.Message));
-                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(repairResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(repairResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageRepairFailedContentList);
                                                 });
 
@@ -2135,7 +2135,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageRepairFailedContentList = [];
                                                     packageRepairFailedContentList.Add(PackageRepairFailedContent1String);
                                                     packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent2String, WinGetPackageRepairAgreementsNotAcceptedString) : string.Format(PackageRepairFailedContent3String, WinGetPackageRepairAgreementsNotAcceptedString, repairResult.ExtendedErrorCode.Message));
-                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(repairResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(repairResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageRepairFailedContentList);
                                                 });
 
@@ -2184,7 +2184,7 @@ namespace GetStoreApp.Views.Pages
                                     List<string> packageRepairFailedContentList = [];
                                     packageRepairFailedContentList.Add(PackageRepairFailedContent1String);
                                     packageRepairFailedContentList.Add(exception is not null ? string.Format(PackageRepairFailedContent2String, WinGetPackageRepairOtherErrorString) : string.Format(PackageRepairFailedContent3String, WinGetPackageRepairOtherErrorString, exception.Message));
-                                    packageRepairFailedContentList.Add(exception is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(exception.HResult, 16).ToUpper()) : NotAvailableString);
+                                    packageRepairFailedContentList.Add(exception is not null ? string.Format(PackageRepairFailedContent4String, "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                     return string.Join(Environment.NewLine, packageRepairFailedContentList);
                                 });
 
@@ -2311,7 +2311,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageUpgradeFailedContentList = [];
                                                     packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1String);
                                                     packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2String, WinGetPackageUpgradeBlockedByPolicyString) : string.Format(PackageUpgradeFailedContent3String, WinGetPackageUpgradeBlockedByPolicyString, installResult.ExtendedErrorCode.Message));
-                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
                                                 });
 
@@ -2339,7 +2339,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageUpgradeFailedContentList = [];
                                                     packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1String);
                                                     packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2String, WinGetPackageUpgradeCatalogErrorString) : string.Format(PackageUpgradeFailedContent3String, WinGetPackageUpgradeCatalogErrorString, installResult.ExtendedErrorCode.Message));
-                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
                                                 });
 
@@ -2367,7 +2367,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageUpgradeFailedContentList = [];
                                                     packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1String);
                                                     packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2String, WinGetPackageUpgradeInternalErrorString) : string.Format(PackageUpgradeFailedContent3String, WinGetPackageUpgradeInternalErrorString, installResult.ExtendedErrorCode.Message));
-                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
                                                 });
 
@@ -2395,7 +2395,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageUpgradeFailedContentList = [];
                                                     packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1String);
                                                     packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2String, WinGetPackageUpgradeInvalidOptionsString) : string.Format(PackageUpgradeFailedContent3String, WinGetPackageUpgradeInvalidOptionsString, installResult.ExtendedErrorCode.Message));
-                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
                                                 });
 
@@ -2423,7 +2423,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageUpgradeFailedContentList = [];
                                                     packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1String);
                                                     packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2String, WinGetPackageUpgradeDownloadErrorString) : string.Format(PackageUpgradeFailedContent3String, WinGetPackageUpgradeDownloadErrorString, installResult.ExtendedErrorCode.Message));
-                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
                                                 });
 
@@ -2451,7 +2451,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageUpgradeFailedContentList = [];
                                                     packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1String);
                                                     packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2String, WinGetPackageUpgradeErrorString) : string.Format(PackageUpgradeFailedContent3String, WinGetPackageUpgradeErrorString, installResult.ExtendedErrorCode.Message));
-                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
                                                 });
 
@@ -2479,7 +2479,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageUpgradeFailedContentList = [];
                                                     packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1String);
                                                     packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2String, WinGetPackageUpgradeManifestErrorString) : string.Format(PackageUpgradeFailedContent3String, WinGetPackageUpgradeManifestErrorString, installResult.ExtendedErrorCode.Message));
-                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
                                                 });
 
@@ -2507,7 +2507,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageUpgradeFailedContentList = [];
                                                     packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1String);
                                                     packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2String, WinGetPackageUpgradeNoApplicableInstallersString) : string.Format(PackageUpgradeFailedContent3String, WinGetPackageUpgradeNoApplicableInstallersString, installResult.ExtendedErrorCode.Message));
-                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
                                                 });
 
@@ -2535,7 +2535,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageUpgradeFailedContentList = [];
                                                     packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1String);
                                                     packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2String, WinGetPackageUpgradeNoApplicableUpgradeString) : string.Format(PackageUpgradeFailedContent3String, WinGetPackageUpgradeNoApplicableUpgradeString, installResult.ExtendedErrorCode.Message));
-                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
                                                 });
 
@@ -2563,7 +2563,7 @@ namespace GetStoreApp.Views.Pages
                                                     List<string> packageUpgradeFailedContentList = [];
                                                     packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1String);
                                                     packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2String, WinGetPackageUpgradeAgreementsNotAcceptedString) : string.Format(PackageUpgradeFailedContent3String, WinGetPackageUpgradeAgreementsNotAcceptedString, installResult.ExtendedErrorCode.Message));
-                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpper()) : NotAvailableString);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(installResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                                     return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
                                                 });
 
@@ -2632,7 +2632,7 @@ namespace GetStoreApp.Views.Pages
                                         List<string> packageUpgradeFailedContentList = [];
                                         packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1String);
                                         packageUpgradeFailedContentList.Add(exception is not null ? string.Format(PackageUpgradeFailedContent2String, WinGetPackageUpgradeOtherErrorString) : string.Format(PackageUpgradeFailedContent3String, WinGetPackageUpgradeOtherErrorString, exception.Message));
-                                        packageUpgradeFailedContentList.Add(exception is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(exception.HResult, 16).ToUpper()) : NotAvailableString);
+                                        packageUpgradeFailedContentList.Add(exception is not null ? string.Format(PackageUpgradeFailedContent4String, "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant()) : NotAvailableString);
                                         return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
                                     });
 

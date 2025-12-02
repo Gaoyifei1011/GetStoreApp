@@ -586,7 +586,7 @@ namespace GetStoreApp.Views.Pages
                 AppInstallState.Canceled => CanceledString,
                 AppInstallState.Completed => CompletedString,
                 AppInstallState.Downloading => string.Format(DownloadingString, appInstallStatus.PercentComplete),
-                AppInstallState.Error => string.Format(ErrorString, "0x" + Convert.ToString(appInstallStatus.ErrorCode.HResult, 16).ToUpper()),
+                AppInstallState.Error => string.Format(ErrorString, "0x" + Convert.ToString(appInstallStatus.ErrorCode.HResult, 16).ToUpperInvariant()),
                 AppInstallState.Installing => string.Format(InstallingString, appInstallStatus.PercentComplete),
                 AppInstallState.Paused => PausedString,
                 AppInstallState.PausedLowBattery => PausedString,

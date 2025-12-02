@@ -170,7 +170,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(SetDefaultFailed2String);
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                            string.Format(SetDefaultFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
+                            string.Format(SetDefaultFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
                             string.Format(SetDefaultFailed4String, exception.Message)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -230,7 +230,7 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(MountFailed2String);
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
-                                string.Format(MountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
+                                string.Format(MountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
                                 string.Format(MountFailed4String, exception.Message)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -249,7 +249,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(MountFailed2String);
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                            string.Format(MountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
+                            string.Format(MountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
                                 string.Format(MountFailed4String, exception.Message)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -309,7 +309,7 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(DismountFailed2String);
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
-                                string.Format(DismountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
+                                string.Format(DismountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
                                 string.Format(DismountFailed4String, exception.Message)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -328,7 +328,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(DismountFailed2String);
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                            string.Format(DismountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
+                            string.Format(DismountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
                                 string.Format(DismountFailed4String, exception.Message)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -398,7 +398,7 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(RemoveFailed2String);
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
-                                string.Format(RemoveFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
+                                string.Format(RemoveFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
                                 string.Format(RemoveFailed4String, exception.Message)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -417,7 +417,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(RemoveFailed2String);
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                            string.Format(RemoveFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
+                            string.Format(RemoveFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
                                 string.Format(RemoveFailed4String, exception.Message)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -580,7 +580,7 @@ namespace GetStoreApp.Views.Pages
             else
             {
                 PackageVolumeResultKind = PackageVolumeResultKind.Failed;
-                PackageVolumeFailedContent = string.Format(PackageVolumeFailedString, exception is not null ? exception.Message : NotAvailableString, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString);
+                PackageVolumeFailedContent = string.Format(PackageVolumeFailedString, exception is not null ? exception.Message : NotAvailableString, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString);
             }
         }
 

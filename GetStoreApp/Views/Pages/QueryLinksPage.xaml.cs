@@ -1230,7 +1230,7 @@ namespace GetStoreApp.Views.Pages
                         if (requestState is InfoBarSeverity.Success)
                         {
                             HtmlParseHelper.InitializeParseData(httpRequestData);
-                            string categoryId = HtmlParseHelper.HtmlParseCID().ToUpper();
+                            string categoryId = HtmlParseHelper.HtmlParseCID().ToUpperInvariant();
                             queryLinksResult.categoryId = categoryId;
                             List<QueryLinksModel> queryLinksList = [];
 

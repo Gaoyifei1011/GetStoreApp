@@ -1715,7 +1715,7 @@ namespace GetStoreAppInstaller.Views.Windows
                     }
                     else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                     {
-                        string errorCode = packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : NotAvailableString;
+                        string errorCode = packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpperInvariant() : NotAvailableString;
                         string errorMessage = packageDeploymentResult.ErrorText;
 
                         // 更新应用安装状态
@@ -1742,7 +1742,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 }
                 else
                 {
-                    string errorCode = exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString;
+                    string errorCode = exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString;
                     string errorMessage = exception is not null ? exception.Message : NotAvailableString;
 
                     // 更新应用安装状态
@@ -3624,7 +3624,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 {
                     foreach (string capability in packageInformation.CapabilitiesList)
                     {
-                        if (CapabilityDict.TryGetValue(capability.ToLower(), out string capabilityValue))
+                        if (CapabilityDict.TryGetValue(capability.ToLowerInvariant(), out string capabilityValue))
                         {
                             CapabilitiesCollection.Add(new CapabilityModel()
                             {

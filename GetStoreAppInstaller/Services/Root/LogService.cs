@@ -49,7 +49,7 @@ namespace GetStoreAppInstaller.Services.Root
                     exceptionFields.AddString("LogLevel", Convert.ToString(logLevel));
                     exceptionFields.AddString("HelpLink", string.IsNullOrEmpty(exception.HelpLink) ? notavailable : exception.HelpLink.Replace('\r', ' ').Replace('\n', ' '));
                     exceptionFields.AddString("Message", string.IsNullOrEmpty(exception.Message) ? notavailable : exception.Message.Replace('\r', ' ').Replace('\n', ' '));
-                    exceptionFields.AddString("HResult", "0x" + Convert.ToString(exception.HResult, 16).ToUpper());
+                    exceptionFields.AddString("HResult", "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant());
                     exceptionFields.AddString("Source", string.IsNullOrEmpty(exception.Source) ? notavailable : exception.Source.Replace('\r', ' ').Replace('\n', ' '));
                     exceptionFields.AddString("StackTrace", string.IsNullOrEmpty(exception.StackTrace) ? notavailable : exception.StackTrace.Replace('\r', ' ').Replace('\n', ' '));
 

@@ -75,8 +75,7 @@ namespace GetStoreApp.Helpers.Root
                     }
                 }
 
-                string hashText = CryptographicBuffer.EncodeToHexString(buffHash.GetValueAndReset()).ToLower();
-
+                string hashText = CryptographicBuffer.EncodeToHexString(buffHash.GetValueAndReset()).ToLowerInvariant();
                 inputStream.Dispose();
                 stream.Dispose();
 

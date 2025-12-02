@@ -318,7 +318,7 @@ namespace GetStoreApp.Views.Pages
 
                                         await Task.Run(() =>
                                         {
-                                            string errorCode = packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : NotAvailableString;
+                                            string errorCode = packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpperInvariant() : NotAvailableString;
                                             string errorMessage = packageDeploymentResult.ErrorText;
 
                                             // 显示安装失败通知
@@ -340,7 +340,7 @@ namespace GetStoreApp.Views.Pages
 
                                     await Task.Run(() =>
                                     {
-                                        string errorCode = exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString;
+                                        string errorCode = exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString;
                                         string errorMessage = exception is not null ? exception.Message : NotAvailableString;
 
                                         // 显示安装失败通知

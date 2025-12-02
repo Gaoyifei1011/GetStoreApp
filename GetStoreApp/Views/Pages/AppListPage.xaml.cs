@@ -459,7 +459,7 @@ namespace GetStoreApp.Views.Pages
                                     appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                                     {
                                         MoveFailed3String,
-                                        string.Format(MoveFailed4String, deploymentResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(deploymentResult.ExtendedErrorCode.HResult, 16).ToUpper() : NotAvailableString),
+                                        string.Format(MoveFailed4String, deploymentResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(deploymentResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString),
                                         string.Format(MoveFailed5String, deploymentResult.ErrorText)
                                     }));
                                     AppNotificationButton openSettingsButton = new(OpenSettingsString);
@@ -484,7 +484,7 @@ namespace GetStoreApp.Views.Pages
                                 appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                                 {
                                     MoveFailed3String,
-                                    string.Format(MoveFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
+                                    string.Format(MoveFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
                                     string.Format(MoveFailed5String, exception.Message)
                                 }));
                                 AppNotificationButton openSettingsButton = new(OpenSettingsString);
@@ -563,7 +563,7 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
                                 RepairFailed3String,
-                                string.Format(RepairFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : NotAvailableString),
+                                string.Format(RepairFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpperInvariant() : NotAvailableString),
                                 string.Format(RepairFailed5String, packageDeploymentResult.ErrorText)
                             }));
                             AppNotificationButton openSettingsButton = new(OpenSettingsString);
@@ -588,7 +588,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
                             RepairFailed3String,
-                            string.Format(RepairFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
+                            string.Format(RepairFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
                             string.Format(RepairFailed5String, exception.Message)
                         }));
                         AppNotificationButton openSettingsButton = new(OpenSettingsString);
@@ -660,7 +660,7 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
                                 ResetFailed3String,
-                                string.Format(ResetFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : NotAvailableString),
+                                string.Format(ResetFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpperInvariant() : NotAvailableString),
                                 string.Format(ResetFailed5String, packageDeploymentResult.ErrorText)
                             }));
                             AppNotificationButton openSettingsButton = new(OpenSettingsString);
@@ -685,7 +685,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
                             ResetFailed3String,
-                            string.Format(ResetFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
+                            string.Format(ResetFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
                             string.Format(ResetFailed5String, exception.Message)
                         }));
                         AppNotificationButton openSettingsButton = new(OpenSettingsString);
@@ -775,7 +775,7 @@ namespace GetStoreApp.Views.Pages
                                 appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                                 {
                                     UninstallFailed3String,
-                                    string.Format(UninstallFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpper() : NotAvailableString),
+                                    string.Format(UninstallFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpperInvariant() : NotAvailableString),
                                     string.Format(UninstallFailed5String, packageDeploymentResult.ErrorText)
                                 }));
                                 AppNotificationButton openSettingsButton = new(OpenSettingsString);
@@ -800,7 +800,7 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
                                 UninstallFailed3String,
-                                string.Format(UninstallFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpper() : NotAvailableString),
+                                string.Format(UninstallFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
                                 string.Format(UninstallFailed5String, exception.Message)
                             }));
                             AppNotificationButton openSettingsButton = new(OpenSettingsString);

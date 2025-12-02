@@ -460,7 +460,7 @@ namespace GetStoreApp.Helpers.Store
                                 string fileSize = await GetNonAppxPackageFileSizeAsync(installerUrl);
                                 string fileSizeString = VolumeSizeHelper.ConvertVolumeSizeToString(double.TryParse(fileSize, out double size) ? size : 0);
 
-                                if (string.IsNullOrEmpty(installerType) || installerUrl.ToLower().EndsWith(".exe") || installerUrl.ToLower().EndsWith(".msi"))
+                                if (string.IsNullOrEmpty(installerType) || installerUrl.ToLowerInvariant().EndsWith(".exe") || installerUrl.ToLowerInvariant().EndsWith(".msi"))
                                 {
                                     nonAppxPackagesLock.Enter();
 

@@ -683,13 +683,13 @@ namespace GetStoreApp.Views.Pages
                     else
                     {
                         InstalledAppsResultKind = InstalledAppsResultKind.Failed;
-                        InstalledFailedContent = string.Format(InstalledAppsFailedString, InstalledFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpper() : NotAvailableString);
+                        InstalledFailedContent = string.Format(InstalledAppsFailedString, InstalledFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString);
                     }
                 }
                 else
                 {
                     InstalledAppsResultKind = InstalledAppsResultKind.Failed;
-                    InstalledFailedContent = string.Format(InstalledAppsFailedString, InstalledCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpper() : NotAvailableString);
+                    InstalledFailedContent = string.Format(InstalledAppsFailedString, InstalledCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString);
                 }
             }
             else
