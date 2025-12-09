@@ -609,7 +609,7 @@ namespace GetStoreApp.Views.Windows
                 string displayName = textBlock.Text;
                 string tag = Convert.ToString(textBlock.Tag);
 
-                (LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully) pinnedRsult = await Task.Run(async () =>
+                (LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully) pinnedResult = await Task.Run(async () =>
                 {
                     LimitedAccessFeatureStatus limitedAccessFeatureStatus = LimitedAccessFeatureStatus.Unknown;
                     bool isPinnedSuccessfully = false;
@@ -661,9 +661,9 @@ namespace GetStoreApp.Views.Windows
                     return ValueTuple.Create(limitedAccessFeatureStatus, isPinnedSuccessfully);
                 });
 
-                if (pinnedRsult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available || pinnedRsult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.AvailableWithoutToken)
+                if (pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available || pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.AvailableWithoutToken)
                 {
-                    await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedRsult.isPinnedSuccessfully));
+                    await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedResult.isPinnedSuccessfully));
                 }
             }
         }

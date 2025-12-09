@@ -441,7 +441,7 @@
                                             CommandParameter="{x:Bind}"
                                             GroupName="LanguageRadioGroup"
                                             IsChecked="{x:Bind IsChecked, Mode=OneWay}"
-                                            Text="{x:Bind LangaugeInfo.Value}" />
+                                            Text="{x:Bind LanguageInfo.Value}" />
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>

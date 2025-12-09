@@ -103,8 +103,8 @@ namespace GetStoreApp.Services.Root
                 {
                     XmlDocument notificationDocument = new();
                     notificationDocument.LoadXml(appNotification.Payload);
-                    ToastNotification notificaiton = new(notificationDocument);
-                    AppToastNotifier.Show(notificaiton);
+                    ToastNotification toastNotification = new(notificationDocument);
+                    AppToastNotifier.Show(toastNotification);
                 }
             }
             catch (Exception e)

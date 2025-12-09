@@ -186,7 +186,7 @@ namespace GetStoreApp.Views.Pages
                     AppLanguage = languageItem;
                     LanguageCollection.Add(new LanguageModel()
                     {
-                        LangaugeInfo = languageItem,
+                        LanguageInfo = languageItem,
                         IsChecked = true
                     });
                 }
@@ -194,7 +194,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     LanguageCollection.Add(new LanguageModel()
                     {
-                        LangaugeInfo = languageItem,
+                        LanguageInfo = languageItem,
                         IsChecked = false
                     });
                 }
@@ -222,9 +222,9 @@ namespace GetStoreApp.Views.Pages
                 foreach (LanguageModel languageItem in LanguageCollection)
                 {
                     languageItem.IsChecked = false;
-                    if (string.Equals(language.LangaugeInfo.Key, languageItem.LangaugeInfo.Key))
+                    if (string.Equals(language.LanguageInfo.Key, languageItem.LanguageInfo.Key))
                     {
-                        AppLanguage = languageItem.LangaugeInfo;
+                        AppLanguage = languageItem.LanguageInfo;
                         languageItem.IsChecked = true;
                     }
                 }

@@ -428,7 +428,7 @@
                             Grid.Column="1"
                             HorizontalAlignment="Left"
                             IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/VertifyIsOK')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/VerifyIsOK')}"
                             TextWrapping="Wrap" />
 
                         <TextBlock
@@ -436,7 +436,7 @@
                             Grid.Column="2"
                             HorizontalAlignment="Left"
                             IsTextSelectionEnabled="True"
-                            Text="{x:Bind VertifyIsOK, Mode=OneWay}"
+                            Text="{x:Bind VerifyIsOK, Mode=OneWay}"
                             TextWrapping="Wrap" />
                     </Grid>
                 </Expander.Content>

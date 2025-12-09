@@ -321,25 +321,25 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 检查应用是否正在更新中
         /// </summary>
-        private bool GetIsNotUpdating(UpdateAppResultKind updateAppReusltKind)
+        private bool GetIsNotUpdating(UpdateAppResultKind updateAppResultKind)
         {
-            return !(updateAppReusltKind is UpdateAppResultKind.Pending || UpdateAppResultKind is UpdateAppResultKind.Downloading || UpdateAppResultKind is UpdateAppResultKind.Canceling || UpdateAppResultKind is UpdateAppResultKind.Deploying);
+            return !(updateAppResultKind is UpdateAppResultKind.Pending || UpdateAppResultKind is UpdateAppResultKind.Downloading || UpdateAppResultKind is UpdateAppResultKind.Canceling || UpdateAppResultKind is UpdateAppResultKind.Deploying);
         }
 
         /// <summary>
         /// 检查应用是否正在更新中
         /// </summary>
-        private Visibility GetUpdateProgressState(UpdateAppResultKind updateAppReusltKind)
+        private Visibility GetUpdateProgressState(UpdateAppResultKind updateAppResultKind)
         {
-            return (updateAppReusltKind is UpdateAppResultKind.Pending || UpdateAppResultKind is UpdateAppResultKind.Downloading || UpdateAppResultKind is UpdateAppResultKind.Canceling || UpdateAppResultKind is UpdateAppResultKind.Deploying) ? Visibility.Visible : Visibility.Collapsed;
+            return (updateAppResultKind is UpdateAppResultKind.Pending || UpdateAppResultKind is UpdateAppResultKind.Downloading || UpdateAppResultKind is UpdateAppResultKind.Canceling || UpdateAppResultKind is UpdateAppResultKind.Deploying) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
         /// 检查应用是否正在取消更新中
         /// </summary>
-        private bool GetIsNotCanceling(UpdateAppResultKind updateAppReusltKind)
+        private bool GetIsNotCanceling(UpdateAppResultKind updateAppResultKind)
         {
-            return updateAppReusltKind is not UpdateAppResultKind.Canceling;
+            return updateAppResultKind is not UpdateAppResultKind.Canceling;
         }
     }
 }

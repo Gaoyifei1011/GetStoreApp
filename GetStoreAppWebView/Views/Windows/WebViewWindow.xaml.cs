@@ -53,8 +53,6 @@ namespace GetStoreAppWebView.Views.Windows
         private readonly OverlappedPresenter overlappedPresenter;
         private readonly SUBCLASSPROC webViewWindowSubClassProc;
 
-        private bool isDialogOpening;
-
         private string _windowTitle;
 
         public string WindowTitle

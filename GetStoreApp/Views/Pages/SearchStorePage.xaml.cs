@@ -115,18 +115,18 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _resultCotnrolVisable;
+        private bool _resultControlVisible;
 
-        public bool ResultControlVisable
+        public bool ResultControlVisible
         {
-            get { return _resultCotnrolVisable; }
+            get { return _resultControlVisible; }
 
             set
             {
-                if (!Equals(_resultCotnrolVisable, value))
+                if (!Equals(_resultControlVisible, value))
                 {
-                    _resultCotnrolVisable = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResultControlVisable)));
+                    _resultControlVisible = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResultControlVisible)));
                 }
             }
         }
@@ -324,7 +324,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     string searchText = SearchText;
                     string generatedContent = SearchStoreHelper.GenerateSearchString(searchText);
-                    return await SearchStoreHelper.SerachStoreAppsAsync(generatedContent);
+                    return await SearchStoreHelper.SearchStoreAppsAsync(generatedContent);
                 });
 
                 // 获取成功
@@ -335,7 +335,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         IsSearchingStore = false;
                         SetControlState(InfoBarSeverity.Success);
-                        ResultControlVisable = true;
+                        ResultControlVisible = true;
                         UpdateHistory(SearchText);
                         foreach (HistoryModel historyItem in HistoryCollection)
                         {
@@ -353,7 +353,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         IsSearchingStore = false;
                         SetControlState(InfoBarSeverity.Warning);
-                        ResultControlVisable = false;
+                        ResultControlVisible = false;
                         foreach (HistoryModel historyItem in HistoryCollection)
                         {
                             historyItem.IsQuerying = false;
@@ -365,7 +365,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     IsSearchingStore = false;
                     SetControlState(InfoBarSeverity.Error);
-                    ResultControlVisable = false;
+                    ResultControlVisible = false;
                     foreach (HistoryModel historyItem in HistoryCollection)
                     {
                         historyItem.IsQuerying = false;

@@ -37,9 +37,9 @@ namespace GetStoreApp.Views.Pages
     public sealed partial class QueryLinksPage : Page, INotifyPropertyChanged
     {
         private readonly string FastString = ResourceService.GetLocalized("QueryLinks/Fast");
-        private readonly string QueryedAppDescriptionString = ResourceService.GetLocalized("QueryLinks/QueryedAppDescription");
-        private readonly string QueryedAppNameString = ResourceService.GetLocalized("QueryLinks/QueryedAppName");
-        private readonly string QueryedAppPublisherString = ResourceService.GetLocalized("QueryLinks/QueryedAppPublisher");
+        private readonly string QueriedAppDescriptionString = ResourceService.GetLocalized("QueryLinks/QueriedAppDescription");
+        private readonly string QueriedAppNameString = ResourceService.GetLocalized("QueryLinks/QueriedAppName");
+        private readonly string QueriedAppPublisherString = ResourceService.GetLocalized("QueryLinks/QueriedAppPublisher");
         private readonly string QueryLinksCountInfoString = ResourceService.GetLocalized("QueryLinks/QueryLinksCountInfo");
         private readonly string InfoBarErrorString = ResourceService.GetLocalized("QueryLinks/InfoBarError");
         private readonly string InfoBarGettingString = ResourceService.GetLocalized("QueryLinks/InfoBarGetting");
@@ -201,18 +201,18 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _resultCotnrolVisable;
+        private bool _resultControlVisible;
 
-        public bool ResultControlVisable
+        public bool ResultControlVisible
         {
-            get { return _resultCotnrolVisable; }
+            get { return _resultControlVisible; }
 
             set
             {
-                if (!Equals(_resultCotnrolVisable, value))
+                if (!Equals(_resultControlVisible, value))
                 {
-                    _resultCotnrolVisable = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResultControlVisable)));
+                    _resultControlVisible = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResultControlVisible)));
                 }
             }
         }
@@ -416,7 +416,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 填入到文本框
         /// </summary>
-        private void OnFillinExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnFillInExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is HistoryModel history && MainWindow.Current.GetFrameContent() is StorePage storePage)
             {
@@ -618,14 +618,14 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 复制应用信息
         /// </summary>
-        private async void OnCopyQueryedAppInfoClicked(object sender, RoutedEventArgs args)
+        private async void OnCopyQueriedAppInfoClicked(object sender, RoutedEventArgs args)
         {
             string appInformationCopyString = await Task.Run(() =>
             {
                 List<string> appInformationCopyStringList = [];
-                appInformationCopyStringList.Add(QueryedAppNameString + AppInfo.Name);
-                appInformationCopyStringList.Add(QueryedAppPublisherString + AppInfo.Publisher);
-                appInformationCopyStringList.Add(QueryedAppDescriptionString);
+                appInformationCopyStringList.Add(QueriedAppNameString + AppInfo.Name);
+                appInformationCopyStringList.Add(QueriedAppPublisherString + AppInfo.Publisher);
+                appInformationCopyStringList.Add(QueriedAppDescriptionString);
                 appInformationCopyStringList.Add(AppInfo.Description);
 
                 return string.Join(Environment.NewLine, appInformationCopyStringList);
@@ -1162,7 +1162,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             UpdateHistory(appInfoItem.Name, typeIndex, channelIndex, link);
                             SetControlState(InfoBarSeverity.Success);
-                            ResultControlVisable = true;
+                            ResultControlVisible = true;
                             IsAppInfoVisible = true;
                             IsPackagedApp = isPackagedApp;
 
@@ -1194,7 +1194,7 @@ namespace GetStoreApp.Views.Pages
                         else
                         {
                             SetControlState(InfoBarSeverity.Warning);
-                            ResultControlVisable = false;
+                            ResultControlVisible = false;
                             IsAppInfoVisible = false;
                         }
                     }
@@ -1202,7 +1202,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         IsQueryingLinks = false;
                         SetControlState(InfoBarSeverity.Error);
-                        ResultControlVisable = false;
+                        ResultControlVisible = false;
                         foreach (HistoryModel historyItem in HistoryCollection)
                         {
                             historyItem.IsQuerying = false;
@@ -1285,7 +1285,7 @@ namespace GetStoreApp.Views.Pages
 
                         UpdateHistory(categoryId, typeIndex, channelIndex, link);
                         SetControlState(requestState);
-                        ResultControlVisable = true;
+                        ResultControlVisible = true;
 
                         queryLinksLock.Enter();
 
@@ -1314,7 +1314,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         IsQueryingLinks = false;
                         SetControlState(requestState);
-                        ResultControlVisable = false;
+                        ResultControlVisible = false;
                         IsAppInfoVisible = false;
                         foreach (HistoryModel historyItem in HistoryCollection)
                         {
@@ -1325,7 +1325,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         IsQueryingLinks = false;
                         SetControlState(requestState);
-                        ResultControlVisable = false;
+                        ResultControlVisible = false;
                         IsAppInfoVisible = false;
                         foreach (HistoryModel historyItem in HistoryCollection)
                         {

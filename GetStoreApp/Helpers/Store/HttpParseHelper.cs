@@ -21,7 +21,7 @@ namespace GetStoreApp.Helpers.Store
         private static partial Regex NonPackagedAppRegex { get; }
 
         /// <summary>
-        /// 初始化 HtmlParseService 类时添加 HtmlReqeustHelper 生成的字符串数据
+        /// 初始化 HtmlParseService 类时添加 HtmlRequestHelper 生成的字符串数据
         /// </summary>
         public static void InitializeParseData(RequestModel httpRequestData)
         {

@@ -955,12 +955,12 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        appInformation.VertifyIsOK = package.Package.Status.VerifyIsOK() ? YesString : NoString;
+                        appInformation.VerifyIsOK = package.Package.Status.VerifyIsOK() ? YesString : NoString;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.VertifyIsOK = NotAvailableString;
+                        appInformation.VerifyIsOK = NotAvailableString;
                     }
 
                     try
@@ -985,20 +985,20 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        IReadOnlyList<Package> dependcies = package.Package.Dependencies;
+                        IReadOnlyList<Package> dependencyList = package.Package.Dependencies;
 
-                        if (dependcies.Count > 0)
+                        if (dependencyList.Count > 0)
                         {
-                            for (int index = 0; index < dependcies.Count; index++)
+                            for (int index = 0; index < dependencyList.Count; index++)
                             {
                                 try
                                 {
                                     appInformation.DependenciesList.Add(new PackageModel()
                                     {
-                                        DisplayName = dependcies[index].DisplayName,
-                                        PublisherDisplayName = dependcies[index].PublisherDisplayName,
-                                        Version = Convert.ToString(new Version(dependcies[index].Id.Version.Major, dependcies[index].Id.Version.Minor, dependcies[index].Id.Version.Build, dependcies[index].Id.Version.Revision)),
-                                        Package = dependcies[index]
+                                        DisplayName = dependencyList[index].DisplayName,
+                                        PublisherDisplayName = dependencyList[index].PublisherDisplayName,
+                                        Version = Convert.ToString(new Version(dependencyList[index].Id.Version.Major, dependencyList[index].Id.Version.Minor, dependencyList[index].Id.Version.Build, dependencyList[index].Id.Version.Revision)),
+                                        Package = dependencyList[index]
                                     });
                                 }
                                 catch

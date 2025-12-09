@@ -104,11 +104,11 @@ namespace GetStoreApp.Views.Pages
             {
                 if (ApplicationData.GetForPackageFamily("Microsoft.DesktopAppInstaller_8wekyb3d8bbwe") is ApplicationData applicationData)
                 {
-                    string wingetConfigFilePath = Path.Combine(applicationData.LocalFolder.Path, "settings.json");
+                    string winGetConfigFilePath = Path.Combine(applicationData.LocalFolder.Path, "settings.json");
 
-                    if (File.Exists(wingetConfigFilePath))
+                    if (File.Exists(winGetConfigFilePath))
                     {
-                        await Launcher.LaunchFileAsync(await global::Windows.Storage.StorageFile.GetFileFromPathAsync(wingetConfigFilePath));
+                        await Launcher.LaunchFileAsync(await global::Windows.Storage.StorageFile.GetFileFromPathAsync(winGetConfigFilePath));
                     }
                     else
                     {

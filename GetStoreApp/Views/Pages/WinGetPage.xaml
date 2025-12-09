@@ -279,7 +279,7 @@
                             Grid.Column="3"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Click="{x:Bind OnRemoveFinishedTasklicked}"
+                            Click="{x:Bind OnRemoveFinishedTaskClicked}"
                             IsEnabled="{x:Bind system:Convert.ToBoolean(PackageOperationCollection.Count), Mode=OneWay}"
                             Style="{StaticResource AlternateCloseButtonStyle}">
 

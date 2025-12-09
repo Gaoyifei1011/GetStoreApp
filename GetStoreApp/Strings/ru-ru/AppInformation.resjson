@@ -37,7 +37,7 @@
   "PublisherInformation": "Информация об издателе",
   "ResourceId": "ID ресурса",
   "SignatureKind": "Тип подписи",
+  "VerifyIsOk": "Завершено",
   "Version": "Версия пакета",
-  "VertifyIsOk": "Завершено",
   "ViewMore": "Показать больше"
 }

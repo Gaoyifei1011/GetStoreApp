@@ -49,8 +49,8 @@ namespace GetStoreApp.Views.Pages
         private readonly string PublisherIdString = ResourceService.GetLocalized("AppInformation/PublisherId");
         private readonly string ResourceIdString = ResourceService.GetLocalized("AppInformation/ResourceId");
         private readonly string SignatureKindString = ResourceService.GetLocalized("AppInformation/SignatureKind");
+        private readonly string VerifyIsOKString = ResourceService.GetLocalized("AppInformation/VerifyIsOK");
         private readonly string VersionString = ResourceService.GetLocalized("AppInformation/Version");
-        private readonly string VertifyIsOKString = ResourceService.GetLocalized("AppInformation/VertifyIsOK");
 
         private string _displayName = string.Empty;
 
@@ -324,18 +324,18 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private string _vertifyIsOK;
+        private string _verifyIsOK;
 
-        public string VertifyIsOK
+        public string VerifyIsOK
         {
-            get { return _vertifyIsOK; }
+            get { return _verifyIsOK; }
 
             set
             {
-                if (!string.Equals(_vertifyIsOK, value))
+                if (!string.Equals(_verifyIsOK, value))
                 {
-                    _vertifyIsOK = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VertifyIsOK)));
+                    _verifyIsOK = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VerifyIsOK)));
                 }
             }
         }
@@ -379,7 +379,7 @@ namespace GetStoreApp.Views.Pages
                 IsOptional = appInformation.IsOptional;
                 IsResourcePackage = appInformation.IsResourcePackage;
                 IsStub = appInformation.IsStub;
-                VertifyIsOK = appInformation.VertifyIsOK;
+                VerifyIsOK = appInformation.VerifyIsOK;
 
                 AppListEntryCollection.Clear();
                 foreach (AppListEntryModel appListEntry in appInformation.AppListEntryList)
@@ -571,7 +571,7 @@ namespace GetStoreApp.Views.Pages
                 copyStringList.Add(string.Format("{0}:\t{1}", IsOptionalString, IsOptional));
                 copyStringList.Add(string.Format("{0}:\t{1}", IsResourcePackageString, IsResourcePackage));
                 copyStringList.Add(string.Format("{0}:\t{1}", IsStubString, IsStub));
-                copyStringList.Add(string.Format("{0}:\t{1}", VertifyIsOKString, VertifyIsOK));
+                copyStringList.Add(string.Format("{0}:\t{1}", VerifyIsOKString, VerifyIsOK));
                 return copyStringList;
             });
 

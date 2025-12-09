@@ -624,13 +624,13 @@
                         <MenuFlyoutSeparator
                             Grid.Row="6"
                             Margin="2,10"
-                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DocumentionCollection.Count), Mode=OneWay}" />
+                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DocumentationCollection.Count), Mode=OneWay}" />
 
                         <ListView
                             Grid.Row="7"
-                            ItemsSource="{x:Bind DocumentionCollection}"
+                            ItemsSource="{x:Bind DocumentationCollection}"
                             SelectionMode="None"
-                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DocumentionCollection.Count), Mode=OneWay}">
+                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DocumentationCollection.Count), Mode=OneWay}">
 
                             <ListView.ItemContainerStyle>
                                 <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">

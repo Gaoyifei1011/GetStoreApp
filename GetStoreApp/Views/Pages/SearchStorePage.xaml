@@ -268,7 +268,7 @@
             <Grid
                 Grid.Row="3"
                 CornerRadius="{ThemeResource ControlCornerRadius}"
-                Visibility="{x:Bind ResultControlVisable, Mode=OneWay}">
+                Visibility="{x:Bind ResultControlVisible, Mode=OneWay}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

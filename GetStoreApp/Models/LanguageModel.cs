@@ -8,7 +8,7 @@ namespace GetStoreApp.Models
     /// </summary>
     public sealed partial class LanguageModel : INotifyPropertyChanged
     {
-        public KeyValuePair<string, string> LangaugeInfo { get; set; }
+        public KeyValuePair<string, string> LanguageInfo { get; set; }
 
         private bool _isChecked;
 

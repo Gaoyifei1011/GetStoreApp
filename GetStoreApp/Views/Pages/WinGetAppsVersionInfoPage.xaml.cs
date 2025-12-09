@@ -495,7 +495,7 @@ namespace GetStoreApp.Views.Pages
 
         private ObservableCollection<string> TagCollection { get; } = [];
 
-        private ObservableCollection<ContentLinkInfo> DocumentionCollection { get; } = [];
+        private ObservableCollection<ContentLinkInfo> DocumentationCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -998,13 +998,13 @@ namespace GetStoreApp.Views.Pages
                     TagCollection.Add(tag);
                 }
 
-                DocumentionCollection.Clear();
+                DocumentationCollection.Clear();
                 for (int index = 0; index < catalogPackageMetadata.Documentations.Count; index++)
                 {
                     Documentation documentation = catalogPackageMetadata.Documentations[index];
                     if (Uri.TryCreate(documentation.DocumentUrl, new UriCreationOptions(), out Uri documentUrlUri))
                     {
-                        DocumentionCollection.Add(new ContentLinkInfo() { DisplayText = documentation.DocumentLabel, Uri = documentUrlUri });
+                        DocumentationCollection.Add(new ContentLinkInfo() { DisplayText = documentation.DocumentLabel, Uri = documentUrlUri });
                     }
                 }
             }
@@ -1036,16 +1036,16 @@ namespace GetStoreApp.Views.Pages
                 ReleaseNotesLink = null;
                 IsReleaseNotesLinkExisted = false;
                 TagCollection.Clear();
-                DocumentionCollection.Clear();
+                DocumentationCollection.Clear();
             }
         }
 
         /// <summary>
         /// 获取显示的应用类型
         /// </summary>
-        private Visibility GetWinGetAppsType(object wingetApps)
+        private Visibility GetWinGetAppsType(object winGetApps)
         {
-            return wingetApps is null ? Visibility.Collapsed : Visibility.Visible;
+            return winGetApps is null ? Visibility.Collapsed : Visibility.Visible;
         }
     }
 }

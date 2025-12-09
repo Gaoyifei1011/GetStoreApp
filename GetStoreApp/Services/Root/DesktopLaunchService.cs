@@ -198,9 +198,9 @@ namespace GetStoreApp.Services.Root
                     IsLaunched = isLaunched
                 };
 
-                if (protocolActivatedEventArgs.Data is ValueSet dataSet && dataSet.TryGetValue("Parameter", out object parameterobj))
+                if (protocolActivatedEventArgs.Data is ValueSet dataSet && dataSet.TryGetValue("Parameter", out object parameterObj))
                 {
-                    appLaunchArguments.SubParameters = [Convert.ToString(parameterobj)];
+                    appLaunchArguments.SubParameters = [Convert.ToString(parameterObj)];
                 }
 
                 SignalAppLaunchActivated(appLaunchArguments);

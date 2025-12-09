@@ -38,6 +38,6 @@
   "ResourceId": "Resource id",
   "SignatureKind": "Signature kind",
   "Version": "Package version",
-  "VertifyIsOk": "Is completed",
+  "VerifyIsOk": "Is completed",
   "ViewMore": "View more"
 }

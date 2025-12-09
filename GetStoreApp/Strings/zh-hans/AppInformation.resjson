@@ -37,7 +37,7 @@
   "PublisherInformation": "发布者信息",
   "ResourceId": "资源ID",
   "SignatureKind": "签名方式",
+  "VerifyIsOK": "是否完整",
   "Version": "应用版本",
-  "VertifyIsOK": "是否完整",
   "ViewMore": "查看更多"
 }

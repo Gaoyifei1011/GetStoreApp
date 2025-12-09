@@ -10,6 +10,9 @@ using System.Numerics;
 using System.Runtime.InteropServices.Marshalling;
 using WinRT;
 
+// 抑制 IDE0060 警告
+#pragma warning disable IDE0060
+
 namespace GetStoreAppInstaller.Views.NotificationTips
 {
     /// <summary>

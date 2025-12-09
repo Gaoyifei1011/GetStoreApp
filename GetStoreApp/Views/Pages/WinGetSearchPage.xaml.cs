@@ -331,10 +331,10 @@ namespace GetStoreApp.Views.Pages
         {
             Task.Run(async () =>
             {
-                string wingetTempPath = Path.Combine(Path.GetTempPath(), "WinGet");
-                if (Directory.Exists(wingetTempPath))
+                string winGetTempPath = Path.Combine(Path.GetTempPath(), "WinGet");
+                if (Directory.Exists(winGetTempPath))
                 {
-                    await Launcher.LaunchFolderPathAsync(wingetTempPath);
+                    await Launcher.LaunchFolderPathAsync(winGetTempPath);
                 }
                 else
                 {

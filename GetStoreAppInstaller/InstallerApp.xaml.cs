@@ -7,6 +7,9 @@ using Microsoft.UI.Xaml;
 using System;
 using Windows.Foundation.Diagnostics;
 
+// 抑制 CA1822 警告
+#pragma warning disable CA1822
+
 namespace GetStoreAppInstaller
 {
     /// <summary>

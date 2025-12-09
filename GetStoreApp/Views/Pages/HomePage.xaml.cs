@@ -75,7 +75,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 点击条目时进入条目对应的页面
         /// </summary>
-        private void OnControlItemClickExcecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnControlItemClickExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is ControlItemModel controlItem)
             {

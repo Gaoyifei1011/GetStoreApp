@@ -28,7 +28,7 @@
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
 
-            <XamlUICommand x:Name="ControlItemClickCommand" ExecuteRequested="{x:Bind OnControlItemClickExcecuteRequested}" />
+            <XamlUICommand x:Name="ControlItemClickCommand" ExecuteRequested="{x:Bind OnControlItemClickExecuteRequested}" />
         </ResourceDictionary>
     </Page.Resources>
 

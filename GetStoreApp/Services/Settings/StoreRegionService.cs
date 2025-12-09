@@ -136,9 +136,9 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 遍历所有的区域
         /// </summary>
-        private static bool EnumNameProc(nint unmamedParam1, nint unmamedParam2)
+        private static bool EnumNameProc(nint unnamedParam1, nint unnamedParam2)
         {
-            string region = Marshal.PtrToStringUni(unmamedParam1);
+            string region = Marshal.PtrToStringUni(unnamedParam1);
             if (GeographicRegion.IsSupported(region))
             {
                 StoreRegionList.Add(new(region));

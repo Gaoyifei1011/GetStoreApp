@@ -22,7 +22,7 @@ namespace GetStoreApp.Services.Settings
 
         public static FlowDirection FlowDirection { get; private set; }
 
-        private static IReadOnlyList<string> AppLanguagesList { get; } = ApplicationLanguages.ManifestLanguages;
+        private static IReadOnlyList<string> AppLanguageList { get; } = ApplicationLanguages.ManifestLanguages;
 
         public static List<KeyValuePair<string, string>> LanguageList { get; } = [];
 
@@ -41,9 +41,9 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private static void InitializeLanguageList()
         {
-            foreach (string applanguage in AppLanguagesList)
+            foreach (string appLanguage in AppLanguageList)
             {
-                CultureInfo culture = CultureInfo.GetCultureInfo(applanguage);
+                CultureInfo culture = CultureInfo.GetCultureInfo(appLanguage);
                 LanguageList.Add(KeyValuePair.Create(culture.Name, culture.NativeName));
             }
             LanguageList.Sort((item1, item2) => item1.Key.CompareTo(item2.Key));

@@ -277,7 +277,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 移除已完成任务
         /// </summary>
-        private void OnRemoveFinishedTasklicked(object sender, RoutedEventArgs args)
+        private void OnRemoveFinishedTaskClicked(object sender, RoutedEventArgs args)
         {
             PackageOperationLock.Enter();
 

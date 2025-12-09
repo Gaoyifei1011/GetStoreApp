@@ -522,9 +522,9 @@ namespace GetStoreApp.Services.Download
 
                 foreach (KeyValuePair<string, string> aria2DownloadItem in Aria2DownloadDict)
                 {
-                    (bool isTellStausSuccessfully, DownloadProgressState downloadProgressState, double completedSize, double totalSize, double downloadSpeed) = await TellStatusAsync(aria2DownloadItem.Key);
+                    (bool isTellStatusSuccessfully, DownloadProgressState downloadProgressState, double completedSize, double totalSize, double downloadSpeed) = await TellStatusAsync(aria2DownloadItem.Key);
 
-                    if (isTellStausSuccessfully)
+                    if (isTellStatusSuccessfully)
                     {
                         DownloadProgress?.Invoke(new DownloadProgress()
                         {

@@ -1921,7 +1921,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (progress.Status is PackageDeploymentProgressStatus.Queued)
                 {
                     IsInstalling = true;
-                    IsInstallWaiting = false; // TODO：wasdk api 问题
+                    IsInstallWaiting = false; // TODO：windows app sdk api 问题
                     //InstallStateString = WaitInstallString;
                     InstallProgressValue = progress.Progress * 100;
                     InstallStateString = string.Format(InstallProgressString, Convert.ToInt32(progress.Progress * 100));
@@ -2301,7 +2301,7 @@ namespace GetStoreAppInstaller.Views.Windows
                                     if (packageManifestInformation.ApplicationDict is not null)
                                     {
                                         packageInformation.LanguageList = packageManifestInformation.LanguageList;
-                                        string applicationFileName = ParsePacakgeBundleCompatibleFile(packageManifestInformation.ApplicationDict);
+                                        string applicationFileName = ParsePackageBundleCompatibleFile(packageManifestInformation.ApplicationDict);
                                         string architecture = ParsePackageBundleArchitecture(packageManifestInformation.ApplicationDict);
                                         packageInformation.ProcessorArchitecture = architecture;
 
@@ -2338,7 +2338,7 @@ namespace GetStoreAppInstaller.Views.Windows
                                         // 获取应用包图标
                                         if (!string.IsNullOrEmpty(packageInformation.Logo))
                                         {
-                                            Dictionary<string, IAppxFile> scaleBundleFileDict = ParsePacakgeBundleScaleFiles(appxBundleReader, packageManifestInformation.ScaleResourceList);
+                                            Dictionary<string, IAppxFile> scaleBundleFileDict = ParsePackageBundleScaleFiles(appxBundleReader, packageManifestInformation.ScaleResourceList);
                                             IStream imageFileStream = await GetPackageBundleLogoAsync(packageInformation.Logo, scaleBundleFileDict);
                                             packageInformation.ImageLogo = imageFileStream;
                                         }
@@ -3043,7 +3043,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 解析应用捆绑包适合主机系统的文件
         /// </summary>
-        private string ParsePacakgeBundleCompatibleFile(Dictionary<ProcessorArchitecture, string> applicationDict)
+        private string ParsePackageBundleCompatibleFile(Dictionary<ProcessorArchitecture, string> applicationDict)
         {
             Architecture osArchitecture = RuntimeInformation.ProcessArchitecture;
             string appxFile = null;
@@ -3148,7 +3148,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 解析应用捆绑包带缩放资源的文件
         /// </summary>
-        private Dictionary<string, IAppxFile> ParsePacakgeBundleScaleFiles(IAppxBundleReader appxBundleReader, List<string> scaleResourceList)
+        private Dictionary<string, IAppxFile> ParsePackageBundleScaleFiles(IAppxBundleReader appxBundleReader, List<string> scaleResourceList)
         {
             Dictionary<string, IAppxFile> bundleFileDict = [];
 
@@ -3185,20 +3185,20 @@ namespace GetStoreAppInstaller.Views.Windows
             {
                 if (resource.StartsWith(msresource))
                 {
-                    string splitedResource = resource[msresource.Length..];
+                    string splitResource = resource[msresource.Length..];
 
                     string resourceKey;
-                    if (splitedResource.Contains('\\'))
+                    if (splitResource.Contains('\\'))
                     {
-                        resourceKey = splitedResource;
+                        resourceKey = splitResource;
                     }
                     else if (resource.Contains('/'))
                     {
-                        resourceKey = splitedResource.Replace('/', '\\');
+                        resourceKey = splitResource.Replace('/', '\\');
                     }
                     else
                     {
-                        resourceKey = string.Format(@"Resources\{0}", splitedResource);
+                        resourceKey = string.Format(@"Resources\{0}", splitResource);
                     }
 
                     try

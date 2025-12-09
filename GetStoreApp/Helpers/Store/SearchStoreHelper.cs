@@ -50,7 +50,7 @@ namespace GetStoreApp.Helpers.Store
 
                 JsonObject jsonObject = new()
                 {
-                    ["MaximunResults"] = JsonValue.CreateNumberValue(1000),
+                    ["MaximumResults"] = JsonValue.CreateNumberValue(1000),
                     ["Filters"] = filtersArray,
                     ["Query"] = queryObject,
                 };
@@ -67,7 +67,7 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 搜索商店应用
         /// </summary>
-        public static async Task<(bool requestResult, List<SearchStoreModel> searchStoreList)> SerachStoreAppsAsync(string generatedContent)
+        public static async Task<(bool requestResult, List<SearchStoreModel> searchStoreList)> SearchStoreAppsAsync(string generatedContent)
         {
             bool requestResult = false;
             List<SearchStoreModel> searchStoreList = [];
@@ -97,7 +97,7 @@ namespace GetStoreApp.Helpers.Store
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(SerachStoreAppsAsync), 1, responseDict);
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(SearchStoreAppsAsync), 1, responseDict);
                     string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                     if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
@@ -119,7 +119,7 @@ namespace GetStoreApp.Helpers.Store
                 // 请求失败
                 else
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(SerachStoreAppsAsync), 2, httpRequestResult.ExtendedError);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(SearchStoreAppsAsync), 2, httpRequestResult.ExtendedError);
                 }
 
                 httpRequestResult.Dispose();
@@ -127,7 +127,7 @@ namespace GetStoreApp.Helpers.Store
             // 其他异常
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(SerachStoreAppsAsync), 3, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(SearchStoreAppsAsync), 3, e);
             }
 
             return ValueTuple.Create(requestResult, searchStoreList);

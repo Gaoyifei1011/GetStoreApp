@@ -20,7 +20,7 @@
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="Transparent" />
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="Transparent" />
 
-        <XamlUICommand x:Name="FillinCommand" ExecuteRequested="{x:Bind OnFillinExecuteRequested}" />
+        <XamlUICommand x:Name="FillInCommand" ExecuteRequested="{x:Bind OnFillInExecuteRequested}" />
         <XamlUICommand x:Name="DownloadCommand" ExecuteRequested="{x:Bind OnDownloadExecuteRequested}" />
         <XamlUICommand x:Name="OpenLinkCommand" ExecuteRequested="{x:Bind OnOpenLinkExecuteRequested}" />
         <XamlUICommand x:Name="CopyLinkCommand" ExecuteRequested="{x:Bind OnCopyLinkExecuteRequested}" />
@@ -460,9 +460,9 @@
                                             Grid.Column="4"
                                             Margin="10,0,0,0"
                                             Padding="0"
-                                            Command="{StaticResource FillinCommand}"
+                                            Command="{StaticResource FillInCommand}"
                                             CommandParameter="{x:Bind}"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Fillin')}"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FillIn')}"
                                             IsEnabled="{x:Bind IsQuerying.Equals(x:False), Mode=OneWay}" />
                                     </Grid>
                                 </DataTemplate>
@@ -476,7 +476,7 @@
             <Grid
                 Grid.Row="3"
                 CornerRadius="{ThemeResource ControlCornerRadius}"
-                Visibility="{x:Bind ResultControlVisable, Mode=OneWay}">
+                Visibility="{x:Bind ResultControlVisible, Mode=OneWay}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -513,7 +513,7 @@
                                 Margin="0,0,0,2"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryedAppInfo')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueriedAppInfo')}" />
 
                             <CommandBar
                                 Grid.Column="2"
@@ -523,7 +523,7 @@
                                 DefaultLabelPosition="Right">
 
                                 <CommandBar.PrimaryCommands>
-                                    <AppBarButton Click="{x:Bind OnCopyQueryedAppInfoClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyQueryedAppInfo')}">
+                                    <AppBarButton Click="{x:Bind OnCopyQueriedAppInfoClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyQueriedAppInfo')}">
                                         <AppBarButton.Icon>
                                             <FontIcon Glyph="&#xE8C8;" />
                                         </AppBarButton.Icon>
@@ -556,7 +556,7 @@
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryedAppName')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueriedAppName')}" />
 
                             <TextBlock
                                 Grid.Row="0"
@@ -570,7 +570,7 @@
                             <TextBlock
                                 Grid.Row="1"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryedAppPublisher')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueriedAppPublisher')}" />
 
                             <TextBlock
                                 Grid.Row="1"
@@ -584,7 +584,7 @@
                             <TextBlock
                                 Grid.Row="2"
                                 Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryedAppDescription')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueriedAppDescription')}" />
 
                             <TextBlock
                                 Grid.Row="2"
@@ -644,7 +644,7 @@
                             <TextBlock
                                 Grid.Column="0"
                                 HorizontalAlignment="Left"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueryedAppType')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueriedAppType')}" />
 
                             <TextBlock
                                 Grid.Column="1"

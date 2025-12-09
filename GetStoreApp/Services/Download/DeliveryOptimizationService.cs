@@ -88,8 +88,8 @@ namespace GetStoreApp.Services.Download
                         doDownload.SetProperty(DODownloadProperty.DODownloadProperty_Uri, urlVariant);
                         ComVariant filePathVariant = ComVariant.Create(saveFilePath);
                         doDownload.SetProperty(DODownloadProperty.DODownloadProperty_LocalPath, filePathVariant);
-                        doDownload.GetProperty(DODownloadProperty.DODownloadProperty_Id, out ComVariant idVarient);
-                        string downloadID = idVarient.As<string>();
+                        doDownload.GetProperty(DODownloadProperty.DODownloadProperty_Id, out ComVariant idVariant);
+                        string downloadID = idVariant.As<string>();
                         DODownloadStatusCallback doDownloadStatusCallback = new()
                         {
                             DownloadID = downloadID

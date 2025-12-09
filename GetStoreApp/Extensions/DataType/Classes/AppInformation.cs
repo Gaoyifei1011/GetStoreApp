@@ -96,7 +96,7 @@ namespace GetStoreApp.Extensions.DataType.Classes
         /// <summary>
         /// 应用状态是否良好
         /// </summary>
-        public string VertifyIsOK { get; set; }
+        public string VerifyIsOK { get; set; }
 
         /// <summary>
         /// 应用入口信息
