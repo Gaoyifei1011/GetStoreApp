@@ -74,25 +74,16 @@
                             x:Name="StoreSelectorBar"
                             Padding="0"
                             HorizontalAlignment="Center"
-                            SelectedItem="{x:Bind SelectedItem, Mode=OneWay}">
+                            SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
+                            SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}">
 
-                            <SelectorBarItem
-                                Padding="12,6,12,3"
-                                IsTapEnabled="True"
-                                Tag="{x:Bind PageList[0]}"
-                                Tapped="{x:Bind OnSelectorBarTapped}"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryLinks')}">
+                            <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryLinks')}">
                                 <SelectorBarItem.Icon>
                                     <FontIcon Glyph="&#xE71B;" />
                                 </SelectorBarItem.Icon>
                             </SelectorBarItem>
 
-                            <SelectorBarItem
-                                Padding="12,6,12,3"
-                                IsTapEnabled="True"
-                                Tag="{x:Bind PageList[1]}"
-                                Tapped="{x:Bind OnSelectorBarTapped}"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchApps')}">
+                            <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchApps')}">
                                 <SelectorBarItem.Icon>
                                     <FontIcon Glyph="&#xE721;" />
                                 </SelectorBarItem.Icon>

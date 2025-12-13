@@ -7,7 +7,6 @@ using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
@@ -23,7 +22,6 @@ using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
-using WinRT;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -119,43 +117,49 @@ namespace GetStoreApp.Views.Pages
         #region 第二部分：设置项页面——挂载的事件
 
         /// <summary>
-        /// 点击选择器栏发生的事件
+        /// 点击选择器栏选中项发生变化时发生的事件
         /// </summary>
-        private void OnSelectorBarTapped(object sender, TappedRoutedEventArgs args)
+        private void OnSelectorBarSelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
         {
-            if (sender.As<SelectorBarItem>().Tag is Type pageType)
-            {
-                int index = PageList.IndexOf(pageType);
-                int currentIndex = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+            SelectedItem = sender.SelectedItem;
+            int index = sender.Items.IndexOf(SelectedItem);
+            Type currentPage = GetCurrentPageType();
+            int currentIndex = PageList.FindIndex(item => Equals(item, currentPage));
 
-                if (index is 0 && !Equals(GetCurrentPageType(), PageList[0]))
+            if (index is 0)
+            {
+                if (currentPage is null)
+                {
+                    NavigateTo(PageList[0]);
+                }
+                else if (!Equals(currentPage, PageList[0]))
                 {
                     NavigateTo(PageList[0], null, index > currentIndex);
                 }
-                else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
-                {
-                    NavigateTo(PageList[1], null, index > currentIndex);
-                }
-                else if (index is 2 && !Equals(GetCurrentPageType(), PageList[2]))
-                {
-                    NavigateTo(PageList[2], null, index > currentIndex);
-                }
-                else if (index is 3 && !Equals(GetCurrentPageType(), PageList[3]))
-                {
-                    NavigateTo(PageList[3], null, index > currentIndex);
-                }
-                else if (index is 4 && !Equals(GetCurrentPageType(), PageList[4]))
-                {
-                    NavigateTo(PageList[4], null, index > currentIndex);
-                }
-                else if (index is 5 && !Equals(GetCurrentPageType(), PageList[5]))
-                {
-                    NavigateTo(PageList[5], null, index > currentIndex);
-                }
-                else if (index is 6 && !Equals(GetCurrentPageType(), PageList[6]))
-                {
-                    NavigateTo(PageList[6], null, index > currentIndex);
-                }
+            }
+            else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
+            {
+                NavigateTo(PageList[1], null, index > currentIndex);
+            }
+            else if (index is 2 && !Equals(GetCurrentPageType(), PageList[2]))
+            {
+                NavigateTo(PageList[2], null, index > currentIndex);
+            }
+            else if (index is 3 && !Equals(GetCurrentPageType(), PageList[3]))
+            {
+                NavigateTo(PageList[3], null, index > currentIndex);
+            }
+            else if (index is 4 && !Equals(GetCurrentPageType(), PageList[4]))
+            {
+                NavigateTo(PageList[4], null, index > currentIndex);
+            }
+            else if (index is 5 && !Equals(GetCurrentPageType(), PageList[5]))
+            {
+                NavigateTo(PageList[5], null, index > currentIndex);
+            }
+            else if (index is 6 && !Equals(GetCurrentPageType(), PageList[6]))
+            {
+                NavigateTo(PageList[6], null, index > currentIndex);
             }
         }
 

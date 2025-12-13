@@ -58,7 +58,8 @@
                 <DropDownButton
                     Grid.Column="0"
                     VerticalAlignment="Center"
-                    Content="{x:Bind SelectedType.DisplayName, Mode=OneWay}">
+                    Content="{x:Bind SelectedType.DisplayName, Mode=OneWay}"
+                    IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}">
 
                     <DropDownButton.Flyout>
                         <MenuFlyout Placement="Bottom">
@@ -82,7 +83,8 @@
                 <DropDownButton
                     Grid.Column="1"
                     VerticalAlignment="Center"
-                    Content="{x:Bind SelectedChannel.DisplayName, Mode=OneWay}">
+                    Content="{x:Bind SelectedChannel.DisplayName, Mode=OneWay}"
+                    IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}">
 
                     <DropDownButton.Flyout>
                         <MenuFlyout Placement="Bottom">
@@ -813,13 +815,15 @@
                                 Grid.Column="0"
                                 Width="50"
                                 Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                IsTapEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
-                                Tapped="{x:Bind OnSelectTapped}"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Select')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap"
                                 Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
+
+                                <Hyperlink Click="{x:Bind OnSelectHeaderClicked}" UnderlineStyle="None">
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Select')}" />
+                                </Hyperlink>
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
@@ -834,6 +838,7 @@
                                 x:Name="FileNameHeaderText"
                                 Grid.Column="1"
                                 Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileName')}"
                                 TextTrimming="CharacterEllipsis"
@@ -853,6 +858,7 @@
                                 x:Name="FileSizeHeaderText"
                                 Grid.Column="2"
                                 Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileSize')}"
                                 TextTrimming="CharacterEllipsis"
@@ -871,7 +877,7 @@
                             <TextBlock
                                 Grid.Column="3"
                                 Margin="0,0,10,0"
-                                HorizontalAlignment="Stretch"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Options')}">
 
@@ -938,6 +944,7 @@
                                     <HyperlinkButton.Content>
                                         <TextBlock
                                             x:Name="FileNameText"
+                                            HorizontalAlignment="Left"
                                             Text="{x:Bind FileName}"
                                             TextTrimming="CharacterEllipsis"
                                             TextWrapping="NoWrap">
@@ -1005,6 +1012,7 @@
                                     Grid.Column="3"
                                     Margin="0,0,5,0"
                                     Padding="0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Command="{StaticResource OpenLinkCommand}"
                                     CommandParameter="{x:Bind FileLink}"

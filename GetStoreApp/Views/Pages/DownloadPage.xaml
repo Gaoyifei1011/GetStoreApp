@@ -57,22 +57,17 @@
                     Margin="20,6,30,3"
                     Padding="0"
                     HorizontalAlignment="Left"
-                    SelectedItem="{x:Bind SelectedItem, Mode=OneWay}">
+                    SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
+                    SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}">
 
                     <SelectorBarItem
                         Padding="12,5"
                         FontSize="22"
-                        IsTapEnabled="True"
-                        Tag="{x:Bind PageList[0]}"
-                        Tapped="{x:Bind OnSelectorBarTapped}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/Downloading')}" />
 
                     <SelectorBarItem
                         Padding="12,5"
                         FontSize="22"
-                        IsTapEnabled="True"
-                        Tag="{x:Bind PageList[1]}"
-                        Tapped="{x:Bind OnSelectorBarTapped}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/Completed')}" />
                 </SelectorBar>
 

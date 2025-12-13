@@ -10,6 +10,7 @@ using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.Storage.Pickers;
@@ -683,7 +684,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 全选 / 全部不选
         /// </summary>
-        private void OnSelectTapped(object sender, TappedRoutedEventArgs args)
+        private void OnSelectHeaderClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             if (IsSelectMode)
             {

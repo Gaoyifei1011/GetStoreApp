@@ -342,27 +342,33 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 点击选择器栏发生的事件
+        /// 点击选择器栏选中项发生变化时发生的事件
         /// </summary>
-        private void OnSelectorBarTapped(object sender, TappedRoutedEventArgs args)
+        private void OnSelectorBarSelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
         {
-            if (sender.As<SelectorBarItem>().Tag is Type pageType)
-            {
-                int index = PageList.IndexOf(pageType);
-                int currentIndex = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+            SelectedItem = sender.SelectedItem;
+            int index = sender.Items.IndexOf(SelectedItem);
+            Type currentPage = GetCurrentPageType();
+            int currentIndex = PageList.FindIndex(item => Equals(item, currentPage));
 
-                if (index is 0 && !Equals(GetCurrentPageType(), PageList[0]))
+            if (index is 0)
+            {
+                if (currentPage is null)
                 {
-                    NavigateTo(PageList[0], this, index > currentIndex);
+                    NavigateTo(PageList[0]);
                 }
-                else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
+                else if (!Equals(currentPage, PageList[0]))
                 {
-                    NavigateTo(PageList[1], this, index > currentIndex);
+                    NavigateTo(PageList[0], null, index > currentIndex);
                 }
-                else if (index is 2 && !Equals(GetCurrentPageType(), PageList[2]))
-                {
-                    NavigateTo(PageList[2], this, index > currentIndex);
-                }
+            }
+            else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
+            {
+                NavigateTo(PageList[1], this, index > currentIndex);
+            }
+            else if (index is 2 && !Equals(GetCurrentPageType(), PageList[2]))
+            {
+                NavigateTo(PageList[2], this, index > currentIndex);
             }
         }
 

@@ -3,7 +3,6 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,6 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
-using WinRT;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -73,7 +71,7 @@ namespace GetStoreApp.Views.Pages
                 // 第一次导航
                 if (GetCurrentPageType() is null)
                 {
-                    NavigateTo(PageList[0]);
+                    SelectedItem = DownloadSelctorBar.Items[0];
                 }
             }
         }
@@ -98,23 +96,29 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 点击选择器栏发生的事件
+        /// 点击选择器栏选中项发生变化时发生的事件
         /// </summary>
-        private void OnSelectorBarTapped(object sender, TappedRoutedEventArgs args)
+        private void OnSelectorBarSelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
         {
-            if (sender.As<SelectorBarItem>().Tag is Type pageType)
-            {
-                int index = PageList.IndexOf(pageType);
-                int currentIndex = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+            SelectedItem = sender.SelectedItem;
+            int index = sender.Items.IndexOf(SelectedItem);
+            Type currentPage = GetCurrentPageType();
+            int currentIndex = PageList.FindIndex(item => Equals(item, currentPage));
 
-                if (index is 0 && !Equals(GetCurrentPageType(), PageList[0]))
+            if (index is 0)
+            {
+                if (currentPage is null)
+                {
+                    NavigateTo(PageList[0]);
+                }
+                else if (!Equals(currentPage, PageList[0]))
                 {
                     NavigateTo(PageList[0], null, index > currentIndex);
                 }
-                else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
-                {
-                    NavigateTo(PageList[1], null, index > currentIndex);
-                }
+            }
+            else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
+            {
+                NavigateTo(PageList[1], null, index > currentIndex);
             }
         }
 
