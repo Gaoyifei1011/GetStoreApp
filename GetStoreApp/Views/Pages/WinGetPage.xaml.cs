@@ -22,7 +22,6 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
-using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -381,7 +380,7 @@ namespace GetStoreApp.Views.Pages
 
             if (index >= 0 && index < WinGetSelectorBar.Items.Count)
             {
-                SelectedItem = WinGetSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
+                SelectedItem = WinGetSelectorBar.Items[index];
             }
         }
 
@@ -395,7 +394,7 @@ namespace GetStoreApp.Views.Pages
 
             if (index >= 0 && index < WinGetSelectorBar.Items.Count)
             {
-                SelectedItem = WinGetSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
+                SelectedItem = WinGetSelectorBar.Items[index];
             }
 
             LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(OnNavigationFailed), 1, args.Exception);

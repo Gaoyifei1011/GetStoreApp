@@ -142,7 +142,7 @@ namespace GetStoreApp.Views.Pages
 
             if (index >= 0 && index < StoreSelectorBar.Items.Count)
             {
-                SelectedItem = StoreSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
+                SelectedItem = StoreSelectorBar.Items[index];
             }
         }
 
@@ -156,7 +156,7 @@ namespace GetStoreApp.Views.Pages
 
             if (index >= 0 && index < StoreSelectorBar.Items.Count)
             {
-                SelectedItem = StoreSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
+                SelectedItem = StoreSelectorBar.Items[index];
             }
 
             LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(StorePage), nameof(OnNavigationFailed), 1, args.Exception);
