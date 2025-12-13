@@ -177,6 +177,7 @@
 
                                     <TextBlock
                                         x:Name="DescriptionText"
+                                        HorizontalAlignment="Left"
                                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                         RelativePanel.Below="titleText"
                                         Style="{StaticResource CaptionTextBlockStyle}"

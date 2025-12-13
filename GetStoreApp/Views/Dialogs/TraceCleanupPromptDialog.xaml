@@ -61,6 +61,7 @@
                             <TextBlock
                                 x:Name="CleanFailed"
                                 Margin="0,5,0,0"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CleanFailed')}"

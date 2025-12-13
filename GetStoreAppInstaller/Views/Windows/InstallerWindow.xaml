@@ -298,7 +298,7 @@
                                             Background="Transparent"
                                             Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                             Visibility="{Binding ElementName=PublisherText, Path=IsTextTrimmed, Mode=OneWay}">
-                                            <TextBlock Grid.Row="1">
+                                            <TextBlock>
                                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Publisher')}" />
                                                 <Run Text="{x:Bind PublisherDisplayName, Mode=OneWay}" />
                                             </TextBlock>
@@ -321,7 +321,7 @@
                                             Background="Transparent"
                                             Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
                                             Visibility="{Binding ElementName=PackageVersionText, Path=IsTextTrimmed, Mode=OneWay}">
-                                            <TextBlock Grid.Row="1">
+                                            <TextBlock>
                                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageVersion')}" />
                                                 <Run Text="{x:Bind system:Convert.ToString(Version), Mode=OneWay}" />
                                             </TextBlock>
@@ -1562,6 +1562,7 @@
                                                             x:Name="TargetDeviceNameHeaderText"
                                                             Grid.Column="0"
                                                             Margin="6,0,0,0"
+                                                            HorizontalAlignment="Left"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/TargetDeviceName')}"
                                                             TextAlignment="Left"
@@ -1582,6 +1583,7 @@
                                                             x:Name="MinVersionHeaderText"
                                                             Grid.Column="1"
                                                             Margin="6,0,0,0"
+                                                            HorizontalAlignment="Left"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MinVersion')}"
                                                             TextAlignment="Left"
@@ -1602,6 +1604,7 @@
                                                             x:Name="MaxVersionTestedHeaderText"
                                                             Grid.Column="2"
                                                             Margin="6,0,0,0"
+                                                            HorizontalAlignment="Left"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MaxVersionTested')}"
                                                             TextAlignment="Left"
@@ -1781,6 +1784,7 @@
                                                                 x:Name="PackageDependencyNameHeaderText"
                                                                 Grid.Column="0"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
                                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}"
                                                                 TextAlignment="Left"
@@ -1801,6 +1805,7 @@
                                                                 x:Name="PackageDependencyPublisherHeaderText"
                                                                 Grid.Column="1"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
                                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
                                                                 TextAlignment="Left"
@@ -1821,6 +1826,7 @@
                                                                 x:Name="PackageDependencyMinVersionHeaderText"
                                                                 Grid.Column="2"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
                                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyMinVersion')}"
                                                                 TextAlignment="Left"
@@ -1961,6 +1967,7 @@
                                                                 x:Name="AppInstallerDependencyNameHeaderText"
                                                                 Grid.Column="0"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
                                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}"
                                                                 TextAlignment="Left"
@@ -1981,6 +1988,7 @@
                                                                 x:Name="AppInstallerDependencyPublisherHeaderText"
                                                                 Grid.Column="1"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
                                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
                                                                 TextAlignment="Left"
@@ -2001,6 +2009,7 @@
                                                                 x:Name="AppInstallerDependencyVersionHeaderText"
                                                                 Grid.Column="2"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
                                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyVersion')}"
                                                                 TextAlignment="Left"
@@ -2021,6 +2030,7 @@
                                                                 x:Name="AppInstallerDependencyProcessorArchitectureHeaderText"
                                                                 Grid.Column="3"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
                                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyProcessorArchitecture')}"
                                                                 TextAlignment="Left"
@@ -2041,6 +2051,7 @@
                                                                 x:Name="AppInstallerDependencyOperationHeaderText"
                                                                 Grid.Column="4"
                                                                 Margin="6,0,0,0"
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
                                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyOperation')}"
                                                                 TextAlignment="Left"
@@ -2358,6 +2369,7 @@
                                                             x:Name="AppIDHeaderText"
                                                             Grid.Column="0"
                                                             Margin="6,0,0,0"
+                                                            HorizontalAlignment="Left"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppID')}"
                                                             TextAlignment="Left"
@@ -2378,6 +2390,7 @@
                                                             x:Name="AppDescriptionHeaderText"
                                                             Grid.Column="1"
                                                             Margin="6,0,0,0"
+                                                            HorizontalAlignment="Left"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppDescription')}"
                                                             TextAlignment="Left"
@@ -2398,6 +2411,7 @@
                                                             x:Name="ExecutableHeaderText"
                                                             Grid.Column="2"
                                                             Margin="6,0,0,0"
+                                                            HorizontalAlignment="Left"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Executable')}"
                                                             TextAlignment="Left"
@@ -2418,6 +2432,7 @@
                                                             x:Name="EntryPointHeaderText"
                                                             Grid.Column="3"
                                                             Margin="6,0,0,0"
+                                                            HorizontalAlignment="Left"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/EntryPoint')}"
                                                             TextAlignment="Left"
@@ -2438,6 +2453,7 @@
                                                             x:Name="AppUserModelIdHeaderText"
                                                             Grid.Column="4"
                                                             Margin="6,0,0,0"
+                                                            HorizontalAlignment="Left"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppUserModelId')}"
                                                             TextAlignment="Left"
