@@ -356,7 +356,7 @@
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
 
-                    <NavigationViewItem Tag="{x:Bind PageList[5].Key}">
+                    <NavigationViewItem Tag="{x:Bind PageList[4].Key}">
 
                         <NavigationViewItem.Content>
                             <TextBlock
