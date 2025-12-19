@@ -205,9 +205,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnDoEngineModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
             {
-                DoEngineMode = DoEngineModeList[Convert.ToInt32(tag)];
+                DoEngineMode = DoEngineModeList[tag];
                 DownloadOptionsService.SetDoEngineMode(DoEngineMode.Key);
             }
         }

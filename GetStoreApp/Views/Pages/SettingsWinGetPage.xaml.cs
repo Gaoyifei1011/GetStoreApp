@@ -76,9 +76,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnWinGetSourceSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
             {
-                WinGetSource = WinGetSourceList[Convert.ToInt32(tag)];
+                WinGetSource = WinGetSourceList[tag];
                 WinGetConfigService.SetWinGetSource(WinGetSource.Key);
             }
         }

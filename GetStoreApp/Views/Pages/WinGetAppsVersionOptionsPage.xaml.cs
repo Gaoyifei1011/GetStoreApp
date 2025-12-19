@@ -598,9 +598,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageArchitectureSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
             {
-                PackageArchitecture = PackageArchitectureList[Convert.ToInt32(tag)];
+                PackageArchitecture = PackageArchitectureList[tag];
             }
         }
 
@@ -609,9 +609,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageInstallScopeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
             {
-                PackageInstallScope = PackageInstallScopeList[Convert.ToInt32(tag)];
+                PackageInstallScope = PackageInstallScopeList[tag];
             }
         }
 
@@ -902,9 +902,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
             {
-                PackageInstallMode = PackageInstallModeList[Convert.ToInt32(tag)];
+                PackageInstallMode = PackageInstallModeList[tag];
             }
         }
 
@@ -1137,9 +1137,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageRepairScopeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
             {
-                PackageRepairScope = PackageRepairScopeList[Convert.ToInt32(tag)];
+                PackageRepairScope = PackageRepairScopeList[tag];
             }
         }
 
@@ -1148,9 +1148,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageRepairModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
             {
-                PackageRepairMode = PackageRepairModeList[Convert.ToInt32(tag)];
+                PackageRepairMode = PackageRepairModeList[tag];
             }
         }
 

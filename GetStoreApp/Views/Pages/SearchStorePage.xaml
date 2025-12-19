@@ -21,7 +21,7 @@
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="Transparent" />
 
         <XamlUICommand x:Name="CopyLinkCommand" ExecuteRequested="{x:Bind OnCopyLinkExecuteRequested}" />
-        <XamlUICommand x:Name="FillinCommand" ExecuteRequested="{x:Bind OnFillinExecuteRequested}" />
+        <XamlUICommand x:Name="FillInCommand" ExecuteRequested="{x:Bind OnFillInExecuteRequested}" />
         <XamlUICommand x:Name="OpenLinkCommand" ExecuteRequested="{x:Bind OnOpenLinkExecuteRequested}" />
         <XamlUICommand x:Name="QueryLinksCommand" ExecuteRequested="{x:Bind OnQueryLinksExecuteRequested}" />
     </Page.Resources>
@@ -253,9 +253,9 @@
                                             Grid.Column="1"
                                             Margin="10,0,0,0"
                                             Padding="0"
-                                            Command="{StaticResource FillinCommand}"
+                                            Command="{StaticResource FillInCommand}"
                                             CommandParameter="{x:Bind HistoryContent}"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/Fillin')}"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/FillIn')}"
                                             IsEnabled="{x:Bind IsQuerying.Equals(x:False), Mode=OneWay}" />
                                     </Grid>
                                 </DataTemplate>

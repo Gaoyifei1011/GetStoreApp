@@ -103,22 +103,34 @@
                                 Click="{x:Bind OnThemeSelectClicked}"
                                 GroupName="ThemeRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(Theme.Key, ThemeList[0].Key), Mode=OneWay}"
-                                Tag="0"
-                                Text="{x:Bind ThemeList[0].Value}" />
+                                Text="{x:Bind ThemeList[0].Value}">
+
+                                <RadioMenuFlyoutItem.Tag>
+                                    <x:Int32>0</x:Int32>
+                                </RadioMenuFlyoutItem.Tag>
+                            </RadioMenuFlyoutItem>
 
                             <RadioMenuFlyoutItem
                                 Click="{x:Bind OnThemeSelectClicked}"
                                 GroupName="ThemeRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(Theme.Key, ThemeList[1].Key), Mode=OneWay}"
-                                Tag="1"
-                                Text="{x:Bind ThemeList[1].Value}" />
+                                Text="{x:Bind ThemeList[1].Value}">
+
+                                <RadioMenuFlyoutItem.Tag>
+                                    <x:Int32>1</x:Int32>
+                                </RadioMenuFlyoutItem.Tag>
+                            </RadioMenuFlyoutItem>
 
                             <RadioMenuFlyoutItem
                                 Click="{x:Bind OnThemeSelectClicked}"
                                 GroupName="ThemeRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(Theme.Key, ThemeList[2].Key), Mode=OneWay}"
-                                Tag="2"
-                                Text="{x:Bind ThemeList[2].Value}" />
+                                Text="{x:Bind ThemeList[2].Value}">
+
+                                <RadioMenuFlyoutItem.Tag>
+                                    <x:Int32>2</x:Int32>
+                                </RadioMenuFlyoutItem.Tag>
+                            </RadioMenuFlyoutItem>
                         </MenuFlyout>
                     </DropDownButton.Flyout>
                 </DropDownButton>
@@ -197,8 +209,12 @@
                                 Click="{x:Bind OnBackdropSelectClicked}"
                                 GroupName="BackdropRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(Backdrop.Key, BackdropList[0].Key), Mode=OneWay}"
-                                Tag="0"
-                                Text="{x:Bind BackdropList[0].Value}" />
+                                Text="{x:Bind BackdropList[0].Value}">
+
+                                <RadioMenuFlyoutItem.Tag>
+                                    <x:Int32>0</x:Int32>
+                                </RadioMenuFlyoutItem.Tag>
+                            </RadioMenuFlyoutItem>
 
                             <MenuFlyoutSubItem
                                 x:Name="MicaFlyoutItem"
@@ -209,15 +225,23 @@
                                     Click="{x:Bind OnBackdropSelectClicked}"
                                     GroupName="BackdropRadioGroup"
                                     IsChecked="{x:Bind x:String.Equals(Backdrop.Key, BackdropList[1].Key), Mode=OneWay}"
-                                    Tag="1"
-                                    Text="{x:Bind BackdropList[1].Value}" />
+                                    Text="{x:Bind BackdropList[1].Value}">
+
+                                    <RadioMenuFlyoutItem.Tag>
+                                        <x:Int32>1</x:Int32>
+                                    </RadioMenuFlyoutItem.Tag>
+                                </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
                                     Click="{x:Bind OnBackdropSelectClicked}"
                                     GroupName="BackdropRadioGroup"
                                     IsChecked="{x:Bind x:String.Equals(Backdrop.Key, BackdropList[2].Key), Mode=OneWay}"
-                                    Tag="2"
-                                    Text="{x:Bind BackdropList[2].Value}" />
+                                    Text="{x:Bind BackdropList[2].Value}">
+
+                                    <RadioMenuFlyoutItem.Tag>
+                                        <x:Int32>2</x:Int32>
+                                    </RadioMenuFlyoutItem.Tag>
+                                </RadioMenuFlyoutItem>
                             </MenuFlyoutSubItem>
 
                             <MenuFlyoutSubItem
@@ -229,22 +253,34 @@
                                     Click="{x:Bind OnBackdropSelectClicked}"
                                     GroupName="BackdropRadioGroup"
                                     IsChecked="{x:Bind x:String.Equals(Backdrop.Key, BackdropList[3].Key), Mode=OneWay}"
-                                    Tag="3"
-                                    Text="{x:Bind BackdropList[3].Value}" />
+                                    Text="{x:Bind BackdropList[3].Value}">
+
+                                    <RadioMenuFlyoutItem.Tag>
+                                        <x:Int32>3</x:Int32>
+                                    </RadioMenuFlyoutItem.Tag>
+                                </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
                                     Click="{x:Bind OnBackdropSelectClicked}"
                                     GroupName="BackdropRadioGroup"
                                     IsChecked="{x:Bind x:String.Equals(Backdrop.Key, BackdropList[4].Key), Mode=OneWay}"
-                                    Tag="4"
-                                    Text="{x:Bind BackdropList[4].Value}" />
+                                    Text="{x:Bind BackdropList[4].Value}">
+
+                                    <RadioMenuFlyoutItem.Tag>
+                                        <x:Int32>4</x:Int32>
+                                    </RadioMenuFlyoutItem.Tag>
+                                </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
                                     Click="{x:Bind OnBackdropSelectClicked}"
                                     GroupName="BackdropRadioGroup"
                                     IsChecked="{x:Bind x:String.Equals(Backdrop.Key, BackdropList[5].Key), Mode=OneWay}"
-                                    Tag="5"
-                                    Text="{x:Bind BackdropList[5].Value}" />
+                                    Text="{x:Bind BackdropList[5].Value}">
+
+                                    <RadioMenuFlyoutItem.Tag>
+                                        <x:Int32>5</x:Int32>
+                                    </RadioMenuFlyoutItem.Tag>
+                                </RadioMenuFlyoutItem>
                             </MenuFlyoutSubItem>
                         </MenuFlyout>
                     </DropDownButton.Flyout>

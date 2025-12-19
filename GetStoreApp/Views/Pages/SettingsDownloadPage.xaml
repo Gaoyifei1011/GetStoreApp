@@ -283,23 +283,35 @@
                                 Click="{x:Bind OnDoEngineModeSelectClicked}"
                                 GroupName="DoEngineModeModeRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(DoEngineMode.Key, DoEngineModeList[0].Key), Mode=OneWay}"
-                                Tag="0"
                                 Text="{x:Bind DoEngineModeList[0].Value}"
-                                Visibility="{x:Bind roothelper:InfoHelper.IsDeliveryOptimizationEnabled}" />
+                                Visibility="{x:Bind roothelper:InfoHelper.IsDeliveryOptimizationEnabled}">
+
+                                <RadioMenuFlyoutItem.Tag>
+                                    <x:Int32>0</x:Int32>
+                                </RadioMenuFlyoutItem.Tag>
+                            </RadioMenuFlyoutItem>
 
                             <RadioMenuFlyoutItem
                                 Click="{x:Bind OnDoEngineModeSelectClicked}"
                                 GroupName="DoEngineModeModeRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(DoEngineMode.Key, DoEngineModeList[1].Key), Mode=OneWay}"
-                                Tag="1"
-                                Text="{x:Bind DoEngineModeList[1].Value}" />
+                                Text="{x:Bind DoEngineModeList[1].Value}">
+
+                                <RadioMenuFlyoutItem.Tag>
+                                    <x:Int32>1</x:Int32>
+                                </RadioMenuFlyoutItem.Tag>
+                            </RadioMenuFlyoutItem>
 
                             <RadioMenuFlyoutItem
                                 Click="{x:Bind OnDoEngineModeSelectClicked}"
                                 GroupName="DoEngineModeModeRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(DoEngineMode.Key, DoEngineModeList[2].Key), Mode=OneWay}"
-                                Tag="2"
-                                Text="{x:Bind DoEngineModeList[2].Value}" />
+                                Text="{x:Bind DoEngineModeList[2].Value}">
+
+                                <RadioMenuFlyoutItem.Tag>
+                                    <x:Int32>2</x:Int32>
+                                </RadioMenuFlyoutItem.Tag>
+                            </RadioMenuFlyoutItem>
                         </MenuFlyout>
                     </DropDownButton.Flyout>
                 </DropDownButton>

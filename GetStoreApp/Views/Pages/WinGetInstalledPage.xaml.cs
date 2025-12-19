@@ -366,9 +366,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is string increase && (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult))
+            if (sender.As<RadioMenuFlyoutItem>().Tag is bool increase && (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult))
             {
-                IsIncrease = Convert.ToBoolean(increase);
+                IsIncrease = increase;
                 if (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult)
                 {
                     InitializeMatchedInstalledApps();

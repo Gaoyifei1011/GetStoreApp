@@ -111,15 +111,23 @@
                                 Click="{x:Bind OnWinGetSourceSelectClicked}"
                                 GroupName="WinGetSourceRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(WinGetSource.Key, WinGetSourceList[0].Key), Mode=OneWay}"
-                                Tag="0"
-                                Text="{x:Bind WinGetSourceList[0].Value}" />
+                                Text="{x:Bind WinGetSourceList[0].Value}">
+
+                                <RadioMenuFlyoutItem.Tag>
+                                    <x:Int32>0</x:Int32>
+                                </RadioMenuFlyoutItem.Tag>
+                            </RadioMenuFlyoutItem>
 
                             <RadioMenuFlyoutItem
                                 Click="{x:Bind OnWinGetSourceSelectClicked}"
                                 GroupName="WinGetSourceRadioGroup"
                                 IsChecked="{x:Bind x:String.Equals(WinGetSource.Key, WinGetSourceList[1].Key), Mode=OneWay}"
-                                Tag="1"
-                                Text="{x:Bind WinGetSourceList[1].Value}" />
+                                Text="{x:Bind WinGetSourceList[1].Value}">
+
+                                <RadioMenuFlyoutItem.Tag>
+                                    <x:Int32>1</x:Int32>
+                                </RadioMenuFlyoutItem.Tag>
+                            </RadioMenuFlyoutItem>
                         </MenuFlyout>
                     </DropDownButton.Flyout>
                 </DropDownButton>

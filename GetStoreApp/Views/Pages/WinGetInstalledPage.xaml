@@ -239,15 +239,23 @@
                                     Click="{x:Bind OnSortWayClicked}"
                                     GroupName="InstalledSortWayRadioGroup"
                                     IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
-                                    Tag="True"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortIncrease')}" />
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortIncrease')}">
+
+                                    <RadioMenuFlyoutItem.Tag>
+                                        <x:Boolean>True</x:Boolean>
+                                    </RadioMenuFlyoutItem.Tag>
+                                </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
                                     Click="{x:Bind OnSortWayClicked}"
                                     GroupName="InstalledSortWayRadioGroup"
                                     IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
-                                    Tag="False"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortDecrease')}" />
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortDecrease')}">
+
+                                    <RadioMenuFlyoutItem.Tag>
+                                        <x:Boolean>False</x:Boolean>
+                                    </RadioMenuFlyoutItem.Tag>
+                                </RadioMenuFlyoutItem>
                             </MenuFlyoutSubItem>
 
                             <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortRule')}">

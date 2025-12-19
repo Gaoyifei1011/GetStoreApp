@@ -270,9 +270,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is string increase && SearchAppsResultKind is SearchAppsResultKind.Successfully)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is bool increase && SearchAppsResultKind is SearchAppsResultKind.Successfully)
             {
-                IsIncrease = Convert.ToBoolean(increase);
+                IsIncrease = increase;
                 SearchAppsResultKind = SearchAppsResultKind.Searching;
                 List<SearchAppsModel> searchAppsList = [.. SearchAppsCollection];
                 SearchAppsCollection.Clear();

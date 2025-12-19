@@ -201,7 +201,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is string increase && UpgradableAppsResultKind is UpgradableAppsResultKind.Successfully)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is bool increase && UpgradableAppsResultKind is UpgradableAppsResultKind.Successfully)
             {
                 IsIncrease = Convert.ToBoolean(increase);
                 InitializeMatchedUpgradableApps();

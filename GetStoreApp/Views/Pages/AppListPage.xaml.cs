@@ -1357,9 +1357,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is string increase)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is bool increase)
             {
-                IsIncrease = Convert.ToBoolean(increase);
+                IsIncrease = increase;
 
                 AppManagerResultKind = AppManagerResultKind.Loading;
                 AppManagerCollection.Clear();

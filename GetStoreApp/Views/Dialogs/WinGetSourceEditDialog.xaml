@@ -266,15 +266,23 @@
                                         Click="{x:Bind OnCatalogTrustLevelClicked}"
                                         GroupName="CatalogTrustLevel"
                                         IsChecked="{x:Bind x:Object.Equals(SelectedCatalogTrustLevel.Key, CatalogTrustLevelList[0].Key), Mode=OneWay}"
-                                        Tag="0"
-                                        Text="{x:Bind CatalogTrustLevelList[0].Value}" />
+                                        Text="{x:Bind CatalogTrustLevelList[0].Value}">
+
+                                        <RadioMenuFlyoutItem.Tag>
+                                            <x:Int32>0</x:Int32>
+                                        </RadioMenuFlyoutItem.Tag>
+                                    </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
                                         Click="{x:Bind OnCatalogTrustLevelClicked}"
                                         GroupName="CatalogTrustLevel"
                                         IsChecked="{x:Bind x:Object.Equals(SelectedCatalogTrustLevel.Key, CatalogTrustLevelList[1].Key), Mode=OneWay}"
-                                        Tag="1"
-                                        Text="{x:Bind CatalogTrustLevelList[1].Value}" />
+                                        Text="{x:Bind CatalogTrustLevelList[1].Value}">
+
+                                        <RadioMenuFlyoutItem.Tag>
+                                            <x:Int32>1</x:Int32>
+                                        </RadioMenuFlyoutItem.Tag>
+                                    </RadioMenuFlyoutItem>
                                 </MenuFlyout>
                             </DropDownButton.Flyout>
                         </DropDownButton>

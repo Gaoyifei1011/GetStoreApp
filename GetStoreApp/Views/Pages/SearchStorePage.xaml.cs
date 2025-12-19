@@ -246,7 +246,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 填入到文本框
         /// </summary>
-        private void OnFillinExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnFillInExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is string historyContent && !string.IsNullOrEmpty(historyContent))
             {

@@ -156,12 +156,12 @@
                 SelectionChanged="{x:Bind OnSelectionChanged}">
 
                 <NavigationView.MenuItems>
-                    <NavigationViewItem Tag="Home">
+                    <NavigationViewItem Tag="{x:Bind PageList[0].Key}">
 
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowHomeText"
-                                Tag="Home"
+                                Tag="{x:Bind PageList[0].Key}"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Home')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
@@ -207,12 +207,12 @@
 
                     <NavigationViewItemSeparator Margin="0,0,5,0" />
 
-                    <NavigationViewItem Tag="Store">
+                    <NavigationViewItem Tag="{x:Bind PageList[1].Key}">
 
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowStoreText"
-                                Tag="Store"
+                                Tag="{x:Bind PageList[1].Key}"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Store')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
@@ -256,12 +256,12 @@
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
 
-                    <NavigationViewItem Tag="AppUpdate">
+                    <NavigationViewItem Tag="{x:Bind PageList[2].Key}">
 
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowAppUpdateText"
-                                Tag="AppUpdate"
+                                Tag="{x:Bind PageList[2].Key}"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/AppUpdate')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
@@ -307,12 +307,12 @@
 
                     <NavigationViewItemSeparator Margin="0,0,5,0" />
 
-                    <NavigationViewItem Tag="WinGet">
+                    <NavigationViewItem Tag="{x:Bind PageList[3].Key}">
 
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowWinGetText"
-                                Tag="WinGet"
+                                Tag="{x:Bind PageList[3].Key}"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/WinGet')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
@@ -356,12 +356,12 @@
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
 
-                    <NavigationViewItem Tag="AppManager">
+                    <NavigationViewItem Tag="{x:Bind PageList[5].Key}">
 
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowAppManagerText"
-                                Tag="AppManager"
+                                Tag="{x:Bind PageList[4].Key}"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/AppManager')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
@@ -407,12 +407,12 @@
 
                     <NavigationViewItemSeparator Margin="0,0,5,0" />
 
-                    <NavigationViewItem Tag="Download">
+                    <NavigationViewItem Tag="{x:Bind PageList[5].Key}">
 
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowDownloadText"
-                                Tag="Download"
+                                Tag="{x:Bind PageList[5].Key}"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Download')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
@@ -456,12 +456,12 @@
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
 
-                    <NavigationViewItem Tag="Web">
+                    <NavigationViewItem Tag="{x:Bind PageList[6].Key}">
 
                         <NavigationViewItem.Content>
                             <TextBlock
                                 x:Name="WindowWebText"
-                                Tag="Web"
+                                Tag="{x:Bind PageList[6].Key}"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Web')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
@@ -507,7 +507,7 @@
                 </NavigationView.MenuItems>
 
                 <NavigationView.FooterMenuItems>
-                    <NavigationViewItem Tag="Settings">
+                    <NavigationViewItem Tag="{x:Bind PageList[7].Key}">
 
                         <NavigationViewItem.Content>
                             <TextBlock

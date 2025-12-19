@@ -261,9 +261,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnThemeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
             {
-                Theme = ThemeList[Convert.ToInt32(tag)];
+                Theme = ThemeList[tag];
                 ThemeService.SetTheme(Theme.Key);
             }
         }
@@ -273,9 +273,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnBackdropSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
             {
-                Backdrop = BackdropList[Convert.ToInt32(tag)];
+                Backdrop = BackdropList[tag];
                 BackdropService.SetBackdrop(Backdrop.Key);
                 AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Backdrop.Key, BackdropList[0].Key);
 
