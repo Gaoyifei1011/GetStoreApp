@@ -1,4 +1,8 @@
 ﻿{
+  "AppLinkOpenMode": "Способ открытия ссылки приложения",
+  "AppLinkOpenModeBuiltInApp": "встроенное в приложение",
+  "AppLinkOpenModeDescription": "Настроить способ открытия ссылок приложений",
+  "AppLinkOpenModeSystemBrowser": "браузер по умолчанию",
   "BlockMap": "Не отображать файлы с расширением BlockMap",
   "BlockMapDescription": "Файлы BlockMap создаются автоматически при упаковке makeappx.exe",
   "BlockMapOffContent": "Не фильтровать",

@@ -1,4 +1,8 @@
 {
+  "AppLinkOpenMode": "אופן פתיחת קישורי אפליקציה",
+  "AppLinkOpenModeBuiltInApp": "מותקן באפליקציה",
+  "AppLinkOpenModeDescription": "הגדר כיצד לפתוח קישורים של אפליקציות",
+  "AppLinkOpenModeSystemBrowser": "דפדפן ברירת המחדל של המערכת",
   "BlockMap": "אל תציג קבצים עם סיומת BlockMap",
   "BlockMapDescription": "קובצי BlockMap נוצרים אוטומטית על ידי makeappx.exe בעת האריזה",
   "BlockMapOffContent": "אל תסנן",

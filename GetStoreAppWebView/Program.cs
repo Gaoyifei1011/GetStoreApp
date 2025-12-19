@@ -4,9 +4,11 @@ using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.Services.Settings;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
+using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Activation;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
 using WinRT;
@@ -21,6 +23,8 @@ namespace GetStoreAppWebView
     /// </summary>
     public class Program
     {
+        public static AppActivationArguments AppActivationArguments { get; private set; }
+
         /// <summary>
         /// 应用程序的主入口点
         /// </summary>
@@ -36,13 +40,23 @@ namespace GetStoreAppWebView
             }
 
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-            InitializeResourcesAsync().Wait();
+            AppActivationArguments = AppInstance.GetCurrent().GetActivatedEventArgs();
 
-            if (RuntimeHelper.WebView2Type is WebView2Type.None)
+            if (AppActivationArguments.Kind is ExtendedActivationKind.Protocol && RuntimeHelper.WebView2Type is WebView2Type.None)
             {
-                Launcher.LaunchUriAsync(new Uri("https://apps.microsoft.com")).Wait();
+                ProtocolActivatedEventArgs protocolActivatedEventArgs = AppActivationArguments.Data.As<ProtocolActivatedEventArgs>();
+                if (protocolActivatedEventArgs.Data.TryGetValue("AppLink", out object appLinkObj) && appLinkObj is string appLink && !string.IsNullOrEmpty(appLink))
+                {
+                    Launcher.LaunchUriAsync(new Uri(appLink)).Wait();
+                }
+                else
+                {
+                    Launcher.LaunchUriAsync(new Uri("https://apps.microsoft.com")).Wait();
+                }
                 return;
             }
+
+            InitializeResourcesAsync().Wait();
 
             Application.Start((param) =>
             {

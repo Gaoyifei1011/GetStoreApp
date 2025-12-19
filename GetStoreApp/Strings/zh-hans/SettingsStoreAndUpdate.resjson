@@ -1,4 +1,8 @@
 ﻿{
+  "AppLinkOpenMode": "应用链接打开方式",
+  "AppLinkOpenModeBuiltInApp": "应用内置",
+  "AppLinkOpenModeDescription": "设置应用链接的打开方式",
+  "AppLinkOpenModeSystemBrowser": "系统默认浏览器",
   "BlockMap": "不显示文件扩展名称为BlockMap的文件",
   "BlockMapDescription": "BlockMap文件由makeappx.exe打包时自动创建",
   "BlockMapOffContent": "不过滤",

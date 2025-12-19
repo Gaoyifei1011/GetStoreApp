@@ -3,6 +3,7 @@ using GetStoreApp.Helpers.Store;
 using GetStoreApp.Models;
 using GetStoreApp.Services.History;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Settings;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
@@ -15,6 +16,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
+using Windows.Foundation.Collections;
 using Windows.System;
 using WinRT;
 
@@ -262,7 +265,17 @@ namespace GetStoreApp.Views.Pages
                 {
                     try
                     {
-                        await Launcher.LaunchUriAsync(new Uri(appLink));
+                        if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[0]))
+                        {
+                            await Launcher.LaunchUriAsync(new Uri("getstoreappwebview:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                            {
+                                {"AppLink", appLink },
+                            });
+                        }
+                        else if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[1]))
+                        {
+                            await Launcher.LaunchUriAsync(new Uri(appLink));
+                        }
                     }
                     catch (Exception e)
                     {

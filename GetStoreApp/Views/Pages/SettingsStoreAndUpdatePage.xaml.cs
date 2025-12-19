@@ -25,6 +25,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsStoreAndUpdatePage : Page, INotifyPropertyChanged
     {
+        private readonly string AppLinkOpenModeBuiltInAppString = ResourceService.GetLocalized("SettingsStoreAndUpdate/AppLinkOpenModeBuiltInApp");
+        private readonly string AppLinkOpenModeSystemBrowserString = ResourceService.GetLocalized("SettingsStoreAndUpdate/AppLinkOpenModeSystemBrowser");
         private readonly string QueryLinksModeOfficialString = ResourceService.GetLocalized("SettingsStoreAndUpdate/QueryLinksModeOfficial");
         private readonly string QueryLinksModeThirdPartyString = ResourceService.GetLocalized("SettingsStoreAndUpdate/QueryLinksModeThirdParty");
         private readonly string InstallModeAppInstallString = ResourceService.GetLocalized("SettingsStoreAndUpdate/InstallModeAppInstall");
@@ -42,6 +44,22 @@ namespace GetStoreApp.Views.Pages
                 {
                     _queryLinksMode = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(QueryLinksMode)));
+                }
+            }
+        }
+
+        private KeyValuePair<string, string> _appLinkOpenMode;
+
+        public KeyValuePair<string, string> AppLinkOpenMode
+        {
+            get { return _appLinkOpenMode; }
+
+            set
+            {
+                if (!Equals(_appLinkOpenMode, value))
+                {
+                    _appLinkOpenMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppLinkOpenMode)));
                 }
             }
         }
@@ -160,6 +178,8 @@ namespace GetStoreApp.Views.Pages
 
         private List<KeyValuePair<string, string>> QueryLinksModeList { get; } = [];
 
+        private List<KeyValuePair<string, string>> AppLinkOpenModeList { get; } = [];
+
         private List<KeyValuePair<string, string>> InstallModeList { get; } = [];
 
         private ObservableCollection<StoreRegionModel> StoreRegionCollection { get; } = [];
@@ -172,6 +192,10 @@ namespace GetStoreApp.Views.Pages
             QueryLinksModeList.Add(KeyValuePair.Create(QueryLinksModeService.QueryLinksModeList[0], QueryLinksModeOfficialString));
             QueryLinksModeList.Add(KeyValuePair.Create(QueryLinksModeService.QueryLinksModeList[1], QueryLinksModeThirdPartyString));
             QueryLinksMode = QueryLinksModeList.Find(item => string.Equals(item.Key, QueryLinksModeService.QueryLinksMode, StringComparison.OrdinalIgnoreCase));
+
+            AppLinkOpenModeList.Add(KeyValuePair.Create(AppLinkOpenModeService.AppLinkOpenModeList[0], AppLinkOpenModeBuiltInAppString));
+            AppLinkOpenModeList.Add(KeyValuePair.Create(AppLinkOpenModeService.AppLinkOpenModeList[1], AppLinkOpenModeSystemBrowserString));
+            AppLinkOpenMode = AppLinkOpenModeList.Find(item => string.Equals(item.Key, AppLinkOpenModeService.AppLinkOpenMode, StringComparison.OrdinalIgnoreCase));
 
             InstallModeList.Add(KeyValuePair.Create(InstallModeService.InstallModeList[0], InstallModeAppInstallString));
             InstallModeList.Add(KeyValuePair.Create(InstallModeService.InstallModeList[1], InstallModeCodeInstallString));
@@ -239,10 +263,22 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnQueryLinksModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
             {
-                QueryLinksMode = QueryLinksModeList[Convert.ToInt32(tag)];
+                QueryLinksMode = QueryLinksModeList[tag];
                 QueryLinksModeService.SetQueryLinksMode(QueryLinksMode.Key);
+            }
+        }
+
+        /// <summary>
+        /// 选择应用链接打开方式
+        /// </summary>
+        private void OnAppLinkOpenModeSelectClicked(object sender, RoutedEventArgs args)
+        {
+            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
+            {
+                AppLinkOpenMode = AppLinkOpenModeList[tag];
+                AppLinkOpenModeService.SetAppLinkOpenMode(AppLinkOpenMode.Key);
             }
         }
 
@@ -251,9 +287,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is string tag)
+            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
             {
-                InstallMode = InstallModeList[Convert.ToInt32(tag)];
+                InstallMode = InstallModeList[tag];
                 InstallModeService.SetInstallMode(InstallMode.Key);
             }
         }

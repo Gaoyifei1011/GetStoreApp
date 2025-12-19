@@ -17,6 +17,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.Web.WebView2.Core;
+using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ using System.IO;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
@@ -44,6 +46,7 @@ namespace GetStoreAppWebView.Views.Windows
     public sealed partial class WebViewWindow : Window, INotifyPropertyChanged
     {
         private readonly string TitleString = ResourceService.GetLocalized("WebView/Title");
+        private readonly string WebTitleString = ResourceService.GetLocalized("WebView/WebTitle");
         private readonly string RunningAdministratorString = ResourceService.GetLocalized("WebView/RunningAdministrator");
 
         private readonly ContentIsland contentIsland;
@@ -165,6 +168,22 @@ namespace GetStoreAppWebView.Views.Windows
             }
         }
 
+        private string _webTitle;
+
+        public string WebTitle
+        {
+            get { return _webTitle; }
+
+            set
+            {
+                if (!string.Equals(_webTitle, value))
+                {
+                    _webTitle = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WebTitle)));
+                }
+            }
+        }
+
         private bool _isDownloadClickEnabled;
 
         public bool IsDownloadClickEnabled
@@ -204,6 +223,7 @@ namespace GetStoreAppWebView.Views.Windows
             InitializeComponent();
 
             // 窗口部分初始化
+            WebTitle = WebTitleString;
             WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
             overlappedPresenter = AppWindow.Presenter.As<OverlappedPresenter>();
             ExtendsContentIntoTitleBar = true;
@@ -481,7 +501,23 @@ namespace GetStoreAppWebView.Views.Windows
             if (coreWebView2Environment is not null)
             {
                 await WebViewBrowser.EnsureCoreWebView2Async(coreWebView2Environment);
-                WebViewBrowser.CoreWebView2.Navigate("https://apps.microsoft.com");
+                if (Program.AppActivationArguments.Kind is ExtendedActivationKind.Protocol)
+                {
+                    ProtocolActivatedEventArgs protocolActivatedEventArgs = Program.AppActivationArguments.Data.As<ProtocolActivatedEventArgs>();
+                    if (protocolActivatedEventArgs.Data is ValueSet protocolData && protocolData.TryGetValue("AppLink", out object appLinkObj) && appLinkObj is string appLink && !string.IsNullOrEmpty(appLink))
+                    {
+                        WebViewBrowser.CoreWebView2.Navigate(appLink);
+                    }
+                    else
+                    {
+                        WebViewBrowser.CoreWebView2.Navigate("https://apps.microsoft.com");
+                    }
+                }
+                else
+                {
+                    WebViewBrowser.CoreWebView2.Navigate("https://apps.microsoft.com");
+                }
+
                 CoreWebView2Profile coreWebView2Profile = WebViewBrowser.CoreWebView2.Profile;
                 coreWebView2Profile.DefaultDownloadFolderPath = DownloadOptionsService.DownloadFolder;
             }
@@ -518,6 +554,14 @@ namespace GetStoreAppWebView.Views.Windows
         private void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
             WebViewBrowser?.Reload();
+        }
+
+        /// <summary>
+        /// 导航到主页
+        /// </summary>
+        private void OnHomeClicked(object sender, RoutedEventArgs args)
+        {
+            WebViewBrowser?.CoreWebView2.Navigate("https://apps.microsoft.com");
         }
 
         /// <summary>
@@ -658,6 +702,16 @@ namespace GetStoreAppWebView.Views.Windows
         private void OnWebView2NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
         {
             IsLoading = true;
+            if (string.IsNullOrEmpty(sender.CoreWebView2.DocumentTitle))
+            {
+                WebTitle = WebTitleString;
+                WindowTitle = TitleString;
+            }
+            else
+            {
+                WebTitle = sender.CoreWebView2.DocumentTitle;
+                WindowTitle = string.Format("{0} - {1}", sender.CoreWebView2.DocumentTitle, TitleString);
+            }
         }
 
         /// <summary>
@@ -666,7 +720,16 @@ namespace GetStoreAppWebView.Views.Windows
         private void OnWebView2NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
         {
             IsLoading = false;
-            WindowTitle = string.Format("{0} - {1}", WebViewBrowser.CoreWebView2.DocumentTitle, TitleString);
+            if (string.IsNullOrEmpty(sender.CoreWebView2.DocumentTitle))
+            {
+                WebTitle = WebTitleString;
+                WindowTitle = TitleString;
+            }
+            else
+            {
+                WebTitle = sender.CoreWebView2.DocumentTitle;
+                WindowTitle = string.Format("{0} - {1}", sender.CoreWebView2.DocumentTitle, TitleString);
+            }
         }
 
         /// <summary>

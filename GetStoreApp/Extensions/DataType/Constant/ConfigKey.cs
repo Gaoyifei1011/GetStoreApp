@@ -9,6 +9,8 @@
 
         public const string AlwaysShowBackdropKey = "AlwaysShowBackdrop";
 
+        public const string AppLinkOpenModeKey = "AppLinkOpenMode";
+
         public const string BackdropKey = "AppBackdrop";
 
         public const string BlockMapFilterKey = "BlockMapFilterValue";

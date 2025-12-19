@@ -1,4 +1,8 @@
 ﻿{
+  "AppLinkOpenMode": "App link open mode",
+  "AppLinkOpenModeBuiltInApp": "Built-in app",
+  "AppLinkOpenModeDescription": "Set app link open mode",
+  "AppLinkOpenModeSystemBrowser": "System default browser",
   "BlockMap": "Files with file name extensions called BlockMap are not displayed",
   "BlockMapDescription": "BlockMap files are created automatically by makeappx.exe when they are packaged",
   "BlockMapOffContent": "Do not filter",

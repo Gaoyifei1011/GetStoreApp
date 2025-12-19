@@ -156,46 +156,108 @@
                 </Grid.ColumnDefinitions>
 
                 <!--  左侧控制栏  -->
-                <CommandBar
+                <Grid
                     Grid.Column="0"
                     Margin="4,0,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    DefaultLabelPosition="Right">
+                    ColumnSpacing="4">
 
-                    <CommandBar.PrimaryCommands>
-                        <AppBarButton
-                            Click="{x:Bind OnBrowserBackClicked}"
-                            IsEnabled="{x:Bind CanGoBack, Mode=OneWay}"
-                            Label="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Back')}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                            <AppBarButton.Icon>
-                                <FontIcon Glyph="&#xE72B;" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
+                    <Button
+                        Grid.Column="0"
+                        Width="34"
+                        Height="34"
+                        Padding="8"
+                        Click="{x:Bind OnBrowserBackClicked}"
+                        IsEnabled="{x:Bind CanGoBack, Mode=OneWay}"
+                        Style="{StaticResource SubtleButtonStyle}">
 
-                        <AppBarButton
-                            Click="{x:Bind OnBrowserForwardClicked}"
-                            IsEnabled="{x:Bind CanGoForward, Mode=OneWay}"
-                            Label="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Forward')}">
+                        <Button.Content>
+                            <FontIcon FontSize="16" Glyph="&#xE72B;" />
+                        </Button.Content>
 
-                            <AppBarButton.Icon>
-                                <FontIcon Glyph="&#xE72A;" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Back')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        </ToolTipService.ToolTip>
+                    </Button>
 
-                        <AppBarButton
-                            Click="{x:Bind OnRefreshClicked}"
-                            IsEnabled="{x:Bind IsLoading.Equals(x:False), Mode=OneWay}"
-                            Label="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Refresh')}">
+                    <Button
+                        Grid.Column="1"
+                        Width="34"
+                        Height="34"
+                        Padding="8"
+                        Click="{x:Bind OnBrowserForwardClicked}"
+                        IsEnabled="{x:Bind CanGoForward, Mode=OneWay}"
+                        Style="{StaticResource SubtleButtonStyle}"
+                        Visibility="{x:Bind CanGoForward, Mode=OneWay}">
 
-                            <AppBarButton.Icon>
-                                <FontIcon Glyph="&#xE72C;" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                    </CommandBar.PrimaryCommands>
-                </CommandBar>
+                        <Button.Content>
+                            <FontIcon FontSize="16" Glyph="&#xE72A;" />
+                        </Button.Content>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Forward')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        </ToolTipService.ToolTip>
+                    </Button>
+
+                    <Button
+                        Grid.Column="2"
+                        Width="34"
+                        Height="34"
+                        Padding="8"
+                        Click="{x:Bind OnRefreshClicked}"
+                        Style="{StaticResource SubtleButtonStyle}">
+
+                        <Button.Content>
+                            <FontIcon FontSize="16" Glyph="&#xE72C;" />
+                        </Button.Content>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Refresh')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        </ToolTipService.ToolTip>
+                    </Button>
+
+                    <Button
+                        Grid.Column="3"
+                        Width="34"
+                        Height="34"
+                        Padding="8"
+                        Click="{x:Bind OnHomeClicked}"
+                        Style="{StaticResource SubtleButtonStyle}">
+
+                        <Button.Content>
+                            <FontIcon FontSize="16" Glyph="&#xE80F;" />
+                        </Button.Content>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Home')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        </ToolTipService.ToolTip>
+                    </Button>
+                </Grid>
 
                 <!--  网页标题  -->
                 <Grid
@@ -206,7 +268,6 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <ProgressRing
@@ -217,15 +278,25 @@
                         HorizontalAlignment="Right"
                         IsActive="{x:Bind IsLoading, Mode=OneWay}"
                         Visibility="{x:Bind IsLoading, Mode=OneWay}" />
+
                     <TextBlock
+                        x:Name="WebTitleText"
                         Grid.Column="1"
+                        MaxWidth="400"
                         VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WebView/WebTitle')}" />
-                    <TextBlock
-                        Grid.Column="2"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Loading')}"
-                        Visibility="{x:Bind IsLoading, Mode=OneWay}" />
+                        Text="{x:Bind WebTitle, Mode=OneWay}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Content="{x:Bind WebTitle, Mode=OneWay}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
+                                Visibility="{x:Bind WebTitleText.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
                 </Grid>
 
                 <!--  右侧控制栏  -->
