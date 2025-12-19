@@ -203,35 +203,46 @@ namespace GetStoreApp.Views.Dialogs
         }
 
         /// <summary>
-        /// 文本输入框内容发生更改时触发的事件
+        /// 数据源名称文本输入框内容发生更改时触发的事件
         /// </summary>
-        private void OnTextChanged(object sender, TextChangedEventArgs args)
+        private void OnSourceNameTextChanged(object sender, TextChangedEventArgs args)
         {
             if (sender.As<TextBox>() is TextBox textBox)
             {
-                switch (Convert.ToString(textBox.Tag))
-                {
-                    case nameof(SourceName):
-                        {
-                            SourceName = textBox.Text;
-                            break;
-                        }
-                    case nameof(SourceUri):
-                        {
-                            SourceUri = textBox.Text;
-                            break;
-                        }
-                    case nameof(CustomHeader):
-                        {
-                            CustomHeader = textBox.Text;
-                            break;
-                        }
-                    case nameof(SourceType):
-                        {
-                            SourceType = textBox.Text;
-                            break;
-                        }
-                }
+                SourceName = textBox.Text;
+            }
+        }
+
+        /// <summary>
+        /// 数据源链接文本输入框内容发生更改时触发的事件
+        /// </summary>
+        private void OnSourceUriTextChanged(object sender, TextChangedEventArgs args)
+        {
+            if (sender.As<TextBox>() is TextBox textBox)
+            {
+                SourceUri = textBox.Text;
+            }
+        }
+
+        /// <summary>
+        /// 自定义标头文本输入框内容发生更改时触发的事件
+        /// </summary>
+        private void OnCustomHeaderTextChanged(object sender, TextChangedEventArgs args)
+        {
+            if (sender.As<TextBox>() is TextBox textBox)
+            {
+                CustomHeader = textBox.Text;
+            }
+        }
+
+        /// <summary>
+        /// 数据源类型文本输入框内容发生更改时触发的事件
+        /// </summary>
+        private void OnSourceTypeTextChanged(object sender, TextChangedEventArgs args)
+        {
+            if (sender.As<TextBox>() is TextBox textBox)
+            {
+                SourceType = textBox.Text;
             }
         }
 

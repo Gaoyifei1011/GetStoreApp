@@ -93,9 +93,8 @@
                             Width="280"
                             VerticalAlignment="Center"
                             IsEnabled="{x:Bind IsSaving.Equals(x:False), Mode=OneWay}"
-                            Tag="SourceName"
                             Text="{x:Bind SourceName, Mode=OneWay}"
-                            TextChanged="{x:Bind OnTextChanged}" />
+                            TextChanged="{x:Bind OnSourceNameTextChanged}" />
                     </Grid>
 
                     <Grid
@@ -123,9 +122,8 @@
                             Width="280"
                             VerticalAlignment="Center"
                             IsEnabled="{x:Bind IsSaving.Equals(x:False), Mode=OneWay}"
-                            Tag="SourceUri"
                             Text="{x:Bind SourceUri, Mode=OneWay}"
-                            TextChanged="{x:Bind OnTextChanged}" />
+                            TextChanged="{x:Bind OnSourceUriTextChanged}" />
                     </Grid>
 
                     <Grid
@@ -153,9 +151,8 @@
                             Width="280"
                             VerticalAlignment="Center"
                             IsEnabled="{x:Bind IsSaving.Equals(x:False), Mode=OneWay}"
-                            Tag="CustomHeader"
                             Text="{x:Bind CustomHeader, Mode=OneWay}"
-                            TextChanged="{x:Bind OnTextChanged}" />
+                            TextChanged="{x:Bind OnCustomHeaderTextChanged}" />
                     </Grid>
 
                     <Grid
@@ -183,9 +180,8 @@
                             Width="280"
                             VerticalAlignment="Center"
                             IsEnabled="{x:Bind IsSaving.Equals(x:False), Mode=OneWay}"
-                            Tag="SourceType"
                             Text="{x:Bind SourceType, Mode=OneWay}"
-                            TextChanged="{x:Bind OnTextChanged}" />
+                            TextChanged="{x:Bind OnSourceTypeTextChanged}" />
                     </Grid>
 
                     <Grid
