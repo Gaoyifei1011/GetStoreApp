@@ -3218,7 +3218,7 @@ namespace GetStoreAppInstaller.Views.Windows
                     }
                     catch (Exception exception)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(ResourceService), nameof(GetLocalizedString), 1, exception);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(GetLocalizedString), 1, exception);
                         return resourceKey;
                     }
                 }
