@@ -45,6 +45,7 @@ namespace GetStoreAppPinner.Services.Settings
             }
 
             ApplicationLanguages.PrimaryLanguageOverride = AppLanguage;
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(AppLanguage);
             FlowDirection = CultureInfo.GetCultureInfo(AppLanguage).TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
         }
     }

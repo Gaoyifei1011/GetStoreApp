@@ -37,6 +37,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text.RegularExpressions;
@@ -97,7 +98,6 @@ namespace GetStoreAppInstaller.Views.Windows
         private readonly string UnsupportedMultiFilesString = ResourceService.GetLocalized("Installer/UnsupportedMultiFiles");
         private readonly string WaitInstallString = ResourceService.GetLocalized("Installer/WaitInstall");
         private readonly string YesString = ResourceService.GetLocalized("Installer/Yes");
-
         private readonly Guid CLSID_AppxFactory = new("5842A140-FF9F-4166-8F5C-62F5B7B0C781");
         private readonly Guid CLSID_AppxBundleFactory = new("378E0446-5384-43B7-8877-E7DBDD883446");
         private readonly PackageManager packageManager = new();
@@ -734,7 +734,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private ObservableCollection<ApplicationModel> ApplicationCollection { get; } = [];
 
-        private ObservableCollection<Language> LanguageCollection { get; } = [];
+        private ObservableCollection<CultureInfo> LanguageCollection { get; } = [];
 
         private ObservableCollection<InstallDependencyModel> InstallDependencyCollection { get; } = [];
 
@@ -3655,7 +3655,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 {
                     foreach (string language in packageInformation.LanguageList)
                     {
-                        LanguageCollection.Add(new Language(language));
+                        LanguageCollection.Add(new CultureInfo(language));
                     }
                 }
 

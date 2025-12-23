@@ -100,6 +100,7 @@ namespace GetStoreApp.Services.Settings
                     if (existResult)
                     {
                         SetLanguage(currentParentLanguage);
+                        CultureInfo.DefaultThreadCurrentUICulture = currentParentCultureInfo;
                         FlowDirection = currentParentCultureInfo.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
                         User32Library.SetProcessDefaultLayout(Convert.ToUInt32(currentParentCultureInfo.TextInfo.IsRightToLeft));
                         return currentParentLanguage;
@@ -110,6 +111,7 @@ namespace GetStoreApp.Services.Settings
                     {
                         SetLanguage(DefaultAppLanguage);
                         CultureInfo defaultCultureInfo = CultureInfo.GetCultureInfo(DefaultAppLanguage.Key);
+                        CultureInfo.DefaultThreadCurrentUICulture = defaultCultureInfo;
                         FlowDirection = defaultCultureInfo.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
                         User32Library.SetProcessDefaultLayout(Convert.ToUInt32(defaultCultureInfo.TextInfo.IsRightToLeft));
                         return DefaultAppLanguage;
@@ -119,6 +121,7 @@ namespace GetStoreApp.Services.Settings
             else
             {
                 CultureInfo savedCultureInfo = CultureInfo.GetCultureInfo(Convert.ToString(language));
+                CultureInfo.DefaultThreadCurrentUICulture = savedCultureInfo;
                 FlowDirection = savedCultureInfo.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
                 User32Library.SetProcessDefaultLayout(Convert.ToUInt32(savedCultureInfo.TextInfo.IsRightToLeft));
                 KeyValuePair<string, string> languageKeyValue = LanguageList.Find(item => Convert.ToString(language).Contains(item.Key, StringComparison.OrdinalIgnoreCase));

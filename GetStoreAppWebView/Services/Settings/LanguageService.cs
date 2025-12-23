@@ -47,6 +47,7 @@ namespace GetStoreAppWebView.Services.Settings
 
             ApplicationLanguages.PrimaryLanguageOverride = AppLanguage;
             CultureInfo cultureInfo = CultureInfo.GetCultureInfo(AppLanguage);
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
             FlowDirection = cultureInfo.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
             User32Library.SetProcessDefaultLayout(Convert.ToUInt32(cultureInfo.TextInfo.IsRightToLeft));
         }

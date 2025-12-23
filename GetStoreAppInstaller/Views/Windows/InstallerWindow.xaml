@@ -7,7 +7,7 @@
     xmlns:converter="using:GetStoreAppInstaller.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="using:GetStoreAppInstaller.Extensions.DataType.Enums"
-    xmlns:globalization="using:Windows.Globalization"
+    xmlns:globalization="using:System.Globalization"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreAppInstaller.Models"
     xmlns:rootservice="using:GetStoreAppInstaller.Services.Root"
@@ -2654,7 +2654,7 @@
                                                 </ListView.ItemsPanel>
 
                                                 <ListView.ItemTemplate>
-                                                    <DataTemplate x:DataType="globalization:Language">
+                                                    <DataTemplate x:DataType="globalization:CultureInfo">
                                                         <Grid
                                                             Width="220"
                                                             Height="30"
@@ -2689,7 +2689,7 @@
                                                                             <TextBlock>
                                                                                 <Run Text="{x:Bind DisplayName}" />
                                                                                 <Run Text=" - " />
-                                                                                <Run Text="{x:Bind LanguageTag}" />
+                                                                                <Run Text="{x:Bind Name}" />
                                                                             </TextBlock>
                                                                         </ToolTip.Content>
                                                                     </ToolTip>
