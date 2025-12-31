@@ -595,7 +595,6 @@ namespace GetStoreApp.Views.Pages
                 SelectedType = type;
                 sampleLink = SampleLinkList[TypeList.FindIndex(item => string.Equals(item.InternalName, SelectedType.InternalName))];
                 LinkPlaceHolderText = SampleTitleString + sampleLink;
-                LinkText = string.Empty;
             }
         }
 
