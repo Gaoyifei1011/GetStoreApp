@@ -290,7 +290,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnQueryLinksExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is string appLink && MainWindow.Current.GetFrameContent() is StorePage storePage && !Equals(storePage.GetCurrentPageType(), typeof(QueryLinksPage)))
+            if (args.Parameter is string appLink && MainWindow.Current.GetFrameContent() is StorePage storePage && !Equals(storePage.GetCurrentPageType(), storePage.PageList[0]))
             {
                 storePage.NavigateTo(storePage.PageList[0], new List<string> { "0", null, appLink }, false);
             }

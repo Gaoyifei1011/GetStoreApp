@@ -352,7 +352,7 @@ namespace GetStoreApp.Views.Windows
                 }
                 else if (contentDialogResult is ContentDialogResult.Secondary)
                 {
-                    if (!Equals(GetCurrentPageType(), typeof(DownloadPage)))
+                    if (GetFrameContent() is not DownloadPage)
                     {
                         NavigateTo(typeof(DownloadPage));
                     }
@@ -1213,27 +1213,27 @@ namespace GetStoreApp.Views.Windows
             {
                 if (appLaunchArguments.SubParameters is not null && appLaunchArguments.SubParameters.Count >= 1)
                 {
-                    if (appLaunchArguments.SubParameters[0] is "Home" && !Equals(GetCurrentPageType(), typeof(HomePage)))
+                    if (appLaunchArguments.SubParameters[0] is "Home" && GetFrameContent() is not HomePage)
                     {
                         NavigateTo(typeof(HomePage));
                     }
-                    else if (appLaunchArguments.SubParameters[0] is "Store" && !Equals(GetCurrentPageType(), typeof(StorePage)))
+                    else if (appLaunchArguments.SubParameters[0] is "Store" && GetFrameContent() is not StorePage)
                     {
                         NavigateTo(typeof(StorePage));
                     }
-                    else if (appLaunchArguments.SubParameters[0] is "AppUpdate" && !Equals(GetCurrentPageType(), typeof(AppUpdatePage)))
+                    else if (appLaunchArguments.SubParameters[0] is "AppUpdate" && GetFrameContent() is not AppUpdatePage)
                     {
                         NavigateTo(typeof(AppUpdatePage));
                     }
-                    else if (appLaunchArguments.SubParameters[0] is "WinGet" && !Equals(GetCurrentPageType(), typeof(WinGetPage)))
+                    else if (appLaunchArguments.SubParameters[0] is "WinGet" && GetFrameContent() is not WinGetPage)
                     {
                         NavigateTo(typeof(WinGetPage));
                     }
-                    else if (appLaunchArguments.SubParameters[0] is "AppManager" && !Equals(GetCurrentPageType(), typeof(AppManagerPage)))
+                    else if (appLaunchArguments.SubParameters[0] is "AppManager" && GetFrameContent() is not AppManagerPage)
                     {
                         NavigateTo(typeof(AppManagerPage));
                     }
-                    else if (appLaunchArguments.SubParameters[0] is "Download" && !Equals(GetCurrentPageType(), typeof(DownloadPage)))
+                    else if (appLaunchArguments.SubParameters[0] is "Download" && GetFrameContent() is not DownloadPage)
                     {
                         NavigateTo(typeof(DownloadPage));
                     }
@@ -1244,27 +1244,27 @@ namespace GetStoreApp.Views.Windows
             {
                 if (appLaunchArguments.SubParameters is not null && appLaunchArguments.SubParameters.Count >= 1)
                 {
-                    if (appLaunchArguments.SubParameters[0] is "Home" && !Equals(GetCurrentPageType(), typeof(HomePage)))
+                    if (appLaunchArguments.SubParameters[0] is "Home" && GetFrameContent() is not HomePage)
                     {
                         NavigateTo(typeof(HomePage));
                     }
-                    else if (appLaunchArguments.SubParameters[0] is "Store" && !Equals(GetCurrentPageType(), typeof(StorePage)))
+                    else if (appLaunchArguments.SubParameters[0] is "Store" && GetFrameContent() is not StorePage)
                     {
                         NavigateTo(typeof(StorePage));
                     }
-                    else if (appLaunchArguments.SubParameters[0] is "AppUpdate" && !Equals(GetCurrentPageType(), typeof(AppUpdatePage)))
+                    else if (appLaunchArguments.SubParameters[0] is "AppUpdate" && GetFrameContent() is not AppUpdatePage)
                     {
                         NavigateTo(typeof(AppUpdatePage));
                     }
-                    else if (appLaunchArguments.SubParameters[0] is "WinGet" && !Equals(GetCurrentPageType(), typeof(WinGetPage)))
+                    else if (appLaunchArguments.SubParameters[0] is "WinGet" && GetFrameContent() is not WinGetPage)
                     {
                         NavigateTo(typeof(WinGetPage));
                     }
-                    else if (appLaunchArguments.SubParameters[0] is "AppManager" && !Equals(GetCurrentPageType(), typeof(AppManagerPage)))
+                    else if (appLaunchArguments.SubParameters[0] is "AppManager" && GetFrameContent() is not AppManagerPage)
                     {
                         NavigateTo(typeof(AppManagerPage));
                     }
-                    else if (appLaunchArguments.SubParameters[0] is "Download" && !Equals(GetCurrentPageType(), typeof(DownloadPage)))
+                    else if (appLaunchArguments.SubParameters[0] is "Download" && GetFrameContent() is not DownloadPage)
                     {
                         NavigateTo(typeof(DownloadPage));
                     }
@@ -1275,9 +1275,9 @@ namespace GetStoreApp.Views.Windows
             {
                 if (appLaunchArguments.SubParameters is not null && appLaunchArguments.SubParameters.Count is 3)
                 {
-                    if (Equals(GetCurrentPageType(), typeof(StorePage)))
+                    if (GetFrameContent() is StorePage storePage)
                     {
-                        (GetFrameContent() as StorePage).InitializeQueryLinksContent(appLaunchArguments.SubParameters);
+                        storePage.InitializeQueryLinksContent(appLaunchArguments.SubParameters);
                     }
                     else
                     {
@@ -1301,7 +1301,7 @@ namespace GetStoreApp.Views.Windows
                     {
                         if (appLaunchArguments.SubParameters[0] is "DownloadSettings")
                         {
-                            if (!Equals(GetCurrentPageType(), typeof(SettingsPage)))
+                            if (GetFrameContent() is not SettingsPage)
                             {
                                 NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.Download);
                             }
@@ -1327,7 +1327,7 @@ namespace GetStoreApp.Views.Windows
                         }
                         else if (appLaunchArguments.SubParameters[0] is "AppInstallSettings")
                         {
-                            if (!Equals(GetCurrentPageType(), typeof(SettingsPage)))
+                            if (GetFrameContent() is not SettingsPage)
                             {
                                 NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.AppInstall);
                             }
@@ -1365,7 +1365,7 @@ namespace GetStoreApp.Views.Windows
                     }
                     else if (appLaunchArguments.SubParameters[0] is "ViewDownloadPage")
                     {
-                        if (!Equals(GetCurrentPageType(), typeof(DownloadPage)))
+                        if (GetFrameContent() is not DownloadPage)
                         {
                             NavigateTo(typeof(DownloadPage), AppNaviagtionArgs.Completed);
                         }
@@ -1387,9 +1387,9 @@ namespace GetStoreApp.Views.Windows
             // 从控制台启动
             else if (appLaunchArguments.AppLaunchKind is AppLaunchKind.Console)
             {
-                if (Equals(GetCurrentPageType(), typeof(StorePage)))
+                if (GetFrameContent() is StorePage storePage)
                 {
-                    (GetFrameContent() as StorePage).InitializeQueryLinksContent(appLaunchArguments.SubParameters);
+                    storePage.InitializeQueryLinksContent(appLaunchArguments.SubParameters);
                 }
                 else
                 {

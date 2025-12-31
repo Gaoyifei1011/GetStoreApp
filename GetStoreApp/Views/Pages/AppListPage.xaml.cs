@@ -1016,7 +1016,7 @@ namespace GetStoreApp.Views.Pages
                     }
                 });
 
-                if (MainWindow.Current.GetFrameContent() is AppManagerPage appManagerPage && Equals(appManagerPage.GetCurrentPageType(), typeof(AppListPage)))
+                if (MainWindow.Current.GetFrameContent() is AppManagerPage appManagerPage && Equals(appManagerPage.GetCurrentPageType(), appManagerPage.PageList[0]))
                 {
                     appManagerPage.NavigateTo(appManagerPage.PageList[1], appInformation, true);
                 }
