@@ -173,7 +173,7 @@ All the content of the program has been developed
 
 #### <p align="center">Tools that must be installed</p>
 
-> * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com) 
+> * [Microsoft Visual Studio 2026](https://visualstudio.microsoft.com) 
 > * . NET Desktop Development (Installed in Visual Studio Installer, .NET SDK Version 10.0)
 > * [WinGet package manager](https://apps.microsoft.com/store/detail/9NBLGGH4NNS1) (install recommendedly)
 > * [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2) (install recommendedly)
@@ -181,7 +181,7 @@ All the content of the program has been developed
 #### <p align="center">Compilation steps</p>
 
 > * Fork the project and download the code locally
-> * Use Visual Studio 2022 to open the GetStoreApp.sln file. If the solution prompts that some tools are not installed, complete the installation steps and open the solution again.
+> * Use Visual Studio 2026 to open the GetStoreApp.sln file. If the solution prompts that some tools are not installed, complete the installation steps and open the solution again.
 > * Restore the Nuget package for the project.
 > * After the restore is complete, right-click the project solution, generate the solution and click Deploy Solution.
 > * Open the Start menu after the deployment is complete to run the app.
