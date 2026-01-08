@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
 
 [assembly: AssemblyCompany("高怡飞")]
-[assembly: AssemblyCopyright("Copyright 2022-2025 高怡飞 版权所有")]
+[assembly: AssemblyCopyright("Copyright 2022-2026 高怡飞 版权所有")]
 [assembly: AssemblyDescription("固定辅助程序")]
 [assembly: AssemblyFileVersion("6.12.1120.0")]
 [assembly: AssemblyInformationalVersion("6.12.1120.0")]

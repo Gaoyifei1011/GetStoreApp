@@ -5,7 +5,7 @@ using System.Runtime.Versioning;
 
 // 程序集信息设置
 [assembly: AssemblyCompany("高怡飞")]
-[assembly: AssemblyCopyright("Copyright 2022-2025 高怡飞 版权所有")]
+[assembly: AssemblyCopyright("Copyright 2022-2026 高怡飞 版权所有")]
 [assembly: AssemblyDescription("网页浏览器")]
 [assembly: AssemblyFileVersion("6.12.1120.0")]
 [assembly: AssemblyInformationalVersion("6.12.1120.0")]
