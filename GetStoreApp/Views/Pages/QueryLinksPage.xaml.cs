@@ -1,4 +1,4 @@
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Store;
 using GetStoreApp.Models;
@@ -1130,7 +1130,7 @@ namespace GetStoreApp.Views.Pages
                                             }
                                         }
 
-                                        if (!isExisted)
+                                        if (!isExisted && !string.IsNullOrEmpty(appxPackage.FileLink))
                                         {
                                             queryLinksList.Add(appxPackage);
                                         }
