@@ -68,11 +68,11 @@
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.0-prerelease.251115.2" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7463" GeneratePathProperty="true" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.7.20250829.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-		<PackageReference Include="Microsoft.WindowsAppSDK.Base" Version="1.8.250831001" />
-		<PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.8.251104000" />
-		<PackageReference Include="Microsoft.WindowsAppSDK.InteractiveExperiences" Version="1.8.251104001" />
-		<PackageReference Include="Microsoft.WindowsAppSDK.Runtime" Version="1.8.251106002" />
-		<PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="1.8.251105000" />
+		<PackageReference Include="Microsoft.WindowsAppSDK.Base" Version="1.8.251216001" />
+		<PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.8.251220000" />
+		<PackageReference Include="Microsoft.WindowsAppSDK.InteractiveExperiences" Version="1.8.251217001" />
+		<PackageReference Include="Microsoft.WindowsAppSDK.Runtime" Version="1.8.260101001" />
+		<PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="1.8.251222000" />
 		
 		<Page Remove="InstallerApp.xaml" />
     <Page Update="Views\NotificationTips\CopyPasteInstallerNotificationTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
