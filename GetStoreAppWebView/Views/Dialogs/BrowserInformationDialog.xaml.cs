@@ -1,9 +1,9 @@
-using Microsoft.UI.Xaml.Controls;
+锘縰sing Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreAppWebView.Views.Dialogs
 {
     /// <summary>
-    /// 浏览器内核信息对话框
+    /// 娴忚鍣ㄥ唴鏍镐俊鎭璇濇
     /// </summary>
     public sealed partial class BrowserInformationDialog : ContentDialog
     {

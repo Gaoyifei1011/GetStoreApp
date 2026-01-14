@@ -1,4 +1,4 @@
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;

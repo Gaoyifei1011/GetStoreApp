@@ -1,4 +1,4 @@
-using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;

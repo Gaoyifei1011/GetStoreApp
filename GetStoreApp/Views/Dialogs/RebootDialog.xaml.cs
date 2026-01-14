@@ -1,4 +1,4 @@
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 

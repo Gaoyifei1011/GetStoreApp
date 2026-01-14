@@ -1,4 +1,4 @@
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Store;
 using GetStoreApp.Models;
 using GetStoreApp.Services.History;

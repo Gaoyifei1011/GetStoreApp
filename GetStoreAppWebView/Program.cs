@@ -1,4 +1,4 @@
-using GetStoreAppWebView.Extensions.DataType.Enums;
+﻿using GetStoreAppWebView.Extensions.DataType.Enums;
 using GetStoreAppWebView.Helpers.Root;
 using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.Services.Settings;

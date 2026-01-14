@@ -1,4 +1,4 @@
-<ContentDialog
+﻿<ContentDialog
     x:Class="GetStoreApp.Views.Dialogs.WinGetSourceEditDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
