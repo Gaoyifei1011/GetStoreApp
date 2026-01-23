@@ -25,21 +25,10 @@
 
         <TextBlock Grid.Row="0" Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/DeleteFileContent')}" />
 
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <CheckBox
-                Grid.Column="0"
-                MinWidth="0"
-                IsChecked="{x:Bind DeleteFileSameTime, Mode=TwoWay}" />
-
-            <TextBlock
-                Grid.Column="1"
-                VerticalAlignment="Center"
-                Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/DeleteFileSameTime')}" />
-        </Grid>
+        <CheckBox
+            Grid.Row="1"
+            MinWidth="0"
+            Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/DeleteFileSameTime')}"
+            IsChecked="{x:Bind DeleteFileSameTime, Mode=TwoWay}" />
     </Grid>
 </ContentDialog>
