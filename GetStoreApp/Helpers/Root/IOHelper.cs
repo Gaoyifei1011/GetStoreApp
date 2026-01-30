@@ -31,8 +31,7 @@ namespace GetStoreApp.Helpers.Root
                 List<string> cleanList = [];
                 if (Directory.Exists(folder))
                 {
-                    cleanList.AddRange(Directory.GetFiles(folder));
-                    cleanList.AddRange(Directory.GetDirectories(folder));
+                    cleanList.AddRange(folder);
                 }
 
                 // 删除当前文件夹下所有文件和子文件夹

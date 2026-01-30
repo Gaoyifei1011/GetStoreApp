@@ -155,30 +155,30 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static async Task<bool> ClearLogAsync()
         {
-            try
+            return await Task.Run(() =>
             {
-                await Task.Run(() =>
+                try
                 {
                     List<string> cleanList = [];
                     if (Directory.Exists(httpRequestFolderPath))
                     {
-                        cleanList.AddRange(Directory.GetFiles(httpRequestFolderPath, "*.etl"));
+                        cleanList.AddRange(httpRequestFolderPath);
                     }
 
                     if (Directory.Exists(exceptionFolderPath))
                     {
-                        cleanList.AddRange(Directory.GetFiles(exceptionFolderPath, "*.etl"));
+                        cleanList.AddRange(exceptionFolderPath);
                     }
 
                     DeleteFileHelper.DeleteFilesToRecycleBin(cleanList);
-                });
-                return true;
-            }
-            catch (Exception e)
-            {
-                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                return false;
-            }
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    return false;
+                }
+            });
         }
 
         /// <summary>
