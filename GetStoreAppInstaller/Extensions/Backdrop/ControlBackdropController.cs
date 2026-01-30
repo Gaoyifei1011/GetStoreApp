@@ -1,8 +1,8 @@
 ﻿using GetStoreAppInstaller.Services.Root;
 using GetStoreAppInstaller.Views.Windows;
-using GetStoreAppInstaller.WindowsAPI.ComTypes;
 using Microsoft.UI.Composition;
 using Microsoft.UI.Composition.SystemBackdrops;
+using Microsoft.UI.Content;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;

@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.Extensions.Backdrop;
-using GetStoreApp.WindowsAPI.ComTypes;
 using Microsoft.UI.Composition;
+using Microsoft.UI.Content;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Hosting;
