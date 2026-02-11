@@ -36,7 +36,7 @@
     <WindowsAppSDKBackgroundTask>false</WindowsAppSDKBackgroundTask>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>
-    <WindowsSdkPackageVersion>10.0.26100.81</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.84</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 
@@ -345,13 +345,13 @@
     <None Remove="MainApp.xaml" />
 
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.0-prerelease.251115.2" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7463" GeneratePathProperty="true" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7705" GeneratePathProperty="true" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.7.251221100" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Microsoft.WindowsAppSDK.Base" Version="1.8.251216001" />
-    <PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.8.251220000" />
-    <PackageReference Include="Microsoft.WindowsAppSDK.InteractiveExperiences" Version="1.8.251217001" />
-    <PackageReference Include="Microsoft.WindowsAppSDK.Runtime" Version="1.8.260101001" />
-    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="1.8.251222000" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.8.260203002" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.InteractiveExperiences" Version="1.8.260125001" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.Runtime" Version="1.8.260209005" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="1.8.260204000" />
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.12.440" GeneratePathProperty="true" />
     <PackageReference Include="Microsoft.WindowsPackageManager.InProcCom" Version="1.12.440" GeneratePathProperty="true" IncludeAssets="none" />
     <PackageReference Include="Mile.Aria2" Version="1.0.230" />

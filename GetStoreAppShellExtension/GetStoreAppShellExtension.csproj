@@ -28,7 +28,7 @@
     <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
-    <WindowsSdkPackageVersion>10.0.26100.81</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.84</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 
@@ -54,10 +54,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.0-prerelease.251115.2" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7463" GeneratePathProperty="true" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7705" GeneratePathProperty="true" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.7.251221100" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-		<PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.8.251220000" />
-		<PackageReference Include="Microsoft.WindowsAppSDK.Runtime" Version="1.8.260101001" />
+		<PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.8.260203002" />
+		<PackageReference Include="Microsoft.WindowsAppSDK.Runtime" Version="1.8.260209005" />
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->
