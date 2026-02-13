@@ -88,13 +88,20 @@ namespace GetStoreAppPinner
                         }
                         else if (position is "Taskbar")
                         {
-                            string featureId = "com.microsoft.windows.taskbar.requestPinSecondaryTile";
-                            string token = FeatureAccessHelper.GenerateTokenFromFeatureId(featureId);
-                            string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
-                            LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
-                            LimitedAccessFeatureStatus limitedAccessFeatureStatus = accessResult.Status;
+                            string feature = "com.microsoft.windows.taskbar.requestPinSecondaryTile";
+                            string featureId = FeatureAccessHelper.GetFeatureId(feature);
+                            if (!string.IsNullOrEmpty(featureId))
+                            {
+                                string token = FeatureAccessHelper.GenerateTokenFromFeatureId(feature, featureId);
+                                string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
+                                LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
 
-                            if (limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available)
+                                if (accessResult.Status is LimitedAccessFeatureStatus.Available || accessResult.Status is LimitedAccessFeatureStatus.AvailableWithoutToken)
+                                {
+                                    await TaskbarManager.GetDefault().RequestPinSecondaryTileAsync(secondaryTile);
+                                }
+                            }
+                            else
                             {
                                 await TaskbarManager.GetDefault().RequestPinSecondaryTileAsync(secondaryTile);
                             }

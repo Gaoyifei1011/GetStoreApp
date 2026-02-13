@@ -342,10 +342,7 @@ namespace GetStoreApp.Views.Windows
                     BackdropService.PropertyChanged -= OnServicePropertyChanged;
                     TopMostService.PropertyChanged -= OnServicePropertyChanged;
                     DesktopLaunchService.AppLaunchActivated -= OnAppLaunchActivated;
-                    if (navigationViewBackButtonToolTip is not null)
-                    {
-                        navigationViewBackButtonToolTip.Loaded -= ToolTipBackdropHelper.OnLoaded;
-                    }
+                    navigationViewBackButtonToolTip?.Loaded -= ToolTipBackdropHelper.OnLoaded;
                     DownloadSchedulerService.TerminateDownload();
                     Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0);
                     (Application.Current as MainApp).Dispose();
@@ -369,10 +366,7 @@ namespace GetStoreApp.Views.Windows
                 BackdropService.PropertyChanged -= OnServicePropertyChanged;
                 TopMostService.PropertyChanged -= OnServicePropertyChanged;
                 DesktopLaunchService.AppLaunchActivated -= OnAppLaunchActivated;
-                if (navigationViewBackButtonToolTip is not null)
-                {
-                    navigationViewBackButtonToolTip.Loaded -= ToolTipBackdropHelper.OnLoaded;
-                }
+                navigationViewBackButtonToolTip?.Loaded -= ToolTipBackdropHelper.OnLoaded;
                 Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0);
                 (Application.Current as MainApp).Dispose();
             }
@@ -609,12 +603,23 @@ namespace GetStoreApp.Views.Windows
                 string displayName = textBlock.Text;
                 string tag = Convert.ToString(textBlock.Tag);
 
-                (LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully) pinnedResult = await Task.Run(async () =>
+                (bool needUnlock, LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully) pinnedResult = await Task.Run(async () =>
                 {
                     LimitedAccessFeatureStatus limitedAccessFeatureStatus = LimitedAccessFeatureStatus.Unknown;
+                    bool needUnlock = false;
                     bool isPinnedSuccessfully = false;
 
-                    if (!RuntimeHelper.IsElevated)
+                    if (RuntimeHelper.IsElevated)
+                    {
+                        await global::Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new global::Windows.System.LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                        {
+                            {"Type", nameof(SecondaryTile) },
+                            { "DisplayName", displayName },
+                            { "Tag", tag },
+                            { "Position", "Taskbar" }
+                        });
+                    }
+                    else
                     {
                         try
                         {
@@ -630,15 +635,23 @@ namespace GetStoreApp.Views.Windows
                             secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
                             secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
 
-                            string featureId = "com.microsoft.windows.taskbar.requestPinSecondaryTile";
-                            string token = FeatureAccessHelper.GenerateTokenFromFeatureId(featureId);
-                            string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
-                            LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
-                            limitedAccessFeatureStatus = accessResult.Status;
-
-                            if (limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available)
+                            string feature = "com.microsoft.windows.taskbar.requestPinSecondaryTile";
+                            string featureId = FeatureAccessHelper.GetFeatureId(feature);
+                            if (!string.IsNullOrEmpty(featureId))
                             {
-                                isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinSecondaryTileAsync(secondaryTile);
+                                needUnlock = true;
+                                string token = FeatureAccessHelper.GenerateTokenFromFeatureId(feature, featureId);
+                                string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
+                                LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
+
+                                if (accessResult.Status is LimitedAccessFeatureStatus.Available || accessResult.Status is LimitedAccessFeatureStatus.AvailableWithoutToken)
+                                {
+                                    isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinCurrentAppAsync();
+                                }
+                            }
+                            else
+                            {
+                                isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinCurrentAppAsync();
                             }
                         }
                         catch (Exception e)
@@ -646,7 +659,7 @@ namespace GetStoreApp.Views.Windows
                             LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(OnPinToStartScreenClicked), 1, e);
                         }
 
-                        if ((limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unavailable || limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unknown) && !isPinnedSuccessfully)
+                        if (needUnlock && (limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unavailable || limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unknown) && !isPinnedSuccessfully)
                         {
                             await global::Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new global::Windows.System.LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
                             {
@@ -658,12 +671,22 @@ namespace GetStoreApp.Views.Windows
                         }
                     }
 
-                    return ValueTuple.Create(limitedAccessFeatureStatus, isPinnedSuccessfully);
+                    return ValueTuple.Create(needUnlock, limitedAccessFeatureStatus, isPinnedSuccessfully);
                 });
 
-                if (pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available || pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.AvailableWithoutToken)
+                if (!RuntimeHelper.IsElevated)
                 {
-                    await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedResult.isPinnedSuccessfully));
+                    if (pinnedResult.needUnlock)
+                    {
+                        if (pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available || pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.AvailableWithoutToken)
+                        {
+                            await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedResult.isPinnedSuccessfully));
+                        }
+                    }
+                    else
+                    {
+                        await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedResult.isPinnedSuccessfully));
+                    }
                 }
             }
         }

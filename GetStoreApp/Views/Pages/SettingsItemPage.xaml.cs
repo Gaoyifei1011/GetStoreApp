@@ -289,24 +289,42 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnPinToTaskbarClicked(object sender, RoutedEventArgs args)
         {
-            (LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully) pinnedResult = await Task.Run(async () =>
+            (bool needUnlock, LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully) pinnedResult = await Task.Run(async () =>
             {
                 LimitedAccessFeatureStatus limitedAccessFeatureStatus = LimitedAccessFeatureStatus.Unknown;
+                bool needUnlock = false;
                 bool isPinnedSuccessfully = false;
 
-                if (!RuntimeHelper.IsElevated)
+                if (RuntimeHelper.IsElevated)
+                {
+                    await Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                    {
+                        {"Type", nameof(TaskbarManager) },
+                        { "AppUserModelId", Package.Current.GetAppListEntries()[0].AppUserModelId },
+                        { "PackageFullName", Package.Current.Id.FullName },
+                    });
+                }
+                else
                 {
                     try
                     {
                         if (ApiInformation.IsTypePresent("Windows.UI.Shell.ITaskbarManagerDesktopAppSupportStatics"))
                         {
-                            string featureId = "com.microsoft.windows.taskbar.pin";
-                            string token = FeatureAccessHelper.GenerateTokenFromFeatureId(featureId);
-                            string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
-                            LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
-                            limitedAccessFeatureStatus = accessResult.Status;
+                            string feature = "com.microsoft.windows.taskbar.pin";
+                            string featureId = FeatureAccessHelper.GetFeatureId(feature);
+                            if (!string.IsNullOrEmpty(featureId))
+                            {
+                                needUnlock = true;
+                                string token = FeatureAccessHelper.GenerateTokenFromFeatureId(feature, featureId);
+                                string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
+                                LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
 
-                            if (limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available)
+                                if (accessResult.Status is LimitedAccessFeatureStatus.Available || accessResult.Status is LimitedAccessFeatureStatus.AvailableWithoutToken)
+                                {
+                                    isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinCurrentAppAsync();
+                                }
+                            }
+                            else
                             {
                                 isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinCurrentAppAsync();
                             }
@@ -316,24 +334,34 @@ namespace GetStoreApp.Views.Pages
                     {
                         LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsItemPage), nameof(OnPinToTaskbarClicked), 1, e);
                     }
-                }
 
-                if ((limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unavailable || limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unknown) && !isPinnedSuccessfully)
-                {
-                    await Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                    if (needUnlock && (limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unavailable || limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unknown) && !isPinnedSuccessfully)
                     {
-                        {"Type", nameof(TaskbarManager) },
-                        { "AppUserModelId", Package.Current.GetAppListEntries()[0].AppUserModelId },
-                        { "PackageFullName", Package.Current.Id.FullName },
-                    });
+                        await Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                        {
+                            {"Type", nameof(TaskbarManager) },
+                            { "AppUserModelId", Package.Current.GetAppListEntries()[0].AppUserModelId },
+                            { "PackageFullName", Package.Current.Id.FullName },
+                        });
+                    }
                 }
 
-                return ValueTuple.Create(limitedAccessFeatureStatus, isPinnedSuccessfully);
+                return ValueTuple.Create(needUnlock, limitedAccessFeatureStatus, isPinnedSuccessfully);
             });
 
-            if (pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available || pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.AvailableWithoutToken)
+            if (!RuntimeHelper.IsElevated)
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedResult.isPinnedSuccessfully));
+                if (pinnedResult.needUnlock)
+                {
+                    if (pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available || pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.AvailableWithoutToken)
+                    {
+                        await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedResult.isPinnedSuccessfully));
+                    }
+                }
+                else
+                {
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedResult.isPinnedSuccessfully));
+                }
             }
         }
 
