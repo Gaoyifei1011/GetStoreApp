@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
-using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage;
 using Windows.Storage.Streams;
@@ -53,32 +53,21 @@ namespace GetStoreApp.Helpers.Root
             try
             {
                 HashAlgorithmProvider hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
-
-                StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
-                Stream stream = await file.OpenStreamForReadAsync();
-                IInputStream inputStream = stream.AsInputStream();
-                uint capacity = 100000000;
-                Windows.Storage.Streams.Buffer buffer = new(capacity);
-                CryptographicHash buffHash = hashAlgorithmProvider.CreateHash();
-
+                CryptographicHash cryptographicHash = hashAlgorithmProvider.CreateHash();
+                IRandomAccessStream randomAccessStream = await FileRandomAccessStream.OpenAsync(filePath, FileAccessMode.Read);
+                const int bufferSize = 1024 * 64;
                 while (true)
                 {
-                    await inputStream.ReadAsync(buffer, capacity, InputStreamOptions.None);
-                    if (buffer.Length > 0)
-                    {
-                        buffHash.Append(buffer);
-                    }
-                    else
+                    IBuffer buffer = WindowsRuntimeBuffer.Create(bufferSize);
+                    buffer = await randomAccessStream.ReadAsync(buffer, bufferSize, InputStreamOptions.None);
+                    if (buffer.Length is 0)
                     {
                         break;
                     }
+                    cryptographicHash.Append(buffer);
                 }
-
-                string hashText = CryptographicBuffer.EncodeToHexString(buffHash.GetValueAndReset()).ToLowerInvariant();
-                inputStream.Dispose();
-                stream.Dispose();
-
-                return hashText;
+                randomAccessStream.Dispose();
+                return Convert.ToHexString(cryptographicHash.GetValueAndReset().ToArray());
             }
             catch (Exception e)
             {

@@ -24,7 +24,7 @@ namespace GetStoreApp.Helpers.Root
         public static string GenerateTokenFromFeatureId(string feature, string featureId)
         {
             string generatedContent = string.Format("{0}!{1}!{2}", feature, featureId, packageFamilyName);
-            return HashAlgorithmHelper.ComputeSHA256Hash(generatedContent);
+            return HashAlgorithmHelper.ComputeSHA256(generatedContent);
         }
 
         /// <summary>
