@@ -5,12 +5,12 @@ using GetStoreApp.Services.Settings;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.Marshalling;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation.Diagnostics;
-using Windows.Security.Cryptography;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
@@ -52,7 +52,7 @@ namespace GetStoreApp.Helpers.Store
             {
                 byte[] cookieByteArray = ResourceService.GetEmbeddedData("Files/Assets/Embed/cookie.xml");
 
-                HttpStringContent httpStringContent = new(CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, CryptographicBuffer.CreateFromByteArray(cookieByteArray)));
+                HttpStringContent httpStringContent = new(Encoding.UTF8.GetString(cookieByteArray));
                 httpStringContent.TryComputeLength(out ulong length);
                 httpStringContent.Headers.Expires = DateTimeOffset.Now;
                 httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
@@ -197,7 +197,7 @@ namespace GetStoreApp.Helpers.Store
             try
             {
                 byte[] wubyteArray = ResourceService.GetEmbeddedData("Files/Assets/Embed/wu.xml");
-                string fileListXml = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, CryptographicBuffer.CreateFromByteArray(wubyteArray)).Replace("{1}", cookie).Replace("{2}", categoryId).Replace("{3}", ring);
+                string fileListXml = Encoding.UTF8.GetString(wubyteArray).Replace("{1}", cookie).Replace("{2}", categoryId).Replace("{3}", ring);
 
                 HttpStringContent httpStringContent = new(fileListXml);
                 httpStringContent.TryComputeLength(out ulong length);
@@ -348,7 +348,7 @@ namespace GetStoreApp.Helpers.Store
             try
             {
                 byte[] urlbyteArray = ResourceService.GetEmbeddedData("Files/Assets/Embed/url.xml");
-                string url = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, CryptographicBuffer.CreateFromByteArray(ResourceService.GetEmbeddedData("Files/Assets/Embed/url.xml"))).Replace("{1}", updateID).Replace("{2}", revisionNumber).Replace("{3}", ring);
+                string url = Encoding.UTF8.GetString(ResourceService.GetEmbeddedData("Files/Assets/Embed/url.xml")).Replace("{1}", updateID).Replace("{2}", revisionNumber).Replace("{3}", ring);
 
                 HttpStringContent httpContent = new(url);
                 httpContent.TryComputeLength(out ulong length);
