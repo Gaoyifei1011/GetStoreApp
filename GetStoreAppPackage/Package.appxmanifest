@@ -14,7 +14,7 @@
 	<Identity
 	  Name="055B5CA4.GetStoreApp"
 	  Publisher="CN=ABAA73FA-E48C-48D6-8060-D6B3A4EA70B6"
-	  Version="6.14.201.0" />
+	  Version="6.15.215.0" />
 
 	<Properties>
 		<Description>ms-resource:PackageDescription</Description>
