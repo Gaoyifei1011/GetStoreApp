@@ -41,25 +41,59 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Grid
-                Grid.Row="0"
-                Margin="0,0,1,3"
-                ColumnSpacing="6">
+            <Grid Grid.Row="0" Margin="0,0,1,3">
 
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBox
+                <DropDownButton
                     Grid.Column="0"
+                    Margin="0,0,6,0"
+                    VerticalAlignment="Center"
+                    Content="{x:Bind SelectedSearchType.Value, Mode=OneWay}"
+                    IsEnabled="{x:Bind IsSearchingStore.Equals(x:False), Mode=OneWay}"
+                    Visibility="{x:Bind UseSearchType, Mode=OneWay}">
+
+                    <DropDownButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <RadioMenuFlyoutItem
+                                Click="{x:Bind OnSearchTypeSelectClicked}"
+                                GroupName="SearchTypeRadioGroup"
+                                IsChecked="{x:Bind x:Object.Equals(SelectedSearchType.Key, SearchTypeList[0].Key), Mode=OneWay}"
+                                Text="{x:Bind SearchTypeList[0].Value}">
+
+                                <RadioMenuFlyoutItem.Tag>
+                                    <x:Int32>0</x:Int32>
+                                </RadioMenuFlyoutItem.Tag>
+                            </RadioMenuFlyoutItem>
+
+                            <RadioMenuFlyoutItem
+                                Click="{x:Bind OnSearchTypeSelectClicked}"
+                                GroupName="SearchTypeRadioGroup"
+                                IsChecked="{x:Bind x:Object.Equals(SelectedSearchType.Key, SearchTypeList[1].Key), Mode=OneWay}"
+                                Text="{x:Bind SearchTypeList[1].Value}">
+
+                                <RadioMenuFlyoutItem.Tag>
+                                    <x:Int32>1</x:Int32>
+                                </RadioMenuFlyoutItem.Tag>
+                            </RadioMenuFlyoutItem>
+                        </MenuFlyout>
+                    </DropDownButton.Flyout>
+                </DropDownButton>
+
+                <TextBox
+                    Grid.Column="1"
+                    Margin="0,0,6,0"
                     IsEnabled="{x:Bind IsSearchingStore.Equals(x:False), Mode=OneWay}"
                     PlaceholderText="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/SearchPlaceHolderText')}"
                     Text="{x:Bind SearchText, Mode=OneWay}"
                     TextChanged="{x:Bind OnTextChanged}" />
 
                 <Button
-                    Grid.Column="1"
+                    Grid.Column="2"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
                     Click="{x:Bind OnSearchStoreClicked}"

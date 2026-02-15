@@ -1,4 +1,4 @@
-{
+﻿{
   "CopyLink": "העתק קישור",
   "CopyLinkToolTip": "העתק את קישור היישום ללוח",
   "FillIn": "מלא",
@@ -8,6 +8,7 @@
   "InfoBarGetting": "מחפש משרתי חנות Microsoft, אנא המתן...",
   "InfoBarSuccess": "יישומים אלה נמצאו בהצלחה משרתי חנות Microsoft",
   "InfoBarWarning": "הנתונים שהוחזרו מהשרת ריקים, אנא בדוק את התוכן שהזנת",
+  "NormalSearch": "חיפוש רגיל",
   "Options": "אפשרויות",
   "OptionsToolTip": "בחר את האפשרויות שברצונך להשתמש בהן",
   "QueryLinks": "שאילת קישורים",
@@ -18,6 +19,7 @@
   "SearchStore": "חפש יישומים",
   "SearchStoreCountInfo": "נמצאו {0} תוצאות מחנות Microsoft",
   "SearchStoreEmpty": "לא נמצאו תוצאות, אנא בדוק את התוכן שהזנת ונסה שוב",
+  "SimilarSearch": "חיפוש דומה",
   "StoreAppLink": "קישור יישום",
   "StoreAppName": "שם יישום",
   "StoreAppPublisher": "מפרסם",

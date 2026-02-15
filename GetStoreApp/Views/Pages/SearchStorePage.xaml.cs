@@ -35,8 +35,42 @@ namespace GetStoreApp.Views.Pages
         private readonly string InfoBarGettingString = ResourceService.GetLocalized("SearchStore/InfoBarGetting");
         private readonly string InfoBarSuccessString = ResourceService.GetLocalized("SearchStore/InfoBarSuccess");
         private readonly string InfoBarWarningString = ResourceService.GetLocalized("SearchStore/InfoBarWarning");
+        private readonly string NormalSearchString = ResourceService.GetLocalized("SearchStore/NormalSearch");
         private readonly string SearchStoreCountInfo = ResourceService.GetLocalized("SearchStore/SearchStoreCountInfo");
+        private readonly string SimilarSearchString = ResourceService.GetLocalized("SearchStore/SimilarSearch");
         private readonly string WelcomeString = ResourceService.GetLocalized("SearchStore/Welcome");
+
+        private bool _useSearchType;
+
+        public bool UseSearchType
+        {
+            get { return _useSearchType; }
+
+            set
+            {
+                if (!Equals(_useSearchType, value))
+                {
+                    _useSearchType = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UseSearchType)));
+                }
+            }
+        }
+
+        private KeyValuePair<string, string> _selectedSearchType;
+
+        public KeyValuePair<string, string> SelectedSearchType
+        {
+            get { return _selectedSearchType; }
+
+            set
+            {
+                if (!Equals(_selectedSearchType, value))
+                {
+                    _selectedSearchType = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSearchType)));
+                }
+            }
+        }
 
         private string _searchText;
 
@@ -150,6 +184,8 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        private List<KeyValuePair<string, string>> SearchTypeList { get; } = [];
+
         private List<InfoBarModel> SearchStoreInfoList { get; } = [];
 
         private ObservableCollection<HistoryModel> HistoryCollection { get; } = [];
@@ -162,6 +198,9 @@ namespace GetStoreApp.Views.Pages
         {
             InitializeComponent();
             StateInfoText = WelcomeString;
+            SearchTypeList.Add(KeyValuePair.Create("NormalSearch", NormalSearchString));
+            SearchTypeList.Add(KeyValuePair.Create("SimilarSearch", SimilarSearchString));
+            SelectedSearchType = SearchTypeList[0];
 
             SearchStoreInfoList.Add(new InfoBarModel
             {
@@ -220,6 +259,19 @@ namespace GetStoreApp.Views.Pages
         {
             List<HistoryModel> searchStoreHistoryList = await Task.Run(HistoryStorageService.GetSearchStoreData);
 
+            if (Equals(SearchAppsModeService.SearchAppsMode, SearchAppsModeService.SearchAppsModeList[0]))
+            {
+                UseSearchType = false;
+            }
+            else if (Equals(SearchAppsModeService.SearchAppsMode, SearchAppsModeService.SearchAppsModeList[1]))
+            {
+                UseSearchType = true;
+            }
+            else
+            {
+                UseSearchType = false;
+            }
+
             HistoryCollection.Clear();
             foreach (HistoryModel historyItem in searchStoreHistoryList)
             {
@@ -230,6 +282,17 @@ namespace GetStoreApp.Views.Pages
         #endregion 第一部分：重写父类事件
 
         #region 第二部分：XamlUICommand 命令调用时挂载的事件
+
+        /// <summary>
+        /// 选择搜索应用方式
+        /// </summary>
+        private void OnSearchTypeSelectClicked(object sender, RoutedEventArgs args)
+        {
+            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
+            {
+                SelectedSearchType = SearchTypeList[tag];
+            }
+        }
 
         /// <summary>
         /// 复制指定应用的链接

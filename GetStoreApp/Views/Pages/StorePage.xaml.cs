@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Settings;
 using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
@@ -69,6 +70,22 @@ namespace GetStoreApp.Views.Pages
                 if (args.Parameter is List<string> dataList)
                 {
                     InitializeQueryLinksContent(dataList);
+                }
+
+                if (StoreFrame.Content is SearchStorePage searchStorePage)
+                {
+                    if (Equals(SearchAppsModeService.SearchAppsMode, SearchAppsModeService.SearchAppsModeList[0]))
+                    {
+                        searchStorePage.UseSearchType = false;
+                    }
+                    else if (Equals(SearchAppsModeService.SearchAppsMode, SearchAppsModeService.SearchAppsModeList[1]))
+                    {
+                        searchStorePage.UseSearchType = true;
+                    }
+                    else
+                    {
+                        searchStorePage.UseSearchType = false;
+                    }
                 }
             }
         }
