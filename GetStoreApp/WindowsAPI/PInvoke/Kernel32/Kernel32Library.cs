@@ -102,15 +102,5 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         [LibraryImport(Kernel32, EntryPoint = "Process32NextW", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool Process32Next(nint snapshot, ref PROCESSENTRY32 lppe);
-
-        /// <summary>
-        /// 终止指定的进程及其所有线程。
-        /// </summary>
-        /// <param name="hProcess">句柄必须具有 PROCESS_TERMINATE 访问权限。 有关详细信息，请参阅 进程安全性和访问权限。</param>
-        /// <param name="uExitCode">进程和线程将使用的退出代码，由于此调用而终止。 使用 GetExitCodeProcess 函数检索进程的退出值。 使用 GetExitCodeThread 函数检索线程的退出值。</param>
-        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(Kernel32, EntryPoint = "TerminateProcess", SetLastError = false), PreserveSig]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool TerminateProcess(nint hProcess, uint uExitCode);
     }
 }
