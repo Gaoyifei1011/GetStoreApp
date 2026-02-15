@@ -31,6 +31,8 @@ namespace GetStoreApp.Views.Pages
         private readonly string QueryLinksModeThirdPartyString = ResourceService.GetLocalized("SettingsStoreAndUpdate/QueryLinksModeThirdParty");
         private readonly string InstallModeAppInstallString = ResourceService.GetLocalized("SettingsStoreAndUpdate/InstallModeAppInstall");
         private readonly string InstallModeCodeInstallString = ResourceService.GetLocalized("SettingsStoreAndUpdate/InstallModeCodeInstall");
+        private readonly string SearchAppsModeOfficialAPIString = ResourceService.GetLocalized("SettingsStoreAndUpdate/SearchAppsModeOfficialAPI");
+        private readonly string SearchAppsModeOfficialConsoleClientString = ResourceService.GetLocalized("SettingsStoreAndUpdate/SearchAppsModeOfficialConsoleClient");
 
         private KeyValuePair<string, string> _queryLinksMode;
 
@@ -44,6 +46,22 @@ namespace GetStoreApp.Views.Pages
                 {
                     _queryLinksMode = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(QueryLinksMode)));
+                }
+            }
+        }
+
+        private KeyValuePair<string, string> _searchAppsMode;
+
+        public KeyValuePair<string, string> SearchAppsMode
+        {
+            get { return _searchAppsMode; }
+
+            set
+            {
+                if (!Equals(_searchAppsMode, value))
+                {
+                    _searchAppsMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchAppsMode)));
                 }
             }
         }
@@ -178,6 +196,8 @@ namespace GetStoreApp.Views.Pages
 
         private List<KeyValuePair<string, string>> QueryLinksModeList { get; } = [];
 
+        private List<KeyValuePair<string, string>> SearchAppsModeList { get; } = [];
+
         private List<KeyValuePair<string, string>> AppLinkOpenModeList { get; } = [];
 
         private List<KeyValuePair<string, string>> InstallModeList { get; } = [];
@@ -192,6 +212,10 @@ namespace GetStoreApp.Views.Pages
             QueryLinksModeList.Add(KeyValuePair.Create(QueryLinksModeService.QueryLinksModeList[0], QueryLinksModeOfficialString));
             QueryLinksModeList.Add(KeyValuePair.Create(QueryLinksModeService.QueryLinksModeList[1], QueryLinksModeThirdPartyString));
             QueryLinksMode = QueryLinksModeList.Find(item => string.Equals(item.Key, QueryLinksModeService.QueryLinksMode, StringComparison.OrdinalIgnoreCase));
+
+            SearchAppsModeList.Add(KeyValuePair.Create(SearchAppsModeService.SearchAppsModeList[0], SearchAppsModeOfficialAPIString));
+            SearchAppsModeList.Add(KeyValuePair.Create(SearchAppsModeService.SearchAppsModeList[1], SearchAppsModeOfficialConsoleClientString));
+            SearchAppsMode = SearchAppsModeList.Find(item => string.Equals(item.Key, SearchAppsModeService.SearchAppsMode, StringComparison.OrdinalIgnoreCase));
 
             AppLinkOpenModeList.Add(KeyValuePair.Create(AppLinkOpenModeService.AppLinkOpenModeList[0], AppLinkOpenModeBuiltInAppString));
             AppLinkOpenModeList.Add(KeyValuePair.Create(AppLinkOpenModeService.AppLinkOpenModeList[1], AppLinkOpenModeSystemBrowserString));
@@ -267,6 +291,18 @@ namespace GetStoreApp.Views.Pages
             {
                 QueryLinksMode = QueryLinksModeList[tag];
                 QueryLinksModeService.SetQueryLinksMode(QueryLinksMode.Key);
+            }
+        }
+
+        /// <summary>
+        /// 选择搜索应用方式
+        /// </summary>
+        private void OnSearchAppsModeSelectClicked(Object sender, RoutedEventArgs args)
+        {
+            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
+            {
+                SearchAppsMode = SearchAppsModeList[tag];
+                SearchAppsModeService.SetSearchAppsMode(SearchAppsMode.Key);
             }
         }
 

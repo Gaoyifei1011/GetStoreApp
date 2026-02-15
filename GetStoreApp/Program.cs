@@ -109,6 +109,7 @@ namespace GetStoreApp
             StoreRegionService.InitializeStoreRegion();
             LinkFilterService.InitializeLinkFilter();
             QueryLinksModeService.InitializeQueryLinksMode();
+            SearchAppsModeService.InitializeSearchAppsMode();
             AppLinkOpenModeService.InitializeAppLinkOpenMode();
             await DownloadOptionsService.InitializeDownloadOptionsAsync();
             DownloadStorageService.Initialize();

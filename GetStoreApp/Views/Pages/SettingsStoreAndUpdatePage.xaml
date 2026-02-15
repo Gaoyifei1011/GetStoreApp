@@ -29,6 +29,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <!--  查询链接方式设置  -->
@@ -52,7 +53,7 @@
                     Grid.Column="0"
                     Margin="0,0,12,0"
                     FontSize="16"
-                    Glyph="&#xE721;" />
+                    Glyph="&#xE71B;" />
 
                 <StackPanel
                     Grid.Column="1"
@@ -118,9 +119,96 @@
                 </DropDownButton>
             </Grid>
 
-            <!--  应用链接打开方式设置  -->
+            <!--  搜索应用方式设置  -->
             <Grid
                 Grid.Row="1"
+                Height="60"
+                Margin="0,0,0,2"
+                Padding="16,0"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    FontSize="16"
+                    Glyph="&#xE773;" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/SearchAppsMode')}" />
+
+                    <TextBlock
+                        x:Name="SearchAppsModeDescription"
+                        HorizontalAlignment="Left"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/SearchAppsModeDescription')}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Background="Transparent"
+                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/SearchAppsModeDescription')}"
+                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
+                                Visibility="{x:Bind SearchAppsModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+                </StackPanel>
+
+                <DropDownButton
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Content="{x:Bind SearchAppsMode.Value, Mode=OneWay}">
+
+                    <DropDownButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <RadioMenuFlyoutItem
+                                Click="{x:Bind OnSearchAppsModeSelectClicked}"
+                                GroupName="SearchAppsModeRadioGroup"
+                                IsChecked="{x:Bind x:String.Equals(SearchAppsMode.Key, SearchAppsModeList[0].Key), Mode=OneWay}"
+                                Text="{x:Bind SearchAppsModeList[0].Value}">
+
+                                <RadioMenuFlyoutItem.Tag>
+                                    <x:Int32>0</x:Int32>
+                                </RadioMenuFlyoutItem.Tag>
+                            </RadioMenuFlyoutItem>
+
+                            <RadioMenuFlyoutItem
+                                Click="{x:Bind OnSearchAppsModeSelectClicked}"
+                                GroupName="SearchAppsModeRadioGroup"
+                                IsChecked="{x:Bind x:String.Equals(SearchAppsMode.Key, SearchAppsModeList[1].Key), Mode=OneWay}"
+                                Text="{x:Bind SearchAppsModeList[1].Value}">
+
+                                <RadioMenuFlyoutItem.Tag>
+                                    <x:Int32>1</x:Int32>
+                                </RadioMenuFlyoutItem.Tag>
+                            </RadioMenuFlyoutItem>
+                        </MenuFlyout>
+                    </DropDownButton.Flyout>
+                </DropDownButton>
+            </Grid>
+
+            <!--  应用链接打开方式设置  -->
+            <Grid
+                Grid.Row="2"
                 Height="60"
                 Margin="0,0,0,2"
                 Padding="16,0"
@@ -207,7 +295,7 @@
 
             <!--  应用安装方式设置  -->
             <Grid
-                Grid.Row="2"
+                Grid.Row="3"
                 Height="60"
                 Margin="0,0,0,2"
                 Padding="16,0"
@@ -293,7 +381,7 @@
 
             <!--  检测到更新后是否直接取消更新  -->
             <Grid
-                Grid.Row="3"
+                Grid.Row="4"
                 Height="60"
                 Margin="0,0,0,2"
                 Padding="16,0"
@@ -373,7 +461,7 @@
 
             <!--  商店区域设置  -->
             <Expander
-                Grid.Row="4"
+                Grid.Row="5"
                 Margin="0,0,0,2"
                 Padding="0"
                 HorizontalAlignment="Stretch"
@@ -623,7 +711,7 @@
 
             <!--  链接过滤设置  -->
             <Expander
-                Grid.Row="5"
+                Grid.Row="6"
                 Margin="0,0,0,2"
                 Padding="0"
                 HorizontalAlignment="Stretch"

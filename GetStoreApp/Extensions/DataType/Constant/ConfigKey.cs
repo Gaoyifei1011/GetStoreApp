@@ -37,6 +37,8 @@
 
         public const string QueryLinksModeKey = "QueryLinksMode";
 
+        public const string SearchAppsModeKey = "SearchAppsMode";
+
         public const string StoreRegionKey = "StoreRegion";
 
         public const string ShellMenuKey = "ShellMenu";

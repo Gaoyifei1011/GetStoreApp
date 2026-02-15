@@ -1,4 +1,4 @@
-{
+﻿{
   "AppLinkOpenMode": "אופן פתיחת קישורי אפליקציה",
   "AppLinkOpenModeBuiltInApp": "מותקן באפליקציה",
   "AppLinkOpenModeDescription": "הגדר כיצד לפתוח קישורים של אפליקציות",
@@ -26,6 +26,10 @@
   "QueryLinksModeDescription": "בחר את ערוץ ממשק היישום לשאילתת קישורים",
   "QueryLinksModeOfficial": "ממשק רשמי",
   "QueryLinksModeThirdParty": "ממשק צד שלישי",
+  "SearchAppsMode": "מצב חיפוש אפליקציה",
+  "SearchAppsModeDescription": "בחר את ערוץ הממשק עבור אפליקציית החיפוש",
+  "SearchAppsModeOfficialAPI": "API רשמי",
+  "SearchAppsModeOfficialConsoleClient": "לקוח קונסולה רשמי",
   "StoreCountryOrRegion": "מדינות ואזורים",
   "StoreCountryOrRegionDescription": "הגדר מדינות או אזורים של חנות Microsoft",
   "StoreRegion": "אזור החנות",
