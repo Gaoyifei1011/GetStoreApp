@@ -580,7 +580,7 @@
                                                 </ToolTipService.ToolTip>
                                             </MenuFlyoutItem>
 
-                                            <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/ShareFile')}">
+                                            <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/Share')}">
 
                                                 <MenuFlyoutSubItem.Icon>
                                                     <FontIcon Glyph="&#xE72D;" />
