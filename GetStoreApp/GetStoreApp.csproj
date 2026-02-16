@@ -303,7 +303,7 @@
     <None Remove="Views\Dialogs\AppInformationDialog.xaml" />
     <None Remove="Views\Dialogs\AppRunningDialog.xaml" />
     <None Remove="Views\Dialogs\ClosingWindowDialog.xaml" />
-		<None Remove="Views\Dialogs\DeleteFileDialog.xaml" />
+    <None Remove="Views\Dialogs\DeleteFileDialog.xaml" />
     <None Remove="Views\Dialogs\DesktopStartupArgsDialog.xaml" />
     <None Remove="Views\Dialogs\FileInformationDialog.xaml" />
     <None Remove="Views\Dialogs\LicenseDialog.xaml" />
@@ -312,7 +312,7 @@
     <None Remove="Views\Dialogs\RebootDialog.xaml" />
     <None Remove="Views\Dialogs\RestartAppsDialog.xaml" />
     <None Remove="Views\Dialogs\TraceCleanupPromptDialog.xaml" />
-		<None Remove="Views\Dialogs\UpdateAppDialog.xaml" />
+    <None Remove="Views\Dialogs\UpdateAppDialog.xaml" />
     <None Remove="Views\Dialogs\WinGetAppsVersionDialog.xaml" />
     <None Remove="Views\Dialogs\WinGetSourceEditDialog.xaml" />
     <None Remove="Views\NotificationTips\CopyPasteMainNotificationTip.xaml" />
@@ -371,7 +371,7 @@
     <Page Update="Views\Dialogs\RebootDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\RestartAppsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\TraceCleanupPromptDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-		<Page Update="Views\Dialogs\UpdateAppDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Dialogs\UpdateAppDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\WinGetAppsVersionDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\WinGetSourceEditDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\NotificationTips\CopyPasteMainNotificationTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -407,43 +407,43 @@
     <Page Update="Views\Windows\MainWindow.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Remove="MainApp.xaml" />
 
-		<PRIResource Include="Strings\en-us\AppInformation.resjson" />
-		<PRIResource Include="Strings\en-us\Application.resjson" />
-		<PRIResource Include="Strings\en-us\AppList.resjson" />
-		<PRIResource Include="Strings\en-us\AppManager.resjson" />
-		<PRIResource Include="Strings\en-us\AppUpdate.resjson" />
-		<PRIResource Include="Strings\en-us\Completed.resjson" />
-		<PRIResource Include="Strings\en-us\Dialog.resjson" />
-		<PRIResource Include="Strings\en-us\Download.resjson" />
-		<PRIResource Include="Strings\en-us\Downloading.resjson" />
-		<PRIResource Include="Strings\en-us\Home.resjson" />
-		<PRIResource Include="Strings\en-us\Installer.resjson" />
-		<PRIResource Include="Strings\en-us\NotificationTip.resjson" />
-		<PRIResource Include="Strings\en-us\Pinner.resjson" />
-		<PRIResource Include="Strings\en-us\QueryLinks.resjson" />
-		<PRIResource Include="Strings\en-us\Resources.resjson" />
-		<PRIResource Include="Strings\en-us\SearchStore.resjson" />
-		<PRIResource Include="Strings\en-us\Settings.resjson" />
-		<PRIResource Include="Strings\en-us\SettingsAbout.resjson" />
-		<PRIResource Include="Strings\en-us\SettingsAdvanced.resjson" />
-		<PRIResource Include="Strings\en-us\SettingsAppInstall.resjson" />
-		<PRIResource Include="Strings\en-us\SettingsDownload.resjson" />
-		<PRIResource Include="Strings\en-us\SettingsGeneral.resjson" />
-		<PRIResource Include="Strings\en-us\SettingsItem.resjson" />
-		<PRIResource Include="Strings\en-us\SettingsPackageVolume.resjson" />
-		<PRIResource Include="Strings\en-us\SettingsStoreAndUpdate.resjson" />
-		<PRIResource Include="Strings\en-us\SettingsWinGet.resjson" />
-		<PRIResource Include="Strings\en-us\SettingsWinGetSource.resjson" />
-		<PRIResource Include="Strings\en-us\ShellMenu.resjson" />
-		<PRIResource Include="Strings\en-us\Store.resjson" />
-		<PRIResource Include="Strings\en-us\WebView.resjson" />
-		<PRIResource Include="Strings\en-us\Window.resjson" />
-		<PRIResource Include="Strings\en-us\WinGet.resjson" />
-		<PRIResource Include="Strings\en-us\WinGetAppsVersionInfo.resjson" />
-		<PRIResource Include="Strings\en-us\WinGetAppsVersionOptions.resjson" />
-		<PRIResource Include="Strings\en-us\WinGetInstalled.resjson" />
-		<PRIResource Include="Strings\en-us\WinGetSearch.resjson" />
-		<PRIResource Include="Strings\en-us\WinGetUpgrade.resjson" />
+    <PRIResource Include="Strings\en-us\AppInformation.resjson" />
+    <PRIResource Include="Strings\en-us\Application.resjson" />
+    <PRIResource Include="Strings\en-us\AppList.resjson" />
+    <PRIResource Include="Strings\en-us\AppManager.resjson" />
+    <PRIResource Include="Strings\en-us\AppUpdate.resjson" />
+    <PRIResource Include="Strings\en-us\Completed.resjson" />
+    <PRIResource Include="Strings\en-us\Dialog.resjson" />
+    <PRIResource Include="Strings\en-us\Download.resjson" />
+    <PRIResource Include="Strings\en-us\Downloading.resjson" />
+    <PRIResource Include="Strings\en-us\Home.resjson" />
+    <PRIResource Include="Strings\en-us\Installer.resjson" />
+    <PRIResource Include="Strings\en-us\NotificationTip.resjson" />
+    <PRIResource Include="Strings\en-us\Pinner.resjson" />
+    <PRIResource Include="Strings\en-us\QueryLinks.resjson" />
+    <PRIResource Include="Strings\en-us\Resources.resjson" />
+    <PRIResource Include="Strings\en-us\SearchStore.resjson" />
+    <PRIResource Include="Strings\en-us\Settings.resjson" />
+    <PRIResource Include="Strings\en-us\SettingsAbout.resjson" />
+    <PRIResource Include="Strings\en-us\SettingsAdvanced.resjson" />
+    <PRIResource Include="Strings\en-us\SettingsAppInstall.resjson" />
+    <PRIResource Include="Strings\en-us\SettingsDownload.resjson" />
+    <PRIResource Include="Strings\en-us\SettingsGeneral.resjson" />
+    <PRIResource Include="Strings\en-us\SettingsItem.resjson" />
+    <PRIResource Include="Strings\en-us\SettingsPackageVolume.resjson" />
+    <PRIResource Include="Strings\en-us\SettingsStoreAndUpdate.resjson" />
+    <PRIResource Include="Strings\en-us\SettingsWinGet.resjson" />
+    <PRIResource Include="Strings\en-us\SettingsWinGetSource.resjson" />
+    <PRIResource Include="Strings\en-us\ShellMenu.resjson" />
+    <PRIResource Include="Strings\en-us\Store.resjson" />
+    <PRIResource Include="Strings\en-us\WebView.resjson" />
+    <PRIResource Include="Strings\en-us\Window.resjson" />
+    <PRIResource Include="Strings\en-us\WinGet.resjson" />
+    <PRIResource Include="Strings\en-us\WinGetAppsVersionInfo.resjson" />
+    <PRIResource Include="Strings\en-us\WinGetAppsVersionOptions.resjson" />
+    <PRIResource Include="Strings\en-us\WinGetInstalled.resjson" />
+    <PRIResource Include="Strings\en-us\WinGetSearch.resjson" />
+    <PRIResource Include="Strings\en-us\WinGetUpgrade.resjson" />
     <PRIResource Include="Strings\he-il\AppInformation.resjson" />
     <PRIResource Include="Strings\he-il\Application.resjson" />
     <PRIResource Include="Strings\he-il\AppList.resjson" />
@@ -481,43 +481,43 @@
     <PRIResource Include="Strings\he-il\WinGetInstalled.resjson" />
     <PRIResource Include="Strings\he-il\WinGetSearch.resjson" />
     <PRIResource Include="Strings\he-il\WinGetUpgrade.resjson" />
-		<PRIResource Include="Strings\ru-ru\AppInformation.resjson" />
-		<PRIResource Include="Strings\ru-ru\Application.resjson" />
-		<PRIResource Include="Strings\ru-ru\AppList.resjson" />
-		<PRIResource Include="Strings\ru-ru\AppManager.resjson" />
-		<PRIResource Include="Strings\ru-ru\AppUpdate.resjson" />
-		<PRIResource Include="Strings\ru-ru\Completed.resjson" />
-		<PRIResource Include="Strings\ru-ru\Dialog.resjson" />
-		<PRIResource Include="Strings\ru-ru\Download.resjson" />
-		<PRIResource Include="Strings\ru-ru\Downloading.resjson" />
-		<PRIResource Include="Strings\ru-ru\Home.resjson" />
-		<PRIResource Include="Strings\ru-ru\Installer.resjson" />
-		<PRIResource Include="Strings\ru-ru\NotificationTip.resjson" />
-		<PRIResource Include="Strings\ru-ru\Pinner.resjson" />
-		<PRIResource Include="Strings\ru-ru\QueryLinks.resjson" />
-		<PRIResource Include="Strings\ru-ru\Resources.resjson" />
-		<PRIResource Include="Strings\ru-ru\SearchStore.resjson" />
-		<PRIResource Include="Strings\ru-ru\Settings.resjson" />
-		<PRIResource Include="Strings\ru-ru\SettingsAbout.resjson" />
-		<PRIResource Include="Strings\ru-ru\SettingsAdvanced.resjson" />
-		<PRIResource Include="Strings\ru-ru\SettingsAppInstall.resjson" />
-		<PRIResource Include="Strings\ru-ru\SettingsDownload.resjson" />
-		<PRIResource Include="Strings\ru-ru\SettingsGeneral.resjson" />
-		<PRIResource Include="Strings\ru-ru\SettingsItem.resjson" />
-		<PRIResource Include="Strings\ru-ru\SettingsPackageVolume.resjson" />
-		<PRIResource Include="Strings\ru-ru\SettingsStoreAndUpdate.resjson" />
-		<PRIResource Include="Strings\ru-ru\SettingsWinGet.resjson" />
-		<PRIResource Include="Strings\ru-ru\SettingsWinGetSource.resjson" />
-		<PRIResource Include="Strings\ru-ru\ShellMenu.resjson" />
-		<PRIResource Include="Strings\ru-ru\Store.resjson" />
-		<PRIResource Include="Strings\ru-ru\WebView.resjson" />
-		<PRIResource Include="Strings\ru-ru\Window.resjson" />
-		<PRIResource Include="Strings\ru-ru\WinGet.resjson" />
-		<PRIResource Include="Strings\ru-ru\WinGetAppsVersionInfo.resjson" />
-		<PRIResource Include="Strings\ru-ru\WinGetAppsVersionOptions.resjson" />
-		<PRIResource Include="Strings\ru-ru\WinGetInstalled.resjson" />
-		<PRIResource Include="Strings\ru-ru\WinGetSearch.resjson" />
-		<PRIResource Include="Strings\ru-ru\WinGetUpgrade.resjson" />
+    <PRIResource Include="Strings\ru-ru\AppInformation.resjson" />
+    <PRIResource Include="Strings\ru-ru\Application.resjson" />
+    <PRIResource Include="Strings\ru-ru\AppList.resjson" />
+    <PRIResource Include="Strings\ru-ru\AppManager.resjson" />
+    <PRIResource Include="Strings\ru-ru\AppUpdate.resjson" />
+    <PRIResource Include="Strings\ru-ru\Completed.resjson" />
+    <PRIResource Include="Strings\ru-ru\Dialog.resjson" />
+    <PRIResource Include="Strings\ru-ru\Download.resjson" />
+    <PRIResource Include="Strings\ru-ru\Downloading.resjson" />
+    <PRIResource Include="Strings\ru-ru\Home.resjson" />
+    <PRIResource Include="Strings\ru-ru\Installer.resjson" />
+    <PRIResource Include="Strings\ru-ru\NotificationTip.resjson" />
+    <PRIResource Include="Strings\ru-ru\Pinner.resjson" />
+    <PRIResource Include="Strings\ru-ru\QueryLinks.resjson" />
+    <PRIResource Include="Strings\ru-ru\Resources.resjson" />
+    <PRIResource Include="Strings\ru-ru\SearchStore.resjson" />
+    <PRIResource Include="Strings\ru-ru\Settings.resjson" />
+    <PRIResource Include="Strings\ru-ru\SettingsAbout.resjson" />
+    <PRIResource Include="Strings\ru-ru\SettingsAdvanced.resjson" />
+    <PRIResource Include="Strings\ru-ru\SettingsAppInstall.resjson" />
+    <PRIResource Include="Strings\ru-ru\SettingsDownload.resjson" />
+    <PRIResource Include="Strings\ru-ru\SettingsGeneral.resjson" />
+    <PRIResource Include="Strings\ru-ru\SettingsItem.resjson" />
+    <PRIResource Include="Strings\ru-ru\SettingsPackageVolume.resjson" />
+    <PRIResource Include="Strings\ru-ru\SettingsStoreAndUpdate.resjson" />
+    <PRIResource Include="Strings\ru-ru\SettingsWinGet.resjson" />
+    <PRIResource Include="Strings\ru-ru\SettingsWinGetSource.resjson" />
+    <PRIResource Include="Strings\ru-ru\ShellMenu.resjson" />
+    <PRIResource Include="Strings\ru-ru\Store.resjson" />
+    <PRIResource Include="Strings\ru-ru\WebView.resjson" />
+    <PRIResource Include="Strings\ru-ru\Window.resjson" />
+    <PRIResource Include="Strings\ru-ru\WinGet.resjson" />
+    <PRIResource Include="Strings\ru-ru\WinGetAppsVersionInfo.resjson" />
+    <PRIResource Include="Strings\ru-ru\WinGetAppsVersionOptions.resjson" />
+    <PRIResource Include="Strings\ru-ru\WinGetInstalled.resjson" />
+    <PRIResource Include="Strings\ru-ru\WinGetSearch.resjson" />
+    <PRIResource Include="Strings\ru-ru\WinGetUpgrade.resjson" />
     <PRIResource Include="Strings\zh-hans\AppInformation.resjson" />
     <PRIResource Include="Strings\zh-hans\Application.resjson" />
     <PRIResource Include="Strings\zh-hans\AppList.resjson" />
@@ -555,11 +555,11 @@
     <PRIResource Include="Strings\zh-hans\WinGetInstalled.resjson" />
     <PRIResource Include="Strings\zh-hans\WinGetSearch.resjson" />
     <PRIResource Include="Strings\zh-hans\WinGetUpgrade.resjson" />
-    
+
     <Content Include="$(PkgMicrosoft_WindowsPackageManager_InProcCom)\runtimes\win-$(Platform)\native\Microsoft.Management.Deployment.InProc.dll" Link="Microsoft.Management.Deployment.dll" CopyToOutputDirectory="Always" />
     <Content Include="$(PkgMicrosoft_WindowsPackageManager_InProcCom)\runtimes\win-$(Platform)\native\WindowsPackageManager.dll" Link="WindowsPackageManager.dll" CopyToOutputDirectory="Always" />
   </ItemGroup>
-  
+
   <!-- 测试 AOT 发布后的文件 -->
   <Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Debug|true|true'">
     <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Publish" />
