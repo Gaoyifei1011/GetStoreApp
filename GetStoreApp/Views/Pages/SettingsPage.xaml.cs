@@ -236,6 +236,14 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 下载 Microsoft Store
+        /// </summary>
+        private void OnDownloadMicrosoftStoreClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            SettingsSplitView.IsPaneOpen = false;
+        }
+
+        /// <summary>
         /// 了解加密包
         /// </summary>
         private void OnLearnEncryptedPackageClicked(Hyperlink sender, HyperlinkClickEventArgs args)

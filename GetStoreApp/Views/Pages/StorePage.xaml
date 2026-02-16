@@ -252,6 +252,9 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
                         <TextBlock
@@ -280,10 +283,37 @@
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
-                        <MenuFlyoutSeparator Grid.Row="3" />
+                        <TextBlock
+                            Grid.Row="3"
+                            Margin="16,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchStoreHelp1')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
 
                         <TextBlock
                             Grid.Row="4"
+                            Margin="16,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchStoreHelp2')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+
+                        <TextBlock
+                            Grid.Row="5"
+                            Margin="16,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchStoreHelp3')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+
+                        <MenuFlyoutSeparator Grid.Row="6" />
+
+                        <TextBlock
+                            Grid.Row="7"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -291,7 +321,7 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="5"
+                            Grid.Row="8"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -300,7 +330,7 @@
                             TextWrapping="Wrap" />
 
                         <StackPanel
-                            Grid.Row="6"
+                            Grid.Row="9"
                             Margin="16,0,16,5"
                             Spacing="5">
 
@@ -311,10 +341,10 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <MenuFlyoutSeparator Grid.Row="7" />
+                        <MenuFlyoutSeparator Grid.Row="10" />
 
                         <TextBlock
-                            Grid.Row="8"
+                            Grid.Row="11"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -322,7 +352,7 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="9"
+                            Grid.Row="12"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -331,7 +361,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="10"
+                            Grid.Row="13"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -340,7 +370,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="11"
+                            Grid.Row="14"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -349,7 +379,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="12"
+                            Grid.Row="15"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -358,7 +388,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="13"
+                            Grid.Row="16"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -367,7 +397,7 @@
                             TextWrapping="Wrap" />
 
                         <StackPanel
-                            Grid.Row="14"
+                            Grid.Row="17"
                             Margin="16,0,16,5"
                             Spacing="5">
 
@@ -384,25 +414,6 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <MenuFlyoutSeparator Grid.Row="15" />
-
-                        <TextBlock
-                            Grid.Row="16"
-                            Margin="16,10,16,10"
-                            FontSize="15"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/PaidApps')}"
-                            TextAlignment="Left" />
-
-                        <TextBlock
-                            Grid.Row="17"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/PaidAppsDescription')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-
                         <MenuFlyoutSeparator Grid.Row="18" />
 
                         <TextBlock
@@ -410,11 +421,30 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadFailed')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/PaidApps')}"
                             TextAlignment="Left" />
 
                         <TextBlock
                             Grid.Row="20"
+                            Margin="16,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/PaidAppsDescription')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+
+                        <MenuFlyoutSeparator Grid.Row="21" />
+
+                        <TextBlock
+                            Grid.Row="22"
+                            Margin="16,10,16,10"
+                            FontSize="15"
+                            FontWeight="Normal"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadFailed')}"
+                            TextAlignment="Left" />
+
+                        <TextBlock
+                            Grid.Row="23"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -423,7 +453,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="21"
+                            Grid.Row="24"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -432,7 +462,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="22"
+                            Grid.Row="25"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -441,7 +471,7 @@
                             TextWrapping="Wrap" />
 
                         <StackPanel
-                            Grid.Row="23"
+                            Grid.Row="26"
                             Margin="16,0,16,5"
                             Spacing="5">
 

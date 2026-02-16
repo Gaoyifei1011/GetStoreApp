@@ -210,7 +210,7 @@
                                 Margin="16,0,16,5"
                                 Spacing="5">
 
-                                <TextBlock>
+                                <TextBlock HorizontalAlignment="Left">
                                     <Hyperlink
                                         Click="{x:Bind OnLearnWinGetClicked}"
                                         NavigateUri="https://learn.microsoft.com/windows/package-manager"
