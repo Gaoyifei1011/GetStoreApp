@@ -15,11 +15,13 @@
     mc:Ignorable="d">
 
     <Page.Resources>
+        <XamlUICommand x:Name="CopyCommand" ExecuteRequested="{x:Bind OnCopyEexeuteReqeusted}" />
         <XamlUICommand x:Name="DeleteCommand" ExecuteRequested="{x:Bind OnDeleteExecuteRequested}" />
         <XamlUICommand x:Name="FileInformationCommand" ExecuteRequested="{x:Bind OnFileInformationExecuteRequested}" />
         <XamlUICommand x:Name="InstallCommand" ExecuteRequested="{x:Bind OnInstallExecuteRequested}" />
+        <XamlUICommand x:Name="NearbySharingCommand" ExecuteRequested="{x:Bind OnNearbySharingExecuteRequested}" />
         <XamlUICommand x:Name="OpenFolderCommand" ExecuteRequested="{x:Bind OnOpenFolderExecuteRequested}" />
-        <XamlUICommand x:Name="ShareFileCommand" ExecuteRequested="{x:Bind OnShareFileExecuteRequested}" />
+        <XamlUICommand x:Name="ShowShareUICommand" ExecuteRequested="{x:Bind OnShowShareUIExecuteRequested}" />
     </Page.Resources>
 
     <Grid>
@@ -184,16 +186,41 @@
 
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutItem
-                            Click="{x:Bind OnShareSelectedFileClicked}"
+                        <MenuFlyoutSubItem
                             IsEnabled="{x:Bind GetIsLoading(CompletedResultKind), Mode=OneWay}"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/ShareSelectedFile')}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/Share')}"
                             Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
-                            <MenuFlyoutItem.Icon>
+                            <MenuFlyoutSubItem.Icon>
                                 <FontIcon Glyph="&#xE72D;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
+                            </MenuFlyoutSubItem.Icon>
+
+                            <MenuFlyoutSubItem.Items>
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnShowShareUIClicked}"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/ShowShareUI')}"
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckShareUIVisibilityConvert()}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE70A;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+
+                                <MenuFlyoutItem Click="{x:Bind OnNearbySharingClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/NearbySharing')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xF3E2;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+
+                                <MenuFlyoutItem Click="{x:Bind OnCopyClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/Copy')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE8C8;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                            </MenuFlyoutSubItem.Items>
+                        </MenuFlyoutSubItem>
 
                         <MenuFlyoutItem Click="{x:Bind OnOpenFolderClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/OpenFolder')}">
 
@@ -553,15 +580,45 @@
                                                 </ToolTipService.ToolTip>
                                             </MenuFlyoutItem>
 
-                                            <MenuFlyoutItem
-                                                Command="{StaticResource ShareFileCommand}"
-                                                CommandParameter="{x:Bind}"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/ShareFile')}">
+                                            <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/ShareFile')}">
 
-                                                <MenuFlyoutItem.Icon>
+                                                <MenuFlyoutSubItem.Icon>
                                                     <FontIcon Glyph="&#xE72D;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
+                                                </MenuFlyoutSubItem.Icon>
+
+                                                <MenuFlyoutSubItem.Items>
+                                                    <MenuFlyoutItem
+                                                        Command="{StaticResource ShowShareUICommand}"
+                                                        CommandParameter="{x:Bind}"
+                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/ShowShareUI')}"
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckShareUIVisibilityConvert()}">
+
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon Glyph="&#xE70A;" />
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
+
+                                                    <MenuFlyoutItem
+                                                        Command="{StaticResource NearbySharingCommand}"
+                                                        CommandParameter="{x:Bind}"
+                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/NearbySharing')}">
+
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon Glyph="&#xF3E2;" />
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
+
+                                                    <MenuFlyoutItem
+                                                        Command="{StaticResource CopyCommand}"
+                                                        CommandParameter="{x:Bind}"
+                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/Copy')}">
+
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon Glyph="&#xE8C8;" />
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
+                                                </MenuFlyoutSubItem.Items>
+                                            </MenuFlyoutSubItem>
 
                                             <MenuFlyoutItem
                                                 Command="{StaticResource FileInformationCommand}"

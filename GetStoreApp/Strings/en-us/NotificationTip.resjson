@@ -1,6 +1,6 @@
 ﻿{
-  "CopyToClipboardFailed": "Failed to copy the content to the clipboard. Please check the access permission of the clipboard",
-  "CopyToClipboardSuccessfully": "Content has been successfully copied to the clipboard",
+  "CopyToClipboardFailed": "Failed to copy to clipboard, please check the clipboard access permissions",
+  "CopyToClipboardSuccessfully": "Successfully copy to clipboard",
   "DesktopShortcutFailed": "The app's desktop shortcut failed to create, please create it manually",
   "DesktopShortcutSuccessfully": "The desktop shortcut for the app was created successfully",
   "DownloadCreateFailed": "The download task is created failed",

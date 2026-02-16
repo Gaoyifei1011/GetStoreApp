@@ -1,6 +1,6 @@
-{
-  "CopyToClipboardFailed": "העתקת התוכן ללוח נכשלה, אנא בדוק את הרשאות הגישה ללוח",
-  "CopyToClipboardSuccessfully": "התוכן הועתק בהצלחה ללוח",
+﻿{
+  "CopyToClipboardFailed": "העתקה ללוח נכשלה, בבקשה בדוק את הרשאות הגישה ללוח",
+  "CopyToClipboardSuccessfully": "הועתק בהצלחה ללוח",
   "DesktopShortcutFailed": "יצירת קיצור הדרך של היישום לשולחן העבודה נכשלה, אנא צור אותו ידנית",
   "DesktopShortcutSuccessfully": "קיצור הדרך של היישום לשולחן העבודה נוצר בהצלחה",
   "DownloadCreateFailed": "יצירת משימת ההורדה נכשלה",

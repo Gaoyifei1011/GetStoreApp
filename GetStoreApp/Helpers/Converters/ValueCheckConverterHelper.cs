@@ -1,7 +1,9 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Store.Preview.InstallControl;
 
 namespace GetStoreApp.Helpers.Converters
@@ -11,6 +13,14 @@ namespace GetStoreApp.Helpers.Converters
     /// </summary>
     public static class ValueCheckConverterHelper
     {
+        /// <summary>
+        /// 检查是否支持显示分享面板
+        /// </summary>
+        public static Visibility CheckShareUIVisibilityConvert()
+        {
+            return DataTransferManager.IsSupported() && !RuntimeHelper.IsElevated ? Visibility.Visible : Visibility.Collapsed;
+        }
+
         /// <summary>
         /// 检查痕迹清理对话框按钮是否可用
         /// </summary>

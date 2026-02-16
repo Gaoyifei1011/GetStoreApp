@@ -1,6 +1,6 @@
 ﻿{
-  "CopyToClipboardFailed": "复制内容到剪贴板失败，请检查剪贴板的访问权限",
-  "CopyToClipboardSuccessfully": "成功复制内容到剪贴板",
+  "CopyToClipboardFailed": "复制到剪贴板失败，请检查剪贴板的访问权限",
+  "CopyToClipboardSuccessfully": "成功复制到剪贴板",
   "DesktopShortcutFailed": "应用的桌面快捷方式创建失败，请手动创建",
   "DesktopShortcutSuccessfully": "应用的桌面快捷方式已成功创建",
   "DownloadCreateFailed": "下载任务创建失败",

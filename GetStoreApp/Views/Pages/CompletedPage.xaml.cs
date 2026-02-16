@@ -154,6 +154,27 @@ namespace GetStoreApp.Views.Pages
         #region 第二部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
+        /// 复制到剪贴板
+        /// </summary>
+        private async void OnCopyEexeuteReqeusted(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is CompletedModel completed && File.Exists(completed.FilePath))
+            {
+                try
+                {
+                    List<StorageFile> fileList = [await StorageFile.GetFileFromPathAsync(completed.FilePath)];
+                    bool copyResult = CopyPasteHelper.CopyFileToClipBoard(fileList);
+                    await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                }
+                catch (Exception e)
+                {
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.ShareFailed, false, 1));
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShowShareUIExecuteRequested), 1, e);
+                }
+            }
+        }
+
+        /// <summary>
         /// 删除当前任务
         /// </summary>
         private async void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
@@ -374,6 +395,16 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 就近分享
+        /// </summary>
+        private async void OnNearbySharingExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is CompletedModel completed && File.Exists(completed.FilePath))
+            {
+            }
+        }
+
+        /// <summary>
         /// 打开当前项目存储的文件夹
         /// </summary>
         private void OnOpenFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
@@ -422,9 +453,9 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 共享文件
+        /// 显示分享面板
         /// </summary>
-        private async void OnShareFileExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnShowShareUIExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is CompletedModel completed && File.Exists(completed.FilePath))
             {
@@ -440,7 +471,7 @@ namespace GetStoreApp.Views.Pages
                     catch (Exception e)
                     {
                         await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.ShareFailed, false, 1));
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShareFileExecuteRequested), 1, e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShowShareUIExecuteRequested), 1, e);
                     }
                 }
             }
@@ -589,9 +620,9 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 分享选中的文件
+        /// 显示分享面板
         /// </summary>
-        private async void OnShareSelectedFileClicked(object sender, RoutedEventArgs args)
+        private async void OnShowShareUIClicked(object sender, RoutedEventArgs args)
         {
             List<CompletedModel> selectedCompletedDataList = [];
 
@@ -627,7 +658,7 @@ namespace GetStoreApp.Views.Pages
                             }
                             catch (Exception e)
                             {
-                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShareSelectedFileClicked), 1, e);
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShowShareUIClicked), 1, e);
                                 continue;
                             }
                         }
@@ -640,8 +671,79 @@ namespace GetStoreApp.Views.Pages
                 catch (Exception e)
                 {
                     await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.ShareFailed, true, selectedCompletedDataList.Count));
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShareSelectedFileClicked), 2, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShowShareUIClicked), 2, e);
                 }
+            }
+        }
+
+        /// <summary>
+        /// 就近分享
+        /// </summary>
+        private async void OnNearbySharingClicked(object sender, RoutedEventArgs args)
+        {
+            List<CompletedModel> selectedCompletedDataList = [];
+
+            foreach (CompletedModel completedItem in CompletedCollection)
+            {
+                if (completedItem.IsSelected)
+                {
+                    selectedCompletedDataList.Add(completedItem);
+                }
+            }
+
+            // 没有选中任何内容时显示空提示对话框
+            if (selectedCompletedDataList.Count is 0)
+            {
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
+                return;
+            }
+            else
+            {
+            }
+        }
+
+        /// <summary>
+        /// 复制到剪贴板
+        /// </summary>
+        private async void OnCopyClicked(object sender, RoutedEventArgs args)
+        {
+            List<CompletedModel> selectedCompletedDataList = [];
+
+            foreach (CompletedModel completedItem in CompletedCollection)
+            {
+                if (completedItem.IsSelected)
+                {
+                    selectedCompletedDataList.Add(completedItem);
+                }
+            }
+
+            // 没有选中任何内容时显示空提示对话框
+            if (selectedCompletedDataList.Count is 0)
+            {
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
+                return;
+            }
+            else
+            {
+                List<StorageFile> selectedFileList = [];
+                foreach (CompletedModel completedItem in selectedCompletedDataList)
+                {
+                    try
+                    {
+                        if (File.Exists(completedItem.FilePath))
+                        {
+                            selectedFileList.Add(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnCopyClicked), 1, e);
+                        continue;
+                    }
+                }
+
+                bool copyResult = CopyPasteHelper.CopyFileToClipBoard(selectedFileList);
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
             }
         }
 
