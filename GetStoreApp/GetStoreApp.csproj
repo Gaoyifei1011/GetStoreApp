@@ -4,6 +4,7 @@
     <AnalysisLevel>latest</AnalysisLevel>
     <AssemblyName>GetStoreApp</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <CsWinRTIncludes>Windows.ApplicationModel.Internal.DataTransfer.NearShare</CsWinRTIncludes>
     <DefaultLanguage>en-US</DefaultLanguage>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
@@ -178,6 +179,8 @@
     <Content Remove="Assets\Embed\LICENSE" />
     <Content Remove="Assets\Embed\url.xml" />
     <Content Remove="Assets\Embed\wu.xml" />
+
+    <CsWinRTInputs Include="$(ProjectDir)Windows.ApplicationModel.Internal.DataTransfer.NearShare.winmd" />
 
     <MainAppEmbeddedItem Include="Assets\Embed\cookie.xml" />
     <MainAppEmbeddedItem Include="Assets\Embed\LICENSE" />
