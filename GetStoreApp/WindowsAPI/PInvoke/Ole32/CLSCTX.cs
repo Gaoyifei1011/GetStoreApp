@@ -1,8 +1,11 @@
-﻿namespace GetStoreApp.WindowsAPI.PInvoke.Ole32
+﻿using System;
+
+namespace GetStoreApp.WindowsAPI.PInvoke.Ole32
 {
     /// <summary>
     /// 激活调用中使用的值，用于指示要在其中运行对象的执行上下文。 这些值还用于对 CoRegisterClassObject 的调用，以指示一组执行上下文，在该上下文中，类对象可用于构造实例的请求。
     /// </summary>
+    [Flags]
     public enum CLSCTX : uint
     {
         /// <summary>
