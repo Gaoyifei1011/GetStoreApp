@@ -518,7 +518,7 @@
                     </Grid>
                 </Expander.Header>
 
-                <Expander.Content>
+                
                     <StackPanel Padding="0" HorizontalAlignment="Stretch">
                         <Grid
                             Height="52"
@@ -706,7 +706,7 @@
                             </DropDownButton>
                         </Grid>
                     </StackPanel>
-                </Expander.Content>
+                
             </Expander>
 
             <!--  链接过滤设置  -->
@@ -768,7 +768,7 @@
                     </Grid>
                 </Expander.Header>
 
-                <Expander.Content>
+                
                     <StackPanel Padding="0" HorizontalAlignment="Stretch">
                         <Grid
                             Height="52"
@@ -906,7 +906,7 @@
                             </StackPanel>
                         </Grid>
                     </StackPanel>
-                </Expander.Content>
+                
             </Expander>
         </Grid>
     </ScrollViewer>

@@ -199,7 +199,6 @@ namespace GetStoreApp.Views.Windows
             contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
             inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
             inputPointerSource = InputPointerSource.GetForIsland(contentIsland);
-            ControlBackdropController.Initialize(Current);
 
             // 挂载相应的事件
             AppWindow.Changed += OnAppWindowChanged;
@@ -333,7 +332,6 @@ namespace GetStoreApp.Views.Windows
 
                 if (contentDialogResult is ContentDialogResult.Primary)
                 {
-                    ControlBackdropController.UnInitialize();
                     AppWindow.Changed -= OnAppWindowChanged;
                     contentIsland.Environment.SettingChanged -= OnSettingChanged;
                     inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
@@ -357,7 +355,6 @@ namespace GetStoreApp.Views.Windows
             }
             else
             {
-                ControlBackdropController.UnInitialize();
                 AppWindow.Changed -= OnAppWindowChanged;
                 contentIsland.Environment.SettingChanged -= OnSettingChanged;
                 inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
@@ -506,7 +503,6 @@ namespace GetStoreApp.Views.Windows
         {
             SetTitleBarTheme(sender.ActualTheme);
             SetClassicMenuTheme(sender.ActualTheme);
-            ControlBackdropController.UpdateControlTheme(sender.ActualTheme);
         }
 
         /// <summary>

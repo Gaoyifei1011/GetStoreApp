@@ -370,7 +370,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/BriefIntroduction')}" />
                 </Expander.Header>
 
-                <Expander.Content>
+                
                     <StackPanel Margin="0">
                         <TextBlock
                             Margin="30,10,16,10"
@@ -433,7 +433,7 @@
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
                     </StackPanel>
-                </Expander.Content>
+                
             </Expander>
 
             <!--  项目引用信息  -->
@@ -453,7 +453,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/Reference')}" />
                 </Expander.Header>
 
-                <Expander.Content>
+                
                     <ListView
                         Margin="26,0,16,0"
                         Padding="5"
@@ -517,7 +517,7 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                </Expander.Content>
+                
             </Expander>
 
             <!--  感谢用户信息  -->
@@ -536,7 +536,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/Thanks')}" />
                 </Expander.Header>
 
-                <Expander.Content>
+                
                     <StackPanel Margin="0">
                         <TextBlock
                             Margin="30,10,16,5"
@@ -611,7 +611,7 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </StackPanel>
-                </Expander.Content>
+                
             </Expander>
         </Grid>
     </ScrollViewer>

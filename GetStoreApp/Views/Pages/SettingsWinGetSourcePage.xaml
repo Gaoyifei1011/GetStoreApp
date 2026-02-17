@@ -112,14 +112,14 @@
                 IsAccessKeyScope="True"
                 Style="{ThemeResource EllipsisButton}">
 
-                <Button.Content>
+                
                     <FontIcon
                         Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
                         VerticalAlignment="Center"
                         FontFamily="{ThemeResource SymbolThemeFontFamily}"
                         FontSize="20"
                         Glyph="&#xE712;" />
-                </Button.Content>
+                
 
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">
@@ -336,7 +336,7 @@
                                         </Grid>
                                     </Expander.Header>
 
-                                    <Expander.Content>
+                                    
                                         <Grid
                                             Margin="40,0,0,0"
                                             ColumnSpacing="15"
@@ -547,7 +547,7 @@
                                                 Text="{x:Bind PackageCatalogBackgroundUpdateInterval}"
                                                 TextWrapping="Wrap" />
                                         </Grid>
-                                    </Expander.Content>
+                                    
                                 </Expander>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -750,7 +750,7 @@
                                         </Grid>
                                     </Expander.Header>
 
-                                    <Expander.Content>
+                                    
                                         <Grid
                                             Margin="40,0,0,0"
                                             ColumnSpacing="15"
@@ -961,7 +961,7 @@
                                                 Text="{x:Bind PackageCatalogBackgroundUpdateInterval}"
                                                 TextWrapping="Wrap" />
                                         </Grid>
-                                    </Expander.Content>
+                                    
                                 </Expander>
                             </DataTemplate>
                         </ListView.ItemTemplate>

@@ -209,7 +209,7 @@
                     </Grid>
                 </Expander.Header>
 
-                <Expander.Content>
+                
                     <StackPanel>
                         <TextBlock
                             HorizontalAlignment="Center"
@@ -471,7 +471,7 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </StackPanel>
-                </Expander.Content>
+                
             </Expander>
 
             <!--  查询链接结果  -->
@@ -541,7 +541,7 @@
                         </Grid>
                     </Expander.Header>
 
-                    <Expander.Content>
+                    
                         <Grid Margin="0,0,10,0" RowSpacing="6">
 
                             <Grid.RowDefinitions>
@@ -597,7 +597,7 @@
                                 TextAlignment="Justify"
                                 TextWrapping="Wrap" />
                         </Grid>
-                    </Expander.Content>
+                    
                 </Expander>
 
                 <!--  查询链接结果控制栏  -->
@@ -941,7 +941,7 @@
                                     CommandParameter="{x:Bind}"
                                     IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}">
 
-                                    <HyperlinkButton.Content>
+                                    
                                         <TextBlock
                                             x:Name="FileNameText"
                                             HorizontalAlignment="Left"
@@ -958,7 +958,7 @@
                                                     Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}" />
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
-                                    </HyperlinkButton.Content>
+                                    
 
                                     <HyperlinkButton.ContextFlyout>
                                         <MenuFlyout Placement="Bottom">

@@ -51,7 +51,7 @@
         PaneBackground="Transparent"
         PanePlacement="Right">
 
-        <SplitView.Content>
+        
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -91,7 +91,7 @@
                     Navigated="{x:Bind OnNavigated}"
                     NavigationFailed="{x:Bind OnNavigationFailed}" />
             </Grid>
-        </SplitView.Content>
+        
 
         <SplitView.Pane>
             <Grid>
@@ -137,12 +137,12 @@
                             Click="{x:Bind OnCloseClicked}"
                             Style="{StaticResource AlternateCloseButtonStyle}">
 
-                            <Button.Content>
+                            
                                 <FontIcon
                                     Margin="4"
                                     FontSize="16"
                                     Glyph="&#xE711;" />
-                            </Button.Content>
+                            
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
@@ -275,12 +275,12 @@
                             IsEnabled="{x:Bind system:Convert.ToBoolean(PackageOperationCollection.Count), Mode=OneWay}"
                             Style="{StaticResource AlternateCloseButtonStyle}">
 
-                            <Button.Content>
+                            
                                 <FontIcon
                                     Margin="4"
                                     FontSize="16"
                                     Glyph="&#xE74D;" />
-                            </Button.Content>
+                            
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
@@ -298,12 +298,12 @@
                             Click="{x:Bind OnCloseClicked}"
                             Style="{StaticResource AlternateCloseButtonStyle}">
 
-                            <Button.Content>
+                            
                                 <FontIcon
                                     Margin="4"
                                     FontSize="16"
                                     Glyph="&#xE711;" />
-                            </Button.Content>
+                            
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
@@ -614,12 +614,12 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Finished, x:True), Mode=OneWay}">
 
-                                            <Button.Content>
+                                            
                                                 <FontIcon
                                                     Margin="4"
                                                     FontSize="16"
                                                     Glyph="&#xE711;" />
-                                            </Button.Content>
+                                            
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -642,12 +642,12 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Finished, x:False), Mode=OneWay}">
 
-                                            <Button.Content>
+                                            
                                                 <FontIcon
                                                     Margin="4"
                                                     FontSize="16"
                                                     Glyph="&#xE74D;" />
-                                            </Button.Content>
+                                            
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -924,12 +924,12 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:True), Mode=OneWay}">
 
-                                            <Button.Content>
+                                            
                                                 <FontIcon
                                                     Margin="4"
                                                     FontSize="16"
                                                     Glyph="&#xE711;" />
-                                            </Button.Content>
+                                            
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -952,12 +952,12 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:False), Mode=OneWay}">
 
-                                            <Button.Content>
+                                            
                                                 <FontIcon
                                                     Margin="4"
                                                     FontSize="16"
                                                     Glyph="&#xE74D;" />
-                                            </Button.Content>
+                                            
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -1109,12 +1109,12 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.Finished, x:True), Mode=OneWay}">
 
-                                            <Button.Content>
+                                            
                                                 <FontIcon
                                                     Margin="4"
                                                     FontSize="16"
                                                     Glyph="&#xE711;" />
-                                            </Button.Content>
+                                            
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -1137,12 +1137,12 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.Finished, x:False), Mode=OneWay}">
 
-                                            <Button.Content>
+                                            
                                                 <FontIcon
                                                     Margin="4"
                                                     FontSize="16"
                                                     Glyph="&#xE74D;" />
-                                            </Button.Content>
+                                            
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -1340,12 +1340,12 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.Finished, x:True), Mode=OneWay}">
 
-                                            <Button.Content>
+                                            
                                                 <FontIcon
                                                     Margin="4"
                                                     FontSize="16"
                                                     Glyph="&#xE711;" />
-                                            </Button.Content>
+                                            
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -1368,12 +1368,12 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.Finished, x:False), Mode=OneWay}">
 
-                                            <Button.Content>
+                                            
                                                 <FontIcon
                                                     Margin="4"
                                                     FontSize="16"
                                                     Glyph="&#xE74D;" />
-                                            </Button.Content>
+                                            
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -1650,12 +1650,12 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:True), Mode=OneWay}">
 
-                                            <Button.Content>
+                                            
                                                 <FontIcon
                                                     Margin="4"
                                                     FontSize="16"
                                                     Glyph="&#xE711;" />
-                                            </Button.Content>
+                                            
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -1678,12 +1678,12 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:False), Mode=OneWay}">
 
-                                            <Button.Content>
+                                            
                                                 <FontIcon
                                                     Margin="4"
                                                     FontSize="16"
                                                     Glyph="&#xE74D;" />
-                                            </Button.Content>
+                                            
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip

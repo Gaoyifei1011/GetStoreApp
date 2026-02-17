@@ -180,9 +180,9 @@
                         IsEnabled="{x:Bind CanGoBack, Mode=OneWay}"
                         Style="{StaticResource SubtleButtonStyle}">
 
-                        <Button.Content>
+                        
                             <FontIcon FontSize="16" Glyph="&#xE72B;" />
-                        </Button.Content>
+                        
 
                         <ToolTipService.ToolTip>
                             <ToolTip
@@ -203,9 +203,9 @@
                         Style="{StaticResource SubtleButtonStyle}"
                         Visibility="{x:Bind CanGoForward, Mode=OneWay}">
 
-                        <Button.Content>
+                        
                             <FontIcon FontSize="16" Glyph="&#xE72A;" />
-                        </Button.Content>
+                        
 
                         <ToolTipService.ToolTip>
                             <ToolTip
@@ -224,9 +224,9 @@
                         Click="{x:Bind OnRefreshClicked}"
                         Style="{StaticResource SubtleButtonStyle}">
 
-                        <Button.Content>
+                        
                             <FontIcon FontSize="16" Glyph="&#xE72C;" />
-                        </Button.Content>
+                        
 
                         <ToolTipService.ToolTip>
                             <ToolTip
@@ -245,9 +245,9 @@
                         Click="{x:Bind OnHomeClicked}"
                         Style="{StaticResource SubtleButtonStyle}">
 
-                        <Button.Content>
+                        
                             <FontIcon FontSize="16" Glyph="&#xE80F;" />
-                        </Button.Content>
+                        
 
                         <ToolTipService.ToolTip>
                             <ToolTip
@@ -330,14 +330,14 @@
                     IsAccessKeyScope="True"
                     Style="{ThemeResource EllipsisButton}">
 
-                    <Button.Content>
+                    
                         <FontIcon
                             Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
                             VerticalAlignment="Center"
                             FontFamily="{ThemeResource SymbolThemeFontFamily}"
                             FontSize="20"
                             Glyph="&#xE712;" />
-                    </Button.Content>
+                    
 
                     <Button.Flyout>
                         <MenuFlyout Placement="Bottom">

@@ -173,12 +173,12 @@
                     Click="{x:Bind OnRestartExplorerClicked}"
                     IsEnabled="{x:Bind IsRestarting.Equals(x:False), Mode=OneWay}">
 
-                    <HyperlinkButton.Content>
+                    
                         <Grid>
                             <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/RestartExplorer')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsRestarting), Mode=OneWay}" />
                             <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/Restarting')}" Visibility="{x:Bind IsRestarting, Mode=OneWay}" />
                         </Grid>
-                    </HyperlinkButton.Content>
+                    
                 </HyperlinkButton>
 
                 <StackPanel
@@ -325,7 +325,7 @@
                     </Grid>
                 </Expander.Header>
 
-                <Expander.Content>
+                
                     <StackPanel Padding="0" HorizontalAlignment="Stretch">
                         <Grid
                             Height="52"
@@ -427,7 +427,7 @@
                                 Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/Clear')}" />
                         </Grid>
                     </StackPanel>
-                </Expander.Content>
+                
             </Expander>
         </Grid>
     </ScrollViewer>

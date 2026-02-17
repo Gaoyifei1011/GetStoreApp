@@ -158,14 +158,12 @@
                 <NavigationView.MenuItems>
                     <NavigationViewItem Tag="{x:Bind PageList[0].Key}">
 
-                        <NavigationViewItem.Content>
-                            <TextBlock
-                                x:Name="WindowHomeText"
-                                Tag="{x:Bind PageList[0].Key}"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Home')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap" />
-                        </NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowHomeText"
+                            Tag="{x:Bind PageList[0].Key}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Home')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
 
                         <NavigationViewItem.Icon>
                             <ImageIcon Source="ms-appx:///Assets/Icon/Control/Home.png" />
@@ -209,14 +207,12 @@
 
                     <NavigationViewItem Tag="{x:Bind PageList[1].Key}">
 
-                        <NavigationViewItem.Content>
-                            <TextBlock
-                                x:Name="WindowStoreText"
-                                Tag="{x:Bind PageList[1].Key}"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Store')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap" />
-                        </NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowStoreText"
+                            Tag="{x:Bind PageList[1].Key}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Store')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
 
                         <NavigationViewItem.Icon>
                             <ImageIcon Source="ms-appx:///Assets/Icon/Control/Store.png" />
@@ -258,14 +254,12 @@
 
                     <NavigationViewItem Tag="{x:Bind PageList[2].Key}">
 
-                        <NavigationViewItem.Content>
-                            <TextBlock
-                                x:Name="WindowAppUpdateText"
-                                Tag="{x:Bind PageList[2].Key}"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/AppUpdate')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap" />
-                        </NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowAppUpdateText"
+                            Tag="{x:Bind PageList[2].Key}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/AppUpdate')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
 
                         <NavigationViewItem.Icon>
                             <ImageIcon Source="ms-appx:///Assets/Icon/Control/AppUpdate.png" />
@@ -309,14 +303,12 @@
 
                     <NavigationViewItem Tag="{x:Bind PageList[3].Key}">
 
-                        <NavigationViewItem.Content>
-                            <TextBlock
-                                x:Name="WindowWinGetText"
-                                Tag="{x:Bind PageList[3].Key}"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/WinGet')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap" />
-                        </NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowWinGetText"
+                            Tag="{x:Bind PageList[3].Key}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/WinGet')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
 
                         <NavigationViewItem.Icon>
                             <ImageIcon Source="ms-appx:///Assets/Icon/Control/WinGet.png" />
@@ -358,14 +350,12 @@
 
                     <NavigationViewItem Tag="{x:Bind PageList[4].Key}">
 
-                        <NavigationViewItem.Content>
-                            <TextBlock
-                                x:Name="WindowAppManagerText"
-                                Tag="{x:Bind PageList[4].Key}"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/AppManager')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap" />
-                        </NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowAppManagerText"
+                            Tag="{x:Bind PageList[4].Key}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/AppManager')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
 
                         <NavigationViewItem.Icon>
                             <ImageIcon Source="ms-appx:///Assets/Icon/Control/AppManager.png" />
@@ -409,14 +399,12 @@
 
                     <NavigationViewItem Tag="{x:Bind PageList[5].Key}">
 
-                        <NavigationViewItem.Content>
-                            <TextBlock
-                                x:Name="WindowDownloadText"
-                                Tag="{x:Bind PageList[5].Key}"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Download')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap" />
-                        </NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowDownloadText"
+                            Tag="{x:Bind PageList[5].Key}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Download')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
 
                         <NavigationViewItem.Icon>
                             <ImageIcon Source="ms-appx:///Assets/Icon/Control/Download.png" />
@@ -458,14 +446,12 @@
 
                     <NavigationViewItem Tag="{x:Bind PageList[6].Key}">
 
-                        <NavigationViewItem.Content>
-                            <TextBlock
-                                x:Name="WindowWebText"
-                                Tag="{x:Bind PageList[6].Key}"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Web')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap" />
-                        </NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowWebText"
+                            Tag="{x:Bind PageList[6].Key}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Web')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
 
                         <NavigationViewItem.Icon>
                             <ImageIcon Source="ms-appx:///Assets/Icon/Control/Web.png" />
@@ -509,13 +495,11 @@
                 <NavigationView.FooterMenuItems>
                     <NavigationViewItem Tag="{x:Bind PageList[7].Key}">
 
-                        <NavigationViewItem.Content>
-                            <TextBlock
-                                x:Name="WindowSettingsText"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Settings')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap" />
-                        </NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowSettingsText"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/Settings')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
 
                         <NavigationViewItem.Icon>
                             <ImageIcon Source="ms-appx:///Assets/Icon/Control/Settings.png" />

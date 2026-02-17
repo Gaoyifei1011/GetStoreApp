@@ -917,7 +917,6 @@ namespace GetStoreAppInstaller.Views.Windows
             contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
             inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
             inputPointerSource = InputPointerSource.GetForIsland(contentIsland);
-            ControlBackdropController.Initialize(this);
 
             AppWindow.Changed += OnAppWindowChanged;
             AppWindow.Closing += OnAppWindowClosing;
@@ -1036,7 +1035,6 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnAppWindowClosing(AppWindow sender, AppWindowClosingEventArgs args)
         {
-            ControlBackdropController.UnInitialize();
             AppWindow.Changed -= OnAppWindowChanged;
             contentIsland.Environment.SettingChanged -= OnSettingChanged;
             inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
@@ -1207,7 +1205,6 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             SetTitleBarTheme(sender.ActualTheme);
             SetClassicMenuTheme(sender.ActualTheme);
-            ControlBackdropController.UpdateControlTheme(sender.ActualTheme);
         }
 
         /// <summary>

@@ -69,9 +69,9 @@
                 Padding="0"
                 HorizontalAlignment="Right">
 
-                <Button.Content>
+                
                     <FontIcon FontSize="16" Glyph="&#xE712;" />
-                </Button.Content>
+                
 
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">

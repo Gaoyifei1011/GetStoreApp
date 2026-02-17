@@ -61,14 +61,14 @@
                     IsAccessKeyScope="True"
                     Style="{ThemeResource EllipsisButton}">
 
-                    <Button.Content>
+                    
                         <FontIcon
                             Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
                             VerticalAlignment="Center"
                             FontFamily="{ThemeResource SymbolThemeFontFamily}"
                             FontSize="20"
                             Glyph="&#xE712;" />
-                    </Button.Content>
+                    
 
                     <Button.Flyout>
                         <MenuFlyout Placement="Bottom">
@@ -459,14 +459,14 @@
                     IsAccessKeyScope="True"
                     Style="{ThemeResource EllipsisButton}">
 
-                    <Button.Content>
+                    
                         <FontIcon
                             Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
                             VerticalAlignment="Center"
                             FontFamily="{ThemeResource SymbolThemeFontFamily}"
                             FontSize="20"
                             Glyph="&#xE712;" />
-                    </Button.Content>
+                    
 
                     <Button.Flyout>
                         <MenuFlyout Placement="Bottom">
@@ -1034,14 +1034,14 @@
                     IsAccessKeyScope="True"
                     Style="{ThemeResource EllipsisButton}">
 
-                    <Button.Content>
+                    
                         <FontIcon
                             Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
                             VerticalAlignment="Center"
                             FontFamily="{ThemeResource SymbolThemeFontFamily}"
                             FontSize="20"
                             Glyph="&#xE712;" />
-                    </Button.Content>
+                    
 
                     <Button.Flyout>
                         <MenuFlyout Placement="Bottom">
@@ -1415,14 +1415,14 @@
                     IsAccessKeyScope="True"
                     Style="{ThemeResource EllipsisButton}">
 
-                    <Button.Content>
+                    
                         <FontIcon
                             Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
                             VerticalAlignment="Center"
                             FontFamily="{ThemeResource SymbolThemeFontFamily}"
                             FontSize="20"
                             Glyph="&#xE712;" />
-                    </Button.Content>
+                    
 
                     <Button.Flyout>
                         <MenuFlyout Placement="Bottom">
