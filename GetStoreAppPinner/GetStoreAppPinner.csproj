@@ -63,8 +63,8 @@
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.0-prerelease.251115.2" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7705" GeneratePathProperty="true" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.7.251221100" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-		<PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.8.260203002" />
-		<PackageReference Include="Microsoft.WindowsAppSDK.Runtime" Version="1.8.260209005" />
+		<PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="2.0.15-preview" />
+		<PackageReference Include="Microsoft.WindowsAppSDK.Runtime" Version="2.0.0-preview1" />
 
 		<Page Update="Views\Pages\PinnerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
 	</ItemGroup>
