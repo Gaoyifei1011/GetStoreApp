@@ -187,10 +187,15 @@
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 MaxWidth="9999"
+                                                Padding="0"
                                                 Background="Transparent"
-                                                Content="{x:Bind Description}"
-                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                                Visibility="{Binding ElementName=DescriptionText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                Visibility="{Binding ElementName=DescriptionText, Path=IsTextTrimmed, Mode=OneWay}">
+
+                                                <Grid>
+                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind Description}" />
+                                                </Grid>
+                                            </ToolTip>
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
                                 </StackPanel>

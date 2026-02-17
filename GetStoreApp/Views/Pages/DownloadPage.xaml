@@ -43,42 +43,40 @@
         PaneBackground="Transparent"
         PanePlacement="Right">
 
-        <SplitView.Content>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-                <!--  下载管理控制栏  -->
-                <SelectorBar
-                    x:Name="DownloadSelctorBar"
-                    Grid.Row="0"
-                    Margin="20,6,30,3"
-                    Padding="0"
-                    HorizontalAlignment="Left"
-                    SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
-                    SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}">
+            <!--  下载管理控制栏  -->
+            <SelectorBar
+                x:Name="DownloadSelctorBar"
+                Grid.Row="0"
+                Margin="20,6,30,3"
+                Padding="0"
+                HorizontalAlignment="Left"
+                SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
+                SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}">
 
-                    <SelectorBarItem
-                        Padding="12,5"
-                        FontSize="22"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/Downloading')}" />
+                <SelectorBarItem
+                    Padding="12,5"
+                    FontSize="22"
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/Downloading')}" />
 
-                    <SelectorBarItem
-                        Padding="12,5"
-                        FontSize="22"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/Completed')}" />
-                </SelectorBar>
+                <SelectorBarItem
+                    Padding="12,5"
+                    FontSize="22"
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/Completed')}" />
+            </SelectorBar>
 
-                <!--  WinGet 程序包内容  -->
-                <Frame
-                    x:Name="DownloadFrame"
-                    Grid.Row="1"
-                    Navigated="{x:Bind OnNavigated}"
-                    NavigationFailed="{x:Bind OnNavigationFailed}" />
-            </Grid>
-        </SplitView.Content>
+            <!--  WinGet 程序包内容  -->
+            <Frame
+                x:Name="DownloadFrame"
+                Grid.Row="1"
+                Navigated="{x:Bind OnNavigated}"
+                NavigationFailed="{x:Bind OnNavigationFailed}" />
+        </Grid>
 
         <SplitView.Pane>
             <!--  使用说明  -->
@@ -122,19 +120,22 @@
                         Click="{x:Bind OnCloseClicked}"
                         Style="{StaticResource AlternateCloseButtonStyle}">
 
-                        <Button.Content>
-                            <FontIcon
-                                Margin="4"
-                                FontSize="16"
-                                Glyph="&#xE711;" />
-                        </Button.Content>
+                        <FontIcon
+                            Margin="4"
+                            FontSize="16"
+                            Glyph="&#xE711;" />
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Download/Close')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                Padding="0"
+                                Background="Transparent">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/Close')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </Button>
                 </Grid>

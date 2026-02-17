@@ -83,363 +83,361 @@
                     </Grid>
                 </Expander.Header>
 
-                <Expander.Content>
-                    <Grid Margin="0,0,10,0" RowSpacing="3">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
+                <Grid Margin="0,0,10,0" RowSpacing="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                        <TextBlock
-                            Grid.Row="0"
-                            Grid.RowSpan="2"
-                            Grid.Column="0"
-                            Margin="0,0,25,0"
-                            HorizontalAlignment="Left"
-                            FontSize="17"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/BasicInformation')}" />
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="0"
+                        Margin="0,0,25,0"
+                        HorizontalAlignment="Left"
+                        FontSize="17"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/BasicInformation')}" />
 
-                        <TextBlock
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/AppDisplayName')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/AppDisplayName')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="0"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind DisplayName, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind DisplayName, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PackageFamilyName')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PackageFamilyName')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="1"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind PackageFamilyName, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind PackageFamilyName, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PackageFullName')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PackageFullName')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="2"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind PackageFullName, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind PackageFullName, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="3"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/AppDescription')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/AppDescription')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="3"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind Description, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind Description, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
-                        <MenuFlyoutSeparator
-                            Grid.Row="4"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="3" />
+                    <MenuFlyoutSeparator
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3" />
 
-                        <TextBlock
-                            Grid.Row="5"
-                            Grid.RowSpan="2"
-                            Grid.Column="0"
-                            Margin="0,0,25,0"
-                            HorizontalAlignment="Left"
-                            FontSize="17"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PublisherInformation')}" />
+                    <TextBlock
+                        Grid.Row="5"
+                        Grid.RowSpan="2"
+                        Grid.Column="0"
+                        Margin="0,0,25,0"
+                        HorizontalAlignment="Left"
+                        FontSize="17"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PublisherInformation')}" />
 
-                        <TextBlock
-                            Grid.Row="5"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PublisherDisplayName')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PublisherDisplayName')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="5"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind PublisherDisplayName, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="5"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind PublisherDisplayName, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="6"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PublisherId')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="6"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PublisherId')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="6"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind PublisherId, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="6"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind PublisherId, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
-                        <MenuFlyoutSeparator
-                            Grid.Row="7"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="3" />
+                    <MenuFlyoutSeparator
+                        Grid.Row="7"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3" />
 
-                        <TextBlock
-                            Grid.Row="8"
-                            Grid.RowSpan="2"
-                            Grid.Column="0"
-                            Margin="0,0,25,0"
-                            HorizontalAlignment="Left"
-                            FontSize="17"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PackageInformation')}" />
+                    <TextBlock
+                        Grid.Row="8"
+                        Grid.RowSpan="2"
+                        Grid.Column="0"
+                        Margin="0,0,25,0"
+                        HorizontalAlignment="Left"
+                        FontSize="17"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PackageInformation')}" />
 
-                        <TextBlock
-                            Grid.Row="8"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Version')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="8"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Version')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="8"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind Version, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="8"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind Version, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="9"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/InstalledDate')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="9"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/InstalledDate')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="9"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind InstalledDate, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="9"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind InstalledDate, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="10"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Architecture')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="10"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Architecture')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="10"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind Architecture, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="10"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind Architecture, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="11"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/SignatureKind')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="11"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/SignatureKind')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="11"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind SignatureKind, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="11"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind SignatureKind, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="12"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/ResourceId')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="12"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/ResourceId')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="12"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind ResourceId, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="12"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind ResourceId, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="13"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsBundle')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="13"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsBundle')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="13"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind IsBundle, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="13"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind IsBundle, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="14"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsDevelopmentMode')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="14"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsDevelopmentMode')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="14"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind IsDevelopmentMode, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="14"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind IsDevelopmentMode, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="15"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsFramework')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="15"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsFramework')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="15"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind IsFramework, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="15"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind IsFramework, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="16"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsOptional')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="16"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsOptional')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="16"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind IsOptional, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="16"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind IsOptional, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="17"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsResourcePackage')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="17"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsResourcePackage')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="17"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind IsResourcePackage, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="17"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind IsResourcePackage, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="18"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsStub')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="18"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/IsStub')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="18"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind IsStub, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="18"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind IsStub, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="19"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/VerifyIsOK')}"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="19"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/VerifyIsOK')}"
+                        TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Grid.Row="19"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind VerifyIsOK, Mode=OneWay}"
-                            TextWrapping="Wrap" />
-                    </Grid>
-                </Expander.Content>
+                    <TextBlock
+                        Grid.Row="19"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind VerifyIsOK, Mode=OneWay}"
+                        TextWrapping="Wrap" />
+                </Grid>
             </Expander>
 
             <!--  应用程序入口  -->
@@ -473,72 +471,74 @@
                     </Grid>
                 </Expander.Header>
 
-                <Expander.Content>
-                    <ListView
-                        CornerRadius="0"
-                        ItemsSource="{x:Bind AppListEntryCollection}"
-                        SelectionMode="None">
+                <ListView
+                    CornerRadius="0"
+                    ItemsSource="{x:Bind AppListEntryCollection}"
+                    SelectionMode="None">
 
-                        <ListView.ItemContainerStyle>
-                            <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                <Setter Property="Background" Value="Transparent" />
-                                <Setter Property="Margin" Value="0" />
-                                <Setter Property="MinHeight" Value="0" />
-                                <Setter Property="Padding" Value="0" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
+                    <ListView.ItemContainerStyle>
+                        <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Margin" Value="0" />
+                            <Setter Property="MinHeight" Value="0" />
+                            <Setter Property="Padding" Value="0" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
 
-                        <ItemsControl.ItemContainerTransitions>
-                            <TransitionCollection />
-                        </ItemsControl.ItemContainerTransitions>
+                    <ItemsControl.ItemContainerTransitions>
+                        <TransitionCollection />
+                    </ItemsControl.ItemContainerTransitions>
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="model:AppListEntryModel">
-                                <Grid
-                                    Height="60"
-                                    Padding="18,0,12,0"
-                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                    BorderThickness="0,0,0,1"
-                                    CornerRadius="0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="model:AppListEntryModel">
+                            <Grid
+                                Height="60"
+                                Padding="18,0,12,0"
+                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                BorderThickness="0,0,0,1"
+                                CornerRadius="0">
 
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-                                    <StackPanel
-                                        Grid.Column="0"
-                                        VerticalAlignment="Center"
-                                        Orientation="Vertical">
+                                <StackPanel
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
 
-                                        <TextBlock
-                                            HorizontalAlignment="Left"
-                                            IsTextSelectionEnabled="True"
-                                            Style="{StaticResource BodyTextBlockStyle}"
-                                            Text="{x:Bind DisplayName}"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap" />
+                                    <TextBlock
+                                        HorizontalAlignment="Left"
+                                        IsTextSelectionEnabled="True"
+                                        Style="{StaticResource BodyTextBlockStyle}"
+                                        Text="{x:Bind DisplayName}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap" />
 
-                                        <TextBlock
-                                            HorizontalAlignment="Left"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            IsTextSelectionEnabled="True"
-                                            Style="{StaticResource CaptionTextBlockStyle}"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
+                                    <TextBlock
+                                        HorizontalAlignment="Left"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        IsTextSelectionEnabled="True"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
 
-                                            <Run Text="{x:Bind Description}" />
-                                            <Run Text=" | " />
-                                            <Run Text="{x:Bind AppUserModelId}" />
-                                        </TextBlock>
+                                        <Run Text="{x:Bind Description}" />
+                                        <Run Text=" | " />
+                                        <Run Text="{x:Bind AppUserModelId}" />
+                                    </TextBlock>
 
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                MaxWidth="9999"
-                                                Background="Transparent"
-                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Padding="0"
+                                            Background="Transparent">
 
-                                                <StackPanel>
+                                            <Grid>
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+
+                                                <StackPanel Padding="{StaticResource ToolTipBorderPadding}">
                                                     <TextBlock>
                                                         <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/EntryDisplayName')}" />
                                                         <Run Text="{x:Bind DisplayName}" />
@@ -554,76 +554,91 @@
                                                         <Run Text="{x:Bind AppUserModelId}" />
                                                     </TextBlock>
                                                 </StackPanel>
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                    </StackPanel>
+                                            </Grid>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </StackPanel>
 
-                                    <SplitButton
-                                        Grid.Column="1"
-                                        Command="{StaticResource LaunchCommand}"
-                                        CommandParameter="{x:Bind}"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Launch')}">
+                                <SplitButton
+                                    Grid.Column="1"
+                                    Command="{StaticResource LaunchCommand}"
+                                    CommandParameter="{x:Bind}"
+                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Launch')}">
 
-                                        <SplitButton.Flyout>
-                                            <MenuFlyout Placement="Bottom">
-                                                <MenuFlyoutItem Command="{StaticResource PinToDesktopCommand}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToDesktop')}">
+                                    <SplitButton.Flyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem Command="{StaticResource PinToDesktopCommand}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToDesktop')}">
 
-                                                    <MenuFlyoutItem.Icon>
-                                                        <FontIcon Glyph="&#xE7F4;" />
-                                                    </MenuFlyoutItem.Icon>
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE7F4;" />
+                                                </MenuFlyoutItem.Icon>
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Background="Transparent"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToDesktopToolTip')}"
-                                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                                                    </ToolTipService.ToolTip>
-                                                </MenuFlyoutItem>
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Padding="0"
+                                                        Background="Transparent">
 
-                                                <MenuFlyoutItem
-                                                    Command="{StaticResource PinToStartScreenCommand}"
-                                                    CommandParameter="{x:Bind}"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToStartScreen')}">
+                                                        <Grid>
+                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToDesktopToolTip')}" />
+                                                        </Grid>
+                                                    </ToolTip>
+                                                </ToolTipService.ToolTip>
+                                            </MenuFlyoutItem>
 
-                                                    <MenuFlyoutItem.Icon>
-                                                        <FontIcon Glyph="&#xE8FC;" />
-                                                    </MenuFlyoutItem.Icon>
+                                            <MenuFlyoutItem
+                                                Command="{StaticResource PinToStartScreenCommand}"
+                                                CommandParameter="{x:Bind}"
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToStartScreen')}">
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Background="Transparent"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToStartScreenToolTip')}"
-                                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                                                    </ToolTipService.ToolTip>
-                                                </MenuFlyoutItem>
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE8FC;" />
+                                                </MenuFlyoutItem.Icon>
 
-                                                <MenuFlyoutItem
-                                                    Command="{StaticResource PinToTaskbarCommand}"
-                                                    CommandParameter="{x:Bind}"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToTaskbar')}">
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Padding="0"
+                                                        Background="Transparent">
 
-                                                    <MenuFlyoutItem.Icon>
-                                                        <FontIcon Glyph="&#xE770;" />
-                                                    </MenuFlyoutItem.Icon>
+                                                        <Grid>
+                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToStartScreenToolTip')}" />
+                                                        </Grid>
+                                                    </ToolTip>
+                                                </ToolTipService.ToolTip>
+                                            </MenuFlyoutItem>
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Background="Transparent"
-                                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToTaskbarToolTip')}"
-                                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                                                    </ToolTipService.ToolTip>
-                                                </MenuFlyoutItem>
-                                            </MenuFlyout>
-                                        </SplitButton.Flyout>
-                                    </SplitButton>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Expander.Content>
+                                            <MenuFlyoutItem
+                                                Command="{StaticResource PinToTaskbarCommand}"
+                                                CommandParameter="{x:Bind}"
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToTaskbar')}">
+
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE770;" />
+                                                </MenuFlyoutItem.Icon>
+
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Padding="0"
+                                                        Background="Transparent">
+
+                                                        <Grid>
+                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToTaskbarToolTip')}" />
+                                                        </Grid>
+                                                    </ToolTip>
+                                                </ToolTipService.ToolTip>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </SplitButton.Flyout>
+                                </SplitButton>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Expander>
 
             <!--  依赖信息  -->
@@ -658,73 +673,75 @@
                     </Grid>
                 </Expander.Header>
 
-                <Expander.Content>
-                    <ListView
-                        CornerRadius="0"
-                        ItemsSource="{x:Bind DependenciesCollection}"
-                        SelectionMode="None">
+                <ListView
+                    CornerRadius="0"
+                    ItemsSource="{x:Bind DependenciesCollection}"
+                    SelectionMode="None">
 
-                        <ListView.ItemContainerStyle>
-                            <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                <Setter Property="Background" Value="Transparent" />
-                                <Setter Property="Margin" Value="0" />
-                                <Setter Property="MinHeight" Value="0" />
-                                <Setter Property="Padding" Value="0" />
-                                <Setter Property="CornerRadius" Value="0" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
+                    <ListView.ItemContainerStyle>
+                        <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Margin" Value="0" />
+                            <Setter Property="MinHeight" Value="0" />
+                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="CornerRadius" Value="0" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
 
-                        <ItemsControl.ItemContainerTransitions>
-                            <TransitionCollection />
-                        </ItemsControl.ItemContainerTransitions>
+                    <ItemsControl.ItemContainerTransitions>
+                        <TransitionCollection />
+                    </ItemsControl.ItemContainerTransitions>
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="model:PackageModel">
-                                <Grid
-                                    Height="60"
-                                    Padding="18,0,12,0"
-                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                    BorderThickness="0,0,0,1"
-                                    CornerRadius="0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="model:PackageModel">
+                            <Grid
+                                Height="60"
+                                Padding="18,0,12,0"
+                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                BorderThickness="0,0,0,1"
+                                CornerRadius="0">
 
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-                                    <StackPanel
-                                        Grid.Column="0"
-                                        VerticalAlignment="Center"
-                                        Orientation="Vertical">
+                                <StackPanel
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
 
-                                        <TextBlock
-                                            HorizontalAlignment="Left"
-                                            IsTextSelectionEnabled="True"
-                                            Style="{StaticResource BodyTextBlockStyle}"
-                                            Text="{x:Bind DisplayName}"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap" />
+                                    <TextBlock
+                                        HorizontalAlignment="Left"
+                                        IsTextSelectionEnabled="True"
+                                        Style="{StaticResource BodyTextBlockStyle}"
+                                        Text="{x:Bind DisplayName}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap" />
 
-                                        <TextBlock
-                                            HorizontalAlignment="Left"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            IsTextSelectionEnabled="True"
-                                            Style="{StaticResource CaptionTextBlockStyle}"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
+                                    <TextBlock
+                                        HorizontalAlignment="Left"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        IsTextSelectionEnabled="True"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
 
-                                            <Run Text="{x:Bind PublisherDisplayName}" />
-                                            <Run Text=" | " />
-                                            <Run Text="{x:Bind Version}" />
-                                        </TextBlock>
+                                        <Run Text="{x:Bind PublisherDisplayName}" />
+                                        <Run Text=" | " />
+                                        <Run Text="{x:Bind Version}" />
+                                    </TextBlock>
 
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                MaxWidth="9999"
-                                                Background="Transparent"
-                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Padding="0"
+                                            Background="Transparent">
 
-                                                <StackPanel>
+                                            <Grid>
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+
+                                                <StackPanel Padding="{StaticResource ToolTipBorderPadding}">
                                                     <TextBlock>
                                                         <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/DependencyDisplayName')}" />
                                                         <Run Text="{x:Bind DisplayName}" />
@@ -740,57 +757,60 @@
                                                         <Run Text="{x:Bind Version}" />
                                                     </TextBlock>
                                                 </StackPanel>
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                    </StackPanel>
+                                            </Grid>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </StackPanel>
 
-                                    <Button
-                                        Grid.Column="1"
-                                        Width="34"
-                                        Height="34"
-                                        Padding="0">
+                                <Button
+                                    Grid.Column="1"
+                                    Width="34"
+                                    Height="34"
+                                    Padding="0">
 
-                                        <Button.Content>
-                                            <FontIcon FontSize="16" Glyph="&#xE712;" />
-                                        </Button.Content>
+                                    <FontIcon FontSize="16" Glyph="&#xE712;" />
 
-                                        <Button.Flyout>
-                                            <MenuFlyout Placement="Bottom">
-                                                <MenuFlyoutItem
-                                                    Command="{StaticResource OpenStoreCommand}"
-                                                    CommandParameter="{x:Bind Package}"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/OpenStore')}">
+                                    <Button.Flyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem
+                                                Command="{StaticResource OpenStoreCommand}"
+                                                CommandParameter="{x:Bind Package}"
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/OpenStore')}">
 
-                                                    <MenuFlyoutItem.Icon>
-                                                        <FontIcon Glyph="&#xE719;" />
-                                                    </MenuFlyoutItem.Icon>
-                                                </MenuFlyoutItem>
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE719;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
 
-                                                <MenuFlyoutItem
-                                                    Command="{StaticResource OpenFolderCommand}"
-                                                    CommandParameter="{x:Bind Package}"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/OpenFolder')}">
+                                            <MenuFlyoutItem
+                                                Command="{StaticResource OpenFolderCommand}"
+                                                CommandParameter="{x:Bind Package}"
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/OpenFolder')}">
 
-                                                    <MenuFlyoutItem.Icon>
-                                                        <FontIcon Glyph="&#xE8B7;" />
-                                                    </MenuFlyoutItem.Icon>
-                                                </MenuFlyoutItem>
-                                            </MenuFlyout>
-                                        </Button.Flyout>
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE8B7;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </Button.Flyout>
 
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                MaxWidth="9999"
-                                                Background="Transparent"
-                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/ViewMore')}"
-                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                                        </ToolTipService.ToolTip>
-                                    </Button>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Expander.Content>
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Padding="0"
+                                            Background="Transparent">
+
+                                            <Grid>
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/ViewMore')}" />
+                                            </Grid>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Expander>
         </Grid>
     </ScrollViewer>

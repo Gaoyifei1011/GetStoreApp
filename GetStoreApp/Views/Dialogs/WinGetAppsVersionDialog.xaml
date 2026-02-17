@@ -77,23 +77,26 @@
                 IsEnabled="{x:Bind GetCanBack(BreadCollection.Count), Mode=OneWay}"
                 Style="{StaticResource AlternateCloseButtonStyle}">
 
-                <Button.Content>
-                    <AnimatedIcon Margin="2">
-                        <AnimatedIcon.Source>
-                            <animatedvisuals:AnimatedBackVisualSource />
-                        </AnimatedIcon.Source>
-                        <AnimatedIcon.FallbackIconSource>
-                            <FontIconSource Glyph="&#xE72B;" />
-                        </AnimatedIcon.FallbackIconSource>
-                    </AnimatedIcon>
-                </Button.Content>
+                <AnimatedIcon Margin="2">
+                    <AnimatedIcon.Source>
+                        <animatedvisuals:AnimatedBackVisualSource />
+                    </AnimatedIcon.Source>
+                    <AnimatedIcon.FallbackIconSource>
+                        <FontIconSource Glyph="&#xE72B;" />
+                    </AnimatedIcon.FallbackIconSource>
+                </AnimatedIcon>
 
                 <ToolTipService.ToolTip>
                     <ToolTip
                         MaxWidth="9999"
-                        Background="Transparent"
-                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Back')}"
-                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        Padding="0"
+                        Background="Transparent">
+
+                        <Grid>
+                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Back')}" />
+                        </Grid>
+                    </ToolTip>
                 </ToolTipService.ToolTip>
             </Button>
 
@@ -118,19 +121,22 @@
                 Click="{x:Bind OnCloseClicked}"
                 Style="{StaticResource AlternateCloseButtonStyle}">
 
-                <Button.Content>
-                    <FontIcon
-                        Margin="4"
-                        FontSize="16"
-                        Glyph="&#xE711;" />
-                </Button.Content>
+                <FontIcon
+                    Margin="4"
+                    FontSize="16"
+                    Glyph="&#xE711;" />
 
                 <ToolTipService.ToolTip>
                     <ToolTip
                         MaxWidth="9999"
-                        Background="Transparent"
-                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Close')}"
-                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        Padding="0"
+                        Background="Transparent">
+
+                        <Grid>
+                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Close')}" />
+                        </Grid>
+                    </ToolTip>
                 </ToolTipService.ToolTip>
             </Button>
         </Grid>
