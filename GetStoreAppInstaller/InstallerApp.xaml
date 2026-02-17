@@ -7,6 +7,7 @@
         <ResourceDictionary>
             <x:Double x:Key="TeachingTipMinWidth">0</x:Double>
             <x:Double x:Key="TeachingTipMaxWidth">9999</x:Double>
+            <Thickness x:Key="TeachingTipContentMargin">0</Thickness>
             <Thickness x:Key="TeachingTipButtonPanelMargin">0,0,0,0</Thickness>
 
             <ResourceDictionary.MergedDictionaries>

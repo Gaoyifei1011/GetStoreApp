@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Background="Transparent"
     CloseButtonContent="TeachingTip"
-    Closed="{x:Bind OnClosed}"
     IsLightDismissEnabled="False"
     PlacementMargin="0,20,0,0"
     PreferredPlacement="Bottom"
@@ -25,14 +24,18 @@
     </TeachingTip.CloseButtonStyle>
 
     <Grid>
+        <SystemBackdropElement CornerRadius="{StaticResource OverlayCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+
         <TextBlock
             x:Name="OperationResultSuccess"
+            Padding="12"
             Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind OperationContent, Mode=OneWay}"
             Visibility="{x:Bind IsSuccessOperation, Mode=OneWay}" />
 
         <TextBlock
             x:Name="OperationResultFailed"
+            Padding="12"
             Foreground="{ThemeResource SystemFillColorCriticalBrush}"
             Text="{x:Bind OperationContent, Mode=OneWay}"
             Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSuccessOperation), Mode=OneWay}" />
