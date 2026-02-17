@@ -42,447 +42,442 @@
         PaneBackground="Transparent"
         PanePlacement="Right">
 
-        
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-                <TextBlock
-                    Grid.Row="0"
-                    Margin="30,10,30,0"
-                    FontSize="22"
-                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/MicrosoftStore')}" />
+            <TextBlock
+                Grid.Row="0"
+                Margin="30,10,30,0"
+                FontSize="22"
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/MicrosoftStore')}" />
 
+            <Grid
+                Grid.Row="1"
+                Margin="30,8"
+                HorizontalAlignment="Stretch">
+
+                <!--  商店应用控制栏  -->
                 <Grid
-                    Grid.Row="1"
-                    Margin="30,8"
-                    HorizontalAlignment="Stretch">
+                    HorizontalAlignment="Center"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{ThemeResource ControlCornerRadius}">
 
-                    <!--  商店应用控制栏  -->
-                    <Grid
-                        HorizontalAlignment="Center"
-                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                        BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
-                        BorderThickness="1"
-                        CornerRadius="{ThemeResource ControlCornerRadius}">
-
-                        <SelectorBar
-                            x:Name="StoreSelectorBar"
-                            Padding="0"
-                            HorizontalAlignment="Center"
-                            SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
-                            SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}">
-
-                            <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryLinks')}">
-                                <SelectorBarItem.Icon>
-                                    <FontIcon Glyph="&#xE71B;" />
-                                </SelectorBarItem.Icon>
-                            </SelectorBarItem>
-
-                            <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchApps')}">
-                                <SelectorBarItem.Icon>
-                                    <FontIcon Glyph="&#xE721;" />
-                                </SelectorBarItem.Icon>
-                            </SelectorBarItem>
-                        </SelectorBar>
-                    </Grid>
-
-                    <Button
-                        Width="34"
-                        Height="34"
+                    <SelectorBar
+                        x:Name="StoreSelectorBar"
                         Padding="0"
-                        HorizontalAlignment="Right">
+                        HorizontalAlignment="Center"
+                        SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
+                        SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}">
 
-                        
-                            <FontIcon FontSize="16" Glyph="&#xE712;" />
-                        
+                        <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryLinks')}">
+                            <SelectorBarItem.Icon>
+                                <FontIcon Glyph="&#xE71B;" />
+                            </SelectorBarItem.Icon>
+                        </SelectorBarItem>
 
-                        <Button.Flyout>
-                            <MenuFlyout Placement="Bottom">
-                                <MenuFlyoutItem Click="{x:Bind OnLanguageAndRegionClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/LanguageAndRegion')}">
-
-                                    <MenuFlyoutItem.Icon>
-                                        <FontIcon Glyph="&#xF2B7;" />
-                                    </MenuFlyoutItem.Icon>
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Background="Transparent"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/LanguageAndRegionToolTip')}"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                                    </ToolTipService.ToolTip>
-                                </MenuFlyoutItem>
-
-                                <MenuFlyoutItem Click="{x:Bind OnUseInstructionClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstruction')}">
-
-                                    <MenuFlyoutItem.Icon>
-                                        <FontIcon Glyph="&#xE946;" />
-                                    </MenuFlyoutItem.Icon>
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Background="Transparent"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstructionToolTip')}"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                                    </ToolTipService.ToolTip>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </Button.Flyout>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/ViewMore')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                        </ToolTipService.ToolTip>
-                    </Button>
+                        <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchApps')}">
+                            <SelectorBarItem.Icon>
+                                <FontIcon Glyph="&#xE721;" />
+                            </SelectorBarItem.Icon>
+                        </SelectorBarItem>
+                    </SelectorBar>
                 </Grid>
 
-                <MenuFlyoutSeparator
-                    Grid.Row="2"
-                    Margin="35,0,35,3"
-                    Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
+                <Button
+                    Width="34"
+                    Height="34"
+                    Padding="0"
+                    HorizontalAlignment="Right">
 
-                <!--  商店内容  -->
-                <Frame
-                    x:Name="StoreFrame"
-                    Grid.Row="3"
-                    Navigated="{x:Bind OnNavigated}"
-                    NavigationFailed="{x:Bind OnNavigationFailed}" />
+                    <FontIcon FontSize="16" Glyph="&#xE712;" />
+
+                    <Button.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem Click="{x:Bind OnLanguageAndRegionClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/LanguageAndRegion')}">
+
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xF2B7;" />
+                                </MenuFlyoutItem.Icon>
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Background="Transparent"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/LanguageAndRegionToolTip')}"
+                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                </ToolTipService.ToolTip>
+                            </MenuFlyoutItem>
+
+                            <MenuFlyoutItem Click="{x:Bind OnUseInstructionClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstruction')}">
+
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE946;" />
+                                </MenuFlyoutItem.Icon>
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Background="Transparent"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstructionToolTip')}"
+                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                </ToolTipService.ToolTip>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </Button.Flyout>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            MaxWidth="9999"
+                            Background="Transparent"
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/ViewMore')}"
+                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                    </ToolTipService.ToolTip>
+                </Button>
             </Grid>
-        
+
+            <MenuFlyoutSeparator
+                Grid.Row="2"
+                Margin="35,0,35,3"
+                Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
+
+            <!--  商店内容  -->
+            <Frame
+                x:Name="StoreFrame"
+                Grid.Row="3"
+                Navigated="{x:Bind OnNavigated}"
+                NavigationFailed="{x:Bind OnNavigationFailed}" />
+        </Grid>
 
         <SplitView.Pane>
             <!--  使用说明  -->
-            <Grid
-                Margin="0,10,0,0"
-                Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
-                CornerRadius="4,0,0,4">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+            <Grid Margin="0,10,0,0" CornerRadius="4,0,0,0">
+                <SystemBackdropElement CornerRadius="4,0,0,0" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
 
-                <Grid
-                    Grid.Row="0"
-                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="0,0,0,1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
 
-                    <FontIcon
-                        Grid.Column="0"
-                        Margin="16,0,6,0"
-                        VerticalAlignment="Center"
-                        FontSize="16"
-                        Glyph="&#xE946;" />
+                    <Grid
+                        Grid.Row="0"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="0,0,0,1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                    <TextBlock
-                        Grid.Column="1"
-                        Margin="0,0,0,2"
-                        VerticalAlignment="Center"
-                        FontSize="14"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstruction')}" />
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="16,0,6,0"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            Glyph="&#xE946;" />
 
-                    <Button
-                        Grid.Column="2"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Click="{x:Bind OnCloseClicked}"
-                        Style="{StaticResource AlternateCloseButtonStyle}">
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="0,0,0,2"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstruction')}" />
 
-                        
+                        <Button
+                            Grid.Column="2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Click="{x:Bind OnCloseClicked}"
+                            Style="{StaticResource AlternateCloseButtonStyle}">
+
                             <FontIcon
                                 Margin="4"
                                 FontSize="16"
                                 Glyph="&#xE711;" />
-                        
 
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/Close')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                        </ToolTipService.ToolTip>
-                    </Button>
-                </Grid>
-
-                <ScrollViewer
-                    Grid.Row="1"
-                    HorizontalScrollBarVisibility="Disabled"
-                    HorizontalScrollMode="Disabled"
-                    VerticalScrollBarVisibility="Visible"
-                    VerticalScrollMode="Enabled">
-
-                    <Grid Margin="0,0,0,30">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <TextBlock
-                            Grid.Row="0"
-                            Margin="16,10,16,10"
-                            FontSize="15"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/BeginnerGuide')}"
-                            TextAlignment="Left" />
-
-                        <TextBlock
-                            Grid.Row="1"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryLinksHelp1')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-
-                        <TextBlock
-                            Grid.Row="2"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryLinksHelp2')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-
-                        <TextBlock
-                            Grid.Row="3"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchStoreHelp1')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-
-                        <TextBlock
-                            Grid.Row="4"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchStoreHelp2')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-
-                        <TextBlock
-                            Grid.Row="5"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchStoreHelp3')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-
-                        <MenuFlyoutSeparator Grid.Row="6" />
-
-                        <TextBlock
-                            Grid.Row="7"
-                            Margin="16,10,16,10"
-                            FontSize="15"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/LaunchParameters')}"
-                            TextAlignment="Left" />
-
-                        <TextBlock
-                            Grid.Row="8"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/LaunchParametersDescription')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-
-                        <StackPanel
-                            Grid.Row="9"
-                            Margin="16,0,16,5"
-                            Spacing="5">
-
-                            <TextBlock HorizontalAlignment="Left">
-                                <Hyperlink Click="{x:Bind OnDesktopLaunchClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DesktopLaunch')}" />
-                                </Hyperlink>
-                            </TextBlock>
-                        </StackPanel>
-
-                        <MenuFlyoutSeparator Grid.Row="10" />
-
-                        <TextBlock
-                            Grid.Row="11"
-                            Margin="16,10,16,10"
-                            FontSize="15"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailed')}"
-                            TextAlignment="Left" />
-
-                        <TextBlock
-                            Grid.Row="12"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailedDescription')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-
-                        <TextBlock
-                            Grid.Row="13"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailedStep1')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-
-                        <TextBlock
-                            Grid.Row="14"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailedStep2')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-
-                        <TextBlock
-                            Grid.Row="15"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailedStep3')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-
-                        <TextBlock
-                            Grid.Row="16"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailedStep4')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-
-                        <StackPanel
-                            Grid.Row="17"
-                            Margin="16,0,16,5"
-                            Spacing="5">
-
-                            <TextBlock HorizontalAlignment="Left">
-                                <Hyperlink Click="{x:Bind OnCheckNetWorkClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/CheckNetwork')}" />
-                                </Hyperlink>
-                            </TextBlock>
-
-                            <TextBlock HorizontalAlignment="Left">
-                                <Hyperlink Click="{x:Bind OnTroubleShootClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/TroubleShoot')}" />
-                                </Hyperlink>
-                            </TextBlock>
-                        </StackPanel>
-
-                        <MenuFlyoutSeparator Grid.Row="18" />
-
-                        <TextBlock
-                            Grid.Row="19"
-                            Margin="16,10,16,10"
-                            FontSize="15"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/PaidApps')}"
-                            TextAlignment="Left" />
-
-                        <TextBlock
-                            Grid.Row="20"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/PaidAppsDescription')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-
-                        <MenuFlyoutSeparator Grid.Row="21" />
-
-                        <TextBlock
-                            Grid.Row="22"
-                            Margin="16,10,16,10"
-                            FontSize="15"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadFailed')}"
-                            TextAlignment="Left" />
-
-                        <TextBlock
-                            Grid.Row="23"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadFailedDescription')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-
-                        <TextBlock
-                            Grid.Row="24"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadFailedStep1')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-
-                        <TextBlock
-                            Grid.Row="25"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadFailedStep2')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-
-                        <StackPanel
-                            Grid.Row="26"
-                            Margin="16,0,16,5"
-                            Spacing="5">
-
-                            <TextBlock HorizontalAlignment="Left">
-                                <Hyperlink Click="{x:Bind OnDownloadSettingsClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadSettings')}" />
-                                </Hyperlink>
-                            </TextBlock>
-                        </StackPanel>
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Background="Transparent"
+                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/Close')}"
+                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                            </ToolTipService.ToolTip>
+                        </Button>
                     </Grid>
-                </ScrollViewer>
+
+                    <ScrollViewer
+                        Grid.Row="1"
+                        HorizontalScrollBarVisibility="Disabled"
+                        HorizontalScrollMode="Disabled"
+                        VerticalScrollBarVisibility="Visible"
+                        VerticalScrollMode="Enabled">
+
+                        <Grid Margin="0,0,0,30">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock
+                                Grid.Row="0"
+                                Margin="16,10,16,10"
+                                FontSize="15"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/BeginnerGuide')}"
+                                TextAlignment="Left" />
+
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryLinksHelp1')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Grid.Row="2"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryLinksHelp2')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Grid.Row="3"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchStoreHelp1')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Grid.Row="4"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchStoreHelp2')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Grid.Row="5"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchStoreHelp3')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <MenuFlyoutSeparator Grid.Row="6" />
+
+                            <TextBlock
+                                Grid.Row="7"
+                                Margin="16,10,16,10"
+                                FontSize="15"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/LaunchParameters')}"
+                                TextAlignment="Left" />
+
+                            <TextBlock
+                                Grid.Row="8"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/LaunchParametersDescription')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <StackPanel
+                                Grid.Row="9"
+                                Margin="16,0,16,5"
+                                Spacing="5">
+
+                                <TextBlock HorizontalAlignment="Left">
+                                    <Hyperlink Click="{x:Bind OnDesktopLaunchClicked}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DesktopLaunch')}" />
+                                    </Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <MenuFlyoutSeparator Grid.Row="10" />
+
+                            <TextBlock
+                                Grid.Row="11"
+                                Margin="16,10,16,10"
+                                FontSize="15"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailed')}"
+                                TextAlignment="Left" />
+
+                            <TextBlock
+                                Grid.Row="12"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailedDescription')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Grid.Row="13"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailedStep1')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Grid.Row="14"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailedStep2')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Grid.Row="15"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailedStep3')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Grid.Row="16"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/RequestFailedStep4')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <StackPanel
+                                Grid.Row="17"
+                                Margin="16,0,16,5"
+                                Spacing="5">
+
+                                <TextBlock HorizontalAlignment="Left">
+                                    <Hyperlink Click="{x:Bind OnCheckNetWorkClicked}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/CheckNetwork')}" />
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <TextBlock HorizontalAlignment="Left">
+                                    <Hyperlink Click="{x:Bind OnTroubleShootClicked}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/TroubleShoot')}" />
+                                    </Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <MenuFlyoutSeparator Grid.Row="18" />
+
+                            <TextBlock
+                                Grid.Row="19"
+                                Margin="16,10,16,10"
+                                FontSize="15"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/PaidApps')}"
+                                TextAlignment="Left" />
+
+                            <TextBlock
+                                Grid.Row="20"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/PaidAppsDescription')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <MenuFlyoutSeparator Grid.Row="21" />
+
+                            <TextBlock
+                                Grid.Row="22"
+                                Margin="16,10,16,10"
+                                FontSize="15"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadFailed')}"
+                                TextAlignment="Left" />
+
+                            <TextBlock
+                                Grid.Row="23"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadFailedDescription')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Grid.Row="24"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadFailedStep1')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Grid.Row="25"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadFailedStep2')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <StackPanel
+                                Grid.Row="26"
+                                Margin="16,0,16,5"
+                                Spacing="5">
+
+                                <TextBlock HorizontalAlignment="Left">
+                                    <Hyperlink Click="{x:Bind OnDownloadSettingsClicked}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/DownloadSettings')}" />
+                                    </Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
             </Grid>
         </SplitView.Pane>
     </SplitView>

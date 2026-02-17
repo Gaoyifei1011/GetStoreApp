@@ -80,142 +80,143 @@
 
         <SplitView.Pane>
             <!--  使用说明  -->
-            <Grid
-                Margin="0,10,0,0"
-                Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
-                CornerRadius="4,0,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+            <Grid Margin="0,10,0,0" CornerRadius="4,0,0,0">
+                <SystemBackdropElement CornerRadius="4,0,0,0" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
 
-                <Grid
-                    Grid.Row="0"
-                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="0,0,0,1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
 
-                    <FontIcon
-                        Grid.Column="0"
-                        Margin="16,0,6,0"
-                        VerticalAlignment="Center"
-                        FontSize="16"
-                        Glyph="&#xE946;" />
-
-                    <TextBlock
-                        Grid.Column="1"
-                        VerticalAlignment="Center"
-                        FontSize="14"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/UseInstruction')}" />
-
-                    <Button
-                        Grid.Column="2"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Click="{x:Bind OnCloseClicked}"
-                        Style="{StaticResource AlternateCloseButtonStyle}">
+                    <Grid
+                        Grid.Row="0"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="0,0,0,1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
                         <FontIcon
-                            Margin="4"
+                            Grid.Column="0"
+                            Margin="16,0,6,0"
+                            VerticalAlignment="Center"
                             FontSize="16"
-                            Glyph="&#xE711;" />
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/Close')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
-                    </Button>
-                </Grid>
-
-                <ScrollViewer
-                    Grid.Row="1"
-                    HorizontalScrollBarVisibility="Disabled"
-                    HorizontalScrollMode="Disabled"
-                    VerticalScrollBarVisibility="Visible"
-                    VerticalScrollMode="Enabled">
-
-                    <Grid Margin="0,0,0,30">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
+                            Glyph="&#xE946;" />
 
                         <TextBlock
-                            Grid.Row="0"
-                            Margin="16,10,16,10"
-                            FontSize="15"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/DownloadInstruction')}"
-                            TextAlignment="Left" />
-
-                        <TextBlock
-                            Grid.Row="1"
-                            Margin="16,0,16,5"
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
                             FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/DownloadInstruction1')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/UseInstruction')}" />
 
-                        <TextBlock
-                            Grid.Row="2"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/DownloadInstruction2')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
+                        <Button
+                            Grid.Column="2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Click="{x:Bind OnCloseClicked}"
+                            Style="{StaticResource AlternateCloseButtonStyle}">
 
-                        <TextBlock
-                            Grid.Row="3"
-                            Margin="16,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/DownloadInstruction3')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
+                            <FontIcon
+                                Margin="4"
+                                FontSize="16"
+                                Glyph="&#xE711;" />
 
-                        <StackPanel
-                            Grid.Row="4"
-                            Margin="16,0,16,5"
-                            Spacing="5">
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Padding="0"
+                                    Background="Transparent">
 
-                            <TextBlock HorizontalAlignment="Left">
-                                <Hyperlink Click="{x:Bind OnLearnMoreClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/LearnMore')}" />
-                                </Hyperlink>
-                            </TextBlock>
-
-                            <TextBlock HorizontalAlignment="Left">
-                                <Hyperlink Click="{x:Bind OnNetworkInternetClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/NetworkAndInternet')}" />
-                                </Hyperlink>
-                            </TextBlock>
-
-                            <TextBlock HorizontalAlignment="Left">
-                                <Hyperlink Click="{x:Bind OnOpenSettingsClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/OpenSettings')}" />
-                                </Hyperlink>
-                            </TextBlock>
-                        </StackPanel>
+                                    <Grid>
+                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/Close')}" />
+                                    </Grid>
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                        </Button>
                     </Grid>
-                </ScrollViewer>
+
+                    <ScrollViewer
+                        Grid.Row="1"
+                        HorizontalScrollBarVisibility="Disabled"
+                        HorizontalScrollMode="Disabled"
+                        VerticalScrollBarVisibility="Visible"
+                        VerticalScrollMode="Enabled">
+
+                        <Grid Margin="0,0,0,30">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock
+                                Grid.Row="0"
+                                Margin="16,10,16,10"
+                                FontSize="15"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/DownloadInstruction')}"
+                                TextAlignment="Left" />
+
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/DownloadInstruction1')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Grid.Row="2"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/DownloadInstruction2')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Grid.Row="3"
+                                Margin="16,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/DownloadInstruction3')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <StackPanel
+                                Grid.Row="4"
+                                Margin="16,0,16,5"
+                                Spacing="5">
+
+                                <TextBlock HorizontalAlignment="Left">
+                                    <Hyperlink Click="{x:Bind OnLearnMoreClicked}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/LearnMore')}" />
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <TextBlock HorizontalAlignment="Left">
+                                    <Hyperlink Click="{x:Bind OnNetworkInternetClicked}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/NetworkAndInternet')}" />
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <TextBlock HorizontalAlignment="Left">
+                                    <Hyperlink Click="{x:Bind OnOpenSettingsClicked}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/OpenSettings')}" />
+                                    </Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
             </Grid>
         </SplitView.Pane>
     </SplitView>

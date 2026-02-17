@@ -51,56 +51,52 @@
         PaneBackground="Transparent"
         PanePlacement="Right">
 
-        
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-                <!--  WinGet 程序包控制栏  -->
-                <SelectorBar
-                    x:Name="WinGetSelectorBar"
-                    Grid.Row="0"
-                    Margin="20,6,30,3"
-                    Padding="0"
-                    HorizontalAlignment="Left"
-                    SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
-                    SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}">
+            <!--  WinGet 程序包控制栏  -->
+            <SelectorBar
+                x:Name="WinGetSelectorBar"
+                Grid.Row="0"
+                Margin="20,6,30,3"
+                Padding="0"
+                HorizontalAlignment="Left"
+                SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
+                SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}">
 
-                    <SelectorBarItem
-                        Padding="12,5"
-                        FontSize="22"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/SearchApps')}" />
+                <SelectorBarItem
+                    Padding="12,5"
+                    FontSize="22"
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/SearchApps')}" />
 
-                    <SelectorBarItem
-                        Padding="12,5"
-                        FontSize="22"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/InstalledApps')}" />
+                <SelectorBarItem
+                    Padding="12,5"
+                    FontSize="22"
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/InstalledApps')}" />
 
-                    <SelectorBarItem
-                        Padding="12,5"
-                        FontSize="22"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UpgradableApps')}" />
-                </SelectorBar>
+                <SelectorBarItem
+                    Padding="12,5"
+                    FontSize="22"
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/UpgradableApps')}" />
+            </SelectorBar>
 
-                <!--  WinGet 程序包内容  -->
-                <Frame
-                    x:Name="WinGetFrame"
-                    Grid.Row="1"
-                    Navigated="{x:Bind OnNavigated}"
-                    NavigationFailed="{x:Bind OnNavigationFailed}" />
-            </Grid>
-        
+            <!--  WinGet 程序包内容  -->
+            <Frame
+                x:Name="WinGetFrame"
+                Grid.Row="1"
+                Navigated="{x:Bind OnNavigated}"
+                NavigationFailed="{x:Bind OnNavigationFailed}" />
+        </Grid>
 
         <SplitView.Pane>
-            <Grid>
+            <Grid Margin="0,10,0,0" CornerRadius="4,0,0,0">
+                <SystemBackdropElement CornerRadius="4,0,0,0" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+
                 <!--  使用说明  -->
-                <Grid
-                    Margin="0,10,0,0"
-                    Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
-                    CornerRadius="4,0,0,0"
-                    Visibility="{x:Bind CheckWinGetPaneKindState(WinGetPaneKind, enum:WinGetPaneKind.UseInstruction), Mode=OneWay}">
+                <Grid Visibility="{x:Bind CheckWinGetPaneKindState(WinGetPaneKind, enum:WinGetPaneKind.UseInstruction), Mode=OneWay}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
@@ -137,12 +133,10 @@
                             Click="{x:Bind OnCloseClicked}"
                             Style="{StaticResource AlternateCloseButtonStyle}">
 
-                            
-                                <FontIcon
-                                    Margin="4"
-                                    FontSize="16"
-                                    Glyph="&#xE711;" />
-                            
+                            <FontIcon
+                                Margin="4"
+                                FontSize="16"
+                                Glyph="&#xE711;" />
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
@@ -224,11 +218,7 @@
                 </Grid>
 
                 <!--  任务管理  -->
-                <Grid
-                    Margin="0,10,0,0"
-                    Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
-                    CornerRadius="4,0,0,0"
-                    Visibility="{x:Bind CheckWinGetPaneKindState(WinGetPaneKind, enum:WinGetPaneKind.TaskManager), Mode=OneWay}">
+                <Grid Visibility="{x:Bind CheckWinGetPaneKindState(WinGetPaneKind, enum:WinGetPaneKind.TaskManager), Mode=OneWay}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
@@ -275,12 +265,10 @@
                             IsEnabled="{x:Bind system:Convert.ToBoolean(PackageOperationCollection.Count), Mode=OneWay}"
                             Style="{StaticResource AlternateCloseButtonStyle}">
 
-                            
-                                <FontIcon
-                                    Margin="4"
-                                    FontSize="16"
-                                    Glyph="&#xE74D;" />
-                            
+                            <FontIcon
+                                Margin="4"
+                                FontSize="16"
+                                Glyph="&#xE74D;" />
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
@@ -298,12 +286,10 @@
                             Click="{x:Bind OnCloseClicked}"
                             Style="{StaticResource AlternateCloseButtonStyle}">
 
-                            
-                                <FontIcon
-                                    Margin="4"
-                                    FontSize="16"
-                                    Glyph="&#xE711;" />
-                            
+                            <FontIcon
+                                Margin="4"
+                                FontSize="16"
+                                Glyph="&#xE711;" />
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
@@ -614,12 +600,10 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Finished, x:True), Mode=OneWay}">
 
-                                            
-                                                <FontIcon
-                                                    Margin="4"
-                                                    FontSize="16"
-                                                    Glyph="&#xE711;" />
-                                            
+                                            <FontIcon
+                                                Margin="4"
+                                                FontSize="16"
+                                                Glyph="&#xE711;" />
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -642,12 +626,10 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Finished, x:False), Mode=OneWay}">
 
-                                            
-                                                <FontIcon
-                                                    Margin="4"
-                                                    FontSize="16"
-                                                    Glyph="&#xE74D;" />
-                                            
+                                            <FontIcon
+                                                Margin="4"
+                                                FontSize="16"
+                                                Glyph="&#xE74D;" />
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -924,12 +906,10 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:True), Mode=OneWay}">
 
-                                            
-                                                <FontIcon
-                                                    Margin="4"
-                                                    FontSize="16"
-                                                    Glyph="&#xE711;" />
-                                            
+                                            <FontIcon
+                                                Margin="4"
+                                                FontSize="16"
+                                                Glyph="&#xE711;" />
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -952,12 +932,10 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:False), Mode=OneWay}">
 
-                                            
-                                                <FontIcon
-                                                    Margin="4"
-                                                    FontSize="16"
-                                                    Glyph="&#xE74D;" />
-                                            
+                                            <FontIcon
+                                                Margin="4"
+                                                FontSize="16"
+                                                Glyph="&#xE74D;" />
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -1109,12 +1087,10 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.Finished, x:True), Mode=OneWay}">
 
-                                            
-                                                <FontIcon
-                                                    Margin="4"
-                                                    FontSize="16"
-                                                    Glyph="&#xE711;" />
-                                            
+                                            <FontIcon
+                                                Margin="4"
+                                                FontSize="16"
+                                                Glyph="&#xE711;" />
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -1137,12 +1113,10 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.Finished, x:False), Mode=OneWay}">
 
-                                            
-                                                <FontIcon
-                                                    Margin="4"
-                                                    FontSize="16"
-                                                    Glyph="&#xE74D;" />
-                                            
+                                            <FontIcon
+                                                Margin="4"
+                                                FontSize="16"
+                                                Glyph="&#xE74D;" />
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -1340,12 +1314,10 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.Finished, x:True), Mode=OneWay}">
 
-                                            
-                                                <FontIcon
-                                                    Margin="4"
-                                                    FontSize="16"
-                                                    Glyph="&#xE711;" />
-                                            
+                                            <FontIcon
+                                                Margin="4"
+                                                FontSize="16"
+                                                Glyph="&#xE711;" />
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -1368,12 +1340,10 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.Finished, x:False), Mode=OneWay}">
 
-                                            
-                                                <FontIcon
-                                                    Margin="4"
-                                                    FontSize="16"
-                                                    Glyph="&#xE74D;" />
-                                            
+                                            <FontIcon
+                                                Margin="4"
+                                                FontSize="16"
+                                                Glyph="&#xE74D;" />
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -1650,12 +1620,10 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:True), Mode=OneWay}">
 
-                                            
-                                                <FontIcon
-                                                    Margin="4"
-                                                    FontSize="16"
-                                                    Glyph="&#xE711;" />
-                                            
+                                            <FontIcon
+                                                Margin="4"
+                                                FontSize="16"
+                                                Glyph="&#xE711;" />
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
@@ -1678,12 +1646,10 @@
                                             Style="{StaticResource AlternateCloseButtonStyle}"
                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:False), Mode=OneWay}">
 
-                                            
-                                                <FontIcon
-                                                    Margin="4"
-                                                    FontSize="16"
-                                                    Glyph="&#xE74D;" />
-                                            
+                                            <FontIcon
+                                                Margin="4"
+                                                FontSize="16"
+                                                Glyph="&#xE74D;" />
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
