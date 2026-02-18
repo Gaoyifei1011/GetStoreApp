@@ -9,6 +9,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.AppNotifications.Builder;
+using Microsoft.Windows.Management.Deployment;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,7 +17,6 @@ using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
-using Windows.Management.Deployment;
 using Windows.Storage;
 
 // 抑制 CA1822，IDE0028，IDE0060 警告
@@ -58,7 +58,6 @@ namespace GetStoreApp.Views.Pages
         private readonly string SetDefaultSuccessfullyString = ResourceService.GetLocalized("SettingsPackageVolume/SetDefaultSuccessfully");
         private readonly string VolumeSpaceString = ResourceService.GetLocalized("SettingsPackageVolume/VolumeSpace");
         private readonly string YesString = ResourceService.GetLocalized("SettingsPackageVolume/Yes");
-        private PackageManager packageManager;
 
         private PackageVolumeResultKind _packageVolumeResultKind = PackageVolumeResultKind.Loading;
 
@@ -128,7 +127,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     try
                     {
-                        packageManager.SetDefaultPackageVolume(packageVolume.WinRTPackageVolume);
+                        packageVolume.PackageVolume.SetDefault();
                         return ValueTuple.Create<bool, Exception>(true, null);
                     }
                     catch (Exception e)
@@ -188,24 +187,24 @@ namespace GetStoreApp.Views.Pages
             if (args.Parameter is PackageVolumeModel packageVolume && packageVolume.IsOffline)
             {
                 packageVolume.IsOperating = true;
-                (bool result, DeploymentResult deploymentResult, Exception exception) = await Task.Run(async () =>
+                (bool result, PackageDeploymentResult packageDeploymentResult, Exception exception) = await Task.Run(async () =>
                 {
                     try
                     {
-                        DeploymentResult deploymentResult = await packageManager.SetPackageVolumeOnlineAsync(packageVolume.WinRTPackageVolume);
-                        return ValueTuple.Create<bool, DeploymentResult, Exception>(true, deploymentResult, null);
+                        PackageDeploymentResult packageDeploymentResult = await packageVolume.PackageVolume.SetOnlineAsync();
+                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, packageDeploymentResult, null);
                     }
                     catch (Exception e)
                     {
                         LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnMountExecuteRequested), 1, e);
-                        return ValueTuple.Create<bool, DeploymentResult, Exception>(false, null, e);
+                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
                     }
                 });
 
                 packageVolume.IsOperating = false;
-                if (result)
+                if (result && packageDeploymentResult is not null)
                 {
-                    if (deploymentResult.ExtendedErrorCode is null)
+                    if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
                     {
                         packageVolume.Offline = MountedString;
                         packageVolume.IsOffline = false;
@@ -219,7 +218,7 @@ namespace GetStoreApp.Views.Pages
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                         });
                     }
-                    else
+                    else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                     {
                         // 显示应用包存储卷挂载失败通知
                         await Task.Run(() =>
@@ -267,24 +266,24 @@ namespace GetStoreApp.Views.Pages
             if (args.Parameter is PackageVolumeModel packageVolume && !packageVolume.IsOffline)
             {
                 packageVolume.IsOperating = true;
-                (bool result, DeploymentResult deploymentResult, Exception exception) = await Task.Run(async () =>
+                (bool result, PackageDeploymentResult packageDeploymentResult, Exception exception) = await Task.Run(async () =>
                 {
                     try
                     {
-                        DeploymentResult deploymentResult = await packageManager.SetPackageVolumeOfflineAsync(packageVolume.WinRTPackageVolume);
-                        return ValueTuple.Create<bool, DeploymentResult, Exception>(true, deploymentResult, null);
+                        PackageDeploymentResult packageDeploymentResult = await packageVolume.PackageVolume.SetOfflineAsync();
+                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, packageDeploymentResult, null);
                     }
                     catch (Exception e)
                     {
                         LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnMountExecuteRequested), 1, e);
-                        return ValueTuple.Create<bool, DeploymentResult, Exception>(false, null, e);
+                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
                     }
                 });
 
                 packageVolume.IsOperating = false;
-                if (result)
+                if (result && packageDeploymentResult is not null)
                 {
-                    if (deploymentResult.ExtendedErrorCode is null)
+                    if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
                     {
                         packageVolume.Offline = DismountedString;
                         packageVolume.IsOffline = true;
@@ -298,7 +297,7 @@ namespace GetStoreApp.Views.Pages
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                         });
                     }
-                    else
+                    else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                     {
                         // 显示应用包存储卷卸载失败通知
                         await Task.Run(() =>
@@ -346,24 +345,24 @@ namespace GetStoreApp.Views.Pages
             if (args.Parameter is PackageVolumeModel packageVolume)
             {
                 packageVolume.IsOperating = true;
-                (bool result, DeploymentResult deploymentResult, Exception exception) = await Task.Run(async () =>
+                (bool result, PackageDeploymentResult packageDeploymentResult, Exception exception) = await Task.Run(async () =>
                 {
                     try
                     {
-                        DeploymentResult deploymentResult = await packageManager.RemovePackageVolumeAsync(packageVolume.WinRTPackageVolume);
-                        return ValueTuple.Create<bool, DeploymentResult, Exception>(true, deploymentResult, null);
+                        PackageDeploymentResult packageDeploymentResult = await packageVolume.PackageVolume.RemoveAsync();
+                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, packageDeploymentResult, null);
                     }
                     catch (Exception e)
                     {
                         LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnMountExecuteRequested), 1, e);
-                        return ValueTuple.Create<bool, DeploymentResult, Exception>(false, null, e);
+                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
                     }
                 });
 
                 packageVolume.IsOperating = false;
-                if (result)
+                if (result && packageDeploymentResult is not null)
                 {
-                    if (deploymentResult.ExtendedErrorCode is null)
+                    if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
                     {
                         PackageVolumeCollection.Remove(packageVolume);
 
@@ -387,7 +386,7 @@ namespace GetStoreApp.Views.Pages
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                         });
                     }
-                    else
+                    else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                     {
                         // 显示应用包存储卷移除失败通知
                         await Task.Run(() =>
@@ -436,7 +435,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnAddNewPackageVolumeClicked(object sender, RoutedEventArgs args)
         {
-            ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new PackageVolumeAddDialog(packageManager));
+            ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new PackageVolumeAddDialog());
 
             if (contentDialogResult is ContentDialogResult.Primary)
             {
@@ -473,19 +472,14 @@ namespace GetStoreApp.Views.Pages
             PackageVolumeResultKind = PackageVolumeResultKind.Loading;
             PackageVolumeCollection.Clear();
 
-            packageManager = await Task.Run(() =>
-            {
-                return new PackageManager();
-            });
-
             (bool result, List<PackageVolumeModel> packageVolumeList, Exception exception) = await Task.Run(async () =>
             {
                 List<PackageVolumeModel> packageVolumeList = [];
 
                 try
                 {
-                    PackageVolume defaultVolume = packageManager.GetDefaultPackageVolume();
-                    IReadOnlyList<PackageVolume> requestedPackageVolumeList = await packageManager.GetPackageVolumesAsync();
+                    PackageVolume defaultVolume = PackageVolume.GetDefault();
+                    IList<PackageVolume> requestedPackageVolumeList = PackageVolume.FindPackageVolumes();
 
                     foreach (PackageVolume packageVolume in requestedPackageVolumeList)
                     {
@@ -533,16 +527,15 @@ namespace GetStoreApp.Views.Pages
                                 PackageVolumePath = packageVolume.PackageStorePath,
                                 MountPoint = packageVolume.MountPoint,
                                 PackageVolumeUsedPercentage = usedPercentage,
-                                WinRTPackageVolume = packageVolume,
-                                WASDKPackageVolume = Microsoft.Windows.Management.Deployment.PackageVolume.FindPackageVolumeByPath(packageVolume.PackageStorePath),
+                                PackageVolume = packageVolume,
                                 IsAvailableSpaceWarning = usedPercentage > 90,
                                 IsAvailableSpaceError = usedPercentage > 95,
                                 DefaultVolume = isDefaultVolume ? YesString : NoString,
                                 IsDefaultVolume = isDefaultVolume,
                                 IsAppxInstallSupported = packageVolume.IsAppxInstallSupported ? YesString : NoString,
                                 IsFullTrustPackageSupported = packageVolume.IsFullTrustPackageSupported ? YesString : NoString,
-                                Offline = packageVolume.IsOffline ? YesString : NoString,
-                                IsOffline = packageVolume.IsOffline,
+                                Offline = packageVolume.IsOffline() ? YesString : NoString,
+                                IsOffline = packageVolume.IsOffline(),
                                 IsSystemVolume = packageVolume.IsSystemVolume ? YesString : NoString,
                                 SupportedHardLinks = packageVolume.SupportsHardLinks ? YesString : NoString,
                             };

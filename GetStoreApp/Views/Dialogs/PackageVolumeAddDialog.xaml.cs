@@ -7,6 +7,7 @@ using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppNotifications.Builder;
+using Microsoft.Windows.Management.Deployment;
 using Microsoft.Windows.Storage.Pickers;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,6 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
-using Windows.Management.Deployment;
 using Windows.Storage;
 using WinRT;
 
@@ -38,7 +38,6 @@ namespace GetStoreApp.Views.Dialogs
         private readonly string CreateSuccessfullyString = ResourceService.GetLocalized("Dialog/CreateSuccessfully");
         private readonly string NotAvailableString = ResourceService.GetLocalized("Dialog/NotAvailable");
         private readonly string VolumeSpaceString = ResourceService.GetLocalized("Dialog/VolumeSpace");
-        private readonly PackageManager PackageManager;
 
         private bool _isPrimaryEnabled;
 
@@ -156,10 +155,9 @@ namespace GetStoreApp.Views.Dialogs
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public PackageVolumeAddDialog(PackageManager packageManager)
+        public PackageVolumeAddDialog()
         {
             InitializeComponent();
-            PackageManager = packageManager;
         }
 
         #region 第一部分：应用包添加卷对话框——挂载的事件
@@ -186,16 +184,16 @@ namespace GetStoreApp.Views.Dialogs
             {
                 SelectedPackageVolume = args.AddedItems[0] as PackageVolumeModel;
                 IsPrimaryEnabled = true;
-                if (UseWindowsAppsFolderValue && SelectedPackageVolume is not null && SelectedPackageVolume.WinRTPackageVolume is not null)
+                if (UseWindowsAppsFolderValue && SelectedPackageVolume is not null && SelectedPackageVolume.PackageVolume is not null)
                 {
-                    SelectedFolder = Path.Combine(SelectedPackageVolume.WinRTPackageVolume.MountPoint, "WindowsApps");
+                    SelectedFolder = Path.Combine(SelectedPackageVolume.PackageVolume.MountPoint, "WindowsApps");
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(SelectedFolder) && SelectedPackageVolume is not null && SelectedPackageVolume.WinRTPackageVolume is not null)
+                    if (!string.IsNullOrEmpty(SelectedFolder) && SelectedPackageVolume is not null && SelectedPackageVolume.PackageVolume is not null)
                     {
                         string rootPath = Path.GetPathRoot(SelectedFolder);
-                        SelectedFolder = SelectedFolder.Replace(rootPath, SelectedPackageVolume.WinRTPackageVolume.MountPoint);
+                        SelectedFolder = SelectedFolder.Replace(rootPath, SelectedPackageVolume.PackageVolume.MountPoint);
                     }
                 }
             }
@@ -218,7 +216,7 @@ namespace GetStoreApp.Views.Dialogs
                     if (await folderPicker.PickSingleFolderAsync() is PickFolderResult pickFolderResult)
                     {
                         string rootPath = Path.GetPathRoot(pickFolderResult.Path);
-                        SelectedFolder = pickFolderResult.Path.Replace(rootPath, SelectedPackageVolume.WinRTPackageVolume.MountPoint);
+                        SelectedFolder = pickFolderResult.Path.Replace(rootPath, SelectedPackageVolume.PackageVolume.MountPoint);
                     }
                 }
                 catch (Exception e)
@@ -241,9 +239,9 @@ namespace GetStoreApp.Views.Dialogs
             if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
             {
                 UseWindowsAppsFolderValue = toggleSwitch.IsOn;
-                if (SelectedPackageVolume is not null && SelectedPackageVolume.WinRTPackageVolume is not null)
+                if (SelectedPackageVolume is not null && SelectedPackageVolume.PackageVolume is not null)
                 {
-                    SelectedFolder = Path.Combine(SelectedPackageVolume.WinRTPackageVolume.MountPoint, "WindowsApps");
+                    SelectedFolder = Path.Combine(SelectedPackageVolume.PackageVolume.MountPoint, "WindowsApps");
                 }
             }
         }
@@ -286,7 +284,7 @@ namespace GetStoreApp.Views.Dialogs
                     {
                         try
                         {
-                            IAsyncOperation<PackageVolume> packageVolumeProgress = PackageManager.AddPackageVolumeAsync(SelectedFolder);
+                            IAsyncOperation<PackageVolume> packageVolumeProgress = PackageVolume.AddAsync(SelectedFolder);
                             return ValueTuple.Create<bool, PackageVolume, Exception>(true, await packageVolumeProgress, null);
                         }
                         catch (Exception e)
@@ -315,7 +313,7 @@ namespace GetStoreApp.Views.Dialogs
                             {
                                 try
                                 {
-                                    PackageManager.SetDefaultPackageVolume(packageVolume);
+                                    packageVolume.SetDefault();
                                 }
                                 catch (Exception e)
                                 {
@@ -376,7 +374,7 @@ namespace GetStoreApp.Views.Dialogs
             List<PackageVolumeModel> packageVolumeList = await Task.Run(async () =>
             {
                 List<PackageVolumeModel> packageVolumeList = [];
-                IReadOnlyList<PackageVolume> requestedPackageVolumeList = await PackageManager.GetPackageVolumesAsync();
+                IList<PackageVolume> requestedPackageVolumeList = PackageVolume.FindPackageVolumes();
 
                 foreach (PackageVolume packageVolume in requestedPackageVolumeList)
                 {
@@ -421,7 +419,7 @@ namespace GetStoreApp.Views.Dialogs
                             PackageVolumeId = packageVolume.Name,
                             PackageVolumePath = packageVolume.PackageStorePath,
                             PackageVolumeUsedPercentage = usedPercentage,
-                            WinRTPackageVolume = packageVolume,
+                            PackageVolume = packageVolume,
                             IsAvailableSpaceWarning = usedPercentage > 90,
                             IsAvailableSpaceError = usedPercentage > 95,
                         };

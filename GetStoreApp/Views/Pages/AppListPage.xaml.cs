@@ -405,7 +405,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    PackageVolumeInfoDialog packageVolumeInfoDialog = new(packageManager, package);
+                    PackageVolumeInfoDialog packageVolumeInfoDialog = new(package);
                     ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(packageVolumeInfoDialog);
 
                     if (contentDialogResult is ContentDialogResult.Primary && packageVolumeInfoDialog.SelectedPackageVolume is not null)
@@ -418,7 +418,15 @@ namespace GetStoreApp.Views.Pages
                             try
                             {
                                 // 移动目标应用，并获取移动进度
-                                IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> movePackageWithProgress = packageManager.MovePackageToVolumeAsync(package.Package.Id.FullName, DeploymentOptions.None, packageVolumeInfoDialog.SelectedPackageVolume.WinRTPackageVolume);
+                                global::Windows.Management.Deployment.PackageVolume winRTPackageVolume = null;
+                                foreach (global::Windows.Management.Deployment.PackageVolume winRTPackageVolumeItem in packageManager.FindPackageVolumes())
+                                {
+                                    if (string.Equals(winRTPackageVolumeItem.PackageStorePath, packageVolumeInfoDialog.SelectedPackageVolume.PackageVolume.PackageStorePath))
+                                    {
+                                        winRTPackageVolume = winRTPackageVolumeItem;
+                                    }
+                                }
+                                IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> movePackageWithProgress = packageManager.MovePackageToVolumeAsync(package.Package.Id.FullName, DeploymentOptions.None, winRTPackageVolume);
 
                                 // 更新移动进度
                                 movePackageWithProgress.Progress = (result, progress) => OnPackageMoveProgress(result, progress, package);

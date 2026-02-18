@@ -285,14 +285,12 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     try
                                     {
-                                        global::Windows.Management.Deployment.PackageVolume defaultVolume = packageManager.GetDefaultPackageVolume();
-
                                         AddPackageOptions addPackageOptions = new()
                                         {
                                             AllowUnsigned = AppInstallService.AllowUnsignedPackageValue,
                                             ForceAppShutdown = AppInstallService.ForceAppShutdownValue,
                                             ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdownValue,
-                                            TargetVolume = PackageVolume.FindPackageVolumeByPath(defaultVolume.PackageStorePath)
+                                            TargetVolume = PackageVolume.GetDefault()
                                         };
 
                                         // 安装目标应用，并获取安装进度

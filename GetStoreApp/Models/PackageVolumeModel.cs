@@ -60,12 +60,7 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 存储卷
         /// </summary>
-        public Windows.Management.Deployment.PackageVolume WinRTPackageVolume { get; set; }
-
-        /// <summary>
-        /// 存储卷
-        /// </summary>
-        public PackageVolume WASDKPackageVolume { get; set; }
+        public PackageVolume PackageVolume { get; set; }
 
         /// <summary>
         /// 存储卷可用空间警告（可用空间在 5% - 10%）

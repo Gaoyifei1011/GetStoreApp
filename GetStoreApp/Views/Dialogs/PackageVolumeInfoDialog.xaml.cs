@@ -4,13 +4,13 @@ using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.Windows.Management.Deployment;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
-using Windows.Management.Deployment;
 using Windows.Storage;
 
 // 抑制 CA1822，IDE0028，IDE0060 警告
@@ -24,7 +24,7 @@ namespace GetStoreApp.Views.Dialogs
     public sealed partial class PackageVolumeInfoDialog : ContentDialog, INotifyPropertyChanged
     {
         private readonly string VolumeSpaceString = ResourceService.GetLocalized("Dialog/VolumeSpace");
-        private readonly PackageManager PackageManager;
+        private readonly global::Windows.Management.Deployment.PackageManager packageManager = new();
         private readonly PackageModel Package;
 
         private bool _isPrimaryEnabled;
@@ -127,10 +127,9 @@ namespace GetStoreApp.Views.Dialogs
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public PackageVolumeInfoDialog(PackageManager packageManager, PackageModel package)
+        public PackageVolumeInfoDialog(PackageModel package)
         {
             InitializeComponent();
-            PackageManager = packageManager;
             Package = package;
         }
 
@@ -183,7 +182,7 @@ namespace GetStoreApp.Views.Dialogs
             {
                 PackageVolumeModel currentPackageVolume = null;
                 List<PackageVolumeModel> packageVolumeList = [];
-                IReadOnlyList<PackageVolume> requestedPackageVolumeList = await PackageManager.GetPackageVolumesAsync();
+                IList<PackageVolume> requestedPackageVolumeList = PackageVolume.FindPackageVolumes();
 
                 foreach (PackageVolume packageVolume in requestedPackageVolumeList)
                 {
@@ -228,12 +227,20 @@ namespace GetStoreApp.Views.Dialogs
                             PackageVolumeId = packageVolume.Name,
                             PackageVolumePath = packageVolume.PackageStorePath,
                             PackageVolumeUsedPercentage = usedPercentage,
-                            WinRTPackageVolume = packageVolume,
+                            PackageVolume = packageVolume,
                             IsAvailableSpaceWarning = usedPercentage > 90,
                             IsAvailableSpaceError = usedPercentage > 95,
                         };
 
-                        if (currentPackageVolume is null && packageVolume.FindPackageForUser(string.Empty, Package.Package.Id.FullName).Count > 0)
+                        global::Windows.Management.Deployment.PackageVolume winRTPackageVolume = null;
+                        foreach (global::Windows.Management.Deployment.PackageVolume winRTPackageVolumeItem in packageManager.FindPackageVolumes())
+                        {
+                            if (string.Equals(winRTPackageVolumeItem.PackageStorePath, packageVolume.PackageStorePath))
+                            {
+                                winRTPackageVolume = winRTPackageVolumeItem;
+                            }
+                        }
+                        if (currentPackageVolume is null && winRTPackageVolume.FindPackageForUser(string.Empty, Package.Package.Id.FullName).Count > 0)
                         {
                             currentPackageVolume = packageVolumeItem;
                         }

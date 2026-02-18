@@ -51,7 +51,6 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
 using Windows.Graphics;
-using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.System;
@@ -98,7 +97,7 @@ namespace GetStoreAppInstaller.Views.Windows
         private readonly string YesString = ResourceService.GetLocalized("Installer/Yes");
         private readonly Guid CLSID_AppxFactory = new("5842A140-FF9F-4166-8F5C-62F5B7B0C781");
         private readonly Guid CLSID_AppxBundleFactory = new("378E0446-5384-43B7-8877-E7DBDD883446");
-        private readonly PackageManager packageManager = new();
+        private readonly global::Windows.Management.Deployment.PackageManager packageManager = new();
         private readonly PackageDeploymentManager packageDeploymentManager = PackageDeploymentManager.GetDefault();
         private readonly ContentIsland contentIsland;
         private readonly InputKeyboardSource inputKeyboardSource;
@@ -1650,14 +1649,12 @@ namespace GetStoreAppInstaller.Views.Windows
                                 });
                             }
 
-                            global::Windows.Management.Deployment.PackageVolume defaultVolume = packageManager.GetDefaultPackageVolume();
-
-                            Microsoft.Windows.Management.Deployment.AddPackageOptions addPackageOptions = new()
+                            AddPackageOptions addPackageOptions = new()
                             {
                                 AllowUnsigned = AppInstallService.AllowUnsignedPackageValue,
                                 ForceAppShutdown = AppInstallService.ForceAppShutdownValue,
                                 ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdownValue,
-                                TargetVolume = Microsoft.Windows.Management.Deployment.PackageVolume.FindPackageVolumeByPath(defaultVolume.PackageStorePath)
+                                TargetVolume = PackageVolume.GetDefault()
                             };
 
                             foreach (InstallDependencyModel installDependencyItem in InstallDependencyCollection)
