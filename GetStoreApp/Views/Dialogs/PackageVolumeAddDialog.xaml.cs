@@ -21,8 +21,8 @@ using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 using WinRT;
 
-// 抑制 CA1822，IDE0028，IDE0060 警告
-#pragma warning disable CA1822,IDE0028,IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Dialogs
 {
@@ -394,7 +394,7 @@ namespace GetStoreApp.Views.Dialogs
                                 displayName = rootFolder.DisplayName;
                                 if (rootFolder is not null)
                                 {
-                                    IDictionary<string, object> propertiesDict = await rootFolder.Properties.RetrievePropertiesAsync(new List<string> { "System.Capacity" });
+                                    IDictionary<string, object> propertiesDict = await rootFolder.Properties.RetrievePropertiesAsync((string[])["System.Capacity"]);
 
                                     if (propertiesDict.TryGetValue("System.Capacity", out object value))
                                     {
