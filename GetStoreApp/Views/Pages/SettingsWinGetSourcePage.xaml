@@ -112,14 +112,12 @@
                 IsAccessKeyScope="True"
                 Style="{ThemeResource EllipsisButton}">
 
-                
-                    <FontIcon
-                        Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
-                        VerticalAlignment="Center"
-                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                        FontSize="20"
-                        Glyph="&#xE712;" />
-                
+                <FontIcon
+                    Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
+                    VerticalAlignment="Center"
+                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                    FontSize="20"
+                    Glyph="&#xE712;" />
 
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">
@@ -134,9 +132,14 @@
                 <ToolTipService.ToolTip>
                     <ToolTip
                         MaxWidth="9999"
-                        Background="Transparent"
-                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/ViewMore')}"
-                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        Padding="0"
+                        Background="Transparent">
+
+                        <Grid>
+                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/ViewMore')}" />
+                        </Grid>
+                    </ToolTip>
                 </ToolTipService.ToolTip>
             </Button>
         </Grid>
@@ -280,12 +283,16 @@
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip
                                                         MaxWidth="9999"
-                                                        Background="Transparent"
-                                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                                                        Padding="0"
+                                                        Background="Transparent">
 
                                                         <Grid>
-                                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Selected')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
-                                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/UnSelected')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
+                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+
+                                                            <Grid Padding="{StaticResource ToolTipBorderPadding}">
+                                                                <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Selected')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
+                                                                <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/UnSelected')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
+                                                            </Grid>
                                                         </Grid>
                                                     </ToolTip>
                                                 </ToolTipService.ToolTip>
@@ -316,238 +323,240 @@
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip
                                                         MaxWidth="9999"
-                                                        Background="Transparent"
-                                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                                                        Padding="0"
+                                                        Background="Transparent">
 
-                                                        <StackPanel>
-                                                            <TextBlock>
-                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Name')}" />
-                                                                <Run Text="{x:Bind Name}" />
-                                                            </TextBlock>
+                                                        <Grid>
+                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
 
-                                                            <TextBlock>
-                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Arguments')}" />
-                                                                <Run Text="{x:Bind Arguments}" />
-                                                            </TextBlock>
-                                                        </StackPanel>
+                                                            <StackPanel Padding="{StaticResource ToolTipBorderPadding}">
+                                                                <TextBlock>
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Name')}" />
+                                                                    <Run Text="{x:Bind Name}" />
+                                                                </TextBlock>
+
+                                                                <TextBlock>
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Arguments')}" />
+                                                                    <Run Text="{x:Bind Arguments}" />
+                                                                </TextBlock>
+                                                            </StackPanel>
+                                                        </Grid>
                                                     </ToolTip>
                                                 </ToolTipService.ToolTip>
                                             </StackPanel>
                                         </Grid>
                                     </Expander.Header>
 
-                                    
-                                        <Grid
-                                            Margin="40,0,0,0"
-                                            ColumnSpacing="15"
-                                            RowSpacing="3">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
+                                    <Grid
+                                        Margin="40,0,0,0"
+                                        ColumnSpacing="15"
+                                        RowSpacing="3">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
 
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
 
-                                            <TextBlock
-                                                Grid.Row="0"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/SourceId')}" />
+                                        <TextBlock
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/SourceId')}" />
 
-                                            <TextBlock
-                                                Grid.Row="0"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind SourceId}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind SourceId}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="1"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Explicit')}" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Explicit')}" />
 
-                                            <TextBlock
-                                                Grid.Row="1"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind Explicit}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind Explicit}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="2"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/TrustLevel')}" />
+                                        <TextBlock
+                                            Grid.Row="2"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/TrustLevel')}" />
 
-                                            <TextBlock
-                                                Grid.Row="2"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind TrustLevel}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind TrustLevel}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="3"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/LastUpdateTime')}" />
+                                        <TextBlock
+                                            Grid.Row="3"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/LastUpdateTime')}" />
 
-                                            <TextBlock
-                                                Grid.Row="3"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind LastUpdateTime}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="3"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind LastUpdateTime}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="4"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Origin')}" />
+                                        <TextBlock
+                                            Grid.Row="4"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Origin')}" />
 
-                                            <TextBlock
-                                                Grid.Row="4"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind Origin}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="4"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind Origin}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="5"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Type')}" />
+                                        <TextBlock
+                                            Grid.Row="5"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Type')}" />
 
-                                            <TextBlock
-                                                Grid.Row="5"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind Type}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="5"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind Type}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="6"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AcceptSourceAgreements')}" />
+                                        <TextBlock
+                                            Grid.Row="6"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AcceptSourceAgreements')}" />
 
-                                            <TextBlock
-                                                Grid.Row="6"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind AcceptSourceAgreements}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="6"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind AcceptSourceAgreements}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="7"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AdditionalPackageCatalogArguments')}" />
+                                        <TextBlock
+                                            Grid.Row="7"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AdditionalPackageCatalogArguments')}" />
 
-                                            <TextBlock
-                                                Grid.Row="7"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind AdditionalPackageCatalogArguments}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="7"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind AdditionalPackageCatalogArguments}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="8"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AuthenticationType')}" />
+                                        <TextBlock
+                                            Grid.Row="8"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AuthenticationType')}" />
 
-                                            <TextBlock
-                                                Grid.Row="8"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind AuthenticationType}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="8"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind AuthenticationType}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="9"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AuthenticationAccount')}" />
+                                        <TextBlock
+                                            Grid.Row="9"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AuthenticationAccount')}" />
 
-                                            <TextBlock
-                                                Grid.Row="9"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind AuthenticationAccount}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="9"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind AuthenticationAccount}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="10"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/PackageCatalogBackgroundUpdateInterval')}" />
+                                        <TextBlock
+                                            Grid.Row="10"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/PackageCatalogBackgroundUpdateInterval')}" />
 
-                                            <TextBlock
-                                                Grid.Row="10"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind PackageCatalogBackgroundUpdateInterval}"
-                                                TextWrapping="Wrap" />
-                                        </Grid>
-                                    
+                                        <TextBlock
+                                            Grid.Row="10"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind PackageCatalogBackgroundUpdateInterval}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
                                 </Expander>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -646,12 +655,16 @@
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip
                                                         MaxWidth="9999"
-                                                        Background="Transparent"
-                                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                                                        Padding="0"
+                                                        Background="Transparent">
 
                                                         <Grid>
-                                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Selected')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
-                                                            <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/UnSelected')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
+                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+
+                                                            <Grid Padding="{StaticResource ToolTipBorderPadding}">
+                                                                <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Selected')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
+                                                                <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/UnSelected')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
+                                                            </Grid>
                                                         </Grid>
                                                     </ToolTip>
                                                 </ToolTipService.ToolTip>
@@ -682,20 +695,24 @@
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip
                                                         MaxWidth="9999"
-                                                        Background="Transparent"
-                                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                                                        Padding="0"
+                                                        Background="Transparent">
 
-                                                        <StackPanel>
-                                                            <TextBlock>
-                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Name')}" />
-                                                                <Run Text="{x:Bind Name}" />
-                                                            </TextBlock>
+                                                        <Grid>
+                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
 
-                                                            <TextBlock>
-                                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Arguments')}" />
-                                                                <Run Text="{x:Bind Arguments}" />
-                                                            </TextBlock>
-                                                        </StackPanel>
+                                                            <StackPanel Padding="{StaticResource ToolTipBorderPadding}">
+                                                                <TextBlock>
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Name')}" />
+                                                                    <Run Text="{x:Bind Name}" />
+                                                                </TextBlock>
+
+                                                                <TextBlock>
+                                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Arguments')}" />
+                                                                    <Run Text="{x:Bind Arguments}" />
+                                                                </TextBlock>
+                                                            </StackPanel>
+                                                        </Grid>
                                                     </ToolTip>
                                                 </ToolTipService.ToolTip>
                                             </StackPanel>
@@ -742,226 +759,229 @@
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip
                                                         MaxWidth="9999"
-                                                        Background="Transparent"
-                                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/EditToolTip')}"
-                                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                                        Padding="0"
+                                                        Background="Transparent">
+
+                                                        <Grid>
+                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/EditToolTip')}" />
+                                                        </Grid>
+                                                    </ToolTip>
                                                 </ToolTipService.ToolTip>
                                             </SplitButton>
                                         </Grid>
                                     </Expander.Header>
 
-                                    
-                                        <Grid
-                                            Margin="40,0,0,0"
-                                            ColumnSpacing="15"
-                                            RowSpacing="3">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
+                                    <Grid
+                                        Margin="40,0,0,0"
+                                        ColumnSpacing="15"
+                                        RowSpacing="3">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
 
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
 
-                                            <TextBlock
-                                                Grid.Row="0"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/SourceId')}" />
+                                        <TextBlock
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/SourceId')}" />
 
-                                            <TextBlock
-                                                Grid.Row="0"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind SourceId}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind SourceId}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="1"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Explicit')}" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Explicit')}" />
 
-                                            <TextBlock
-                                                Grid.Row="1"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind Explicit}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind Explicit}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="2"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/TrustLevel')}" />
+                                        <TextBlock
+                                            Grid.Row="2"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/TrustLevel')}" />
 
-                                            <TextBlock
-                                                Grid.Row="2"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind TrustLevel}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind TrustLevel}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="3"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/LastUpdateTime')}" />
+                                        <TextBlock
+                                            Grid.Row="3"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/LastUpdateTime')}" />
 
-                                            <TextBlock
-                                                Grid.Row="3"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind LastUpdateTime}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="3"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind LastUpdateTime}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="4"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Origin')}" />
+                                        <TextBlock
+                                            Grid.Row="4"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Origin')}" />
 
-                                            <TextBlock
-                                                Grid.Row="4"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind Origin}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="4"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind Origin}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="5"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Type')}" />
+                                        <TextBlock
+                                            Grid.Row="5"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/Type')}" />
 
-                                            <TextBlock
-                                                Grid.Row="5"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind Type}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="5"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind Type}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="6"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AcceptSourceAgreements')}" />
+                                        <TextBlock
+                                            Grid.Row="6"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AcceptSourceAgreements')}" />
 
-                                            <TextBlock
-                                                Grid.Row="6"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind AcceptSourceAgreements}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="6"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind AcceptSourceAgreements}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="7"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AdditionalPackageCatalogArguments')}" />
+                                        <TextBlock
+                                            Grid.Row="7"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AdditionalPackageCatalogArguments')}" />
 
-                                            <TextBlock
-                                                Grid.Row="7"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind AdditionalPackageCatalogArguments}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="7"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind AdditionalPackageCatalogArguments}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="8"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AuthenticationType')}" />
+                                        <TextBlock
+                                            Grid.Row="8"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AuthenticationType')}" />
 
-                                            <TextBlock
-                                                Grid.Row="8"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind AuthenticationType}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="8"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind AuthenticationType}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="9"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AuthenticationAccount')}" />
+                                        <TextBlock
+                                            Grid.Row="9"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/AuthenticationAccount')}" />
 
-                                            <TextBlock
-                                                Grid.Row="9"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind AuthenticationAccount}"
-                                                TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="9"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind AuthenticationAccount}"
+                                            TextWrapping="Wrap" />
 
-                                            <TextBlock
-                                                Grid.Row="10"
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/PackageCatalogBackgroundUpdateInterval')}" />
+                                        <TextBlock
+                                            Grid.Row="10"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/PackageCatalogBackgroundUpdateInterval')}" />
 
-                                            <TextBlock
-                                                Grid.Row="10"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind PackageCatalogBackgroundUpdateInterval}"
-                                                TextWrapping="Wrap" />
-                                        </Grid>
-                                    
+                                        <TextBlock
+                                            Grid.Row="10"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left"
+                                            FontSize="14"
+                                            IsTextSelectionEnabled="True"
+                                            Text="{x:Bind PackageCatalogBackgroundUpdateInterval}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
                                 </Expander>
                             </DataTemplate>
                         </ListView.ItemTemplate>

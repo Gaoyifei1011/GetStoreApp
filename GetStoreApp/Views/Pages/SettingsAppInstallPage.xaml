@@ -70,10 +70,15 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Padding="0"
                                 Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/AllowUnsignedPackageDescription')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                Visibility="{x:Bind AllowUnsignedPackageDescription.IsTextTrimmed, Mode=OneWay}" />
+                                Visibility="{x:Bind AllowUnsignedPackageDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/AllowUnsignedPackageDescription')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -155,10 +160,15 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Padding="0"
                                 Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceAppShutdownDescription')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                Visibility="{x:Bind ForceAppShutdownDescription.IsTextTrimmed, Mode=OneWay}" />
+                                Visibility="{x:Bind ForceAppShutdownDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceAppShutdownDescription')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -233,10 +243,15 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Padding="0"
                                 Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceTargetAppShutdownDescription')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                Visibility="{x:Bind ForceTargetAppShutdownDescription.IsTextTrimmed, Mode=OneWay}" />
+                                Visibility="{x:Bind ForceTargetAppShutdownDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceTargetAppShutdownDescription')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -313,10 +328,15 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Padding="0"
                                 Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/PackageVolumeDescription')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                Visibility="{x:Bind PackageVolumeDescription.IsTextTrimmed, Mode=OneWay}" />
+                                Visibility="{x:Bind PackageVolumeDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/PackageVolumeDescription')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>

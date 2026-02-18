@@ -209,36 +209,175 @@
                     </Grid>
                 </Expander.Header>
 
-                
-                    <StackPanel>
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryEmpty')}"
-                            TextAlignment="Center"
-                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(HistoryCollection.Count), Mode=OneWay}" />
+                <StackPanel>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryEmpty')}"
+                        TextAlignment="Center"
+                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(HistoryCollection.Count), Mode=OneWay}" />
 
-                        <ListView
-                            CornerRadius="0"
-                            ItemsSource="{x:Bind HistoryCollection}"
-                            SelectionMode="None"
-                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(HistoryCollection.Count), Mode=OneWay}">
+                    <ListView
+                        CornerRadius="0"
+                        ItemsSource="{x:Bind HistoryCollection}"
+                        SelectionMode="None"
+                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(HistoryCollection.Count), Mode=OneWay}">
 
-                            <ListView.ItemContainerStyle>
-                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                    <Setter Property="Background" Value="Transparent" />
-                                    <Setter Property="Margin" Value="0" />
-                                    <Setter Property="MinHeight" Value="0" />
-                                    <Setter Property="Padding" Value="0" />
-                                </Style>
-                            </ListView.ItemContainerStyle>
+                        <ListView.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="MinHeight" Value="0" />
+                                <Setter Property="Padding" Value="0" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
 
-                            <ItemsControl.ItemContainerTransitions>
-                                <TransitionCollection />
-                            </ItemsControl.ItemContainerTransitions>
+                        <ItemsControl.ItemContainerTransitions>
+                            <TransitionCollection />
+                        </ItemsControl.ItemContainerTransitions>
 
-                            <ListView.Header>
-                                <Grid Height="35" Padding="6,0,0,0">
+                        <ListView.Header>
+                            <Grid Height="35" Padding="6,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1.5*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="70" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    x:Name="HistoryAppNameHeaderText"
+                                    Grid.Column="0"
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryAppName')}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Padding="0"
+                                            Background="Transparent"
+                                            Visibility="{x:Bind HistoryAppNameHeaderText.IsTextTrimmed, Mode=OneWay}">
+
+                                            <Grid>
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryAppName')}" />
+                                            </Grid>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+
+                                <TextBlock
+                                    x:Name="HistoryTypeHeaderText"
+                                    Grid.Column="1"
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryType')}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Padding="0"
+                                            Background="Transparent"
+                                            Visibility="{x:Bind HistoryTypeHeaderText.IsTextTrimmed, Mode=OneWay}">
+
+                                            <Grid>
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryType')}" />
+                                            </Grid>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+
+                                <TextBlock
+                                    x:Name="HistoryChannelHeaderText"
+                                    Grid.Column="2"
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryChannel')}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Padding="0"
+                                            Background="Transparent"
+                                            Visibility="{x:Bind HistoryChannelHeaderText.IsTextTrimmed, Mode=OneWay}">
+
+                                            <Grid>
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryChannel')}" />
+                                            </Grid>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+
+                                <TextBlock
+                                    x:Name="HistoryLinkHeaderText"
+                                    Grid.Column="3"
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryLink')}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Padding="0"
+                                            Background="Transparent"
+                                            Visibility="{x:Bind HistoryLinkHeaderText.IsTextTrimmed, Mode=OneWay}">
+
+                                            <Grid>
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryLink')}" />
+                                            </Grid>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+
+                                <TextBlock
+                                    Grid.Column="4"
+                                    Grid.ColumnSpan="2"
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Options')}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Padding="0"
+                                            Background="Transparent">
+
+                                            <Grid>
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OptionsToolTip')}" />
+                                            </Grid>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+                            </Grid>
+                        </ListView.Header>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="model:HistoryModel">
+                                <Grid
+                                    Height="35"
+                                    Padding="6,0,0,0"
+                                    HorizontalAlignment="Stretch"
+                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                    BorderThickness="0,1,0,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="1.5*" />
                                         <ColumnDefinition Width="*" />
@@ -248,230 +387,134 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock
-                                        x:Name="HistoryAppNameHeaderText"
+                                        x:Name="HistoryAppNameText"
                                         Grid.Column="0"
+                                        MinWidth="50"
                                         Margin="10,0,0,0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryAppName')}"
+                                        FontSize="14"
+                                        IsTextSelectionEnabled="True"
+                                        Text="{x:Bind HistoryAppName}"
+                                        TextAlignment="Left"
                                         TextTrimming="CharacterEllipsis"
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 MaxWidth="9999"
+                                                Padding="0"
                                                 Background="Transparent"
-                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryAppName')}"
-                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                                Visibility="{x:Bind HistoryAppNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                Visibility="{Binding ElementName=HistoryAppNameText, Path=IsTextTrimmed, Mode=OneWay}">
+
+                                                <Grid>
+                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind HistoryAppName}" />
+                                                </Grid>
+                                            </ToolTip>
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
 
                                     <TextBlock
-                                        x:Name="HistoryTypeHeaderText"
+                                        x:Name="HistoryTypeText"
                                         Grid.Column="1"
+                                        MinWidth="50"
                                         Margin="10,0,0,0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryType')}"
+                                        FontSize="14"
+                                        IsTextSelectionEnabled="True"
+                                        Text="{x:Bind HistoryTypeName}"
+                                        TextAlignment="Left"
                                         TextTrimming="CharacterEllipsis"
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 MaxWidth="9999"
+                                                Padding="0"
                                                 Background="Transparent"
-                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryType')}"
-                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                                Visibility="{x:Bind HistoryTypeHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                Visibility="{Binding ElementName=HistoryTypeText, Path=IsTextTrimmed, Mode=OneWay}">
+
+                                                <Grid>
+                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind HistoryTypeName}" />
+                                                </Grid>
+                                            </ToolTip>
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
 
                                     <TextBlock
-                                        x:Name="HistoryChannelHeaderText"
+                                        x:Name="HistoryChannelText"
                                         Grid.Column="2"
+                                        MinWidth="50"
                                         Margin="10,0,0,0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryChannel')}"
+                                        FontSize="14"
+                                        IsTextSelectionEnabled="True"
+                                        Text="{x:Bind HistoryChannelName}"
+                                        TextAlignment="Left"
                                         TextTrimming="CharacterEllipsis"
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 MaxWidth="9999"
+                                                Padding="0"
                                                 Background="Transparent"
-                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryChannel')}"
-                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                                Visibility="{x:Bind HistoryChannelHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                Visibility="{Binding ElementName=HistoryChannelText, Path=IsTextTrimmed, Mode=OneWay}">
+
+                                                <Grid>
+                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind HistoryChannelName}" />
+                                                </Grid>
+                                            </ToolTip>
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
 
                                     <TextBlock
-                                        x:Name="HistoryLinkHeaderText"
+                                        x:Name="HistoryLinkText"
                                         Grid.Column="3"
+                                        MinWidth="50"
                                         Margin="10,0,0,0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryLink')}"
+                                        FontSize="14"
+                                        IsTextSelectionEnabled="True"
+                                        Text="{x:Bind HistoryLink}"
+                                        TextAlignment="Left"
                                         TextTrimming="CharacterEllipsis"
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 MaxWidth="9999"
+                                                Padding="0"
                                                 Background="Transparent"
-                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryLink')}"
-                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                                Visibility="{x:Bind HistoryLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                Visibility="{Binding ElementName=HistoryLinkText, Path=IsTextTrimmed, Mode=OneWay}">
+
+                                                <Grid>
+                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind HistoryLink}" />
+                                                </Grid>
+                                            </ToolTip>
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
 
-                                    <TextBlock
+                                    <HyperlinkButton
                                         Grid.Column="4"
-                                        Grid.ColumnSpan="2"
                                         Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Options')}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                MaxWidth="9999"
-                                                Background="Transparent"
-                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OptionsToolTip')}"
-                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
+                                        Padding="0"
+                                        Command="{StaticResource FillInCommand}"
+                                        CommandParameter="{x:Bind}"
+                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FillIn')}"
+                                        IsEnabled="{x:Bind IsQuerying.Equals(x:False), Mode=OneWay}" />
                                 </Grid>
-                            </ListView.Header>
-
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="model:HistoryModel">
-                                    <Grid
-                                        Height="35"
-                                        Padding="6,0,0,0"
-                                        HorizontalAlignment="Stretch"
-                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                        BorderThickness="0,1,0,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1.5*" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="3*" />
-                                            <ColumnDefinition Width="70" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBlock
-                                            x:Name="HistoryAppNameText"
-                                            Grid.Column="0"
-                                            MinWidth="50"
-                                            Margin="10,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            FontSize="14"
-                                            IsTextSelectionEnabled="True"
-                                            Text="{x:Bind HistoryAppName}"
-                                            TextAlignment="Left"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Background="Transparent"
-                                                    Content="{x:Bind HistoryAppName}"
-                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                                    Visibility="{Binding ElementName=HistoryAppNameText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-
-                                        <TextBlock
-                                            x:Name="HistoryTypeText"
-                                            Grid.Column="1"
-                                            MinWidth="50"
-                                            Margin="10,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            FontSize="14"
-                                            IsTextSelectionEnabled="True"
-                                            Text="{x:Bind HistoryTypeName}"
-                                            TextAlignment="Left"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Background="Transparent"
-                                                    Content="{x:Bind HistoryTypeName}"
-                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                                    Visibility="{Binding ElementName=HistoryTypeText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-
-                                        <TextBlock
-                                            x:Name="HistoryChannelText"
-                                            Grid.Column="2"
-                                            MinWidth="50"
-                                            Margin="10,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            FontSize="14"
-                                            IsTextSelectionEnabled="True"
-                                            Text="{x:Bind HistoryChannelName}"
-                                            TextAlignment="Left"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Background="Transparent"
-                                                    Content="{x:Bind HistoryChannelName}"
-                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                                    Visibility="{Binding ElementName=HistoryChannelText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-
-                                        <TextBlock
-                                            x:Name="HistoryLinkText"
-                                            Grid.Column="3"
-                                            MinWidth="50"
-                                            Margin="10,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            FontSize="14"
-                                            IsTextSelectionEnabled="True"
-                                            Text="{x:Bind HistoryLink}"
-                                            TextAlignment="Left"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Background="Transparent"
-                                                    Content="{x:Bind HistoryLink}"
-                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                                    Visibility="{Binding ElementName=HistoryLinkText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-
-                                        <HyperlinkButton
-                                            Grid.Column="4"
-                                            Margin="10,0,0,0"
-                                            Padding="0"
-                                            Command="{StaticResource FillInCommand}"
-                                            CommandParameter="{x:Bind}"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FillIn')}"
-                                            IsEnabled="{x:Bind IsQuerying.Equals(x:False), Mode=OneWay}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackPanel>
-                
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
             </Expander>
 
             <!--  查询链接结果  -->
@@ -541,63 +584,61 @@
                         </Grid>
                     </Expander.Header>
 
-                    
-                        <Grid Margin="0,0,10,0" RowSpacing="6">
+                    <Grid Margin="0,0,10,0" RowSpacing="6">
 
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="120" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-                            <TextBlock
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueriedAppName')}" />
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueriedAppName')}" />
 
-                            <TextBlock
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind AppInfo.Name, Mode=OneWay}"
-                                TextAlignment="Justify"
-                                TextWrapping="Wrap" />
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
+                            Text="{x:Bind AppInfo.Name, Mode=OneWay}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
 
-                            <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueriedAppPublisher')}" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueriedAppPublisher')}" />
 
-                            <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind AppInfo.Publisher, Mode=OneWay}"
-                                TextAlignment="Justify"
-                                TextWrapping="Wrap" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
+                            Text="{x:Bind AppInfo.Publisher, Mode=OneWay}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
 
-                            <TextBlock
-                                Grid.Row="2"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueriedAppDescription')}" />
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/QueriedAppDescription')}" />
 
-                            <TextBlock
-                                Grid.Row="2"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind AppInfo.Description, Mode=OneWay}"
-                                TextAlignment="Justify"
-                                TextWrapping="Wrap" />
-                        </Grid>
-                    
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
+                            Text="{x:Bind AppInfo.Description, Mode=OneWay}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+                    </Grid>
                 </Expander>
 
                 <!--  查询链接结果控制栏  -->
@@ -689,9 +730,14 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
-                                        Background="Transparent"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/SelectToolTip')}"
-                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                        Padding="0"
+                                        Background="Transparent">
+
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/SelectToolTip')}" />
+                                        </Grid>
+                                    </ToolTip>
                                 </ToolTipService.ToolTip>
                             </AppBarButton>
                         </CommandBar.PrimaryCommands>
@@ -719,9 +765,14 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     MaxWidth="9999"
-                                                    Background="Transparent"
-                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopySelectedLinkToolTip')}"
-                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                                    Padding="0"
+                                                    Background="Transparent">
+
+                                                    <Grid>
+                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopySelectedLinkToolTip')}" />
+                                                    </Grid>
+                                                </ToolTip>
                                             </ToolTipService.ToolTip>
                                         </MenuFlyoutItem>
 
@@ -730,9 +781,14 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     MaxWidth="9999"
-                                                    Background="Transparent"
-                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopySelectedContentToolTip')}"
-                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                                    Padding="0"
+                                                    Background="Transparent">
+
+                                                    <Grid>
+                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopySelectedContentToolTip')}" />
+                                                    </Grid>
+                                                </ToolTip>
                                             </ToolTipService.ToolTip>
                                         </MenuFlyoutItem>
                                     </MenuFlyout>
@@ -741,9 +797,14 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
-                                        Background="Transparent"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyOptionsToolTip')}"
-                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                        Padding="0"
+                                        Background="Transparent">
+
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyOptionsToolTip')}" />
+                                        </Grid>
+                                    </ToolTip>
                                 </ToolTipService.ToolTip>
                             </AppBarButton>
 
@@ -763,9 +824,14 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
-                                        Background="Transparent"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CancelToolTip')}"
-                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                        Padding="0"
+                                        Background="Transparent">
+
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CancelToolTip')}" />
+                                        </Grid>
+                                    </ToolTip>
                                 </ToolTipService.ToolTip>
                             </AppBarButton>
                         </CommandBar.PrimaryCommands>
@@ -828,9 +894,14 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
-                                        Background="Transparent"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/SelectHeader')}"
-                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                        Padding="0"
+                                        Background="Transparent">
+
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/SelectHeader')}" />
+                                        </Grid>
+                                    </ToolTip>
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
@@ -847,10 +918,15 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
+                                        Padding="0"
                                         Background="Transparent"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileName')}"
-                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                        Visibility="{x:Bind FileNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                        Visibility="{x:Bind FileNameHeaderText.IsTextTrimmed, Mode=OneWay}">
+
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileName')}" />
+                                        </Grid>
+                                    </ToolTip>
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
@@ -867,10 +943,15 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
+                                        Padding="0"
                                         Background="Transparent"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileSize')}"
-                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                        Visibility="{x:Bind FileSizeHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                        Visibility="{x:Bind FileSizeHeaderText.IsTextTrimmed, Mode=OneWay}">
+
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/FileSize')}" />
+                                        </Grid>
+                                    </ToolTip>
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
@@ -884,9 +965,14 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
-                                        Background="Transparent"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OptionsToolTip')}"
-                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                        Padding="0"
+                                        Background="Transparent">
+
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OptionsToolTip')}" />
+                                        </Grid>
+                                    </ToolTip>
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </Grid>
@@ -921,12 +1007,15 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
-                                            Background="Transparent"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                                            Padding="0"
+                                            Background="Transparent">
 
                                             <Grid>
-                                                <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Selected')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
-                                                <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/UnSelected')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                <Grid Padding="{StaticResource ToolTipBorderPadding}">
+                                                    <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Selected')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
+                                                    <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/UnSelected')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
+                                                </Grid>
                                             </Grid>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
@@ -941,24 +1030,27 @@
                                     CommandParameter="{x:Bind}"
                                     IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}">
 
-                                    
-                                        <TextBlock
-                                            x:Name="FileNameText"
-                                            HorizontalAlignment="Left"
-                                            Text="{x:Bind FileName}"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
+                                    <TextBlock
+                                        x:Name="FileNameText"
+                                        HorizontalAlignment="Left"
+                                        Text="{x:Bind FileName}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
 
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Background="Transparent"
-                                                    Content="{x:Bind FileName}"
-                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                                    Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-                                    
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Padding="0"
+                                                Background="Transparent"
+                                                Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}">
+
+                                                <Grid>
+                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind FileName}" />
+                                                </Grid>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
 
                                     <HyperlinkButton.ContextFlyout>
                                         <MenuFlyout Placement="Bottom">
@@ -975,9 +1067,14 @@
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip
                                                         MaxWidth="9999"
-                                                        Background="Transparent"
-                                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyLinkToolTip')}"
-                                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                                        Padding="0"
+                                                        Background="Transparent">
+
+                                                        <Grid>
+                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyLinkToolTip')}" />
+                                                        </Grid>
+                                                    </ToolTip>
                                                 </ToolTipService.ToolTip>
                                             </MenuFlyoutItem>
                                         </MenuFlyout>
@@ -1001,10 +1098,15 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
+                                            Padding="0"
                                             Background="Transparent"
-                                            Content="{x:Bind FileSize}"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                            Visibility="{Binding ElementName=FileSizeText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                            Visibility="{Binding ElementName=FileSizeText, Path=IsTextTrimmed, Mode=OneWay}">
+
+                                            <Grid>
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind FileSize}" />
+                                            </Grid>
+                                        </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -1022,9 +1124,14 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
-                                            Background="Transparent"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OpenLinkToolTip')}"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                            Padding="0"
+                                            Background="Transparent">
+
+                                            <Grid>
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/OpenLinkToolTip')}" />
+                                            </Grid>
+                                        </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </HyperlinkButton>
 
@@ -1043,9 +1150,14 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     MaxWidth="9999"
-                                                    Background="Transparent"
-                                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyInformationToolTip')}"
-                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                                    Padding="0"
+                                                    Background="Transparent">
+
+                                                    <Grid>
+                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyInformationToolTip')}" />
+                                                    </Grid>
+                                                </ToolTip>
                                             </ToolTipService.ToolTip>
                                         </MenuFlyoutItem>
                                     </MenuFlyout>

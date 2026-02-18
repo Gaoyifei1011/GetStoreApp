@@ -317,7 +317,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     try
                     {
-                        if (ApplicationData.GetForPackageFamily(package.Id.FamilyName) is Microsoft.Windows.Storage.ApplicationData applicationData)
+                        if (ApplicationData.GetForPackageFamily(package.Id.FamilyName) is ApplicationData applicationData)
                         {
                             await Launcher.LaunchFolderAsync(applicationData.LocalFolder);
                         }
@@ -424,6 +424,7 @@ namespace GetStoreApp.Views.Pages
                                     if (string.Equals(winRTPackageVolumeItem.PackageStorePath, packageVolumeInfoDialog.SelectedPackageVolume.PackageVolume.PackageStorePath))
                                     {
                                         winRTPackageVolume = winRTPackageVolumeItem;
+                                        break;
                                     }
                                 }
                                 IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> movePackageWithProgress = packageManager.MovePackageToVolumeAsync(package.Package.Id.FullName, DeploymentOptions.None, winRTPackageVolume);

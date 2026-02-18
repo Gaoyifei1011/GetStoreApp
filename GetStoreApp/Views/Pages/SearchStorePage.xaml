@@ -220,10 +220,15 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
+                                            Padding="0"
                                             Background="Transparent"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/HistoryContent')}"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                            Visibility="{x:Bind HistoryContentHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                            Visibility="{x:Bind HistoryContentHeaderText.IsTextTrimmed, Mode=OneWay}">
+
+                                            <Grid>
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/HistoryContent')}" />
+                                            </Grid>
+                                        </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -238,9 +243,14 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
-                                            Background="Transparent"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/OptionsToolTip')}"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                            Padding="0"
+                                            Background="Transparent">
+
+                                            <Grid>
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/OptionsToolTip')}" />
+                                            </Grid>
+                                        </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
                             </Grid>
@@ -275,10 +285,15 @@
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 MaxWidth="9999"
+                                                Padding="0"
                                                 Background="Transparent"
-                                                Content="{x:Bind HistoryContent}"
-                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                                Visibility="{Binding ElementName=HistoryContentText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                Visibility="{Binding ElementName=HistoryContentText, Path=IsTextTrimmed, Mode=OneWay}">
+
+                                                <Grid>
+                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind HistoryContent}" />
+                                                </Grid>
+                                            </ToolTip>
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
 
@@ -399,10 +414,15 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
+                                        Padding="0"
                                         Background="Transparent"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppName')}"
-                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                        Visibility="{x:Bind StoreAppNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                        Visibility="{x:Bind StoreAppNameHeaderText.IsTextTrimmed, Mode=OneWay}">
+
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppName')}" />
+                                        </Grid>
+                                    </ToolTip>
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
@@ -419,10 +439,15 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
+                                        Padding="0"
                                         Background="Transparent"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppPublisher')}"
-                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                        Visibility="{x:Bind StoreAppPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                        Visibility="{x:Bind StoreAppPublisherHeaderText.IsTextTrimmed, Mode=OneWay}">
+
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppPublisher')}" />
+                                        </Grid>
+                                    </ToolTip>
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
@@ -439,10 +464,15 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
+                                        Padding="0"
                                         Background="Transparent"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppLink')}"
-                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                        Visibility="{x:Bind StoreAppLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                        Visibility="{x:Bind StoreAppLinkHeaderText.IsTextTrimmed, Mode=OneWay}">
+
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppLink')}" />
+                                        </Grid>
+                                    </ToolTip>
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
@@ -457,9 +487,14 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
-                                        Background="Transparent"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/OptionsToolTip')}"
-                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                        Padding="0"
+                                        Background="Transparent">
+
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/OptionsToolTip')}" />
+                                        </Grid>
+                                    </ToolTip>
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </Grid>
@@ -497,10 +532,15 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
+                                            Padding="0"
                                             Background="Transparent"
-                                            Content="{x:Bind StoreAppName}"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                            Visibility="{Binding ElementName=StoreAppNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                            Visibility="{Binding ElementName=StoreAppNameText, Path=IsTextTrimmed, Mode=OneWay}">
+
+                                            <Grid>
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind StoreAppName}" />
+                                            </Grid>
+                                        </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -521,10 +561,15 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
+                                            Padding="0"
                                             Background="Transparent"
-                                            Content="{x:Bind StoreAppPublisher}"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                            Visibility="{Binding ElementName=StoreAppPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                            Visibility="{Binding ElementName=StoreAppPublisherText, Path=IsTextTrimmed, Mode=OneWay}">
+
+                                            <Grid>
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind StoreAppPublisher}" />
+                                            </Grid>
+                                        </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -540,13 +585,17 @@
                                         Text="{x:Bind StoreAppLink}"
                                         TextTrimming="CharacterEllipsis"
                                         TextWrapping="NoWrap">
+
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 MaxWidth="9999"
-                                                Background="Transparent"
-                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                                                Padding="0"
+                                                Background="Transparent">
 
-                                                <TextBlock Text="{x:Bind StoreAppLink}" />
+                                                <Grid>
+                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind StoreAppLink}" />
+                                                </Grid>
                                             </ToolTip>
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
@@ -565,9 +614,14 @@
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip
                                                         MaxWidth="9999"
-                                                        Background="Transparent"
-                                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/CopyLinkToolTip')}"
-                                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                                        Padding="0"
+                                                        Background="Transparent">
+
+                                                        <Grid>
+                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/CopyLinkToolTip')}" />
+                                                        </Grid>
+                                                    </ToolTip>
                                                 </ToolTipService.ToolTip>
                                             </MenuFlyoutItem>
                                         </MenuFlyout>
@@ -586,9 +640,14 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
-                                            Background="Transparent"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/QueryLinksToolTip')}"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                            Padding="0"
+                                            Background="Transparent">
+
+                                            <Grid>
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/QueryLinksToolTip')}" />
+                                            </Grid>
+                                        </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </HyperlinkButton>
                             </Grid>

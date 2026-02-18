@@ -238,6 +238,7 @@ namespace GetStoreApp.Views.Dialogs
                             if (string.Equals(winRTPackageVolumeItem.PackageStorePath, packageVolume.PackageStorePath))
                             {
                                 winRTPackageVolume = winRTPackageVolumeItem;
+                                break;
                             }
                         }
                         if (currentPackageVolume is null && winRTPackageVolume.FindPackageForUser(string.Empty, Package.Package.Id.FullName).Count > 0)

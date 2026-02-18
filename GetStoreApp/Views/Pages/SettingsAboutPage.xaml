@@ -68,9 +68,14 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip
                                     MaxWidth="9999"
-                                    Background="Transparent"
-                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/DeveloperNameToolTip')}"
-                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                    Padding="0"
+                                    Background="Transparent">
+
+                                    <Grid>
+                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/DeveloperNameToolTip')}" />
+                                    </Grid>
+                                </ToolTip>
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </StackPanel>
@@ -370,70 +375,68 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/BriefIntroduction')}" />
                 </Expander.Header>
 
-                
-                    <StackPanel Margin="0">
-                        <TextBlock
-                            Margin="30,10,16,10"
-                            HorizontalAlignment="Left"
-                            FontSize="15"
-                            FontWeight="Normal"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/DevelopPurpose')}"
-                            TextAlignment="Left" />
+                <StackPanel Margin="0">
+                    <TextBlock
+                        Margin="30,10,16,10"
+                        HorizontalAlignment="Left"
+                        FontSize="15"
+                        FontWeight="Normal"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/DevelopPurpose')}"
+                        TextAlignment="Left" />
 
-                        <TextBlock
-                            Margin="30,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/DevelopPurposeDescription')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Margin="30,0,16,5"
+                        FontSize="14"
+                        FontWeight="Normal"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/DevelopPurposeDescription')}"
+                        TextAlignment="Justify"
+                        TextWrapping="Wrap" />
 
-                        <MenuFlyoutSeparator />
+                    <MenuFlyoutSeparator />
 
-                        <TextBlock
-                            Margin="30,10,16,10"
-                            HorizontalAlignment="Left"
-                            FontSize="15"
-                            FontWeight="Normal"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/UpdatePath')}"
-                            TextAlignment="Left" />
+                    <TextBlock
+                        Margin="30,10,16,10"
+                        HorizontalAlignment="Left"
+                        FontSize="15"
+                        FontWeight="Normal"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/UpdatePath')}"
+                        TextAlignment="Left" />
 
-                        <TextBlock
-                            Margin="30,0,16,5"
-                            HorizontalAlignment="Left"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/UpdatePathDescription')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
+                    <TextBlock
+                        Margin="30,0,16,5"
+                        HorizontalAlignment="Left"
+                        FontSize="14"
+                        FontWeight="Normal"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/UpdatePathDescription')}"
+                        TextAlignment="Justify"
+                        TextWrapping="Wrap" />
 
-                        <MenuFlyoutSeparator />
+                    <MenuFlyoutSeparator />
 
-                        <TextBlock
-                            Margin="30,10,16,10"
-                            HorizontalAlignment="Left"
-                            FontSize="15"
-                            FontWeight="Normal"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/PrivacyandSecurity')}"
-                            TextAlignment="Left" />
+                    <TextBlock
+                        Margin="30,10,16,10"
+                        HorizontalAlignment="Left"
+                        FontSize="15"
+                        FontWeight="Normal"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/PrivacyandSecurity')}"
+                        TextAlignment="Left" />
 
-                        <TextBlock
-                            Margin="30,0,16,10"
-                            Padding="0,0,2,0"
-                            HorizontalAlignment="Left"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/PrivacyandSecurityDescription')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-                    </StackPanel>
-                
+                    <TextBlock
+                        Margin="30,0,16,10"
+                        Padding="0,0,2,0"
+                        HorizontalAlignment="Left"
+                        FontSize="14"
+                        FontWeight="Normal"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/PrivacyandSecurityDescription')}"
+                        TextAlignment="Justify"
+                        TextWrapping="Wrap" />
+                </StackPanel>
             </Expander>
 
             <!--  项目引用信息  -->
@@ -453,13 +456,107 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/Reference')}" />
                 </Expander.Header>
 
-                
+                <ListView
+                    Margin="26,0,16,0"
+                    Padding="5"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    ItemsSource="{x:Bind ReferenceList}"
+                    SelectionMode="None">
+
+                    <ListView.ItemContainerStyle>
+                        <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Margin" Value="0,0,2,2" />
+                            <Setter Property="MinHeight" Value="0" />
+                            <Setter Property="Padding" Value="0" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+
+                    <ItemsControl.ItemContainerTransitions>
+                        <TransitionCollection />
+                    </ItemsControl.ItemContainerTransitions>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="text:ContentLinkInfo">
+                            <StackPanel
+                                Width="320"
+                                Padding="0,8"
+                                HorizontalAlignment="Left"
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
+
+                                    <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind DisplayText}" />
+                                    </Hyperlink>
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Padding="0"
+                                            Background="Transparent">
+
+                                            <Grid>
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+
+                                                <StackPanel Padding="{StaticResource ToolTipBorderPadding}">
+                                                    <TextBlock>
+                                                        <Run Text="{x:Bind DisplayText}" />
+                                                        <LineBreak />
+                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ReferenceToolTip')}" />
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </Grid>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Expander>
+
+            <!--  感谢用户信息  -->
+            <Expander
+                Grid.Row="4"
+                Padding="0"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                IsExpanded="True">
+
+                <Expander.Header>
+                    <TextBlock
+                        Padding="15,0,0,0"
+                        FontSize="16"
+                        FontWeight="Medium"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/Thanks')}" />
+                </Expander.Header>
+
+                <StackPanel Margin="0">
+                    <TextBlock
+                        Margin="30,10,16,5"
+                        FontSize="15"
+                        FontWeight="Normal"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ThanksDescription')}"
+                        TextAlignment="Left" />
+
+                    <MenuFlyoutSeparator />
+
                     <ListView
                         Margin="26,0,16,0"
                         Padding="5"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Stretch"
-                        ItemsSource="{x:Bind ReferenceList}"
+                        ItemsSource="{x:Bind ThanksList}"
                         SelectionMode="None">
 
                         <ListView.ItemContainerStyle>
@@ -484,12 +581,12 @@
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="text:ContentLinkInfo">
                                 <StackPanel
-                                    Width="320"
+                                    Width="150"
                                     Padding="0,8"
                                     HorizontalAlignment="Left"
                                     Orientation="Horizontal">
                                     <TextBlock
-                                        HorizontalAlignment="Center"
+                                        HorizontalAlignment="Left"
                                         TextTrimming="CharacterEllipsis"
                                         TextWrapping="NoWrap">
 
@@ -500,16 +597,20 @@
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 MaxWidth="9999"
-                                                Background="Transparent"
-                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                                                Padding="0"
+                                                Background="Transparent">
 
-                                                <StackPanel>
-                                                    <TextBlock>
-                                                        <Run Text="{x:Bind DisplayText}" />
-                                                        <LineBreak />
-                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ReferenceToolTip')}" />
-                                                    </TextBlock>
-                                                </StackPanel>
+                                                <Grid>
+                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+
+                                                    <StackPanel Padding="{StaticResource ToolTipBorderPadding}">
+                                                        <TextBlock>
+                                                            <Run Text="{x:Bind DisplayText}" />
+                                                            <LineBreak />
+                                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ThanksToolTip')}" />
+                                                        </TextBlock>
+                                                    </StackPanel>
+                                                </Grid>
                                             </ToolTip>
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
@@ -517,101 +618,7 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                
-            </Expander>
-
-            <!--  感谢用户信息  -->
-            <Expander
-                Grid.Row="4"
-                Padding="0"
-                HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Stretch"
-                IsExpanded="True">
-
-                <Expander.Header>
-                    <TextBlock
-                        Padding="15,0,0,0"
-                        FontSize="16"
-                        FontWeight="Medium"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/Thanks')}" />
-                </Expander.Header>
-
-                
-                    <StackPanel Margin="0">
-                        <TextBlock
-                            Margin="30,10,16,5"
-                            FontSize="15"
-                            FontWeight="Normal"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ThanksDescription')}"
-                            TextAlignment="Left" />
-
-                        <MenuFlyoutSeparator />
-
-                        <ListView
-                            Margin="26,0,16,0"
-                            Padding="5"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Stretch"
-                            ItemsSource="{x:Bind ThanksList}"
-                            SelectionMode="None">
-
-                            <ListView.ItemContainerStyle>
-                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                    <Setter Property="Background" Value="Transparent" />
-                                    <Setter Property="Margin" Value="0,0,2,2" />
-                                    <Setter Property="MinHeight" Value="0" />
-                                    <Setter Property="Padding" Value="0" />
-                                </Style>
-                            </ListView.ItemContainerStyle>
-
-                            <ListView.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <ItemsWrapGrid Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ListView.ItemsPanel>
-
-                            <ItemsControl.ItemContainerTransitions>
-                                <TransitionCollection />
-                            </ItemsControl.ItemContainerTransitions>
-
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="text:ContentLinkInfo">
-                                    <StackPanel
-                                        Width="150"
-                                        Padding="0,8"
-                                        HorizontalAlignment="Left"
-                                        Orientation="Horizontal">
-                                        <TextBlock
-                                            HorizontalAlignment="Left"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
-
-                                            <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
-                                                <Run Text="{x:Bind DisplayText}" />
-                                            </Hyperlink>
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Background="Transparent"
-                                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
-
-                                                    <StackPanel>
-                                                        <TextBlock>
-                                                            <Run Text="{x:Bind DisplayText}" />
-                                                            <LineBreak />
-                                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ThanksToolTip')}" />
-                                                        </TextBlock>
-                                                    </StackPanel>
-                                                </ToolTip>
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackPanel>
-                
+                </StackPanel>
             </Expander>
         </Grid>
     </ScrollViewer>

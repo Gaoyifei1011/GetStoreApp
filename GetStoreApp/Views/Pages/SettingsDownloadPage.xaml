@@ -71,15 +71,19 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Background="Transparent"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                                Padding="0"
+                                Background="Transparent">
 
-                                <StackPanel HorizontalAlignment="Stretch">
-                                    <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/FileStoragePath')}" />
-                                    <TextBlock Text="{x:Bind DownloadFolder, Mode=OneWay}" />
-                                    <MenuFlyoutSeparator Margin="4,3" />
-                                    <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/OpenFolder')}" />
-                                </StackPanel>
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+
+                                    <StackPanel Padding="{StaticResource ToolTipBorderPadding}" HorizontalAlignment="Stretch">
+                                        <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/FileStoragePath')}" />
+                                        <TextBlock Text="{x:Bind DownloadFolder, Mode=OneWay}" />
+                                        <MenuFlyoutSeparator Margin="4,3" />
+                                        <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/OpenFolder')}" />
+                                    </StackPanel>
+                                </Grid>
                             </ToolTip>
                         </ToolTipService.ToolTip>
                     </TextBlock>
@@ -178,10 +182,15 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Padding="0"
                                 Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/ManualSetDownloadFolderDescription')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                Visibility="{x:Bind ManualSetDownloadFolderDescription.IsTextTrimmed, Mode=OneWay}" />
+                                Visibility="{x:Bind ManualSetDownloadFolderDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/ManualSetDownloadFolderDescription')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -257,10 +266,15 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Padding="0"
                                 Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DoEngineModeDescription')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                Visibility="{x:Bind DoEngineModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                                Visibility="{x:Bind DoEngineModeDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DoEngineModeDescription')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -362,10 +376,15 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Padding="0"
                                 Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DeliveryOptimizationDescription')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                Visibility="{x:Bind DeliveryOptimizationDescription.IsTextTrimmed, Mode=OneWay}" />
+                                Visibility="{x:Bind DeliveryOptimizationDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/DeliveryOptimizationDescription')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -422,10 +441,15 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Padding="0"
                                 Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/Aria2ConfigurationDescription')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                Visibility="{x:Bind Aria2ConfigurationDescription.IsTextTrimmed, Mode=OneWay}" />
+                                Visibility="{x:Bind Aria2ConfigurationDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/Aria2ConfigurationDescription')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>

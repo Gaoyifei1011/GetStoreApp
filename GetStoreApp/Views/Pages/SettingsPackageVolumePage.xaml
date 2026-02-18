@@ -116,14 +116,12 @@
                 IsAccessKeyScope="True"
                 Style="{ThemeResource EllipsisButton}">
 
-                
-                    <FontIcon
-                        Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
-                        VerticalAlignment="Center"
-                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                        FontSize="20"
-                        Glyph="&#xE712;" />
-                
+                <FontIcon
+                    Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
+                    VerticalAlignment="Center"
+                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                    FontSize="20"
+                    Glyph="&#xE712;" />
 
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">
@@ -138,9 +136,14 @@
                 <ToolTipService.ToolTip>
                     <ToolTip
                         MaxWidth="9999"
-                        Background="Transparent"
-                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/ViewMore')}"
-                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        Padding="0"
+                        Background="Transparent">
+
+                        <Grid>
+                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/ViewMore')}" />
+                        </Grid>
+                    </ToolTip>
                 </ToolTipService.ToolTip>
             </Button>
         </Grid>
@@ -252,10 +255,15 @@
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 MaxWidth="9999"
+                                                Padding="0"
                                                 Background="Transparent"
-                                                Content="{x:Bind Name}"
-                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                                Visibility="{Binding ElementName=PackageVolumeNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                Visibility="{Binding ElementName=PackageVolumeNameText, Path=IsTextTrimmed, Mode=OneWay}">
+
+                                                <Grid>
+                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind Name}" />
+                                                </Grid>
+                                            </ToolTip>
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
 
@@ -282,10 +290,15 @@
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 MaxWidth="9999"
+                                                Padding="0"
                                                 Background="Transparent"
-                                                Content="{x:Bind Name}"
-                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                                Visibility="{Binding ElementName=PackageVolumeSpaceText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                Visibility="{Binding ElementName=PackageVolumeSpaceText, Path=IsTextTrimmed, Mode=OneWay}">
+
+                                                <Grid>
+                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind Space}" />
+                                                </Grid>
+                                            </ToolTip>
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
                                 </StackPanel>
@@ -308,14 +321,12 @@
                                     IsAccessKeyScope="True"
                                     Style="{ThemeResource EllipsisButton}">
 
-                                    
-                                        <FontIcon
-                                            Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
-                                            VerticalAlignment="Center"
-                                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                            FontSize="20"
-                                            Glyph="&#xE712;" />
-                                    
+                                    <FontIcon
+                                        Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
+                                        VerticalAlignment="Center"
+                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                        FontSize="20"
+                                        Glyph="&#xE712;" />
 
                                     <Button.Flyout>
                                         <MenuFlyout Placement="Bottom">
@@ -367,190 +378,193 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
-                                            Background="Transparent"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/ViewMore')}"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                            Padding="0"
+                                            Background="Transparent">
+
+                                            <Grid>
+                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/ViewMore')}" />
+                                            </Grid>
+                                        </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </Button>
                             </Grid>
                         </Expander.Header>
 
-                        
-                            <Grid
-                                Margin="28,0,0,0"
-                                ColumnSpacing="15"
-                                RowSpacing="3">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
+                        <Grid
+                            Margin="28,0,0,0"
+                            ColumnSpacing="15"
+                            RowSpacing="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                                <TextBlock
-                                    Grid.Row="0"
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/PackageVolumeId')}" />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/PackageVolumeId')}" />
 
-                                <TextBlock
-                                    Grid.Row="0"
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind PackageVolumeId}"
-                                    TextWrapping="Wrap" />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind PackageVolumeId}"
+                                TextWrapping="Wrap" />
 
-                                <TextBlock
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/PackageVolumePath')}" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/PackageVolumePath')}" />
 
-                                <TextBlock
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind PackageVolumePath}"
-                                    TextWrapping="Wrap" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind PackageVolumePath}"
+                                TextWrapping="Wrap" />
 
-                                <TextBlock
-                                    Grid.Row="2"
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/MountPoint')}" />
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/MountPoint')}" />
 
-                                <TextBlock
-                                    Grid.Row="2"
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind MountPoint}"
-                                    TextWrapping="Wrap" />
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind MountPoint}"
+                                TextWrapping="Wrap" />
 
-                                <TextBlock
-                                    Grid.Row="3"
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/DefaultVolume')}" />
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/DefaultVolume')}" />
 
-                                <TextBlock
-                                    Grid.Row="3"
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind DefaultVolume, Mode=OneWay}"
-                                    TextWrapping="Wrap" />
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind DefaultVolume, Mode=OneWay}"
+                                TextWrapping="Wrap" />
 
-                                <TextBlock
-                                    Grid.Row="4"
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/AppxInstallSupported')}" />
+                            <TextBlock
+                                Grid.Row="4"
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/AppxInstallSupported')}" />
 
-                                <TextBlock
-                                    Grid.Row="4"
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind IsAppxInstallSupported, Mode=OneWay}"
-                                    TextWrapping="Wrap" />
+                            <TextBlock
+                                Grid.Row="4"
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind IsAppxInstallSupported, Mode=OneWay}"
+                                TextWrapping="Wrap" />
 
-                                <TextBlock
-                                    Grid.Row="5"
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/FullTrustPackageSupported')}" />
+                            <TextBlock
+                                Grid.Row="5"
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/FullTrustPackageSupported')}" />
 
-                                <TextBlock
-                                    Grid.Row="5"
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind IsFullTrustPackageSupported, Mode=OneWay}"
-                                    TextWrapping="Wrap" />
+                            <TextBlock
+                                Grid.Row="5"
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind IsFullTrustPackageSupported, Mode=OneWay}"
+                                TextWrapping="Wrap" />
 
-                                <TextBlock
-                                    Grid.Row="6"
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Offline')}" />
+                            <TextBlock
+                                Grid.Row="6"
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Offline')}" />
 
-                                <TextBlock
-                                    Grid.Row="6"
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind Offline, Mode=OneWay}"
-                                    TextWrapping="Wrap" />
+                            <TextBlock
+                                Grid.Row="6"
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind Offline, Mode=OneWay}"
+                                TextWrapping="Wrap" />
 
-                                <TextBlock
-                                    Grid.Row="7"
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/SystemVolume')}" />
+                            <TextBlock
+                                Grid.Row="7"
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/SystemVolume')}" />
 
-                                <TextBlock
-                                    Grid.Row="7"
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind IsSystemVolume, Mode=OneWay}"
-                                    TextWrapping="Wrap" />
+                            <TextBlock
+                                Grid.Row="7"
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind IsSystemVolume, Mode=OneWay}"
+                                TextWrapping="Wrap" />
 
-                                <TextBlock
-                                    Grid.Row="8"
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/SupportedHardLinks')}" />
+                            <TextBlock
+                                Grid.Row="8"
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/SupportedHardLinks')}" />
 
-                                <TextBlock
-                                    Grid.Row="8"
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Left"
-                                    FontSize="14"
-                                    IsTextSelectionEnabled="True"
-                                    Text="{x:Bind SupportedHardLinks}"
-                                    TextWrapping="Wrap" />
-                            </Grid>
-                        
+                            <TextBlock
+                                Grid.Row="8"
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                FontSize="14"
+                                IsTextSelectionEnabled="True"
+                                Text="{x:Bind SupportedHardLinks}"
+                                TextWrapping="Wrap" />
+                        </Grid>
                     </Expander>
                 </DataTemplate>
             </ListView.ItemTemplate>

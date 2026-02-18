@@ -109,9 +109,14 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
-                                        Background="Transparent"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/LanguageAndRegionToolTip')}"
-                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                        Padding="0"
+                                        Background="Transparent">
+
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/LanguageAndRegionToolTip')}" />
+                                        </Grid>
+                                    </ToolTip>
                                 </ToolTipService.ToolTip>
                             </MenuFlyoutItem>
 
@@ -124,9 +129,14 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
-                                        Background="Transparent"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstructionToolTip')}"
-                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                        Padding="0"
+                                        Background="Transparent">
+
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstructionToolTip')}" />
+                                        </Grid>
+                                    </ToolTip>
                                 </ToolTipService.ToolTip>
                             </MenuFlyoutItem>
                         </MenuFlyout>
@@ -135,9 +145,14 @@
                     <ToolTipService.ToolTip>
                         <ToolTip
                             MaxWidth="9999"
-                            Background="Transparent"
-                            Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/ViewMore')}"
-                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                            Padding="0"
+                            Background="Transparent">
+
+                            <Grid>
+                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/ViewMore')}" />
+                            </Grid>
+                        </ToolTip>
                     </ToolTipService.ToolTip>
                 </Button>
             </Grid>
@@ -206,9 +221,14 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip
                                     MaxWidth="9999"
-                                    Background="Transparent"
-                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('Store/Close')}"
-                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                    Padding="0"
+                                    Background="Transparent">
+
+                                    <Grid>
+                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/Close')}" />
+                                    </Grid>
+                                </ToolTip>
                             </ToolTipService.ToolTip>
                         </Button>
                     </Grid>

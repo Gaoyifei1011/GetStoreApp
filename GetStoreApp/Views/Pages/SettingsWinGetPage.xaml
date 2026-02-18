@@ -68,10 +68,15 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Padding="0"
                                 Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceDescription')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                Visibility="{x:Bind WinGetSourceDescription.IsTextTrimmed, Mode=OneWay}" />
+                                Visibility="{x:Bind WinGetSourceDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceDescription')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -89,13 +94,17 @@
                     <ToolTipService.ToolTip>
                         <ToolTip
                             MaxWidth="9999"
-                            Background="Transparent"
-                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                            Padding="0"
+                            Background="Transparent">
 
-                            <TextBlock>
-                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/CurrentWinGetSource')}" />
-                                <Run Text="{x:Bind CurrentWinGetSource.Value, Mode=OneWay}" />
-                            </TextBlock>
+                            <Grid>
+                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+
+                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}">
+                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/CurrentWinGetSource')}" />
+                                    <Run Text="{x:Bind CurrentWinGetSource.Value, Mode=OneWay}" />
+                                </TextBlock>
+                            </Grid>
                         </ToolTip>
                     </ToolTipService.ToolTip>
                 </Button>
@@ -178,10 +187,15 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Padding="0"
                                 Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceConfigurationDescription')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                Visibility="{x:Bind WinGetSourceConfigurationDescription.IsTextTrimmed, Mode=OneWay}" />
+                                Visibility="{x:Bind WinGetSourceConfigurationDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceConfigurationDescription')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -239,10 +253,15 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Padding="0"
                                 Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSettingsDescription')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                Visibility="{x:Bind WinGetSettingsDescription.IsTextTrimmed, Mode=OneWay}" />
+                                Visibility="{x:Bind WinGetSettingsDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSettingsDescription')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -261,9 +280,14 @@
                     <ToolTipService.ToolTip>
                         <ToolTip
                             MaxWidth="9999"
-                            Background="Transparent"
-                            Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/OpenConfigurationFile')}"
-                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                            Padding="0"
+                            Background="Transparent">
+
+                            <Grid>
+                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/OpenConfigurationFile')}" />
+                            </Grid>
+                        </ToolTip>
                     </ToolTipService.ToolTip>
                 </Button>
             </Grid>

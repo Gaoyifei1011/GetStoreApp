@@ -119,14 +119,12 @@
                         Style="{ThemeResource EllipsisButton}"
                         Visibility="{x:Bind GetWinGetAppsType(SearchApps)}">
 
-                        
-                            <FontIcon
-                                Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
-                                VerticalAlignment="Center"
-                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                FontSize="20"
-                                Glyph="&#xE712;" />
-                        
+                        <FontIcon
+                            Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
+                            VerticalAlignment="Center"
+                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                            FontSize="20"
+                            Glyph="&#xE712;" />
 
                         <Button.Flyout>
                             <MenuFlyout Placement="Bottom">
@@ -153,9 +151,14 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/ViewMore')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                Padding="0"
+                                Background="Transparent">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/ViewMore')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </Button>
 
@@ -187,14 +190,12 @@
                         Style="{ThemeResource EllipsisButton}"
                         Visibility="{x:Bind GetWinGetAppsType(UpgradableApps)}">
 
-                        
-                            <FontIcon
-                                Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
-                                VerticalAlignment="Center"
-                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                FontSize="20"
-                                Glyph="&#xE712;" />
-                        
+                        <FontIcon
+                            Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
+                            VerticalAlignment="Center"
+                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                            FontSize="20"
+                            Glyph="&#xE712;" />
 
                         <Button.Flyout>
                             <MenuFlyout Placement="Bottom">
@@ -209,9 +210,14 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/ViewMore')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                Padding="0"
+                                Background="Transparent">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/ViewMore')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </Button>
                 </Grid>
@@ -611,10 +617,15 @@
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 MaxWidth="9999"
+                                                Padding="0"
                                                 Background="Transparent"
-                                                Content="{x:Bind}"
-                                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                                Visibility="{Binding ElementName=TagText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                Visibility="{Binding ElementName=TagText, Path=IsTextTrimmed, Mode=OneWay}">
+
+                                                <Grid>
+                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind}" />
+                                                </Grid>
+                                            </ToolTip>
                                         </ToolTipService.ToolTip>
                                     </Grid>
                                 </DataTemplate>

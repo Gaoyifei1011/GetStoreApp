@@ -78,10 +78,15 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Padding="0"
                                 Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/QueryLinksModeDescription')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                Visibility="{x:Bind QueryLinksModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                                Visibility="{x:Bind QueryLinksModeDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/QueryLinksModeDescription')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -165,10 +170,15 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Padding="0"
                                 Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/SearchAppsModeDescription')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                Visibility="{x:Bind SearchAppsModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                                Visibility="{x:Bind SearchAppsModeDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/SearchAppsModeDescription')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -252,10 +262,15 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Padding="0"
                                 Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/AppLinkOpenModeDescription')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                Visibility="{x:Bind AppLinkOpenModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                                Visibility="{x:Bind AppLinkOpenModeDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/AppLinkOpenModeDescription')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -338,10 +353,15 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Padding="0"
                                 Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/InstallModeDescription')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                Visibility="{x:Bind InstallModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                                Visibility="{x:Bind InstallModeDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/InstallModeDescription')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -424,10 +444,15 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
+                                Padding="0"
                                 Background="Transparent"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdateDescription')}"
-                                Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                Visibility="{x:Bind CancelAutoUpdateDescription.IsTextTrimmed, Mode=OneWay}" />
+                                Visibility="{x:Bind CancelAutoUpdateDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdateDescription')}" />
+                                </Grid>
+                            </ToolTip>
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -508,205 +533,218 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
+                                        Padding="0"
                                         Background="Transparent"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreCountryOrRegionDescription')}"
-                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                        Visibility="{x:Bind StoreCountryOrRegionDescription.IsTextTrimmed, Mode=OneWay}" />
+                                        Visibility="{x:Bind StoreCountryOrRegionDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreCountryOrRegionDescription')}" />
+                                        </Grid>
+                                    </ToolTip>
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>
                     </Grid>
                 </Expander.Header>
 
-                
-                    <StackPanel Padding="0" HorizontalAlignment="Stretch">
-                        <Grid
-                            Height="52"
-                            Padding="44,0,8,0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center">
+                <StackPanel Padding="0" HorizontalAlignment="Stretch">
+                    <Grid
+                        Height="52"
+                        Padding="44,0,8,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center">
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                            <StackPanel
-                                Grid.Column="0"
+                        <StackPanel
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
+
+                            <TextBlock
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Orientation="Vertical">
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/UseSystemRegion')}" />
 
-                                <TextBlock
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/UseSystemRegion')}" />
+                            <TextBlock
+                                x:Name="CurrentCountryOrRegionText"
+                                HorizontalAlignment="Left"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
 
-                                <TextBlock
-                                    x:Name="CurrentCountryOrRegionText"
-                                    HorizontalAlignment="Left"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CurrentCountryOrRegion')}" />
+                                <Run Text="{x:Bind CurrentCountryOrRegion.DisplayName, Mode=OneWay}" />
 
-                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CurrentCountryOrRegion')}" />
-                                    <Run Text="{x:Bind CurrentCountryOrRegion.DisplayName, Mode=OneWay}" />
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Padding="0"
+                                        Background="Transparent"
+                                        Visibility="{x:Bind CurrentCountryOrRegionText.IsTextTrimmed, Mode=OneWay}">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Background="Transparent"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                            Visibility="{x:Bind CurrentCountryOrRegionText.IsTextTrimmed, Mode=OneWay}">
-                                            <TextBlock>
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}">
                                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CurrentCountryOrRegion')}" />
                                                 <Run Text="{x:Bind CurrentCountryOrRegion.DisplayName, Mode=OneWay}" />
                                             </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
-                            </StackPanel>
+                                        </Grid>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+                        </StackPanel>
 
-                            <HyperlinkButton
-                                Grid.Column="1"
-                                Margin="0,0,6,0"
+                        <HyperlinkButton
+                            Grid.Column="1"
+                            Margin="0,0,6,0"
+                            VerticalAlignment="Center"
+                            Click="{x:Bind OnSystemRegionSettingsClicked}"
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/SystemRegionSettings')}" />
+
+                        <StackPanel
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+
+                            <TextBlock
                                 VerticalAlignment="Center"
-                                Click="{x:Bind OnSystemRegionSettingsClicked}"
-                                Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/SystemRegionSettings')}" />
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/UseSystemRegionOffContent')}"
+                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(UseSystemRegionValue), Mode=OneWay}" />
 
-                            <StackPanel
-                                Grid.Column="2"
+                            <TextBlock
                                 VerticalAlignment="Center"
-                                Orientation="Horizontal">
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/UseSystemRegionOnContent')}"
+                                Visibility="{x:Bind UseSystemRegionValue, Mode=OneWay}" />
 
-                                <TextBlock
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/UseSystemRegionOffContent')}"
-                                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(UseSystemRegionValue), Mode=OneWay}" />
+                            <ToggleSwitch
+                                MinWidth="0"
+                                Margin="10,-2,-2,0"
+                                IsOn="{x:Bind UseSystemRegionValue, Mode=OneWay}"
+                                OffContent=""
+                                OnContent=""
+                                Toggled="{x:Bind OnUseSystemRegionToggled}" />
+                        </StackPanel>
+                    </Grid>
 
-                                <TextBlock
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/UseSystemRegionOnContent')}"
-                                    Visibility="{x:Bind UseSystemRegionValue, Mode=OneWay}" />
+                    <MenuFlyoutSeparator />
 
-                                <ToggleSwitch
-                                    MinWidth="0"
-                                    Margin="10,-2,-2,0"
-                                    IsOn="{x:Bind UseSystemRegionValue, Mode=OneWay}"
-                                    OffContent=""
-                                    OnContent=""
-                                    Toggled="{x:Bind OnUseSystemRegionToggled}" />
-                            </StackPanel>
-                        </Grid>
+                    <Grid
+                        Height="52"
+                        Padding="44,0,16,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center">
 
-                        <MenuFlyoutSeparator />
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                        <Grid
-                            Height="52"
-                            Padding="44,0,16,0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center">
+                        <StackPanel
+                            Grid.Column="0"
+                            Margin="0,10"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel
-                                Grid.Column="0"
-                                Margin="0,10"
+                            <TextBlock
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Orientation="Vertical">
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreRegion')}" />
 
-                                <TextBlock
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreRegion')}" />
+                            <TextBlock
+                                x:Name="StoreRegionDescription"
+                                HorizontalAlignment="Left"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreRegionDescription')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
 
-                                <TextBlock
-                                    x:Name="StoreRegionDescription"
-                                    HorizontalAlignment="Left"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreRegionDescription')}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Padding="0"
+                                        Background="Transparent"
+                                        Visibility="{x:Bind StoreRegionDescription.IsTextTrimmed, Mode=OneWay}">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Background="Transparent"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreRegionDescription')}"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                            Visibility="{x:Bind StoreRegionDescription.IsTextTrimmed, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
-                            </StackPanel>
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreRegionDescription')}" />
+                                        </Grid>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+                        </StackPanel>
 
-                            <DropDownButton
-                                Grid.Column="3"
-                                VerticalAlignment="Center"
-                                Content="{x:Bind StoreRegion.DisplayName, Mode=OneWay}"
-                                IsEnabled="{x:Bind UseSystemRegionValue.Equals(x:False), Mode=OneWay}">
+                        <DropDownButton
+                            Grid.Column="3"
+                            VerticalAlignment="Center"
+                            Content="{x:Bind StoreRegion.DisplayName, Mode=OneWay}"
+                            IsEnabled="{x:Bind UseSystemRegionValue.Equals(x:False), Mode=OneWay}">
 
-                                <DropDownButton.Flyout>
-                                    <Flyout
-                                        x:Name="StoreRegionFlyout"
-                                        Opened="{x:Bind OnStoreRegionFlyoutOpened}"
-                                        Placement="Bottom"
-                                        ShouldConstrainToRootBounds="False"
-                                        SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
+                            <DropDownButton.Flyout>
+                                <Flyout
+                                    x:Name="StoreRegionFlyout"
+                                    Opened="{x:Bind OnStoreRegionFlyoutOpened}"
+                                    Placement="Bottom"
+                                    ShouldConstrainToRootBounds="False"
+                                    SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
 
-                                        <Flyout.FlyoutPresenterStyle>
-                                            <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
-                                                <Setter Property="Padding" Value="0,1" />
+                                    <Flyout.FlyoutPresenterStyle>
+                                        <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
+                                            <Setter Property="Padding" Value="0,1" />
+                                            <Setter Property="Background" Value="Transparent" />
+                                            <Setter Property="MinHeight" Value="0" />
+                                        </Style>
+                                    </Flyout.FlyoutPresenterStyle>
+
+                                    <ListView
+                                        x:Name="StoreRegionListView"
+                                        MaxHeight="300"
+                                        Background="Transparent"
+                                        ItemsSource="{x:Bind StoreRegionCollection}"
+                                        SelectionMode="None">
+
+                                        <ListView.ItemContainerStyle>
+                                            <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
                                                 <Setter Property="Background" Value="Transparent" />
+                                                <Setter Property="Margin" Value="0" />
                                                 <Setter Property="MinHeight" Value="0" />
+                                                <Setter Property="Padding" Value="0" />
                                             </Style>
-                                        </Flyout.FlyoutPresenterStyle>
+                                        </ListView.ItemContainerStyle>
 
-                                        <ListView
-                                            x:Name="StoreRegionListView"
-                                            MaxHeight="300"
-                                            Background="Transparent"
-                                            ItemsSource="{x:Bind StoreRegionCollection}"
-                                            SelectionMode="None">
+                                        <ItemsControl.ItemContainerTransitions>
+                                            <TransitionCollection />
+                                        </ItemsControl.ItemContainerTransitions>
 
-                                            <ListView.ItemContainerStyle>
-                                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                                    <Setter Property="Background" Value="Transparent" />
-                                                    <Setter Property="Margin" Value="0" />
-                                                    <Setter Property="MinHeight" Value="0" />
-                                                    <Setter Property="Padding" Value="0" />
-                                                </Style>
-                                            </ListView.ItemContainerStyle>
-
-                                            <ItemsControl.ItemContainerTransitions>
-                                                <TransitionCollection />
-                                            </ItemsControl.ItemContainerTransitions>
-
-                                            <ListView.ItemTemplate>
-                                                <DataTemplate x:DataType="model:StoreRegionModel">
-                                                    <RadioMenuFlyoutItem
-                                                        Height="32"
-                                                        Padding="11,0"
-                                                        Command="{StaticResource StoreRegionCommand}"
-                                                        CommandParameter="{x:Bind}"
-                                                        GroupName="StoreRegionRadioGroup"
-                                                        IsChecked="{x:Bind IsChecked, Mode=OneWay}"
-                                                        Text="{x:Bind StoreRegionInfo.DisplayName}" />
-                                                </DataTemplate>
-                                            </ListView.ItemTemplate>
-                                        </ListView>
-                                    </Flyout>
-                                </DropDownButton.Flyout>
-                            </DropDownButton>
-                        </Grid>
-                    </StackPanel>
-                
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="model:StoreRegionModel">
+                                                <RadioMenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
+                                                    Command="{StaticResource StoreRegionCommand}"
+                                                    CommandParameter="{x:Bind}"
+                                                    GroupName="StoreRegionRadioGroup"
+                                                    IsChecked="{x:Bind IsChecked, Mode=OneWay}"
+                                                    Text="{x:Bind StoreRegionInfo.DisplayName}" />
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </Flyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                    </Grid>
+                </StackPanel>
             </Expander>
 
             <!--  链接过滤设置  -->
@@ -758,155 +796,168 @@
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         MaxWidth="9999"
+                                        Padding="0"
                                         Background="Transparent"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/LinkFilterDescription')}"
-                                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                        Visibility="{x:Bind LinkFilterDescription.IsTextTrimmed, Mode=OneWay}" />
+                                        Visibility="{x:Bind LinkFilterDescription.IsTextTrimmed, Mode=OneWay}">
+
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/LinkFilterDescription')}" />
+                                        </Grid>
+                                    </ToolTip>
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>
                     </Grid>
                 </Expander.Header>
 
-                
-                    <StackPanel Padding="0" HorizontalAlignment="Stretch">
-                        <Grid
-                            Height="52"
-                            Padding="44,0,8,0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center">
+                <StackPanel Padding="0" HorizontalAlignment="Stretch">
+                    <Grid
+                        Height="52"
+                        Padding="44,0,8,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center">
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                            <StackPanel
-                                Grid.Column="0"
+                        <StackPanel
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
+
+                            <TextBlock
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Orientation="Vertical">
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackage')}" />
 
-                                <TextBlock
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackage')}" />
+                            <TextBlock
+                                x:Name="EncryptedPackageDescription"
+                                HorizontalAlignment="Left"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageDescription')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
 
-                                <TextBlock
-                                    x:Name="EncryptedPackageDescription"
-                                    HorizontalAlignment="Left"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageDescription')}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Padding="0"
+                                        Background="Transparent"
+                                        Visibility="{x:Bind EncryptedPackageDescription.IsTextTrimmed, Mode=OneWay}">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Background="Transparent"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageDescription')}"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                            Visibility="{x:Bind EncryptedPackageDescription.IsTextTrimmed, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
-                            </StackPanel>
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageDescription')}" />
+                                        </Grid>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+                        </StackPanel>
 
-                            <StackPanel
-                                Grid.Column="1"
+                        <StackPanel
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+
+                            <TextBlock
                                 VerticalAlignment="Center"
-                                Orientation="Horizontal">
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageOffContent')}"
+                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(EncryptedPackageFilterValue), Mode=OneWay}" />
 
-                                <TextBlock
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageOffContent')}"
-                                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(EncryptedPackageFilterValue), Mode=OneWay}" />
-
-                                <TextBlock
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageOnContent')}"
-                                    Visibility="{x:Bind EncryptedPackageFilterValue, Mode=OneWay}" />
-
-                                <ToggleSwitch
-                                    MinWidth="0"
-                                    Margin="10,-2,-2,0"
-                                    IsOn="{x:Bind EncryptedPackageFilterValue, Mode=OneWay}"
-                                    OffContent=""
-                                    OnContent=""
-                                    Toggled="{x:Bind OnEncryptedPackageToggled}" />
-                            </StackPanel>
-                        </Grid>
-
-                        <MenuFlyoutSeparator />
-
-                        <Grid
-                            Height="52"
-                            Padding="44,0,8,0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center">
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel
-                                Grid.Column="0"
+                            <TextBlock
                                 VerticalAlignment="Center"
-                                Orientation="Vertical">
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageOnContent')}"
+                                Visibility="{x:Bind EncryptedPackageFilterValue, Mode=OneWay}" />
 
-                                <TextBlock
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMap')}" />
+                            <ToggleSwitch
+                                MinWidth="0"
+                                Margin="10,-2,-2,0"
+                                IsOn="{x:Bind EncryptedPackageFilterValue, Mode=OneWay}"
+                                OffContent=""
+                                OnContent=""
+                                Toggled="{x:Bind OnEncryptedPackageToggled}" />
+                        </StackPanel>
+                    </Grid>
 
-                                <TextBlock
-                                    x:Name="BlockMapDescription"
-                                    HorizontalAlignment="Left"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapDescription')}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                    <MenuFlyoutSeparator />
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Background="Transparent"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapDescription')}"
-                                            Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}"
-                                            Visibility="{x:Bind BlockMapDescription.IsTextTrimmed, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
-                            </StackPanel>
+                    <Grid
+                        Height="52"
+                        Padding="44,0,8,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center">
 
-                            <StackPanel
-                                Grid.Column="1"
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
+
+                            <TextBlock
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Orientation="Horizontal">
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMap')}" />
 
-                                <TextBlock
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapOffContent')}"
-                                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(BlockMapFilterValue), Mode=OneWay}" />
+                            <TextBlock
+                                x:Name="BlockMapDescription"
+                                HorizontalAlignment="Left"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapDescription')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
 
-                                <TextBlock
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapOnContent')}"
-                                    Visibility="{x:Bind BlockMapFilterValue, Mode=OneWay}" />
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Padding="0"
+                                        Background="Transparent"
+                                        Visibility="{x:Bind BlockMapDescription.IsTextTrimmed, Mode=OneWay}">
 
-                                <ToggleSwitch
-                                    MinWidth="0"
-                                    Margin="10,-2,-2,0"
-                                    IsOn="{x:Bind BlockMapFilterValue, Mode=OneWay}"
-                                    OffContent=""
-                                    OnContent=""
-                                    Toggled="{x:Bind OnBlockMapToggled}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                
+                                        <Grid>
+                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapDescription')}" />
+                                        </Grid>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapOffContent')}"
+                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(BlockMapFilterValue), Mode=OneWay}" />
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapOnContent')}"
+                                Visibility="{x:Bind BlockMapFilterValue, Mode=OneWay}" />
+
+                            <ToggleSwitch
+                                MinWidth="0"
+                                Margin="10,-2,-2,0"
+                                IsOn="{x:Bind BlockMapFilterValue, Mode=OneWay}"
+                                OffContent=""
+                                OnContent=""
+                                Toggled="{x:Bind OnBlockMapToggled}" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
             </Expander>
         </Grid>
     </ScrollViewer>
