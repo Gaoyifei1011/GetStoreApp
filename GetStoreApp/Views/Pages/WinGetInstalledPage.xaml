@@ -2,7 +2,6 @@
     x:Class="GetStoreApp.Views.Pages.WinGetInstalledPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:backdrophelper="using:GetStoreApp.Helpers.Backdrop"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:deployment="using:Microsoft.Management.Deployment"
@@ -216,14 +215,12 @@
                 IsAccessKeyScope="True"
                 Style="{ThemeResource EllipsisButton}">
 
-                
-                    <FontIcon
-                        Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
-                        VerticalAlignment="Center"
-                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                        FontSize="20"
-                        Glyph="&#xE712;" />
-                
+                <FontIcon
+                    Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
+                    VerticalAlignment="Center"
+                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                    FontSize="20"
+                    Glyph="&#xE712;" />
 
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">
@@ -278,9 +275,14 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip
                                     MaxWidth="9999"
-                                    Background="Transparent"
-                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortToolTip')}"
-                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                    Padding="0"
+                                    Background="Transparent">
+
+                                    <Grid>
+                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortToolTip')}" />
+                                    </Grid>
+                                </ToolTip>
                             </ToolTipService.ToolTip>
                         </MenuFlyoutSubItem>
 
@@ -310,9 +312,14 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip
                                     MaxWidth="9999"
-                                    Background="Transparent"
-                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/UseInstructionToolTip')}"
-                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                                    Padding="0"
+                                    Background="Transparent">
+
+                                    <Grid>
+                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/UseInstructionToolTip')}" />
+                                    </Grid>
+                                </ToolTip>
                             </ToolTipService.ToolTip>
                         </MenuFlyoutItem>
                     </MenuFlyout>
@@ -321,9 +328,14 @@
                 <ToolTipService.ToolTip>
                     <ToolTip
                         MaxWidth="9999"
-                        Background="Transparent"
-                        Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/ViewMore')}"
-                        Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}" />
+                        Padding="0"
+                        Background="Transparent">
+
+                        <Grid>
+                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/ViewMore')}" />
+                        </Grid>
+                    </ToolTip>
                 </ToolTipService.ToolTip>
             </Button>
         </Grid>
@@ -445,36 +457,40 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip
                                     MaxWidth="9999"
-                                    Background="Transparent"
-                                    Loaded="{x:Bind backdrophelper:ToolTipBackdropHelper.OnLoaded}">
+                                    Padding="0"
+                                    Background="Transparent">
 
                                     <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
+                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
 
-                                        <TextBlock Grid.Row="0">
-                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/AppName')}" />
-                                            <Run Text="{x:Bind AppName}" />
-                                        </TextBlock>
+                                        <Grid Padding="{StaticResource ToolTipBorderPadding}">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
 
-                                        <TextBlock Grid.Row="1">
-                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/AppPublisher')}" />
-                                            <Run Text="{x:Bind AppPublisher}" />
-                                        </TextBlock>
+                                            <TextBlock Grid.Row="0">
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/AppName')}" />
+                                                <Run Text="{x:Bind AppName}" />
+                                            </TextBlock>
 
-                                        <TextBlock Grid.Row="2">
-                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/AppVersion')}" />
-                                            <Run Text="{x:Bind AppVersion}" />
-                                        </TextBlock>
+                                            <TextBlock Grid.Row="1">
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/AppPublisher')}" />
+                                                <Run Text="{x:Bind AppPublisher}" />
+                                            </TextBlock>
 
-                                        <TextBlock Grid.Row="3">
-                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/AppID')}" />
-                                            <Run Text="{x:Bind AppID}" />
-                                        </TextBlock>
+                                            <TextBlock Grid.Row="2">
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/AppVersion')}" />
+                                                <Run Text="{x:Bind AppVersion}" />
+                                            </TextBlock>
+
+                                            <TextBlock Grid.Row="3">
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/AppID')}" />
+                                                <Run Text="{x:Bind AppID}" />
+                                            </TextBlock>
+                                        </Grid>
                                     </Grid>
                                 </ToolTip>
                             </ToolTipService.ToolTip>

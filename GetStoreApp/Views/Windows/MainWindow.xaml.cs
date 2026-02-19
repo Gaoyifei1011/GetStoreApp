@@ -1,8 +1,6 @@
 ﻿using GetStoreApp.Extensions.Backdrop;
 using GetStoreApp.Extensions.DataType.Classes;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Backdrop;
-using GetStoreApp.Helpers.Controls;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Download;
@@ -66,7 +64,6 @@ namespace GetStoreApp.Views.Windows
         private readonly ContentCoordinateConverter contentCoordinateConverter;
         private readonly OverlappedPresenter overlappedPresenter;
         private readonly SUBCLASSPROC mainWindowSubClassProc;
-        private ToolTip navigationViewBackButtonToolTip;
 
         public new static MainWindow Current { get; private set; }
 
@@ -340,7 +337,6 @@ namespace GetStoreApp.Views.Windows
                     BackdropService.PropertyChanged -= OnServicePropertyChanged;
                     TopMostService.PropertyChanged -= OnServicePropertyChanged;
                     DesktopLaunchService.AppLaunchActivated -= OnAppLaunchActivated;
-                    navigationViewBackButtonToolTip?.Loaded -= ToolTipBackdropHelper.OnLoaded;
                     DownloadSchedulerService.TerminateDownload();
                     Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0);
                     (Application.Current as MainApp).Dispose();
@@ -363,7 +359,6 @@ namespace GetStoreApp.Views.Windows
                 BackdropService.PropertyChanged -= OnServicePropertyChanged;
                 TopMostService.PropertyChanged -= OnServicePropertyChanged;
                 DesktopLaunchService.AppLaunchActivated -= OnAppLaunchActivated;
-                navigationViewBackButtonToolTip?.Loaded -= ToolTipBackdropHelper.OnLoaded;
                 Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0);
                 (Application.Current as MainApp).Dispose();
             }
@@ -692,6 +687,25 @@ namespace GetStoreApp.Views.Windows
         #region 第五部分：导航控件及其内容挂载的事件
 
         /// <summary>
+        /// 当后退按钮收到交互（如单击或点击）时发生
+        /// </summary>
+        private void OnBackClicked(object sender, RoutedEventArgs args)
+        {
+            if (GetFrameContent() is AppManagerPage appManagerPage && appManagerPage.BreadCollection.Count is 2)
+            {
+                appManagerPage.NavigateTo(appManagerPage.PageList[0], null, false);
+            }
+            else if (GetFrameContent() is SettingsPage settingsPage && settingsPage.BreadCollection.Count is 2)
+            {
+                settingsPage.NavigateTo(settingsPage.PageList[0], null, false);
+            }
+            else
+            {
+                NavigationFrom();
+            }
+        }
+
+        /// <summary>
         /// 导航控件加载完成后初始化内容，初始化导航控件属性、屏幕缩放比例值和应用的背景色
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(NavigationViewItem))]
@@ -703,17 +717,6 @@ namespace GetStoreApp.Views.Windows
             // 导航控件加载完成后初始化内容
             if (sender.As<NavigationView>() is NavigationView navigationView)
             {
-                if (XamlTreeHelper.FindDescendant<Button>(navigationView, "NavigationViewBackButton") is Button navigationViewBackButton)
-                {
-                    navigationViewBackButtonToolTip = ToolTipService.GetToolTip(navigationViewBackButton).As<ToolTip>();
-
-                    if (navigationViewBackButtonToolTip is not null)
-                    {
-                        navigationViewBackButtonToolTip.Background = new SolidColorBrush(Colors.Transparent);
-                        navigationViewBackButtonToolTip.Loaded += ToolTipBackdropHelper.OnLoaded;
-                    }
-                }
-
                 foreach (object menuItem in navigationView.MenuItems)
                 {
                     try
@@ -765,25 +768,6 @@ namespace GetStoreApp.Views.Windows
             // 初始化启动信息
             AppLaunchArguments appLaunchArguments = DesktopLaunchService.AppLaunchArguments;
             await ParseAppLaunchArgumentsAsync(appLaunchArguments, true);
-        }
-
-        /// <summary>
-        /// 当后退按钮收到交互（如单击或点击）时发生
-        /// </summary>
-        private void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
-        {
-            if (GetFrameContent() is AppManagerPage appManagerPage && appManagerPage.BreadCollection.Count is 2)
-            {
-                appManagerPage.NavigateTo(appManagerPage.PageList[0], null, false);
-            }
-            else if (GetFrameContent() is SettingsPage settingsPage && settingsPage.BreadCollection.Count is 2)
-            {
-                settingsPage.NavigateTo(settingsPage.PageList[0], null, false);
-            }
-            else
-            {
-                NavigationFrom();
-            }
         }
 
         /// <summary>

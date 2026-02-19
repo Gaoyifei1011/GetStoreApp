@@ -1,6 +1,7 @@
 ﻿{
   "AppManager": "应用管理",
   "AppUpdate": "应用更新",
+  "Back": "返回",
   "CheckNetWorkConnection": "检查网络连接",
   "Close": "关闭",
   "Download": "下载管理",
