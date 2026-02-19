@@ -116,8 +116,7 @@
                             <Flyout
                                 Closed="{x:Bind OnClosed}"
                                 Placement="Bottom"
-                                ShouldConstrainToRootBounds="False"
-                                SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
+                                ShouldConstrainToRootBounds="False">
 
                                 <Flyout.FlyoutPresenterStyle>
                                     <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
@@ -126,84 +125,89 @@
                                     </Style>
                                 </Flyout.FlyoutPresenterStyle>
 
-                                <StackPanel Padding="12" Spacing="5">
-                                    <TextBlock
-                                        Margin="2,0,0,0"
-                                        FontSize="14"
-                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/AppType')}" />
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource OverlayCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
 
-                                    <ToggleButton
-                                        Click="{x:Bind OnFilterWayClicked}"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/FrameworkPackage')}"
-                                        IsChecked="{x:Bind IsAppFramework, Mode=OneWay}" />
+                                    <StackPanel Padding="12" Spacing="5">
 
-                                    <MenuFlyoutSeparator Margin="4,0,6,0" Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
-
-                                    <TextBlock
-                                        Margin="2,0,0,0"
-                                        FontSize="14"
-                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SignatureType')}" />
-
-                                    <Grid ColumnSpacing="5" RowSpacing="5">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Margin="2,0,0,0"
+                                            FontSize="14"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/AppType')}" />
 
                                         <ToggleButton
-                                            Grid.Row="0"
-                                            Grid.Column="0"
-                                            HorizontalAlignment="Stretch"
-                                            Click="{x:Bind OnSignatureRuleClicked}"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SignatureStore')}"
-                                            IsChecked="{x:Bind IsStoreSignatureSelected, Mode=OneWay}"
-                                            Tag="{x:Bind applicationmodel:PackageSignatureKind.Store}" />
+                                            Click="{x:Bind OnFilterWayClicked}"
+                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/FrameworkPackage')}"
+                                            IsChecked="{x:Bind IsAppFramework, Mode=OneWay}" />
 
-                                        <ToggleButton
-                                            Grid.Row="0"
-                                            Grid.Column="1"
-                                            HorizontalAlignment="Stretch"
-                                            Click="{x:Bind OnSignatureRuleClicked}"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SignatureSystem')}"
-                                            IsChecked="{x:Bind IsSystemSignatureSelected, Mode=OneWay}"
-                                            Tag="{x:Bind applicationmodel:PackageSignatureKind.System}" />
+                                        <MenuFlyoutSeparator Margin="4,0,6,0" Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
 
-                                        <ToggleButton
-                                            Grid.Row="0"
-                                            Grid.Column="2"
-                                            HorizontalAlignment="Stretch"
-                                            Click="{x:Bind OnSignatureRuleClicked}"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SignatureEnterprise')}"
-                                            IsChecked="{x:Bind IsEnterpriseSignatureSelected, Mode=OneWay}"
-                                            Tag="{x:Bind applicationmodel:PackageSignatureKind.Enterprise}" />
+                                        <TextBlock
+                                            Margin="2,0,0,0"
+                                            FontSize="14"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SignatureType')}" />
 
-                                        <ToggleButton
-                                            Grid.Row="0"
-                                            Grid.Column="3"
-                                            HorizontalAlignment="Stretch"
-                                            Click="{x:Bind OnSignatureRuleClicked}"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SignatureDeveloper')}"
-                                            IsChecked="{x:Bind IsDeveloperSignatureSelected, Mode=OneWay}"
-                                            Tag="{x:Bind applicationmodel:PackageSignatureKind.Developer}" />
+                                        <Grid ColumnSpacing="5" RowSpacing="5">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
 
-                                        <ToggleButton
-                                            Grid.Row="0"
-                                            Grid.Column="4"
-                                            HorizontalAlignment="Stretch"
-                                            Click="{x:Bind OnSignatureRuleClicked}"
-                                            Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SignatureNone')}"
-                                            IsChecked="{x:Bind IsNoneSignatureSelected, Mode=OneWay}"
-                                            Tag="{x:Bind applicationmodel:PackageSignatureKind.None}" />
-                                    </Grid>
-                                </StackPanel>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <ToggleButton
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                HorizontalAlignment="Stretch"
+                                                Click="{x:Bind OnSignatureRuleClicked}"
+                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SignatureStore')}"
+                                                IsChecked="{x:Bind IsStoreSignatureSelected, Mode=OneWay}"
+                                                Tag="{x:Bind applicationmodel:PackageSignatureKind.Store}" />
+
+                                            <ToggleButton
+                                                Grid.Row="0"
+                                                Grid.Column="1"
+                                                HorizontalAlignment="Stretch"
+                                                Click="{x:Bind OnSignatureRuleClicked}"
+                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SignatureSystem')}"
+                                                IsChecked="{x:Bind IsSystemSignatureSelected, Mode=OneWay}"
+                                                Tag="{x:Bind applicationmodel:PackageSignatureKind.System}" />
+
+                                            <ToggleButton
+                                                Grid.Row="0"
+                                                Grid.Column="2"
+                                                HorizontalAlignment="Stretch"
+                                                Click="{x:Bind OnSignatureRuleClicked}"
+                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SignatureEnterprise')}"
+                                                IsChecked="{x:Bind IsEnterpriseSignatureSelected, Mode=OneWay}"
+                                                Tag="{x:Bind applicationmodel:PackageSignatureKind.Enterprise}" />
+
+                                            <ToggleButton
+                                                Grid.Row="0"
+                                                Grid.Column="3"
+                                                HorizontalAlignment="Stretch"
+                                                Click="{x:Bind OnSignatureRuleClicked}"
+                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SignatureDeveloper')}"
+                                                IsChecked="{x:Bind IsDeveloperSignatureSelected, Mode=OneWay}"
+                                                Tag="{x:Bind applicationmodel:PackageSignatureKind.Developer}" />
+
+                                            <ToggleButton
+                                                Grid.Row="0"
+                                                Grid.Column="4"
+                                                HorizontalAlignment="Stretch"
+                                                Click="{x:Bind OnSignatureRuleClicked}"
+                                                Content="{x:Bind rootservice:ResourceService.GetLocalized('AppList/SignatureNone')}"
+                                                IsChecked="{x:Bind IsNoneSignatureSelected, Mode=OneWay}"
+                                                Tag="{x:Bind applicationmodel:PackageSignatureKind.None}" />
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
                             </Flyout>
                         </AppBarButton.Flyout>
 

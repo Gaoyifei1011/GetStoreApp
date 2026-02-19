@@ -456,8 +456,7 @@
                             x:Name="LanguageFlyout"
                             Opened="{x:Bind OnLanguageFlyoutOpened}"
                             Placement="Bottom"
-                            ShouldConstrainToRootBounds="False"
-                            SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
+                            ShouldConstrainToRootBounds="False">
 
                             <Flyout.FlyoutPresenterStyle>
                                 <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
@@ -467,39 +466,43 @@
                                 </Style>
                             </Flyout.FlyoutPresenterStyle>
 
-                            <ListView
-                                x:Name="LanguageListView"
-                                MaxHeight="300"
-                                Background="Transparent"
-                                ItemsSource="{x:Bind LanguageCollection}"
-                                SelectionMode="None">
+                            <Grid>
+                                <SystemBackdropElement CornerRadius="{StaticResource OverlayCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
 
-                                <ListView.ItemContainerStyle>
-                                    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                        <Setter Property="Background" Value="Transparent" />
-                                        <Setter Property="Margin" Value="0" />
-                                        <Setter Property="MinHeight" Value="0" />
-                                        <Setter Property="Padding" Value="0" />
-                                    </Style>
-                                </ListView.ItemContainerStyle>
+                                <ListView
+                                    x:Name="LanguageListView"
+                                    MaxHeight="300"
+                                    Background="Transparent"
+                                    ItemsSource="{x:Bind LanguageCollection}"
+                                    SelectionMode="None">
 
-                                <ItemsControl.ItemContainerTransitions>
-                                    <TransitionCollection />
-                                </ItemsControl.ItemContainerTransitions>
+                                    <ListView.ItemContainerStyle>
+                                        <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                            <Setter Property="Background" Value="Transparent" />
+                                            <Setter Property="Margin" Value="0" />
+                                            <Setter Property="MinHeight" Value="0" />
+                                            <Setter Property="Padding" Value="0" />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
 
-                                <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="model:LanguageModel">
-                                        <RadioMenuFlyoutItem
-                                            Height="32"
-                                            Padding="11,0"
-                                            Command="{StaticResource LanguageCommand}"
-                                            CommandParameter="{x:Bind}"
-                                            GroupName="LanguageRadioGroup"
-                                            IsChecked="{x:Bind IsChecked, Mode=OneWay}"
-                                            Text="{x:Bind LanguageInfo.Value}" />
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                                    <ItemsControl.ItemContainerTransitions>
+                                        <TransitionCollection />
+                                    </ItemsControl.ItemContainerTransitions>
+
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="model:LanguageModel">
+                                            <RadioMenuFlyoutItem
+                                                Height="32"
+                                                Padding="11,0"
+                                                Command="{StaticResource LanguageCommand}"
+                                                CommandParameter="{x:Bind}"
+                                                GroupName="LanguageRadioGroup"
+                                                IsChecked="{x:Bind IsChecked, Mode=OneWay}"
+                                                Text="{x:Bind LanguageInfo.Value}" />
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Grid>
                         </Flyout>
                     </DropDownButton.Flyout>
                 </DropDownButton>

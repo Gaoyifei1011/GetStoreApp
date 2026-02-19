@@ -421,8 +421,7 @@
                                                 <Flyout
                                                     x:Name="AddDependencyFlyout"
                                                     Placement="Bottom"
-                                                    ShouldConstrainToRootBounds="False"
-                                                    SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
+                                                    ShouldConstrainToRootBounds="False">
 
                                                     <Flyout.FlyoutPresenterStyle>
                                                         <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
@@ -432,281 +431,285 @@
                                                         </Style>
                                                     </Flyout.FlyoutPresenterStyle>
 
-                                                    <Grid DataContext="{x:Bind InstallerPage}">
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="40" />
-                                                            <RowDefinition Height="*" />
-                                                        </Grid.RowDefinitions>
+                                                    <Grid>
+                                                        <SystemBackdropElement CornerRadius="{StaticResource OverlayCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
 
-                                                        <Grid
-                                                            Grid.Row="0"
-                                                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                                            BorderThickness="0,0,0,1">
+                                                        <Grid DataContext="{x:Bind InstallerPage}">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="40" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
 
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="Auto" />
-                                                                <ColumnDefinition Width="*" />
-                                                                <ColumnDefinition Width="Auto" />
-                                                                <ColumnDefinition Width="Auto" />
-                                                                <ColumnDefinition Width="Auto" />
-                                                            </Grid.ColumnDefinitions>
+                                                            <Grid
+                                                                Grid.Row="0"
+                                                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                                BorderThickness="0,0,0,1">
 
-                                                            <FontIcon
-                                                                Grid.Column="0"
-                                                                Margin="16,0,6,0"
-                                                                VerticalAlignment="Center"
-                                                                FontSize="16"
-                                                                Glyph="&#xF003;" />
-
-                                                            <TextBlock
-                                                                Grid.Column="1"
-                                                                VerticalAlignment="Center"
-                                                                FontSize="14"
-                                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddedDependencyPackage')}" />
-
-                                                            <Button
-                                                                Grid.Column="2"
-                                                                HorizontalAlignment="Center"
-                                                                VerticalAlignment="Center"
-                                                                Click="{x:Bind OnAddDependencyClicked}"
-                                                                Style="{StaticResource AlternateCloseButtonStyle}">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                </Grid.ColumnDefinitions>
 
                                                                 <FontIcon
-                                                                    Margin="4"
+                                                                    Grid.Column="0"
+                                                                    Margin="16,0,6,0"
+                                                                    VerticalAlignment="Center"
                                                                     FontSize="16"
-                                                                    Glyph="&#xE710;" />
+                                                                    Glyph="&#xF003;" />
 
-                                                                <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Padding="0"
-                                                                        Background="Transparent">
+                                                                <TextBlock
+                                                                    Grid.Column="1"
+                                                                    VerticalAlignment="Center"
+                                                                    FontSize="14"
+                                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddedDependencyPackage')}" />
 
-                                                                        <Grid>
-                                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependency')}" />
-                                                                        </Grid>
-                                                                    </ToolTip>
-                                                                </ToolTipService.ToolTip>
-                                                            </Button>
+                                                                <Button
+                                                                    Grid.Column="2"
+                                                                    HorizontalAlignment="Center"
+                                                                    VerticalAlignment="Center"
+                                                                    Click="{x:Bind OnAddDependencyClicked}"
+                                                                    Style="{StaticResource AlternateCloseButtonStyle}">
 
-                                                            <Button
-                                                                Grid.Column="3"
-                                                                Margin="-5,0,0,0"
-                                                                HorizontalAlignment="Center"
-                                                                VerticalAlignment="Center"
-                                                                Click="{x:Bind OnClearDependencyClicked}"
-                                                                IsEnabled="{x:Bind system:Convert.ToBoolean(InstallDependencyCollection.Count), Mode=OneWay}"
-                                                                Style="{StaticResource AlternateCloseButtonStyle}">
+                                                                    <FontIcon
+                                                                        Margin="4"
+                                                                        FontSize="16"
+                                                                        Glyph="&#xE710;" />
 
-                                                                <FontIcon
-                                                                    Margin="4"
-                                                                    FontSize="16"
-                                                                    Glyph="&#xE74D;" />
+                                                                    <ToolTipService.ToolTip>
+                                                                        <ToolTip
+                                                                            MaxWidth="9999"
+                                                                            Padding="0"
+                                                                            Background="Transparent">
 
-                                                                <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Padding="0"
-                                                                        Background="Transparent">
+                                                                            <Grid>
+                                                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependency')}" />
+                                                                            </Grid>
+                                                                        </ToolTip>
+                                                                    </ToolTipService.ToolTip>
+                                                                </Button>
 
-                                                                        <Grid>
-                                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ClearDependency')}" />
-                                                                        </Grid>
-                                                                    </ToolTip>
-                                                                </ToolTipService.ToolTip>
-                                                            </Button>
+                                                                <Button
+                                                                    Grid.Column="3"
+                                                                    Margin="-5,0,0,0"
+                                                                    HorizontalAlignment="Center"
+                                                                    VerticalAlignment="Center"
+                                                                    Click="{x:Bind OnClearDependencyClicked}"
+                                                                    IsEnabled="{x:Bind system:Convert.ToBoolean(InstallDependencyCollection.Count), Mode=OneWay}"
+                                                                    Style="{StaticResource AlternateCloseButtonStyle}">
 
-                                                            <Button
-                                                                Grid.Column="4"
-                                                                Margin="-5,0,0,0"
-                                                                HorizontalAlignment="Center"
-                                                                VerticalAlignment="Center"
-                                                                Click="{x:Bind OnCloseFlyoutClicked}"
-                                                                Style="{StaticResource AlternateCloseButtonStyle}"
-                                                                Tag="{x:Bind AddDependencyFlyout}">
+                                                                    <FontIcon
+                                                                        Margin="4"
+                                                                        FontSize="16"
+                                                                        Glyph="&#xE74D;" />
 
-                                                                <FontIcon
-                                                                    Margin="4"
-                                                                    FontSize="16"
-                                                                    Glyph="&#xE711;" />
+                                                                    <ToolTipService.ToolTip>
+                                                                        <ToolTip
+                                                                            MaxWidth="9999"
+                                                                            Padding="0"
+                                                                            Background="Transparent">
 
-                                                                <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Padding="0"
-                                                                        Background="Transparent">
+                                                                            <Grid>
+                                                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ClearDependency')}" />
+                                                                            </Grid>
+                                                                        </ToolTip>
+                                                                    </ToolTipService.ToolTip>
+                                                                </Button>
 
-                                                                        <Grid>
-                                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}" />
-                                                                        </Grid>
-                                                                    </ToolTip>
-                                                                </ToolTipService.ToolTip>
-                                                            </Button>
-                                                        </Grid>
+                                                                <Button
+                                                                    Grid.Column="4"
+                                                                    Margin="-5,0,0,0"
+                                                                    HorizontalAlignment="Center"
+                                                                    VerticalAlignment="Center"
+                                                                    Click="{x:Bind OnCloseFlyoutClicked}"
+                                                                    Style="{StaticResource AlternateCloseButtonStyle}"
+                                                                    Tag="{x:Bind AddDependencyFlyout}">
 
-                                                        <Grid
-                                                            Grid.Row="1"
-                                                            Width="300"
-                                                            Height="100"
-                                                            Padding="20"
-                                                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(InstallDependencyCollection.Count), Mode=OneWay}">
+                                                                    <FontIcon
+                                                                        Margin="4"
+                                                                        FontSize="16"
+                                                                        Glyph="&#xE711;" />
 
-                                                            <TextBlock
-                                                                HorizontalAlignment="Center"
-                                                                VerticalAlignment="Center"
-                                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependencyListEmpty')}"
-                                                                TextAlignment="Center"
-                                                                TextWrapping="WrapWholeWords" />
-                                                        </Grid>
+                                                                    <ToolTipService.ToolTip>
+                                                                        <ToolTip
+                                                                            MaxWidth="9999"
+                                                                            Padding="0"
+                                                                            Background="Transparent">
 
-                                                        <ListView
-                                                            Grid.Row="1"
-                                                            Width="450"
-                                                            Height="200"
-                                                            ItemsSource="{x:Bind InstallDependencyCollection}"
-                                                            SelectionMode="None"
-                                                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(InstallDependencyCollection.Count), Mode=OneWay}">
+                                                                            <Grid>
+                                                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}" />
+                                                                            </Grid>
+                                                                        </ToolTip>
+                                                                    </ToolTipService.ToolTip>
+                                                                </Button>
+                                                            </Grid>
 
-                                                            <ListView.ItemContainerStyle>
-                                                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                                                    <Setter Property="Background" Value="Transparent" />
-                                                                    <Setter Property="Margin" Value="0" />
-                                                                    <Setter Property="MinHeight" Value="0" />
-                                                                    <Setter Property="Padding" Value="0" />
-                                                                </Style>
-                                                            </ListView.ItemContainerStyle>
+                                                            <Grid
+                                                                Grid.Row="1"
+                                                                Width="300"
+                                                                Height="100"
+                                                                Padding="20"
+                                                                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(InstallDependencyCollection.Count), Mode=OneWay}">
 
-                                                            <ItemsControl.ItemContainerTransitions>
-                                                                <TransitionCollection />
-                                                            </ItemsControl.ItemContainerTransitions>
+                                                                <TextBlock
+                                                                    HorizontalAlignment="Center"
+                                                                    VerticalAlignment="Center"
+                                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependencyListEmpty')}"
+                                                                    TextAlignment="Center"
+                                                                    TextWrapping="WrapWholeWords" />
+                                                            </Grid>
 
-                                                            <ListView.ItemTemplate>
-                                                                <DataTemplate x:DataType="model:InstallDependencyModel">
-                                                                    <Grid
-                                                                        Height="60"
-                                                                        Margin="2,0,2,2"
-                                                                        Padding="16,0,6,0"
-                                                                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                                                        BorderThickness="1"
-                                                                        CornerRadius="{StaticResource ControlCornerRadius}">
+                                                            <ListView
+                                                                Grid.Row="1"
+                                                                Width="450"
+                                                                Height="200"
+                                                                ItemsSource="{x:Bind InstallDependencyCollection}"
+                                                                SelectionMode="None"
+                                                                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(InstallDependencyCollection.Count), Mode=OneWay}">
 
-                                                                        <Grid.ColumnDefinitions>
-                                                                            <ColumnDefinition Width="*" />
-                                                                            <ColumnDefinition Width="Auto" />
-                                                                        </Grid.ColumnDefinitions>
+                                                                <ListView.ItemContainerStyle>
+                                                                    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                                                        <Setter Property="Background" Value="Transparent" />
+                                                                        <Setter Property="Margin" Value="0" />
+                                                                        <Setter Property="MinHeight" Value="0" />
+                                                                        <Setter Property="Padding" Value="0" />
+                                                                    </Style>
+                                                                </ListView.ItemContainerStyle>
 
+                                                                <ItemsControl.ItemContainerTransitions>
+                                                                    <TransitionCollection />
+                                                                </ItemsControl.ItemContainerTransitions>
+
+                                                                <ListView.ItemTemplate>
+                                                                    <DataTemplate x:DataType="model:InstallDependencyModel">
                                                                         <Grid
-                                                                            Grid.Column="0"
-                                                                            VerticalAlignment="Center"
-                                                                            RowSpacing="2">
-                                                                            <Grid.RowDefinitions>
-                                                                                <RowDefinition Height="Auto" />
-                                                                                <RowDefinition Height="Auto" />
-                                                                            </Grid.RowDefinitions>
+                                                                            Height="60"
+                                                                            Margin="2,0,2,2"
+                                                                            Padding="16,0,6,0"
+                                                                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                                            BorderThickness="1"
+                                                                            CornerRadius="{StaticResource ControlCornerRadius}">
 
-                                                                            <TextBlock
-                                                                                x:Name="DependencyNameText"
-                                                                                Grid.Row="0"
-                                                                                MinWidth="50"
-                                                                                Margin="0,0,5,0"
-                                                                                HorizontalAlignment="Left"
+                                                                            <Grid.ColumnDefinitions>
+                                                                                <ColumnDefinition Width="*" />
+                                                                                <ColumnDefinition Width="Auto" />
+                                                                            </Grid.ColumnDefinitions>
+
+                                                                            <Grid
+                                                                                Grid.Column="0"
                                                                                 VerticalAlignment="Center"
-                                                                                FontSize="14"
-                                                                                IsTextSelectionEnabled="True"
-                                                                                Text="{x:Bind DependencyName}"
-                                                                                TextAlignment="Left"
-                                                                                TextTrimming="CharacterEllipsis">
+                                                                                RowSpacing="2">
+                                                                                <Grid.RowDefinitions>
+                                                                                    <RowDefinition Height="Auto" />
+                                                                                    <RowDefinition Height="Auto" />
+                                                                                </Grid.RowDefinitions>
+
+                                                                                <TextBlock
+                                                                                    x:Name="DependencyNameText"
+                                                                                    Grid.Row="0"
+                                                                                    MinWidth="50"
+                                                                                    Margin="0,0,5,0"
+                                                                                    HorizontalAlignment="Left"
+                                                                                    VerticalAlignment="Center"
+                                                                                    FontSize="14"
+                                                                                    IsTextSelectionEnabled="True"
+                                                                                    Text="{x:Bind DependencyName}"
+                                                                                    TextAlignment="Left"
+                                                                                    TextTrimming="CharacterEllipsis">
+
+                                                                                    <ToolTipService.ToolTip>
+                                                                                        <ToolTip
+                                                                                            MaxWidth="9999"
+                                                                                            Padding="0"
+                                                                                            Background="Transparent"
+                                                                                            Visibility="{Binding ElementName=DependencyNameText, Path=IsTextTrimmed, Mode=OneWay}">
+
+                                                                                            <Grid>
+                                                                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind DependencyName}" />
+                                                                                            </Grid>
+                                                                                        </ToolTip>
+                                                                                    </ToolTipService.ToolTip>
+                                                                                </TextBlock>
+
+                                                                                <TextBlock
+                                                                                    x:Name="DependencyInfoText"
+                                                                                    Grid.Row="1"
+                                                                                    MinWidth="50"
+                                                                                    Margin="0,0,5,0"
+                                                                                    HorizontalAlignment="Left"
+                                                                                    VerticalAlignment="Center"
+                                                                                    FontSize="14"
+                                                                                    IsTextSelectionEnabled="True"
+                                                                                    TextAlignment="Left"
+                                                                                    TextTrimming="CharacterEllipsis">
+
+                                                                                    <Run Text="{x:Bind DependencyVersion}" />
+                                                                                    <Run Text=" | " />
+                                                                                    <Run Text="{x:Bind DependencyPublisher}" />
+
+                                                                                    <ToolTipService.ToolTip>
+                                                                                        <ToolTip
+                                                                                            MaxWidth="9999"
+                                                                                            Padding="0"
+                                                                                            Background="Transparent"
+                                                                                            Visibility="{Binding ElementName=DependencyInfoText, Path=IsTextTrimmed, Mode=OneWay}">
+
+                                                                                            <Grid>
+                                                                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+
+                                                                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}">
+                                                                                                    <Run Text="{x:Bind DependencyVersion}" />
+                                                                                                    <Run Text=" | " />
+                                                                                                    <Run Text="{x:Bind DependencyPublisher}" />
+                                                                                                </TextBlock>
+                                                                                            </Grid>
+                                                                                        </ToolTip>
+                                                                                    </ToolTipService.ToolTip>
+                                                                                </TextBlock>
+                                                                            </Grid>
+
+                                                                            <Button
+                                                                                Grid.Column="1"
+                                                                                Width="Auto"
+                                                                                Height="Auto"
+                                                                                Margin="10,0,0,0"
+                                                                                HorizontalAlignment="Center"
+                                                                                VerticalAlignment="Center"
+                                                                                Command="{StaticResource DeleteDependencyPackageCommand}"
+                                                                                CommandParameter="{x:Bind DependencyFullName}"
+                                                                                Style="{StaticResource AlternateCloseButtonStyle}">
+
+                                                                                <FontIcon
+                                                                                    Margin="4"
+                                                                                    FontSize="16"
+                                                                                    Glyph="&#xE711;" />
 
                                                                                 <ToolTipService.ToolTip>
                                                                                     <ToolTip
                                                                                         MaxWidth="9999"
                                                                                         Padding="0"
-                                                                                        Background="Transparent"
-                                                                                        Visibility="{Binding ElementName=DependencyNameText, Path=IsTextTrimmed, Mode=OneWay}">
+                                                                                        Background="Transparent">
 
                                                                                         <Grid>
                                                                                             <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind DependencyName}" />
+                                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DeleteDependencyPackage')}" />
                                                                                         </Grid>
                                                                                     </ToolTip>
                                                                                 </ToolTipService.ToolTip>
-                                                                            </TextBlock>
-
-                                                                            <TextBlock
-                                                                                x:Name="DependencyInfoText"
-                                                                                Grid.Row="1"
-                                                                                MinWidth="50"
-                                                                                Margin="0,0,5,0"
-                                                                                HorizontalAlignment="Left"
-                                                                                VerticalAlignment="Center"
-                                                                                FontSize="14"
-                                                                                IsTextSelectionEnabled="True"
-                                                                                TextAlignment="Left"
-                                                                                TextTrimming="CharacterEllipsis">
-
-                                                                                <Run Text="{x:Bind DependencyVersion}" />
-                                                                                <Run Text=" | " />
-                                                                                <Run Text="{x:Bind DependencyPublisher}" />
-
-                                                                                <ToolTipService.ToolTip>
-                                                                                    <ToolTip
-                                                                                        MaxWidth="9999"
-                                                                                        Padding="0"
-                                                                                        Background="Transparent"
-                                                                                        Visibility="{Binding ElementName=DependencyInfoText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                                        <Grid>
-                                                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-
-                                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}">
-                                                                                                <Run Text="{x:Bind DependencyVersion}" />
-                                                                                                <Run Text=" | " />
-                                                                                                <Run Text="{x:Bind DependencyPublisher}" />
-                                                                                            </TextBlock>
-                                                                                        </Grid>
-                                                                                    </ToolTip>
-                                                                                </ToolTipService.ToolTip>
-                                                                            </TextBlock>
+                                                                            </Button>
                                                                         </Grid>
-
-                                                                        <Button
-                                                                            Grid.Column="1"
-                                                                            Width="Auto"
-                                                                            Height="Auto"
-                                                                            Margin="10,0,0,0"
-                                                                            HorizontalAlignment="Center"
-                                                                            VerticalAlignment="Center"
-                                                                            Command="{StaticResource DeleteDependencyPackageCommand}"
-                                                                            CommandParameter="{x:Bind DependencyFullName}"
-                                                                            Style="{StaticResource AlternateCloseButtonStyle}">
-
-                                                                            <FontIcon
-                                                                                Margin="4"
-                                                                                FontSize="16"
-                                                                                Glyph="&#xE711;" />
-
-                                                                            <ToolTipService.ToolTip>
-                                                                                <ToolTip
-                                                                                    MaxWidth="9999"
-                                                                                    Padding="0"
-                                                                                    Background="Transparent">
-
-                                                                                    <Grid>
-                                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DeleteDependencyPackage')}" />
-                                                                                    </Grid>
-                                                                                </ToolTip>
-                                                                            </ToolTipService.ToolTip>
-                                                                        </Button>
-                                                                    </Grid>
-                                                                </DataTemplate>
-                                                            </ListView.ItemTemplate>
-                                                        </ListView>
+                                                                    </DataTemplate>
+                                                                </ListView.ItemTemplate>
+                                                            </ListView>
+                                                        </Grid>
                                                     </Grid>
                                                 </Flyout>
                                             </Button.Flyout>
@@ -814,8 +817,7 @@
                                             <Flyout
                                                 x:Name="ViewErrorInformationFlyout"
                                                 Placement="Bottom"
-                                                ShouldConstrainToRootBounds="False"
-                                                SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
+                                                ShouldConstrainToRootBounds="False">
 
                                                 <Flyout.FlyoutPresenterStyle>
                                                     <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
@@ -826,104 +828,108 @@
                                                 </Flyout.FlyoutPresenterStyle>
 
                                                 <Grid>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="40" />
-                                                        <RowDefinition Height="*" />
-                                                    </Grid.RowDefinitions>
+                                                    <SystemBackdropElement CornerRadius="{StaticResource OverlayCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
 
-                                                    <Grid
-                                                        Grid.Row="0"
-                                                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                                        BorderThickness="0,0,0,1">
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="40" />
+                                                            <RowDefinition Height="*" />
+                                                        </Grid.RowDefinitions>
 
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="Auto" />
-                                                            <ColumnDefinition Width="*" />
-                                                            <ColumnDefinition Width="Auto" />
-                                                            <ColumnDefinition Width="Auto" />
-                                                        </Grid.ColumnDefinitions>
+                                                        <Grid
+                                                            Grid.Row="0"
+                                                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                            BorderThickness="0,0,0,1">
 
-                                                        <FontIcon
-                                                            Grid.Column="0"
-                                                            Margin="16,0,6,0"
-                                                            VerticalAlignment="Center"
-                                                            FontSize="16"
-                                                            Glyph="&#xE783;" />
-
-                                                        <TextBlock
-                                                            Grid.Column="1"
-                                                            VerticalAlignment="Center"
-                                                            FontSize="14"
-                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ErrorInformation')}" />
-
-                                                        <Button
-                                                            Grid.Column="2"
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Click="{x:Bind OnCopyErrorInformationClicked}"
-                                                            IsEnabled="{x:Bind converter:ValueConverterHelper.IsNotEmptyString(InstallFailedInformation), Mode=OneWay}"
-                                                            Style="{StaticResource AlternateCloseButtonStyle}">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                            </Grid.ColumnDefinitions>
 
                                                             <FontIcon
-                                                                Margin="4"
+                                                                Grid.Column="0"
+                                                                Margin="16,0,6,0"
+                                                                VerticalAlignment="Center"
                                                                 FontSize="16"
-                                                                Glyph="&#xE8C8;" />
+                                                                Glyph="&#xE783;" />
 
-                                                            <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent">
+                                                            <TextBlock
+                                                                Grid.Column="1"
+                                                                VerticalAlignment="Center"
+                                                                FontSize="14"
+                                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ErrorInformation')}" />
 
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CopyErrorInformation')}" />
-                                                                    </Grid>
-                                                                </ToolTip>
-                                                            </ToolTipService.ToolTip>
-                                                        </Button>
+                                                            <Button
+                                                                Grid.Column="2"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"
+                                                                Click="{x:Bind OnCopyErrorInformationClicked}"
+                                                                IsEnabled="{x:Bind converter:ValueConverterHelper.IsNotEmptyString(InstallFailedInformation), Mode=OneWay}"
+                                                                Style="{StaticResource AlternateCloseButtonStyle}">
 
-                                                        <Button
-                                                            Grid.Column="3"
-                                                            Margin="-5,0,0,0"
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Click="{x:Bind OnCloseFlyoutClicked}"
-                                                            Style="{StaticResource AlternateCloseButtonStyle}"
-                                                            Tag="{x:Bind ViewErrorInformationFlyout}">
+                                                                <FontIcon
+                                                                    Margin="4"
+                                                                    FontSize="16"
+                                                                    Glyph="&#xE8C8;" />
 
-                                                            <FontIcon
-                                                                Margin="4"
-                                                                FontSize="16"
-                                                                Glyph="&#xE711;" />
+                                                                <ToolTipService.ToolTip>
+                                                                    <ToolTip
+                                                                        MaxWidth="9999"
+                                                                        Padding="0"
+                                                                        Background="Transparent">
 
-                                                            <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent">
+                                                                        <Grid>
+                                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CopyErrorInformation')}" />
+                                                                        </Grid>
+                                                                    </ToolTip>
+                                                                </ToolTipService.ToolTip>
+                                                            </Button>
 
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}" />
-                                                                    </Grid>
-                                                                </ToolTip>
-                                                            </ToolTipService.ToolTip>
-                                                        </Button>
-                                                    </Grid>
+                                                            <Button
+                                                                Grid.Column="3"
+                                                                Margin="-5,0,0,0"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"
+                                                                Click="{x:Bind OnCloseFlyoutClicked}"
+                                                                Style="{StaticResource AlternateCloseButtonStyle}"
+                                                                Tag="{x:Bind ViewErrorInformationFlyout}">
 
-                                                    <Grid
-                                                        Grid.Row="1"
-                                                        Width="450"
-                                                        MinHeight="100"
-                                                        Padding="16,8,16,8">
+                                                                <FontIcon
+                                                                    Margin="4"
+                                                                    FontSize="16"
+                                                                    Glyph="&#xE711;" />
 
-                                                        <TextBlock
-                                                            HorizontalAlignment="Left"
-                                                            IsTextSelectionEnabled="True"
-                                                            Text="{x:Bind InstallFailedInformation, Mode=OneWay}"
-                                                            TextWrapping="Wrap" />
+                                                                <ToolTipService.ToolTip>
+                                                                    <ToolTip
+                                                                        MaxWidth="9999"
+                                                                        Padding="0"
+                                                                        Background="Transparent">
+
+                                                                        <Grid>
+                                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}" />
+                                                                        </Grid>
+                                                                    </ToolTip>
+                                                                </ToolTipService.ToolTip>
+                                                            </Button>
+                                                        </Grid>
+
+                                                        <Grid
+                                                            Grid.Row="1"
+                                                            Width="450"
+                                                            MinHeight="100"
+                                                            Padding="16,8,16,8">
+
+                                                            <TextBlock
+                                                                HorizontalAlignment="Left"
+                                                                IsTextSelectionEnabled="True"
+                                                                Text="{x:Bind InstallFailedInformation, Mode=OneWay}"
+                                                                TextWrapping="Wrap" />
+                                                        </Grid>
                                                     </Grid>
                                                 </Grid>
                                             </Flyout>
