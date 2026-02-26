@@ -494,7 +494,7 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     MoveFailed3String,
                                     string.Format(MoveFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
-                                    string.Format(MoveFailed5String, exception.Message)
+                                    string.Format(MoveFailed5String, exception is not null ? exception.Message : NotAvailableString)
                                 }));
                                 AppNotificationButton openSettingsButton = new(OpenSettingsString);
                                 openSettingsButton.Arguments.Add("action", "OpenSettings");
@@ -560,8 +560,11 @@ namespace GetStoreApp.Views.Pages
                         package.IsOperating = false;
                     }
                     // 修复失败
-                    else
+                    else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                     {
+                        string errorCode = packageDeploymentResult.Error is not null ? "0x" + Convert.ToString(packageDeploymentResult.Error.HResult, 16).ToUpperInvariant() : NotAvailableString;
+                        string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+
                         // 显示 UWP 应用修复失败通知
                         await Task.Run(() =>
                         {
@@ -572,8 +575,8 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
                                 RepairFailed3String,
-                                string.Format(RepairFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpperInvariant() : NotAvailableString),
-                                string.Format(RepairFailed5String, packageDeploymentResult.ErrorText)
+                                string.Format(RepairFailed4String, errorCode),
+                                string.Format(RepairFailed5String, errorMessage)
                             }));
                             AppNotificationButton openSettingsButton = new(OpenSettingsString);
                             openSettingsButton.Arguments.Add("action", "OpenSettings");
@@ -598,7 +601,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             RepairFailed3String,
                             string.Format(RepairFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
-                            string.Format(RepairFailed5String, exception.Message)
+                            string.Format(RepairFailed5String, exception is not null ? exception.Message : NotAvailableString)
                         }));
                         AppNotificationButton openSettingsButton = new(OpenSettingsString);
                         openSettingsButton.Arguments.Add("action", "OpenSettings");
@@ -657,8 +660,11 @@ namespace GetStoreApp.Views.Pages
                         package.IsOperating = false;
                     }
                     // 重置失败
-                    else
+                    else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                     {
+                        string errorCode = packageDeploymentResult.Error is not null ? "0x" + Convert.ToString(packageDeploymentResult.Error.HResult, 16).ToUpperInvariant() : NotAvailableString;
+                        string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+
                         // 显示 UWP 应用重置失败通知
                         await Task.Run(() =>
                         {
@@ -669,8 +675,8 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
                                 ResetFailed3String,
-                                string.Format(ResetFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpperInvariant() : NotAvailableString),
-                                string.Format(ResetFailed5String, packageDeploymentResult.ErrorText)
+                                string.Format(ResetFailed4String, errorCode),
+                                string.Format(ResetFailed5String, errorMessage)
                             }));
                             AppNotificationButton openSettingsButton = new(OpenSettingsString);
                             openSettingsButton.Arguments.Add("action", "OpenSettings");
@@ -695,7 +701,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             ResetFailed3String,
                             string.Format(ResetFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
-                            string.Format(ResetFailed5String, exception.Message)
+                            string.Format(ResetFailed5String, exception is not null ? exception.Message : NotAvailableString)
                         }));
                         AppNotificationButton openSettingsButton = new(OpenSettingsString);
                         openSettingsButton.Arguments.Add("action", "OpenSettings");
@@ -772,8 +778,11 @@ namespace GetStoreApp.Views.Pages
                             }
                         }
                         // 卸载失败
-                        else
+                        else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                         {
+                            string errorCode = packageDeploymentResult.Error is not null ? "0x" + Convert.ToString(packageDeploymentResult.Error.HResult, 16).ToUpperInvariant() : NotAvailableString;
+                            string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+
                             // 显示 UWP 应用卸载失败通知
                             await Task.Run(() =>
                             {
@@ -784,8 +793,8 @@ namespace GetStoreApp.Views.Pages
                                 appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                                 {
                                     UninstallFailed3String,
-                                    string.Format(UninstallFailed4String, packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpperInvariant() : NotAvailableString),
-                                    string.Format(UninstallFailed5String, packageDeploymentResult.ErrorText)
+                                    string.Format(UninstallFailed4String, errorCode),
+                                    string.Format(UninstallFailed5String, errorMessage)
                                 }));
                                 AppNotificationButton openSettingsButton = new(OpenSettingsString);
                                 openSettingsButton.Arguments.Add("action", "OpenSettings");
@@ -810,7 +819,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 UninstallFailed3String,
                                 string.Format(UninstallFailed4String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
-                                string.Format(UninstallFailed5String, exception.Message)
+                                string.Format(UninstallFailed5String, exception is not null ? exception.Message : NotAvailableString)
                             }));
                             AppNotificationButton openSettingsButton = new(OpenSettingsString);
                             openSettingsButton.Arguments.Add("action", "OpenSettings");

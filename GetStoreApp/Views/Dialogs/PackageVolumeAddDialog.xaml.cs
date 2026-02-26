@@ -184,16 +184,16 @@ namespace GetStoreApp.Views.Dialogs
             {
                 SelectedPackageVolume = args.AddedItems[0] as PackageVolumeModel;
                 IsPrimaryEnabled = true;
-                if (UseWindowsAppsFolderValue && SelectedPackageVolume is not null && SelectedPackageVolume.PackageVolume is not null)
+                if (UseWindowsAppsFolderValue && SelectedPackageVolume is not null && SelectedPackageVolume.WinRTPackageVolume is not null)
                 {
-                    SelectedFolder = Path.Combine(SelectedPackageVolume.PackageVolume.MountPoint, "WindowsApps");
+                    SelectedFolder = Path.Combine(SelectedPackageVolume.WinRTPackageVolume.MountPoint, "WindowsApps");
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(SelectedFolder) && SelectedPackageVolume is not null && SelectedPackageVolume.PackageVolume is not null)
+                    if (!string.IsNullOrEmpty(SelectedFolder) && SelectedPackageVolume is not null && SelectedPackageVolume.WinRTPackageVolume is not null)
                     {
                         string rootPath = Path.GetPathRoot(SelectedFolder);
-                        SelectedFolder = SelectedFolder.Replace(rootPath, SelectedPackageVolume.PackageVolume.MountPoint);
+                        SelectedFolder = SelectedFolder.Replace(rootPath, SelectedPackageVolume.WinRTPackageVolume.MountPoint);
                     }
                 }
             }
@@ -216,7 +216,7 @@ namespace GetStoreApp.Views.Dialogs
                     if (await folderPicker.PickSingleFolderAsync() is PickFolderResult pickFolderResult)
                     {
                         string rootPath = Path.GetPathRoot(pickFolderResult.Path);
-                        SelectedFolder = pickFolderResult.Path.Replace(rootPath, SelectedPackageVolume.PackageVolume.MountPoint);
+                        SelectedFolder = pickFolderResult.Path.Replace(rootPath, SelectedPackageVolume.WinRTPackageVolume.MountPoint);
                     }
                 }
                 catch (Exception e)
@@ -239,9 +239,9 @@ namespace GetStoreApp.Views.Dialogs
             if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
             {
                 UseWindowsAppsFolderValue = toggleSwitch.IsOn;
-                if (SelectedPackageVolume is not null && SelectedPackageVolume.PackageVolume is not null)
+                if (SelectedPackageVolume is not null && SelectedPackageVolume.WinRTPackageVolume is not null)
                 {
-                    SelectedFolder = Path.Combine(SelectedPackageVolume.PackageVolume.MountPoint, "WindowsApps");
+                    SelectedFolder = Path.Combine(SelectedPackageVolume.WinRTPackageVolume.MountPoint, "WindowsApps");
                 }
             }
         }
@@ -333,8 +333,8 @@ namespace GetStoreApp.Views.Dialogs
                             appNotificationBuilder.AddText(CreateFailed2String);
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
-                            string.Format(CreateFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
-                            string.Format(CreateFailed4String, exception.Message)
+                                string.Format(CreateFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
+                                string.Format(CreateFailed4String, exception is not null ? exception.Message : NotAvailableString)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                             LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeInfoDialog), nameof(OnSaveClicked), 1, exception is not null ? exception : new Exception());
@@ -374,9 +374,9 @@ namespace GetStoreApp.Views.Dialogs
             List<PackageVolumeModel> packageVolumeList = await Task.Run(async () =>
             {
                 List<PackageVolumeModel> packageVolumeList = [];
-                IList<PackageVolume> requestedPackageVolumeList = PackageVolume.FindPackageVolumes();
+                IReadOnlyList<global::Windows.Management.Deployment.PackageVolume> requestedPackageVolumeList = await new global::Windows.Management.Deployment.PackageManager().GetPackageVolumesAsync();
 
-                foreach (PackageVolume packageVolume in requestedPackageVolumeList)
+                foreach (global::Windows.Management.Deployment.PackageVolume packageVolume in requestedPackageVolumeList)
                 {
                     if (string.Equals(packageVolume.MountPoint, packageVolume.PackageStorePath, StringComparison.OrdinalIgnoreCase))
                     {
@@ -394,7 +394,7 @@ namespace GetStoreApp.Views.Dialogs
                                 displayName = rootFolder.DisplayName;
                                 if (rootFolder is not null)
                                 {
-                                    IDictionary<string, object> propertiesDict = await rootFolder.Properties.RetrievePropertiesAsync((string[])["System.Capacity"]);
+                                    IDictionary<string, object> propertiesDict = await rootFolder.Properties.RetrievePropertiesAsync(new List<string> { "System.Capacity" });
 
                                     if (propertiesDict.TryGetValue("System.Capacity", out object value))
                                     {
@@ -419,7 +419,7 @@ namespace GetStoreApp.Views.Dialogs
                             PackageVolumeId = packageVolume.Name,
                             PackageVolumePath = packageVolume.PackageStorePath,
                             PackageVolumeUsedPercentage = usedPercentage,
-                            PackageVolume = packageVolume,
+                            WinRTPackageVolume = packageVolume,
                             IsAvailableSpaceWarning = usedPercentage > 90,
                             IsAvailableSpaceError = usedPercentage > 95,
                         };

@@ -328,8 +328,11 @@ namespace GetStoreApp.Views.Pages
                                         });
                                     }
                                     // 安装失败
-                                    else
+                                    else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                                     {
+                                        string errorCode = packageDeploymentResult.Error is not null ? "0x" + Convert.ToString(packageDeploymentResult.Error.HResult, 16).ToUpperInvariant() : NotAvailableString;
+                                        string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+
                                         completed.InstallProgressValue = 100;
                                         completed.IsInstallWaiting = false;
                                         completed.InstallFailed = true;

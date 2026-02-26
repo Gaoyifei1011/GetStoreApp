@@ -170,7 +170,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
                             string.Format(SetDefaultFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
-                            string.Format(SetDefaultFailed4String, exception.Message)
+                            string.Format(SetDefaultFailed4String, exception is not null ? exception.Message : NotAvailableString)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                         LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnSetDefaultVolumeExecuteRequested), 2, exception is not null ? exception : new Exception());
@@ -220,6 +220,9 @@ namespace GetStoreApp.Views.Pages
                     }
                     else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                     {
+                        string errorCode = packageDeploymentResult.Error is not null ? "0x" + Convert.ToString(packageDeploymentResult.Error.HResult, 16).ToUpperInvariant() : NotAvailableString;
+                        string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+
                         // 显示应用包存储卷挂载失败通知
                         await Task.Run(() =>
                         {
@@ -229,8 +232,8 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(MountFailed2String);
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
-                                string.Format(MountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
-                                string.Format(MountFailed4String, exception.Message)
+                                string.Format(MountFailed3String, errorCode),
+                                string.Format(MountFailed4String, errorMessage)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                             LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnMountExecuteRequested), 2, exception is not null ? exception : new Exception());
@@ -249,7 +252,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
                             string.Format(MountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
-                                string.Format(MountFailed4String, exception.Message)
+                            string.Format(MountFailed4String, exception is not null ? exception.Message : NotAvailableString)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                         LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnMountExecuteRequested), 2, exception is not null ? exception : new Exception());
@@ -299,6 +302,9 @@ namespace GetStoreApp.Views.Pages
                     }
                     else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                     {
+                        string errorCode = packageDeploymentResult.Error is not null ? "0x" + Convert.ToString(packageDeploymentResult.Error.HResult, 16).ToUpperInvariant() : NotAvailableString;
+                        string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+
                         // 显示应用包存储卷卸载失败通知
                         await Task.Run(() =>
                         {
@@ -308,8 +314,8 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(DismountFailed2String);
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
-                                string.Format(DismountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
-                                string.Format(DismountFailed4String, exception.Message)
+                                string.Format(DismountFailed3String, errorCode),
+                                string.Format(DismountFailed4String, errorMessage)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                             LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnDismountExecuteRequested), 2, exception is not null ? exception : new Exception());
@@ -328,7 +334,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
                             string.Format(DismountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
-                                string.Format(DismountFailed4String, exception.Message)
+                            string.Format(DismountFailed4String, exception is not null ? exception.Message : NotAvailableString)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                         LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnDismountExecuteRequested), 2, exception is not null ? exception : new Exception());
@@ -388,6 +394,9 @@ namespace GetStoreApp.Views.Pages
                     }
                     else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                     {
+                        string errorCode = packageDeploymentResult.Error is not null ? "0x" + Convert.ToString(packageDeploymentResult.Error.HResult, 16).ToUpperInvariant() : NotAvailableString;
+                        string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+
                         // 显示应用包存储卷移除失败通知
                         await Task.Run(() =>
                         {
@@ -397,8 +406,8 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(RemoveFailed2String);
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
-                                string.Format(RemoveFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
-                                string.Format(RemoveFailed4String, exception.Message)
+                                string.Format(RemoveFailed3String, errorCode),
+                                string.Format(RemoveFailed4String, errorMessage)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                             LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnRemoveExecuteRequested), 2, exception is not null ? exception : new Exception());
@@ -417,7 +426,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
                             string.Format(RemoveFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
-                                string.Format(RemoveFailed4String, exception.Message)
+                            string.Format(RemoveFailed4String, exception is not null ? exception.Message : NotAvailableString)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                         LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnRemoveExecuteRequested), 2, exception is not null ? exception : new Exception());

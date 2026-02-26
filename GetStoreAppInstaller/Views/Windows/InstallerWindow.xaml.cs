@@ -1707,8 +1707,8 @@ namespace GetStoreAppInstaller.Views.Windows
                     }
                     else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                     {
-                        string errorCode = packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpperInvariant() : NotAvailableString;
-                        string errorMessage = packageDeploymentResult.ErrorText;
+                        string errorCode = packageDeploymentResult.Error is not null ? "0x" + Convert.ToString(packageDeploymentResult.Error.HResult, 16).ToUpperInvariant() : NotAvailableString;
+                        string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
 
                         // 更新应用安装状态
                         CanDragFile = true;
