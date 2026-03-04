@@ -355,8 +355,8 @@
     <PackageReference Include="Microsoft.WindowsAppSDK.InteractiveExperiences" Version="2.0.6-preview" />
     <PackageReference Include="Microsoft.WindowsAppSDK.Runtime" Version="2.0.0-preview1" />
     <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="2.0.7-preview" />
-    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.28.110-preview" GeneratePathProperty="true" />
-    <PackageReference Include="Microsoft.WindowsPackageManager.InProcCom" Version="1.28.110-preview" GeneratePathProperty="true" IncludeAssets="none" />
+    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.28.190" GeneratePathProperty="true" />
+    <PackageReference Include="Microsoft.WindowsPackageManager.InProcCom" Version="1.28.190" GeneratePathProperty="true" IncludeAssets="none" />
     <PackageReference Include="Mile.Aria2" Version="1.0.1050" />
 
     <Page Update="Views\Dialogs\AppInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
