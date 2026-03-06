@@ -89,7 +89,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// <param name="samDesired">一个掩码，指定要打开的密钥的所需访问权限。 如果密钥的安全描述符不允许调用进程的请求访问，函数将失败。</param>
         /// <param name="phkResult">一个变量的指针，此变量指向已打开键的句柄。</param>
         /// <returns>如果函数成功，则返回值为 ERROR_SUCCESS。如果函数失败，则返回值为 Winerror.h 中定义的非零错误代码。</returns>
-        [LibraryImport(Advapi32, EntryPoint = "RegOpenKeyExW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
+        [LibraryImport(Advapi32, EntryPoint = "RegOpenKeyExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
         public static partial int RegOpenKeyEx(nuint hKey, [MarshalAs(UnmanagedType.LPWStr)] string lpSubKey, int ulOptions, RegistryAccessRights samDesired, out nint phkResult);
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// 如果函数成功，则返回值为 ERROR_SUCCESS。如果函数失败，则返回值为 系统错误代码。
         /// 如果 lpData 缓冲区太小，无法接收数据，函数将返回ERROR_MORE_DATA。如果 lpValueName 注册表值不存在，该函数将返回ERROR_FILE_NOT_FOUND。
         /// </returns>
-        [LibraryImport(Advapi32, EntryPoint = "RegQueryValueExW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
+        [LibraryImport(Advapi32, EntryPoint = "RegQueryValueExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
         public static partial int RegQueryValueEx(nint hKey, [MarshalAs(UnmanagedType.LPWStr)] string lpValueName, nint lpReserved, out REG_VALUE_TYPE lpType, [Out] byte[] lpData, ref int lpcbData);
     }
 }
