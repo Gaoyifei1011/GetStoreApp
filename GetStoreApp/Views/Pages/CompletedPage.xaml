@@ -18,7 +18,6 @@
         <XamlUICommand x:Name="DeleteCommand" ExecuteRequested="{x:Bind OnDeleteExecuteRequested}" />
         <XamlUICommand x:Name="FileInformationCommand" ExecuteRequested="{x:Bind OnFileInformationExecuteRequested}" />
         <XamlUICommand x:Name="InstallCommand" ExecuteRequested="{x:Bind OnInstallExecuteRequested}" />
-        <XamlUICommand x:Name="NearbySharingCommand" ExecuteRequested="{x:Bind OnNearbySharingExecuteRequested}" />
         <XamlUICommand x:Name="OpenFolderCommand" ExecuteRequested="{x:Bind OnOpenFolderExecuteRequested}" />
         <XamlUICommand x:Name="ShowShareUICommand" ExecuteRequested="{x:Bind OnShowShareUIExecuteRequested}" />
     </Page.Resources>
@@ -215,13 +214,6 @@
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xE70A;" />
-                                    </MenuFlyoutItem.Icon>
-                                </MenuFlyoutItem>
-
-                                <MenuFlyoutItem Click="{x:Bind OnNearbySharingClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/NearbySharing')}">
-
-                                    <MenuFlyoutItem.Icon>
-                                        <FontIcon Glyph="&#xF3E2;" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
 
@@ -643,16 +635,6 @@
 
                                                         <MenuFlyoutItem.Icon>
                                                             <FontIcon Glyph="&#xE70A;" />
-                                                        </MenuFlyoutItem.Icon>
-                                                    </MenuFlyoutItem>
-
-                                                    <MenuFlyoutItem
-                                                        Command="{StaticResource NearbySharingCommand}"
-                                                        CommandParameter="{x:Bind}"
-                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/NearbySharing')}">
-
-                                                        <MenuFlyoutItem.Icon>
-                                                            <FontIcon Glyph="&#xF3E2;" />
                                                         </MenuFlyoutItem.Icon>
                                                     </MenuFlyoutItem>
 

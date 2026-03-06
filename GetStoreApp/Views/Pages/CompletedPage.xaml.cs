@@ -396,16 +396,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 就近分享
-        /// </summary>
-        private async void OnNearbySharingExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is CompletedModel completed && File.Exists(completed.FilePath))
-            {
-            }
-        }
-
-        /// <summary>
         /// 打开当前项目存储的文件夹
         /// </summary>
         private void OnOpenFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
@@ -674,32 +664,6 @@ namespace GetStoreApp.Views.Pages
                     await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.ShareFailed, true, selectedCompletedDataList.Count));
                     LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShowShareUIClicked), 2, e);
                 }
-            }
-        }
-
-        /// <summary>
-        /// 就近分享
-        /// </summary>
-        private async void OnNearbySharingClicked(object sender, RoutedEventArgs args)
-        {
-            List<CompletedModel> selectedCompletedDataList = [];
-
-            foreach (CompletedModel completedItem in CompletedCollection)
-            {
-                if (completedItem.IsSelected)
-                {
-                    selectedCompletedDataList.Add(completedItem);
-                }
-            }
-
-            // 没有选中任何内容时显示空提示对话框
-            if (selectedCompletedDataList.Count is 0)
-            {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
-                return;
-            }
-            else
-            {
             }
         }
 
