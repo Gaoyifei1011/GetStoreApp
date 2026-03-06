@@ -1913,8 +1913,8 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (progress.Status is PackageDeploymentProgressStatus.Queued)
                 {
                     IsInstalling = true;
-                    IsInstallWaiting = false; // TODO：windows app sdk api 问题
-                    //InstallStateString = WaitInstallString;
+                    IsInstallWaiting = true;
+                    InstallStateString = WaitInstallString;
                     InstallProgressValue = progress.Progress * 100;
                     InstallStateString = string.Format(InstallProgressString, Convert.ToInt32(progress.Progress * 100));
                 }

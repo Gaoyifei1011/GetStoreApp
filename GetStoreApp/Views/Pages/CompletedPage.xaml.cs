@@ -838,8 +838,8 @@ namespace GetStoreApp.Views.Pages
                 if (progress.Status is PackageDeploymentProgressStatus.Queued)
                 {
                     completed.IsInstalling = true;
-                    completed.IsInstallWaiting = false; // TODO：windows app sdk api 问题
-                    //InstallStateString = WaitInstallString;
+                    completed.IsInstallWaiting = true;
+                    completed.InstallStateString = WaitInstallString;
                     completed.InstallProgressValue = Convert.ToInt32(progress.Progress * 100);
                     completed.InstallStateString = string.Format(InstallProgressString, progress.Progress * 100);
                 }
