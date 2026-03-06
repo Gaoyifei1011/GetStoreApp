@@ -1625,12 +1625,13 @@ namespace GetStoreAppInstaller.Views.Windows
             if (File.Exists(fileName))
             {
                 CanDragFile = false;
+                IsCancelInstall = true;
                 IsInstalling = true;
                 IsInstallFailed = false;
                 InstallProgressValue = 0;
                 InstallStateString = PrepareInstallString;
 
-                (bool result, PackageDeploymentResult packageDeploymentResult, Exception exception) = await Task.Run(async () =>
+                (bool result, bool isCanceled, PackageDeploymentResult packageDeploymentResult, Exception exception) = await Task.Run(async () =>
                 {
                     string extensionName = Path.GetExtension(fileName);
 
@@ -1667,69 +1668,79 @@ namespace GetStoreAppInstaller.Views.Windows
 
                             // 更新安装进度
                             installPackageWithProgress.Progress = (result, progress) => OnPackageInstallProgress(result, progress);
-                            return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, await installPackageWithProgress, null);
+                            return ValueTuple.Create<bool, bool, PackageDeploymentResult, Exception>(true, false, await installPackageWithProgress, null);
+                        }
+                        // 任务已取消
+                        catch (OperationCanceledException e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(OnInstallAppClicked), 1, e);
+                            return ValueTuple.Create<bool, bool, PackageDeploymentResult, Exception>(true, true, null, e);
                         }
                         // 安装失败显示失败信息
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(OnInstallAppClicked), 1, e);
-                            return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, null, e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(OnInstallAppClicked), 2, e);
+                            return ValueTuple.Create<bool, bool, PackageDeploymentResult, Exception>(true, false, null, e);
                         }
                     }
                     else
                     {
-                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, null);
+                        return ValueTuple.Create<bool, bool, PackageDeploymentResult, Exception>(false, false, null, null);
                     }
                 });
 
-                if (result && packageDeploymentResult is not null)
+                IsCancelInstall = true;
+                if (result)
                 {
-                    if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
+                    if (!isCanceled && packageDeploymentResult is not null)
                     {
-                        // 更新应用安装状态
-                        CanDragFile = true;
-                        InstallProgressValue = 100;
-                        IsInstallWaiting = false;
-                        IsInstallFailed = false;
-                        InstallFailedInformation = string.Empty;
-                        IsAppInstalled = true;
-                        InstallStateString = AppInstallSuccessfullyString;
-                        AppInstalledState = AppInstalledNotNewVersionString;
-
-                        await Task.Run(() =>
+                        if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
                         {
-                            // 显示安装成功通知
-                            AppNotificationBuilder appNotificationBuilder = new();
-                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(AppInstallSuccessfully1String, PackageName));
-                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        });
-                    }
-                    else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
-                    {
-                        string errorCode = packageDeploymentResult.Error is not null ? "0x" + Convert.ToString(packageDeploymentResult.Error.HResult, 16).ToUpperInvariant() : NotAvailableString;
-                        string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+                            // 更新应用安装状态
+                            CanDragFile = true;
+                            InstallProgressValue = 100;
+                            IsInstallWaiting = false;
+                            IsInstallFailed = false;
+                            InstallFailedInformation = string.Empty;
+                            IsAppInstalled = true;
+                            InstallStateString = AppInstallSuccessfullyString;
+                            AppInstalledState = AppInstalledNotNewVersionString;
 
-                        // 更新应用安装状态
-                        CanDragFile = true;
-                        InstallProgressValue = 100;
-                        IsInstallWaiting = false;
-                        IsInstallFailed = true;
-                        InstallFailedInformation = errorMessage;
-                        IsAppInstalled = false;
-                        InstallStateString = AppInstallFailedString;
-                        AppInstalledState = AppNotInstallString;
-
-                        await Task.Run(() =>
+                            await Task.Run(() =>
+                            {
+                                // 显示安装成功通知
+                                AppNotificationBuilder appNotificationBuilder = new();
+                                appNotificationBuilder.AddArgument("action", "OpenApp");
+                                appNotificationBuilder.AddText(string.Format(AppInstallSuccessfully1String, PackageName));
+                                ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                            });
+                        }
+                        else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                         {
-                            // 显示安装失败通知
-                            AppNotificationBuilder appNotificationBuilder = new();
-                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(AppInstallFailed1String, PackageName));
-                            appNotificationBuilder.AddText(string.Format(AppInstallFailed2String, errorCode));
-                            appNotificationBuilder.AddText(string.Format(AppInstallFailed3String, errorMessage));
-                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        });
+                            string errorCode = packageDeploymentResult.Error is not null ? "0x" + Convert.ToString(packageDeploymentResult.Error.HResult, 16).ToUpperInvariant() : NotAvailableString;
+                            string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+
+                            // 更新应用安装状态
+                            CanDragFile = true;
+                            InstallProgressValue = 100;
+                            IsInstallWaiting = false;
+                            IsInstallFailed = true;
+                            InstallFailedInformation = errorMessage;
+                            IsAppInstalled = false;
+                            InstallStateString = AppInstallFailedString;
+                            AppInstalledState = AppNotInstallString;
+
+                            await Task.Run(() =>
+                            {
+                                // 显示安装失败通知
+                                AppNotificationBuilder appNotificationBuilder = new();
+                                appNotificationBuilder.AddArgument("action", "OpenApp");
+                                appNotificationBuilder.AddText(string.Format(AppInstallFailed1String, PackageName));
+                                appNotificationBuilder.AddText(string.Format(AppInstallFailed2String, errorCode));
+                                appNotificationBuilder.AddText(string.Format(AppInstallFailed3String, errorMessage));
+                                ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                            });
+                        }
                     }
                 }
                 else
@@ -1774,7 +1785,6 @@ namespace GetStoreAppInstaller.Views.Windows
             {
                 IsCancelInstall = false;
                 await Task.Run(installPackageWithProgress.Cancel);
-                IsCancelInstall = true;
             }
         }
 
