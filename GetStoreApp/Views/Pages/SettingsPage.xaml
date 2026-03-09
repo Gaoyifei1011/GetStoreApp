@@ -199,35 +199,6 @@
                                 Margin="16,10,16,10"
                                 FontSize="15"
                                 FontWeight="Normal"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/SearchApps')}"
-                                TextAlignment="Left" />
-
-                            <TextBlock
-                                Margin="16,0,16,5"
-                                FontSize="14"
-                                FontWeight="Normal"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/SearchAppsDescription')}"
-                                TextAlignment="Justify"
-                                TextWrapping="Wrap" />
-
-                            <StackPanel Margin="16,0,16,5" Spacing="5">
-
-                                <TextBlock HorizontalAlignment="Left">
-                                    <Hyperlink
-                                        Click="{x:Bind OnLearnEncryptedPackageClicked}"
-                                        NavigateUri="https://apps.microsoft.com/detail/9wzdncrfjbmp"
-                                        UnderlineStyle="None">
-                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/DownloadMicrosoftStore')}" />
-                                    </Hyperlink>
-                                </TextBlock>
-                            </StackPanel>
-
-                            <MenuFlyoutSeparator />
-
-                            <TextBlock
-                                Margin="16,10,16,10"
-                                FontSize="15"
-                                FontWeight="Normal"
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Settings/LinkFilter')}"
                                 TextAlignment="Left" />
 

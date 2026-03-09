@@ -71,22 +71,6 @@ namespace GetStoreApp.Views.Pages
                 {
                     InitializeQueryLinksContent(dataList);
                 }
-
-                if (StoreFrame.Content is SearchStorePage searchStorePage)
-                {
-                    if (Equals(SearchAppsModeService.SearchAppsMode, SearchAppsModeService.SearchAppsModeList[0]))
-                    {
-                        searchStorePage.UseSearchType = false;
-                    }
-                    else if (Equals(SearchAppsModeService.SearchAppsMode, SearchAppsModeService.SearchAppsModeList[1]))
-                    {
-                        searchStorePage.UseSearchType = true;
-                    }
-                    else
-                    {
-                        searchStorePage.UseSearchType = false;
-                    }
-                }
             }
         }
 

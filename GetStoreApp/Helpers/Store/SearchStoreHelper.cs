@@ -19,11 +19,12 @@ namespace GetStoreApp.Helpers.Store
     {
         private static readonly string storeLink = "https://apps.microsoft.com/store/detail/{0}";
         private static readonly Uri manifestSearchUri = new("https://storeedgefd.dsx.mp.microsoft.com/v9.0/manifestSearch");
+        private static readonly Uri storeResultsSearchUri = new("https://storeedgefd.dsx.mp.microsoft.com/v9.0/pages/searchResults");
 
         /// <summary>
-        /// 生成搜索应用的所需的字符串
+        /// 生成清单搜索应用的所需的字符串
         /// </summary>
-        public static string GenerateSearchString(string content)
+        public static string GenerateManifestSearchString(string content)
         {
             try
             {
@@ -65,9 +66,62 @@ namespace GetStoreApp.Helpers.Store
         }
 
         /// <summary>
-        /// 搜索商店应用
+        /// 使用商店应用接口方式搜索应用
         /// </summary>
-        public static async Task<(bool requestResult, List<SearchStoreModel> searchStoreList)> SearchStoreAppsAsync(string generatedContent)
+        public static async Task<(bool requestResult, List<SearchStoreModel> searchStoreList)> StoreSearchAsync(string content)
+        {
+            bool requestResult = false;
+            List<SearchStoreModel> searchStoreList = [];
+
+            try
+            {
+                Uri storeSearchUri = new(string.Format("{0}?market={1}&locale={2}&deviceFamily=windows.desktop&query={3}", storeResultsSearchUri, StoreRegionService.StoreRegion.CodeTwoLetter, LanguageService.AppLanguage.Key, content));
+
+                // 默认超时时间是 20 秒
+                HttpClient httpClient = new();
+                HttpRequestResult httpRequestResult = await httpClient.TryGetAsync(storeSearchUri);
+                httpClient.Dispose();
+
+                // 请求成功
+                if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
+                {
+                    requestResult = true;
+                    Dictionary<string, string> responseDict = new()
+                    {
+                        { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
+                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
+                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
+                    };
+
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(StoreSearchAsync), 1, responseDict);
+                    string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
+
+                    if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
+                    {
+                        // TODO：未完成
+                    }
+                }
+                // 请求失败
+                else
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(StoreSearchAsync), 2, httpRequestResult.ExtendedError);
+                }
+
+                httpRequestResult.Dispose();
+            }
+            // 其他异常
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(StoreSearchAsync), 3, e);
+            }
+
+            return ValueTuple.Create(requestResult, searchStoreList);
+        }
+
+        /// <summary>
+        /// 按照清单方式搜索应用
+        /// </summary>
+        public static async Task<(bool requestResult, List<SearchStoreModel> searchStoreList)> ManifestSearchAsync(string generatedContent)
         {
             bool requestResult = false;
             List<SearchStoreModel> searchStoreList = [];
@@ -97,7 +151,7 @@ namespace GetStoreApp.Helpers.Store
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(SearchStoreAppsAsync), 1, responseDict);
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(ManifestSearchAsync), 1, responseDict);
                     string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                     if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
@@ -119,7 +173,7 @@ namespace GetStoreApp.Helpers.Store
                 // 请求失败
                 else
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(SearchStoreAppsAsync), 2, httpRequestResult.ExtendedError);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(ManifestSearchAsync), 2, httpRequestResult.ExtendedError);
                 }
 
                 httpRequestResult.Dispose();
@@ -127,7 +181,7 @@ namespace GetStoreApp.Helpers.Store
             // 其他异常
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(SearchStoreAppsAsync), 3, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(ManifestSearchAsync), 3, e);
             }
 
             return ValueTuple.Create(requestResult, searchStoreList);

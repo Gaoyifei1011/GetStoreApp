@@ -35,26 +35,10 @@ namespace GetStoreApp.Views.Pages
         private readonly string InfoBarGettingString = ResourceService.GetLocalized("SearchStore/InfoBarGetting");
         private readonly string InfoBarSuccessString = ResourceService.GetLocalized("SearchStore/InfoBarSuccess");
         private readonly string InfoBarWarningString = ResourceService.GetLocalized("SearchStore/InfoBarWarning");
-        private readonly string NormalSearchString = ResourceService.GetLocalized("SearchStore/NormalSearch");
+        private readonly string ManifestSearchString = ResourceService.GetLocalized("SearchStore/ManifestSearch");
         private readonly string SearchStoreCountInfo = ResourceService.GetLocalized("SearchStore/SearchStoreCountInfo");
-        private readonly string SimilarSearchString = ResourceService.GetLocalized("SearchStore/SimilarSearch");
+        private readonly string StoreSearchString = ResourceService.GetLocalized("SearchStore/StoreSearch");
         private readonly string WelcomeString = ResourceService.GetLocalized("SearchStore/Welcome");
-
-        private bool _useSearchType;
-
-        public bool UseSearchType
-        {
-            get { return _useSearchType; }
-
-            set
-            {
-                if (!Equals(_useSearchType, value))
-                {
-                    _useSearchType = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UseSearchType)));
-                }
-            }
-        }
 
         private KeyValuePair<string, string> _selectedSearchType;
 
@@ -198,8 +182,8 @@ namespace GetStoreApp.Views.Pages
         {
             InitializeComponent();
             StateInfoText = WelcomeString;
-            SearchTypeList.Add(KeyValuePair.Create("NormalSearch", NormalSearchString));
-            SearchTypeList.Add(KeyValuePair.Create("SimilarSearch", SimilarSearchString));
+            SearchTypeList.Add(KeyValuePair.Create("StoreSearch", StoreSearchString));
+            SearchTypeList.Add(KeyValuePair.Create("ManifestSearch", ManifestSearchString));
             SelectedSearchType = SearchTypeList[0];
 
             SearchStoreInfoList.Add(new InfoBarModel
@@ -258,19 +242,6 @@ namespace GetStoreApp.Views.Pages
         protected override async void OnNavigatedTo(NavigationEventArgs args)
         {
             List<HistoryModel> searchStoreHistoryList = await Task.Run(HistoryStorageService.GetSearchStoreData);
-
-            if (Equals(SearchAppsModeService.SearchAppsMode, SearchAppsModeService.SearchAppsModeList[0]))
-            {
-                UseSearchType = false;
-            }
-            else if (Equals(SearchAppsModeService.SearchAppsMode, SearchAppsModeService.SearchAppsModeList[1]))
-            {
-                UseSearchType = true;
-            }
-            else
-            {
-                UseSearchType = false;
-            }
 
             HistoryCollection.Clear();
             foreach (HistoryModel historyItem in searchStoreHistoryList)
@@ -398,9 +369,21 @@ namespace GetStoreApp.Views.Pages
 
                 (bool requestResult, List<SearchStoreModel> searchStoreList) = await Task.Run(async () =>
                 {
-                    string searchText = SearchText;
-                    string generatedContent = SearchStoreHelper.GenerateSearchString(searchText);
-                    return await SearchStoreHelper.SearchStoreAppsAsync(generatedContent);
+                    if (Equals(SelectedSearchType, SearchTypeList[0]))
+                    {
+                        // TODO：未完成
+                        return ValueTuple.Create<bool, List<SearchStoreModel>>(false, null);
+                    }
+                    else if (Equals(SelectedSearchType, SearchTypeList[1]))
+                    {
+                        string searchText = SearchText;
+                        string generatedContent = SearchStoreHelper.GenerateManifestSearchString(searchText);
+                        return await SearchStoreHelper.ManifestSearchAsync(generatedContent);
+                    }
+                    else
+                    {
+                        return ValueTuple.Create<bool, List<SearchStoreModel>>(false, null);
+                    }
                 });
 
                 // 获取成功

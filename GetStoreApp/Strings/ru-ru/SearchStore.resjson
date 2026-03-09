@@ -8,7 +8,7 @@
   "InfoBarGetting": "Поиск с серверов Microsoft Store, подождите...",
   "InfoBarSuccess": "Приложения успешно найдены с серверов Microsoft Store",
   "InfoBarWarning": "Данные, возвращенные сервером, пусты, проверьте введенные вами данные",
-  "NormalSearch": "Стандартный поиск",
+  "ManifestSearch": "Поиск манифеста",
   "Options": "Параметры",
   "OptionsToolTip": "Выберите параметры, которые вы хотите использовать",
   "QueryLinks": "Запросить ссылки",
@@ -19,9 +19,9 @@
   "SearchStore": "Поиск приложений",
   "SearchStoreCountInfo": "{0} результатов найдено в Microsoft Store",
   "SearchStoreEmpty": "Нет результатов поиска, проверьте введенный вами контент и повторите попытку",
-  "SimilarSearch": "Похожие результаты поиска",
   "StoreAppLink": "Ссылка на приложение",
   "StoreAppName": "Имя приложения",
   "StoreAppPublisher": "Издатель приложения",
+  "StoreSearch": "Поиск по магазину",
   "Welcome": "Добро пожаловать в использование GetStoreApp"
 }

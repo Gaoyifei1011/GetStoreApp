@@ -28,7 +28,7 @@
   "SearchApps": "Search apps",
   "SearchStoreHelp1": "There are two modes when using the console client interface to search: normal search and similar search",
   "SearchStoreHelp2": "Normal search finds apps or games that match the entered keywords",
-  "SearchStoreHelp3": "Similar search finds products similar to the specified application based on the entered keywords",
+  "SearchStoreHelp3": "Manifest search follows the same method as WinGet for searching for store applications",
   "TroubleShoot": "Trouble shoot",
   "UseInstruction": "Direction for use",
   "UseInstructionToolTip": "Click to learn how to use the app",
