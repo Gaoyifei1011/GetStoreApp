@@ -1,6 +1,7 @@
 ﻿{
   "CopyLink": "Copy link",
   "CopyLinkToolTip": "Copy the app link to the clipboard",
+  "ExactSearch": "Exact search",
   "FillIn": "Fill in",
   "HistoryContent": "Input content",
   "HistoryEmpty": "The history is empty",
@@ -22,6 +23,5 @@
   "StoreAppLink": "App link",
   "StoreAppName": "App name",
   "StoreAppPublisher": "App publisher",
-  "StoreSearch": "Store search",
   "Welcome": "Welcome to use GetStoreApp"
 }

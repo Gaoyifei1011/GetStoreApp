@@ -1,6 +1,7 @@
 ﻿{
   "CopyLink": "复制链接",
   "CopyLinkToolTip": "复制应用链接到剪贴板",
+  "ExactSearch": "精确搜索",
   "FillIn": "填入",
   "HistoryContent": "输入的内容",
   "HistoryEmpty": "历史记录空空如也",
@@ -22,6 +23,5 @@
   "StoreAppLink": "应用链接",
   "StoreAppName": "应用名称",
   "StoreAppPublisher": "发布者",
-  "StoreSearch": "商店搜索",
   "Welcome": "欢迎使用获取商店应用"
 }

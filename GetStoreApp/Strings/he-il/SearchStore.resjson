@@ -1,6 +1,7 @@
 ﻿{
   "CopyLink": "העתק קישור",
   "CopyLinkToolTip": "העתק את קישור היישום ללוח",
+  "ExactSearch": "חיפוש מדויק",
   "FillIn": "מלא",
   "HistoryContent": "תוכן שהוזן",
   "HistoryEmpty": "ההיסטוריה ריקה",
@@ -19,7 +20,6 @@
   "SearchStore": "חפש יישומים",
   "SearchStoreCountInfo": "נמצאו {0} תוצאות מחנות Microsoft",
   "SearchStoreEmpty": "לא נמצאו תוצאות, אנא בדוק את התוכן שהזנת ונסה שוב",
-  "StoreSearch": "חיפוש בחנות",
   "StoreAppLink": "קישור יישום",
   "StoreAppName": "שם יישום",
   "StoreAppPublisher": "מפרסם",

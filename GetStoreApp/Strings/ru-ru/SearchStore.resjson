@@ -1,6 +1,7 @@
 ﻿{
   "CopyLink": "Копировать ссылку",
   "CopyLinkToolTip": "Копировать ссылку на приложение в буфер обмена",
+  "ExactSearch": "Точный поиск",
   "FillIn": "Заполнить",
   "HistoryContent": "Вводимый контент",
   "HistoryEmpty": "История пуста",
@@ -22,6 +23,5 @@
   "StoreAppLink": "Ссылка на приложение",
   "StoreAppName": "Имя приложения",
   "StoreAppPublisher": "Издатель приложения",
-  "StoreSearch": "Поиск по магазину",
   "Welcome": "Добро пожаловать в использование GetStoreApp"
 }

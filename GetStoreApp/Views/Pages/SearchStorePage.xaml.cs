@@ -31,13 +31,13 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SearchStorePage : Page, INotifyPropertyChanged
     {
+        private readonly string ExactSearchString = ResourceService.GetLocalized("SearchStore/ExactSearch");
         private readonly string InfoBarErrorString = ResourceService.GetLocalized("SearchStore/InfoBarError");
         private readonly string InfoBarGettingString = ResourceService.GetLocalized("SearchStore/InfoBarGetting");
         private readonly string InfoBarSuccessString = ResourceService.GetLocalized("SearchStore/InfoBarSuccess");
         private readonly string InfoBarWarningString = ResourceService.GetLocalized("SearchStore/InfoBarWarning");
         private readonly string ManifestSearchString = ResourceService.GetLocalized("SearchStore/ManifestSearch");
         private readonly string SearchStoreCountInfo = ResourceService.GetLocalized("SearchStore/SearchStoreCountInfo");
-        private readonly string StoreSearchString = ResourceService.GetLocalized("SearchStore/StoreSearch");
         private readonly string WelcomeString = ResourceService.GetLocalized("SearchStore/Welcome");
 
         private KeyValuePair<string, string> _selectedSearchType;
@@ -182,7 +182,7 @@ namespace GetStoreApp.Views.Pages
         {
             InitializeComponent();
             StateInfoText = WelcomeString;
-            SearchTypeList.Add(KeyValuePair.Create("StoreSearch", StoreSearchString));
+            SearchTypeList.Add(KeyValuePair.Create("ExactSearch", ExactSearchString));
             SearchTypeList.Add(KeyValuePair.Create("ManifestSearch", ManifestSearchString));
             SelectedSearchType = SearchTypeList[0];
 
@@ -372,7 +372,7 @@ namespace GetStoreApp.Views.Pages
                     if (Equals(SelectedSearchType, SearchTypeList[0]))
                     {
                         string searchText = SearchText;
-                        return await SearchStoreHelper.StoreSearchAsync(searchText);
+                        return await SearchStoreHelper.StoreExactSearchAsync(searchText);
                     }
                     else if (Equals(SelectedSearchType, SearchTypeList[1]))
                     {
