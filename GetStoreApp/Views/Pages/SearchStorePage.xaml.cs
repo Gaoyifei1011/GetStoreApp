@@ -371,8 +371,8 @@ namespace GetStoreApp.Views.Pages
                 {
                     if (Equals(SelectedSearchType, SearchTypeList[0]))
                     {
-                        // TODO：未完成
-                        return ValueTuple.Create<bool, List<SearchStoreModel>>(false, null);
+                        string searchText = SearchText;
+                        return await SearchStoreHelper.StoreSearchAsync(searchText);
                     }
                     else if (Equals(SelectedSearchType, SearchTypeList[1]))
                     {

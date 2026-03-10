@@ -96,9 +96,33 @@ namespace GetStoreApp.Helpers.Store
                     LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(StoreSearchAsync), 1, responseDict);
                     string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
-                    if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
+                    if (JsonArray.TryParse(responseString, out JsonArray responseStringArray) && responseStringArray.Count is 2)
                     {
-                        // TODO：未完成
+                        JsonObject jsonObject = responseStringArray.GetObjectAt(1);
+                        JsonObject payloadObject = jsonObject.GetNamedObject("Payload");
+
+                        if (string.Equals(payloadObject.GetNamedString("$type"), "Microsoft.Marketplace.Storefront.Contracts.V9.SearchResponse, Microsoft.Marketplace.Storefront.Contracts", StringComparison.OrdinalIgnoreCase))
+                        {
+                            JsonArray searchResultsArray = payloadObject.GetNamedArray("SearchResults");
+
+                            foreach (IJsonValue serarchResults in searchResultsArray)
+                            {
+                                JsonObject searchResultsObject = serarchResults.GetObject();
+                                if (string.Equals(searchResultsObject.GetNamedString("$type"), "Microsoft.Marketplace.Storefront.Contracts.V8.One.CardModel, Microsoft.Marketplace.Storefront.Contracts", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    string productId = searchResultsObject.GetNamedString("ProductId");
+                                    string title = searchResultsObject.GetNamedString("Title");
+                                    string publisherName = searchResultsObject.GetNamedString("PublisherName");
+
+                                    searchStoreList.Add(new SearchStoreModel()
+                                    {
+                                        StoreAppLink = string.Format(storeLink, productId),
+                                        StoreAppName = title,
+                                        StoreAppPublisher = publisherName
+                                    });
+                                }
+                            }
+                        }
                     }
                 }
                 // 请求失败
