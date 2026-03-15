@@ -7,6 +7,7 @@ using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,39 @@ namespace GetStoreApp.Views.Pages
         private Type navigateType;
         private object navigateParameter;
         private bool? slideDirection;
+        private bool canScrollHorizontally;
+
+        private bool _isPreviousEnabled;
+
+        public bool IsPreviousEnabled
+        {
+            get { return _isPreviousEnabled; }
+
+            set
+            {
+                if (!Equals(_isPreviousEnabled, value))
+                {
+                    _isPreviousEnabled = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPreviousEnabled)));
+                }
+            }
+        }
+
+        private bool _isNextEnabled;
+
+        public bool IsNextEnabled
+        {
+            get { return _isNextEnabled; }
+
+            set
+            {
+                if (!Equals(_isNextEnabled, value))
+                {
+                    _isNextEnabled = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNextEnabled)));
+                }
+            }
+        }
 
         private SelectorBarItem _selectedItem;
 
@@ -61,21 +95,6 @@ namespace GetStoreApp.Views.Pages
         public SettingsItemPage()
         {
             InitializeComponent();
-        }
-
-        /// <summary>
-        /// 设置项页面加载完成后触发的事件
-        /// </summary>
-        private void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            if (needNavigate)
-            {
-                NavigateTo(navigateType, navigateParameter, slideDirection);
-                needNavigate = false;
-                navigateType = null;
-                navigateParameter = null;
-                slideDirection = null;
-            }
         }
 
         #region 第一部分：重写父类事件
@@ -115,6 +134,110 @@ namespace GetStoreApp.Views.Pages
         #endregion 第一部分：重写父类事件
 
         #region 第二部分：设置项页面——挂载的事件
+
+        /// <summary>
+        /// 设置项页面加载完成后触发的事件
+        /// </summary>
+        private void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            canScrollHorizontally = SettingsScrollViewer.ExtentWidth > SettingsScrollViewer.ViewportWidth;
+            IsPreviousEnabled = false;
+            IsNextEnabled = false;
+
+            if (needNavigate)
+            {
+                NavigateTo(navigateType, navigateParameter, slideDirection);
+                needNavigate = false;
+                navigateType = null;
+                navigateParameter = null;
+                slideDirection = null;
+            }
+        }
+
+        /// <summary>
+        /// 鼠标进入后触发的事件
+        /// </summary>
+        private void OnSelectorBarPointerEntered(object sender, PointerRoutedEventArgs args)
+        {
+            if (canScrollHorizontally)
+            {
+                if (SettingsScrollViewer.HorizontalOffset <= 0)
+                {
+                    IsPreviousEnabled = false;
+                    IsNextEnabled = true;
+                }
+                else if (SettingsScrollViewer.HorizontalOffset >= SettingsScrollViewer.ScrollableWidth)
+                {
+                    IsPreviousEnabled = true;
+                    IsNextEnabled = false;
+                }
+                else
+                {
+                    IsPreviousEnabled = true;
+                    IsNextEnabled = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 鼠标退出后触发的事件
+        /// </summary>
+        private void OnSelectorBarPointerExited(object sender, PointerRoutedEventArgs args)
+        {
+            IsPreviousEnabled = false;
+            IsNextEnabled = false;
+        }
+
+        /// <summary>
+        /// 大小发生变化后触发的事件
+        /// </summary>
+        private void OnSizeChanged(object sender, SizeChangedEventArgs args)
+        {
+            canScrollHorizontally = SettingsScrollViewer.ExtentWidth > SettingsScrollViewer.ViewportWidth;
+            IsPreviousEnabled = false;
+            IsNextEnabled = false;
+        }
+
+        /// <summary>
+        /// 当滚动和缩放等操作导致视图更改时发生的事件
+        /// </summary>
+        private void OnViewChanged(object sender, ScrollViewerViewChangedEventArgs args)
+        {
+            if (canScrollHorizontally)
+            {
+                if (SettingsScrollViewer.HorizontalOffset <= 0)
+                {
+                    IsPreviousEnabled = false;
+                    IsNextEnabled = true;
+                }
+                else if (SettingsScrollViewer.HorizontalOffset >= SettingsScrollViewer.ScrollableWidth)
+                {
+                    IsPreviousEnabled = true;
+                    IsNextEnabled = false;
+                }
+                else
+                {
+                    IsPreviousEnabled = true;
+                    IsNextEnabled = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 向前移动
+        /// </summary>
+        private void OnPreviousClick(object sender, RoutedEventArgs args)
+        {
+            SettingsScrollViewer.ChangeView(SettingsScrollViewer.HorizontalOffset < 150 ? 0 : SettingsScrollViewer.HorizontalOffset - 150, null, null);
+        }
+
+        /// <summary>
+        /// 向后移动
+        /// </summary>
+        private void OnNextClick(object sender, RoutedEventArgs args)
+        {
+            SettingsScrollViewer.ChangeView(SettingsScrollViewer.HorizontalOffset >= SettingsScrollViewer.ScrollableWidth - 150 ? SettingsScrollViewer.ScrollableWidth : SettingsScrollViewer.HorizontalOffset + 150, null, null);
+        }
 
         /// <summary>
         /// 点击选择器栏选中项发生变化时发生的事件

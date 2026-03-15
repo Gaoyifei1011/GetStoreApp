@@ -46,21 +46,70 @@
 
         <!--  设置项控制栏  -->
         <Grid Grid.Row="0" Margin="20,0,30,3">
-            <SelectorBar
-                x:Name="SettingsItemSelectorBar"
-                Padding="0"
-                HorizontalAlignment="Left"
-                SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
-                SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}">
 
-                <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/General')}" />
-                <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/StoreAndUpdate')}" />
-                <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/WinGet')}" />
-                <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/Download')}" />
-                <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/AppInstaller')}" />
-                <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/Advanced')}" />
-                <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/About')}" />
-            </SelectorBar>
+            <Grid
+                Margin="0,0,40,0"
+                PointerEntered="{x:Bind OnSelectorBarPointerEntered}"
+                PointerExited="{x:Bind OnSelectorBarPointerExited}"
+                SizeChanged="{x:Bind OnSizeChanged}">
+
+                <Button
+                    Width="16"
+                    Height="32"
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Canvas.ZIndex="1"
+                    Click="{x:Bind OnPreviousClick}"
+                    CornerRadius="{StaticResource ControlCornerRadius}"
+                    IsTabStop="False"
+                    Template="{StaticResource HorizontalPreviousTemplate}"
+                    UseSystemFocusVisuals="False"
+                    Visibility="{x:Bind IsPreviousEnabled, Mode=OneWay}" />
+
+                <Button
+                    Width="16"
+                    Height="32"
+                    Margin="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Canvas.ZIndex="1"
+                    Click="{x:Bind OnNextClick}"
+                    CornerRadius="{StaticResource ControlCornerRadius}"
+                    IsTabStop="False"
+                    Template="{StaticResource HorizontalNextTemplate}"
+                    UseSystemFocusVisuals="False"
+                    Visibility="{x:Bind IsNextEnabled, Mode=OneWay}" />
+
+                <ScrollViewer
+                    x:Name="SettingsScrollViewer"
+                    Margin="12,0,4,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    HorizontalScrollBarVisibility="Hidden"
+                    HorizontalScrollMode="Enabled"
+                    VerticalScrollBarVisibility="Disabled"
+                    VerticalScrollMode="Disabled"
+                    ViewChanged="{x:Bind OnViewChanged}">
+
+                    <SelectorBar
+                        x:Name="SettingsItemSelectorBar"
+                        Margin="-12,0,0,0"
+                        Padding="0"
+                        HorizontalAlignment="Left"
+                        SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
+                        SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}">
+
+                        <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/General')}" />
+                        <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/StoreAndUpdate')}" />
+                        <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/WinGet')}" />
+                        <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/Download')}" />
+                        <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/AppInstaller')}" />
+                        <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/Advanced')}" />
+                        <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/About')}" />
+                    </SelectorBar>
+                </ScrollViewer>
+            </Grid>
 
             <Button
                 Width="34"
