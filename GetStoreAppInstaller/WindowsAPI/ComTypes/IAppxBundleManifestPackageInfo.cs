@@ -24,7 +24,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="packageId">包标识符。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetPackageId([MarshalAs(UnmanagedType.Interface)] out IAppxManifestPackageId packageId);
+        int GetPackageId([MarshalAs(UnmanagedType.Interface)] out IAppxManifestPackageId2 packageId);
 
         /// <summary>
         /// 检索包的文件名属性。

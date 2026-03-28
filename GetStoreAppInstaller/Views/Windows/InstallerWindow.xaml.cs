@@ -105,8 +105,8 @@ namespace GetStoreAppInstaller.Views.Windows
         private readonly ContentCoordinateConverter contentCoordinateConverter;
         private readonly OverlappedPresenter overlappedPresenter;
         private readonly SUBCLASSPROC installerWindowSubClassProc;
-        private readonly IAppxFactory3 appxFactory;
-        private readonly IAppxBundleFactory2 appxBundleFactory;
+        private readonly IAppxFactory appxFactory;
+        private readonly IAppxBundleFactory appxBundleFactory;
 
         [GeneratedRegex("""scale-(\d{3})""", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
         private static partial Regex ScaleRegex { get; }
@@ -941,14 +941,14 @@ namespace GetStoreAppInstaller.Views.Windows
                 Shell32Library.DragAcceptFiles(Win32Interop.GetWindowFromWindowId(AppWindow.Id), true);
             }
 
-            if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory3).GUID, out nint appxFactoryPtr) is 0)
+            if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory).GUID, out nint appxFactoryPtr) is 0)
             {
-                appxFactory = (IAppxFactory3)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxFactoryPtr, CreateObjectFlags.None);
+                appxFactory = (IAppxFactory)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxFactoryPtr, CreateObjectFlags.None);
             }
 
-            if (Ole32Library.CoCreateInstance(CLSID_AppxBundleFactory, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxBundleFactory2).GUID, out nint appxBundleFactoryPtr) is 0)
+            if (Ole32Library.CoCreateInstance(CLSID_AppxBundleFactory, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxBundleFactory).GUID, out nint appxBundleFactoryPtr) is 0)
             {
-                appxBundleFactory = (IAppxBundleFactory2)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxBundleFactoryPtr, CreateObjectFlags.None);
+                appxBundleFactory = (IAppxBundleFactory)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxBundleFactoryPtr, CreateObjectFlags.None);
             }
 
             rasterizationScale = contentIsland.RasterizationScale;
@@ -2221,7 +2221,7 @@ namespace GetStoreAppInstaller.Views.Windows
                         IRandomAccessStream randomAccessStream = await FileRandomAccessStream.OpenAsync(filePath, FileAccessMode.Read);
                         if (randomAccessStream is not null && ShCoreLibrary.CreateStreamOverRandomAccessStream((randomAccessStream as IWinRTObject).NativeObject.ThisPtr, typeof(IStream).GUID, out IStream fileStream) is 0)
                         {
-                            if (appxFactory is not null && appxFactory.CreatePackageReader2(fileStream, null, out IAppxPackageReader appxPackageReader) is 0)
+                            if (appxFactory is not null && appxFactory.CreatePackageReader(fileStream, out IAppxPackageReader appxPackageReader) is 0)
                             {
                                 parseResult = true;
 
@@ -2291,7 +2291,7 @@ namespace GetStoreAppInstaller.Views.Windows
                         IRandomAccessStream randomAccessStream = await FileRandomAccessStream.OpenAsync(filePath, FileAccessMode.Read);
                         if (randomAccessStream is not null && ShCoreLibrary.CreateStreamOverRandomAccessStream((randomAccessStream as IWinRTObject).NativeObject.ThisPtr, typeof(IStream).GUID, out IStream fileStream) is 0)
                         {
-                            if (appxBundleFactory is not null && appxBundleFactory.CreateBundleReader2(fileStream, null, out IAppxBundleReader appxBundleReader) is 0 && appxBundleReader.GetManifest(out IAppxBundleManifestReader appxBundleManifestReader) is 0)
+                            if (appxBundleFactory is not null && appxBundleFactory.CreateBundleReader(fileStream, out IAppxBundleReader appxBundleReader) is 0 && appxBundleReader.GetManifest(out IAppxBundleManifestReader appxBundleManifestReader) is 0)
                             {
                                 PackageManifestInformation packageManifestInformation = ParsePackageBundleManifestInfo(appxBundleManifestReader);
 
@@ -2311,7 +2311,7 @@ namespace GetStoreAppInstaller.Views.Windows
                                         {
                                             appxBundleReader.GetPayloadPackage(applicationFileName, out IAppxFile applicationFile);
 
-                                            if (applicationFile.GetStream(out IStream applicationFileStream) is 0 && appxFactory.CreatePackageReader2(applicationFileStream, null, out IAppxPackageReader appxPackageReader) is 0)
+                                            if (applicationFile.GetStream(out IStream applicationFileStream) is 0 && appxFactory.CreatePackageReader(applicationFileStream, out IAppxPackageReader appxPackageReader) is 0)
                                             {
                                                 Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(applicationFileStream, CreateComInterfaceFlags.None));
 
@@ -2569,7 +2569,7 @@ namespace GetStoreAppInstaller.Views.Windows
                         IRandomAccessStream randomAccessStream = await FileRandomAccessStream.OpenAsync(filePath, FileAccessMode.Read);
                         if (randomAccessStream is not null && ShCoreLibrary.CreateStreamOverRandomAccessStream((randomAccessStream as IWinRTObject).NativeObject.ThisPtr, typeof(IStream).GUID, out IStream fileStream) is 0)
                         {
-                            if (appxFactory is not null && appxFactory.CreatePackageReader2(fileStream, null, out IAppxPackageReader appxPackageReader) is 0)
+                            if (appxFactory is not null && appxFactory.CreatePackageReader(fileStream, out IAppxPackageReader appxPackageReader) is 0)
                             {
                                 parseResult = true;
 
@@ -2587,12 +2587,12 @@ namespace GetStoreAppInstaller.Views.Windows
                     // 解析以 appxbundle 或 msixbundle 格式结尾的应用包
                     else if (string.Equals(extensionName, ".appxbundle", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msixbundle", StringComparison.OrdinalIgnoreCase))
                     {
-                        if (Ole32Library.CoCreateInstance(CLSID_AppxBundleFactory, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxBundleFactory2).GUID, out nint appxBundleFactoryPtr) is 0)
+                        if (Ole32Library.CoCreateInstance(CLSID_AppxBundleFactory, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxBundleFactory).GUID, out nint appxBundleFactoryPtr) is 0)
                         {
                             IRandomAccessStream randomAccessStream = await FileRandomAccessStream.OpenAsync(filePath, FileAccessMode.Read);
                             if (randomAccessStream is not null && ShCoreLibrary.CreateStreamOverRandomAccessStream((randomAccessStream as IWinRTObject).NativeObject.ThisPtr, typeof(IStream).GUID, out IStream fileStream) is 0)
                             {
-                                if (appxBundleFactory is not null && appxBundleFactory.CreateBundleReader2(fileStream, null, out IAppxBundleReader appxBundleReader) is 0)
+                                if (appxBundleFactory is not null && appxBundleFactory.CreateBundleReader(fileStream, out IAppxBundleReader appxBundleReader) is 0)
                                 {
                                     parseResult = true;
 
@@ -2801,7 +2801,10 @@ namespace GetStoreAppInstaller.Views.Windows
 
                         try
                         {
-                            File.Delete(tempFilename);
+                            if (File.Exists(tempFilename))
+                            {
+                                File.Delete(tempFilename);
+                            }
                         }
                         catch (Exception e)
                         {
@@ -3112,8 +3115,8 @@ namespace GetStoreAppInstaller.Views.Windows
                     // 获取应用捆绑包中的所有资源包（暂不支持解析分割 resources.pri 的解析）
                     if (packageType is APPX_BUNDLE_PAYLOAD_PACKAGE_TYPE.APPX_BUNDLE_PAYLOAD_PACKAGE_TYPE_APPLICATION)
                     {
-                        appxBundleManifestPackageInfo.GetPackageId(out IAppxManifestPackageId appxManifestPackageId);
-                        appxManifestPackageId.GetArchitecture(out ProcessorArchitecture architecture);
+                        appxBundleManifestPackageInfo.GetPackageId(out IAppxManifestPackageId2 appxManifestPackageId);
+                        appxManifestPackageId.GetArchitecture2(out ProcessorArchitecture architecture);
                         applicationDict.TryAdd(architecture, fileName);
                         scaleResourceList.Add(fileName);
 
@@ -3273,7 +3276,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 {
                     scaleBundleItem.Value.GetStream(out IStream bundleFileStream);
 
-                    if (appxFactory is not null && appxFactory.CreatePackageReader2(bundleFileStream, null, out IAppxPackageReader appxPackageReader) is 0)
+                    if (appxFactory is not null && appxFactory.CreatePackageReader(bundleFileStream, out IAppxPackageReader appxPackageReader) is 0)
                     {
                         // 解析安装包所有文件
                         Dictionary<string, IAppxFile> appxFileDict = ParsePackagePayloadFiles(appxPackageReader);
