@@ -246,7 +246,7 @@
 
         <!--  应用更新结果展示项目控件  -->
         <ListView
-            Grid.Row="2"
+            Grid.Row="3"
             Padding="30,0,30,30"
             ItemsSource="{x:Bind AppUpdateCollection}"
             SelectionMode="None"

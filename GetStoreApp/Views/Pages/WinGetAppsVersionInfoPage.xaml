@@ -307,6 +307,7 @@
                                 IsTextSelectionEnabled="True"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind IsPackageLinkExisted, Mode=OneWay}">
+
                                 <Hyperlink NavigateUri="{x:Bind PackageLink, Mode=OneWay}" UnderlineStyle="None">
                                     <Run Text="{x:Bind PackageLink, Mode=OneWay}" />
                                 </Hyperlink>
@@ -355,6 +356,7 @@
                                 IsTextSelectionEnabled="True"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind IsPublisherLinkExisted, Mode=OneWay}">
+
                                 <Hyperlink NavigateUri="{x:Bind PublisherLink, Mode=OneWay}" UnderlineStyle="None">
                                     <Run Text="{x:Bind PublisherLink, Mode=OneWay}" />
                                 </Hyperlink>
@@ -379,6 +381,7 @@
                                 IsTextSelectionEnabled="True"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind IsPublisherSupportLinkExisted, Mode=OneWay}">
+
                                 <Hyperlink NavigateUri="{x:Bind PublisherSupportLink, Mode=OneWay}" UnderlineStyle="None">
                                     <Run Text="{x:Bind PublisherSupportLink, Mode=OneWay}" />
                                 </Hyperlink>
@@ -427,6 +430,7 @@
                                 IsTextSelectionEnabled="True"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind IsCopyRightLinkExisted, Mode=OneWay}">
+
                                 <Hyperlink NavigateUri="{x:Bind CopyRightLink, Mode=OneWay}" UnderlineStyle="None">
                                     <Run Text="{x:Bind CopyRightLink, Mode=OneWay}" />
                                 </Hyperlink>
@@ -487,6 +491,7 @@
                                 IsTextSelectionEnabled="True"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind IsPrivacyLinkExisted, Mode=OneWay}">
+
                                 <Hyperlink NavigateUri="{x:Bind PrivacyLink, Mode=OneWay}" UnderlineStyle="None">
                                     <Run Text="{x:Bind PrivacyLink, Mode=OneWay}" />
                                 </Hyperlink>
@@ -511,6 +516,7 @@
                                 IsTextSelectionEnabled="True"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind IsPurchaseLinkExisted, Mode=OneWay}">
+
                                 <Hyperlink NavigateUri="{x:Bind PurchaseLink, Mode=OneWay}" UnderlineStyle="None">
                                     <Run Text="{x:Bind PurchaseLink, Mode=OneWay}" />
                                 </Hyperlink>
@@ -547,6 +553,7 @@
                                 IsTextSelectionEnabled="True"
                                 TextWrapping="Wrap"
                                 Visibility="{x:Bind IsReleaseNotesLinkExisted, Mode=OneWay}">
+
                                 <Hyperlink NavigateUri="{x:Bind ReleaseNotesLink, Mode=OneWay}" UnderlineStyle="None">
                                     <Run Text="{x:Bind ReleaseNotesLink, Mode=OneWay}" />
                                 </Hyperlink>
