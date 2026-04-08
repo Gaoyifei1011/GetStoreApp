@@ -171,10 +171,7 @@ namespace GetStoreApp.Views.Dialogs
         {
             try
             {
-                if (slideDirection.HasValue)
-                {
-                    WinGetAppsVersionFrame.ContentTransitions = slideDirection.Value ? RightSlideNavigationTransitionCollection : LeftSlideNavigationTransitionCollection;
-                }
+                WinGetAppsVersionFrame.ContentTransitions = slideDirection.HasValue ? slideDirection.Value ? RightSlideNavigationTransitionCollection : LeftSlideNavigationTransitionCollection : SuppressNavigationTransitionCollection;
 
                 // 导航到该项目对应的页面
                 WinGetAppsVersionFrame.Navigate(navigationPageType, parameter);

@@ -2685,10 +2685,7 @@ namespace GetStoreApp.Views.Pages
         {
             try
             {
-                if (slideDirection.HasValue)
-                {
-                    WinGetFrame.ContentTransitions = slideDirection.Value ? RightSlideNavigationTransitionCollection : LeftSlideNavigationTransitionCollection;
-                }
+                WinGetFrame.ContentTransitions = slideDirection.HasValue ? slideDirection.Value ? RightSlideNavigationTransitionCollection : LeftSlideNavigationTransitionCollection : SuppressNavigationTransitionCollection;
 
                 // 导航到该项目对应的页面
                 WinGetFrame.Navigate(navigationPageType, parameter);

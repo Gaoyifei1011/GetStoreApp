@@ -497,10 +497,7 @@ namespace GetStoreApp.Views.Pages
         {
             try
             {
-                if (slideDirection.HasValue)
-                {
-                    SettingsItemFrame.ContentTransitions = slideDirection.Value ? RightSlideNavigationTransitionCollection : LeftSlideNavigationTransitionCollection;
-                }
+                SettingsItemFrame.ContentTransitions = slideDirection.HasValue ? slideDirection.Value ? RightSlideNavigationTransitionCollection : LeftSlideNavigationTransitionCollection : SuppressNavigationTransitionCollection;
 
                 // 导航到该项目对应的页面
                 SettingsItemFrame.Navigate(navigationPageType, parameter);
