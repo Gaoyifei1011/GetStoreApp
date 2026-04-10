@@ -169,7 +169,7 @@ namespace GetStoreApp.Views.Pages
                 catch (Exception e)
                 {
                     await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.ShareFailed, false, 1));
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShowShareUIExecuteRequested), 1, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnCopyEexeuteReqeusted), 1, e);
                 }
             }
         }
@@ -531,8 +531,6 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第三部分：已下载完成页面——挂载的事件
-
         /// <summary>
         /// 删除选中的任务
         /// </summary>
@@ -736,7 +734,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #region 第三部分：已下载完成页面——自定义事件
+        #endregion 第三部分：已下载完成页面——挂载的事件
+
+        #region 第四部分：已下载完成页面——自定义事件
 
         /// <summary>
         /// 在共享操作启动时发生的事件
@@ -853,7 +853,7 @@ namespace GetStoreApp.Views.Pages
             });
         }
 
-        #endregion 第三部分：已下载完成页面——自定义事件
+        #endregion 第四部分：已下载完成页面——自定义事件
 
         /// <summary>
         /// 获取文件缩略图
