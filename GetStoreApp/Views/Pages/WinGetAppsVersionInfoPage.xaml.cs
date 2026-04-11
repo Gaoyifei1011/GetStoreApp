@@ -667,9 +667,9 @@ namespace GetStoreApp.Views.Pages
                                 availableVersionList.Insert(0, new AvailableVersionModel()
                                 {
                                     IsDefaultVersion = true,
-                                    Version = SearchApps.CatalogPackage.DefaultInstallVersion.Version,
+                                    Version = UpgradableApps.CatalogPackage.DefaultInstallVersion.Version,
                                     PackageVersionId = null,
-                                    PackageVersionInfo = SearchApps.CatalogPackage.DefaultInstallVersion
+                                    PackageVersionInfo = UpgradableApps.CatalogPackage.DefaultInstallVersion
                                 });
                             }
 
@@ -866,7 +866,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 else if (UpgradableApps is not null)
                 {
-                    packageVersionInfo = availableVersion.PackageVersionId is not null ? SearchApps.CatalogPackage.GetPackageVersionInfo(availableVersion.PackageVersionId) : availableVersion.PackageVersionInfo;
+                    packageVersionInfo = availableVersion.PackageVersionId is not null ? UpgradableApps.CatalogPackage.GetPackageVersionInfo(availableVersion.PackageVersionId) : availableVersion.PackageVersionInfo;
 
                     if (packageVersionInfo is not null)
                     {
