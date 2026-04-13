@@ -220,7 +220,10 @@ namespace GetStoreApp.Views.Pages
                         {
                             LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(OnCheckUpdateClicked), 1, e);
                             IsChecking = false;
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, 2));
+                            DispatcherQueue.TryEnqueue(async () =>
+                            {
+                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, 2));
+                            });
                         }
 
                         if (!isNewest)
