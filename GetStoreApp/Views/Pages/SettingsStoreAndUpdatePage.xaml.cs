@@ -3,7 +3,6 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,9 +31,9 @@ namespace GetStoreApp.Views.Pages
         private readonly string InstallModeAppInstallString = ResourceService.GetLocalized("SettingsStoreAndUpdate/InstallModeAppInstall");
         private readonly string InstallModeCodeInstallString = ResourceService.GetLocalized("SettingsStoreAndUpdate/InstallModeCodeInstall");
 
-        private KeyValuePair<string, string> _queryLinksMode;
+        private ComboBoxItemModel _queryLinksMode;
 
-        public KeyValuePair<string, string> QueryLinksMode
+        public ComboBoxItemModel QueryLinksMode
         {
             get { return _queryLinksMode; }
 
@@ -48,9 +47,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private KeyValuePair<string, string> _searchAppsMode;
+        private ComboBoxItemModel _searchAppsMode;
 
-        public KeyValuePair<string, string> SearchAppsMode
+        public ComboBoxItemModel SearchAppsMode
         {
             get { return _searchAppsMode; }
 
@@ -64,9 +63,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private KeyValuePair<string, string> _appLinkOpenMode;
+        private ComboBoxItemModel _appLinkOpenMode;
 
-        public KeyValuePair<string, string> AppLinkOpenMode
+        public ComboBoxItemModel AppLinkOpenMode
         {
             get { return _appLinkOpenMode; }
 
@@ -80,9 +79,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private KeyValuePair<string, string> _installMode;
+        private ComboBoxItemModel _installMode;
 
-        public KeyValuePair<string, string> InstallMode
+        public ComboBoxItemModel InstallMode
         {
             get { return _installMode; }
 
@@ -144,9 +143,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private GeographicRegion _storeRegion;
+        private StoreRegionModel _storeRegion;
 
-        public GeographicRegion StoreRegion
+        public StoreRegionModel StoreRegion
         {
             get { return _storeRegion; }
 
@@ -192,11 +191,11 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<KeyValuePair<string, string>> QueryLinksModeList { get; } = [];
+        private List<ComboBoxItemModel> QueryLinksModeList { get; } = [];
 
-        private List<KeyValuePair<string, string>> AppLinkOpenModeList { get; } = [];
+        private List<ComboBoxItemModel> AppLinkOpenModeList { get; } = [];
 
-        private List<KeyValuePair<string, string>> InstallModeList { get; } = [];
+        private List<ComboBoxItemModel> InstallModeList { get; } = [];
 
         private ObservableCollection<StoreRegionModel> StoreRegionCollection { get; } = [];
 
@@ -205,36 +204,34 @@ namespace GetStoreApp.Views.Pages
         public SettingsStoreAndUpdatePage()
         {
             InitializeComponent();
-            QueryLinksModeList.Add(KeyValuePair.Create(QueryLinksModeService.QueryLinksModeList[0], QueryLinksModeOfficialString));
-            QueryLinksModeList.Add(KeyValuePair.Create(QueryLinksModeService.QueryLinksModeList[1], QueryLinksModeThirdPartyString));
-            QueryLinksMode = QueryLinksModeList.Find(item => string.Equals(item.Key, QueryLinksModeService.QueryLinksMode, StringComparison.OrdinalIgnoreCase));
+            QueryLinksModeList.Add(new ComboBoxItemModel() { SelectedValue = QueryLinksModeService.QueryLinksModeList[0], DisplayMember = QueryLinksModeOfficialString });
+            QueryLinksModeList.Add(new ComboBoxItemModel() { SelectedValue = QueryLinksModeService.QueryLinksModeList[1], DisplayMember = QueryLinksModeThirdPartyString });
+            QueryLinksMode = QueryLinksModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), QueryLinksModeService.QueryLinksMode, StringComparison.OrdinalIgnoreCase));
 
-            AppLinkOpenModeList.Add(KeyValuePair.Create(AppLinkOpenModeService.AppLinkOpenModeList[0], AppLinkOpenModeBuiltInAppString));
-            AppLinkOpenModeList.Add(KeyValuePair.Create(AppLinkOpenModeService.AppLinkOpenModeList[1], AppLinkOpenModeSystemBrowserString));
-            AppLinkOpenMode = AppLinkOpenModeList.Find(item => string.Equals(item.Key, AppLinkOpenModeService.AppLinkOpenMode, StringComparison.OrdinalIgnoreCase));
+            AppLinkOpenModeList.Add(new ComboBoxItemModel() { SelectedValue = AppLinkOpenModeService.AppLinkOpenModeList[0], DisplayMember = AppLinkOpenModeBuiltInAppString });
+            AppLinkOpenModeList.Add(new ComboBoxItemModel() { SelectedValue = AppLinkOpenModeService.AppLinkOpenModeList[1], DisplayMember = AppLinkOpenModeSystemBrowserString });
+            AppLinkOpenMode = AppLinkOpenModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), AppLinkOpenModeService.AppLinkOpenMode, StringComparison.OrdinalIgnoreCase));
 
-            InstallModeList.Add(KeyValuePair.Create(InstallModeService.InstallModeList[0], InstallModeAppInstallString));
-            InstallModeList.Add(KeyValuePair.Create(InstallModeService.InstallModeList[1], InstallModeCodeInstallString));
-            InstallMode = InstallModeList.Find(item => string.Equals(item.Key, InstallModeService.InstallMode, StringComparison.OrdinalIgnoreCase));
+            InstallModeList.Add(new ComboBoxItemModel() { SelectedValue = InstallModeService.InstallModeList[0], DisplayMember = InstallModeAppInstallString });
+            InstallModeList.Add(new ComboBoxItemModel() { SelectedValue = InstallModeService.InstallModeList[1], DisplayMember = InstallModeCodeInstallString });
+            InstallMode = InstallModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), InstallModeService.InstallMode, StringComparison.OrdinalIgnoreCase));
 
             foreach (GeographicRegion geographicRegionItem in StoreRegionService.StoreRegionList)
             {
-                if (string.Equals(StoreRegionService.StoreRegion.CodeTwoLetter, geographicRegionItem.CodeTwoLetter))
+                StoreRegionCollection.Add(new StoreRegionModel()
                 {
-                    StoreRegion = geographicRegionItem;
-                    StoreRegionCollection.Add(new StoreRegionModel()
-                    {
-                        StoreRegionInfo = geographicRegionItem,
-                        IsChecked = true
-                    });
-                }
-                else
+                    DisplayMember = geographicRegionItem.DisplayName,
+                    CodeTwoLetter = geographicRegionItem.CodeTwoLetter,
+                    GeographicRegion = geographicRegionItem
+                });
+            }
+
+            foreach (StoreRegionModel storeRegion in StoreRegionCollection)
+            {
+                if (string.Equals(StoreRegionService.StoreRegion.CodeTwoLetter, storeRegion.CodeTwoLetter))
                 {
-                    StoreRegionCollection.Add(new StoreRegionModel()
-                    {
-                        StoreRegionInfo = geographicRegionItem,
-                        IsChecked = false
-                    });
+                    StoreRegion = storeRegion;
+                    break;
                 }
             }
 
@@ -242,71 +239,41 @@ namespace GetStoreApp.Views.Pages
             StoreRegionService.PropertyChanged += OnServicePropertyChanged;
         }
 
-        #region 第一部分：XamlUICommand 命令调用时挂载的事件
-
-        /// <summary>
-        /// 修改商店区域
-        /// </summary>
-        private void OnStoreRegionExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (StoreRegionFlyout.IsOpen)
-            {
-                StoreRegionFlyout.Hide();
-            }
-
-            if (args.Parameter is StoreRegionModel storeRegion)
-            {
-                foreach (StoreRegionModel storeRegionItem in StoreRegionCollection)
-                {
-                    storeRegionItem.IsChecked = false;
-                    if (string.Equals(storeRegion.StoreRegionInfo.CodeTwoLetter, storeRegionItem.StoreRegionInfo.CodeTwoLetter))
-                    {
-                        StoreRegion = storeRegionItem.StoreRegionInfo;
-                        storeRegionItem.IsChecked = true;
-                    }
-                }
-
-                StoreRegionService.SetRegion(StoreRegion);
-            }
-        }
-
-        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
-
-        #region 第二部分：设置商店与更新页面——挂载的事件
+        #region 第一部分：设置商店与更新页面——挂载的事件
 
         /// <summary>
         /// 选择查询链接方式
         /// </summary>
-        private void OnQueryLinksModeSelectClicked(object sender, RoutedEventArgs args)
+        private void OnQueryLinksModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel queryLinksMode && !Equals(QueryLinksMode, queryLinksMode))
             {
-                QueryLinksMode = QueryLinksModeList[tag];
-                QueryLinksModeService.SetQueryLinksMode(QueryLinksMode.Key);
+                QueryLinksMode = queryLinksMode;
+                QueryLinksModeService.SetQueryLinksMode(Convert.ToString(QueryLinksMode.SelectedValue));
             }
         }
 
         /// <summary>
         /// 选择应用链接打开方式
         /// </summary>
-        private void OnAppLinkOpenModeSelectClicked(object sender, RoutedEventArgs args)
+        private void OnAppLinkOpenModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel appLinkOpenMode && !Equals(AppLinkOpenMode, appLinkOpenMode))
             {
-                AppLinkOpenMode = AppLinkOpenModeList[tag];
-                AppLinkOpenModeService.SetAppLinkOpenMode(AppLinkOpenMode.Key);
+                AppLinkOpenMode = appLinkOpenMode;
+                AppLinkOpenModeService.SetAppLinkOpenMode(Convert.ToString(AppLinkOpenMode.SelectedValue));
             }
         }
 
         /// <summary>
         /// 应用安装方式设置
         /// </summary>
-        private void OnInstallModeSelectClicked(object sender, RoutedEventArgs args)
+        private void OnInstallModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel installMode && !Equals(InstallMode, installMode))
             {
-                InstallMode = InstallModeList[tag];
-                InstallModeService.SetInstallMode(InstallMode.Key);
+                InstallMode = installMode;
+                InstallModeService.SetInstallMode(Convert.ToString(InstallMode.SelectedValue));
             }
         }
 
@@ -352,18 +319,16 @@ namespace GetStoreApp.Views.Pages
 
                 if (UseSystemRegionValue)
                 {
-                    StoreRegion = StoreRegionService.DefaultStoreRegion;
-                    StoreRegionService.SetRegion(StoreRegion);
-
-                    foreach (StoreRegionModel storeRegionItem in StoreRegionCollection)
+                    foreach (StoreRegionModel storeRegion in StoreRegionCollection)
                     {
-                        storeRegionItem.IsChecked = false;
-                        if (string.Equals(StoreRegion.CodeTwoLetter, storeRegionItem.StoreRegionInfo.CodeTwoLetter))
+                        if (Equals(storeRegion.CodeTwoLetter, StoreRegionService.DefaultStoreRegion.CodeTwoLetter))
                         {
-                            StoreRegion = storeRegionItem.StoreRegionInfo;
-                            storeRegionItem.IsChecked = true;
+                            StoreRegion = storeRegion;
+                            break;
                         }
                     }
+
+                    StoreRegionService.SetRegion(StoreRegion.GeographicRegion);
                 }
             }
         }
@@ -371,15 +336,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 区域设置菜单打开时自动定位到选中项
         /// </summary>
-        private void OnStoreRegionFlyoutOpened(object sender, object args)
+        private void OnStoreRegionSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            for (int index = 0; index < StoreRegionCollection.Count; index++)
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is StoreRegionModel storeRegion && !Equals(StoreRegion, storeRegion))
             {
-                if (StoreRegionCollection[index].IsChecked)
-                {
-                    StoreRegionListView.ScrollIntoView(StoreRegionCollection[index]);
-                    break;
-                }
+                StoreRegion = storeRegion;
+                StoreRegionService.SetRegion(StoreRegion.GeographicRegion);
             }
         }
 
@@ -407,9 +369,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第二部分：设置商店与更新页面——挂载的事件
+        #endregion 第一部分：设置商店与更新页面——挂载的事件
 
-        #region 第三部分：设置商店与更新页面——自定义事件
+        #region 第二部分：设置商店与更新页面——自定义事件
 
         /// <summary>
         /// 应用程序退出时触发的事件
@@ -443,15 +405,12 @@ namespace GetStoreApp.Views.Pages
 
                     if (UseSystemRegionValue)
                     {
-                        StoreRegion = StoreRegionService.DefaultStoreRegion;
-
-                        foreach (StoreRegionModel storeRegionItem in StoreRegionCollection)
+                        foreach (StoreRegionModel storeRegion in StoreRegionCollection)
                         {
-                            storeRegionItem.IsChecked = false;
-                            if (string.Equals(StoreRegion.CodeTwoLetter, storeRegionItem.StoreRegionInfo.CodeTwoLetter))
+                            if (Equals(storeRegion.CodeTwoLetter, StoreRegionService.DefaultStoreRegion.CodeTwoLetter))
                             {
-                                StoreRegion = storeRegionItem.StoreRegionInfo;
-                                storeRegionItem.IsChecked = true;
+                                StoreRegion = storeRegion;
+                                break;
                             }
                         }
                     }
@@ -459,6 +418,6 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第三部分：设置商店与更新页面——自定义事件
+        #endregion 第二部分：设置商店与更新页面——自定义事件
     }
 }

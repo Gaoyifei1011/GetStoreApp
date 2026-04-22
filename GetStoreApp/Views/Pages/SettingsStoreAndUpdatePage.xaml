@@ -10,10 +10,6 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
-    <Page.Resources>
-        <XamlUICommand x:Name="StoreRegionCommand" ExecuteRequested="{x:Bind OnStoreRegionExecuteRequested}" />
-    </Page.Resources>
-
     <ScrollViewer
         HorizontalScrollBarVisibility="Disabled"
         HorizontalScrollMode="Disabled"
@@ -89,37 +85,14 @@
                     </TextBlock>
                 </StackPanel>
 
-                <DropDownButton
+                <ComboBox
                     Grid.Column="2"
                     VerticalAlignment="Center"
-                    Content="{x:Bind QueryLinksMode.Value, Mode=OneWay}">
-
-                    <DropDownButton.Flyout>
-                        <MenuFlyout Placement="Bottom">
-                            <RadioMenuFlyoutItem
-                                Click="{x:Bind OnQueryLinksModeSelectClicked}"
-                                GroupName="QueryLinksModeRadioGroup"
-                                IsChecked="{x:Bind x:String.Equals(QueryLinksMode.Key, QueryLinksModeList[0].Key), Mode=OneWay}"
-                                Text="{x:Bind QueryLinksModeList[0].Value}">
-
-                                <RadioMenuFlyoutItem.Tag>
-                                    <x:Int32>0</x:Int32>
-                                </RadioMenuFlyoutItem.Tag>
-                            </RadioMenuFlyoutItem>
-
-                            <RadioMenuFlyoutItem
-                                Click="{x:Bind OnQueryLinksModeSelectClicked}"
-                                GroupName="QueryLinksModeRadioGroup"
-                                IsChecked="{x:Bind x:String.Equals(QueryLinksMode.Key, QueryLinksModeList[1].Key), Mode=OneWay}"
-                                Text="{x:Bind QueryLinksModeList[1].Value}">
-
-                                <RadioMenuFlyoutItem.Tag>
-                                    <x:Int32>1</x:Int32>
-                                </RadioMenuFlyoutItem.Tag>
-                            </RadioMenuFlyoutItem>
-                        </MenuFlyout>
-                    </DropDownButton.Flyout>
-                </DropDownButton>
+                    DisplayMemberPath="DisplayMember"
+                    ItemsSource="{x:Bind QueryLinksModeList}"
+                    SelectedItem="{x:Bind QueryLinksMode, Mode=OneWay}"
+                    SelectionChanged="{x:Bind OnQueryLinksModeSelectionChanged}"
+                    Style="{StaticResource ComboBoxStyle}" />
             </Grid>
 
             <!--  应用链接打开方式设置  -->
@@ -181,37 +154,14 @@
                     </TextBlock>
                 </StackPanel>
 
-                <DropDownButton
+                <ComboBox
                     Grid.Column="2"
                     VerticalAlignment="Center"
-                    Content="{x:Bind AppLinkOpenMode.Value, Mode=OneWay}">
-
-                    <DropDownButton.Flyout>
-                        <MenuFlyout Placement="Bottom">
-                            <RadioMenuFlyoutItem
-                                Click="{x:Bind OnAppLinkOpenModeSelectClicked}"
-                                GroupName="AppLinkOpenModeRadioGroup"
-                                IsChecked="{x:Bind x:String.Equals(AppLinkOpenMode.Key, AppLinkOpenModeList[0].Key), Mode=OneWay}"
-                                Text="{x:Bind AppLinkOpenModeList[0].Value}">
-
-                                <RadioMenuFlyoutItem.Tag>
-                                    <x:Int32>0</x:Int32>
-                                </RadioMenuFlyoutItem.Tag>
-                            </RadioMenuFlyoutItem>
-
-                            <RadioMenuFlyoutItem
-                                Click="{x:Bind OnAppLinkOpenModeSelectClicked}"
-                                GroupName="AppLinkOpenModeRadioGroup"
-                                IsChecked="{x:Bind x:String.Equals(AppLinkOpenMode.Key, AppLinkOpenModeList[1].Key), Mode=OneWay}"
-                                Text="{x:Bind AppLinkOpenModeList[1].Value}">
-
-                                <RadioMenuFlyoutItem.Tag>
-                                    <x:Int32>1</x:Int32>
-                                </RadioMenuFlyoutItem.Tag>
-                            </RadioMenuFlyoutItem>
-                        </MenuFlyout>
-                    </DropDownButton.Flyout>
-                </DropDownButton>
+                    DisplayMemberPath="DisplayMember"
+                    ItemsSource="{x:Bind AppLinkOpenModeList}"
+                    SelectedItem="{x:Bind AppLinkOpenMode, Mode=OneWay}"
+                    SelectionChanged="{x:Bind OnAppLinkOpenModeSelectionChanged}"
+                    Style="{StaticResource ComboBoxStyle}" />
             </Grid>
 
             <!--  应用安装方式设置  -->
@@ -272,37 +222,14 @@
                     </TextBlock>
                 </StackPanel>
 
-                <DropDownButton
+                <ComboBox
                     Grid.Column="2"
                     VerticalAlignment="Center"
-                    Content="{x:Bind InstallMode.Value, Mode=OneWay}">
-
-                    <DropDownButton.Flyout>
-                        <MenuFlyout Placement="Bottom">
-                            <RadioMenuFlyoutItem
-                                Click="{x:Bind OnInstallModeSelectClicked}"
-                                GroupName="InstallModeModeRadioGroup"
-                                IsChecked="{x:Bind x:String.Equals(InstallMode.Key, InstallModeList[0].Key), Mode=OneWay}"
-                                Text="{x:Bind InstallModeList[0].Value}">
-
-                                <RadioMenuFlyoutItem.Tag>
-                                    <x:Int32>0</x:Int32>
-                                </RadioMenuFlyoutItem.Tag>
-                            </RadioMenuFlyoutItem>
-
-                            <RadioMenuFlyoutItem
-                                Click="{x:Bind OnInstallModeSelectClicked}"
-                                GroupName="InstallModeModeRadioGroup"
-                                IsChecked="{x:Bind x:String.Equals(InstallMode.Key, InstallModeList[1].Key), Mode=OneWay}"
-                                Text="{x:Bind InstallModeList[1].Value}">
-
-                                <RadioMenuFlyoutItem.Tag>
-                                    <x:Int32>1</x:Int32>
-                                </RadioMenuFlyoutItem.Tag>
-                            </RadioMenuFlyoutItem>
-                        </MenuFlyout>
-                    </DropDownButton.Flyout>
-                </DropDownButton>
+                    DisplayMemberPath="DisplayMember"
+                    ItemsSource="{x:Bind InstallModeList}"
+                    SelectedItem="{x:Bind InstallMode, Mode=OneWay}"
+                    SelectionChanged="{x:Bind OnInstallModeSelectionChanged}"
+                    Style="{StaticResource ComboBoxStyle}" />
             </Grid>
 
             <!--  检测到更新后是否直接取消更新  -->
@@ -591,67 +518,15 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <DropDownButton
+                        <ComboBox
                             Grid.Column="3"
                             VerticalAlignment="Center"
-                            Content="{x:Bind StoreRegion.DisplayName, Mode=OneWay}"
-                            IsEnabled="{x:Bind UseSystemRegionValue.Equals(x:False), Mode=OneWay}">
-
-                            <DropDownButton.Flyout>
-                                <Flyout
-                                    x:Name="StoreRegionFlyout"
-                                    Opened="{x:Bind OnStoreRegionFlyoutOpened}"
-                                    Placement="Bottom"
-                                    ShouldConstrainToRootBounds="False">
-
-                                    <Flyout.FlyoutPresenterStyle>
-                                        <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
-                                            <Setter Property="Padding" Value="0,1" />
-                                            <Setter Property="Background" Value="Transparent" />
-                                            <Setter Property="MinHeight" Value="0" />
-                                        </Style>
-                                    </Flyout.FlyoutPresenterStyle>
-
-                                    <Grid>
-                                        <SystemBackdropElement CornerRadius="{StaticResource OverlayCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-
-                                        <ListView
-                                            x:Name="StoreRegionListView"
-                                            MaxHeight="300"
-                                            Background="Transparent"
-                                            ItemsSource="{x:Bind StoreRegionCollection}"
-                                            SelectionMode="None">
-
-                                            <ListView.ItemContainerStyle>
-                                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                                    <Setter Property="Background" Value="Transparent" />
-                                                    <Setter Property="Margin" Value="0" />
-                                                    <Setter Property="MinHeight" Value="0" />
-                                                    <Setter Property="Padding" Value="0" />
-                                                </Style>
-                                            </ListView.ItemContainerStyle>
-
-                                            <ItemsControl.ItemContainerTransitions>
-                                                <TransitionCollection />
-                                            </ItemsControl.ItemContainerTransitions>
-
-                                            <ListView.ItemTemplate>
-                                                <DataTemplate x:DataType="model:StoreRegionModel">
-                                                    <RadioMenuFlyoutItem
-                                                        Height="32"
-                                                        Padding="11,0"
-                                                        Command="{StaticResource StoreRegionCommand}"
-                                                        CommandParameter="{x:Bind}"
-                                                        GroupName="StoreRegionRadioGroup"
-                                                        IsChecked="{x:Bind IsChecked, Mode=OneWay}"
-                                                        Text="{x:Bind StoreRegionInfo.DisplayName}" />
-                                                </DataTemplate>
-                                            </ListView.ItemTemplate>
-                                        </ListView>
-                                    </Grid>
-                                </Flyout>
-                            </DropDownButton.Flyout>
-                        </DropDownButton>
+                            DisplayMemberPath="DisplayMember"
+                            IsEnabled="{x:Bind UseSystemRegionValue.Equals(x:False), Mode=OneWay}"
+                            ItemsSource="{x:Bind StoreRegionCollection}"
+                            SelectedItem="{x:Bind StoreRegion, Mode=OneWay}"
+                            SelectionChanged="{x:Bind OnStoreRegionSelectionChanged}"
+                            Style="{StaticResource ComboBoxStyle}" />
                     </Grid>
                 </StackPanel>
             </Expander>

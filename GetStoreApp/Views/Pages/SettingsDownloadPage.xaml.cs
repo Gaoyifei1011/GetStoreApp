@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
@@ -7,6 +8,7 @@ using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Documents;
 using Microsoft.Windows.Storage.Pickers;
 using System;
@@ -66,9 +68,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private KeyValuePair<string, string> _doEngineMode;
+        private ComboBoxItemModel _doEngineMode;
 
-        public KeyValuePair<string, string> DoEngineMode
+        public ComboBoxItemModel DoEngineMode
         {
             get { return _doEngineMode; }
 
@@ -82,17 +84,17 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<KeyValuePair<string, string>> DoEngineModeList { get; } = [];
+        private List<ComboBoxItemModel> DoEngineModeList { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public SettingsDownloadPage()
         {
             InitializeComponent();
-            DoEngineModeList.Add(KeyValuePair.Create(DownloadOptionsService.DoEngineModeList[0], DoEngineDoString));
-            DoEngineModeList.Add(KeyValuePair.Create(DownloadOptionsService.DoEngineModeList[1], DoEngineBitsString));
-            DoEngineModeList.Add(KeyValuePair.Create(DownloadOptionsService.DoEngineModeList[2], DoEngineAria2String));
-            DoEngineMode = DoEngineModeList.Find(item => string.Equals(item.Key, DownloadOptionsService.DoEngineMode, StringComparison.OrdinalIgnoreCase));
+            DoEngineModeList.Add(new ComboBoxItemModel() { SelectedValue = DownloadOptionsService.DoEngineModeList[0], DisplayMember = DoEngineDoString });
+            DoEngineModeList.Add(new ComboBoxItemModel() { SelectedValue = DownloadOptionsService.DoEngineModeList[1], DisplayMember = DoEngineBitsString });
+            DoEngineModeList.Add(new ComboBoxItemModel() { SelectedValue = DownloadOptionsService.DoEngineModeList[2], DisplayMember = DoEngineAria2String });
+            DoEngineMode = DoEngineModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), DownloadOptionsService.DoEngineMode, StringComparison.OrdinalIgnoreCase));
         }
 
         #region 第一部分：设置下载管理页面——挂载的事件
@@ -203,12 +205,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 下载引擎方式设置
         /// </summary>
-        private void OnDoEngineModeSelectClicked(object sender, RoutedEventArgs args)
+        private void OnDoEngineModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel doEngineMode && !Equals(DoEngineMode, doEngineMode))
             {
-                DoEngineMode = DoEngineModeList[tag];
-                DownloadOptionsService.SetDoEngineMode(DoEngineMode.Key);
+                DoEngineMode = doEngineMode;
+                DownloadOptionsService.SetDoEngineMode(Convert.ToString(DoEngineMode.SelectedValue));
             }
         }
 

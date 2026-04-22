@@ -10,7 +10,7 @@
     <DesktopCompatible>true</DesktopCompatible>
     <DisableXbfLineInfo>false</DisableXbfLineInfo>
     <EnableDefaultPriItems>false</EnableDefaultPriItems>
-    <ForceAotCompile>false</ForceAotCompile>
+    <ForceAotCompile>true</ForceAotCompile>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <ImplicitUsings>disable</ImplicitUsings>

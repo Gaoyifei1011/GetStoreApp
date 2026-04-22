@@ -1,9 +1,12 @@
-﻿namespace GetStoreApp.Models
+﻿using WinRT;
+
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 应用类型数据模型
     /// </summary>
-    public sealed class TypeModel
+    [GeneratedBindableCustomProperty]
+    public sealed partial class TypeModel
     {
         /// <summary>
         /// 获取应用类型显示名称

@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Models;
+using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
@@ -26,9 +27,9 @@ namespace GetStoreApp.Views.Pages
         private readonly string AppInstallerString = ResourceService.GetLocalized("SettingsWinGet/AppInstaller");
         private readonly string BuiltInAppString = ResourceService.GetLocalized("SettingsWinGet/BuiltInApp");
 
-        private KeyValuePair<string, string> _currentWinGetSource;
+        private ComboBoxItemModel _currentWinGetSource;
 
-        public KeyValuePair<string, string> CurrentWinGetSource
+        public ComboBoxItemModel CurrentWinGetSource
         {
             get { return _currentWinGetSource; }
 
@@ -42,9 +43,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private KeyValuePair<string, string> _winGetSource;
+        private ComboBoxItemModel _winGetSource;
 
-        public KeyValuePair<string, string> WinGetSource
+        public ComboBoxItemModel WinGetSource
         {
             get { return _winGetSource; }
 
@@ -58,28 +59,28 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<KeyValuePair<string, string>> WinGetSourceList { get; } = [];
+        private List<ComboBoxItemModel> WinGetSourceList { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public SettingsWinGetPage()
         {
             InitializeComponent();
-            WinGetSourceList.Add(KeyValuePair.Create(WinGetConfigService.WinGetSourceList[0], BuiltInAppString));
-            WinGetSourceList.Add(KeyValuePair.Create(WinGetConfigService.WinGetSourceList[1], AppInstallerString));
-            WinGetSource = WinGetSourceList.Find(item => string.Equals(item.Key, WinGetConfigService.WinGetSource, StringComparison.OrdinalIgnoreCase));
-            CurrentWinGetSource = WinGetSourceList.Find(item => string.Equals(item.Key, WinGetConfigService.CurrentWinGetSource, StringComparison.OrdinalIgnoreCase));
+            WinGetSourceList.Add(new ComboBoxItemModel() { SelectedValue = WinGetConfigService.WinGetSourceList[0], DisplayMember = BuiltInAppString });
+            WinGetSourceList.Add(new ComboBoxItemModel() { SelectedValue = WinGetConfigService.WinGetSourceList[1], DisplayMember = AppInstallerString });
+            WinGetSource = WinGetSourceList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), WinGetConfigService.WinGetSource, StringComparison.OrdinalIgnoreCase));
+            CurrentWinGetSource = WinGetSourceList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), WinGetConfigService.CurrentWinGetSource, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
         /// 设置 WinGet 来源
         /// </summary>
-        private void OnWinGetSourceSelectClicked(object sender, RoutedEventArgs args)
+        private void OnWinGetSourceSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel wingetSource && !Equals(WinGetSource, wingetSource))
             {
-                WinGetSource = WinGetSourceList[tag];
-                WinGetConfigService.SetWinGetSource(WinGetSource.Key);
+                WinGetSource = wingetSource;
+                WinGetConfigService.SetWinGetSource(Convert.ToString(WinGetSource.SelectedValue));
             }
         }
 

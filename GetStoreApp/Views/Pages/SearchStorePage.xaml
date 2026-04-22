@@ -48,39 +48,16 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <DropDownButton
+                <ComboBox
                     Grid.Column="0"
                     Margin="0,0,6,0"
                     VerticalAlignment="Center"
-                    Content="{x:Bind SelectedSearchType.Value, Mode=OneWay}"
-                    IsEnabled="{x:Bind IsSearchingStore.Equals(x:False), Mode=OneWay}">
-
-                    <DropDownButton.Flyout>
-                        <MenuFlyout Placement="Bottom">
-                            <RadioMenuFlyoutItem
-                                Click="{x:Bind OnSearchTypeSelectClicked}"
-                                GroupName="SearchTypeRadioGroup"
-                                IsChecked="{x:Bind x:Object.Equals(SelectedSearchType.Key, SearchTypeList[0].Key), Mode=OneWay}"
-                                Text="{x:Bind SearchTypeList[0].Value}">
-
-                                <RadioMenuFlyoutItem.Tag>
-                                    <x:Int32>0</x:Int32>
-                                </RadioMenuFlyoutItem.Tag>
-                            </RadioMenuFlyoutItem>
-
-                            <RadioMenuFlyoutItem
-                                Click="{x:Bind OnSearchTypeSelectClicked}"
-                                GroupName="SearchTypeRadioGroup"
-                                IsChecked="{x:Bind x:Object.Equals(SelectedSearchType.Key, SearchTypeList[1].Key), Mode=OneWay}"
-                                Text="{x:Bind SearchTypeList[1].Value}">
-
-                                <RadioMenuFlyoutItem.Tag>
-                                    <x:Int32>1</x:Int32>
-                                </RadioMenuFlyoutItem.Tag>
-                            </RadioMenuFlyoutItem>
-                        </MenuFlyout>
-                    </DropDownButton.Flyout>
-                </DropDownButton>
+                    DisplayMemberPath="DisplayMember"
+                    IsEnabled="{x:Bind IsSearchingStore.Equals(x:False), Mode=OneWay}"
+                    ItemsSource="{x:Bind SearchTypeList}"
+                    SelectedItem="{x:Bind SelectedSearchType, Mode=OneWay}"
+                    SelectionChanged="{x:Bind OnSearchTypeSelectionChanged}"
+                    Style="{StaticResource ComboBoxStyle}" />
 
                 <TextBox
                     Grid.Column="1"

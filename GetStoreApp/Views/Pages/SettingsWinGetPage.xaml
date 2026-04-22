@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
+    xmlns:system="using:System"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -101,44 +102,21 @@
 
                                 <TextBlock Padding="{StaticResource ToolTipBorderPadding}">
                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/CurrentWinGetSource')}" />
-                                    <Run Text="{x:Bind CurrentWinGetSource.Value, Mode=OneWay}" />
+                                    <Run Text="{x:Bind CurrentWinGetSource.DisplayMember, Mode=OneWay}" />
                                 </TextBlock>
                             </Grid>
                         </ToolTip>
                     </ToolTipService.ToolTip>
                 </Button>
 
-                <DropDownButton
+                <ComboBox
                     Grid.Column="3"
                     VerticalAlignment="Center"
-                    Content="{x:Bind WinGetSource.Value, Mode=OneWay}">
-
-                    <DropDownButton.Flyout>
-                        <MenuFlyout Placement="Bottom">
-                            <RadioMenuFlyoutItem
-                                Click="{x:Bind OnWinGetSourceSelectClicked}"
-                                GroupName="WinGetSourceRadioGroup"
-                                IsChecked="{x:Bind x:String.Equals(WinGetSource.Key, WinGetSourceList[0].Key), Mode=OneWay}"
-                                Text="{x:Bind WinGetSourceList[0].Value}">
-
-                                <RadioMenuFlyoutItem.Tag>
-                                    <x:Int32>0</x:Int32>
-                                </RadioMenuFlyoutItem.Tag>
-                            </RadioMenuFlyoutItem>
-
-                            <RadioMenuFlyoutItem
-                                Click="{x:Bind OnWinGetSourceSelectClicked}"
-                                GroupName="WinGetSourceRadioGroup"
-                                IsChecked="{x:Bind x:String.Equals(WinGetSource.Key, WinGetSourceList[1].Key), Mode=OneWay}"
-                                Text="{x:Bind WinGetSourceList[1].Value}">
-
-                                <RadioMenuFlyoutItem.Tag>
-                                    <x:Int32>1</x:Int32>
-                                </RadioMenuFlyoutItem.Tag>
-                            </RadioMenuFlyoutItem>
-                        </MenuFlyout>
-                    </DropDownButton.Flyout>
-                </DropDownButton>
+                    DisplayMemberPath="DisplayMember"
+                    ItemsSource="{x:Bind WinGetSourceList}"
+                    SelectedItem="{x:Bind WinGetSource, Mode=OneWay}"
+                    SelectionChanged="{x:Bind OnWinGetSourceSelectionChanged}"
+                    Style="{StaticResource ComboBoxStyle}" />
             </Grid>
 
             <!--  WinGet 数据源配置  -->

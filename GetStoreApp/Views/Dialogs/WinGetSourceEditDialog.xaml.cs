@@ -7,6 +7,7 @@ using GetStoreApp.Views.Windows;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -162,9 +163,9 @@ namespace GetStoreApp.Views.Dialogs
             }
         }
 
-        private KeyValuePair<PackageCatalogTrustLevel, string> _selectedCatalogTrustLevel;
+        private ComboBoxItemModel _selectedCatalogTrustLevel;
 
-        public KeyValuePair<PackageCatalogTrustLevel, string> SelectedCatalogTrustLevel
+        public ComboBoxItemModel SelectedCatalogTrustLevel
         {
             get { return _selectedCatalogTrustLevel; }
 
@@ -178,7 +179,7 @@ namespace GetStoreApp.Views.Dialogs
             }
         }
 
-        private List<KeyValuePair<PackageCatalogTrustLevel, string>> CatalogTrustLevelList { get; } = [];
+        private List<ComboBoxItemModel> CatalogTrustLevelList { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -186,8 +187,8 @@ namespace GetStoreApp.Views.Dialogs
         {
             InitializeComponent();
             WinGetSourceEditKind = winGetSourceEditKind;
-            CatalogTrustLevelList.Add(KeyValuePair.Create(PackageCatalogTrustLevel.None, CatalogTrustLevelNoneString));
-            CatalogTrustLevelList.Add(KeyValuePair.Create(PackageCatalogTrustLevel.Trusted, CatalogTrustLevelTrustedString));
+            CatalogTrustLevelList.Add(new ComboBoxItemModel() { SelectedValue = PackageCatalogTrustLevel.None, DisplayMember = CatalogTrustLevelNoneString });
+            CatalogTrustLevelList.Add(new ComboBoxItemModel() { SelectedValue = PackageCatalogTrustLevel.Trusted, DisplayMember = CatalogTrustLevelTrustedString });
             SelectedCatalogTrustLevel = CatalogTrustLevelList[0];
             EditTitle = winGetSourceEditKind is WinGetSourceEditKind.Add ? WinGetDataSourceAddString : WinGetDataSourceEditString;
 
@@ -198,7 +199,7 @@ namespace GetStoreApp.Views.Dialogs
                 CustomHeader = string.Empty;
                 SourceType = winGetSource.Type;
                 Explicit = winGetSource.PackageCatalogInformation.Explicit;
-                SelectedCatalogTrustLevel = CatalogTrustLevelList.Find(item => Equals(item.Key, winGetSource.PackageCatalogInformation.TrustLevel));
+                SelectedCatalogTrustLevel = CatalogTrustLevelList.Find(item => Equals(item.SelectedValue, winGetSource.PackageCatalogInformation.TrustLevel));
             }
         }
 
@@ -260,11 +261,11 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 数据源信任等级发生更改时触发的事件
         /// </summary>
-        private void OnCatalogTrustLevelClicked(object sender, RoutedEventArgs args)
+        private void OnCatalogTrustLevelSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel catalogTrustLevel && !Equals(SelectedCatalogTrustLevel, catalogTrustLevel))
             {
-                SelectedCatalogTrustLevel = CatalogTrustLevelList[tag];
+                SelectedCatalogTrustLevel = catalogTrustLevel;
             }
         }
 
@@ -302,7 +303,7 @@ namespace GetStoreApp.Views.Dialogs
                         addPackageCatalogOptions.Name = SourceName;
                         addPackageCatalogOptions.SourceUri = SourceUri;
                         addPackageCatalogOptions.Explicit = Explicit;
-                        addPackageCatalogOptions.TrustLevel = SelectedCatalogTrustLevel.Key;
+                        addPackageCatalogOptions.TrustLevel = SelectedCatalogTrustLevel.SelectedValue.As<PackageCatalogTrustLevel>();
                         addPackageCatalogOptions.CustomHeader = string.IsNullOrEmpty(CustomHeader) ? string.Empty : CustomHeader;
                         addPackageCatalogOptions.Type = string.IsNullOrEmpty(SourceType) ? string.Empty : SourceType;
 
@@ -378,7 +379,7 @@ namespace GetStoreApp.Views.Dialogs
                             addPackageCatalogOptions.Name = SourceName;
                             addPackageCatalogOptions.SourceUri = SourceUri;
                             addPackageCatalogOptions.Explicit = Explicit;
-                            addPackageCatalogOptions.TrustLevel = SelectedCatalogTrustLevel.Key;
+                            addPackageCatalogOptions.TrustLevel = SelectedCatalogTrustLevel.SelectedValue.As<PackageCatalogTrustLevel>();
                             addPackageCatalogOptions.CustomHeader = string.IsNullOrEmpty(CustomHeader) ? string.Empty : CustomHeader;
                             addPackageCatalogOptions.Type = string.IsNullOrEmpty(SourceType) ? string.Empty : SourceType;
 

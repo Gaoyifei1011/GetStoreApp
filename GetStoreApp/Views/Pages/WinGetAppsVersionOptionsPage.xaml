@@ -186,59 +186,14 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/PackageArchitecture')}" />
 
-                        <DropDownButton
+                        <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            Content="{x:Bind PackageArchitecture.Value, Mode=OneWay}">
-
-                            <DropDownButton.Flyout>
-                                <MenuFlyout Placement="Bottom">
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageArchitectureSelectClicked}"
-                                        GroupName="PackageArchitectureRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageArchitecture.Key, PackageArchitectureList[0].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageArchitectureList[0].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>0</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageArchitectureSelectClicked}"
-                                        GroupName="PackageArchitectureRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageArchitecture.Key, PackageArchitectureList[1].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageArchitectureList[1].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>1</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageArchitectureSelectClicked}"
-                                        GroupName="PackageArchitectureRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageArchitecture.Key, PackageArchitectureList[2].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageArchitectureList[2].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>2</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageArchitectureSelectClicked}"
-                                        GroupName="PackageArchitectureRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageArchitecture.Key, PackageArchitectureList[3].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageArchitectureList[3].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>3</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-                                </MenuFlyout>
-                            </DropDownButton.Flyout>
-                        </DropDownButton>
+                            DisplayMemberPath="DisplayMember"
+                            ItemsSource="{x:Bind PackageArchitectureList}"
+                            SelectedItem="{x:Bind PackageArchitecture, Mode=OneWay}"
+                            SelectionChanged="{x:Bind OnPackageArchitectureSelectionChanged}"
+                            Style="{StaticResource ComboBoxStyle}" />
                     </Grid>
 
                     <!--  安装包安装范围  -->
@@ -264,48 +219,14 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/PackageInstallScope')}" />
 
-                        <DropDownButton
+                        <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            Content="{x:Bind PackageInstallScope.Value, Mode=OneWay}">
-
-                            <DropDownButton.Flyout>
-                                <MenuFlyout Placement="Bottom">
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
-                                        GroupName="PackageInstallScopeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[0].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageInstallScopeList[0].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>0</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
-                                        GroupName="PackageInstallScopeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[1].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageInstallScopeList[1].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>1</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
-                                        GroupName="PackageInstallScopeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[2].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageInstallScopeList[2].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>2</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-                                </MenuFlyout>
-                            </DropDownButton.Flyout>
-                        </DropDownButton>
+                            DisplayMemberPath="DisplayMember"
+                            ItemsSource="{x:Bind PackageInstallScopeList}"
+                            SelectedItem="{x:Bind PackageInstallScope, Mode=OneWay}"
+                            SelectionChanged="{x:Bind OnPackageInstallScopeSelectionChanged}"
+                            Style="{StaticResource ComboBoxStyle}" />
                     </Grid>
 
                     <!--  安装程序下载到的目录  -->
@@ -740,48 +661,14 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/PackageInstallScope')}" />
 
-                        <DropDownButton
+                        <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            Content="{x:Bind PackageInstallScope.Value, Mode=OneWay}">
-
-                            <DropDownButton.Flyout>
-                                <MenuFlyout Placement="Bottom">
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
-                                        GroupName="PackageInstallScopeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[0].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageInstallScopeList[0].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>0</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
-                                        GroupName="PackageInstallScopeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[1].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageInstallScopeList[1].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>1</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
-                                        GroupName="PackageInstallScopeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[2].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageInstallScopeList[2].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>2</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-                                </MenuFlyout>
-                            </DropDownButton.Flyout>
-                        </DropDownButton>
+                            DisplayMemberPath="DisplayMember"
+                            ItemsSource="{x:Bind PackageInstallScopeList}"
+                            SelectedItem="{x:Bind PackageInstallScope, Mode=OneWay}"
+                            SelectionChanged="{x:Bind OnPackageInstallScopeSelectionChanged}"
+                            Style="{StaticResource ComboBoxStyle}" />
                     </Grid>
 
                     <!--  应用安装模式  -->
@@ -807,48 +694,14 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/PackageInstallMode')}" />
 
-                        <DropDownButton
+                        <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            Content="{x:Bind PackageInstallMode.Value, Mode=OneWay}">
-
-                            <DropDownButton.Flyout>
-                                <MenuFlyout Placement="Bottom">
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageInstallModeSelectClicked}"
-                                        GroupName="PackageInstallModeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageInstallMode.Key, PackageInstallModeList[0].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageInstallModeList[0].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>0</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageInstallModeSelectClicked}"
-                                        GroupName="PackageInstallModeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageInstallMode.Key, PackageInstallModeList[1].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageInstallModeList[1].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>1</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageInstallModeSelectClicked}"
-                                        GroupName="PackageInstallModeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageInstallMode.Key, PackageInstallModeList[2].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageInstallModeList[2].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>2</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-                                </MenuFlyout>
-                            </DropDownButton.Flyout>
-                        </DropDownButton>
+                            DisplayMemberPath="DisplayMember"
+                            ItemsSource="{x:Bind PackageInstallModeList}"
+                            SelectedItem="{x:Bind PackageInstallMode, Mode=OneWay}"
+                            SelectionChanged="{x:Bind OnPackageInstallModeSelectionChanged}"
+                            Style="{StaticResource ComboBoxStyle}" />
                     </Grid>
 
                     <!--  应用安装路径  -->
@@ -1271,48 +1124,14 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/PackageRepairScope')}" />
 
-                        <DropDownButton
+                        <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            Content="{x:Bind PackageRepairScope.Value, Mode=OneWay}">
-
-                            <DropDownButton.Flyout>
-                                <MenuFlyout Placement="Bottom">
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageRepairScopeSelectClicked}"
-                                        GroupName="PackageRepairScopeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageRepairScope.Key, PackageRepairScopeList[0].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageRepairScopeList[0].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>0</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageRepairScopeSelectClicked}"
-                                        GroupName="PackageRepairScopeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageRepairScope.Key, PackageRepairScopeList[1].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageRepairScopeList[1].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>1</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageRepairScopeSelectClicked}"
-                                        GroupName="PackageRepairScopeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageRepairScope.Key, PackageRepairScopeList[2].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageRepairScopeList[2].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>2</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-                                </MenuFlyout>
-                            </DropDownButton.Flyout>
-                        </DropDownButton>
+                            DisplayMemberPath="DisplayMember"
+                            ItemsSource="{x:Bind PackageRepairScopeList}"
+                            SelectedItem="{x:Bind PackageRepairScope, Mode=OneWay}"
+                            SelectionChanged="{x:Bind OnPackageRepairScopeSelectionChanged}"
+                            Style="{StaticResource ComboBoxStyle}" />
                     </Grid>
 
                     <!--  应用修复模式  -->
@@ -1337,48 +1156,14 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/PackageRepairMode')}" />
 
-                        <DropDownButton
+                        <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            Content="{x:Bind PackageRepairMode.Value, Mode=OneWay}">
-
-                            <DropDownButton.Flyout>
-                                <MenuFlyout Placement="Bottom">
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageRepairModeSelectClicked}"
-                                        GroupName="PackageRepairModeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageRepairMode.Key, PackageRepairModeList[0].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageRepairScopeList[0].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>0</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageRepairModeSelectClicked}"
-                                        GroupName="PackageRepairModeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageRepairMode.Key, PackageRepairModeList[1].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageRepairScopeList[1].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>1</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageRepairModeSelectClicked}"
-                                        GroupName="PackageRepairModeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageRepairMode.Key, PackageRepairModeList[2].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageRepairScopeList[2].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>2</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-                                </MenuFlyout>
-                            </DropDownButton.Flyout>
-                        </DropDownButton>
+                            DisplayMemberPath="DisplayMember"
+                            ItemsSource="{x:Bind PackageRepairModeList}"
+                            SelectedItem="{x:Bind PackageRepairMode, Mode=OneWay}"
+                            SelectionChanged="{x:Bind OnPackageRepairModeSelectionChanged}"
+                            Style="{StaticResource ComboBoxStyle}" />
                     </Grid>
                 </Grid>
             </ScrollViewer>
@@ -1706,48 +1491,14 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/PackageInstallScope')}" />
 
-                        <DropDownButton
+                        <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            Content="{x:Bind PackageInstallScope.Value, Mode=OneWay}">
-
-                            <DropDownButton.Flyout>
-                                <MenuFlyout Placement="Bottom">
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
-                                        GroupName="PackageInstallScopeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[0].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageInstallScopeList[0].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>0</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
-                                        GroupName="PackageInstallScopeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[1].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageInstallScopeList[1].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>1</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
-                                        GroupName="PackageInstallScopeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageInstallScope.Key, PackageInstallScopeList[2].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageInstallScopeList[2].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>2</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-                                </MenuFlyout>
-                            </DropDownButton.Flyout>
-                        </DropDownButton>
+                            DisplayMemberPath="DisplayMember"
+                            ItemsSource="{x:Bind PackageInstallScopeList}"
+                            SelectedItem="{x:Bind PackageInstallScope, Mode=OneWay}"
+                            SelectionChanged="{x:Bind OnPackageInstallScopeSelectionChanged}"
+                            Style="{StaticResource ComboBoxStyle}" />
                     </Grid>
 
                     <!--  应用安装模式  -->
@@ -1773,48 +1524,14 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/PackageInstallMode')}" />
 
-                        <DropDownButton
+                        <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            Content="{x:Bind PackageInstallMode.Value, Mode=OneWay}">
-
-                            <DropDownButton.Flyout>
-                                <MenuFlyout Placement="Bottom">
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageInstallModeSelectClicked}"
-                                        GroupName="PackageInstallModeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageInstallMode.Key, PackageInstallModeList[0].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageInstallModeList[0].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>0</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageInstallModeSelectClicked}"
-                                        GroupName="PackageInstallModeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageInstallMode.Key, PackageInstallModeList[1].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageInstallModeList[1].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>1</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnPackageInstallModeSelectClicked}"
-                                        GroupName="PackageInstallModeRadioGroup"
-                                        IsChecked="{x:Bind x:String.Equals(PackageInstallMode.Key, PackageInstallModeList[2].Key), Mode=OneWay}"
-                                        Text="{x:Bind PackageInstallModeList[2].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>2</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-                                </MenuFlyout>
-                            </DropDownButton.Flyout>
-                        </DropDownButton>
+                            DisplayMemberPath="DisplayMember"
+                            ItemsSource="{x:Bind PackageInstallModeList}"
+                            SelectedItem="{x:Bind PackageInstallMode, Mode=OneWay}"
+                            SelectionChanged="{x:Bind OnPackageInstallModeSelectionChanged}"
+                            Style="{StaticResource ComboBoxStyle}" />
                     </Grid>
 
                     <!--  应用安装路径  -->

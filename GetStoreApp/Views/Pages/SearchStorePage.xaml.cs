@@ -8,6 +8,7 @@ using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
@@ -40,9 +41,9 @@ namespace GetStoreApp.Views.Pages
         private readonly string SearchStoreCountInfo = ResourceService.GetLocalized("SearchStore/SearchStoreCountInfo");
         private readonly string WelcomeString = ResourceService.GetLocalized("SearchStore/Welcome");
 
-        private KeyValuePair<string, string> _selectedSearchType;
+        private ComboBoxItemModel _selectedSearchType;
 
-        public KeyValuePair<string, string> SelectedSearchType
+        public ComboBoxItemModel SelectedSearchType
         {
             get { return _selectedSearchType; }
 
@@ -168,7 +169,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<KeyValuePair<string, string>> SearchTypeList { get; } = [];
+        private List<ComboBoxItemModel> SearchTypeList { get; } = [];
 
         private List<InfoBarModel> SearchStoreInfoList { get; } = [];
 
@@ -182,8 +183,8 @@ namespace GetStoreApp.Views.Pages
         {
             InitializeComponent();
             StateInfoText = WelcomeString;
-            SearchTypeList.Add(KeyValuePair.Create("ExactSearch", ExactSearchString));
-            SearchTypeList.Add(KeyValuePair.Create("ManifestSearch", ManifestSearchString));
+            SearchTypeList.Add(new ComboBoxItemModel() { SelectedValue = "ExactSearch", DisplayMember = ExactSearchString });
+            SearchTypeList.Add(new ComboBoxItemModel() { SelectedValue = "ManifestSearch", DisplayMember = ManifestSearchString });
             SelectedSearchType = SearchTypeList[0];
 
             SearchStoreInfoList.Add(new InfoBarModel
@@ -257,11 +258,11 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 选择搜索应用方式
         /// </summary>
-        private void OnSearchTypeSelectClicked(object sender, RoutedEventArgs args)
+        private void OnSearchTypeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel searchType && !Equals(SelectedSearchType, searchType))
             {
-                SelectedSearchType = SearchTypeList[tag];
+                SelectedSearchType = searchType;
             }
         }
 

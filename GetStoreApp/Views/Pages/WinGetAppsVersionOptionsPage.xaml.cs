@@ -123,9 +123,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private KeyValuePair<PackageInstallScope, string> _packageInstallScope;
+        private ComboBoxItemModel _packageInstallScope;
 
-        public KeyValuePair<PackageInstallScope, string> PackageInstallScope
+        public ComboBoxItemModel PackageInstallScope
         {
             get { return _packageInstallScope; }
 
@@ -139,9 +139,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private KeyValuePair<ProcessorArchitecture, string> _packageArchitecture;
+        private ComboBoxItemModel _packageArchitecture;
 
-        public KeyValuePair<ProcessorArchitecture, string> PackageArchitecture
+        public ComboBoxItemModel PackageArchitecture
         {
             get { return _packageArchitecture; }
 
@@ -203,9 +203,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private KeyValuePair<PackageInstallMode, string> _packageInstallMode;
+        private ComboBoxItemModel _packageInstallMode;
 
-        public KeyValuePair<PackageInstallMode, string> PackageInstallMode
+        public ComboBoxItemModel PackageInstallMode
         {
             get { return _packageInstallMode; }
 
@@ -299,9 +299,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private KeyValuePair<PackageRepairScope, string> _packageRepairScope;
+        private ComboBoxItemModel _packageRepairScope;
 
-        public KeyValuePair<PackageRepairScope, string> PackageRepairScope
+        public ComboBoxItemModel PackageRepairScope
         {
             get { return _packageRepairScope; }
 
@@ -315,9 +315,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private KeyValuePair<PackageRepairMode, string> _packageRepairMode;
+        private ComboBoxItemModel _packageRepairMode;
 
-        public KeyValuePair<PackageRepairMode, string> PackageRepairMode
+        public ComboBoxItemModel PackageRepairMode
         {
             get { return _packageRepairMode; }
 
@@ -331,15 +331,15 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<KeyValuePair<ProcessorArchitecture, string>> PackageArchitectureList { get; } = [];
+        private List<ComboBoxItemModel> PackageArchitectureList { get; } = [];
 
-        private List<KeyValuePair<PackageInstallScope, string>> PackageInstallScopeList { get; } = [];
+        private List<ComboBoxItemModel> PackageInstallScopeList { get; } = [];
 
-        private List<KeyValuePair<PackageInstallMode, string>> PackageInstallModeList { get; } = [];
+        private List<ComboBoxItemModel> PackageInstallModeList { get; } = [];
 
-        private List<KeyValuePair<PackageRepairScope, string>> PackageRepairScopeList { get; } = [];
+        private List<ComboBoxItemModel> PackageRepairScopeList { get; } = [];
 
-        private List<KeyValuePair<PackageRepairMode, string>> PackageRepairModeList { get; } = [];
+        private List<ComboBoxItemModel> PackageRepairModeList { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -347,22 +347,22 @@ namespace GetStoreApp.Views.Pages
         {
             InitializeComponent();
 
-            PackageArchitectureList.Add(KeyValuePair.Create(ProcessorArchitecture.Unknown, ProcessorArchitectureDefaultString));
-            PackageArchitectureList.Add(KeyValuePair.Create(ProcessorArchitecture.X86, ProcessorArchitectureX86String));
-            PackageArchitectureList.Add(KeyValuePair.Create(ProcessorArchitecture.X64, ProcessorArchitectureX64String));
-            PackageArchitectureList.Add(KeyValuePair.Create(ProcessorArchitecture.Arm64, ProcessorArchitectureArm64String));
-            PackageInstallScopeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallScope.Any, PackageInstallScopeAnyString));
-            PackageInstallScopeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallScope.User, PackageInstallScopeUserString));
-            PackageInstallScopeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallScope.System, PackageInstallScopeSystemString));
-            PackageInstallModeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallMode.Default, PackageInstallModeDefaultString));
-            PackageInstallModeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallMode.Interactive, PackageInstallModeInteractiveString));
-            PackageInstallModeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageInstallMode.Silent, PackageInstallModeSilentString));
-            PackageRepairScopeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairScope.Any, PackageRepairScopeAnyString));
-            PackageRepairScopeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairScope.User, PackageRepairScopeUserString));
-            PackageRepairScopeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairScope.System, PackageRepairScopeSystemString));
-            PackageRepairModeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairMode.Default, PackageRepairModeDefaultString));
-            PackageRepairModeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairMode.Interactive, PackageRepairModeInteractiveString));
-            PackageRepairModeList.Add(KeyValuePair.Create(Microsoft.Management.Deployment.PackageRepairMode.Silent, PackageRepairModeSilentString));
+            PackageArchitectureList.Add(new ComboBoxItemModel() { SelectedValue = ProcessorArchitecture.Unknown, DisplayMember = ProcessorArchitectureDefaultString });
+            PackageArchitectureList.Add(new ComboBoxItemModel() { SelectedValue = ProcessorArchitecture.X86, DisplayMember = ProcessorArchitectureX86String });
+            PackageArchitectureList.Add(new ComboBoxItemModel() { SelectedValue = ProcessorArchitecture.X64, DisplayMember = ProcessorArchitectureX64String });
+            PackageArchitectureList.Add(new ComboBoxItemModel() { SelectedValue = ProcessorArchitecture.Arm64, DisplayMember = ProcessorArchitectureArm64String });
+            PackageInstallScopeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageInstallScope.Any, DisplayMember = PackageInstallScopeAnyString });
+            PackageInstallScopeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageInstallScope.User, DisplayMember = PackageInstallScopeUserString });
+            PackageInstallScopeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageInstallScope.System, DisplayMember = PackageInstallScopeSystemString });
+            PackageInstallModeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageInstallMode.Default, DisplayMember = PackageInstallModeDefaultString });
+            PackageInstallModeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageInstallMode.Interactive, DisplayMember = PackageInstallModeInteractiveString });
+            PackageInstallModeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageInstallMode.Silent, DisplayMember = PackageInstallModeSilentString });
+            PackageRepairScopeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageRepairScope.Any, DisplayMember = PackageRepairScopeAnyString });
+            PackageRepairScopeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageRepairScope.User, DisplayMember = PackageRepairScopeUserString });
+            PackageRepairScopeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageRepairScope.System, DisplayMember = PackageRepairScopeSystemString });
+            PackageRepairModeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageRepairMode.Default, DisplayMember = PackageRepairModeDefaultString });
+            PackageRepairModeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageRepairMode.Interactive, DisplayMember = PackageRepairModeInteractiveString });
+            PackageRepairModeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageRepairMode.Silent, DisplayMember = PackageRepairModeSilentString });
         }
 
         #region 第一部分：重写父类事件
@@ -452,10 +452,10 @@ namespace GetStoreApp.Views.Pages
                 DownloadOptions downloadOptions = WinGetFactoryHelper.CreateDownloadOptions();
                 downloadOptions.AcceptPackageAgreements = true;
                 downloadOptions.AllowHashMismatch = AllowHashMismatch;
-                downloadOptions.Architecture = PackageArchitecture.Key;
+                downloadOptions.Architecture = PackageArchitecture.SelectedValue.As<ProcessorArchitecture>();
                 downloadOptions.DownloadDirectory = PackageDownloadPath;
                 downloadOptions.PackageVersionId = PackageOperation.PackageVersionId;
-                downloadOptions.Scope = PackageInstallScope.Key;
+                downloadOptions.Scope = PackageInstallScope.SelectedValue.As<PackageInstallScope>();
                 downloadOptions.SkipDependencies = false;
                 return downloadOptions;
             });
@@ -479,7 +479,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(PackageArchitecture, PackageArchitectureList[0]))
                 {
                     argsList.Add("--architecture");
-                    argsList.Add(string.Format(@"""{0}""", Convert.ToString(PackageArchitecture.Key)));
+                    argsList.Add(string.Format(@"""{0}""", Convert.ToString(PackageArchitecture.SelectedValue.As<ProcessorArchitecture>())));
                 }
 
                 if (!string.IsNullOrEmpty(PackageDownloadPath))
@@ -537,7 +537,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(PackageArchitecture, PackageArchitectureList[0]))
                 {
                     argsList.Add("--architecture");
-                    argsList.Add(string.Format(@"""{0}""", Convert.ToString(PackageArchitecture.Key)));
+                    argsList.Add(string.Format(@"""{0}""", Convert.ToString(PackageArchitecture.As<ProcessorArchitecture>())));
                 }
 
                 if (!string.IsNullOrEmpty(PackageDownloadPath))
@@ -596,22 +596,22 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用包架构发生更改时触发的事件
         /// </summary>
-        private void OnPackageArchitectureSelectClicked(object sender, RoutedEventArgs args)
+        private void OnPackageArchitectureSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel packageArchitecture && !Equals(PackageArchitecture, packageArchitecture))
             {
-                PackageArchitecture = PackageArchitectureList[tag];
+                PackageArchitecture = packageArchitecture;
             }
         }
 
         /// <summary>
         /// 应用安装包安装范围发生更改时触发的事件
         /// </summary>
-        private void OnPackageInstallScopeSelectClicked(object sender, RoutedEventArgs args)
+        private void OnPackageInstallScopeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel packageInstallScope && !Equals(PackageInstallScope, packageInstallScope))
             {
-                PackageInstallScope = PackageInstallScopeList[tag];
+                PackageInstallScope = packageInstallScope;
             }
         }
 
@@ -698,8 +698,8 @@ namespace GetStoreApp.Views.Pages
                 installOptions.BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck;
                 installOptions.Force = Force;
                 installOptions.LogOutputPath = LogService.WinGetFolderPath;
-                installOptions.PackageInstallMode = PackageInstallMode.Key;
-                installOptions.PackageInstallScope = PackageInstallScope.Key;
+                installOptions.PackageInstallMode = PackageInstallMode.SelectedValue.As<PackageInstallMode>();
+                installOptions.PackageInstallScope = PackageInstallScope.As<PackageInstallScope>();
                 installOptions.PackageVersionId = PackageOperation.PackageVersionId;
                 installOptions.PreferredInstallLocation = PackageInstallPath;
                 installOptions.SkipDependencies = false;
@@ -900,11 +900,11 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用包安装模式
         /// </summary>
-        private void OnPackageInstallModeSelectClicked(object sender, RoutedEventArgs args)
+        private void OnPackageInstallModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel packageInstallMode && !Equals(PackageInstallMode, packageInstallMode))
             {
-                PackageInstallMode = PackageInstallModeList[tag];
+                PackageInstallMode = packageInstallMode;
             }
         }
 
@@ -1002,8 +1002,8 @@ namespace GetStoreApp.Views.Pages
                 repairOptions.BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck;
                 repairOptions.Force = Force;
                 repairOptions.LogOutputPath = LogService.WinGetFolderPath;
-                repairOptions.PackageRepairMode = PackageRepairMode.Key;
-                repairOptions.PackageRepairScope = PackageRepairScope.Key;
+                repairOptions.PackageRepairMode = PackageRepairMode.SelectedValue.As<PackageRepairMode>();
+                repairOptions.PackageRepairScope = PackageRepairScope.SelectedValue.As<PackageRepairScope>();
                 repairOptions.PackageVersionId = PackageOperation.PackageVersionId;
                 return repairOptions;
             });
@@ -1135,22 +1135,22 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用安装包修复范围发生更改时触发的事件
         /// </summary>
-        private void OnPackageRepairScopeSelectClicked(object sender, RoutedEventArgs args)
+        private void OnPackageRepairScopeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel packageRepairScope && !Equals(PackageRepairScope, packageRepairScope))
             {
-                PackageRepairScope = PackageRepairScopeList[tag];
+                PackageRepairScope = packageRepairScope;
             }
         }
 
         /// <summary>
         /// 应用包修复模式
         /// </summary>
-        private void OnPackageRepairModeSelectClicked(object sender, RoutedEventArgs args)
+        private void OnPackageRepairModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is int tag)
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel packageRepairMode && !Equals(PackageRepairMode, packageRepairMode))
             {
-                PackageRepairMode = PackageRepairModeList[tag];
+                PackageRepairMode = packageRepairMode;
             }
         }
 
@@ -1170,8 +1170,8 @@ namespace GetStoreApp.Views.Pages
                     BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck,
                     Force = Force,
                     LogOutputPath = LogService.WinGetFolderPath,
-                    PackageInstallMode = PackageInstallMode.Key,
-                    PackageInstallScope = PackageInstallScope.Key,
+                    PackageInstallMode = PackageInstallMode.SelectedValue.As<PackageInstallMode>(),
+                    PackageInstallScope = PackageInstallScope.SelectedValue.As<PackageInstallScope>(),
                     PackageVersionId = PackageOperation.PackageVersionId,
                     PreferredInstallLocation = PackageInstallPath,
                     SkipDependencies = false,

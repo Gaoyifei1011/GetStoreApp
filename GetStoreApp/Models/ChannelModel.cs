@@ -1,9 +1,12 @@
-﻿namespace GetStoreApp.Models
+﻿using WinRT;
+
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 通道类型数据模型
     /// </summary>
-    public sealed class ChannelModel
+    [GeneratedBindableCustomProperty]
+    public sealed partial class ChannelModel
     {
         /// <summary>
         /// 获取应用通道显示名称

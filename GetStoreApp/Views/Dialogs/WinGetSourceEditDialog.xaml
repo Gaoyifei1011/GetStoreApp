@@ -250,38 +250,14 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CatalogTrustLevel')}" />
 
-                        <DropDownButton
+                        <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            Content="{x:Bind SelectedCatalogTrustLevel.Value, Mode=OneWay}"
-                            IsEnabled="{x:Bind IsSaving.Equals(x:False), Mode=OneWay}">
-
-                            <DropDownButton.Flyout>
-                                <MenuFlyout Placement="Bottom">
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnCatalogTrustLevelClicked}"
-                                        GroupName="CatalogTrustLevel"
-                                        IsChecked="{x:Bind x:Object.Equals(SelectedCatalogTrustLevel.Key, CatalogTrustLevelList[0].Key), Mode=OneWay}"
-                                        Text="{x:Bind CatalogTrustLevelList[0].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>0</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind OnCatalogTrustLevelClicked}"
-                                        GroupName="CatalogTrustLevel"
-                                        IsChecked="{x:Bind x:Object.Equals(SelectedCatalogTrustLevel.Key, CatalogTrustLevelList[1].Key), Mode=OneWay}"
-                                        Text="{x:Bind CatalogTrustLevelList[1].Value}">
-
-                                        <RadioMenuFlyoutItem.Tag>
-                                            <x:Int32>1</x:Int32>
-                                        </RadioMenuFlyoutItem.Tag>
-                                    </RadioMenuFlyoutItem>
-                                </MenuFlyout>
-                            </DropDownButton.Flyout>
-                        </DropDownButton>
+                            DisplayMemberPath="DisplayMember"
+                            ItemsSource="{x:Bind CatalogTrustLevelList}"
+                            SelectedItem="{x:Bind SelectedCatalogTrustLevel, Mode=OneWay}"
+                            SelectionChanged="{x:Bind OnCatalogTrustLevelSelectionChanged}"
+                            Style="{StaticResource ComboBoxStyle}" />
                     </Grid>
                 </StackPanel>
             </Border>

@@ -588,9 +588,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 类型修改选择后修改样例文本
         /// </summary>
-        private void OnTypeSelectClicked(object sender, RoutedEventArgs args)
+        private void OnTypeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is TypeModel type)
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is TypeModel type && !Equals(SelectedType, type))
             {
                 SelectedType = type;
                 sampleLink = SampleLinkList[TypeList.FindIndex(item => string.Equals(item.InternalName, SelectedType.InternalName))];
@@ -601,9 +601,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 通道选择修改
         /// </summary>
-        private void OnChannelSelectClicked(object sender, RoutedEventArgs args)
+        private void OnChannelSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is ChannelModel channel)
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ChannelModel channel && !Equals(SelectedChannel, channel))
             {
                 SelectedChannel = channel;
             }
