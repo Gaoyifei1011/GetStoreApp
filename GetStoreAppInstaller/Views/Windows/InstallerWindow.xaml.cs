@@ -1501,6 +1501,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 {
                     SuggestedStartLocation = PickerLocationId.Desktop
                 };
+
                 fileOpenPicker.FileTypeFilter.Clear();
                 fileOpenPicker.FileTypeFilter.Add(".appx");
                 fileOpenPicker.FileTypeFilter.Add(".msix");
@@ -1543,6 +1544,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 {
                     SuggestedStartLocation = PickerLocationId.Desktop
                 };
+
                 fileOpenPicker.FileTypeFilter.Clear();
                 fileOpenPicker.FileTypeFilter.Add(".appx");
                 fileOpenPicker.FileTypeFilter.Add(".msix");

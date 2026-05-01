@@ -140,7 +140,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 FolderPicker folderPicker = new(MainWindow.Current.AppWindow.Id)
                                 {
-                                    SuggestedStartLocation = PickerLocationId.Downloads
+                                    SuggestedStartFolder = DownloadOptionsService.DownloadFolder
                                 };
 
                                 if (await folderPicker.PickSingleFolderAsync() is PickFolderResult pickFolderResult)
