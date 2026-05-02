@@ -187,18 +187,18 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _force;
+        private bool _forceInstall;
 
-        public bool Force
+        public bool ForceInstall
         {
-            get { return _force; }
+            get { return _forceInstall; }
 
             set
             {
-                if (!Equals(_force, value))
+                if (!Equals(_forceInstall, value))
                 {
-                    _force = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Force)));
+                    _forceInstall = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ForceInstall)));
                 }
             }
         }
@@ -398,7 +398,7 @@ namespace GetStoreApp.Views.Pages
                             AllowHashMismatch = false;
                             BypassIsStoreClientBlockedPolicyCheck = false;
                             AllowUpgradeToUnknownVersion = false;
-                            Force = false;
+                            ForceInstall = false;
                             PackageInstallScope = PackageInstallScopeList[0];
                             PackageInstallMode = PackageInstallModeList[0];
                             PackageInstallPath = string.Empty;
@@ -413,7 +413,7 @@ namespace GetStoreApp.Views.Pages
                             WinGetAppsOptionsTitle = string.Format("{0} - {1}", packageOperation.AppName, packageOperation.AppVersion);
                             AllowHashMismatch = false;
                             BypassIsStoreClientBlockedPolicyCheck = false;
-                            Force = false;
+                            ForceInstall = false;
                             PackageRepairScope = PackageRepairScopeList[0];
                             PackageRepairMode = PackageRepairModeList[0];
                             break;
@@ -424,7 +424,7 @@ namespace GetStoreApp.Views.Pages
                             AllowHashMismatch = false;
                             BypassIsStoreClientBlockedPolicyCheck = false;
                             AllowUpgradeToUnknownVersion = false;
-                            Force = false;
+                            ForceInstall = false;
                             PackageInstallScope = PackageInstallScopeList[0];
                             PackageInstallMode = PackageInstallModeList[0];
                             PackageInstallPath = string.Empty;
@@ -696,7 +696,7 @@ namespace GetStoreApp.Views.Pages
                 installOptions.AllowHashMismatch = AllowHashMismatch;
                 installOptions.AllowUpgradeToUnknownVersion = AllowUpgradeToUnknownVersion;
                 installOptions.BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck;
-                installOptions.Force = Force;
+                installOptions.Force = ForceInstall;
                 installOptions.LogOutputPath = LogService.WinGetFolderPath;
                 installOptions.PackageInstallMode = PackageInstallMode.SelectedValue.As<PackageInstallMode>();
                 installOptions.PackageInstallScope = PackageInstallScope.As<PackageInstallScope>();
@@ -743,7 +743,7 @@ namespace GetStoreApp.Views.Pages
                     argsList.Add(string.Format(@"""{0}""", AdditionalInstallerArguments));
                 }
 
-                if (Force)
+                if (ForceInstall)
                 {
                     argsList.Add("--force");
                 }
@@ -816,7 +816,7 @@ namespace GetStoreApp.Views.Pages
                     argsList.Add(string.Format(@"""{0}""", AdditionalInstallerArguments));
                 }
 
-                if (Force)
+                if (ForceInstall)
                 {
                     argsList.Add("--force");
                 }
@@ -892,9 +892,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 是否强制安装 / 修复
         /// </summary>
-        private void OnForceToggled(object sender, RoutedEventArgs args)
+        private void OnForceInstallToggled(object sender, RoutedEventArgs args)
         {
-            Force = sender.As<ToggleSwitch>().IsOn;
+            ForceInstall = sender.As<ToggleSwitch>().IsOn;
         }
 
         /// <summary>
@@ -1000,7 +1000,7 @@ namespace GetStoreApp.Views.Pages
                 repairOptions.AcceptPackageAgreements = true;
                 repairOptions.AllowHashMismatch = AllowHashMismatch;
                 repairOptions.BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck;
-                repairOptions.Force = Force;
+                repairOptions.Force = ForceInstall;
                 repairOptions.LogOutputPath = LogService.WinGetFolderPath;
                 repairOptions.PackageRepairMode = PackageRepairMode.SelectedValue.As<PackageRepairMode>();
                 repairOptions.PackageRepairScope = PackageRepairScope.SelectedValue.As<PackageRepairScope>();
@@ -1024,7 +1024,7 @@ namespace GetStoreApp.Views.Pages
 
                 argsList.Add("--accept-package-agreements");
 
-                if (Force)
+                if (ForceInstall)
                 {
                     argsList.Add("--force");
                 }
@@ -1083,7 +1083,7 @@ namespace GetStoreApp.Views.Pages
 
                 argsList.Add("--accept-package-agreements");
 
-                if (Force)
+                if (ForceInstall)
                 {
                     argsList.Add("--force");
                 }
@@ -1168,7 +1168,7 @@ namespace GetStoreApp.Views.Pages
                     AllowHashMismatch = AllowHashMismatch,
                     AllowUpgradeToUnknownVersion = AllowUpgradeToUnknownVersion,
                     BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck,
-                    Force = Force,
+                    Force = ForceInstall,
                     LogOutputPath = LogService.WinGetFolderPath,
                     PackageInstallMode = PackageInstallMode.SelectedValue.As<PackageInstallMode>(),
                     PackageInstallScope = PackageInstallScope.SelectedValue.As<PackageInstallScope>(),
@@ -1216,7 +1216,7 @@ namespace GetStoreApp.Views.Pages
                     argsList.Add(string.Format(@"""{0}""", AdditionalInstallerArguments));
                 }
 
-                if (Force)
+                if (ForceInstall)
                 {
                     argsList.Add("--force");
                 }
@@ -1289,7 +1289,7 @@ namespace GetStoreApp.Views.Pages
                     argsList.Add(string.Format(@"""{0}""", AdditionalInstallerArguments));
                 }
 
-                if (Force)
+                if (ForceInstall)
                 {
                     argsList.Add("--force");
                 }

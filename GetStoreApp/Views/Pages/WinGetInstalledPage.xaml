@@ -137,29 +137,13 @@
                                                 FontSize="14"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/ForceUninstall')}" />
 
-                                            <StackPanel
+                                            <ToggleSwitch
                                                 Grid.Column="1"
-                                                VerticalAlignment="Center"
-                                                Orientation="Horizontal">
-
-                                                <TextBlock
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/ForceUninstallOffContent')}"
-                                                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(Force), Mode=OneWay}" />
-
-                                                <TextBlock
-                                                    VerticalAlignment="Center"
-                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/ForceUninstallOnContent')}"
-                                                    Visibility="{x:Bind Force, Mode=OneWay}" />
-
-                                                <ToggleSwitch
-                                                    MinWidth="0"
-                                                    Margin="10,0,-10,-2"
-                                                    IsOn="{x:Bind Force, Mode=OneWay}"
-                                                    OffContent=""
-                                                    OnContent=""
-                                                    Toggled="{x:Bind OnForceToggled}" />
-                                            </StackPanel>
+                                                IsOn="{x:Bind ForceUninstall, Mode=OneWay}"
+                                                OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/ForceUninstallOffContent')}"
+                                                OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/ForceUninstallOnContent')}"
+                                                Style="{StaticResource ToggleSwitchStyle}"
+                                                Toggled="{x:Bind OnForceUninstallToggled}" />
                                         </Grid>
 
                                         <MenuFlyoutSeparator Margin="4,0,6,0" Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />

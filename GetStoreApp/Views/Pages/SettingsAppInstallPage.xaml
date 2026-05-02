@@ -89,29 +89,13 @@
                     Click="{x:Bind OnOpenDevelopersClicked}"
                     Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/DeveloperOptions')}" />
 
-                <StackPanel
+                <ToggleSwitch
                     Grid.Column="3"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/AllowUnsignedPackageOffContent')}"
-                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowUnsignedPackageValue), Mode=OneWay}" />
-
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/AllowUnsignedPackageOnContent')}"
-                        Visibility="{x:Bind AllowUnsignedPackageValue, Mode=OneWay}" />
-
-                    <ToggleSwitch
-                        MinWidth="0"
-                        Margin="10,0,-10,-2"
-                        IsOn="{x:Bind AllowUnsignedPackageValue, Mode=OneWay}"
-                        OffContent=""
-                        OnContent=""
-                        Toggled="{x:Bind OnAllowUnsignedPackageToggled}" />
-                </StackPanel>
+                    IsOn="{x:Bind AllowUnsignedPackageValue, Mode=OneWay}"
+                    OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/AllowUnsignedPackageOffContent')}"
+                    OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/AllowUnsignedPackageOnContent')}"
+                    Style="{StaticResource ToggleSwitchStyle}"
+                    Toggled="{x:Bind OnAllowUnsignedPackageToggled}" />
             </Grid>
 
             <!--  安装应用时强制关闭应用  -->
@@ -172,29 +156,13 @@
                     </TextBlock>
                 </StackPanel>
 
-                <StackPanel
+                <ToggleSwitch
                     Grid.Column="2"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceAppShutdownOffContent')}"
-                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ForceAppShutdownValue), Mode=OneWay}" />
-
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceAppShutdownOnContent')}"
-                        Visibility="{x:Bind ForceAppShutdownValue, Mode=OneWay}" />
-
-                    <ToggleSwitch
-                        MinWidth="0"
-                        Margin="10,0,-10,-2"
-                        IsOn="{x:Bind ForceAppShutdownValue, Mode=OneWay}"
-                        OffContent=""
-                        OnContent=""
-                        Toggled="{x:Bind OnForceAppShutdownToggled}" />
-                </StackPanel>
+                    IsOn="{x:Bind ForceAppShutdownValue, Mode=OneWay}"
+                    OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceAppShutdownOffContent')}"
+                    OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceAppShutdownOnContent')}"
+                    Style="{StaticResource ToggleSwitchStyle}"
+                    Toggled="{x:Bind OnForceAppShutdownToggled}" />
             </Grid>
 
             <!--  安装应用时强制关闭与包关联的进程  -->
@@ -255,31 +223,13 @@
                     </TextBlock>
                 </StackPanel>
 
-                <StackPanel
+                <ToggleSwitch
                     Grid.Column="2"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-
-                    <TextBlock
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceTargetAppShutdownOffContent')}"
-                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ForceTargetAppShutdownValue), Mode=OneWay}" />
-
-                    <TextBlock
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceTargetAppShutdownOnContent')}"
-                        Visibility="{x:Bind ForceTargetAppShutdownValue, Mode=OneWay}" />
-
-                    <ToggleSwitch
-                        MinWidth="0"
-                        Margin="10,0,-10,-2"
-                        IsOn="{x:Bind ForceTargetAppShutdownValue, Mode=OneWay}"
-                        OffContent=""
-                        OnContent=""
-                        Toggled="{x:Bind OnForceTargetAppShutdownToggled}" />
-                </StackPanel>
+                    IsOn="{x:Bind ForceTargetAppShutdownValue, Mode=OneWay}"
+                    OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceTargetAppShutdownOffContent')}"
+                    OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceTargetAppShutdownOnContent')}"
+                    Style="{StaticResource ToggleSwitchStyle}"
+                    Toggled="{x:Bind OnForceTargetAppShutdownToggled}" />
             </Grid>
 
             <!--  应用包存储卷设置  -->

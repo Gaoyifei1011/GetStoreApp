@@ -89,30 +89,14 @@
                     Click="{x:Bind OnSystemNotificationSettingsClicked}"
                     Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/SystemNotificationSettings')}" />
 
-                <StackPanel
+                <ToggleSwitch
                     Grid.Column="3"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/NotificationOffContent')}"
-                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(NotificationValue), Mode=OneWay}" />
-
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/NotificationOnContent')}"
-                        Visibility="{x:Bind NotificationValue, Mode=OneWay}" />
-
-                    <ToggleSwitch
-                        MinWidth="0"
-                        Margin="10,0,-10,-2"
-                        IsEnabled="{x:Bind NotificationEnabled, Mode=OneWay}"
-                        IsOn="{x:Bind NotificationValue, Mode=OneWay}"
-                        OffContent=""
-                        OnContent=""
-                        Toggled="{x:Bind OnNotificationToggled}" />
-                </StackPanel>
+                    IsEnabled="{x:Bind NotificationEnabled, Mode=OneWay}"
+                    IsOn="{x:Bind NotificationValue, Mode=OneWay}"
+                    OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/NotificationOffContent')}"
+                    OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/NotificationOnContent')}"
+                    Style="{StaticResource ToggleSwitchStyle}"
+                    Toggled="{x:Bind OnNotificationToggled}" />
             </Grid>
 
             <!--  文件右键菜单设置  -->
@@ -188,29 +172,13 @@
                     </Grid>
                 </HyperlinkButton>
 
-                <StackPanel
+                <ToggleSwitch
                     Grid.Column="3"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ShellMenuOffContent')}"
-                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ShellMenuValue), Mode=OneWay}" />
-
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ShellMenuOnContent')}"
-                        Visibility="{x:Bind ShellMenuValue, Mode=OneWay}" />
-
-                    <ToggleSwitch
-                        MinWidth="0"
-                        Margin="10,0,-10,-2"
-                        IsOn="{x:Bind ShellMenuValue, Mode=OneWay}"
-                        OffContent=""
-                        OnContent=""
-                        Toggled="{x:Bind OnShellMenuToggled}" />
-                </StackPanel>
+                    IsOn="{x:Bind ShellMenuValue, Mode=OneWay}"
+                    OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ShellMenuOffContent')}"
+                    OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ShellMenuOnContent')}"
+                    Style="{StaticResource ToggleSwitchStyle}"
+                    Toggled="{x:Bind OnShellMenuToggled}" />
             </Grid>
 
             <!--  痕迹清理  -->

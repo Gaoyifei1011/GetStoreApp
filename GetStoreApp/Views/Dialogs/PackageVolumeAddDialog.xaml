@@ -268,30 +268,13 @@
                     VerticalAlignment="Center"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UseWindowsAppsFolder')}" />
 
-                <StackPanel
+                <ToggleSwitch
                     Grid.Column="1"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UseWindowsAppsFolderOffContent')}"
-                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(UseWindowsAppsFolderValue), Mode=OneWay}" />
-
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UseWindowsAppsFolderOnContent')}"
-                        Visibility="{x:Bind UseWindowsAppsFolderValue, Mode=OneWay}" />
-
-                    <ToggleSwitch
-                        MinWidth="0"
-                        MinHeight="0"
-                        Margin="10,-4,-11,-4"
-                        IsOn="{x:Bind UseWindowsAppsFolderValue, Mode=OneWay}"
-                        OffContent=""
-                        OnContent=""
-                        Toggled="{x:Bind OnUseWindowsAppsFolderToggled}" />
-                </StackPanel>
+                    IsOn="{x:Bind UseWindowsAppsFolderValue, Mode=OneWay}"
+                    OffContent="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UseWindowsAppsFolderOffContent')}"
+                    OnContent="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UseWindowsAppsFolderOnContent')}"
+                    Style="{StaticResource ToggleSwitchStyle}"
+                    Toggled="{x:Bind OnUseWindowsAppsFolderToggled}" />
             </Grid>
 
             <!--  是否设置为默认卷  -->
@@ -306,29 +289,13 @@
                     VerticalAlignment="Center"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SetDefaultVolume')}" />
 
-                <StackPanel
+                <ToggleSwitch
                     Grid.Column="1"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SetDefaultVolumeOffContent')}"
-                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(SetDefaultVolumeValue), Mode=OneWay}" />
-
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SetDefaultVolumeOnContent')}"
-                        Visibility="{x:Bind SetDefaultVolumeValue, Mode=OneWay}" />
-
-                    <ToggleSwitch
-                        MinWidth="0"
-                        Margin="10,-4,-11,-4"
-                        IsOn="{x:Bind SetDefaultVolumeValue, Mode=OneWay}"
-                        OffContent=""
-                        OnContent=""
-                        Toggled="{x:Bind OnSetDefaultVolumeToggled}" />
-                </StackPanel>
+                    IsOn="{x:Bind SetDefaultVolumeValue, Mode=OneWay}"
+                    OffContent="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SetDefaultVolumeOffContent')}"
+                    OnContent="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SetDefaultVolumeOnContent')}"
+                    Style="{StaticResource ToggleSwitchStyle}"
+                    Toggled="{x:Bind OnSetDefaultVolumeToggled}" />
             </Grid>
         </Grid>
 

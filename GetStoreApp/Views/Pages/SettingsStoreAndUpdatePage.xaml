@@ -290,31 +290,13 @@
                     </TextBlock>
                 </StackPanel>
 
-                <StackPanel
+                <ToggleSwitch
                     Grid.Column="2"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-
-                    <TextBlock
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdateOffContent')}"
-                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(CancelAutoUpdateValue), Mode=OneWay}" />
-
-                    <TextBlock
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdateOnContent')}"
-                        Visibility="{x:Bind CancelAutoUpdateValue, Mode=OneWay}" />
-
-                    <ToggleSwitch
-                        MinWidth="0"
-                        Margin="10,0,-10,-2"
-                        IsOn="{x:Bind CancelAutoUpdateValue, Mode=OneWay}"
-                        OffContent=""
-                        OnContent=""
-                        Toggled="{x:Bind OnCancelAutoUpdateToggled}" />
-                </StackPanel>
+                    IsOn="{x:Bind CancelAutoUpdateValue, Mode=OneWay}"
+                    OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdateOffContent')}"
+                    OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdateOnContent')}"
+                    Style="{StaticResource ToggleSwitchStyle}"
+                    Toggled="{x:Bind OnCancelAutoUpdateToggled}" />
             </Grid>
 
             <!--  商店区域设置  -->
@@ -443,29 +425,13 @@
                             Click="{x:Bind OnSystemRegionSettingsClicked}"
                             Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/SystemRegionSettings')}" />
 
-                        <StackPanel
+                        <ToggleSwitch
                             Grid.Column="2"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/UseSystemRegionOffContent')}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(UseSystemRegionValue), Mode=OneWay}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/UseSystemRegionOnContent')}"
-                                Visibility="{x:Bind UseSystemRegionValue, Mode=OneWay}" />
-
-                            <ToggleSwitch
-                                MinWidth="0"
-                                Margin="10,-2,-2,0"
-                                IsOn="{x:Bind UseSystemRegionValue, Mode=OneWay}"
-                                OffContent=""
-                                OnContent=""
-                                Toggled="{x:Bind OnUseSystemRegionToggled}" />
-                        </StackPanel>
+                            IsOn="{x:Bind UseSystemRegionValue, Mode=OneWay}"
+                            OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/UseSystemRegionOffContent')}"
+                            OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/UseSystemRegionOnContent')}"
+                            Style="{StaticResource ToggleSwitchStyle}"
+                            Toggled="{x:Bind OnUseSystemRegionToggled}" />
                     </Grid>
 
                     <MenuFlyoutSeparator />
@@ -643,29 +609,13 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <StackPanel
+                        <ToggleSwitch
                             Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageOffContent')}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(EncryptedPackageFilterValue), Mode=OneWay}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageOnContent')}"
-                                Visibility="{x:Bind EncryptedPackageFilterValue, Mode=OneWay}" />
-
-                            <ToggleSwitch
-                                MinWidth="0"
-                                Margin="10,-2,-2,0"
-                                IsOn="{x:Bind EncryptedPackageFilterValue, Mode=OneWay}"
-                                OffContent=""
-                                OnContent=""
-                                Toggled="{x:Bind OnEncryptedPackageToggled}" />
-                        </StackPanel>
+                            IsOn="{x:Bind EncryptedPackageFilterValue, Mode=OneWay}"
+                            OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageOffContent')}"
+                            OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageOnContent')}"
+                            Style="{StaticResource ToggleSwitchStyle}"
+                            Toggled="{x:Bind OnEncryptedPackageToggled}" />
                     </Grid>
 
                     <MenuFlyoutSeparator />
@@ -717,29 +667,13 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <StackPanel
+                        <ToggleSwitch
                             Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapOffContent')}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(BlockMapFilterValue), Mode=OneWay}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapOnContent')}"
-                                Visibility="{x:Bind BlockMapFilterValue, Mode=OneWay}" />
-
-                            <ToggleSwitch
-                                MinWidth="0"
-                                Margin="10,-2,-2,0"
-                                IsOn="{x:Bind BlockMapFilterValue, Mode=OneWay}"
-                                OffContent=""
-                                OnContent=""
-                                Toggled="{x:Bind OnBlockMapToggled}" />
-                        </StackPanel>
+                            IsOn="{x:Bind BlockMapFilterValue, Mode=OneWay}"
+                            OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapOffContent')}"
+                            OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapOnContent')}"
+                            Style="{StaticResource ToggleSwitchStyle}"
+                            Toggled="{x:Bind OnBlockMapToggled}" />
                     </Grid>
                 </StackPanel>
             </Expander>

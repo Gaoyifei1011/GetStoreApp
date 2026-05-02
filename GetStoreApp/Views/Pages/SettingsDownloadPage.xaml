@@ -194,29 +194,13 @@
                     </TextBlock>
                 </StackPanel>
 
-                <StackPanel
+                <ToggleSwitch
                     Grid.Column="2"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/ManualSetDownloadFolderOffContent')}"
-                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ManualSetDownloadFolder), Mode=OneWay}" />
-
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/ManualSetDownloadFolderOnContent')}"
-                        Visibility="{x:Bind ManualSetDownloadFolder, Mode=OneWay}" />
-
-                    <ToggleSwitch
-                        MinWidth="0"
-                        Margin="10,0,-10,-2"
-                        IsOn="{x:Bind ManualSetDownloadFolder, Mode=OneWay}"
-                        OffContent=""
-                        OnContent=""
-                        Toggled="{x:Bind OnManualSetDownloadFolderToggled}" />
-                </StackPanel>
+                    IsOn="{x:Bind ManualSetDownloadFolder, Mode=OneWay}"
+                    OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/ManualSetDownloadFolderOffContent')}"
+                    OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/ManualSetDownloadFolderOnContent')}"
+                    Style="{StaticResource ToggleSwitchStyle}"
+                    Toggled="{x:Bind OnManualSetDownloadFolderToggled}" />
             </Grid>
 
             <!--  下载引擎方式设置  -->

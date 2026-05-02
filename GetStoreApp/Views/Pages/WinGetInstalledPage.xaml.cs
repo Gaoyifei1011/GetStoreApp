@@ -94,18 +94,18 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _force;
+        private bool _forceUninstall;
 
-        public bool Force
+        public bool ForceUninstall
         {
-            get { return _force; }
+            get { return _forceUninstall; }
 
             set
             {
-                if (!Equals(_force, value))
+                if (!Equals(_forceUninstall, value))
                 {
-                    _force = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Force)));
+                    _forceUninstall = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ForceUninstall)));
                 }
             }
         }
@@ -228,7 +228,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     List<string> argsList = ["winget.exe", "uninstall", "--id", string.Format(@"""{0}""", appId)];
 
-                    if (Force)
+                    if (ForceUninstall)
                     {
                         argsList.Add("--force");
                     }
@@ -272,7 +272,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     List<string> argsList = ["uninstall", "--id", string.Format(@"""{0}""", appId)];
 
-                    if (Force)
+                    if (ForceUninstall)
                     {
                         argsList.Add("--force");
                     }
@@ -332,7 +332,7 @@ namespace GetStoreApp.Views.Pages
                 UninstallOptions uninstallOptions = await Task.Run(() =>
                 {
                     UninstallOptions uninstallOptions = WinGetFactoryHelper.CreateUninstallOptions();
-                    uninstallOptions.Force = Force;
+                    uninstallOptions.Force = ForceUninstall;
                     uninstallOptions.LogOutputPath = LogService.WinGetFolderPath;
                     uninstallOptions.PackageUninstallScope = Enum.IsDefined(typeof(PackageUninstallScope), SelectedPackageUninstallScopeIndex) ? (PackageUninstallScope)SelectedPackageUninstallModeIndex : PackageUninstallScope.Any;
                     uninstallOptions.PackageUninstallMode = Enum.IsDefined(typeof(PackageUninstallMode), SelectedPackageUninstallModeIndex) ? (PackageUninstallMode)SelectedPackageUninstallModeIndex : PackageUninstallMode.Default;
@@ -394,9 +394,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 是否强制卸载
         /// </summary>
-        private void OnForceToggled(object sender, RoutedEventArgs args)
+        private void OnForceUninstallToggled(object sender, RoutedEventArgs args)
         {
-            Force = sender.As<ToggleSwitch>().IsOn;
+            ForceUninstall = sender.As<ToggleSwitch>().IsOn;
         }
 
         /// <summary>

@@ -204,30 +204,14 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Explicit')}" />
 
-                        <StackPanel
+                        <ToggleSwitch
                             Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/ExplicitOffContent')}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(Explicit), Mode=OneWay}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/ExplicitOnContent')}"
-                                Visibility="{x:Bind Explicit, Mode=OneWay}" />
-
-                            <ToggleSwitch
-                                MinWidth="0"
-                                Margin="10,0,-10,-2"
-                                IsEnabled="{x:Bind IsSaving.Equals(x:False), Mode=OneWay}"
-                                IsOn="{x:Bind Explicit, Mode=OneWay}"
-                                OffContent=""
-                                OnContent=""
-                                Toggled="{x:Bind OnExplicitToggled}" />
-                        </StackPanel>
+                            IsEnabled="{x:Bind IsSaving.Equals(x:False), Mode=OneWay}"
+                            IsOn="{x:Bind Explicit, Mode=OneWay}"
+                            OffContent="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/ExplicitOffContent')}"
+                            OnContent="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/ExplicitOnContent')}"
+                            Style="{StaticResource ToggleSwitchStyle}"
+                            Toggled="{x:Bind OnExplicitToggled}" />
                     </Grid>
 
                     <Grid

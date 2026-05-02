@@ -297,6 +297,9 @@
     <None Remove="Strings\zh-hans\WinGetInstalled.resjson" />
     <None Remove="Strings\zh-hans\WinGetSearch.resjson" />
     <None Remove="Strings\zh-hans\WinGetUpgrade.resjson" />
+    <None Remove="Styles\ComboBox.xaml" />
+    <None Remove="Styles\NavigationView.xaml" />
+    <None Remove="Styles\ToggleSwitch.xaml" />
     <None Remove="Views\Dialogs\AppInformationDialog.xaml" />
     <None Remove="Views\Dialogs\AppRunningDialog.xaml" />
     <None Remove="Views\Dialogs\ClosingWindowDialog.xaml" />
@@ -356,6 +359,9 @@
     <PackageReference Include="Microsoft.WindowsPackageManager.InProcCom" Version="1.28.220" GeneratePathProperty="true" IncludeAssets="none" />
     <PackageReference Include="Mile.Aria2" Version="1.0.1050" />
 
+    <Page Update="Styles\ComboBox.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\NavigationView.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\ToggleSwitch.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\AppInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\AppRunningDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\ClosingWindowDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

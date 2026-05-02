@@ -138,29 +138,13 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatch')}" />
 
-                        <StackPanel
+                        <ToggleSwitch
                             Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOffContent')}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowHashMismatch), Mode=OneWay}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOnContent')}"
-                                Visibility="{x:Bind AllowHashMismatch, Mode=OneWay}" />
-
-                            <ToggleSwitch
-                                MinWidth="0"
-                                Margin="10,0,-10,-2"
-                                IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
-                                OffContent=""
-                                OnContent=""
-                                Toggled="{x:Bind OnAllowHashMismatchToggled}" />
-                        </StackPanel>
+                            IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
+                            OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOffContent')}"
+                            OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOnContent')}"
+                            Style="{StaticResource ToggleSwitchStyle}"
+                            Toggled="{x:Bind OnAllowHashMismatchToggled}" />
                     </Grid>
 
                     <!--  安装包架构  -->
@@ -469,29 +453,13 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatch')}" />
 
-                        <StackPanel
+                        <ToggleSwitch
                             Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOffContent')}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowHashMismatch), Mode=OneWay}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOnContent')}"
-                                Visibility="{x:Bind AllowHashMismatch, Mode=OneWay}" />
-
-                            <ToggleSwitch
-                                MinWidth="0"
-                                Margin="10,0,-10,-2"
-                                IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
-                                OffContent=""
-                                OnContent=""
-                                Toggled="{x:Bind OnAllowHashMismatchToggled}" />
-                        </StackPanel>
+                            IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
+                            OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOffContent')}"
+                            OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOnContent')}"
+                            Style="{StaticResource ToggleSwitchStyle}"
+                            Toggled="{x:Bind OnAllowHashMismatchToggled}" />
                     </Grid>
 
                     <!--  是否跳过商店策略检查  -->
@@ -517,29 +485,13 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheck')}" />
 
-                        <StackPanel
+                        <ToggleSwitch
                             Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOffContent')}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(BypassIsStoreClientBlockedPolicyCheck), Mode=OneWay}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOnContent')}"
-                                Visibility="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}" />
-
-                            <ToggleSwitch
-                                MinWidth="0"
-                                Margin="10,0,-10,-2"
-                                IsOn="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}"
-                                OffContent=""
-                                OnContent=""
-                                Toggled="{x:Bind OnBypassIsStoreClientBlockedPolicyCheckToggled}" />
-                        </StackPanel>
+                            IsOn="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}"
+                            OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOffContent')}"
+                            OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOnContent')}"
+                            Style="{StaticResource ToggleSwitchStyle}"
+                            Toggled="{x:Bind OnBypassIsStoreClientBlockedPolicyCheckToggled}" />
                     </Grid>
 
                     <!--  是否允许升级到某一个未知版本  -->
@@ -565,29 +517,13 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowUpgradeToUnknownVersion')}" />
 
-                        <StackPanel
+                        <ToggleSwitch
                             Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowUpgradeToUnknownVersionOffContent')}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowUpgradeToUnknownVersion), Mode=OneWay}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowUpgradeToUnknownVersionOnContent')}"
-                                Visibility="{x:Bind AllowUpgradeToUnknownVersion, Mode=OneWay}" />
-
-                            <ToggleSwitch
-                                MinWidth="0"
-                                Margin="10,0,-10,-2"
-                                IsOn="{x:Bind AllowUpgradeToUnknownVersion, Mode=OneWay}"
-                                OffContent=""
-                                OnContent=""
-                                Toggled="{x:Bind OnAllowUpgradeToUnknownVersionToggled}" />
-                        </StackPanel>
+                            IsOn="{x:Bind AllowUpgradeToUnknownVersion, Mode=OneWay}"
+                            OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowUpgradeToUnknownVersionOffContent')}"
+                            OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowUpgradeToUnknownVersionOnContent')}"
+                            Style="{StaticResource ToggleSwitchStyle}"
+                            Toggled="{x:Bind OnAllowUpgradeToUnknownVersionToggled}" />
                     </Grid>
 
                     <!--  是否强制安装  -->
@@ -613,29 +549,13 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceInstall')}" />
 
-                        <StackPanel
+                        <ToggleSwitch
                             Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceInstallOffContent')}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(Force), Mode=OneWay}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceInstallOnContent')}"
-                                Visibility="{x:Bind Force, Mode=OneWay}" />
-
-                            <ToggleSwitch
-                                MinWidth="0"
-                                Margin="10,0,-10,-2"
-                                IsOn="{x:Bind Force, Mode=OneWay}"
-                                OffContent=""
-                                OnContent=""
-                                Toggled="{x:Bind OnForceToggled}" />
-                        </StackPanel>
+                            IsOn="{x:Bind ForceInstall, Mode=OneWay}"
+                            OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceInstallOffContent')}"
+                            OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceInstallOnContent')}"
+                            Style="{StaticResource ToggleSwitchStyle}"
+                            Toggled="{x:Bind OnForceInstallToggled}" />
                     </Grid>
 
                     <!--  安装包安装范围  -->
@@ -980,29 +900,13 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatch')}" />
 
-                        <StackPanel
+                        <ToggleSwitch
                             Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOffContent')}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowHashMismatch), Mode=OneWay}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOnContent')}"
-                                Visibility="{x:Bind AllowHashMismatch, Mode=OneWay}" />
-
-                            <ToggleSwitch
-                                MinWidth="0"
-                                Margin="10,0,-10,-2"
-                                IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
-                                OffContent=""
-                                OnContent=""
-                                Toggled="{x:Bind OnAllowHashMismatchToggled}" />
-                        </StackPanel>
+                            IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
+                            OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOffContent')}"
+                            OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOnContent')}"
+                            Style="{StaticResource ToggleSwitchStyle}"
+                            Toggled="{x:Bind OnAllowHashMismatchToggled}" />
                     </Grid>
 
                     <!--  是否跳过商店策略检查  -->
@@ -1028,29 +932,13 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheck')}" />
 
-                        <StackPanel
+                        <ToggleSwitch
                             Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOffContent')}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(BypassIsStoreClientBlockedPolicyCheck), Mode=OneWay}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOnContent')}"
-                                Visibility="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}" />
-
-                            <ToggleSwitch
-                                MinWidth="0"
-                                Margin="10,0,-10,-2"
-                                IsOn="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}"
-                                OffContent=""
-                                OnContent=""
-                                Toggled="{x:Bind OnBypassIsStoreClientBlockedPolicyCheckToggled}" />
-                        </StackPanel>
+                            IsOn="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}"
+                            OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOffContent')}"
+                            OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOnContent')}"
+                            Style="{StaticResource ToggleSwitchStyle}"
+                            Toggled="{x:Bind OnBypassIsStoreClientBlockedPolicyCheckToggled}" />
                     </Grid>
 
                     <!--  是否强制修复  -->
@@ -1076,29 +964,13 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceRepair')}" />
 
-                        <StackPanel
+                        <ToggleSwitch
                             Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceRepairOffContent')}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(Force), Mode=OneWay}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceRepairOnContent')}"
-                                Visibility="{x:Bind Force, Mode=OneWay}" />
-
-                            <ToggleSwitch
-                                MinWidth="0"
-                                Margin="10,0,-10,-2"
-                                IsOn="{x:Bind Force, Mode=OneWay}"
-                                OffContent=""
-                                OnContent=""
-                                Toggled="{x:Bind OnForceToggled}" />
-                        </StackPanel>
+                            IsOn="{x:Bind ForceInstall, Mode=OneWay}"
+                            OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceInstallOffContent')}"
+                            OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceInstallOnContent')}"
+                            Style="{StaticResource ToggleSwitchStyle}"
+                            Toggled="{x:Bind OnForceInstallToggled}" />
                     </Grid>
 
                     <!--  安装包修复范围  -->
@@ -1299,29 +1171,13 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatch')}" />
 
-                        <StackPanel
+                        <ToggleSwitch
                             Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOffContent')}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowHashMismatch), Mode=OneWay}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOnContent')}"
-                                Visibility="{x:Bind AllowHashMismatch, Mode=OneWay}" />
-
-                            <ToggleSwitch
-                                MinWidth="0"
-                                Margin="10,0,-10,-2"
-                                IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
-                                OffContent=""
-                                OnContent=""
-                                Toggled="{x:Bind OnAllowHashMismatchToggled}" />
-                        </StackPanel>
+                            IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
+                            OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOffContent')}"
+                            OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOnContent')}"
+                            Style="{StaticResource ToggleSwitchStyle}"
+                            Toggled="{x:Bind OnAllowHashMismatchToggled}" />
                     </Grid>
 
                     <!--  是否跳过商店策略检查  -->
@@ -1347,29 +1203,13 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheck')}" />
 
-                        <StackPanel
+                        <ToggleSwitch
                             Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOffContent')}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(BypassIsStoreClientBlockedPolicyCheck), Mode=OneWay}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOnContent')}"
-                                Visibility="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}" />
-
-                            <ToggleSwitch
-                                MinWidth="0"
-                                Margin="10,0,-10,-2"
-                                IsOn="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}"
-                                OffContent=""
-                                OnContent=""
-                                Toggled="{x:Bind OnBypassIsStoreClientBlockedPolicyCheckToggled}" />
-                        </StackPanel>
+                            IsOn="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}"
+                            OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOffContent')}"
+                            OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOnContent')}"
+                            Style="{StaticResource ToggleSwitchStyle}"
+                            Toggled="{x:Bind OnBypassIsStoreClientBlockedPolicyCheckToggled}" />
                     </Grid>
 
                     <!--  是否允许升级到某一个未知版本  -->
@@ -1395,29 +1235,13 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowUpgradeToUnknownVersion')}" />
 
-                        <StackPanel
+                        <ToggleSwitch
                             Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowUpgradeToUnknownVersionOffContent')}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowUpgradeToUnknownVersion), Mode=OneWay}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowUpgradeToUnknownVersionOnContent')}"
-                                Visibility="{x:Bind AllowUpgradeToUnknownVersion, Mode=OneWay}" />
-
-                            <ToggleSwitch
-                                MinWidth="0"
-                                Margin="10,0,-10,-2"
-                                IsOn="{x:Bind AllowUpgradeToUnknownVersion, Mode=OneWay}"
-                                OffContent=""
-                                OnContent=""
-                                Toggled="{x:Bind OnAllowUpgradeToUnknownVersionToggled}" />
-                        </StackPanel>
+                            IsOn="{x:Bind AllowUpgradeToUnknownVersion, Mode=OneWay}"
+                            OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowUpgradeToUnknownVersionOffContent')}"
+                            OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowUpgradeToUnknownVersionOnContent')}"
+                            Style="{StaticResource ToggleSwitchStyle}"
+                            Toggled="{x:Bind OnAllowUpgradeToUnknownVersionToggled}" />
                     </Grid>
 
                     <!--  是否强制安装  -->
@@ -1443,29 +1267,13 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceUpgrade')}" />
 
-                        <StackPanel
+                        <ToggleSwitch
                             Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceUpgradeOffContent')}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(Force), Mode=OneWay}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceUpgradeOnContent')}"
-                                Visibility="{x:Bind Force, Mode=OneWay}" />
-
-                            <ToggleSwitch
-                                MinWidth="0"
-                                Margin="10,0,-10,-2"
-                                IsOn="{x:Bind Force, Mode=OneWay}"
-                                OffContent=""
-                                OnContent=""
-                                Toggled="{x:Bind OnForceToggled}" />
-                        </StackPanel>
+                            IsOn="{x:Bind ForceInstall, Mode=OneWay}"
+                            OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceInstallOffContent')}"
+                            OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceInstallOnContent')}"
+                            Style="{StaticResource ToggleSwitchStyle}"
+                            Toggled="{x:Bind OnForceInstallToggled}" />
                     </Grid>
 
                     <!--  安装包安装范围  -->
