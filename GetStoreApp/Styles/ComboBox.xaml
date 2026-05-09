@@ -191,7 +191,7 @@
                             x:Load="False"
                             Content="{TemplateBinding Description}"
                             Foreground="{ThemeResource SystemControlDescriptionTextForegroundBrush}" />
-                        <Popup x:Name="Popup" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
+                        <Popup x:Name="Popup">
 
                             <Border
                                 x:Name="PopupBorder"
