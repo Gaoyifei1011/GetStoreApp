@@ -7,7 +7,6 @@ using GetStoreApp.Views.Windows;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -323,37 +322,37 @@ namespace GetStoreApp.Views.Dialogs
                         case AddPackageCatalogStatus.GroupPolicyError:
                             {
                                 args.Cancel = true;
-                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceAddFailedString, WinGetDataSourceAddGroupPolicyErrorString, addPackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(addPackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString)));
+                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceAddFailedString, WinGetDataSourceAddGroupPolicyErrorString, addPackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", addPackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
                                 break;
                             }
                         case AddPackageCatalogStatus.CatalogError:
                             {
                                 args.Cancel = true;
-                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceAddFailedString, WinGetDataSourceAddCatalogErrorString, addPackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(addPackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString)));
+                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceAddFailedString, WinGetDataSourceAddCatalogErrorString, addPackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", addPackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
                                 break;
                             }
                         case AddPackageCatalogStatus.InternalError:
                             {
                                 args.Cancel = true;
-                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceAddFailedString, WinGetDataSourceAddInternalErrorString, addPackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(addPackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString)));
+                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceAddFailedString, WinGetDataSourceAddInternalErrorString, addPackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", addPackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
                                 break;
                             }
                         case AddPackageCatalogStatus.InvalidOptions:
                             {
                                 args.Cancel = true;
-                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceAddFailedString, WinGetDataSourceAddInvalidOptionsString, addPackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(addPackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString)));
+                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceAddFailedString, WinGetDataSourceAddInvalidOptionsString, addPackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", addPackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
                                 break;
                             }
                         case AddPackageCatalogStatus.AccessDenied:
                             {
                                 args.Cancel = true;
-                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceAddFailedString, WinGetDataSourceAddAccessDeniedString, addPackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(addPackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString)));
+                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceAddFailedString, WinGetDataSourceAddAccessDeniedString, addPackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", addPackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
                                 break;
                             }
                         case AddPackageCatalogStatus.AuthenticationError:
                             {
                                 args.Cancel = true;
-                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceAddFailedString, WinGetDataSourceAddAuthenticationErrorString, addPackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(addPackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString)));
+                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceAddFailedString, WinGetDataSourceAddAuthenticationErrorString, addPackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", addPackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
                                 break;
                             }
                     }
@@ -399,37 +398,37 @@ namespace GetStoreApp.Views.Dialogs
                             case AddPackageCatalogStatus.GroupPolicyError:
                                 {
                                     args.Cancel = true;
-                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditGroupPolicyErrorString, addPackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(addPackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString)));
+                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditGroupPolicyErrorString, addPackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", addPackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
                                     break;
                                 }
                             case AddPackageCatalogStatus.CatalogError:
                                 {
                                     args.Cancel = true;
-                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditCatalogErrorString, addPackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(addPackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString)));
+                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditCatalogErrorString, addPackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", addPackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
                                     break;
                                 }
                             case AddPackageCatalogStatus.InternalError:
                                 {
                                     args.Cancel = true;
-                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditInternalErrorString, addPackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(addPackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString)));
+                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditInternalErrorString, addPackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", addPackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
                                     break;
                                 }
                             case AddPackageCatalogStatus.InvalidOptions:
                                 {
                                     args.Cancel = true;
-                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditInvalidOptionsString, addPackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(addPackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString)));
+                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditInvalidOptionsString, addPackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", addPackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
                                     break;
                                 }
                             case AddPackageCatalogStatus.AccessDenied:
                                 {
                                     args.Cancel = true;
-                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditAccessDeniedString, addPackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(addPackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString)));
+                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditAccessDeniedString, addPackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", addPackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
                                     break;
                                 }
                             case AddPackageCatalogStatus.AuthenticationError:
                                 {
                                     args.Cancel = true;
-                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditAuthenticationErrorString, addPackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(addPackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString)));
+                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditAuthenticationErrorString, addPackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", addPackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
                                     break;
                                 }
                         }
@@ -448,31 +447,31 @@ namespace GetStoreApp.Views.Dialogs
                             case RemovePackageCatalogStatus.GroupPolicyError:
                                 {
                                     args.Cancel = true;
-                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString)));
+                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
                                     break;
                                 }
                             case RemovePackageCatalogStatus.CatalogError:
                                 {
                                     args.Cancel = true;
-                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditCatalogErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString)));
+                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditCatalogErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
                                     break;
                                 }
                             case RemovePackageCatalogStatus.InternalError:
                                 {
                                     args.Cancel = true;
-                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditInternalErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString)));
+                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditInternalErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
                                     break;
                                 }
                             case RemovePackageCatalogStatus.InvalidOptions:
                                 {
                                     args.Cancel = true;
-                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditInvalidOptionsString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString)));
+                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditInvalidOptionsString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
                                     break;
                                 }
                             case RemovePackageCatalogStatus.AccessDenied:
                                 {
                                     args.Cancel = true;
-                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditAccessDeniedString, removePackageCatalogResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(removePackageCatalogResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString)));
+                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceEditFailedString, WinGetDataSourceEditAccessDeniedString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
                                     break;
                                 }
                         }

@@ -333,7 +333,7 @@ namespace GetStoreApp.Views.Dialogs
                             appNotificationBuilder.AddText(CreateFailed2String);
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
-                                string.Format(CreateFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
+                                string.Format(CreateFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
                                 string.Format(CreateFailed4String, exception is not null ? exception.Message : NotAvailableString)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());

@@ -1315,7 +1315,7 @@ namespace GetStoreAppInstaller.Views.Windows
                     return await ParsePackagedAppAsync(fileName);
                 });
 
-                await UpdateResultAsync(parseResult);
+                UpdateResult(parseResult);
             }
         }
 
@@ -1355,7 +1355,7 @@ namespace GetStoreAppInstaller.Views.Windows
                         return await ParsePackagedAppAsync(fileName);
                     });
 
-                    await UpdateResultAsync(parseResult);
+                    UpdateResult(parseResult);
                 }
             }
             // 从文件处启动
@@ -1378,7 +1378,7 @@ namespace GetStoreAppInstaller.Views.Windows
                             return await ParsePackagedAppAsync(fileName);
                         });
 
-                        await UpdateResultAsync(parseResult);
+                        UpdateResult(parseResult);
                     }
                 }
             }
@@ -1407,7 +1407,7 @@ namespace GetStoreAppInstaller.Views.Windows
                                 return await ParsePackagedAppAsync(fileName);
                             });
 
-                            await UpdateResultAsync(parseResult);
+                            UpdateResult(parseResult);
                         }
                     }
                 }
@@ -1484,7 +1484,7 @@ namespace GetStoreAppInstaller.Views.Windows
                     return await ParsePackagedAppAsync(fileName);
                 });
 
-                await UpdateResultAsync(parseResult);
+                UpdateResult(parseResult);
             }
         }
 
@@ -1529,7 +1529,7 @@ namespace GetStoreAppInstaller.Views.Windows
                     return await ParsePackagedAppAsync(fileName);
                 });
 
-                await UpdateResultAsync(parseResult);
+                UpdateResult(parseResult);
             }
         }
 
@@ -1719,7 +1719,7 @@ namespace GetStoreAppInstaller.Views.Windows
                         }
                         else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                         {
-                            string errorCode = packageDeploymentResult.Error is not null ? "0x" + Convert.ToString(packageDeploymentResult.Error.HResult, 16).ToUpperInvariant() : NotAvailableString;
+                            string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
                             string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
 
                             // 更新应用安装状态
@@ -1747,7 +1747,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 }
                 else
                 {
-                    string errorCode = exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString;
+                    string errorCode = exception is not null ? string.Format("0x{0:X8}", exception.HResult) : NotAvailableString;
                     string errorMessage = exception is not null ? exception.Message : NotAvailableString;
 
                     // 更新应用安装状态
@@ -3572,7 +3572,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 更新结果
         /// </summary>
-        private async Task UpdateResultAsync((bool parseResult, PackageInformation packageInformation) resultDict)
+        private async void UpdateResult((bool parseResult, PackageInformation packageInformation) resultDict)
         {
             IsParseSuccessfully = resultDict.parseResult;
 
@@ -3673,7 +3673,7 @@ namespace GetStoreAppInstaller.Views.Windows
                         ShCoreLibrary.CreateRandomAccessStreamOverStream(packageInformation.ImageLogo, BSOS_OPTIONS.BSOS_DEFAULT, typeof(IRandomAccessStream).GUID, out nint ppv);
                         RandomAccessStreamOverStream randomAccessStreamOverStream = RandomAccessStreamOverStream.FromAbi(ppv);
                         BitmapImage bitmapImage = new();
-                        await bitmapImage.SetSourceAsync(randomAccessStreamOverStream);
+                        bitmapImage.SetSource(randomAccessStreamOverStream);
                         PackageIconImage = bitmapImage;
                         randomAccessStreamOverStream?.Dispose();
                         Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(packageInformation.ImageLogo, CreateComInterfaceFlags.None));
@@ -3686,7 +3686,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(UpdateResultAsync), 1, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(UpdateResult), 1, e);
                 }
             }
 
@@ -3717,7 +3717,7 @@ namespace GetStoreAppInstaller.Views.Windows
                         return await ParsePackagedAppAsync(fileName);
                     });
 
-                    await UpdateResultAsync(parseResult);
+                    UpdateResult(parseResult);
                 }
             }
         }

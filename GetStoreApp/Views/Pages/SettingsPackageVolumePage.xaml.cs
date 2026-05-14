@@ -169,7 +169,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(SetDefaultFailed2String);
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                            string.Format(SetDefaultFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
+                            string.Format(SetDefaultFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
                             string.Format(SetDefaultFailed4String, exception is not null ? exception.Message : NotAvailableString)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -220,7 +220,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                     {
-                        string errorCode = packageDeploymentResult.Error is not null ? "0x" + Convert.ToString(packageDeploymentResult.Error.HResult, 16).ToUpperInvariant() : NotAvailableString;
+                        string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
                         string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
 
                         // 显示应用包存储卷挂载失败通知
@@ -251,7 +251,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(MountFailed2String);
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                            string.Format(MountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
+                            string.Format(MountFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
                             string.Format(MountFailed4String, exception is not null ? exception.Message : NotAvailableString)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -302,7 +302,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                     {
-                        string errorCode = packageDeploymentResult.Error is not null ? "0x" + Convert.ToString(packageDeploymentResult.Error.HResult, 16).ToUpperInvariant() : NotAvailableString;
+                        string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
                         string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
 
                         // 显示应用包存储卷卸载失败通知
@@ -333,7 +333,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(DismountFailed2String);
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                            string.Format(DismountFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
+                            string.Format(DismountFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
                             string.Format(DismountFailed4String, exception is not null ? exception.Message : NotAvailableString)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -394,7 +394,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                     {
-                        string errorCode = packageDeploymentResult.Error is not null ? "0x" + Convert.ToString(packageDeploymentResult.Error.HResult, 16).ToUpperInvariant() : NotAvailableString;
+                        string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
                         string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
 
                         // 显示应用包存储卷移除失败通知
@@ -425,7 +425,7 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(RemoveFailed2String);
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                            string.Format(RemoveFailed3String, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString),
+                            string.Format(RemoveFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
                             string.Format(RemoveFailed4String, exception is not null ? exception.Message : NotAvailableString)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
@@ -582,7 +582,7 @@ namespace GetStoreApp.Views.Pages
             else
             {
                 PackageVolumeResultKind = PackageVolumeResultKind.Failed;
-                PackageVolumeFailedContent = string.Format(PackageVolumeFailedString, exception is not null ? exception.Message : NotAvailableString, exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString);
+                PackageVolumeFailedContent = string.Format(PackageVolumeFailedString, exception is not null ? exception.Message : NotAvailableString, exception is not null ? string.Format("0x{0:X8}", exception.HResult) : NotAvailableString);
             }
         }
 

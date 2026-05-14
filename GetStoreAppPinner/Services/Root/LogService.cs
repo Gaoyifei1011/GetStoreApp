@@ -49,7 +49,7 @@ namespace GetStoreAppPinner.Services.Root
                     exceptionFields.AddString("LogLevel", Convert.ToString(logLevel));
                     exceptionFields.AddString("HelpLink", string.IsNullOrEmpty(exception.HelpLink) ? notAvailable : exception.HelpLink.Replace('\r', ' ').Replace('\n', ' '));
                     exceptionFields.AddString("Message", string.IsNullOrEmpty(exception.Message) ? notAvailable : exception.Message.Replace('\r', ' ').Replace('\n', ' '));
-                    exceptionFields.AddString("HResult", "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant());
+                    exceptionFields.AddString("HResult", string.Format("0x{0:X8}", exception.HResult));
                     exceptionFields.AddString("Source", string.IsNullOrEmpty(exception.Source) ? notAvailable : exception.Source.Replace('\r', ' ').Replace('\n', ' '));
                     exceptionFields.AddString("StackTrace", string.IsNullOrEmpty(exception.StackTrace) ? notAvailable : exception.StackTrace.Replace('\r', ' ').Replace('\n', ' '));
 

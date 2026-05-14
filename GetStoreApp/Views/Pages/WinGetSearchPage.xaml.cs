@@ -485,13 +485,13 @@ namespace GetStoreApp.Views.Pages
                     else
                     {
                         SearchAppsResultKind = SearchAppsResultKind.Failed;
-                        SearchFailedContent = string.Format(SearchAppsFailedString, SearchFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString);
+                        SearchFailedContent = string.Format(SearchAppsFailedString, SearchFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", findPackagesResult.ExtendedErrorCode.HResult) : NotAvailableString);
                     }
                 }
                 else
                 {
                     SearchAppsResultKind = SearchAppsResultKind.Failed;
-                    SearchFailedContent = string.Format(SearchAppsFailedString, SearchCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? "0x" + Convert.ToString(findPackagesResult.ExtendedErrorCode.HResult, 16).ToUpperInvariant() : NotAvailableString);
+                    SearchFailedContent = string.Format(SearchAppsFailedString, SearchCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", findPackagesResult.ExtendedErrorCode.HResult) : NotAvailableString);
                 }
             }
             else

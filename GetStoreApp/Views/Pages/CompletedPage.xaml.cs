@@ -330,7 +330,7 @@ namespace GetStoreApp.Views.Pages
                                     // 安装失败
                                     else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                                     {
-                                        string errorCode = packageDeploymentResult.Error is not null ? "0x" + Convert.ToString(packageDeploymentResult.Error.HResult, 16).ToUpperInvariant() : NotAvailableString;
+                                        string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
                                         string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
 
                                         completed.InstallProgressValue = 100;
@@ -340,7 +340,7 @@ namespace GetStoreApp.Views.Pages
 
                                         await Task.Run(() =>
                                         {
-                                            string errorCode = packageDeploymentResult.ExtendedError is not null ? "0x" + Convert.ToString(packageDeploymentResult.ExtendedError.HResult, 16).ToUpperInvariant() : NotAvailableString;
+                                            string errorCode = packageDeploymentResult.ExtendedError is not null ? string.Format("0x{0:X8}", packageDeploymentResult.ExtendedError.HResult) : NotAvailableString;
                                             string errorMessage = packageDeploymentResult.ErrorText;
 
                                             // 显示安装失败通知
@@ -362,7 +362,7 @@ namespace GetStoreApp.Views.Pages
 
                                     await Task.Run(() =>
                                     {
-                                        string errorCode = exception is not null ? "0x" + Convert.ToString(exception.HResult, 16).ToUpperInvariant() : NotAvailableString;
+                                        string errorCode = exception is not null ? string.Format("0x{0:X8}", exception.HResult) : NotAvailableString;
                                         string errorMessage = exception is not null ? exception.Message : NotAvailableString;
 
                                         // 显示安装失败通知
@@ -878,7 +878,7 @@ namespace GetStoreApp.Views.Pages
                 if (storageItemThumbnail is not null)
                 {
                     BitmapImage bitmapImage = new();
-                    await bitmapImage.SetSourceAsync(storageItemThumbnail);
+                    bitmapImage.SetSource(storageItemThumbnail);
                     storageItemThumbnail.Dispose();
                     return bitmapImage;
                 }
