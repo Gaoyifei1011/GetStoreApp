@@ -23,11 +23,12 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.AppNotifications.Builder;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
@@ -53,11 +54,19 @@ namespace GetStoreApp.Views.Windows
     /// </summary>
     public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
+        private readonly string AppManagerString = ResourceService.GetLocalized("Window/AppManager");
+        private readonly string AppUpdateString = ResourceService.GetLocalized("Window/AppUpdate");
         private readonly string CheckNetWorkConnectionString = ResourceService.GetLocalized("Window/CheckNetWorkConnection");
+        private readonly string DownloadString = ResourceService.GetLocalized("Window/Download");
+        private readonly string HomeString = ResourceService.GetLocalized("Window/Home");
         private readonly string NetworkError1String = ResourceService.GetLocalized("Window/NetworkError1");
         private readonly string NetworkError2String = ResourceService.GetLocalized("Window/NetworkError2");
         private readonly string RunningAdministratorString = ResourceService.GetLocalized("Window/RunningAdministrator");
+        private readonly string SettingsString = ResourceService.GetLocalized("Window/Settings");
+        private readonly string StoreString = ResourceService.GetLocalized("Window/Store");
         private readonly string TitleString = ResourceService.GetLocalized("Window/Title");
+        private readonly string WebString = ResourceService.GetLocalized("Window/Web");
+        private readonly string WinGetString = ResourceService.GetLocalized("Window/WinGet");
         private readonly ContentIsland contentIsland;
         private readonly InputKeyboardSource inputKeyboardSource;
         private readonly InputPointerSource inputPointerSource;
@@ -147,9 +156,9 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        private NavigationViewItem _selectedItem;
+        private NavigationViewItemModel _selectedItem;
 
-        public NavigationViewItem SelectedItem
+        public NavigationViewItemModel SelectedItem
         {
             get { return _selectedItem; }
 
@@ -163,19 +172,9 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        public List<KeyValuePair<string, Type>> PageList { get; } =
-        [
-            KeyValuePair.Create("Home",typeof(HomePage)),
-            KeyValuePair.Create("Store",typeof(StorePage)),
-            KeyValuePair.Create("AppUpdate", typeof(AppUpdatePage)),
-            KeyValuePair.Create("WinGet", typeof(WinGetPage)),
-            KeyValuePair.Create("AppManager", typeof(AppManagerPage)),
-            KeyValuePair.Create("Download", typeof(DownloadPage)),
-            KeyValuePair.Create<string, Type>("Web",null),
-            KeyValuePair.Create("Settings", typeof(SettingsPage))
-        ];
+        public ObservableCollection<NavigationViewItemModel> NavigationViewItemMenuItemsCollection { get; } = [];
 
-        public List<NavigationModel> NavigationItemList { get; } = [];
+        public ObservableCollection<NavigationViewItemModel> NavigationViewItemFooterMenuItemsCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -228,6 +227,95 @@ namespace GetStoreApp.Views.Windows
                 RectInt32 workArea = displayArea.WorkArea;
                 AppWindow.Move(new PointInt32((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
             }
+
+            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Item,
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/Icon/Control/Home.png") } },
+                NavigationTitle = HomeString,
+                NavigationTag = "Home",
+                NavigationPage = typeof(HomePage)
+            });
+            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Seperator,
+                NavigationIcon = null,
+                NavigationTitle = null,
+                NavigationTag = null,
+                NavigationPage = null
+            });
+            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Item,
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/Icon/Control/Store.png") } },
+                NavigationTitle = StoreString,
+                NavigationTag = "Store",
+                NavigationPage = typeof(StorePage)
+            });
+            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Item,
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/Icon/Control/AppUpdate.png") } },
+                NavigationTitle = AppUpdateString,
+                NavigationTag = "AppUpdate",
+                NavigationPage = typeof(AppUpdatePage)
+            });
+            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Seperator,
+                NavigationIcon = null,
+                NavigationTitle = null,
+                NavigationTag = null,
+                NavigationPage = null
+            });
+            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Item,
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/Icon/Control/WinGet.png") } },
+                NavigationTitle = WinGetString,
+                NavigationTag = "WinGet",
+                NavigationPage = typeof(WinGetPage)
+            });
+            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Item,
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/Icon/Control/AppManager.png") } },
+                NavigationTitle = AppManagerString,
+                NavigationTag = "AppManager",
+                NavigationPage = typeof(AppManagerPage)
+            });
+            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Seperator,
+                NavigationIcon = null,
+                NavigationTitle = null,
+                NavigationTag = null,
+                NavigationPage = null
+            });
+            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Item,
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/Icon/Control/Download.png") } },
+                NavigationTitle = DownloadString,
+                NavigationTag = "Download",
+                NavigationPage = typeof(DownloadPage)
+            });
+            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Item,
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/Icon/Control/Web.png") } },
+                NavigationTitle = WebString,
+                NavigationTag = "Web",
+                NavigationPage = null
+            });
+            NavigationViewItemFooterMenuItemsCollection.Add(new NavigationViewItemModel()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Item,
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/Icon/Control/Settings.png") } },
+                NavigationTitle = SettingsString,
+                NavigationTag = "Settings",
+                NavigationPage = typeof(SettingsPage)
+            });
         }
 
         #region 第一部分：窗口类事件
@@ -522,15 +610,20 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
+
+        #endregion 第四部分：窗口内容挂载的事件
+
+        #region 第五部分：XamlUICommand 命令调用时挂载的事件
+
         /// <summary>
         /// 固定到开始屏幕
         /// </summary>
-        private async void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
+        private async void OnPinToStartScreenExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (sender.As<MenuFlyoutItem>().Tag.As<TextBlock>() is TextBlock textBlock)
+            if(args.Parameter is NavigationViewItemModel navigationViewItem)
             {
-                string displayName = textBlock.Text;
-                string tag = Convert.ToString(textBlock.Tag);
+                string displayName = navigationViewItem.NavigationTitle;
+                string tag = navigationViewItem.NavigationTag;
 
                 if (RuntimeHelper.IsElevated)
                 {
@@ -574,7 +667,7 @@ namespace GetStoreApp.Views.Windows
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(OnPinToStartScreenClicked), 1, e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(OnPinToStartScreenExecuteRequested), 1, e);
                     }
                     finally
                     {
@@ -587,12 +680,12 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 固定到任务栏
         /// </summary>
-        private async void OnPinToTaskbarClicked(object sender, RoutedEventArgs args)
+        private async void OnPinToTaskbarExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (sender.As<MenuFlyoutItem>().Tag.As<TextBlock>() is TextBlock textBlock)
+            if (args.Parameter is NavigationViewItemModel navigationViewItem)
             {
-                string displayName = textBlock.Text;
-                string tag = Convert.ToString(textBlock.Tag);
+                string displayName = navigationViewItem.NavigationTitle;
+                string tag = navigationViewItem.NavigationTag;
 
                 (bool needUnlock, LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully) pinnedResult = await Task.Run(async () =>
                 {
@@ -647,7 +740,7 @@ namespace GetStoreApp.Views.Windows
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(OnPinToStartScreenClicked), 1, e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(OnPinToTaskbarExecuteRequested), 1, e);
                         }
 
                         if (needUnlock && (limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unavailable || limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unknown) && !isPinnedSuccessfully)
@@ -682,9 +775,9 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        #endregion 第四部分：窗口内容挂载的事件
+        #endregion 第五部分：XamlUICommand 命令调用时挂载的事件
 
-        #region 第五部分：导航控件及其内容挂载的事件
+        #region 第六部分：导航控件及其内容挂载的事件
 
         /// <summary>
         /// 当后退按钮收到交互（如单击或点击）时发生
@@ -714,54 +807,7 @@ namespace GetStoreApp.Views.Windows
             // 设置标题栏主题
             SetTitleBarTheme(Content.As<FrameworkElement>().ActualTheme);
 
-            // 导航控件加载完成后初始化内容
-            if (sender.As<NavigationView>() is NavigationView navigationView)
-            {
-                foreach (object menuItem in navigationView.MenuItems)
-                {
-                    try
-                    {
-                        if (menuItem is NavigationViewItem navigationViewItem && navigationViewItem.Tag is string tag)
-                        {
-                            int tagIndex = PageList.FindIndex(item => string.Equals(item.Key, tag));
-
-                            NavigationItemList.Add(new NavigationModel()
-                            {
-                                NavigationTag = PageList[tagIndex].Key,
-                                NavigationItem = navigationViewItem,
-                                NavigationPage = PageList[tagIndex].Value,
-                            });
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    }
-                }
-
-                foreach (object footerMenuItem in navigationView.FooterMenuItems)
-                {
-                    try
-                    {
-                        if (footerMenuItem is NavigationViewItem navigationViewItem && navigationViewItem.Tag is string tag)
-                        {
-                            int tagIndex = PageList.FindIndex(item => string.Equals(item.Key, tag));
-
-                            NavigationItemList.Add(new NavigationModel()
-                            {
-                                NavigationTag = PageList[tagIndex].Key,
-                                NavigationItem = navigationViewItem,
-                                NavigationPage = PageList[tagIndex].Value,
-                            });
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    }
-                }
-            }
-
+            SelectedItem = NavigationViewItemMenuItemsCollection[0];
             NavigateTo(typeof(HomePage));
             SetPopupControlTheme(WindowTheme);
 
@@ -775,13 +821,26 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            if (args.SelectedItemContainer is NavigationViewItemBase navigationViewItem && navigationViewItem.Tag is string tag)
+            if (args.SelectedItem is not null && !Equals(SelectedItem, args.SelectedItem))
             {
-                NavigationModel navigationItem = NavigationItemList.Find(item => string.Equals(item.NavigationTag, PageList[PageList.FindIndex(item => string.Equals(item.Key, tag))].Key));
+                SelectedItem = args.SelectedItem as NavigationViewItemModel;
 
-                if (!Equals(SelectedItem, navigationItem.NavigationItem))
+                // 对应的页面为空，选中项修改为已经选择的页面
+                if (SelectedItem.NavigationPage is null)
                 {
-                    if (PageList[PageList.FindIndex(item => string.Equals(item.Key, tag))].Key is "Web")
+                    Type currentPageType = GetCurrentPageType();
+                    NavigationViewItemModel selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemMenuItemsCollection);
+                    if (selectedNavigationViewItem is not null)
+                    {
+                        SelectedItem = selectedNavigationViewItem;
+                    }
+                    else
+                    {
+                        selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemFooterMenuItemsCollection);
+                        SelectedItem = selectedNavigationViewItem is not null ? selectedNavigationViewItem : null;
+                    }
+
+                    if (Equals(SelectedItem.NavigationTag, "Web"))
                     {
                         Task.Run(async () =>
                         {
@@ -794,13 +853,12 @@ namespace GetStoreApp.Views.Windows
                                 ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                             }
                         });
-
-                        sender.SelectedItem = SelectedItem;
                     }
-                    else
-                    {
-                        NavigateTo(navigationItem.NavigationPage);
-                    }
+                }
+                // 切换到选中项对应的页面
+                else
+                {
+                    NavigateTo(SelectedItem.NavigationPage);
                 }
             }
         }
@@ -810,8 +868,29 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            SelectedItem = NavigationItemList.Find(item => Equals(item.NavigationPage, GetCurrentPageType())).NavigationItem;
-            IsBackEnabled = CanGoBack();
+            try
+            {
+                Type currentPageType = GetCurrentPageType();
+
+                // 切换到选中页面对应的项
+                NavigationViewItemModel selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemMenuItemsCollection);
+                SelectedItem = null;
+                if (selectedNavigationViewItem is not null)
+                {
+                    SelectedItem = selectedNavigationViewItem;
+                }
+                else
+                {
+                    selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemFooterMenuItemsCollection);
+                    SelectedItem = selectedNavigationViewItem is not null ? selectedNavigationViewItem : null;
+                }
+
+                IsBackEnabled = CanGoBack();
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(OnNavigated), 1, e);
+            }
         }
 
         /// <summary>
@@ -824,9 +903,9 @@ namespace GetStoreApp.Views.Windows
             (Application.Current as MainApp).Dispose();
         }
 
-        #endregion 第五部分：导航控件及其内容挂载的事件
+        #endregion 第六部分：导航控件及其内容挂载的事件
 
-        #region 第六部分：自定义事件
+        #region 第七部分：自定义事件
 
         /// <summary>
         /// 网络状态发生变化时触发的事件
@@ -870,9 +949,9 @@ namespace GetStoreApp.Views.Windows
             });
         }
 
-        #endregion 第六部分：自定义事件
+        #endregion 第七部分：自定义事件
 
-        #region 第七部分：窗口及内容属性设置
+        #region 第八部分：窗口及内容属性设置
 
         /// <summary>
         /// 设置应用显示的主题
@@ -1020,9 +1099,9 @@ namespace GetStoreApp.Views.Windows
             overlappedPresenter.IsAlwaysOnTop = TopMostService.TopMostValue;
         }
 
-        #endregion 第七部分：窗口及内容属性设置
+        #endregion 第八部分：窗口及内容属性设置
 
-        #region 第八部分：窗口过程
+        #region 第九部分：窗口过程
 
         /// <summary>
         /// 应用主窗口消息处理
@@ -1073,22 +1152,26 @@ namespace GetStoreApp.Views.Windows
             return Comctl32Library.DefSubclassProc(hWnd, Msg, wParam, lParam);
         }
 
-        #endregion 第八部分：窗口过程
+        #endregion 第九部分：窗口过程
 
-        #region 第九部分：窗口导航方法
+        #region 第十部分：窗口导航方法
 
         /// <summary>
         /// 页面向前导航
         /// </summary>
         public void NavigateTo(Type navigationPageType, object parameter = null)
         {
-            foreach (NavigationModel navigationItem in NavigationItemList)
+            try
             {
-                if (Equals(navigationItem.NavigationPage, navigationPageType))
+                // 导航到该项目对应的页面
+                if (!Equals(GetCurrentPageType(), navigationPageType))
                 {
-                    WindowFrame.Navigate(navigationItem.NavigationPage, parameter);
-                    break;
+                    WindowFrame.Navigate(navigationPageType, parameter);
                 }
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(NavigateTo), 1, e);
             }
         }
 
@@ -1127,9 +1210,25 @@ namespace GetStoreApp.Views.Windows
             return WindowFrame.Content;
         }
 
-        #endregion 第九部分：窗口导航方法
+        /// <summary>
+        /// 获取选中项
+        /// </summary>
+        public NavigationViewItemModel GetSelectedItem(Type currentPageType, ObservableCollection<NavigationViewItemModel> navigationViewItemMenuItemCollection)
+        {
+            foreach (NavigationViewItemModel navigationViewItem in navigationViewItemMenuItemCollection)
+            {
+                if (Equals(navigationViewItem.NavigationPage, currentPageType))
+                {
+                    return navigationViewItem;
+                }
+            }
 
-        #region 第十部分：显示对话框和应用通知
+            return null;
+        }
+
+        #endregion 第十部分：窗口导航方法
+
+        #region 第十一部分：显示对话框和应用通知
 
         /// <summary>
         /// 显示内容对话框
@@ -1193,7 +1292,7 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        #endregion 第十部分：显示对话框和应用通知
+        #endregion 第十一部分：显示对话框和应用通知
 
         /// <summary>
         /// 解析应用启动参数

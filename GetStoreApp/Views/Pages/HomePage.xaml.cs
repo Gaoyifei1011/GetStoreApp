@@ -9,8 +9,8 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.System;
 
-// 抑制 IDE0060 警告
-#pragma warning disable IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
@@ -26,42 +26,48 @@ namespace GetStoreApp.Views.Pages
                 Title = ResourceService.GetLocalized("Home/Store"),
                 Description = ResourceService.GetLocalized("Home/StoreDescription"),
                 ImagePath = "ms-appx:///Assets/Icon/Control/Store.png",
-                Tag = "Store"
+                Tag = "Store",
+                NavigationPage = typeof(StorePage)
             },
             new ControlItemModel()
             {
                 Title = ResourceService.GetLocalized("Home/AppUpdate"),
                 Description = ResourceService.GetLocalized("Home/AppUpdateDescription"),
                 ImagePath = "ms-appx:///Assets/Icon/Control/AppUpdate.png",
-                Tag = "AppUpdate"
+                Tag = "AppUpdate",
+                NavigationPage = typeof(AppUpdatePage)
             },
             new ControlItemModel()
             {
                 Title = ResourceService.GetLocalized("Home/WinGet"),
                 Description = ResourceService.GetLocalized("Home/WinGetDescription"),
                 ImagePath = "ms-appx:///Assets/Icon/Control/WinGet.png",
-                Tag = "WinGet"
+                Tag = "WinGet",
+                NavigationPage = typeof(WinGetPage)
             },
             new ControlItemModel()
             {
                 Title = ResourceService.GetLocalized("Home/AppManager"),
                 Description = ResourceService.GetLocalized("Home/AppManagerDescription"),
                 ImagePath = "ms-appx:///Assets/Icon/Control/AppManager.png",
-                Tag = "AppManager"
+                Tag = "AppManager",
+                NavigationPage = typeof(AppManagerPage)
             },
             new ControlItemModel()
             {
                 Title = ResourceService.GetLocalized("Home/Download"),
                 Description = ResourceService.GetLocalized("Home/DownloadDescription"),
                 ImagePath = "ms-appx:///Assets/Icon/Control/Download.png",
-                Tag = "Download"
+                Tag = "Download",
+                NavigationPage = typeof(DownloadPage)
             },
             new ControlItemModel()
             {
                 Title = ResourceService.GetLocalized("Home/Web"),
                 Description = ResourceService.GetLocalized("Home/WebDescription"),
                 ImagePath = "ms-appx:///Assets/Icon/Control/Web.png",
-                Tag = "Web"
+                Tag = "Web",
+                NavigationPage = null
             },
         ];
 
@@ -79,7 +85,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is ControlItemModel controlItem)
             {
-                if (MainWindow.Current.PageList[MainWindow.Current.PageList.FindIndex(item => string.Equals(item.Key, controlItem.Tag))].Key is "Web")
+                if(controlItem.Tag is "Web")
                 {
                     Task.Run(async () =>
                     {
@@ -93,9 +99,9 @@ namespace GetStoreApp.Views.Pages
                         }
                     });
                 }
-                else
+                else if(MainWindow.Current.GetSelectedItem(controlItem.NavigationPage, MainWindow.Current.NavigationViewItemMenuItemsCollection) is NavigationViewItemModel navigationViewItem)
                 {
-                    MainWindow.Current.NavigateTo(MainWindow.Current.PageList.Find(item => string.Equals(item.Key, Convert.ToString(controlItem.Tag))).Value);
+                    MainWindow.Current.NavigateTo(navigationViewItem.NavigationPage);
                 }
             }
         }

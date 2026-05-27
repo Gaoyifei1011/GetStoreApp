@@ -1,4 +1,6 @@
-﻿namespace GetStoreApp.Models
+﻿using System;
+
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 主页面项目数据模型
@@ -24,5 +26,10 @@
         /// 主页面项目标签
         /// </summary>
         public string Tag { get; set; }
+
+        /// <summary>
+        /// 主页面项目对应的页面
+        /// </summary>
+        public Type NavigationPage { get; set; }
     }
 }
