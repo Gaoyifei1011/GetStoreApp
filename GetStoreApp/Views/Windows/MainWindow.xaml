@@ -127,7 +127,7 @@
 
                 <!--  普通导航项数据模板  -->
                 <DataTemplate x:Key="NavigationViewItemTemplate" x:DataType="model:NavigationViewItemModel">
-                    <NavigationViewItem x:Name="MainNavigationView" Icon="{x:Bind NavigationIcon}">
+                    <NavigationViewItem Icon="{x:Bind NavigationIcon}" Style="{StaticResource NavigationViewItemStyle}">
 
                         <TextBlock
                             x:Name="NavigationViewItemText"
@@ -178,7 +178,10 @@
 
                 <!--  设置导航项数据模板  -->
                 <DataTemplate x:Key="NavigationViewSettingsItemTemplate" x:DataType="model:NavigationViewItemModel">
-                    <NavigationViewItem x:Name="MainNavigationView" Icon="{x:Bind NavigationIcon}">
+                    <NavigationViewItem
+                        Icon="{x:Bind NavigationIcon}"
+                        IsExpanded="True"
+                        Style="{StaticResource NavigationViewItemStyle}">
 
                         <TextBlock
                             x:Name="NavigationViewItemText"

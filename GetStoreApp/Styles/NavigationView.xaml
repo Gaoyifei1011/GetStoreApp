@@ -82,7 +82,7 @@
     <Thickness x:Key="NavigationViewCompactItemContentPresenterMargin">2,0,0,0</Thickness>
     <Thickness x:Key="NavigationViewItemContentPresenterMargin">2,0,0,2</Thickness>
 
-    <Style TargetType="NavigationViewItem">
+    <Style x:Key="NavigationViewItemStyle" TargetType="NavigationViewItem">
         <Setter Property="Foreground" Value="{ThemeResource NavigationViewItemForeground}" />
         <Setter Property="Background" Value="{ThemeResource NavigationViewItemBackground}" />
         <Setter Property="BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrush}" />
