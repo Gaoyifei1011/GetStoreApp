@@ -178,10 +178,7 @@
 
                 <!--  设置导航项数据模板  -->
                 <DataTemplate x:Key="NavigationViewSettingsItemTemplate" x:DataType="model:NavigationViewItemModel">
-                    <NavigationViewItem
-                        Icon="{x:Bind NavigationIcon}"
-                        IsExpanded="True"
-                        Style="{StaticResource NavigationViewItemStyle}">
+                    <NavigationViewItem Icon="{x:Bind NavigationIcon}" Style="{StaticResource NavigationViewItemStyle}">
 
                         <TextBlock
                             x:Name="NavigationViewItemText"
