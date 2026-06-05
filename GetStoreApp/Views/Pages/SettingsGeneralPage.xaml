@@ -70,17 +70,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent"
-                                Visibility="{x:Bind ThemeDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/ThemeDescription')}" />
-                                </Grid>
-                            </ToolTip>
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/ThemeDescription')}" Visibility="{x:Bind ThemeDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -146,17 +136,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent"
-                                Visibility="{x:Bind BackdropDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/BackdropDescription')}" />
-                                </Grid>
-                            </ToolTip>
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/BackdropDescription')}" Visibility="{x:Bind BackdropDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -222,17 +202,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent"
-                                Visibility="{x:Bind AlwaysShowBackdropDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/AlwaysShowBackdropDescription')}" />
-                                </Grid>
-                            </ToolTip>
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/AlwaysShowBackdropDescription')}" Visibility="{x:Bind AlwaysShowBackdropDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -291,17 +261,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent"
-                                Visibility="{x:Bind LanguageDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/LanguageDescription')}" />
-                                </Grid>
-                            </ToolTip>
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/LanguageDescription')}" Visibility="{x:Bind LanguageDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -365,17 +325,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent"
-                                Visibility="{x:Bind TopMostDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/TopMostDescription')}" />
-                                </Grid>
-                            </ToolTip>
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/TopMostDescription')}" Visibility="{x:Bind TopMostDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>

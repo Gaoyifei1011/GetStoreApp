@@ -4,10 +4,67 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Application.Resources>
-        <XamlControlsResources>
-            <XamlControlsResources.MergedDictionaries>
-                <ResourceDictionary Source="ms-appx:///Styles/CommandBar.xaml" />
-            </XamlControlsResources.MergedDictionaries>
-        </XamlControlsResources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources>
+                    <XamlControlsResources.MergedDictionaries>
+                        <ResourceDictionary Source="ms-appx:///Styles/CommandBar.xaml" />
+                    </XamlControlsResources.MergedDictionaries>
+                </XamlControlsResources>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--  更新工具提示的默认控件模板样式  -->
+            <Style TargetType="ToolTip">
+                <Setter Property="Foreground" Value="{ThemeResource ToolTipForegroundBrush}" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
+                <Setter Property="BorderBrush" Value="{ThemeResource ToolTipBorderBrush}" />
+                <Setter Property="BorderThickness" Value="{ThemeResource ToolTipBorderThemeThickness}" />
+                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                <Setter Property="FontSize" Value="{ThemeResource ToolTipContentThemeFontSize}" />
+                <Setter Property="Padding" Value="{StaticResource ToolTipBorderPadding}" />
+                <Setter Property="MaxWidth" Value="9999" />
+                <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ToolTip">
+                            <ContentPresenter
+                                x:Name="LayoutRoot"
+                                MaxWidth="{TemplateBinding MaxWidth}"
+                                Background="{TemplateBinding Background}"
+                                BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                ContentTransitions="{TemplateBinding ContentTransitions}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                TextWrapping="Wrap">
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{TemplateBinding CornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <ContentPresenter Padding="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
+                                </Grid>
+
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="OpenStates">
+                                        <VisualState x:Name="Closed">
+
+                                            <Storyboard>
+                                                <FadeOutThemeAnimation TargetName="LayoutRoot" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Opened">
+
+                                            <Storyboard>
+                                                <FadeInThemeAnimation TargetName="LayoutRoot" />
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </ContentPresenter>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

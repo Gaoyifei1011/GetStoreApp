@@ -144,7 +144,8 @@
                 Margin="2,2,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Click="{x:Bind OnOpenSettingsClicked}">
+                Click="{x:Bind OnOpenSettingsClicked}"
+                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Settings')}">
 
                 <AnimatedIcon>
                     <AnimatedIcon.Source>
@@ -154,19 +155,6 @@
                         <FontIconSource Glyph="&#xE713;" />
                     </AnimatedIcon.FallbackIconSource>
                 </AnimatedIcon>
-
-                <ToolTipService.ToolTip>
-                    <ToolTip
-                        MaxWidth="9999"
-                        Padding="0"
-                        Background="Transparent">
-
-                        <Grid>
-                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Settings')}" />
-                        </Grid>
-                    </ToolTip>
-                </ToolTipService.ToolTip>
             </Button>
 
             <!--  空应用包  -->
@@ -278,17 +266,7 @@
                                     TextTrimming="CharacterEllipsis">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Padding="0"
-                                            Background="Transparent"
-                                            Visibility="{Binding ElementName=PackageNameText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                            <Grid>
-                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind PackageName, Mode=OneWay}" />
-                                            </Grid>
-                                        </ToolTip>
+                                        <ToolTip Content="{x:Bind PackageName, Mode=OneWay}" Visibility="{Binding ElementName=PackageNameText, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -302,20 +280,11 @@
                                     <Run Text="{x:Bind PublisherDisplayName, Mode=OneWay}" />
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Padding="0"
-                                            Background="Transparent"
-                                            Visibility="{Binding ElementName=PublisherText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                            <Grid>
-                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-
-                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}">
-                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Publisher')}" />
-                                                    <Run Text="{x:Bind PublisherDisplayName, Mode=OneWay}" />
-                                                </TextBlock>
-                                            </Grid>
+                                        <ToolTip Visibility="{Binding ElementName=PublisherText, Path=IsTextTrimmed, Mode=OneWay}">
+                                            <TextBlock>
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Publisher')}" />
+                                                <Run Text="{x:Bind PublisherDisplayName, Mode=OneWay}" />
+                                            </TextBlock>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
@@ -330,20 +299,11 @@
                                     <Run Text="{x:Bind system:Convert.ToString(Version), Mode=OneWay}" />
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Padding="0"
-                                            Background="Transparent"
-                                            Visibility="{Binding ElementName=PackageVersionText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                            <Grid>
-                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-
-                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}">
-                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageVersion')}" />
-                                                    <Run Text="{x:Bind system:Convert.ToString(Version), Mode=OneWay}" />
-                                                </TextBlock>
-                                            </Grid>
+                                        <ToolTip Visibility="{Binding ElementName=PackageVersionText, Path=IsTextTrimmed, Mode=OneWay}">
+                                            <TextBlock>
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageVersion')}" />
+                                                <Run Text="{x:Bind system:Convert.ToString(Version), Mode=OneWay}" />
+                                            </TextBlock>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
@@ -390,22 +350,10 @@
                                             Height="34"
                                             Margin="0,0,3,0"
                                             Padding="0"
-                                            Click="{x:Bind OnOpenPackageClicked}">
+                                            Click="{x:Bind OnOpenPackageClicked}"
+                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenPackage')}">
 
                                             <FontIcon FontSize="16" Glyph="&#xE8E5;" />
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Padding="0"
-                                                    Background="Transparent">
-
-                                                    <Grid>
-                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenPackage')}" />
-                                                    </Grid>
-                                                </ToolTip>
-                                            </ToolTipService.ToolTip>
                                         </Button>
 
                                         <Button
@@ -413,7 +361,8 @@
                                             Width="34"
                                             Height="34"
                                             Margin="0,0,3,0"
-                                            Padding="0">
+                                            Padding="0"
+                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependency')}">
 
                                             <FontIcon FontSize="16" Glyph="&#xF003;" />
 
@@ -472,25 +421,13 @@
                                                                     HorizontalAlignment="Center"
                                                                     VerticalAlignment="Center"
                                                                     Click="{x:Bind OnAddDependencyClicked}"
-                                                                    Style="{StaticResource AlternateCloseButtonStyle}">
+                                                                    Style="{StaticResource AlternateCloseButtonStyle}"
+                                                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependency')}">
 
                                                                     <FontIcon
                                                                         Margin="4"
                                                                         FontSize="16"
                                                                         Glyph="&#xE710;" />
-
-                                                                    <ToolTipService.ToolTip>
-                                                                        <ToolTip
-                                                                            MaxWidth="9999"
-                                                                            Padding="0"
-                                                                            Background="Transparent">
-
-                                                                            <Grid>
-                                                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependency')}" />
-                                                                            </Grid>
-                                                                        </ToolTip>
-                                                                    </ToolTipService.ToolTip>
                                                                 </Button>
 
                                                                 <Button
@@ -500,25 +437,13 @@
                                                                     VerticalAlignment="Center"
                                                                     Click="{x:Bind OnClearDependencyClicked}"
                                                                     IsEnabled="{x:Bind system:Convert.ToBoolean(InstallDependencyCollection.Count), Mode=OneWay}"
-                                                                    Style="{StaticResource AlternateCloseButtonStyle}">
+                                                                    Style="{StaticResource AlternateCloseButtonStyle}"
+                                                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ClearDependency')}">
 
                                                                     <FontIcon
                                                                         Margin="4"
                                                                         FontSize="16"
                                                                         Glyph="&#xE74D;" />
-
-                                                                    <ToolTipService.ToolTip>
-                                                                        <ToolTip
-                                                                            MaxWidth="9999"
-                                                                            Padding="0"
-                                                                            Background="Transparent">
-
-                                                                            <Grid>
-                                                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ClearDependency')}" />
-                                                                            </Grid>
-                                                                        </ToolTip>
-                                                                    </ToolTipService.ToolTip>
                                                                 </Button>
 
                                                                 <Button
@@ -528,25 +453,13 @@
                                                                     VerticalAlignment="Center"
                                                                     Click="{x:Bind OnCloseFlyoutClicked}"
                                                                     Style="{StaticResource AlternateCloseButtonStyle}"
-                                                                    Tag="{x:Bind AddDependencyFlyout}">
+                                                                    Tag="{x:Bind AddDependencyFlyout}"
+                                                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}">
 
                                                                     <FontIcon
                                                                         Margin="4"
                                                                         FontSize="16"
                                                                         Glyph="&#xE711;" />
-
-                                                                    <ToolTipService.ToolTip>
-                                                                        <ToolTip
-                                                                            MaxWidth="9999"
-                                                                            Padding="0"
-                                                                            Background="Transparent">
-
-                                                                            <Grid>
-                                                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}" />
-                                                                            </Grid>
-                                                                        </ToolTip>
-                                                                    </ToolTipService.ToolTip>
                                                                 </Button>
                                                             </Grid>
 
@@ -625,17 +538,7 @@
                                                                                     TextTrimming="CharacterEllipsis">
 
                                                                                     <ToolTipService.ToolTip>
-                                                                                        <ToolTip
-                                                                                            MaxWidth="9999"
-                                                                                            Padding="0"
-                                                                                            Background="Transparent"
-                                                                                            Visibility="{Binding ElementName=DependencyNameText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                                            <Grid>
-                                                                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind DependencyName}" />
-                                                                                            </Grid>
-                                                                                        </ToolTip>
+                                                                                        <ToolTip Content="{x:Bind DependencyName}" Visibility="{Binding ElementName=DependencyNameText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                                     </ToolTipService.ToolTip>
                                                                                 </TextBlock>
 
@@ -656,21 +559,12 @@
                                                                                     <Run Text="{x:Bind DependencyPublisher}" />
 
                                                                                     <ToolTipService.ToolTip>
-                                                                                        <ToolTip
-                                                                                            MaxWidth="9999"
-                                                                                            Padding="0"
-                                                                                            Background="Transparent"
-                                                                                            Visibility="{Binding ElementName=DependencyInfoText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                                            <Grid>
-                                                                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-
-                                                                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}">
-                                                                                                    <Run Text="{x:Bind DependencyVersion}" />
-                                                                                                    <Run Text=" | " />
-                                                                                                    <Run Text="{x:Bind DependencyPublisher}" />
-                                                                                                </TextBlock>
-                                                                                            </Grid>
+                                                                                        <ToolTip Visibility="{Binding ElementName=DependencyInfoText, Path=IsTextTrimmed, Mode=OneWay}">
+                                                                                            <TextBlock>
+                                                                                                <Run Text="{x:Bind DependencyVersion}" />
+                                                                                                <Run Text=" | " />
+                                                                                                <Run Text="{x:Bind DependencyPublisher}" />
+                                                                                            </TextBlock>
                                                                                         </ToolTip>
                                                                                     </ToolTipService.ToolTip>
                                                                                 </TextBlock>
@@ -685,25 +579,13 @@
                                                                                 VerticalAlignment="Center"
                                                                                 Command="{StaticResource DeleteDependencyPackageCommand}"
                                                                                 CommandParameter="{x:Bind DependencyFullName}"
-                                                                                Style="{StaticResource AlternateCloseButtonStyle}">
+                                                                                Style="{StaticResource AlternateCloseButtonStyle}"
+                                                                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DeleteDependencyPackage')}">
 
                                                                                 <FontIcon
                                                                                     Margin="4"
                                                                                     FontSize="16"
                                                                                     Glyph="&#xE711;" />
-
-                                                                                <ToolTipService.ToolTip>
-                                                                                    <ToolTip
-                                                                                        MaxWidth="9999"
-                                                                                        Padding="0"
-                                                                                        Background="Transparent">
-
-                                                                                        <Grid>
-                                                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DeleteDependencyPackage')}" />
-                                                                                        </Grid>
-                                                                                    </ToolTip>
-                                                                                </ToolTipService.ToolTip>
                                                                             </Button>
                                                                         </Grid>
                                                                     </DataTemplate>
@@ -713,19 +595,6 @@
                                                     </Grid>
                                                 </Flyout>
                                             </Button.Flyout>
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Padding="0"
-                                                    Background="Transparent">
-
-                                                    <Grid>
-                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AddDependency')}" />
-                                                    </Grid>
-                                                </ToolTip>
-                                            </ToolTipService.ToolTip>
                                         </Button>
 
                                         <Button
@@ -736,22 +605,10 @@
                                             HorizontalContentAlignment="Stretch"
                                             VerticalContentAlignment="Stretch"
                                             Click="{x:Bind OnInstallAppClicked}"
-                                            Style="{StaticResource AccentButtonStyle}">
+                                            Style="{StaticResource AccentButtonStyle}"
+                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/InstallApp')}">
 
                                             <FontIcon FontSize="16" Glyph="&#xE896;" />
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Padding="0"
-                                                    Background="Transparent">
-
-                                                    <Grid>
-                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/InstallApp')}" />
-                                                    </Grid>
-                                                </ToolTip>
-                                            </ToolTipService.ToolTip>
                                         </Button>
                                     </Grid>
                                 </ContentControl>
@@ -766,22 +623,10 @@
                                     Click="{x:Bind OnCancelInstallClicked}"
                                     IsEnabled="{x:Bind IsCancelInstall, Mode=OneWay}"
                                     Style="{StaticResource AccentButtonStyle}"
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CancelInstall')}"
                                     Visibility="{x:Bind IsInstalling, Mode=OneWay}">
 
                                     <FontIcon FontSize="16" Glyph="&#xE711;" />
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Padding="0"
-                                            Background="Transparent">
-
-                                            <Grid>
-                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CancelInstall')}" />
-                                            </Grid>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
                                 </Button>
 
                                 <Grid
@@ -809,6 +654,7 @@
                                         Width="32"
                                         Height="32"
                                         Padding="0"
+                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ViewErrorInformation')}"
                                         Visibility="{x:Bind IsInstallFailed, Mode=OneWay}">
 
                                         <FontIcon FontSize="14" Glyph="&#xE783;" />
@@ -868,25 +714,13 @@
                                                                 VerticalAlignment="Center"
                                                                 Click="{x:Bind OnCopyErrorInformationClicked}"
                                                                 IsEnabled="{x:Bind converter:ValueConverterHelper.IsNotEmptyString(InstallFailedInformation), Mode=OneWay}"
-                                                                Style="{StaticResource AlternateCloseButtonStyle}">
+                                                                Style="{StaticResource AlternateCloseButtonStyle}"
+                                                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CopyErrorInformation')}">
 
                                                                 <FontIcon
                                                                     Margin="4"
                                                                     FontSize="16"
                                                                     Glyph="&#xE8C8;" />
-
-                                                                <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Padding="0"
-                                                                        Background="Transparent">
-
-                                                                        <Grid>
-                                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CopyErrorInformation')}" />
-                                                                        </Grid>
-                                                                    </ToolTip>
-                                                                </ToolTipService.ToolTip>
                                                             </Button>
 
                                                             <Button
@@ -896,25 +730,13 @@
                                                                 VerticalAlignment="Center"
                                                                 Click="{x:Bind OnCloseFlyoutClicked}"
                                                                 Style="{StaticResource AlternateCloseButtonStyle}"
-                                                                Tag="{x:Bind ViewErrorInformationFlyout}">
+                                                                Tag="{x:Bind ViewErrorInformationFlyout}"
+                                                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}">
 
                                                                 <FontIcon
                                                                     Margin="4"
                                                                     FontSize="16"
                                                                     Glyph="&#xE711;" />
-
-                                                                <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Padding="0"
-                                                                        Background="Transparent">
-
-                                                                        <Grid>
-                                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/CloseFlyout')}" />
-                                                                        </Grid>
-                                                                    </ToolTip>
-                                                                </ToolTipService.ToolTip>
                                                             </Button>
                                                         </Grid>
 
@@ -934,19 +756,6 @@
                                                 </Grid>
                                             </Flyout>
                                         </Button.Flyout>
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                MaxWidth="9999"
-                                                Padding="0"
-                                                Background="Transparent">
-
-                                                <Grid>
-                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ViewErrorInformation')}" />
-                                                </Grid>
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -1281,19 +1090,11 @@
                                                     </Hyperlink>
 
                                                     <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Padding="0"
-                                                            Background="Transparent">
-
-                                                            <Grid>
-                                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-
-                                                                <StackPanel Padding="{StaticResource ToolTipBorderPadding}">
-                                                                    <TextBlock Text="{x:Bind AppInstallerSourceLink, Mode=OneWay}" />
-                                                                    <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenLink')}" />
-                                                                </StackPanel>
-                                                            </Grid>
+                                                        <ToolTip>
+                                                            <StackPanel>
+                                                                <TextBlock Text="{x:Bind AppInstallerSourceLink, Mode=OneWay}" />
+                                                                <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenLink')}" />
+                                                            </StackPanel>
                                                         </ToolTip>
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -1335,19 +1136,11 @@
                                                     </Hyperlink>
 
                                                     <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            MaxWidth="9999"
-                                                            Padding="0"
-                                                            Background="Transparent">
-
-                                                            <Grid>
-                                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-
-                                                                <StackPanel Padding="{StaticResource ToolTipBorderPadding}" Orientation="Vertical">
-                                                                    <TextBlock Text="{x:Bind PackageSourceLink, Mode=OneWay}" />
-                                                                    <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenLink')}" />
-                                                                </StackPanel>
-                                                            </Grid>
+                                                        <ToolTip>
+                                                            <StackPanel Orientation="Vertical">
+                                                                <TextBlock Text="{x:Bind PackageSourceLink, Mode=OneWay}" />
+                                                                <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenLink')}" />
+                                                            </StackPanel>
                                                         </ToolTip>
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
@@ -1643,17 +1436,7 @@
                                                         TextWrapping="NoWrap">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip
-                                                                MaxWidth="9999"
-                                                                Padding="0"
-                                                                Background="Transparent"
-                                                                Visibility="{x:Bind TargetDeviceNameHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                                                <Grid>
-                                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/TargetDeviceName')}" />
-                                                                </Grid>
-                                                            </ToolTip>
+                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/TargetDeviceName')}" Visibility="{x:Bind TargetDeviceNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                         </ToolTipService.ToolTip>
                                                     </TextBlock>
 
@@ -1669,17 +1452,7 @@
                                                         TextWrapping="NoWrap">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip
-                                                                MaxWidth="9999"
-                                                                Padding="0"
-                                                                Background="Transparent"
-                                                                Visibility="{x:Bind MinVersionHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                                                <Grid>
-                                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MinVersion')}" />
-                                                                </Grid>
-                                                            </ToolTip>
+                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MinVersion')}" Visibility="{x:Bind MinVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                         </ToolTipService.ToolTip>
                                                     </TextBlock>
 
@@ -1695,17 +1468,7 @@
                                                         TextWrapping="NoWrap">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip
-                                                                MaxWidth="9999"
-                                                                Padding="0"
-                                                                Background="Transparent"
-                                                                Visibility="{x:Bind MaxVersionTestedHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                                                <Grid>
-                                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MaxVersionTested')}" />
-                                                                </Grid>
-                                                            </ToolTip>
+                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MaxVersionTested')}" Visibility="{x:Bind MaxVersionTestedHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                         </ToolTipService.ToolTip>
                                                     </TextBlock>
                                                 </Grid>
@@ -1738,17 +1501,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent"
-                                                                    Visibility="{Binding ElementName=TargetDeviceNameText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind TargetDeviceName}" />
-                                                                    </Grid>
-                                                                </ToolTip>
+                                                                <ToolTip Content="{x:Bind TargetDeviceName}" Visibility="{Binding ElementName=TargetDeviceNameText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
@@ -1765,17 +1518,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent"
-                                                                    Visibility="{Binding ElementName=MinVersionText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind system:Convert.ToString(MinVersion)}" />
-                                                                    </Grid>
-                                                                </ToolTip>
+                                                                <ToolTip Content="{x:Bind system:Convert.ToString(MinVersion)}" Visibility="{Binding ElementName=MinVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
@@ -1792,17 +1535,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent"
-                                                                    Visibility="{Binding ElementName=MaxVersionTestedText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind system:Convert.ToString(MaxVersionTested)}" />
-                                                                    </Grid>
-                                                                </ToolTip>
+                                                                <ToolTip Content="{x:Bind system:Convert.ToString(MaxVersionTested)}" Visibility="{Binding ElementName=MaxVersionTestedText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
                                                     </Grid>
@@ -1893,17 +1626,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent"
-                                                                    Visibility="{x:Bind PackageDependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}" />
-                                                                    </Grid>
-                                                                </ToolTip>
+                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}" Visibility="{x:Bind PackageDependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
@@ -1919,17 +1642,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent"
-                                                                    Visibility="{x:Bind PackageDependencyPublisherHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}" />
-                                                                    </Grid>
-                                                                </ToolTip>
+                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}" Visibility="{x:Bind PackageDependencyPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
@@ -1945,17 +1658,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent"
-                                                                    Visibility="{x:Bind PackageDependencyMinVersionHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyMinVersion')}" />
-                                                                    </Grid>
-                                                                </ToolTip>
+                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyMinVersion')}" Visibility="{x:Bind PackageDependencyMinVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
                                                     </Grid>
@@ -1988,17 +1691,7 @@
                                                                 TextWrapping="NoWrap">
 
                                                                 <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Padding="0"
-                                                                        Background="Transparent"
-                                                                        Visibility="{Binding ElementName=PackageDependencyNameText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                        <Grid>
-                                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind DependencyName}" />
-                                                                        </Grid>
-                                                                    </ToolTip>
+                                                                    <ToolTip Content="{x:Bind DependencyName}" Visibility="{Binding ElementName=PackageDependencyNameText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>
 
@@ -2015,17 +1708,7 @@
                                                                 TextWrapping="NoWrap">
 
                                                                 <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Padding="0"
-                                                                        Background="Transparent"
-                                                                        Visibility="{Binding ElementName=PackageDependencyPublisherText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                        <Grid>
-                                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind DependencyPublisher}" />
-                                                                        </Grid>
-                                                                    </ToolTip>
+                                                                    <ToolTip Content="{x:Bind DependencyPublisher}" Visibility="{Binding ElementName=PackageDependencyPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>
 
@@ -2042,17 +1725,7 @@
                                                                 TextWrapping="NoWrap">
 
                                                                 <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Padding="0"
-                                                                        Background="Transparent"
-                                                                        Visibility="{Binding ElementName=PackageDependencyMinVersionText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                        <Grid>
-                                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind system:Convert.ToString(DependencyMinVersion)}" />
-                                                                        </Grid>
-                                                                    </ToolTip>
+                                                                    <ToolTip Content="{x:Bind system:Convert.ToString(DependencyMinVersion)}" Visibility="{Binding ElementName=PackageDependencyMinVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>
                                                         </Grid>
@@ -2106,17 +1779,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent"
-                                                                    Visibility="{x:Bind AppInstallerDependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}" />
-                                                                    </Grid>
-                                                                </ToolTip>
+                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}" Visibility="{x:Bind AppInstallerDependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
@@ -2132,17 +1795,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent"
-                                                                    Visibility="{x:Bind AppInstallerDependencyPublisherHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}" />
-                                                                    </Grid>
-                                                                </ToolTip>
+                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}" Visibility="{x:Bind AppInstallerDependencyPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
@@ -2158,17 +1811,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent"
-                                                                    Visibility="{x:Bind AppInstallerDependencyVersionHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyVersion')}" />
-                                                                    </Grid>
-                                                                </ToolTip>
+                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyVersion')}" Visibility="{x:Bind AppInstallerDependencyVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
@@ -2184,17 +1827,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent"
-                                                                    Visibility="{x:Bind AppInstallerDependencyProcessorArchitectureHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyProcessorArchitecture')}" />
-                                                                    </Grid>
-                                                                </ToolTip>
+                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyProcessorArchitecture')}" Visibility="{x:Bind AppInstallerDependencyProcessorArchitectureHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
@@ -2210,17 +1843,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent"
-                                                                    Visibility="{x:Bind AppInstallerDependencyOperationHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyOperation')}" />
-                                                                    </Grid>
-                                                                </ToolTip>
+                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyOperation')}" Visibility="{x:Bind AppInstallerDependencyOperationHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
                                                     </Grid>
@@ -2255,17 +1878,7 @@
                                                                 TextWrapping="NoWrap">
 
                                                                 <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Padding="0"
-                                                                        Background="Transparent"
-                                                                        Visibility="{Binding ElementName=AppInstallerDependencyNameText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                        <Grid>
-                                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind DependencyName}" />
-                                                                        </Grid>
-                                                                    </ToolTip>
+                                                                    <ToolTip Content="{x:Bind DependencyName}" Visibility="{Binding ElementName=AppInstallerDependencyNameText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>
 
@@ -2282,17 +1895,7 @@
                                                                 TextWrapping="NoWrap">
 
                                                                 <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Padding="0"
-                                                                        Background="Transparent"
-                                                                        Visibility="{Binding ElementName=AppInstallerDependencyPublisherText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                        <Grid>
-                                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind DependencyPublisher}" />
-                                                                        </Grid>
-                                                                    </ToolTip>
+                                                                    <ToolTip Content="{x:Bind DependencyPublisher}" Visibility="{Binding ElementName=AppInstallerDependencyPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>
 
@@ -2309,17 +1912,7 @@
                                                                 TextWrapping="NoWrap">
 
                                                                 <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Padding="0"
-                                                                        Background="Transparent"
-                                                                        Visibility="{Binding ElementName=AppInstallerDependencyVersionText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                        <Grid>
-                                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind system:Convert.ToString(DependencyVersion)}" />
-                                                                        </Grid>
-                                                                    </ToolTip>
+                                                                    <ToolTip Content="{x:Bind system:Convert.ToString(DependencyVersion)}" Visibility="{Binding ElementName=AppInstallerDependencyVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>
 
@@ -2336,17 +1929,7 @@
                                                                 TextWrapping="NoWrap">
 
                                                                 <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Padding="0"
-                                                                        Background="Transparent"
-                                                                        Visibility="{Binding ElementName=AppInstallerDependencyProcessorArchitectureText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                        <Grid>
-                                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind ProcessorArchitecture}" />
-                                                                        </Grid>
-                                                                    </ToolTip>
+                                                                    <ToolTip Content="{x:Bind ProcessorArchitecture}" Visibility="{Binding ElementName=AppInstallerDependencyProcessorArchitectureText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>
 
@@ -2355,24 +1938,12 @@
                                                                 Margin="6,0,0,0"
                                                                 HorizontalAlignment="Left"
                                                                 IsTextSelectionEnabled="True"
-                                                                TextTrimming="CharacterEllipsis">
+                                                                TextTrimming="CharacterEllipsis"
+                                                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenLink')}">
 
                                                                 <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
                                                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Open')}" />
                                                                 </Hyperlink>
-
-                                                                <ToolTipService.ToolTip>
-                                                                    <ToolTip
-                                                                        MaxWidth="9999"
-                                                                        Padding="0"
-                                                                        Background="Transparent">
-
-                                                                        <Grid>
-                                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenLink')}" />
-                                                                        </Grid>
-                                                                    </ToolTip>
-                                                                </ToolTipService.ToolTip>
                                                             </TextBlock>
                                                         </Grid>
                                                     </DataTemplate>
@@ -2465,19 +2036,11 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-
-                                                                        <StackPanel Padding="{StaticResource ToolTipBorderPadding}">
-                                                                            <TextBlock Text="{x:Bind CapabilityLocalizedName}" />
-                                                                            <TextBlock Text="{x:Bind CapabilityName}" />
-                                                                        </StackPanel>
-                                                                    </Grid>
+                                                                <ToolTip>
+                                                                    <StackPanel>
+                                                                        <TextBlock Text="{x:Bind CapabilityLocalizedName}" />
+                                                                        <TextBlock Text="{x:Bind CapabilityName}" />
+                                                                    </StackPanel>
                                                                 </ToolTip>
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
@@ -2559,17 +2122,7 @@
                                                         TextWrapping="NoWrap">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip
-                                                                MaxWidth="9999"
-                                                                Padding="0"
-                                                                Background="Transparent"
-                                                                Visibility="{x:Bind AppIDHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                                                <Grid>
-                                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppID')}" />
-                                                                </Grid>
-                                                            </ToolTip>
+                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppID')}" Visibility="{x:Bind AppIDHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                         </ToolTipService.ToolTip>
                                                     </TextBlock>
 
@@ -2585,17 +2138,7 @@
                                                         TextWrapping="NoWrap">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip
-                                                                MaxWidth="9999"
-                                                                Padding="0"
-                                                                Background="Transparent"
-                                                                Visibility="{x:Bind AppDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                                                <Grid>
-                                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppDescription')}" />
-                                                                </Grid>
-                                                            </ToolTip>
+                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppDescription')}" Visibility="{x:Bind AppDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                         </ToolTipService.ToolTip>
                                                     </TextBlock>
 
@@ -2611,17 +2154,7 @@
                                                         TextWrapping="NoWrap">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip
-                                                                MaxWidth="9999"
-                                                                Padding="0"
-                                                                Background="Transparent"
-                                                                Visibility="{x:Bind ExecutableHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                                                <Grid>
-                                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Executable')}" />
-                                                                </Grid>
-                                                            </ToolTip>
+                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Executable')}" Visibility="{x:Bind ExecutableHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                         </ToolTipService.ToolTip>
                                                     </TextBlock>
 
@@ -2637,17 +2170,7 @@
                                                         TextWrapping="NoWrap">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip
-                                                                MaxWidth="9999"
-                                                                Padding="0"
-                                                                Background="Transparent"
-                                                                Visibility="{x:Bind EntryPointHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                                                <Grid>
-                                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/EntryPoint')}" />
-                                                                </Grid>
-                                                            </ToolTip>
+                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/EntryPoint')}" Visibility="{x:Bind EntryPointHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                         </ToolTipService.ToolTip>
                                                     </TextBlock>
 
@@ -2663,17 +2186,7 @@
                                                         TextWrapping="NoWrap">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip
-                                                                MaxWidth="9999"
-                                                                Padding="0"
-                                                                Background="Transparent"
-                                                                Visibility="{x:Bind AppUserModelIdHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                                                <Grid>
-                                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppUserModelId')}" />
-                                                                </Grid>
-                                                            </ToolTip>
+                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppUserModelId')}" Visibility="{x:Bind AppUserModelIdHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                         </ToolTipService.ToolTip>
                                                     </TextBlock>
                                                 </Grid>
@@ -2708,17 +2221,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent"
-                                                                    Visibility="{Binding ElementName=AppIDText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind AppID}" />
-                                                                    </Grid>
-                                                                </ToolTip>
+                                                                <ToolTip Content="{x:Bind AppID}" Visibility="{Binding ElementName=AppIDText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
@@ -2735,17 +2238,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent"
-                                                                    Visibility="{Binding ElementName=AppDescriptionText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind AppDescription}" />
-                                                                    </Grid>
-                                                                </ToolTip>
+                                                                <ToolTip Content="{x:Bind AppDescription}" Visibility="{Binding ElementName=AppDescriptionText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
@@ -2762,17 +2255,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent"
-                                                                    Visibility="{Binding ElementName=ExecutableText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind Executable}" />
-                                                                    </Grid>
-                                                                </ToolTip>
+                                                                <ToolTip Content="{x:Bind Executable}" Visibility="{Binding ElementName=ExecutableText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
@@ -2789,17 +2272,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent"
-                                                                    Visibility="{Binding ElementName=EntryPointText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind EntryPoint}" />
-                                                                    </Grid>
-                                                                </ToolTip>
+                                                                <ToolTip Content="{x:Bind EntryPoint}" Visibility="{Binding ElementName=EntryPointText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
@@ -2816,17 +2289,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent"
-                                                                    Visibility="{Binding ElementName=AppUserModelIdText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind AppUserModelId}" />
-                                                                    </Grid>
-                                                                </ToolTip>
+                                                                <ToolTip Content="{x:Bind AppUserModelId}" Visibility="{Binding ElementName=AppUserModelIdText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
                                                     </Grid>
@@ -2911,20 +2374,12 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Padding="0"
-                                                                    Background="Transparent">
-
-                                                                    <Grid>
-                                                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-
-                                                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}">
-                                                                            <Run Text="{x:Bind DisplayName}" />
-                                                                            <Run Text=" - " />
-                                                                            <Run Text="{x:Bind Name}" />
-                                                                        </TextBlock>
-                                                                    </Grid>
+                                                                <ToolTip>
+                                                                    <TextBlock>
+                                                                        <Run Text="{x:Bind DisplayName}" />
+                                                                        <Run Text=" - " />
+                                                                        <Run Text="{x:Bind Name}" />
+                                                                    </TextBlock>
                                                                 </ToolTip>
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>

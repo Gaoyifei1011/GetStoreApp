@@ -58,24 +58,14 @@
                             FontSize="15"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/Developer')}" />
 
-                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/DeveloperNameToolTip')}">
 
                             <Hyperlink NavigateUri="https://github.com/Gaoyifei1011" UnderlineStyle="None">
                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/DeveloperName')}" />
                             </Hyperlink>
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    MaxWidth="9999"
-                                    Padding="0"
-                                    Background="Transparent">
-
-                                    <Grid>
-                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/DeveloperNameToolTip')}" />
-                                    </Grid>
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
                         </TextBlock>
                     </StackPanel>
 
@@ -499,22 +489,14 @@
                                     </Hyperlink>
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Padding="0"
-                                            Background="Transparent">
-
-                                            <Grid>
-                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-
-                                                <StackPanel Padding="{StaticResource ToolTipBorderPadding}">
-                                                    <TextBlock>
-                                                        <Run Text="{x:Bind DisplayText}" />
-                                                        <LineBreak />
-                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ReferenceToolTip')}" />
-                                                    </TextBlock>
-                                                </StackPanel>
-                                            </Grid>
+                                        <ToolTip>
+                                            <StackPanel>
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind DisplayText}" />
+                                                    <LineBreak />
+                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ReferenceToolTip')}" />
+                                                </TextBlock>
+                                            </StackPanel>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
@@ -594,22 +576,14 @@
                                         </Hyperlink>
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                MaxWidth="9999"
-                                                Padding="0"
-                                                Background="Transparent">
-
-                                                <Grid>
-                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-
-                                                    <StackPanel Padding="{StaticResource ToolTipBorderPadding}">
-                                                        <TextBlock>
-                                                            <Run Text="{x:Bind DisplayText}" />
-                                                            <LineBreak />
-                                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ThanksToolTip')}" />
-                                                        </TextBlock>
-                                                    </StackPanel>
-                                                </Grid>
+                                            <ToolTip>
+                                                <StackPanel>
+                                                    <TextBlock>
+                                                        <Run Text="{x:Bind DisplayText}" />
+                                                        <LineBreak />
+                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ThanksToolTip')}" />
+                                                    </TextBlock>
+                                                </StackPanel>
                                             </ToolTip>
                                         </ToolTipService.ToolTip>
                                     </TextBlock>

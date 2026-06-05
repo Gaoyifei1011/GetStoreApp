@@ -551,21 +551,8 @@
                                             Text="{x:Bind}"
                                             TextAlignment="Center"
                                             TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap" />
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                MaxWidth="9999"
-                                                Padding="0"
-                                                Background="Transparent"
-                                                Visibility="{Binding ElementName=TagText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                <Grid>
-                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind}" />
-                                                </Grid>
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
+                                            TextWrapping="NoWrap"
+                                            ToolTipService.ToolTip="{x:Bind}" />
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>

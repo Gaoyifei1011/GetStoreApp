@@ -141,44 +141,24 @@
                 </CommandBar.PrimaryCommands>
 
                 <CommandBar.SecondaryCommands>
-                    <AppBarButton Click="{x:Bind OnOpenStoreClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/OpenStore')}">
+                    <AppBarButton
+                        Click="{x:Bind OnOpenStoreClicked}"
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/OpenStore')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/OpenStoreToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE719;" />
                         </AppBarButton.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/OpenStoreToolTip')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
                     </AppBarButton>
 
-                    <AppBarButton Click="{x:Bind OnInsiderProgramClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/InsiderProgram')}">
+                    <AppBarButton
+                        Click="{x:Bind OnInsiderProgramClicked}"
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/InsiderProgram')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/InsiderProgramToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xF1AD;" />
                         </AppBarButton.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/InsiderProgramToolTip')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
                     </AppBarButton>
                 </CommandBar.SecondaryCommands>
             </CommandBar>
@@ -294,26 +274,18 @@
                                     TextWrapping="NoWrap" />
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Padding="0"
-                                        Background="Transparent">
+                                    <ToolTip>
+                                        <StackPanel>
+                                            <TextBlock>
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/DisplayName')}" />
+                                                <Run Text="{x:Bind DisplayName}" />
+                                            </TextBlock>
 
-                                        <Grid>
-                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-
-                                            <StackPanel Padding="{StaticResource ToolTipBorderPadding}">
-                                                <TextBlock>
-                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/DisplayName')}" />
-                                                    <Run Text="{x:Bind DisplayName}" />
-                                                </TextBlock>
-
-                                                <TextBlock>
-                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/PublisherDisplayName')}" />
-                                                    <Run Text="{x:Bind PublisherDisplayName}" />
-                                                </TextBlock>
-                                            </StackPanel>
-                                        </Grid>
+                                            <TextBlock>
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/PublisherDisplayName')}" />
+                                                <Run Text="{x:Bind PublisherDisplayName}" />
+                                            </TextBlock>
+                                        </StackPanel>
                                     </ToolTip>
                                 </ToolTipService.ToolTip>
                             </StackPanel>

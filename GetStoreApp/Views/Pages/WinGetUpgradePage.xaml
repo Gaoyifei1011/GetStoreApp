@@ -98,7 +98,7 @@
                 </CommandBar.PrimaryCommands>
 
                 <CommandBar.SecondaryCommands>
-                    <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/Sort')}">
+                    <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/Sort')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8CB;" />
@@ -153,79 +153,36 @@
                                 </MenuFlyoutSubItem>
                             </MenuFlyout>
                         </AppBarButton.Flyout>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/SortToolTip')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
                     </AppBarButton>
 
-                    <AppBarButton Click="{x:Bind OnOpenTempFolderClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/OpenTempFolder')}">
+                    <AppBarButton
+                        Click="{x:Bind OnOpenTempFolderClicked}"
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/OpenTempFolder')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/OpenTempFolderToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8B7;" />
                         </AppBarButton.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/OpenTempFolderToolTip')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
                     </AppBarButton>
 
-                    <AppBarButton Click="{x:Bind OnUseInstructionClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/UseInstruction')}">
+                    <AppBarButton
+                        Click="{x:Bind OnUseInstructionClicked}"
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/UseInstruction')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/UseInstructionToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE946;" />
                         </AppBarButton.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/UseInstructionToolTip')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
                     </AppBarButton>
 
-                    <AppBarButton Click="{x:Bind OnDataSourceSettingsClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/DataSourceSettings')}">
+                    <AppBarButton
+                        Click="{x:Bind OnDataSourceSettingsClicked}"
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/DataSourceSettings')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/DataSourceSettingsToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE713;" />
                         </AppBarButton.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/DataSourceSettingsToolTip')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
                     </AppBarButton>
                 </CommandBar.SecondaryCommands>
             </CommandBar>
@@ -250,21 +207,8 @@
                     VerticalAlignment="Center"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/NotCheckUpdate')}"
                     TextAlignment="Center"
-                    Visibility="{x:Bind CheckUpgradableAppsState(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.NotCheckUpdate), Mode=OneWay}">
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip
-                            MaxWidth="9999"
-                            Padding="0"
-                            Background="Transparent">
-
-                            <Grid>
-                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/NotCheckUpdate')}" />
-                            </Grid>
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </TextBlock>
+                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/NotCheckUpdate')}"
+                    Visibility="{x:Bind CheckUpgradableAppsState(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.NotCheckUpdate), Mode=OneWay}" />
 
                 <!--  正在检查更新中  -->
                 <StackPanel
@@ -383,48 +327,40 @@
                             </StackPanel>
 
                             <ToolTipService.ToolTip>
-                                <ToolTip
-                                    MaxWidth="9999"
-                                    Padding="0"
-                                    Background="Transparent">
-
+                                <ToolTip>
                                     <Grid>
-                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
 
-                                        <Grid Padding="{StaticResource ToolTipBorderPadding}">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0">
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppName')}" />
+                                            <Run Text="{x:Bind AppName}" />
+                                        </TextBlock>
 
-                                            <TextBlock Grid.Row="0">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppName')}" />
-                                                <Run Text="{x:Bind AppName}" />
-                                            </TextBlock>
+                                        <TextBlock Grid.Row="1">
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppPublisher')}" />
+                                            <Run Text="{x:Bind AppPublisher}" />
+                                        </TextBlock>
 
-                                            <TextBlock Grid.Row="1">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppPublisher')}" />
-                                                <Run Text="{x:Bind AppPublisher}" />
-                                            </TextBlock>
+                                        <TextBlock Grid.Row="2">
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppCurrentVersion')}" />
+                                            <Run Text="{x:Bind AppCurrentVersion}" />
+                                        </TextBlock>
 
-                                            <TextBlock Grid.Row="2">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppCurrentVersion')}" />
-                                                <Run Text="{x:Bind AppCurrentVersion}" />
-                                            </TextBlock>
+                                        <TextBlock Grid.Row="3">
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppNewestVersion')}" />
+                                            <Run Text="{x:Bind AppNewestVersion}" />
+                                        </TextBlock>
 
-                                            <TextBlock Grid.Row="3">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppNewestVersion')}" />
-                                                <Run Text="{x:Bind AppNewestVersion}" />
-                                            </TextBlock>
-
-                                            <TextBlock Grid.Row="4">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppID')}" />
-                                                <Run Text="{x:Bind AppID}" />
-                                            </TextBlock>
-                                        </Grid>
+                                        <TextBlock Grid.Row="4">
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppID')}" />
+                                            <Run Text="{x:Bind AppID}" />
+                                        </TextBlock>
                                     </Grid>
                                 </ToolTip>
                             </ToolTipService.ToolTip>

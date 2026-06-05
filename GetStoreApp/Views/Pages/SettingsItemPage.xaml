@@ -115,30 +115,21 @@
                 Width="34"
                 Height="34"
                 Padding="0"
-                HorizontalAlignment="Right">
+                HorizontalAlignment="Right"
+                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/ViewMore')}">
 
                 <FontIcon FontSize="16" Glyph="&#xE712;" />
 
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutItem Click="{x:Bind OnRestartAppsClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/RestartApp')}">
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnRestartAppsClicked}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/RestartApp')}"
+                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/RestartAppToolTip')}">
 
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE895;" />
                             </MenuFlyoutItem.Icon>
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    MaxWidth="9999"
-                                    Padding="0"
-                                    Background="Transparent">
-
-                                    <Grid>
-                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/RestartAppToolTip')}" />
-                                    </Grid>
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
                         </MenuFlyoutItem>
 
                         <MenuFlyoutItem Click="{x:Bind OnSettingsInstructionClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/SettingsInstruction')}">
@@ -160,80 +151,37 @@
 
                         <MenuFlyoutSeparator />
 
-                        <MenuFlyoutItem Click="{x:Bind OnPinToDesktopClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToDesktop')}">
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnPinToDesktopClicked}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToDesktop')}"
+                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToDesktopToolTip')}">
 
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE70A;" />
                             </MenuFlyoutItem.Icon>
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    MaxWidth="9999"
-                                    Padding="0"
-                                    Background="Transparent">
-
-                                    <Grid>
-                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToDesktopToolTip')}" />
-                                    </Grid>
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
                         </MenuFlyoutItem>
 
-                        <MenuFlyoutItem Click="{x:Bind OnPinToStartScreenClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToStartScreen')}">
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnPinToStartScreenClicked}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToStartScreen')}"
+                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToStartScreenToolTip')}">
 
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE8FC;" />
                             </MenuFlyoutItem.Icon>
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    MaxWidth="9999"
-                                    Padding="0"
-                                    Background="Transparent">
-
-                                    <Grid>
-                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToStartScreenToolTip')}" />
-                                    </Grid>
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
                         </MenuFlyoutItem>
 
-                        <MenuFlyoutItem Click="{x:Bind OnPinToTaskbarClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToTaskbar')}">
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnPinToTaskbarClicked}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToTaskbar')}"
+                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToTaskbarToolTip')}">
 
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE75B;" />
                             </MenuFlyoutItem.Icon>
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    MaxWidth="9999"
-                                    Padding="0"
-                                    Background="Transparent">
-
-                                    <Grid>
-                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToTaskbarToolTip')}" />
-                                    </Grid>
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
                         </MenuFlyoutItem>
                     </MenuFlyout>
                 </Button.Flyout>
-
-                <ToolTipService.ToolTip>
-                    <ToolTip
-                        MaxWidth="9999"
-                        Padding="0"
-                        Background="Transparent">
-
-                        <Grid>
-                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/ViewMore')}" />
-                        </Grid>
-                    </ToolTip>
-                </ToolTipService.ToolTip>
             </Button>
         </Grid>
 

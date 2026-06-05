@@ -67,17 +67,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent"
-                                Visibility="{x:Bind NotificationDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/NotificationDescription')}" />
-                                </Grid>
-                            </ToolTip>
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/NotificationDescription')}" Visibility="{x:Bind NotificationDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -144,17 +134,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent"
-                                Visibility="{x:Bind ShellMenuDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ShellMenuDescription')}" />
-                                </Grid>
-                            </ToolTip>
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ShellMenuDescription')}" Visibility="{x:Bind ShellMenuDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -224,17 +204,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent"
-                                Visibility="{x:Bind TraceCleanupDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/TraceCleanupDescription')}" />
-                                </Grid>
-                            </ToolTip>
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/TraceCleanupDescription')}" Visibility="{x:Bind TraceCleanupDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -293,17 +263,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Padding="0"
-                                        Background="Transparent"
-                                        Visibility="{x:Bind LogRecordDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                        <Grid>
-                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/LogRecordDescription')}" />
-                                        </Grid>
-                                    </ToolTip>
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/LogRecordDescription')}" Visibility="{x:Bind LogRecordDescription.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>
@@ -343,17 +303,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Padding="0"
-                                        Background="Transparent"
-                                        Visibility="{x:Bind LogFolderDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                        <Grid>
-                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/LogFolderDescription')}" />
-                                        </Grid>
-                                    </ToolTip>
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/LogFolderDescription')}" Visibility="{x:Bind LogFolderDescription.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>
@@ -399,17 +349,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Padding="0"
-                                        Background="Transparent"
-                                        Visibility="{x:Bind ClearLogDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                        <Grid>
-                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ClearLogDescription')}" />
-                                        </Grid>
-                                    </ToolTip>
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ClearLogDescription')}" Visibility="{x:Bind ClearLogDescription.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>

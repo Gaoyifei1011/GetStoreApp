@@ -176,22 +176,10 @@
                         Padding="8"
                         Click="{x:Bind OnBrowserBackClicked}"
                         IsEnabled="{x:Bind CanGoBack, Mode=OneWay}"
-                        Style="{StaticResource SubtleButtonStyle}">
+                        Style="{StaticResource SubtleButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Back')}">
 
                         <FontIcon FontSize="16" Glyph="&#xE72B;" />
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Back')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
                     </Button>
 
                     <Button
@@ -202,22 +190,10 @@
                         Click="{x:Bind OnBrowserForwardClicked}"
                         IsEnabled="{x:Bind CanGoForward, Mode=OneWay}"
                         Style="{StaticResource SubtleButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Forward')}"
                         Visibility="{x:Bind CanGoForward, Mode=OneWay}">
 
                         <FontIcon FontSize="16" Glyph="&#xE72A;" />
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Forward')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
                     </Button>
 
                     <Button
@@ -226,22 +202,10 @@
                         Height="34"
                         Padding="8"
                         Click="{x:Bind OnRefreshClicked}"
-                        Style="{StaticResource SubtleButtonStyle}">
+                        Style="{StaticResource SubtleButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Refresh')}">
 
                         <FontIcon FontSize="16" Glyph="&#xE72C;" />
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Refresh')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
                     </Button>
 
                     <Button
@@ -250,22 +214,10 @@
                         Height="34"
                         Padding="8"
                         Click="{x:Bind OnHomeClicked}"
-                        Style="{StaticResource SubtleButtonStyle}">
+                        Style="{StaticResource SubtleButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Home')}">
 
                         <FontIcon FontSize="16" Glyph="&#xE80F;" />
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Home')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
                     </Button>
                 </Grid>
 
@@ -299,17 +251,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent"
-                                Visibility="{x:Bind WebTitleText.IsTextTrimmed, Mode=OneWay}">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind WebTitle, Mode=OneWay}" />
-                                </Grid>
-                            </ToolTip>
+                            <ToolTip Content="{x:Bind WebTitle, Mode=OneWay}" Visibility="{x:Bind WebTitleText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </Grid>

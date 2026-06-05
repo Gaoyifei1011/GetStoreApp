@@ -70,17 +70,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent"
-                                Visibility="{x:Bind QueryLinksModeDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/QueryLinksModeDescription')}" />
-                                </Grid>
-                            </ToolTip>
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/QueryLinksModeDescription')}" Visibility="{x:Bind QueryLinksModeDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -139,17 +129,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent"
-                                Visibility="{x:Bind AppLinkOpenModeDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/AppLinkOpenModeDescription')}" />
-                                </Grid>
-                            </ToolTip>
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/AppLinkOpenModeDescription')}" Visibility="{x:Bind AppLinkOpenModeDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -207,17 +187,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent"
-                                Visibility="{x:Bind InstallModeDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/InstallModeDescription')}" />
-                                </Grid>
-                            </ToolTip>
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/InstallModeDescription')}" Visibility="{x:Bind InstallModeDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -275,17 +245,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent"
-                                Visibility="{x:Bind CancelAutoUpdateDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdateDescription')}" />
-                                </Grid>
-                            </ToolTip>
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdateDescription')}" Visibility="{x:Bind CancelAutoUpdateDescription.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -346,17 +306,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Padding="0"
-                                        Background="Transparent"
-                                        Visibility="{x:Bind StoreCountryOrRegionDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                        <Grid>
-                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreCountryOrRegionDescription')}" />
-                                        </Grid>
-                                    </ToolTip>
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreCountryOrRegionDescription')}" Visibility="{x:Bind StoreCountryOrRegionDescription.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>
@@ -399,20 +349,11 @@
                                 <Run Text="{x:Bind CurrentCountryOrRegion.DisplayName, Mode=OneWay}" />
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Padding="0"
-                                        Background="Transparent"
-                                        Visibility="{x:Bind CurrentCountryOrRegionText.IsTextTrimmed, Mode=OneWay}">
-
-                                        <Grid>
-                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-
-                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CurrentCountryOrRegion')}" />
-                                                <Run Text="{x:Bind CurrentCountryOrRegion.DisplayName, Mode=OneWay}" />
-                                            </TextBlock>
-                                        </Grid>
+                                    <ToolTip Visibility="{x:Bind CurrentCountryOrRegionText.IsTextTrimmed, Mode=OneWay}">
+                                        <TextBlock>
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CurrentCountryOrRegion')}" />
+                                            <Run Text="{x:Bind CurrentCountryOrRegion.DisplayName, Mode=OneWay}" />
+                                        </TextBlock>
                                     </ToolTip>
                                 </ToolTipService.ToolTip>
                             </TextBlock>
@@ -469,17 +410,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Padding="0"
-                                        Background="Transparent"
-                                        Visibility="{x:Bind StoreRegionDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                        <Grid>
-                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreRegionDescription')}" />
-                                        </Grid>
-                                    </ToolTip>
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreRegionDescription')}" Visibility="{x:Bind StoreRegionDescription.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>
@@ -544,17 +475,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Padding="0"
-                                        Background="Transparent"
-                                        Visibility="{x:Bind LinkFilterDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                        <Grid>
-                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/LinkFilterDescription')}" />
-                                        </Grid>
-                                    </ToolTip>
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/LinkFilterDescription')}" Visibility="{x:Bind LinkFilterDescription.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>
@@ -594,17 +515,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Padding="0"
-                                        Background="Transparent"
-                                        Visibility="{x:Bind EncryptedPackageDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                        <Grid>
-                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageDescription')}" />
-                                        </Grid>
-                                    </ToolTip>
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageDescription')}" Visibility="{x:Bind EncryptedPackageDescription.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>
@@ -652,17 +563,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Padding="0"
-                                        Background="Transparent"
-                                        Visibility="{x:Bind BlockMapDescription.IsTextTrimmed, Mode=OneWay}">
-
-                                        <Grid>
-                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapDescription')}" />
-                                        </Grid>
-                                    </ToolTip>
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapDescription')}" Visibility="{x:Bind BlockMapDescription.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>

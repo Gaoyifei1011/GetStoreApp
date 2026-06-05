@@ -193,17 +193,7 @@
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Padding="0"
-                                            Background="Transparent"
-                                            Visibility="{x:Bind HistoryContentHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                            <Grid>
-                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/HistoryContent')}" />
-                                            </Grid>
-                                        </ToolTip>
+                                        <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/HistoryContent')}" Visibility="{x:Bind HistoryContentHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -213,21 +203,8 @@
                                     Margin="10,0,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/Options')}">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Padding="0"
-                                            Background="Transparent">
-
-                                            <Grid>
-                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/OptionsToolTip')}" />
-                                            </Grid>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/Options')}"
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/OptionsToolTip')}" />
                             </Grid>
                         </ListView.Header>
 
@@ -258,17 +235,7 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                MaxWidth="9999"
-                                                Padding="0"
-                                                Background="Transparent"
-                                                Visibility="{Binding ElementName=HistoryContentText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                                <Grid>
-                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind HistoryContent}" />
-                                                </Grid>
-                                            </ToolTip>
+                                            <ToolTip Content="{x:Bind HistoryContent}" Visibility="{Binding ElementName=HistoryContentText, Path=IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
 
@@ -387,17 +354,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Padding="0"
-                                        Background="Transparent"
-                                        Visibility="{x:Bind StoreAppNameHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                        <Grid>
-                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppName')}" />
-                                        </Grid>
-                                    </ToolTip>
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppName')}" Visibility="{x:Bind StoreAppNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
@@ -412,17 +369,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Padding="0"
-                                        Background="Transparent"
-                                        Visibility="{x:Bind StoreAppPublisherHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                        <Grid>
-                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppPublisher')}" />
-                                        </Grid>
-                                    </ToolTip>
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppPublisher')}" Visibility="{x:Bind StoreAppPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
@@ -437,17 +384,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Padding="0"
-                                        Background="Transparent"
-                                        Visibility="{x:Bind StoreAppLinkHeaderText.IsTextTrimmed, Mode=OneWay}">
-
-                                        <Grid>
-                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppLink')}" />
-                                        </Grid>
-                                    </ToolTip>
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/StoreAppLink')}" Visibility="{x:Bind StoreAppLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
@@ -457,21 +394,8 @@
                                 Margin="0,0,10,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/Options')}">
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Padding="0"
-                                        Background="Transparent">
-
-                                        <Grid>
-                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/OptionsToolTip')}" />
-                                        </Grid>
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/Options')}"
+                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/OptionsToolTip')}" />
                         </Grid>
                     </ListView.Header>
 
@@ -505,17 +429,7 @@
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Padding="0"
-                                            Background="Transparent"
-                                            Visibility="{Binding ElementName=StoreAppNameText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                            <Grid>
-                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind StoreAppName}" />
-                                            </Grid>
-                                        </ToolTip>
+                                        <ToolTip Content="{x:Bind StoreAppName}" Visibility="{Binding ElementName=StoreAppNameText, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -534,17 +448,7 @@
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Padding="0"
-                                            Background="Transparent"
-                                            Visibility="{Binding ElementName=StoreAppPublisherText, Path=IsTextTrimmed, Mode=OneWay}">
-
-                                            <Grid>
-                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind StoreAppPublisher}" />
-                                            </Grid>
-                                        </ToolTip>
+                                        <ToolTip Content="{x:Bind StoreAppPublisher}" Visibility="{Binding ElementName=StoreAppPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -559,45 +463,20 @@
                                     <TextBlock
                                         Text="{x:Bind StoreAppLink}"
                                         TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                MaxWidth="9999"
-                                                Padding="0"
-                                                Background="Transparent">
-
-                                                <Grid>
-                                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind StoreAppLink}" />
-                                                </Grid>
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
+                                        TextWrapping="NoWrap"
+                                        ToolTipService.ToolTip="{x:Bind StoreAppLink}" />
 
                                     <HyperlinkButton.ContextFlyout>
                                         <MenuFlyout Placement="Bottom">
                                             <MenuFlyoutItem
                                                 Command="{StaticResource CopyLinkCommand}"
                                                 CommandParameter="{x:Bind StoreAppLink}"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/CopyLink')}">
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/CopyLink')}"
+                                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/CopyLinkToolTip')}">
 
                                                 <MenuFlyoutItem.Icon>
                                                     <FontIcon Glyph="&#xE8C8;" />
                                                 </MenuFlyoutItem.Icon>
-
-                                                <ToolTipService.ToolTip>
-                                                    <ToolTip
-                                                        MaxWidth="9999"
-                                                        Padding="0"
-                                                        Background="Transparent">
-
-                                                        <Grid>
-                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/CopyLinkToolTip')}" />
-                                                        </Grid>
-                                                    </ToolTip>
-                                                </ToolTipService.ToolTip>
                                             </MenuFlyoutItem>
                                         </MenuFlyout>
                                     </HyperlinkButton.ContextFlyout>
@@ -610,21 +489,8 @@
                                     VerticalAlignment="Center"
                                     Command="{StaticResource QueryLinksCommand}"
                                     CommandParameter="{x:Bind StoreAppLink}"
-                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/QueryLinks')}">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Padding="0"
-                                            Background="Transparent">
-
-                                            <Grid>
-                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/QueryLinksToolTip')}" />
-                                            </Grid>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </HyperlinkButton>
+                                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/QueryLinks')}"
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/QueryLinksToolTip')}" />
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

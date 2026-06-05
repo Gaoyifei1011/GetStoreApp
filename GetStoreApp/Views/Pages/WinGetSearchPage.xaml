@@ -99,7 +99,7 @@
                 Style="{StaticResource CommandBarStyle}">
 
                 <CommandBar.PrimaryCommands>
-                    <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/SearchFilter')}">
+                    <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/SearchFilter')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/SearchFilterToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE71C;" />
@@ -195,19 +195,6 @@
                                 </MenuFlyoutSubItem>
                             </MenuFlyout>
                         </AppBarButton.Flyout>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/SearchFilterToolTip')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
                     </AppBarButton>
 
                     <AppBarButton Click="{x:Bind OnTaskManagerClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/TaskManager')}">
@@ -218,7 +205,7 @@
                 </CommandBar.PrimaryCommands>
 
                 <CommandBar.SecondaryCommands>
-                    <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/Sort')}">
+                    <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/Sort')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/SortToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8CB;" />
@@ -253,19 +240,6 @@
                                 </RadioMenuFlyoutItem>
                             </MenuFlyout>
                         </AppBarButton.Flyout>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/SortToolTip')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
                     </AppBarButton>
 
                     <AppBarButton
@@ -278,64 +252,34 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
 
-                    <AppBarButton Click="{x:Bind OnOpenTempFolderClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/OpenTempFolder')}">
+                    <AppBarButton
+                        Click="{x:Bind OnOpenTempFolderClicked}"
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/OpenTempFolder')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/OpenTempFolderToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8B7;" />
                         </AppBarButton.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/OpenTempFolderToolTip')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
                     </AppBarButton>
 
-                    <AppBarButton Click="{x:Bind OnUseInstructionClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/UseInstruction')}">
+                    <AppBarButton
+                        Click="{x:Bind OnUseInstructionClicked}"
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/UseInstruction')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/UseInstructionToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE946;" />
                         </AppBarButton.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/UseInstructionToolTip')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
                     </AppBarButton>
 
-                    <AppBarButton Click="{x:Bind OnDataSourceSettingsClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/DataSourceSettings')}">
+                    <AppBarButton
+                        Click="{x:Bind OnDataSourceSettingsClicked}"
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/DataSourceSettings')}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/DataSourceSettingsToolTip')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE713;" />
                         </AppBarButton.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/DataSourceSettingsToolTip')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
                     </AppBarButton>
                 </CommandBar.SecondaryCommands>
             </CommandBar>
@@ -360,21 +304,8 @@
                     VerticalAlignment="Center"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/NotSearch')}"
                     TextAlignment="Center"
-                    Visibility="{x:Bind CheckSearchAppsState(SearchAppsResultKind, enum:SearchAppsResultKind.NotSearch), Mode=OneWay}">
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip
-                            MaxWidth="9999"
-                            Padding="0"
-                            Background="Transparent">
-
-                            <Grid>
-                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/NotSearch')}" />
-                            </Grid>
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </TextBlock>
+                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/NotSearch')}"
+                    Visibility="{x:Bind CheckSearchAppsState(SearchAppsResultKind, enum:SearchAppsResultKind.NotSearch), Mode=OneWay}" />
 
                 <!--  正在搜索中  -->
                 <StackPanel
@@ -465,30 +396,22 @@
                                 TextWrapping="NoWrap" />
 
                             <ToolTipService.ToolTip>
-                                <ToolTip
-                                    MaxWidth="9999"
-                                    Padding="0"
-                                    Background="Transparent">
-
+                                <ToolTip>
                                     <Grid>
-                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
 
-                                        <Grid Padding="{StaticResource ToolTipBorderPadding}">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0">
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/AppName')}" />
+                                            <Run Text="{x:Bind AppName}" />
+                                        </TextBlock>
 
-                                            <TextBlock Grid.Row="0">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/AppName')}" />
-                                                <Run Text="{x:Bind AppName}" />
-                                            </TextBlock>
-
-                                            <TextBlock Grid.Row="1">
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/AppID')}" />
-                                                <Run Text="{x:Bind AppID}" />
-                                            </TextBlock>
-                                        </Grid>
+                                        <TextBlock Grid.Row="1">
+                                            <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/AppID')}" />
+                                            <Run Text="{x:Bind AppID}" />
+                                        </TextBlock>
                                     </Grid>
                                 </ToolTip>
                             </ToolTipService.ToolTip>
@@ -498,7 +421,8 @@
                             Grid.Column="1"
                             Command="{StaticResource InstallCommand}"
                             CommandParameter="{x:Bind}"
-                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/Install')}">
+                            Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/Install')}"
+                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/InstallDefaultVersion')}">
 
                             <SplitButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
@@ -535,19 +459,6 @@
                                     </MenuFlyoutItem>
                                 </MenuFlyout>
                             </SplitButton.Flyout>
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    MaxWidth="9999"
-                                    Padding="0"
-                                    Background="Transparent">
-
-                                    <Grid>
-                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/InstallDefaultVersion')}" />
-                                    </Grid>
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
                         </SplitButton>
                     </Grid>
                 </DataTemplate>

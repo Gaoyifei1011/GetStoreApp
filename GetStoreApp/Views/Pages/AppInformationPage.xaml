@@ -530,31 +530,23 @@
                                     </TextBlock>
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Padding="0"
-                                            Background="Transparent">
+                                        <ToolTip>
+                                            <StackPanel>
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/EntryDisplayName')}" />
+                                                    <Run Text="{x:Bind DisplayName}" />
+                                                </TextBlock>
 
-                                            <Grid>
-                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/EntryDescription')}" />
+                                                    <Run Text="{x:Bind Description}" />
+                                                </TextBlock>
 
-                                                <StackPanel Padding="{StaticResource ToolTipBorderPadding}">
-                                                    <TextBlock>
-                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/EntryDisplayName')}" />
-                                                        <Run Text="{x:Bind DisplayName}" />
-                                                    </TextBlock>
-
-                                                    <TextBlock>
-                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/EntryDescription')}" />
-                                                        <Run Text="{x:Bind Description}" />
-                                                    </TextBlock>
-
-                                                    <TextBlock>
-                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/EntryAUMID')}" />
-                                                        <Run Text="{x:Bind AppUserModelId}" />
-                                                    </TextBlock>
-                                                </StackPanel>
-                                            </Grid>
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/EntryAUMID')}" />
+                                                    <Run Text="{x:Bind AppUserModelId}" />
+                                                </TextBlock>
+                                            </StackPanel>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </StackPanel>
@@ -567,70 +559,36 @@
 
                                     <SplitButton.Flyout>
                                         <MenuFlyout Placement="Bottom">
-                                            <MenuFlyoutItem Command="{StaticResource PinToDesktopCommand}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToDesktop')}">
+                                            <MenuFlyoutItem
+                                                Command="{StaticResource PinToDesktopCommand}"
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToDesktop')}"
+                                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToDesktopToolTip')}">
 
                                                 <MenuFlyoutItem.Icon>
                                                     <FontIcon Glyph="&#xE7F4;" />
                                                 </MenuFlyoutItem.Icon>
-
-                                                <ToolTipService.ToolTip>
-                                                    <ToolTip
-                                                        MaxWidth="9999"
-                                                        Padding="0"
-                                                        Background="Transparent">
-
-                                                        <Grid>
-                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToDesktopToolTip')}" />
-                                                        </Grid>
-                                                    </ToolTip>
-                                                </ToolTipService.ToolTip>
                                             </MenuFlyoutItem>
 
                                             <MenuFlyoutItem
                                                 Command="{StaticResource PinToStartScreenCommand}"
                                                 CommandParameter="{x:Bind}"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToStartScreen')}">
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToStartScreen')}"
+                                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToStartScreenToolTip')}">
 
                                                 <MenuFlyoutItem.Icon>
                                                     <FontIcon Glyph="&#xE8FC;" />
                                                 </MenuFlyoutItem.Icon>
-
-                                                <ToolTipService.ToolTip>
-                                                    <ToolTip
-                                                        MaxWidth="9999"
-                                                        Padding="0"
-                                                        Background="Transparent">
-
-                                                        <Grid>
-                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToStartScreenToolTip')}" />
-                                                        </Grid>
-                                                    </ToolTip>
-                                                </ToolTipService.ToolTip>
                                             </MenuFlyoutItem>
 
                                             <MenuFlyoutItem
                                                 Command="{StaticResource PinToTaskbarCommand}"
                                                 CommandParameter="{x:Bind}"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToTaskbar')}">
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToTaskbar')}"
+                                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToTaskbarToolTip')}">
 
                                                 <MenuFlyoutItem.Icon>
                                                     <FontIcon Glyph="&#xE770;" />
                                                 </MenuFlyoutItem.Icon>
-
-                                                <ToolTipService.ToolTip>
-                                                    <ToolTip
-                                                        MaxWidth="9999"
-                                                        Padding="0"
-                                                        Background="Transparent">
-
-                                                        <Grid>
-                                                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/PinToTaskbarToolTip')}" />
-                                                        </Grid>
-                                                    </ToolTip>
-                                                </ToolTipService.ToolTip>
                                             </MenuFlyoutItem>
                                         </MenuFlyout>
                                     </SplitButton.Flyout>
@@ -733,31 +691,23 @@
                                     </TextBlock>
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Padding="0"
-                                            Background="Transparent">
+                                        <ToolTip>
+                                            <StackPanel>
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/DependencyDisplayName')}" />
+                                                    <Run Text="{x:Bind DisplayName}" />
+                                                </TextBlock>
 
-                                            <Grid>
-                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/DependencyPublisherDisplayName')}" />
+                                                    <Run Text="{x:Bind PublisherDisplayName}" />
+                                                </TextBlock>
 
-                                                <StackPanel Padding="{StaticResource ToolTipBorderPadding}">
-                                                    <TextBlock>
-                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/DependencyDisplayName')}" />
-                                                        <Run Text="{x:Bind DisplayName}" />
-                                                    </TextBlock>
-
-                                                    <TextBlock>
-                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/DependencyPublisherDisplayName')}" />
-                                                        <Run Text="{x:Bind PublisherDisplayName}" />
-                                                    </TextBlock>
-
-                                                    <TextBlock>
-                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/DependencyVersion')}" />
-                                                        <Run Text="{x:Bind Version}" />
-                                                    </TextBlock>
-                                                </StackPanel>
-                                            </Grid>
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/DependencyVersion')}" />
+                                                    <Run Text="{x:Bind Version}" />
+                                                </TextBlock>
+                                            </StackPanel>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </StackPanel>
@@ -766,7 +716,8 @@
                                     Grid.Column="1"
                                     Width="34"
                                     Height="34"
-                                    Padding="0">
+                                    Padding="0"
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/ViewMore')}">
 
                                     <FontIcon FontSize="16" Glyph="&#xE712;" />
 
@@ -793,19 +744,6 @@
                                             </MenuFlyoutItem>
                                         </MenuFlyout>
                                     </Button.Flyout>
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Padding="0"
-                                            Background="Transparent">
-
-                                            <Grid>
-                                                <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                                <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/ViewMore')}" />
-                                            </Grid>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
                                 </Button>
                             </Grid>
                         </DataTemplate>
