@@ -44,8 +44,8 @@ using Windows.UI.StartScreen;
 using WinRT;
 using WinRT.Interop;
 
-// 抑制 IDE0060 警告
-#pragma warning disable IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Windows
 {
@@ -69,7 +69,6 @@ namespace GetStoreApp.Views.Windows
         private readonly string WinGetString = ResourceService.GetLocalized("Window/WinGet");
         private readonly ContentIsland contentIsland;
         private readonly InputKeyboardSource inputKeyboardSource;
-        private readonly InputPointerSource inputPointerSource;
         private readonly ContentCoordinateConverter contentCoordinateConverter;
         private readonly OverlappedPresenter overlappedPresenter;
         private readonly SUBCLASSPROC mainWindowSubClassProc;
@@ -194,7 +193,6 @@ namespace GetStoreApp.Views.Windows
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
             contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
             inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
-            inputPointerSource = InputPointerSource.GetForIsland(contentIsland);
 
             // 挂载相应的事件
             AppWindow.Changed += OnAppWindowChanged;
@@ -202,7 +200,6 @@ namespace GetStoreApp.Views.Windows
             contentIsland.StateChanged += OnStateChanged;
             contentIsland.Environment.SettingChanged += OnSettingChanged;
             inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
-            inputPointerSource.PointerReleased += OnPointerReleased;
             NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
             ThemeService.PropertyChanged += OnServicePropertyChanged;
             BackdropService.PropertyChanged += OnServicePropertyChanged;
@@ -420,7 +417,6 @@ namespace GetStoreApp.Views.Windows
                     AppWindow.Changed -= OnAppWindowChanged;
                     contentIsland.Environment.SettingChanged -= OnSettingChanged;
                     inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
-                    inputPointerSource.PointerReleased -= OnPointerReleased;
                     ThemeService.PropertyChanged -= OnServicePropertyChanged;
                     BackdropService.PropertyChanged -= OnServicePropertyChanged;
                     TopMostService.PropertyChanged -= OnServicePropertyChanged;
@@ -442,7 +438,6 @@ namespace GetStoreApp.Views.Windows
                 AppWindow.Changed -= OnAppWindowChanged;
                 contentIsland.Environment.SettingChanged -= OnSettingChanged;
                 inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
-                inputPointerSource.PointerReleased -= OnPointerReleased;
                 ThemeService.PropertyChanged -= OnServicePropertyChanged;
                 BackdropService.PropertyChanged -= OnServicePropertyChanged;
                 TopMostService.PropertyChanged -= OnServicePropertyChanged;
@@ -476,7 +471,6 @@ namespace GetStoreApp.Views.Windows
                     WindowTheme = Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
                 }
 
-                SetPopupControlTheme(WindowTheme);
                 StoreRegionService.UpdateDefaultRegion();
             });
         }
@@ -495,23 +489,6 @@ namespace GetStoreApp.Views.Windows
                     ShowMode = FlyoutShowMode.Standard
                 };
                 TitlebarMenuFlyout.ShowAt(null, options);
-            }
-            else if (args.VirtualKey is global::Windows.System.VirtualKey.F10 && Content is not null && Content.XamlRoot is not null)
-            {
-                await Task.Delay(50);
-                SetPopupControlTheme(WindowTheme);
-            }
-        }
-
-        /// <summary>
-        /// 处理鼠标事件
-        /// </summary>
-        private async void OnPointerReleased(InputPointerSource sender, PointerEventArgs args)
-        {
-            if (args.CurrentPoint.Properties.PointerUpdateKind is PointerUpdateKind.RightButtonReleased && Content is not null && Content.XamlRoot is not null)
-            {
-                await Task.Delay(50);
-                SetPopupControlTheme(WindowTheme);
             }
         }
 
@@ -610,7 +587,6 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-
         #endregion 第四部分：窗口内容挂载的事件
 
         #region 第五部分：XamlUICommand 命令调用时挂载的事件
@@ -620,7 +596,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private async void OnPinToStartScreenExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if(args.Parameter is NavigationViewItemModel navigationViewItem)
+            if (args.Parameter is NavigationViewItemModel navigationViewItem)
             {
                 string displayName = navigationViewItem.NavigationTitle;
                 string tag = navigationViewItem.NavigationTag;
@@ -809,7 +785,6 @@ namespace GetStoreApp.Views.Windows
 
             SelectedItem = NavigationViewItemMenuItemsCollection[0];
             NavigateTo(typeof(HomePage));
-            SetPopupControlTheme(WindowTheme);
 
             // 初始化启动信息
             AppLaunchArguments appLaunchArguments = DesktopLaunchService.AppLaunchArguments;
@@ -828,18 +803,6 @@ namespace GetStoreApp.Views.Windows
                 // 对应的页面为空，选中项修改为已经选择的页面
                 if (SelectedItem.NavigationPage is null)
                 {
-                    Type currentPageType = GetCurrentPageType();
-                    NavigationViewItemModel selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemMenuItemsCollection);
-                    if (selectedNavigationViewItem is not null)
-                    {
-                        SelectedItem = selectedNavigationViewItem;
-                    }
-                    else
-                    {
-                        selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemFooterMenuItemsCollection);
-                        SelectedItem = selectedNavigationViewItem is not null ? selectedNavigationViewItem : null;
-                    }
-
                     if (Equals(SelectedItem.NavigationTag, "Web"))
                     {
                         Task.Run(async () =>
@@ -853,6 +816,18 @@ namespace GetStoreApp.Views.Windows
                                 ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                             }
                         });
+                    }
+
+                    Type currentPageType = GetCurrentPageType();
+                    NavigationViewItemModel selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemMenuItemsCollection);
+                    if (selectedNavigationViewItem is not null)
+                    {
+                        SelectedItem = selectedNavigationViewItem;
+                    }
+                    else
+                    {
+                        selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemFooterMenuItemsCollection);
+                        SelectedItem = selectedNavigationViewItem is not null ? selectedNavigationViewItem : null;
                     }
                 }
                 // 切换到选中项对应的页面
@@ -1051,44 +1026,6 @@ namespace GetStoreApp.Views.Windows
             }
 
             UxthemeLibrary.FlushMenuThemes();
-        }
-
-        /// <summary>
-        /// 设置所有弹出控件主题
-        /// </summary>
-        [DynamicWindowsRuntimeCast(typeof(FlyoutPresenter)), DynamicWindowsRuntimeCast(typeof(Grid))]
-        private void SetPopupControlTheme(ElementTheme elementTheme)
-        {
-            foreach (Popup popup in VisualTreeHelper.GetOpenPopupsForXamlRoot(Content.XamlRoot))
-            {
-                popup.RequestedTheme = elementTheme;
-
-                try
-                {
-                    if (popup.Child is FlyoutPresenter flyoutPresenter)
-                    {
-                        flyoutPresenter.RequestedTheme = elementTheme;
-                        continue;
-                    }
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-
-                try
-                {
-                    if (popup.Child is Grid grid && grid.Name is "OuterOverflowContentRootV2")
-                    {
-                        grid.RequestedTheme = elementTheme;
-                        continue;
-                    }
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            }
         }
 
         /// <summary>

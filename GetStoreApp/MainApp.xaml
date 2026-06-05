@@ -8,15 +8,9 @@
 
     <Application.Resources>
         <ResourceDictionary>
-            <x:Double x:Key="TeachingTipMinWidth">0</x:Double>
-            <x:Double x:Key="TeachingTipMaxWidth">9999</x:Double>
-            <Thickness x:Key="TeachingTipContentMargin">0</Thickness>
-            <Thickness x:Key="TeachingTipButtonPanelMargin">0,0,0,0</Thickness>
-
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources>
                     <XamlControlsResources.MergedDictionaries>
-                        <!--  NavigationViewItem 导航项自定义控件样式  -->
                         <ResourceDictionary>
                             <ControlTemplate x:Key="HorizontalNextTemplate" TargetType="Button">
                                 <Border
@@ -165,6 +159,663 @@
                     </XamlControlsResources.MergedDictionaries>
                 </XamlControlsResources>
             </ResourceDictionary.MergedDictionaries>
+
+            <x:Double x:Key="TeachingTipMinWidth">0</x:Double>
+            <x:Double x:Key="TeachingTipMaxWidth">9999</x:Double>
+            <Thickness x:Key="TeachingTipContentMargin">0</Thickness>
+            <Thickness x:Key="TeachingTipButtonPanelMargin">0,0,0,0</Thickness>
+
+            <!--  更新命令栏浮出控件专用命令栏的默认控件模板样式  -->
+            <Style TargetType="primitives:CommandBarFlyoutCommandBar">
+                <Setter Property="SystemBackdrop" Value="{StaticResource CommandBarFlyoutSystemBackdrop}" />
+                <Setter Property="Background" Value="{ThemeResource CommandBarFlyoutBackground}" />
+                <Setter Property="Foreground" Value="{ThemeResource CommandBarFlyoutForeground}" />
+                <Setter Property="BorderBrush" Value="{ThemeResource CommandBarFlyoutBorderBrush}" />
+                <Setter Property="BorderThickness" Value="{ThemeResource CommandBarFlyoutBorderThemeThickness}" />
+                <Setter Property="IsTabStop" Value="False" />
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                <Setter Property="VerticalContentAlignment" Value="Top" />
+                <Setter Property="ClosedDisplayMode" Value="Compact" />
+                <Setter Property="ExitDisplayModeOnAccessKeyInvoked" Value="False" />
+                <Setter Property="DefaultLabelPosition" Value="Collapsed" />
+                <Setter Property="MaxWidth" Value="440" />
+                <Setter Property="IsDynamicOverflowEnabled" Value="True" />
+                <Setter Property="CommandBarOverflowPresenterStyle" Value="{StaticResource CommandBarFlyoutCommandBarOverflowPresenterStyle}" />
+                <Setter Property="CornerRadius" Value="{ThemeResource OverlayCornerRadius}" />
+                <Setter Property="primitives:CommandBarFlyoutCommandBarAutomationProperties.ControlType" Value="Menu" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="primitives:CommandBarFlyoutCommandBar">
+                            <Grid x:Name="LayoutRoot" CornerRadius="{TemplateBinding CornerRadius}">
+                                <Grid.Resources>
+                                    <Visibility x:Key="AppBarButtonHasFlyoutChevronVisibility">Collapsed</Visibility>
+                                    <Style BasedOn="{StaticResource CommandBarFlyoutAppBarButtonStyle}" TargetType="AppBarButton" />
+                                    <Style BasedOn="{StaticResource CommandBarFlyoutAppBarToggleButtonStyle}" TargetType="AppBarToggleButton" />
+                                    <!--
+                                        We'll only provide opening and closing storyboards for RS5 and above,
+                                        because we aren't able to suppress the default flyout open/close animations
+                                        on earlier versions of the OS than that.
+                                    -->
+                                    <Storyboard x:Name="OpeningOpacityStoryboard" FillBehavior="Stop">
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="LayoutRoot"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0"
+                                            To="1"
+                                            Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="OverflowPopup"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0"
+                                            To="1"
+                                            Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    </Storyboard>
+                                    <Storyboard x:Name="ClosingOpacityStoryboard" FillBehavior="HoldEnd">
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="LayoutRoot"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1"
+                                            To="0"
+                                            Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="OverflowPopup"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1"
+                                            To="0"
+                                            Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    </Storyboard>
+                                </Grid.Resources>
+                                <Grid
+                                    x:Name="OuterContentRoot"
+                                    Height="{TemplateBinding Height}"
+                                    MinWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.CurrentWidth}"
+                                    Margin="{TemplateBinding Padding}"
+                                    VerticalAlignment="Top"
+                                    XYFocusKeyboardNavigation="Enabled">
+                                    <Grid x:Name="ContentRoot" Background="{TemplateBinding Background}">
+                                        <Grid.Clip>
+                                            <RectangleGeometry x:Name="ContentRootClip" Rect="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ContentClipRect}">
+                                                <RectangleGeometry.Transform>
+                                                    <!--
+                                                        If you have a value set by a binding and then animate that value,
+                                                        the animation will clear the binding.  Because of that, we need to have
+                                                        two translate transforms - one that we bind to a property,
+                                                        and another that we can animate.
+                                                    -->
+                                                    <TransformGroup>
+                                                        <TranslateTransform X="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionDelta}" />
+                                                        <TranslateTransform x:Name="ContentRootClipTransform" />
+                                                    </TransformGroup>
+                                                </RectangleGeometry.Transform>
+                                            </RectangleGeometry>
+                                        </Grid.Clip>
+                                        <Grid x:Name="PrimaryItemsSystemBackdropRoot" />
+                                        <Grid
+                                            x:Name="PrimaryItemsRoot"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="{TemplateBinding CornerRadius}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" MinWidth="3" />
+                                            </Grid.ColumnDefinitions>
+                                            <ItemsControl
+                                                x:Name="PrimaryItemsControl"
+                                                Grid.Column="0"
+                                                Height="40"
+                                                Margin="3,3,0,3"
+                                                HorizontalAlignment="Left"
+                                                IsTabStop="False">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                            </ItemsControl>
+                                            <Button
+                                                x:Name="MoreButton"
+                                                Grid.Column="1"
+                                                AllowFocusOnInteraction="False"
+                                                Control.IsTemplateKeyTipTarget="True"
+                                                CornerRadius="{TemplateBinding CornerRadius}"
+                                                Foreground="{TemplateBinding Foreground}"
+                                                IsAccessKeyScope="True"
+                                                IsTabStop="False"
+                                                Style="{StaticResource CommandBarFlyoutEllipsisButtonStyle}"
+                                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CommandBarTemplateSettings.EffectiveOverflowButtonVisibility}">
+                                                <Button.RenderTransform>
+                                                    <TranslateTransform x:Name="MoreButtonTransform" />
+                                                </Button.RenderTransform>
+                                                <FontIcon
+                                                    x:Name="EllipsisIcon"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                    FontSize="16"
+                                                    Glyph="&#xE712;" />
+                                            </Button>
+                                        </Grid>
+                                        <Popup x:Name="OverflowPopup" ShouldConstrainToRootBounds="False">
+                                            <!--
+                                                The name OuterOverflowContentRoot is treated specially by the system and causes a shadow placed on this
+                                                an element with this name to fade in. We don't want this for this style, so we need a different template part name
+                                            -->
+                                            <!--
+                                                The Translation and Render transform are mutually exclusive properties. We need
+                                                The translation property on contract 14+ for the drop shadow to work.  We need
+                                                The TranslationTransform is needed before
+                                            -->
+                                            <Grid
+                                                x:Name="OuterOverflowContentRootV2"
+                                                Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ExpandedWidth}"
+                                                Translation="0,0,32">
+                                                <Grid x:Name="OverflowPopupSystemBackdropRoot" />
+                                                <Grid
+                                                    x:Name="OverflowContentRoot"
+                                                    HorizontalAlignment="Stretch"
+                                                    Background="{TemplateBinding Background}">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition />
+                                                        <RowDefinition Height="Auto" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.Clip>
+                                                        <RectangleGeometry x:Name="OverflowContentRootClip" Rect="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.OverflowContentClipRect}">
+                                                            <RectangleGeometry.Transform>
+                                                                <!--
+                                                                    If you have a value set by a binding and then animate that value,
+                                                                    the animation will clear the binding.  Because of that, we need to have
+                                                                    two translate transforms - one that we bind to a property,
+                                                                    and another that we can animate.
+                                                                -->
+                                                                <TransformGroup>
+                                                                    <TranslateTransform X="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionDelta}" />
+                                                                    <TranslateTransform x:Name="OverflowContentRootClipTransform" />
+                                                                </TransformGroup>
+                                                            </RectangleGeometry.Transform>
+                                                        </RectangleGeometry>
+                                                    </Grid.Clip>
+                                                    <CommandBarOverflowPresenter
+                                                        x:Name="SecondaryItemsControl"
+                                                        Grid.Row="1"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        BorderThickness="{ThemeResource CommandBarFlyoutBorderThemeThickness}"
+                                                        IsTabStop="False"
+                                                        Style="{TemplateBinding CommandBarOverflowPresenterStyle}">
+                                                        <!--
+                                                            19h1 has a bug in focus manager that causes a crash when an implicitly styled element
+                                                            has focus and its parent popup closes.  To work around this, on 19h1 we will explicitly
+                                                            Style the overflow elements.
+                                                        -->
+                                                    </CommandBarOverflowPresenter>
+                                                </Grid>
+                                            </Grid>
+                                        </Popup>
+                                    </Grid>
+                                </Grid>
+
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal" />
+
+                                        <VisualState x:Name="Disabled">
+                                            <VisualState.Setters>
+                                                <Setter Target="EllipsisIcon.Foreground" Value="{ThemeResource CommandBarEllipsisIconForegroundDisabled}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <!--
+                                        We can't actually *use* the DisplayModeStates visual state group for our purposes,
+                                        because CommandBar unconditionally defaults to opening up, whereas we want to default
+                                        to opening down.  However, the visual state group needs to be *present* for the CommandBar
+                                        to wait until the closing animation has completed before hiding the popup,
+                                        so we'll include dummy empty storyboards to get CommandBar to do what we want.
+                                    -->
+                                    <VisualStateGroup x:Name="DisplayModeStates">
+
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition
+                                                GeneratedDuration="{StaticResource ControlNormalAnimationDuration}"
+                                                From="CompactClosed"
+                                                To="CompactOpenUp">
+                                                <Storyboard />
+                                            </VisualTransition>
+                                            <VisualTransition
+                                                GeneratedDuration="{StaticResource ControlFastAnimationDuration}"
+                                                From="CompactOpenUp"
+                                                To="CompactClosed">
+                                                <Storyboard />
+                                            </VisualTransition>
+                                            <VisualTransition
+                                                GeneratedDuration="{StaticResource ControlNormalAnimationDuration}"
+                                                From="CompactClosed"
+                                                To="CompactOpenDown">
+                                                <Storyboard />
+                                            </VisualTransition>
+                                            <VisualTransition
+                                                GeneratedDuration="{StaticResource ControlFastAnimationDuration}"
+                                                From="CompactOpenDown"
+                                                To="CompactClosed">
+                                                <Storyboard />
+                                            </VisualTransition>
+                                        </VisualStateGroup.Transitions>
+                                        <VisualState x:Name="CompactClosed" />
+                                        <VisualState x:Name="CompactOpenUp" />
+                                        <VisualState x:Name="CompactOpenDown" />
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="ExpansionStates">
+
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition
+                                                GeneratedDuration="{StaticResource ControlNormalAnimationDuration}"
+                                                From="Collapsed"
+                                                To="ExpandedUp">
+                                                <Storyboard x:Name="CollapsedToExpandedUp">
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="Width">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ExpandedWidth}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MoreButtonTransform" Storyboard.TargetProperty="X">
+                                                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionMoreButtonAnimationStartPosition}" />
+                                                        <SplineDoubleKeyFrame
+                                                            KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                            KeyTime="{StaticResource ControlNormalAnimationDuration}"
+                                                            Value="0" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentRootClipTransform" Storyboard.TargetProperty="X">
+                                                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationStartPosition}" />
+                                                        <SplineDoubleKeyFrame
+                                                            KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                            KeyTime="{StaticResource ControlNormalAnimationDuration}"
+                                                            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationEndPosition}" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="OverflowContentRootClipTransform" Storyboard.TargetProperty="X">
+                                                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationStartPosition}" />
+                                                        <SplineDoubleKeyFrame
+                                                            KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                            KeyTime="{StaticResource ControlNormalAnimationDuration}"
+                                                            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationEndPosition}" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="OverflowContentRootClipTransform" Storyboard.TargetProperty="Y">
+                                                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ExpandUpAnimationStartPosition}" />
+                                                        <SplineDoubleKeyFrame
+                                                            KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                            KeyTime="{StaticResource ControlNormalAnimationDuration}"
+                                                            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ExpandUpAnimationEndPosition}" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PrimaryItemsRoot" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterOverflowContentRootV2" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryItemsControl" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PrimaryItemsRoot" Storyboard.TargetProperty="VerticalAlignment">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Bottom" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                            <VisualTransition
+                                                GeneratedDuration="{StaticResource ControlFastAnimationDuration}"
+                                                From="ExpandedUp"
+                                                To="Collapsed">
+                                                <Storyboard x:Name="ExpandedUpToCollapsed" FillBehavior="Stop">
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="Width">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ExpandedWidth}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MoreButtonTransform" Storyboard.TargetProperty="X">
+                                                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                                                        <SplineDoubleKeyFrame
+                                                            KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                            KeyTime="{StaticResource ControlFastAnimationDuration}"
+                                                            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionMoreButtonAnimationStartPosition}" />
+                                                        <DiscreteDoubleKeyFrame KeyTime="{StaticResource ControlFastAnimationAfterDuration}" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionMoreButtonAnimationEndPosition}" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentRootClipTransform" Storyboard.TargetProperty="X">
+                                                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationEndPosition}" />
+                                                        <SplineDoubleKeyFrame
+                                                            KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                            KeyTime="{StaticResource ControlFastAnimationDuration}"
+                                                            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationStartPosition}" />
+                                                        <DiscreteDoubleKeyFrame KeyTime="{StaticResource ControlFastAnimationAfterDuration}" Value="0" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="OverflowContentRootClipTransform" Storyboard.TargetProperty="X">
+                                                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationEndPosition}" />
+                                                        <SplineDoubleKeyFrame
+                                                            KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                            KeyTime="{StaticResource ControlFastAnimationDuration}"
+                                                            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationStartPosition}" />
+                                                        <DiscreteDoubleKeyFrame KeyTime="{StaticResource ControlFastAnimationAfterDuration}" Value="0" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="OverflowContentRootClipTransform" Storyboard.TargetProperty="Y">
+                                                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ExpandUpAnimationEndPosition}" />
+                                                        <SplineDoubleKeyFrame
+                                                            KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                            KeyTime="{StaticResource ControlFastAnimationDuration}"
+                                                            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ExpandUpAnimationStartPosition}" />
+                                                        <DiscreteDoubleKeyFrame KeyTime="{StaticResource ControlFastAnimationAfterDuration}" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ExpandUpAnimationHoldPosition}" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PrimaryItemsRoot" Storyboard.TargetProperty="VerticalAlignment">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Bottom" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                            <VisualTransition
+                                                GeneratedDuration="{StaticResource ControlNormalAnimationDuration}"
+                                                From="Collapsed"
+                                                To="ExpandedDown">
+                                                <Storyboard x:Name="CollapsedToExpandedDown">
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="Width">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ExpandedWidth}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MoreButtonTransform" Storyboard.TargetProperty="X">
+                                                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionMoreButtonAnimationStartPosition}" />
+                                                        <SplineDoubleKeyFrame
+                                                            KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                            KeyTime="{StaticResource ControlNormalAnimationDuration}"
+                                                            Value="0" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentRootClipTransform" Storyboard.TargetProperty="X">
+                                                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationStartPosition}" />
+                                                        <SplineDoubleKeyFrame
+                                                            KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                            KeyTime="{StaticResource ControlNormalAnimationDuration}"
+                                                            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationEndPosition}" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="OverflowContentRootClipTransform" Storyboard.TargetProperty="X">
+                                                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationStartPosition}" />
+                                                        <SplineDoubleKeyFrame
+                                                            KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                            KeyTime="{StaticResource ControlNormalAnimationDuration}"
+                                                            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationEndPosition}" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="OverflowContentRootClipTransform" Storyboard.TargetProperty="Y">
+                                                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ExpandDownAnimationStartPosition}" />
+                                                        <SplineDoubleKeyFrame
+                                                            KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                            KeyTime="{StaticResource ControlNormalAnimationDuration}"
+                                                            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ExpandDownAnimationEndPosition}" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PrimaryItemsRoot" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterOverflowContentRootV2" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryItemsControl" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PrimaryItemsRoot" Storyboard.TargetProperty="VerticalAlignment">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Top" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                            <VisualTransition
+                                                GeneratedDuration="{StaticResource ControlFastAnimationDuration}"
+                                                From="ExpandedDown"
+                                                To="Collapsed">
+                                                <Storyboard x:Name="ExpandedDownToCollapsed" FillBehavior="Stop">
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="Width">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ExpandedWidth}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MoreButtonTransform" Storyboard.TargetProperty="X">
+                                                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                                                        <SplineDoubleKeyFrame
+                                                            KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                            KeyTime="{StaticResource ControlFastAnimationDuration}"
+                                                            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionMoreButtonAnimationStartPosition}" />
+                                                        <DiscreteDoubleKeyFrame KeyTime="{StaticResource ControlFastAnimationAfterDuration}" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionMoreButtonAnimationEndPosition}" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentRootClipTransform" Storyboard.TargetProperty="X">
+                                                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationEndPosition}" />
+                                                        <SplineDoubleKeyFrame
+                                                            KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                            KeyTime="{StaticResource ControlFastAnimationDuration}"
+                                                            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationStartPosition}" />
+                                                        <DiscreteDoubleKeyFrame KeyTime="{StaticResource ControlFastAnimationAfterDuration}" Value="0" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="OverflowContentRootClipTransform" Storyboard.TargetProperty="X">
+                                                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationEndPosition}" />
+                                                        <SplineDoubleKeyFrame
+                                                            KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                            KeyTime="{StaticResource ControlFastAnimationDuration}"
+                                                            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationStartPosition}" />
+                                                        <DiscreteDoubleKeyFrame KeyTime="{StaticResource ControlFastAnimationAfterDuration}" Value="0" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="OverflowContentRootClipTransform" Storyboard.TargetProperty="Y">
+                                                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ExpandDownAnimationEndPosition}" />
+                                                        <SplineDoubleKeyFrame
+                                                            KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                            KeyTime="{StaticResource ControlFastAnimationDuration}"
+                                                            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ExpandDownAnimationStartPosition}" />
+                                                        <DiscreteDoubleKeyFrame KeyTime="{StaticResource ControlFastAnimationAfterDuration}" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ExpandDownAnimationHoldPosition}" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PrimaryItemsRoot" Storyboard.TargetProperty="VerticalAlignment">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Top" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                        </VisualStateGroup.Transitions>
+                                        <VisualState x:Name="Collapsed" />
+                                        <VisualState x:Name="ExpandedUp">
+                                            <VisualState.Setters>
+                                                <Setter Target="MoreButtonTransform.X" Value="0" />
+                                                <Setter Target="ContentRootClipTransform.X" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationEndPosition}" />
+                                                <Setter Target="OverflowContentRootClipTransform.X" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationEndPosition}" />
+                                                <Setter Target="OverflowContentRootClipTransform.Y" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ExpandUpAnimationEndPosition}" />
+                                                <!--
+                                                    We're using PrimaryItemsRoot as the anchor for the overflow popup, so when we're showing that
+                                                    popup, we'll align PrimaryItemsRoot against the side that we're opening against to ensure that
+                                                    the popup is placed in the expected location.
+                                                -->
+                                                <Setter Target="PrimaryItemsRoot.VerticalAlignment" Value="Bottom" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="ExpandedDown">
+                                            <VisualState.Setters>
+                                                <Setter Target="MoreButtonTransform.X" Value="0" />
+                                                <Setter Target="ContentRootClipTransform.X" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationEndPosition}" />
+                                                <Setter Target="OverflowContentRootClipTransform.X" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.WidthExpansionAnimationEndPosition}" />
+                                                <Setter Target="OverflowContentRootClipTransform.Y" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FlyoutTemplateSettings.ExpandDownAnimationEndPosition}" />
+                                                <Setter Target="PrimaryItemsRoot.VerticalAlignment" Value="Top" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="AvailableCommandsStates">
+                                        <VisualState x:Name="BothCommands" />
+                                        <VisualState x:Name="PrimaryCommandsOnly">
+                                            <VisualState.Setters>
+                                                <Setter Target="OverflowContentRoot.Visibility" Value="Collapsed" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="SecondaryCommandsOnly">
+                                            <VisualState.Setters>
+                                                <!--
+                                                    We'll use PrimaryItemsRoot as the anchor for the overflow popup, so to be able to do that
+                                                    we can't set it to be collapsed.  Instead, we'll just hide it and make it not hit-testable.
+                                                -->
+                                                <Setter Target="PrimaryItemsRoot.Opacity" Value="0" />
+                                                <Setter Target="PrimaryItemsRoot.IsHitTestVisible" Value="False" />
+                                                <Setter Target="PrimaryItemsRoot.Height" Value="0" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup>
+
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition
+                                                GeneratedDuration="{StaticResource ControlNormalAnimationDuration}"
+                                                From="Default"
+                                                To="ExpandedUpWithPrimaryCommands">
+
+                                                <Storyboard>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryItemsControl" Storyboard.TargetProperty="BorderThickness">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{ThemeResource CommandBarFlyoutBorderUpThemeThickness}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PrimaryItemsRoot" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterOverflowContentRootV2" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryItemsControl" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                            <VisualTransition
+                                                GeneratedDuration="{StaticResource ControlNormalAnimationDuration}"
+                                                From="Default"
+                                                To="ExpandedDownWithPrimaryCommands">
+
+                                                <Storyboard>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryItemsControl" Storyboard.TargetProperty="BorderThickness">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{ThemeResource CommandBarFlyoutBorderDownThemeThickness}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PrimaryItemsRoot" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterOverflowContentRootV2" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryItemsControl" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                            <VisualTransition
+                                                GeneratedDuration="{StaticResource ControlFastAnimationDuration}"
+                                                From="ExpandedUpWithPrimaryCommands"
+                                                To="Default">
+
+                                                <Storyboard>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryItemsControl" Storyboard.TargetProperty="BorderThickness">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{ThemeResource CommandBarFlyoutBorderUpThemeThickness}" />
+                                                        <DiscreteObjectKeyFrame KeyTime="{StaticResource ControlFastAnimationDuration}" Value="{ThemeResource CommandBarFlyoutBorderThemeThickness}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+                                                        <DiscreteObjectKeyFrame KeyTime="{StaticResource ControlFastAnimationDuration}" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PrimaryItemsRoot" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+                                                        <DiscreteObjectKeyFrame KeyTime="{StaticResource ControlFastAnimationDuration}" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterOverflowContentRootV2" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
+                                                        <DiscreteObjectKeyFrame KeyTime="{StaticResource ControlFastAnimationDuration}" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryItemsControl" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
+                                                        <DiscreteObjectKeyFrame KeyTime="{StaticResource ControlFastAnimationDuration}" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                            <VisualTransition
+                                                GeneratedDuration="{StaticResource ControlFastAnimationDuration}"
+                                                From="ExpandedDownWithPrimaryCommands"
+                                                To="Default">
+
+                                                <Storyboard>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryItemsControl" Storyboard.TargetProperty="BorderThickness">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{ThemeResource CommandBarFlyoutBorderDownThemeThickness}" />
+                                                        <DiscreteObjectKeyFrame KeyTime="{StaticResource ControlFastAnimationDuration}" Value="{ThemeResource CommandBarFlyoutBorderThemeThickness}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
+                                                        <DiscreteObjectKeyFrame KeyTime="{StaticResource ControlFastAnimationDuration}" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PrimaryItemsRoot" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
+                                                        <DiscreteObjectKeyFrame KeyTime="{StaticResource ControlFastAnimationDuration}" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterOverflowContentRootV2" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+                                                        <DiscreteObjectKeyFrame KeyTime="{StaticResource ControlFastAnimationDuration}" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryItemsControl" Storyboard.TargetProperty="CornerRadius">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+                                                        <DiscreteObjectKeyFrame KeyTime="{StaticResource ControlFastAnimationDuration}" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                        </VisualStateGroup.Transitions>
+                                        <VisualState x:Name="Default" />
+                                        <VisualState x:Name="ExpandedUpWithPrimaryCommands">
+                                            <VisualState.Setters>
+                                                <Setter Target="SecondaryItemsControl.BorderThickness" Value="{ThemeResource CommandBarFlyoutBorderUpThemeThickness}" />
+                                                <Setter Target="LayoutRoot.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+                                                <Setter Target="PrimaryItemsRoot.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+                                                <Setter Target="OuterOverflowContentRootV2.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
+                                                <Setter Target="SecondaryItemsControl.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="ExpandedDownWithPrimaryCommands">
+                                            <VisualState.Setters>
+                                                <Setter Target="SecondaryItemsControl.BorderThickness" Value="{ThemeResource CommandBarFlyoutBorderDownThemeThickness}" />
+                                                <Setter Target="LayoutRoot.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
+                                                <Setter Target="PrimaryItemsRoot.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
+                                                <Setter Target="OuterOverflowContentRootV2.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+                                                <Setter Target="SecondaryItemsControl.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="ExpandedUpWithoutPrimaryCommands">
+                                            <VisualState.Setters>
+                                                <Setter Target="SecondaryItemsControl.BorderThickness" Value="{ThemeResource CommandBarFlyoutBorderThemeThickness}" />
+                                                <Setter Target="LayoutRoot.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                <Setter Target="PrimaryItemsRoot.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                <Setter Target="OuterOverflowContentRootV2.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                <Setter Target="SecondaryItemsControl.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="ExpandedDownWithoutPrimaryCommands">
+                                            <VisualState.Setters>
+                                                <Setter Target="SecondaryItemsControl.BorderThickness" Value="{ThemeResource CommandBarFlyoutBorderThemeThickness}" />
+                                                <Setter Target="LayoutRoot.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                <Setter Target="PrimaryItemsRoot.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                <Setter Target="OuterOverflowContentRootV2.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                <Setter Target="SecondaryItemsControl.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup>
+                                        <VisualState x:Name="NoOuterOverflowContentRootShadow" />
+                                        <VisualState x:Name="OuterOverflowContentRootShadow">
+                                            <VisualState.Setters>
+                                                <Setter Target="OuterOverflowContentRootV2.Shadow" Value="{StaticResource CommandBarFlyoutOverflowShadow}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="PrimaryLabelStates">
+                                        <VisualState x:Name="NoPrimaryLabels" />
+                                        <VisualState x:Name="HasPrimaryLabels">
+                                            <VisualState.Setters>
+                                                <Setter Target="PrimaryItemsControl.MinHeight" Value="52" />
+                                                <Setter Target="PrimaryItemsControl.Height" Value="NaN" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

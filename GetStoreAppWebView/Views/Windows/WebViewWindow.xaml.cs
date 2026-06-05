@@ -51,7 +51,6 @@ namespace GetStoreAppWebView.Views.Windows
 
         private readonly ContentIsland contentIsland;
         private readonly InputKeyboardSource inputKeyboardSource;
-        private readonly InputPointerSource inputPointerSource;
         private readonly ContentCoordinateConverter contentCoordinateConverter;
         private readonly OverlappedPresenter overlappedPresenter;
         private readonly SUBCLASSPROC webViewWindowSubClassProc;
@@ -234,14 +233,12 @@ namespace GetStoreAppWebView.Views.Windows
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
             contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
             inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
-            inputPointerSource = InputPointerSource.GetForIsland(contentIsland);
 
             AppWindow.Changed += OnAppWindowChanged;
             AppWindow.Closing += OnAppWindowClosing;
             contentIsland.StateChanged += OnStateChanged;
             contentIsland.Environment.SettingChanged += OnSettingChanged;
             inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
-            inputPointerSource.PointerReleased += OnPointerReleased;
 
             // 标题栏和右键菜单设置
             SetClassicMenuTheme(Content.As<FrameworkElement>().ActualTheme);
@@ -337,7 +334,6 @@ namespace GetStoreAppWebView.Views.Windows
             AppWindow.Changed -= OnAppWindowChanged;
             contentIsland.Environment.SettingChanged -= OnSettingChanged;
             inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
-            inputPointerSource.PointerReleased -= OnPointerReleased;
             Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), webViewWindowSubClassProc, 0);
             (Application.Current as WebViewApp).Dispose();
         }
@@ -365,8 +361,6 @@ namespace GetStoreAppWebView.Views.Windows
                 {
                     WindowTheme = Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
                 }
-
-                SetPopupControlTheme(WindowTheme);
             });
         }
 
@@ -384,23 +378,6 @@ namespace GetStoreAppWebView.Views.Windows
                     ShowMode = FlyoutShowMode.Standard
                 };
                 TitlebarMenuFlyout.ShowAt(null, options);
-            }
-            else if (args.VirtualKey is VirtualKey.F10 && Content is not null && Content.XamlRoot is not null)
-            {
-                await Task.Delay(50);
-                SetPopupControlTheme(WindowTheme);
-            }
-        }
-
-        /// <summary>
-        /// 处理鼠标事件
-        /// </summary>
-        private async void OnPointerReleased(InputPointerSource sender, PointerEventArgs args)
-        {
-            if (args.CurrentPoint.Properties.PointerUpdateKind is PointerUpdateKind.RightButtonReleased && Content is not null && Content.XamlRoot is not null)
-            {
-                await Task.Delay(50);
-                SetPopupControlTheme(WindowTheme);
             }
         }
 
@@ -852,44 +829,6 @@ namespace GetStoreAppWebView.Views.Windows
             }
 
             UxthemeLibrary.FlushMenuThemes();
-        }
-
-        /// <summary>
-        /// 设置所有弹出控件主题
-        /// </summary>
-        [DynamicWindowsRuntimeCast(typeof(FlyoutPresenter)), DynamicWindowsRuntimeCast(typeof(Grid))]
-        private void SetPopupControlTheme(ElementTheme elementTheme)
-        {
-            foreach (Popup popup in VisualTreeHelper.GetOpenPopupsForXamlRoot(Content.XamlRoot))
-            {
-                popup.RequestedTheme = elementTheme;
-
-                try
-                {
-                    if (popup.Child is FlyoutPresenter flyoutPresenter)
-                    {
-                        flyoutPresenter.RequestedTheme = elementTheme;
-                        continue;
-                    }
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-
-                try
-                {
-                    if (popup.Child is Grid grid && grid.Name is "OuterOverflowContentRootV2")
-                    {
-                        grid.RequestedTheme = elementTheme;
-                        continue;
-                    }
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            }
         }
 
         #endregion 第五部分：窗口及内容属性设置
