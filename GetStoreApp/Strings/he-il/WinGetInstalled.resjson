@@ -42,6 +42,5 @@
   "UninstallOptions": "אפשרויות הסרה",
   "UninstallWithCmd": "הסר התקנה באמצעות פקודה",
   "UseInstruction": "הוראות שימוש",
-  "UseInstructionToolTip": "לחץ כדי ללמוד על אופן השימוש הספציפי בחבילת WinGet",
-  "ViewMore": "הצג עוד"
+  "UseInstructionToolTip": "לחץ כדי ללמוד על אופן השימוש הספציפי בחבילת WinGet"
 }

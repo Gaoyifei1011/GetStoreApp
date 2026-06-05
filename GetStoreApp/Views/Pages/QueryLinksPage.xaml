@@ -520,7 +520,8 @@
                                 Margin="0,0,-15,0"
                                 VerticalAlignment="Center"
                                 Background="Transparent"
-                                DefaultLabelPosition="Right">
+                                DefaultLabelPosition="Right"
+                                Style="{StaticResource CommandBarStyle}">
 
                                 <CommandBar.PrimaryCommands>
                                     <AppBarButton Click="{x:Bind OnCopyQueriedAppInfoClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/CopyQueriedAppInfo')}">
@@ -673,6 +674,7 @@
                         VerticalAlignment="Center"
                         Background="Transparent"
                         DefaultLabelPosition="Right"
+                        Style="{StaticResource CommandBarStyle}"
                         Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelectMode), Mode=OneWay}">
 
                         <CommandBar.PrimaryCommands>
@@ -704,6 +706,7 @@
                         VerticalAlignment="Center"
                         Background="Transparent"
                         DefaultLabelPosition="Right"
+                        Style="{StaticResource CommandBarStyle}"
                         Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
                         <CommandBar.PrimaryCommands>
@@ -712,6 +715,10 @@
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE8C8;" />
                                 </AppBarButton.Icon>
+
+                                <AppBarButton.Resources>
+                                    <Visibility x:Key="AppBarButtonHasFlyoutChevronVisibility">Visible</Visibility>
+                                </AppBarButton.Resources>
 
                                 <AppBarButton.Flyout>
                                     <MenuFlyout Placement="Bottom">

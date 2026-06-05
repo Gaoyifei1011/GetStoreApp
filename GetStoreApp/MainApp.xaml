@@ -154,6 +154,7 @@
                         </ResourceDictionary>
 
                         <ResourceDictionary Source="ms-appx:///Styles/ComboBox.xaml" />
+                        <ResourceDictionary Source="ms-appx:///Styles/CommandBar.xaml" />
                         <ResourceDictionary Source="ms-appx:///Styles/NavigationView.xaml" />
                         <ResourceDictionary Source="ms-appx:///Styles/ToggleSwitch.xaml" />
                     </XamlControlsResources.MergedDictionaries>

@@ -43,7 +43,6 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <FontIcon
@@ -94,7 +93,8 @@
                 Margin="4,0,0,0"
                 VerticalAlignment="Center"
                 Background="Transparent"
-                DefaultLabelPosition="Right">
+                DefaultLabelPosition="Right"
+                Style="{StaticResource CommandBarStyle}">
 
                 <CommandBar.PrimaryCommands>
                     <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/UninstallOptions')}">
@@ -102,6 +102,10 @@
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE700;" />
                         </AppBarButton.Icon>
+
+                        <AppBarButton.Resources>
+                            <Visibility x:Key="AppBarButtonHasFlyoutChevronVisibility">Visible</Visibility>
+                        </AppBarButton.Resources>
 
                         <AppBarButton.Flyout>
                             <Flyout Placement="Bottom" ShouldConstrainToRootBounds="False">
@@ -188,141 +192,116 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
                 </CommandBar.PrimaryCommands>
+
+                <CommandBar.SecondaryCommands>
+                    <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/Sort')}">
+
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE8CB;" />
+                        </AppBarButton.Icon>
+
+                        <AppBarButton.Resources>
+                            <Visibility x:Key="AppBarButtonHasFlyoutChevronVisibility">Visible</Visibility>
+                        </AppBarButton.Resources>
+
+                        <AppBarButton.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortWay')}">
+
+                                    <RadioMenuFlyoutItem
+                                        Click="{x:Bind OnSortWayClicked}"
+                                        GroupName="InstalledSortWayRadioGroup"
+                                        IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortIncrease')}">
+
+                                        <RadioMenuFlyoutItem.Tag>
+                                            <x:Boolean>True</x:Boolean>
+                                        </RadioMenuFlyoutItem.Tag>
+                                    </RadioMenuFlyoutItem>
+
+                                    <RadioMenuFlyoutItem
+                                        Click="{x:Bind OnSortWayClicked}"
+                                        GroupName="InstalledSortWayRadioGroup"
+                                        IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortDecrease')}">
+
+                                        <RadioMenuFlyoutItem.Tag>
+                                            <x:Boolean>False</x:Boolean>
+                                        </RadioMenuFlyoutItem.Tag>
+                                    </RadioMenuFlyoutItem>
+                                </MenuFlyoutSubItem>
+
+                                <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortRule')}">
+
+                                    <RadioMenuFlyoutItem
+                                        Click="{x:Bind OnSortRuleClicked}"
+                                        GroupName="InstalledSortRuleRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
+                                        Tag="{x:Bind enum:AppSortRuleKind.DisplayName}"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortByDisplayName')}" />
+
+                                    <RadioMenuFlyoutItem
+                                        Click="{x:Bind OnSortRuleClicked}"
+                                        GroupName="InstalledSortRuleRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
+                                        Tag="{x:Bind enum:AppSortRuleKind.PublisherName}"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortByPublisher')}" />
+                                </MenuFlyoutSubItem>
+                            </MenuFlyout>
+                        </AppBarButton.Flyout>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Padding="0"
+                                Background="Transparent">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortToolTip')}" />
+                                </Grid>
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                    </AppBarButton>
+
+                    <AppBarButton
+                        Click="{x:Bind OnRefreshClicked}"
+                        IsEnabled="{x:Bind GetIsInstalling(InstalledAppsResultKind), Mode=OneWay}"
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/Refresh')}">
+
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE72C;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+
+                    <AppBarButton Click="{x:Bind OnControlPanelClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/ControlPanel')}">
+
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE70A;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+
+                    <AppBarButton Click="{x:Bind OnUseInstructionClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/UseInstruction')}">
+
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE946;" />
+                        </AppBarButton.Icon>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Padding="0"
+                                Background="Transparent">
+
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/UseInstructionToolTip')}" />
+                                </Grid>
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                    </AppBarButton>
+                </CommandBar.SecondaryCommands>
             </CommandBar>
-
-            <Button
-                Grid.Column="6"
-                MinHeight="{ThemeResource AppBarThemeCompactHeight}"
-                Margin="-6,0,0,0"
-                Padding="{ThemeResource CommandBarMoreButtonMargin}"
-                VerticalAlignment="Center"
-                Foreground="{ThemeResource CommandBarForeground}"
-                IsAccessKeyScope="True"
-                Style="{ThemeResource EllipsisButton}">
-
-                <FontIcon
-                    Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
-                    VerticalAlignment="Center"
-                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                    FontSize="20"
-                    Glyph="&#xE712;" />
-
-                <Button.Flyout>
-                    <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/Sort')}">
-
-                            <MenuFlyoutSubItem.Icon>
-                                <FontIcon Glyph="&#xE8CB;" />
-                            </MenuFlyoutSubItem.Icon>
-
-                            <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortWay')}">
-
-                                <RadioMenuFlyoutItem
-                                    Click="{x:Bind OnSortWayClicked}"
-                                    GroupName="InstalledSortWayRadioGroup"
-                                    IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortIncrease')}">
-
-                                    <RadioMenuFlyoutItem.Tag>
-                                        <x:Boolean>True</x:Boolean>
-                                    </RadioMenuFlyoutItem.Tag>
-                                </RadioMenuFlyoutItem>
-
-                                <RadioMenuFlyoutItem
-                                    Click="{x:Bind OnSortWayClicked}"
-                                    GroupName="InstalledSortWayRadioGroup"
-                                    IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortDecrease')}">
-
-                                    <RadioMenuFlyoutItem.Tag>
-                                        <x:Boolean>False</x:Boolean>
-                                    </RadioMenuFlyoutItem.Tag>
-                                </RadioMenuFlyoutItem>
-                            </MenuFlyoutSubItem>
-
-                            <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortRule')}">
-
-                                <RadioMenuFlyoutItem
-                                    Click="{x:Bind OnSortRuleClicked}"
-                                    GroupName="InstalledSortRuleRadioGroup"
-                                    IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
-                                    Tag="{x:Bind enum:AppSortRuleKind.DisplayName}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortByDisplayName')}" />
-
-                                <RadioMenuFlyoutItem
-                                    Click="{x:Bind OnSortRuleClicked}"
-                                    GroupName="InstalledSortRuleRadioGroup"
-                                    IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
-                                    Tag="{x:Bind enum:AppSortRuleKind.PublisherName}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortByPublisher')}" />
-                            </MenuFlyoutSubItem>
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    MaxWidth="9999"
-                                    Padding="0"
-                                    Background="Transparent">
-
-                                    <Grid>
-                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/SortToolTip')}" />
-                                    </Grid>
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
-                        </MenuFlyoutSubItem>
-
-                        <MenuFlyoutItem
-                            Click="{x:Bind OnRefreshClicked}"
-                            IsEnabled="{x:Bind GetIsInstalling(InstalledAppsResultKind), Mode=OneWay}"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/Refresh')}">
-
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE72C;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-
-                        <MenuFlyoutItem Click="{x:Bind OnControlPanelClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/ControlPanel')}">
-
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE70A;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-
-                        <MenuFlyoutItem Click="{x:Bind OnUseInstructionClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/UseInstruction')}">
-
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE946;" />
-                            </MenuFlyoutItem.Icon>
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    MaxWidth="9999"
-                                    Padding="0"
-                                    Background="Transparent">
-
-                                    <Grid>
-                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/UseInstructionToolTip')}" />
-                                    </Grid>
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
-                        </MenuFlyoutItem>
-                    </MenuFlyout>
-                </Button.Flyout>
-
-                <ToolTipService.ToolTip>
-                    <ToolTip
-                        MaxWidth="9999"
-                        Padding="0"
-                        Background="Transparent">
-
-                        <Grid>
-                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/ViewMore')}" />
-                        </Grid>
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-            </Button>
         </Grid>
 
         <!--  已安装应用状态显示栏  -->

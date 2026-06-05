@@ -59,6 +59,5 @@
   "Repair": "Repair",
   "RepairWithCmd": "Repair with command",
   "Upgrade": "Upgrade",
-  "UpgradeWithCmd": "Upgrade with command",
-  "ViewMore": "View more"
+  "UpgradeWithCmd": "Upgrade with command"
 }

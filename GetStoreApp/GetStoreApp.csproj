@@ -298,6 +298,7 @@
     <None Remove="Strings\zh-hans\WinGetSearch.resjson" />
     <None Remove="Strings\zh-hans\WinGetUpgrade.resjson" />
     <None Remove="Styles\ComboBox.xaml" />
+    <None Remove="Styles\CommandBar.xaml" />
     <None Remove="Styles\NavigationView.xaml" />
     <None Remove="Styles\ToggleSwitch.xaml" />
     <None Remove="Views\Dialogs\AppInformationDialog.xaml" />
@@ -360,6 +361,7 @@
     <PackageReference Include="Mile.Aria2" Version="1.0.1050" />
 
     <Page Update="Styles\ComboBox.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\CommandBar.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\NavigationView.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\ToggleSwitch.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\AppInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -409,7 +411,7 @@
     <Page Update="Views\Pages\WinGetUpgradePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Windows\MainWindow.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Remove="MainApp.xaml" />
-
+    
     <PRIResource Include="Strings\en-us\AppInformation.resjson" />
     <PRIResource Include="Strings\en-us\Application.resjson" />
     <PRIResource Include="Strings\en-us\AppList.resjson" />

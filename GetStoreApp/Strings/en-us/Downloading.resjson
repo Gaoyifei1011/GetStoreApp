@@ -30,6 +30,5 @@
   "SelectToolTip": "Enter multi-select mode",
   "UnSelected": "Not selected",
   "UseInstruction": "Use instruction",
-  "UseInstructionToolTip": "Click to learn how to use the Download management",
-  "ViewMore": "View more"
+  "UseInstructionToolTip": "Click to learn how to use the Download management"
 }

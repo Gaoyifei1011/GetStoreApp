@@ -36,7 +36,6 @@
   "Type": "Тип: ",
   "UnSelected": "Не выбрано",
   "User": "Пользователь",
-  "ViewMore": "Показать больше",
   "WinGetDataSourceCountInfo": "Добавлено источников данных WinGet: {0}",
   "WinGetDataSourceRemoveAccessDenied": "Доступ запрещен",
   "WinGetDataSourceRemoveCatalogError": "Ошибка каталога",

@@ -42,6 +42,5 @@
   "UninstallOptions": "Uninstall options",
   "UninstallWithCmd": "Uninstall with command",
   "UseInstruction": "Use instruction",
-  "UseInstructionToolTip": "Click to learn how to use the WinGet package",
-  "ViewMore": "View more"
+  "UseInstructionToolTip": "Click to learn how to use the WinGet package"
 }

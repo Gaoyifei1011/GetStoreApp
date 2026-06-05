@@ -82,7 +82,6 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
                     <TextBlock
@@ -96,6 +95,7 @@
                         VerticalAlignment="Center"
                         Background="Transparent"
                         DefaultLabelPosition="Right"
+                        Style="{StaticResource CommandBarStyle}"
                         Visibility="{x:Bind GetWinGetAppsType(SearchApps)}">
 
                         <CommandBar.PrimaryCommands>
@@ -105,61 +105,27 @@
                                 </AppBarButton.Icon>
                             </AppBarButton>
                         </CommandBar.PrimaryCommands>
+
+                        <CommandBar.SecondaryCommands>
+                            <AppBarButton Click="{x:Bind OnDownloadClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Download')}">
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="&#xE896;" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+
+                            <AppBarButton Click="{x:Bind OnInstallClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Install')}">
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="&#xE710;" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+
+                            <AppBarButton Click="{x:Bind OnRepairClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Repair')}">
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="&#xE90F;" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                        </CommandBar.SecondaryCommands>
                     </CommandBar>
-
-                    <Button
-                        Grid.Column="2"
-                        MinHeight="{ThemeResource AppBarThemeCompactHeight}"
-                        Margin="-6,0,0,0"
-                        Padding="{ThemeResource CommandBarMoreButtonMargin}"
-                        VerticalAlignment="Center"
-                        Foreground="{ThemeResource CommandBarForeground}"
-                        IsAccessKeyScope="True"
-                        Style="{ThemeResource EllipsisButton}"
-                        Visibility="{x:Bind GetWinGetAppsType(SearchApps)}">
-
-                        <FontIcon
-                            Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
-                            VerticalAlignment="Center"
-                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                            FontSize="20"
-                            Glyph="&#xE712;" />
-
-                        <Button.Flyout>
-                            <MenuFlyout Placement="Bottom">
-                                <MenuFlyoutItem Click="{x:Bind OnDownloadClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Download')}">
-                                    <MenuFlyoutItem.Icon>
-                                        <FontIcon Glyph="&#xE896;" />
-                                    </MenuFlyoutItem.Icon>
-                                </MenuFlyoutItem>
-
-                                <MenuFlyoutItem Click="{x:Bind OnInstallClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Install')}">
-                                    <MenuFlyoutItem.Icon>
-                                        <FontIcon Glyph="&#xE710;" />
-                                    </MenuFlyoutItem.Icon>
-                                </MenuFlyoutItem>
-
-                                <MenuFlyoutItem Click="{x:Bind OnRepairClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Repair')}">
-                                    <MenuFlyoutItem.Icon>
-                                        <FontIcon Glyph="&#xE90F;" />
-                                    </MenuFlyoutItem.Icon>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </Button.Flyout>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/ViewMore')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
-                    </Button>
 
                     <CommandBar
                         Grid.Column="1"
@@ -167,6 +133,7 @@
                         VerticalAlignment="Center"
                         Background="Transparent"
                         DefaultLabelPosition="Right"
+                        Style="{StaticResource CommandBarStyle}"
                         Visibility="{x:Bind GetWinGetAppsType(UpgradableApps)}">
 
                         <CommandBar.PrimaryCommands>
@@ -176,49 +143,15 @@
                                 </AppBarButton.Icon>
                             </AppBarButton>
                         </CommandBar.PrimaryCommands>
+
+                        <CommandBar.SecondaryCommands>
+                            <AppBarButton Click="{x:Bind OnUpgradeClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Upgrade')}">
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="&#xE898;" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                        </CommandBar.SecondaryCommands>
                     </CommandBar>
-
-                    <Button
-                        Grid.Column="2"
-                        MinHeight="{ThemeResource AppBarThemeCompactHeight}"
-                        Margin="-6,0,0,0"
-                        Padding="{ThemeResource CommandBarMoreButtonMargin}"
-                        VerticalAlignment="Center"
-                        Foreground="{ThemeResource CommandBarForeground}"
-                        IsAccessKeyScope="True"
-                        Style="{ThemeResource EllipsisButton}"
-                        Visibility="{x:Bind GetWinGetAppsType(UpgradableApps)}">
-
-                        <FontIcon
-                            Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
-                            VerticalAlignment="Center"
-                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                            FontSize="20"
-                            Glyph="&#xE712;" />
-
-                        <Button.Flyout>
-                            <MenuFlyout Placement="Bottom">
-                                <MenuFlyoutItem Click="{x:Bind OnUpgradeClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Upgrade')}">
-                                    <MenuFlyoutItem.Icon>
-                                        <FontIcon Glyph="&#xE898;" />
-                                    </MenuFlyoutItem.Icon>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </Button.Flyout>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Padding="0"
-                                Background="Transparent">
-
-                                <Grid>
-                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/ViewMore')}" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
-                    </Button>
                 </Grid>
 
                 <MenuFlyoutSeparator Grid.Row="1" />

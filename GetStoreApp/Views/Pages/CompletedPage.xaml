@@ -46,7 +46,6 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <FontIcon
@@ -80,7 +79,8 @@
                 Grid.Column="4"
                 VerticalAlignment="Center"
                 Background="Transparent"
-                DefaultLabelPosition="Right">
+                DefaultLabelPosition="Right"
+                Style="{StaticResource CommandBarStyle}">
 
                 <CommandBar.PrimaryCommands>
                     <AppBarButton
@@ -176,37 +176,23 @@
                         </ToolTipService.ToolTip>
                     </AppBarButton>
                 </CommandBar.PrimaryCommands>
-            </CommandBar>
 
-            <Button
-                Grid.Column="5"
-                MinHeight="{ThemeResource AppBarThemeCompactHeight}"
-                Margin="-6,0,0,0"
-                Padding="{ThemeResource CommandBarMoreButtonMargin}"
-                VerticalAlignment="Center"
-                Foreground="{ThemeResource CommandBarForeground}"
-                IsAccessKeyScope="True"
-                Style="{ThemeResource EllipsisButton}">
+                <CommandBar.SecondaryCommands>
+                    <AppBarButton
+                        IsEnabled="{x:Bind GetIsLoading(CompletedResultKind), Mode=OneWay}"
+                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Completed/Share')}"
+                        Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
-                <FontIcon
-                    Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
-                    VerticalAlignment="Center"
-                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                    FontSize="20"
-                    Glyph="&#xE712;" />
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE72D;" />
+                        </AppBarButton.Icon>
 
-                <Button.Flyout>
-                    <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutSubItem
-                            IsEnabled="{x:Bind GetIsLoading(CompletedResultKind), Mode=OneWay}"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/Share')}"
-                            Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
+                        <AppBarButton.Resources>
+                            <Visibility x:Key="AppBarButtonHasFlyoutChevronVisibility">Visible</Visibility>
+                        </AppBarButton.Resources>
 
-                            <MenuFlyoutSubItem.Icon>
-                                <FontIcon Glyph="&#xE72D;" />
-                            </MenuFlyoutSubItem.Icon>
-
-                            <MenuFlyoutSubItem.Items>
+                        <AppBarButton.Flyout>
+                            <MenuFlyout>
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnShowShareUIClicked}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/ShowShareUI')}"
@@ -223,64 +209,51 @@
                                         <FontIcon Glyph="&#xE8C8;" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
-                            </MenuFlyoutSubItem.Items>
-                        </MenuFlyoutSubItem>
+                            </MenuFlyout>
+                        </AppBarButton.Flyout>
+                    </AppBarButton>
 
-                        <MenuFlyoutItem Click="{x:Bind OnOpenFolderClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/OpenFolder')}">
+                    <AppBarButton Click="{x:Bind OnOpenFolderClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('Completed/OpenFolder')}">
 
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE8B7;" />
-                            </MenuFlyoutItem.Icon>
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE8B7;" />
+                        </AppBarButton.Icon>
 
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    MaxWidth="9999"
-                                    Padding="0"
-                                    Background="Transparent">
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Padding="0"
+                                Background="Transparent">
 
-                                    <Grid>
-                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/OpenFolderToolTip')}" />
-                                    </Grid>
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
-                        </MenuFlyoutItem>
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/OpenFolderToolTip')}" />
+                                </Grid>
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                    </AppBarButton>
 
-                        <MenuFlyoutItem Click="{x:Bind OnUseInstructionClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/UseInstruction')}">
+                    <AppBarButton Click="{x:Bind OnUseInstructionClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('Completed/UseInstruction')}">
 
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE946;" />
-                            </MenuFlyoutItem.Icon>
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE946;" />
+                        </AppBarButton.Icon>
 
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    MaxWidth="9999"
-                                    Padding="0"
-                                    Background="Transparent">
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Padding="0"
+                                Background="Transparent">
 
-                                    <Grid>
-                                        <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                                        <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/UseInstructionToolTip')}" />
-                                    </Grid>
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
-                        </MenuFlyoutItem>
-                    </MenuFlyout>
-                </Button.Flyout>
-
-                <ToolTipService.ToolTip>
-                    <ToolTip
-                        MaxWidth="9999"
-                        Padding="0"
-                        Background="Transparent">
-
-                        <Grid>
-                            <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
-                            <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/ViewMore')}" />
-                        </Grid>
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-            </Button>
+                                <Grid>
+                                    <SystemBackdropElement CornerRadius="{StaticResource ControlCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
+                                    <TextBlock Padding="{StaticResource ToolTipBorderPadding}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/UseInstructionToolTip')}" />
+                                </Grid>
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                    </AppBarButton>
+                </CommandBar.SecondaryCommands>
+            </CommandBar>
         </Grid>
 
         <!--  下载文件状态显示栏  -->

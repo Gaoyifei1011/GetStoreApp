@@ -42,6 +42,5 @@
   "UninstallOptions": "Параметры удаления",
   "UninstallWithCmd": "Удалить с помощью команды",
   "UseInstruction": "Инструкция по использованию",
-  "UseInstructionToolTip": "Нажмите, чтобы узнать, как использовать WinGet",
-  "ViewMore": "Показать больше"
+  "UseInstructionToolTip": "Нажмите, чтобы узнать, как использовать WinGet"
 }

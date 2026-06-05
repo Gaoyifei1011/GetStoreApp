@@ -68,7 +68,8 @@
                         <CommandBar
                             Grid.Column="2"
                             Margin="0,0,-15,0"
-                            DefaultLabelPosition="Right">
+                            DefaultLabelPosition="Right"
+                            Style="{StaticResource CommandBarStyle}">
 
                             <CommandBar.PrimaryCommands>
                                 <AppBarButton Click="{x:Bind OnCopyClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Copy')}">
