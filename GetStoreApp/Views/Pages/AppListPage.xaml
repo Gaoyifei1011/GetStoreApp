@@ -66,6 +66,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/Operation')}" />
+                
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
             <TextBlock

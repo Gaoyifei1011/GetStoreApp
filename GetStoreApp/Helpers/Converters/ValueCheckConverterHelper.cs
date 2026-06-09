@@ -72,7 +72,6 @@ namespace GetStoreApp.Helpers.Converters
         /// <summary>
         /// 检查文件是否正在下载中
         /// </summary>
-
         public static Visibility CheckDownloadingState(DownloadProgressState downloadProgressState)
         {
             return downloadProgressState is DownloadProgressState.Queued || downloadProgressState is DownloadProgressState.Downloading ? Visibility.Visible : Visibility.Collapsed;
