@@ -334,8 +334,10 @@
     <None Remove="Strings\zh-hans\WinGetInstalled.resjson" />
     <None Remove="Strings\zh-hans\WinGetSearch.resjson" />
     <None Remove="Strings\zh-hans\WinGetUpgrade.resjson" />
+    <None Remove="Styles\AutoSuggestBox.xaml" />
     <None Remove="Styles\ComboBox.xaml" />
     <None Remove="Styles\CommandBar.xaml" />
+    <None Remove="Styles\ListView.xaml" />
     <None Remove="Styles\NavigationView.xaml" />
     <None Remove="Styles\ToggleSwitch.xaml" />
     <None Remove="Views\Dialogs\AppInformationDialog.xaml" />
@@ -398,8 +400,10 @@
     <PackageReference Include="Microsoft.WindowsPackageManager.InProcCom" Version="1.28.240" GeneratePathProperty="true" IncludeAssets="none" />
     <PackageReference Include="Mile.Aria2" Version="1.0.1050" />
 
+    <Page Update="Styles\AutoSuggestBox.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\ComboBox.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\CommandBar.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\ListView.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\NavigationView.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\ToggleSwitch.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\AppInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
