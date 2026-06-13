@@ -117,7 +117,7 @@
 <img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/About.png" />
 </div>
 
-#### <p align="center">应用安装程序</p>
+#### <p align="center">应用包安装器</p>
 <div align="center">
 <img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/AppInstaller.png" />
 </div>

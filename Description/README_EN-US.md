@@ -117,7 +117,7 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 <img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/About.png" />
 </div>
 
-#### <p align="center">App installer</p>
+#### <p align="center">App package installer</p>
 <div align="center">
 <img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/AppInstaller.png" />
 </div>
