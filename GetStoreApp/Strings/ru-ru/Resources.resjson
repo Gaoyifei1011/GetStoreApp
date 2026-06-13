@@ -1,5 +1,5 @@
 ﻿{
-  "AppInstaller": "Файл установщика приложений",
+  "AppInstaller": "Файл пакета приложения",
   "InstallerAppDescription": "Установщик приложений",
   "InstallerAppDisplayName": "Установщик приложений",
   "InstallerAppShortDisplayName": "Установщик приложений",

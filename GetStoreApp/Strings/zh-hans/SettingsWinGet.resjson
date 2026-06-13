@@ -1,5 +1,5 @@
 ﻿{
-  "AppInstaller": "应用安装程序",
+  "AppInstaller": "应用包安装器",
   "BuiltInApp": "应用内置",
   "Configuration": "配置",
   "CurrentWinGetSource": "当前 WinGet 来源：",

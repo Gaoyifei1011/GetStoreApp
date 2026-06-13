@@ -1,5 +1,5 @@
 ﻿{
-  "AppInstaller": "App installer",
+  "AppInstaller": "App package installer",
   "BuiltInApp": "Built-in app",
   "Configuration": "Configuration",
   "CurrentWinGetSource": "Current WinGet source: ",

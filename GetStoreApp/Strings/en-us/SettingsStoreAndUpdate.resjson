@@ -17,7 +17,7 @@
   "EncryptedPackageOffContent": "Do not filter",
   "EncryptedPackageOnContent": "filter",
   "InstallMode": "Application install mode",
-  "InstallModeAppInstall": "Install using the app installer",
+  "InstallModeAppInstall": "Install via app package installer",
   "InstallModeCodeInstall": "Direct installation",
   "InstallModeDescription": "Select how the Windows app package is installed",
   "LinkFilter": "Link filtering",

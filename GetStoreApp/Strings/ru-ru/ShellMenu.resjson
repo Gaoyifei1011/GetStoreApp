@@ -1,8 +1,8 @@
 {
-  "AppInstall": "Использовать установщик приложений для установки",
-  "AppInstallAdmin": "Использовать установщик приложений для установки (Админ)",
-  "PSInstall": "Использовать PowerShell для установки",
-  "PSInstallAdmin": "Использовать PowerShell для установки (Админ)",
-  "PSRegister": "Использовать PowerShell для регистрации приложения",
+  "AppInstall": "Установить через установщик пакетов приложений",
+  "AppInstallAdmin": "Установить через установщик приложений (админ)",
+  "PSInstall": "Установить через PowerShell",
+  "PSInstallAdmin": "Установить через PowerShell (от имени администратора)",
+  "PSRegister": "Зарегистрировать приложение через PowerShell",
   "RootMenu": "GetStoreApp"
 }

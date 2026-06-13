@@ -1,8 +1,8 @@
 ﻿{
-  "AppInstaller": "App installer file",
-  "InstallerAppDescription": "App installer",
-  "InstallerAppDisplayName": "App installer",
-  "InstallerAppShortDisplayName": "App installer",
+  "AppInstaller": "App package file",
+  "InstallerAppDescription": "App package installer",
+  "InstallerAppDisplayName": "App package installer",
+  "InstallerAppShortDisplayName": "App package installer",
   "MainAppDescription": "GetStoreApp",
   "MainAppDisplayName": "GetStoreApp",
   "MainAppShortDisplayName": "GetStoreApp",

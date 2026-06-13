@@ -17,7 +17,7 @@
   "EncryptedPackageOffContent": "אל תסנן",
   "EncryptedPackageOnContent": "סנן",
   "InstallMode": "שיטת התקנת יישום",
-  "InstallModeAppInstall": "התקן באמצעות מתקין היישומים",
+  "InstallModeAppInstall": "התקן דרך מתקן חבילות האפליקציות",
   "InstallModeCodeInstall": "התקנה ישירה",
   "InstallModeDescription": "בחר את שיטת ההתקנה של חבילת יישום Windows",
   "LinkFilter": "סינון קישורים",

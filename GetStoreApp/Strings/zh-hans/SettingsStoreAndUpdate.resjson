@@ -17,7 +17,7 @@
   "EncryptedPackageOffContent": "不过滤",
   "EncryptedPackageOnContent": "过滤",
   "InstallMode": "应用安装方式",
-  "InstallModeAppInstall": "使用应用安装程序安装",
+  "InstallModeAppInstall": "使用应用包安装器安装",
   "InstallModeCodeInstall": "直接安装",
   "InstallModeDescription": "选择Windows 应用包的安装方式",
   "LinkFilter": "链接过滤",

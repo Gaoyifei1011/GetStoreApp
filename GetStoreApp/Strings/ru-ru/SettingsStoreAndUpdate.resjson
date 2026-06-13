@@ -17,7 +17,7 @@
   "EncryptedPackageOffContent": "Не фильтровать",
   "EncryptedPackageOnContent": "фильтр",
   "InstallMode": "Режим установки приложения",
-  "InstallModeAppInstall": "Установить с помощью установщика приложений",
+  "InstallModeAppInstall": "Установить через установщик пакетов приложений",
   "InstallModeCodeInstall": "Прямая установка",
   "InstallModeDescription": "Выберите, как устанавливается пакет приложения Windows",
   "LinkFilter": "Фильтрация ссылок",
