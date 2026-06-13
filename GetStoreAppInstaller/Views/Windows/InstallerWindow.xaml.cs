@@ -63,7 +63,7 @@ using WinRT;
 namespace GetStoreAppInstaller.Views.Windows
 {
     /// <summary>
-    /// 应用安装器窗口
+    /// 应用包安装器窗口
     /// </summary>
     public sealed partial class InstallerWindow : Window, INotifyPropertyChanged
     {

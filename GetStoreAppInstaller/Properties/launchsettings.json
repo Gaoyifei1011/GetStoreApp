@@ -1,6 +1,6 @@
 ﻿{
   "profiles": {
-    "应用安装器": {
+    "应用包安装器": {
       "commandName": "MsixPackage",
       "nativeDebugging": true
     }

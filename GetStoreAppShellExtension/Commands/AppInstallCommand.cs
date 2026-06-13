@@ -9,7 +9,7 @@ using System.Runtime.InteropServices.Marshalling;
 namespace GetStoreAppShellExtension.Commands
 {
     /// <summary>
-    /// 使用应用安装器安装
+    /// 使用应用包安装器安装
     /// </summary>
     [GeneratedComClass]
     public partial class AppInstallCommand : IExplorerCommand

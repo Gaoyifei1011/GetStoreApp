@@ -8,7 +8,6 @@ using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
@@ -225,19 +224,6 @@ namespace GetStoreApp.Views.Pages
         #region 第一部分：重写父类事件
 
         /// <summary>
-        /// 点击回车键搜索应用
-        /// </summary>
-        protected override async void OnKeyDown(KeyRoutedEventArgs args)
-        {
-            base.OnKeyDown(args);
-
-            if (args.Key is VirtualKey.Enter && !IsSearchingStore && !IsSelectMode)
-            {
-                await SearchStoreAsync();
-            }
-        }
-
-        /// <summary>
         /// 导航到该页面触发的事件
         /// </summary>
         protected override async void OnNavigatedTo(NavigationEventArgs args)
@@ -256,13 +242,19 @@ namespace GetStoreApp.Views.Pages
         #region 第二部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
-        /// 选择搜索应用方式
+        /// 删除历史记录
         /// </summary>
-        private void OnSearchTypeSelectionChanged(object sender, SelectionChangedEventArgs args)
+        private void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel searchType && !Equals(SelectedSearchType, searchType))
+            if (args.Parameter is HistoryModel history)
             {
-                SelectedSearchType = searchType;
+                HistoryCollection.Remove(history);
+                HistoryStorageService.RemoveSearchStoreData(history.HistoryKey);
+
+                if (HistoryCollection.Count is 0)
+                {
+                    SearchStoreHistoryAutoSuggestBox.IsSuggestionListOpen = false;
+                }
             }
         }
 
@@ -275,17 +267,6 @@ namespace GetStoreApp.Views.Pages
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(storeAppLink);
                 await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
-            }
-        }
-
-        /// <summary>
-        /// 填入到文本框
-        /// </summary>
-        private void OnFillInExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is string historyContent && !string.IsNullOrEmpty(historyContent))
-            {
-                SearchText = historyContent;
             }
         }
 
@@ -336,11 +317,78 @@ namespace GetStoreApp.Views.Pages
         #region 第三部分：搜索应用页面——挂载的事件
 
         /// <summary>
+        /// 选择搜索应用方式
+        /// </summary>
+        private void OnSearchTypeSelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel searchType && !Equals(SelectedSearchType, searchType))
+            {
+                SelectedSearchType = searchType;
+            }
+        }
+
+        /// <summary>
+        /// 建议文本输入框获取焦点后触发的事件
+        /// </summary>
+        private void OnAutoSuggestBoxGotFocus(object sender, RoutedEventArgs args)
+        {
+            if (HistoryCollection.Count > 0 && sender.As<AutoSuggestBox>() is AutoSuggestBox autoSuggestBox)
+            {
+                autoSuggestBox.IsSuggestionListOpen = true;
+            }
+        }
+
+        /// <summary>
+        /// 建议文本输入框正在失去焦点时触发的事件
+        /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Button))]
+        private void OnLosingFocus(UIElement sender, LosingFocusEventArgs args)
+        {
+            if (args.NewFocusedElement is Button)
+            {
+                args.TryCancel();
+            }
+        }
+
+        /// <summary>
+        /// 建议文本输入框失去焦点后触发的事件
+        /// </summary>
+        private void OnAutoSuggestBoxLostFocus(object sender, RoutedEventArgs args)
+        {
+            if (sender.As<AutoSuggestBox>() is AutoSuggestBox autoSuggestBox)
+            {
+                autoSuggestBox.IsSuggestionListOpen = false;
+            }
+        }
+
+        /// <summary>
+        /// 当用户提交搜索查询时发生的事件
+        /// </summary>
+        private async void OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            if (!IsSearchingStore && !IsSelectMode)
+            {
+                await SearchStoreAsync();
+            }
+        }
+
+        /// <summary>
+        /// 在更新可编辑控件组件的文本内容之前引发的事件
+        /// </summary>
+        private void OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            if (!IsSearchingStore && args.SelectedItem is HistoryModel history && !string.IsNullOrEmpty(history.HistoryContent))
+            {
+                SearchText = history.HistoryContent;
+            }
+        }
+
+        /// <summary>
         /// 输入文本框内容发生改变时响应的事件
         /// </summary>
-        private void OnTextChanged(object sender, TextChangedEventArgs args)
+        private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            SearchText = sender.As<TextBox>().Text;
+            SearchText = sender.As<AutoSuggestBox>().Text;
         }
 
         /// <summary>
@@ -456,9 +504,7 @@ namespace GetStoreApp.Views.Pages
                 // 计算时间戳
                 long timeStamp = Convert.ToInt64((DateTimeOffset.UtcNow - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
                 string historyKey = HashAlgorithmHelper.GenerateHistoryKey(inputContent);
-
                 List<HistoryModel> historyList = [.. HistoryCollection];
-
                 int index = historyList.FindIndex(item => string.Equals(item.HistoryKey, historyKey, StringComparison.OrdinalIgnoreCase));
 
                 // 不存在直接添加
@@ -472,20 +518,22 @@ namespace GetStoreApp.Views.Pages
                     };
 
                     historyList.Insert(0, history);
-                    if (historyList.Count is 4)
+
+                    // 保留前 20 项
+                    if (historyList.Count > 20)
                     {
-                        historyList.RemoveAt(historyList.Count - 1);
+                        historyList.RemoveRange(20, historyList.Count - 20);
                     }
                     HistoryStorageService.SaveSearchStoreData(historyList);
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        if (HistoryCollection.Count is 3)
-                        {
-                            HistoryCollection.RemoveAt(HistoryCollection.Count - 1);
-                        }
+                        HistoryCollection.Clear();
 
-                        HistoryCollection.Insert(0, history);
+                        foreach (HistoryModel historyItem in historyList)
+                        {
+                            HistoryCollection.Add(historyItem);
+                        }
                     });
                 }
                 // 存在则修改原来项的时间戳，并调整顺序
@@ -493,9 +541,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     HistoryModel historyItem = historyList[index];
                     historyItem.CreateTimeStamp = timeStamp;
-                    historyList.RemoveAt(index);
-                    historyList.Insert(0, historyItem);
-                    HistoryStorageService.SaveSearchStoreData(historyList);
+                    HistoryStorageService.UpdateSearchStoreData(historyItem);
 
                     DispatcherQueue.TryEnqueue(() =>
                     {

@@ -13,7 +13,7 @@ using Windows.Foundation.Diagnostics;
 namespace GetStoreAppInstaller
 {
     /// <summary>
-    /// 应用安装器主程序
+    /// 应用包安装器主程序
     /// </summary>
     public partial class InstallerApp : Application, IDisposable
     {

@@ -18,7 +18,7 @@ using WinRT;
 namespace GetStoreAppInstaller
 {
     /// <summary>
-    /// 应用安装器
+    /// 应用包安装器
     /// </summary>
     public class Program
     {

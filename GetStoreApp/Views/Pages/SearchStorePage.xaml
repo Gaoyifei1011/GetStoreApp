@@ -19,8 +19,8 @@
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="Transparent" />
         <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="Transparent" />
 
+        <XamlUICommand x:Name="DeleteCommand" ExecuteRequested="{x:Bind OnDeleteExecuteRequested}" />
         <XamlUICommand x:Name="CopyLinkCommand" ExecuteRequested="{x:Bind OnCopyLinkExecuteRequested}" />
-        <XamlUICommand x:Name="FillInCommand" ExecuteRequested="{x:Bind OnFillInExecuteRequested}" />
         <XamlUICommand x:Name="OpenLinkCommand" ExecuteRequested="{x:Bind OnOpenLinkExecuteRequested}" />
         <XamlUICommand x:Name="QueryLinksCommand" ExecuteRequested="{x:Bind OnQueryLinksExecuteRequested}" />
     </Page.Resources>
@@ -34,7 +34,6 @@
 
         <Grid Margin="0,0,0,30">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -59,13 +58,86 @@
                     SelectionChanged="{x:Bind OnSearchTypeSelectionChanged}"
                     Style="{StaticResource ComboBoxStyle}" />
 
-                <TextBox
+                <AutoSuggestBox
+                    x:Name="SearchStoreHistoryAutoSuggestBox"
                     Grid.Column="1"
                     Margin="0,0,6,0"
+                    GotFocus="{x:Bind OnAutoSuggestBoxGotFocus}"
                     IsEnabled="{x:Bind IsSearchingStore.Equals(x:False), Mode=OneWay}"
+                    ItemContainerStyle="{StaticResource AutoSuggestBoxListViewItemStyle}"
+                    ItemsSource="{x:Bind HistoryCollection}"
+                    LosingFocus="{x:Bind OnLosingFocus}"
+                    LostFocus="{x:Bind OnAutoSuggestBoxLostFocus}"
                     PlaceholderText="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/SearchPlaceHolderText')}"
+                    QuerySubmitted="{x:Bind OnQuerySubmitted}"
+                    Style="{StaticResource AutoSuggestBoxStyle}"
+                    SuggestionChosen="{x:Bind OnSuggestionChosen}"
                     Text="{x:Bind SearchText, Mode=OneWay}"
-                    TextChanged="{x:Bind OnTextChanged}" />
+                    TextChanged="{x:Bind OnTextChanged}"
+                    UpdateTextOnSelect="False">
+
+                    <AutoSuggestBox.ItemTemplate>
+                        <DataTemplate x:DataType="model:HistoryModel">
+                            <Grid Height="60" Background="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid
+                                    Grid.Column="0"
+                                    Width="30"
+                                    Height="30"
+                                    Margin="0,0,8,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="{ThemeResource CardStrokeColorDefaultBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="{StaticResource ControlCornerRadius}">
+
+                                    <FontIcon FontSize="16" Glyph="&#xE81C;" />
+                                </Grid>
+
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Text="{x:Bind HistoryContent}" />
+
+                                <Button
+                                    Grid.Column="2"
+                                    Width="32"
+                                    Height="32"
+                                    Margin="3,0,3,0"
+                                    Padding="0"
+                                    VerticalAlignment="Center"
+                                    Command="{StaticResource DeleteCommand}"
+                                    CommandParameter="{x:Bind}"
+                                    CornerRadius="{StaticResource ControlCornerRadius}"
+                                    IsEnabled="{x:Bind IsQuerying.Equals(x:False), Mode=OneWay}"
+                                    Style="{StaticResource AlternateCloseButtonStyle}"
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Delete')}">
+
+                                    <FontIcon
+                                        Margin="4"
+                                        FontSize="16"
+                                        Glyph="&#xE711;" />
+                                </Button>
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip>
+                                        <StackPanel>
+                                            <TextBlock>
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryContent')}" />
+                                                <Run Text="{x:Bind HistoryContent}" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </Grid>
+                        </DataTemplate>
+                    </AutoSuggestBox.ItemTemplate>
+                </AutoSuggestBox>
 
                 <Button
                     Grid.Column="2"
@@ -118,144 +190,8 @@
                 </InfoBar.ActionButton>
             </InfoBar>
 
-            <Expander
-                Grid.Row="2"
-                Margin="0,0,0,3"
-                Padding="0"
-                HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Stretch"
-                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                IsExpanded="True">
-
-                <Expander.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <FontIcon
-                            Grid.Column="0"
-                            Margin="0,0,12,0"
-                            FontSize="16"
-                            Glyph="&#xE823;" />
-
-                        <TextBlock
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/Recent')}" />
-                    </Grid>
-                </Expander.Header>
-
-                <StackPanel>
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/HistoryEmpty')}"
-                        TextAlignment="Center"
-                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(HistoryCollection.Count), Mode=OneWay}" />
-
-                    <ListView
-                        CornerRadius="0"
-                        ItemsSource="{x:Bind HistoryCollection}"
-                        SelectionMode="None"
-                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(HistoryCollection.Count), Mode=OneWay}">
-
-                        <ListView.ItemContainerStyle>
-                            <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                <Setter Property="Background" Value="Transparent" />
-                                <Setter Property="Margin" Value="0" />
-                                <Setter Property="MinHeight" Value="0" />
-                                <Setter Property="Padding" Value="0" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
-
-                        <ItemsControl.ItemContainerTransitions>
-                            <TransitionCollection />
-                        </ItemsControl.ItemContainerTransitions>
-
-                        <ListView.Header>
-                            <Grid Height="35" Padding="6,0,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="80" />
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock
-                                    x:Name="HistoryContentHeaderText"
-                                    Grid.Column="0"
-                                    Margin="10,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/HistoryContent')}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/HistoryContent')}" Visibility="{x:Bind HistoryContentHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
-
-                                <TextBlock
-                                    Grid.Column="1"
-                                    Grid.ColumnSpan="2"
-                                    Margin="10,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/Options')}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/OptionsToolTip')}" />
-                            </Grid>
-                        </ListView.Header>
-
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="model:HistoryModel">
-                                <Grid
-                                    Height="35"
-                                    Padding="6,0,0,0"
-                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                    BorderThickness="0,1,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="80" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <TextBlock
-                                        x:Name="HistoryContentText"
-                                        Grid.Column="0"
-                                        MinWidth="50"
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        FontSize="14"
-                                        IsTextSelectionEnabled="True"
-                                        Text="{x:Bind HistoryContent}"
-                                        TextAlignment="Left"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind HistoryContent}" Visibility="{Binding ElementName=HistoryContentText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-
-                                    <HyperlinkButton
-                                        Grid.Column="1"
-                                        Margin="10,0,0,0"
-                                        Padding="0"
-                                        Command="{StaticResource FillInCommand}"
-                                        CommandParameter="{x:Bind HistoryContent}"
-                                        Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/FillIn')}"
-                                        IsEnabled="{x:Bind IsQuerying.Equals(x:False), Mode=OneWay}" />
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackPanel>
-            </Expander>
-
             <Grid
-                Grid.Row="3"
+                Grid.Row="2"
                 CornerRadius="{ThemeResource ControlCornerRadius}"
                 Visibility="{x:Bind ResultControlVisible, Mode=OneWay}">
 

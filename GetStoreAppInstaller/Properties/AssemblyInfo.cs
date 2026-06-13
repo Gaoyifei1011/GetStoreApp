@@ -6,11 +6,11 @@ using System.Runtime.Versioning;
 
 [assembly: AssemblyCompany("高怡飞")]
 [assembly: AssemblyCopyright("Copyright 2022-2026 高怡飞 版权所有")]
-[assembly: AssemblyDescription("应用安装器")]
+[assembly: AssemblyDescription("应用包安装器")]
 [assembly: AssemblyFileVersion("6.18.522.0")]
 [assembly: AssemblyInformationalVersion("6.18.522.0")]
-[assembly: AssemblyProduct("应用安装器")]
-[assembly: AssemblyTitle("应用安装器")]
+[assembly: AssemblyProduct("应用包安装器")]
+[assembly: AssemblyTitle("应用包安装器")]
 [assembly: AssemblyVersion("6.18.522.0")]
 
 // 应用程序默认区域性的资源控制器设置

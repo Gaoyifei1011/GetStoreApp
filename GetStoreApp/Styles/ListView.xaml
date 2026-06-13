@@ -4,6 +4,10 @@
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives">
 
+    <ResourceDictionary.MergedDictionaries>
+        <XamlControlsResources />
+    </ResourceDictionary.MergedDictionaries>
+
     <Style x:Name="AutoSuggestBoxListViewItemStyle" TargetType="ListViewItem">
         <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
         <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />

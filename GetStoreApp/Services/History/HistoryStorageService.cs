@@ -4,7 +4,6 @@ using GetStoreApp.Services.Root;
 using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using Windows.Foundation.Diagnostics;
 using WinRT;
@@ -71,29 +70,22 @@ namespace GetStoreApp.Services.History
             {
                 if (queryLinksContainer is not null)
                 {
-                    for (int index = 1; index <= 3; index++)
+                    foreach (KeyValuePair<string, object> queryLinksContainerItem in queryLinksContainer.Values)
                     {
-                        try
+                        if (queryLinksContainerItem.Key.Length is 32 && queryLinksContainerItem.Value.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                         {
-                            if (queryLinksContainer.Values.TryGetValue(QueryLinks + Convert.ToString(index), out object value) && value.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
-                            {
-                                TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
-                                ChannelModel channel = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
+                            TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
+                            ChannelModel channel = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
 
-                                queryLinksHistoryList.Add(new HistoryModel()
-                                {
-                                    CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
-                                    HistoryKey = Convert.ToString(compositeValue[HistoryKey]),
-                                    HistoryAppName = Convert.ToString(compositeValue[HistoryAppName]),
-                                    HistoryType = type.InternalName,
-                                    HistoryChannel = channel.InternalName,
-                                    HistoryLink = Convert.ToString(compositeValue[HistoryLink])
-                                });
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                            queryLinksHistoryList.Add(new HistoryModel()
+                            {
+                                HistoryKey = queryLinksContainerItem.Key,
+                                CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
+                                HistoryAppName = Convert.ToString(compositeValue[HistoryAppName]),
+                                HistoryType = type.InternalName,
+                                HistoryChannel = channel.InternalName,
+                                HistoryLink = Convert.ToString(compositeValue[HistoryLink])
+                            });
                         }
                     }
                 }
@@ -107,6 +99,7 @@ namespace GetStoreApp.Services.History
                 historyStorageLock.Exit();
             }
 
+            queryLinksHistoryList.Sort((item1, item2) => item2.CreateTimeStamp.CompareTo(item1.CreateTimeStamp));
             return queryLinksHistoryList;
         }
 
@@ -121,28 +114,21 @@ namespace GetStoreApp.Services.History
 
             try
             {
-                for (int index = 1; index <= 3; index++)
+                if (searchStoreContainer is not null)
                 {
-                    if (searchStoreContainer.Values.TryGetValue(SearchStore + Convert.ToString(index), out object value))
+                    foreach (KeyValuePair<string, object> searchStoreContainerItem in searchStoreContainer.Values)
                     {
-                        try
+                        if (searchStoreContainerItem.Key.Length is 32 && searchStoreContainerItem.Value.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                         {
-                            if (value.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
-                            {
-                                TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryType"] as string, StringComparison.OrdinalIgnoreCase));
-                                ChannelModel channelItem = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryChannel"] as string, StringComparison.OrdinalIgnoreCase));
+                            TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryType"] as string, StringComparison.OrdinalIgnoreCase));
+                            ChannelModel channelItem = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryChannel"] as string, StringComparison.OrdinalIgnoreCase));
 
-                                searchStoreHistoryList.Add(new HistoryModel()
-                                {
-                                    CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
-                                    HistoryKey = Convert.ToString(compositeValue[HistoryKey]),
-                                    HistoryContent = Convert.ToString(compositeValue[HistoryContent]),
-                                });
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                            searchStoreHistoryList.Add(new HistoryModel()
+                            {
+                                HistoryKey = searchStoreContainerItem.Key,
+                                CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
+                                HistoryContent = Convert.ToString(compositeValue[HistoryContent]),
+                            });
                         }
                     }
                 }
@@ -156,6 +142,7 @@ namespace GetStoreApp.Services.History
                 historyStorageLock.Exit();
             }
 
+            searchStoreHistoryList.Sort((item1, item2) => item2.CreateTimeStamp.CompareTo(item1.CreateTimeStamp));
             return searchStoreHistoryList;
         }
 
@@ -164,26 +151,22 @@ namespace GetStoreApp.Services.History
         /// </summary>
         public static void SaveQueryLinksData(List<HistoryModel> queryLinksHistoryList)
         {
-            int endIndex = queryLinksHistoryList.Count >= 3 ? 3 : queryLinksHistoryList.Count;
-
             historyStorageLock.Enter();
 
             try
             {
-                for (int index = 1; index <= endIndex; index++)
+                foreach (HistoryModel historyItem in queryLinksHistoryList)
                 {
                     Windows.Storage.ApplicationDataCompositeValue compositeValue = new()
                     {
-                        [CreateTimeStamp] = queryLinksHistoryList[index - 1].CreateTimeStamp,
-                        [HistoryKey] = queryLinksHistoryList[index - 1].HistoryKey,
-                        [HistoryAppName] = queryLinksHistoryList[index - 1].HistoryAppName,
-                        [HistoryType] = queryLinksHistoryList[index - 1].HistoryType,
-                        [HistoryChannel] = queryLinksHistoryList[index - 1].HistoryChannel,
-                        [HistoryLink] = queryLinksHistoryList[index - 1].HistoryLink
+                        [CreateTimeStamp] = historyItem.CreateTimeStamp,
+                        [HistoryAppName] = historyItem.HistoryAppName,
+                        [HistoryType] = historyItem.HistoryType,
+                        [HistoryChannel] = historyItem.HistoryChannel,
+                        [HistoryLink] = historyItem.HistoryLink
                     };
 
-                    string queryLinksKey = QueryLinks + Convert.ToString(index);
-                    queryLinksContainer.Values[queryLinksKey] = compositeValue;
+                    queryLinksContainer.Values[historyItem.HistoryKey] = compositeValue;
                 }
             }
             catch (Exception e)
@@ -201,28 +184,88 @@ namespace GetStoreApp.Services.History
         /// </summary>
         public static void SaveSearchStoreData(List<HistoryModel> searchStoreHistoryList)
         {
-            int endIndex = searchStoreHistoryList.Count > 3 ? 3 : searchStoreHistoryList.Count;
-
             historyStorageLock.Enter();
 
             try
             {
-                for (int index = 1; index <= endIndex; index++)
+                foreach (HistoryModel historyItem in searchStoreHistoryList)
                 {
                     Windows.Storage.ApplicationDataCompositeValue compositeValue = new()
                     {
-                        [CreateTimeStamp] = searchStoreHistoryList[index - 1].CreateTimeStamp,
-                        [HistoryKey] = searchStoreHistoryList[index - 1].HistoryKey,
-                        [HistoryContent] = searchStoreHistoryList[index - 1].HistoryContent
+                        [CreateTimeStamp] = historyItem.CreateTimeStamp,
+                        [HistoryContent] = historyItem.HistoryContent
                     };
 
-                    string searchStoreKey = SearchStore + Convert.ToString(index);
-                    searchStoreContainer.Values[searchStoreKey] = compositeValue;
+                    searchStoreContainer.Values[historyItem.HistoryKey] = compositeValue;
                 }
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(SaveSearchStoreData), 1, e);
+            }
+            finally
+            {
+                historyStorageLock.Exit();
+            }
+        }
+
+        /// <summary>
+        /// 更新查询链接历史记录数据
+        /// </summary>
+        public static void UpdateQueryLinksData(HistoryModel historyItem)
+        {
+            if (queryLinksContainer.Values.TryGetValue(historyItem.HistoryKey, out object compositeValueObj) && compositeValueObj.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
+            {
+                compositeValue[CreateTimeStamp] = historyItem.CreateTimeStamp;
+                compositeValue[HistoryAppName] = historyItem.HistoryAppName;
+            }
+        }
+
+        /// <summary>
+        /// 更新搜索商店历史记录数据
+        /// </summary>
+        public static void UpdateSearchStoreData(HistoryModel historyItem)
+        {
+        }
+
+        /// <summary>
+        /// 移除查询链接历史记录数据
+        /// </summary>
+        public static void RemoveQueryLinksData(string historyKey)
+        {
+            if (!string.IsNullOrEmpty(historyKey))
+            {
+                historyStorageLock.Enter();
+
+                try
+                {
+                    queryLinksContainer.Values.Remove(historyKey);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(RemoveQueryLinksData), 1, e);
+                }
+                finally
+                {
+                    historyStorageLock.Exit();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 移除查询链接记录数据
+        /// </summary>
+        public static void RemoveSearchStoreData(string historyKey)
+        {
+            historyStorageLock.Enter();
+
+            try
+            {
+                searchStoreContainer.Values.Remove(historyKey);
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(RemoveSearchStoreData), 1, e);
             }
             finally
             {

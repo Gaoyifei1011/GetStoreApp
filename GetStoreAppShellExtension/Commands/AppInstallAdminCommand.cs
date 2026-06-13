@@ -10,7 +10,7 @@ using Windows.ApplicationModel;
 namespace GetStoreAppShellExtension.Commands
 {
     /// <summary>
-    /// 使用应用安装器安装（管理员模式）
+    /// 使用应用包安装器安装（管理员模式）
     /// </summary>
     [GeneratedComClass]
     public partial class AppInstallAdminCommand : IExplorerCommand
