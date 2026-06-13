@@ -103,10 +103,6 @@
                             <FontIcon Glyph="&#xE700;" />
                         </AppBarButton.Icon>
 
-                        <AppBarButton.Resources>
-                            <Visibility x:Key="AppBarButtonHasFlyoutChevronVisibility">Visible</Visibility>
-                        </AppBarButton.Resources>
-
                         <AppBarButton.Flyout>
                             <Flyout Placement="Bottom" ShouldConstrainToRootBounds="False">
 

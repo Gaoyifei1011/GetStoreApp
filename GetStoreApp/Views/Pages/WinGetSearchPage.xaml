@@ -105,10 +105,6 @@
                             <FontIcon Glyph="&#xE71C;" />
                         </AppBarButton.Icon>
 
-                        <AppBarButton.Resources>
-                            <Visibility x:Key="AppBarButtonHasFlyoutChevronVisibility">Visible</Visibility>
-                        </AppBarButton.Resources>
-
                         <AppBarButton.Flyout>
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutSubItem Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/PackageMatchField')}">
