@@ -1,6 +1,9 @@
-﻿using GetStoreApp.Models;
+﻿using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
+using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -287,6 +290,17 @@ namespace GetStoreApp.Views.Pages
                 CancelAutoUpdateService.SetCancelAutoUpdateValue(toggleSwitch.IsOn);
                 CancelAutoUpdateValue = toggleSwitch.IsOn;
             }
+        }
+
+        /// <summary>
+        /// 重置商店缓存
+        /// </summary>
+        private void OnResetStoreCacheClicked(object sender, RoutedEventArgs args)
+        {
+            Task.Run(() =>
+            {
+                Shell32Library.ShellExecute(nint.Zero, "open", "wsreset.exe", string.Empty, null, WindowShowStyle.SW_SHOWNORMAL);
+            });
         }
 
         /// <summary>

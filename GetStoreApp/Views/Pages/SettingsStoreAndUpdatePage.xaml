@@ -24,6 +24,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <!--  查询链接方式设置  -->
@@ -202,7 +203,7 @@
                     Style="{StaticResource ComboBoxStyle}" />
             </Grid>
 
-            <!--  检测到更新后是否直接取消更新  -->
+            <!--  取消自动更新  -->
             <Grid
                 Grid.Row="3"
                 Height="60"
@@ -259,9 +260,63 @@
                     Toggled="{x:Bind OnCancelAutoUpdateToggled}" />
             </Grid>
 
+            <!--  重置商店缓存  -->
+            <Grid
+                Grid.Row="4"
+                Height="60"
+                Margin="0,0,0,2"
+                Padding="16,0"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    FontSize="16"
+                    Glyph="&#xE845;" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/ResetStoreCache')}" />
+
+                    <TextBlock
+                        x:Name="ResetStoreCacheDescription"
+                        HorizontalAlignment="Left"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/ResetStoreCacheDescription')}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/ResetStoreCacheDescription')}" Visibility="{x:Bind ResetStoreCacheDescription.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+                </StackPanel>
+
+                <Button
+                    Grid.Column="2"
+                    Click="{x:Bind OnResetStoreCacheClicked}"
+                    Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/Reset')}" />
+            </Grid>
+
             <!--  商店区域设置  -->
             <Expander
-                Grid.Row="4"
+                Grid.Row="5"
                 Margin="0,0,0,2"
                 Padding="0"
                 HorizontalAlignment="Stretch"
@@ -430,7 +485,7 @@
 
             <!--  链接过滤设置  -->
             <Expander
-                Grid.Row="5"
+                Grid.Row="6"
                 Margin="0,0,0,2"
                 Padding="0"
                 HorizontalAlignment="Stretch"
