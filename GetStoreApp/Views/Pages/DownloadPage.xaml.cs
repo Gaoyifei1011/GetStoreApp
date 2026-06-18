@@ -236,10 +236,11 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 显示下载使用说明
         /// </summary>
-        public void ShowUseInstruction()
+        public async void ShowUseInstruction()
         {
             if (!DownloadSplitView.IsPaneOpen)
             {
+                await Task.Delay(300);
                 DownloadSplitView.IsPaneOpen = true;
             }
         }

@@ -366,7 +366,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            if (!IsSearchingStore && !IsSelectMode)
+            if (!IsSearchingStore && !IsSelectMode && args.ChosenSuggestion is null)
             {
                 await SearchStoreAsync();
             }
@@ -409,6 +409,7 @@ namespace GetStoreApp.Views.Pages
             if (!IsSearchingStore)
             {
                 IsSearchingStore = true;
+                SearchStoreHistoryAutoSuggestBox.IsSuggestionListOpen = false;
                 SearchText = string.IsNullOrEmpty(SearchText) ? "Microsoft Corporation" : SearchText;
                 SetControlState(InfoBarSeverity.Informational);
                 foreach (HistoryModel historyItem in HistoryCollection)

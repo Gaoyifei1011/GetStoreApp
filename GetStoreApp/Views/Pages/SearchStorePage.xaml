@@ -116,7 +116,7 @@
                                     CornerRadius="{StaticResource ControlCornerRadius}"
                                     IsEnabled="{x:Bind IsQuerying.Equals(x:False), Mode=OneWay}"
                                     Style="{StaticResource AlternateCloseButtonStyle}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/Delete')}">
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/Delete')}">
 
                                     <FontIcon
                                         Margin="4"
@@ -128,7 +128,7 @@
                                     <ToolTip>
                                         <StackPanel>
                                             <TextBlock>
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinks/HistoryContent')}" />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchStore/HistoryContent')}" />
                                                 <Run Text="{x:Bind HistoryContent}" />
                                             </TextBlock>
                                         </StackPanel>

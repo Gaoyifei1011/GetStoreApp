@@ -637,7 +637,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            if (!IsQueryingLinks && !IsSelectMode)
+            if (!IsQueryingLinks && !IsSelectMode && args.ChosenSuggestion is null)
             {
                 await QueryLinksAsync();
             }
@@ -1151,6 +1151,7 @@ namespace GetStoreApp.Views.Pages
             {
                 // 设置获取数据时的相关控件状态
                 IsQueryingLinks = true;
+                QueryLinksHistoryAutoSuggestBox.IsSuggestionListOpen = false;
                 LinkText = string.IsNullOrEmpty(LinkText) ? sampleLink : LinkText;
                 SetControlState(InfoBarSeverity.Informational);
                 foreach (HistoryModel historyItem in HistoryCollection)

@@ -70,7 +70,7 @@
                                         SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
                                     <ListView
                                         x:Name="SuggestionsList"
-                                        MaxHeight="186"
+                                        MaxHeight="{ThemeResource AutoSuggestListMaxHeight}"
                                         Margin="{ThemeResource AutoSuggestListPadding}"
                                         Padding="5,3,5,3"
                                         DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
