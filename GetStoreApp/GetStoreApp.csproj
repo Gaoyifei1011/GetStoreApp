@@ -171,7 +171,9 @@
     <Content Include="Assets\StoreLogo.scale-150.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\StoreLogo.scale-200.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\StoreLogo.scale-400.png" CopyToOutputDirectory="Always" />
-
+    <Content Include="Assets\Store\QueryLinks.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Store\SearchStore.png" CopyToOutputDirectory="Always" />
+    
     <Content Remove="Assets\GetStoreApp.ico" />
     <Content Remove="Assets\Embed\cookie.xml" />
     <Content Remove="Assets\Embed\Mile.Aria2.conf" />
