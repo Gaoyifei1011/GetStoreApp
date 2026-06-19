@@ -17,12 +17,18 @@
         PaneBackground="Transparent"
         PanePlacement="Right">
 
-        <Grid>
+        <Grid Margin="0,10,0,0">
             <!--  商店选择器用户控件  -->
             <usercontrol:StoreSelectorUserControl
                 x:Name="StoreSelector"
                 x:FieldModifier="public"
                 Visibility="{x:Bind GetSelectedStoreControl(StoreControl, enum:StoreControl.StoreSelector), Mode=OneWay}" />
+
+            <!--  查询链接结果用户控件  -->
+            <usercontrol:QueryLinksResultUserControl
+                x:Name="QueryLinksResult"
+                x:FieldModifier="public"
+                Visibility="{x:Bind GetSelectedStoreControl(StoreControl, enum:StoreControl.QueryLinksResult), Mode=OneWay}" />
         </Grid>
 
         <SplitView.Pane>
