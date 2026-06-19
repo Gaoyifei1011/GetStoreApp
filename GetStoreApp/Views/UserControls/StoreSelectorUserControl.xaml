@@ -13,7 +13,7 @@
     </UserControl.Resources>
 
     <Grid
-        Margin="30,0,30,85"
+        Margin="30,0,30,128"
         VerticalAlignment="Center"
         RowSpacing="6">
 
@@ -84,7 +84,6 @@
                 x:Name="StoreSelectorBar"
                 Padding="0"
                 HorizontalAlignment="Center"
-                IsEnabled="{x:Bind GetStoreSelectorBarIsEnabled(IsQueryingLinks, IsSearchingApps), Mode=OneWay}"
                 SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
                 SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}">
 
@@ -130,7 +129,6 @@
                     Grid.Row="0"
                     AutoMaximizeSuggestionArea="True"
                     GotFocus="{x:Bind OnQueryLinksGotFocus}"
-                    IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}"
                     ItemContainerStyle="{StaticResource AutoSuggestBoxListViewItemStyle}"
                     ItemsSource="{x:Bind QueryLinksHistoryCollection}"
                     LosingFocus="{x:Bind OnQueryLinksLosingFocus}"
@@ -211,7 +209,6 @@
                                     Command="{StaticResource CopyHistoryCommand}"
                                     CommandParameter="{x:Bind}"
                                     CornerRadius="{StaticResource ControlCornerRadius}"
-                                    IsEnabled="{x:Bind IsQuerying.Equals(x:False), Mode=OneWay}"
                                     Style="{StaticResource AlternateCloseButtonStyle}"
                                     ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/CopyHistory')}">
 
@@ -278,6 +275,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
                     <ComboBox
@@ -285,7 +283,6 @@
                         Margin="0,0,5,0"
                         VerticalAlignment="Center"
                         DisplayMemberPath="DisplayName"
-                        IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}"
                         ItemsSource="{x:Bind TypeList}"
                         SelectedItem="{x:Bind SelectedType, Mode=OneWay}"
                         SelectionChanged="{x:Bind OnTypeSelectionChanged}"
@@ -296,7 +293,6 @@
                         Margin="0,0,5,0"
                         VerticalAlignment="Center"
                         DisplayMemberPath="DisplayName"
-                        IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}"
                         ItemsSource="{x:Bind ChannelList}"
                         SelectedItem="{x:Bind SelectedChannel, Mode=OneWay}"
                         SelectionChanged="{x:Bind OnChannelSelectionChanged}"
@@ -353,7 +349,6 @@
                         Margin="5,0,0,0"
                         Padding="0"
                         Click="{x:Bind OnQueryLinksClearInputContentClicked}"
-                        IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}"
                         ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/ClearInputContent')}">
 
                         <FontIcon FontSize="16" Glyph="&#xE894;" />
@@ -361,6 +356,19 @@
 
                     <Button
                         Grid.Column="4"
+                        Width="32"
+                        Height="32"
+                        Margin="5,0,0,0"
+                        Padding="0"
+                        Click="{x:Bind OnQueryLinksShowResultClicked}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/ShowResult')}"
+                        Visibility="{x:Bind IsQueryLinksResultVisible, Mode=OneWay}">
+
+                        <FontIcon FontSize="16" Glyph="&#xE8BC;" />
+                    </Button>
+
+                    <Button
+                        Grid.Column="5"
                         Width="34"
                         Height="34"
                         Margin="5,0,0,0"
@@ -394,20 +402,6 @@
                             </MenuFlyout>
                         </Button.Flyout>
                     </Button>
-
-                    <Button
-                        Grid.Column="5"
-                        Width="32"
-                        Height="32"
-                        Margin="5,0,0,0"
-                        Padding="0"
-                        Click="{x:Bind OnQueryLinksShowResultClicked}"
-                        IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/ShowResult')}"
-                        Visibility="{x:Bind IsQueryLinksResultVisible, Mode=OneWay}">
-
-                        <FontIcon FontSize="16" Glyph="&#xE8BC;" />
-                    </Button>
                 </Grid>
             </Grid>
         </Grid>
@@ -415,8 +409,8 @@
         <!--  搜索应用控件  -->
         <Grid
             Grid.Row="2"
-            Width="800"
             Height="160"
+            MaxWidth="800"
             Padding="8"
             Background="{ThemeResource LayerFillColorDefaultBrush}"
             BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
@@ -594,7 +588,6 @@
                         Margin="5,0,0,0"
                         Padding="0"
                         Click="{x:Bind OnSearchAppsClearInputContentClicked}"
-                        IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}"
                         ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/ClearInputContent')}">
 
                         <FontIcon FontSize="16" Glyph="&#xE894;" />
@@ -602,6 +595,19 @@
 
                     <Button
                         Grid.Column="3"
+                        Width="32"
+                        Height="32"
+                        Margin="5,0,0,0"
+                        Padding="0"
+                        Click="{x:Bind OnSearchAppsShowResultClicked}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/ShowResult')}"
+                        Visibility="{x:Bind IsSearchAppsResultVisible, Mode=OneWay}">
+
+                        <FontIcon FontSize="16" Glyph="&#xE8BC;" />
+                    </Button>
+
+                    <Button
+                        Grid.Column="4"
                         Width="34"
                         Height="34"
                         Margin="5,0,0,0"
@@ -634,20 +640,6 @@
                                 </MenuFlyoutItem>
                             </MenuFlyout>
                         </Button.Flyout>
-                    </Button>
-
-                    <Button
-                        Grid.Column="4"
-                        Width="32"
-                        Height="32"
-                        Margin="5,0,0,0"
-                        Padding="0"
-                        Click="{x:Bind OnSearchAppsShowResultClicked}"
-                        IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/ShowResult')}"
-                        Visibility="{x:Bind IsSearchAppsResultVisible, Mode=OneWay}">
-
-                        <FontIcon FontSize="16" Glyph="&#xE8BC;" />
                     </Button>
                 </Grid>
             </Grid>
