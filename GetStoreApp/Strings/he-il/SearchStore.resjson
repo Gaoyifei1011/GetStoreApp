@@ -1,9 +1,10 @@
 ﻿{
   "CopyLink": "העתק קישור",
   "CopyLinkToolTip": "העתק את קישור היישום ללוח",
+  "Delete": "מחק",
   "ExactSearch": "חיפוש מדויק",
   "FillIn": "מלא",
-  "HistoryContent": "תוכן שהוזן",
+  "HistoryContent": ":תוכן שהוזן",
   "InfoBarError": "אירעה שגיאה בעת חיפוש יישומים משרתי חנות Microsoft",
   "InfoBarGetting": "מחפש משרתי חנות Microsoft, אנא המתן...",
   "InfoBarSuccess": "יישומים אלה נמצאו בהצלחה משרתי חנות Microsoft",

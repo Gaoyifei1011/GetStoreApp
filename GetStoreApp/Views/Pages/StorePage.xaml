@@ -3,36 +3,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
+    xmlns:usercontrol="using:GetStoreApp.Views.UserControls"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
-
-    <Page.Resources>
-        <TransitionCollection x:Name="SuppressNavigationTransitionCollection">
-            <NavigationThemeTransition>
-                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                    <SuppressNavigationTransitionInfo />
-                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
-            </NavigationThemeTransition>
-        </TransitionCollection>
-
-        <TransitionCollection x:Name="LeftSlideNavigationTransitionCollection">
-            <NavigationThemeTransition>
-                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                    <SlideNavigationTransitionInfo Effect="FromLeft" />
-                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
-            </NavigationThemeTransition>
-        </TransitionCollection>
-
-        <TransitionCollection x:Name="RightSlideNavigationTransitionCollection">
-            <NavigationThemeTransition>
-                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                    <SlideNavigationTransitionInfo Effect="FromRight" />
-                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
-            </NavigationThemeTransition>
-        </TransitionCollection>
-    </Page.Resources>
 
     <SplitView
         x:Name="StoreSplitView"
@@ -44,8 +20,6 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -55,86 +29,12 @@
                 FontSize="22"
                 Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/MicrosoftStore')}" />
 
-            <Grid
+            <!--  商店选择器用户控件  -->
+            <usercontrol:StoreSelectorUserControl
+                x:Name="StoreSelector"
                 Grid.Row="1"
-                Margin="30,8"
-                HorizontalAlignment="Stretch">
-
-                <!--  商店应用控制栏  -->
-                <Grid
-                    HorizontalAlignment="Center"
-                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
-                    BorderThickness="1"
-                    CornerRadius="{ThemeResource ControlCornerRadius}">
-
-                    <SelectorBar
-                        x:Name="StoreSelectorBar"
-                        Padding="0"
-                        HorizontalAlignment="Center"
-                        SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
-                        SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}">
-
-                        <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/QueryLinks')}">
-                            <SelectorBarItem.Icon>
-                                <FontIcon Glyph="&#xE71B;" />
-                            </SelectorBarItem.Icon>
-                        </SelectorBarItem>
-
-                        <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchApps')}">
-                            <SelectorBarItem.Icon>
-                                <FontIcon Glyph="&#xE721;" />
-                            </SelectorBarItem.Icon>
-                        </SelectorBarItem>
-                    </SelectorBar>
-                </Grid>
-
-                <Button
-                    Width="34"
-                    Height="34"
-                    Padding="0"
-                    HorizontalAlignment="Right"
-                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/ViewMore')}">
-
-                    <FontIcon FontSize="16" Glyph="&#xE712;" />
-
-                    <Button.Flyout>
-                        <MenuFlyout Placement="Bottom">
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnLanguageAndRegionClicked}"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/LanguageAndRegion')}"
-                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/LanguageAndRegionToolTip')}">
-
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xF2B7;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnUseInstructionClicked}"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstruction')}"
-                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstructionToolTip')}">
-
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE946;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                        </MenuFlyout>
-                    </Button.Flyout>
-                </Button>
-            </Grid>
-
-            <MenuFlyoutSeparator
-                Grid.Row="2"
-                Margin="35,0,35,3"
-                Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
-
-            <!--  商店内容  -->
-            <Frame
-                x:Name="StoreFrame"
-                Grid.Row="3"
-                Navigated="{x:Bind OnNavigated}"
-                NavigationFailed="{x:Bind OnNavigationFailed}" />
+                x:FieldModifier="public"
+                Visibility="{x:Bind GetSelectedStoreControl(StoreControl, enum:StoreControl.StoreSelector), Mode=OneWay}" />
         </Grid>
 
         <SplitView.Pane>
@@ -257,7 +157,7 @@
                                 Margin="16,0,16,5"
                                 FontSize="14"
                                 FontWeight="Normal"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchStoreHelp1')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchAppsHelp1')}"
                                 TextAlignment="Justify"
                                 TextWrapping="Wrap" />
 
@@ -266,7 +166,7 @@
                                 Margin="16,0,16,5"
                                 FontSize="14"
                                 FontWeight="Normal"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchStoreHelp2')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchAppsHelp2')}"
                                 TextAlignment="Justify"
                                 TextWrapping="Wrap" />
 
@@ -275,7 +175,7 @@
                                 Margin="16,0,16,5"
                                 FontSize="14"
                                 FontWeight="Normal"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchStoreHelp3')}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/SearchAppsHelp3')}"
                                 TextAlignment="Justify"
                                 TextWrapping="Wrap" />
 

@@ -1,6 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Services.Root;
-using GetStoreApp.Services.Settings;
 using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
@@ -12,7 +10,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
-using Windows.Foundation.Diagnostics;
 using Windows.System;
 
 // 抑制 CA1822，IDE0060 警告
@@ -25,23 +22,23 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class StorePage : Page, INotifyPropertyChanged
     {
-        private SelectorBarItem _selectedItem;
+        private bool isInitialized;
 
-        public SelectorBarItem SelectedItem
+        private StoreControl _storeControl;
+
+        public StoreControl StoreControl
         {
-            get { return _selectedItem; }
+            get { return _storeControl; }
 
             set
             {
-                if (!Equals(_selectedItem, value))
+                if (!Equals(_storeControl, value))
                 {
-                    _selectedItem = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedItem)));
+                    _storeControl = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StoreControl)));
                 }
             }
         }
-
-        public List<Type> PageList { get; } = [typeof(QueryLinksPage), typeof(SearchStorePage)];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -55,113 +52,26 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 导航到该页面触发的事件
         /// </summary>
-        protected override void OnNavigatedTo(NavigationEventArgs args)
+        protected override async void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
-            StoreFrame.ContentTransitions = SuppressNavigationTransitionCollection;
 
-            // 第一次导航
-            if (GetCurrentPageType() is null)
+            if (!isInitialized)
             {
-                NavigateTo(PageList[0], args.Parameter);
+                isInitialized = true;
+                await StoreSelector.InitializeStoreSelectorAsync(this);
             }
-            else
+
+            if (StoreSelector is not null && args.Parameter is List<string> dataList)
             {
-                if (args.Parameter is List<string> dataList)
-                {
-                    InitializeQueryLinksContent(dataList);
-                }
+                StoreControl = StoreControl.StoreSelector;
+                StoreSelector.UpdateData(dataList);
             }
         }
 
         #endregion 第一部分：重写父类事件
 
         #region 第二部分：应用商店页面——挂载的事件
-
-        /// <summary>
-        /// 点击选择器栏选中项发生变化时发生的事件
-        /// </summary>
-        private void OnSelectorBarSelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
-        {
-            SelectedItem = sender.SelectedItem;
-            int index = sender.Items.IndexOf(SelectedItem);
-            Type currentPage = GetCurrentPageType();
-            int currentIndex = PageList.FindIndex(item => Equals(item, currentPage));
-
-            if (index is 0)
-            {
-                if (currentPage is null)
-                {
-                    NavigateTo(PageList[0]);
-                }
-                else if (!Equals(currentPage, PageList[0]))
-                {
-                    NavigateTo(PageList[0], null, index > currentIndex);
-                }
-            }
-            else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
-            {
-                NavigateTo(PageList[1], null, index > currentIndex);
-            }
-        }
-
-        /// <summary>
-        /// 打开设置中的语言和区域
-        /// </summary>
-        private void OnLanguageAndRegionClicked(object sender, RoutedEventArgs args)
-        {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:regionformatting"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
-        }
-
-        /// <summary>
-        /// 了解应用具体的使用说明
-        /// </summary>
-        private void OnUseInstructionClicked(object sender, RoutedEventArgs args)
-        {
-            if (!StoreSplitView.IsPaneOpen)
-            {
-                StoreSplitView.IsPaneOpen = true;
-            }
-        }
-
-        /// <summary>
-        /// 导航完成后发生
-        /// </summary>
-        private void OnNavigated(object sender, NavigationEventArgs args)
-        {
-            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
-
-            if (index >= 0 && index < StoreSelectorBar.Items.Count)
-            {
-                SelectedItem = StoreSelectorBar.Items[index];
-            }
-        }
-
-        /// <summary>
-        /// 导航失败时发生
-        /// </summary>
-        private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
-        {
-            args.Handled = true;
-            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
-
-            if (index >= 0 && index < StoreSelectorBar.Items.Count)
-            {
-                SelectedItem = StoreSelectorBar.Items[index];
-            }
-
-            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(StorePage), nameof(OnNavigationFailed), 1, args.Exception);
-        }
 
         /// <summary>
         /// 关闭使用说明浮出栏
@@ -234,49 +144,22 @@ namespace GetStoreApp.Views.Pages
         #endregion 第二部分：应用商店页面——挂载的事件
 
         /// <summary>
-        /// 页面向前导航
+        /// 显示使用说明
         /// </summary>
-        public void NavigateTo(Type navigationPageType, object parameter = null, bool? slideDirection = null)
+        public void ShowUseInstruction()
         {
-            try
+            if (!StoreSplitView.IsPaneOpen)
             {
-                StoreFrame.ContentTransitions = slideDirection.HasValue ? slideDirection.Value ? RightSlideNavigationTransitionCollection : LeftSlideNavigationTransitionCollection : SuppressNavigationTransitionCollection;
-
-                // 导航到该项目对应的页面
-                StoreFrame.Navigate(navigationPageType, parameter);
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(StorePage), nameof(NavigateTo), 1, e);
+                StoreSplitView.IsPaneOpen = true;
             }
         }
 
         /// <summary>
-        /// 获取当前导航到的页
+        /// 获取当前选择的商店控件
         /// </summary>
-        public Type GetCurrentPageType()
+        private Visibility GetSelectedStoreControl(StoreControl selectedStoreControl, StoreControl comparedStoreControl)
         {
-            return StoreFrame.CurrentSourcePageType;
-        }
-
-        /// <summary>
-        /// 初始化查询链接内容
-        /// </summary>
-        public void InitializeQueryLinksContent(List<string> dataList)
-        {
-            if (!Equals(GetCurrentPageType(), PageList[0]))
-            {
-                NavigateTo(PageList[0], dataList, false);
-            }
-            else
-            {
-                if (StoreFrame.Content is QueryLinksPage queryLinksPage && dataList.Count is 3)
-                {
-                    queryLinksPage.SelectedType = Convert.ToInt32(dataList[0]) is -1 ? queryLinksPage.TypeList[0] : queryLinksPage.TypeList[Convert.ToInt32(dataList[0])];
-                    queryLinksPage.SelectedChannel = Convert.ToInt32(dataList[1]) is -1 ? queryLinksPage.ChannelList[3] : queryLinksPage.ChannelList[Convert.ToInt32(dataList[1])];
-                    queryLinksPage.LinkText = dataList[2] is "PlaceHolderText" ? string.Empty : dataList[2];
-                }
-            }
+            return Equals(selectedStoreControl, comparedStoreControl) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

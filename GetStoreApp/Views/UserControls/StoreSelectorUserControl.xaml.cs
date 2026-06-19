@@ -1,0 +1,681 @@
+﻿using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models;
+using GetStoreApp.Services.History;
+using GetStoreApp.Services.Root;
+using GetStoreApp.Views.NotificationTips;
+using GetStoreApp.Views.Pages;
+using GetStoreApp.Views.Windows;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.InteropServices.Marshalling;
+using System.Threading.Tasks;
+using Windows.System;
+using WinRT;
+
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
+
+namespace GetStoreApp.Views.UserControls
+{
+    /// <summary>
+    /// 商店选择器用户控件
+    /// </summary>
+    public partial class StoreSelectorUserControl : UserControl, INotifyPropertyChanged
+    {
+        private readonly string ExactSearchString = ResourceService.GetLocalized("StoreSelector/ExactSearch");
+        private readonly string FastString = ResourceService.GetLocalized("StoreSelector/Fast");
+        private readonly string ManifestSearchString = ResourceService.GetLocalized("StoreSelector/ManifestSearch");
+        private readonly string ProductIDString = ResourceService.GetLocalized("StoreSelector/ProductID");
+        private readonly string RetailString = ResourceService.GetLocalized("StoreSelector/Retail");
+        private readonly string RPString = ResourceService.GetLocalized("StoreSelector/RP");
+        private readonly string SampleTitleString = ResourceService.GetLocalized("StoreSelector/SampleTitle");
+        private readonly string SlowString = ResourceService.GetLocalized("StoreSelector/Slow");
+        private readonly string URLString = ResourceService.GetLocalized("StoreSelector/URL");
+        private bool isInitialized;
+        private string sampleLink;
+        private StorePage storePage;
+
+        private SelectorBarItem _selectedItem;
+
+        public SelectorBarItem SelectedItem
+        {
+            get { return _selectedItem; }
+
+            set
+            {
+                if (!Equals(_selectedItem, value))
+                {
+                    _selectedItem = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedItem)));
+                }
+            }
+        }
+
+        private TypeModel _selectedType;
+
+        public TypeModel SelectedType
+        {
+            get { return _selectedType; }
+
+            set
+            {
+                if (!Equals(_selectedType, value))
+                {
+                    _selectedType = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedType)));
+                }
+            }
+        }
+
+        private ChannelModel _selectedChannel;
+
+        public ChannelModel SelectedChannel
+        {
+            get { return _selectedChannel; }
+
+            set
+            {
+                if (!Equals(_selectedChannel, value))
+                {
+                    _selectedChannel = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedChannel)));
+                }
+            }
+        }
+
+        private string _linkPlaceHolderText = string.Empty;
+
+        public string LinkPlaceHolderText
+        {
+            get { return _linkPlaceHolderText; }
+
+            set
+            {
+                if (!string.Equals(_linkPlaceHolderText, value))
+                {
+                    _linkPlaceHolderText = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LinkPlaceHolderText)));
+                }
+            }
+        }
+
+        private string _queryLinksText = string.Empty;
+
+        public string QueryLinksText
+        {
+            get { return _queryLinksText; }
+
+            set
+            {
+                if (!string.Equals(_queryLinksText, value))
+                {
+                    _queryLinksText = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(QueryLinksText)));
+                }
+            }
+        }
+
+        private bool _isQueryingLinks;
+
+        public bool IsQueryingLinks
+        {
+            get { return _isQueryingLinks; }
+
+            set
+            {
+                if (!Equals(_isQueryingLinks, value))
+                {
+                    _isQueryingLinks = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsQueryingLinks)));
+                }
+            }
+        }
+
+        private bool _isQueryLinksResultVisible;
+
+        public bool IsQueryLinksResultVisible
+        {
+            get { return _isQueryLinksResultVisible; }
+
+            set
+            {
+                if (!Equals(_isQueryLinksResultVisible, value))
+                {
+                    _isQueryLinksResultVisible = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsQueryLinksResultVisible)));
+                }
+            }
+        }
+
+        private ComboBoxItemModel _selectedSearchType;
+
+        public ComboBoxItemModel SelectedSearchType
+        {
+            get { return _selectedSearchType; }
+
+            set
+            {
+                if (!Equals(_selectedSearchType, value))
+                {
+                    _selectedSearchType = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSearchType)));
+                }
+            }
+        }
+
+        private string _searchAppsText;
+
+        public string SearchAppsText
+        {
+            get { return _searchAppsText; }
+
+            set
+            {
+                if (!string.Equals(_searchAppsText, value))
+                {
+                    _searchAppsText = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchAppsText)));
+                }
+            }
+        }
+
+        private bool _isSearchingApps;
+
+        public bool IsSearchingApps
+        {
+            get { return _isSearchingApps; }
+
+            set
+            {
+                if (!Equals(_isSearchingApps, value))
+                {
+                    _isSearchingApps = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSearchingApps)));
+                }
+            }
+        }
+
+        private bool _isSearchAppsResultVisible;
+
+        public bool IsSearchAppsResultVisible
+        {
+            get { return _isSearchAppsResultVisible; }
+
+            set
+            {
+                if (!Equals(_isSearchAppsResultVisible, value))
+                {
+                    _isSearchAppsResultVisible = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSearchAppsResultVisible)));
+                }
+            }
+        }
+
+        private List<string> SampleLinkList { get; } = ["https://apps.microsoft.com/store/detail/9WZDNCRFJBMP", "9WZDNCRFJBMP",];
+
+        public List<TypeModel> TypeList { get; } = [];
+
+        public List<ChannelModel> ChannelList { get; } = [];
+
+        private List<ComboBoxItemModel> SearchTypeList { get; } = [];
+
+        private ObservableCollection<HistoryModel> QueryLinksHistoryCollection { get; } = [];
+
+        private ObservableCollection<HistoryModel> SearchAppsHistoryCollection { get; } = [];
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public StoreSelectorUserControl()
+        {
+            InitializeComponent();
+
+            TypeList.Add(new TypeModel
+            {
+                DisplayName = URLString,
+                InternalName = "url",
+                ShortName = "url"
+            });
+            TypeList.Add(new TypeModel
+            {
+                DisplayName = ProductIDString,
+                InternalName = "ProductId",
+                ShortName = "pid"
+            });
+
+            ChannelList.Add(new ChannelModel
+            {
+                DisplayName = FastString,
+                InternalName = "WIF",
+                ShortName = "wif"
+            });
+            ChannelList.Add(new ChannelModel
+            {
+                DisplayName = SlowString,
+                InternalName = "WIS",
+                ShortName = "wis"
+            });
+            ChannelList.Add(new ChannelModel
+            {
+                DisplayName = RPString,
+                InternalName = "RP",
+                ShortName = "rp"
+            });
+            ChannelList.Add(new ChannelModel
+            {
+                DisplayName = RetailString,
+                InternalName = "Retail",
+                ShortName = "rt"
+            });
+
+            SearchTypeList.Add(new ComboBoxItemModel() { SelectedValue = "ExactSearch", DisplayMember = ExactSearchString });
+            SearchTypeList.Add(new ComboBoxItemModel() { SelectedValue = "ManifestSearch", DisplayMember = ManifestSearchString });
+
+            SelectedType = TypeList[0];
+            SelectedChannel = ChannelList[3];
+            QueryLinksText = string.Empty;
+            sampleLink = SampleLinkList[0];
+            LinkPlaceHolderText = SampleTitleString + sampleLink;
+            SelectedSearchType = SearchTypeList[0];
+            SelectedItem = StoreSelectorBar.Items[0];
+        }
+
+        #region 第一部分：XamlUICommand 命令调用时挂载的事件
+
+        /// <summary>
+        /// 复制历史记录
+        /// </summary>
+        private async void OnCopyHistoryExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is HistoryModel history)
+            {
+                string copyHistory = await Task.Run(() =>
+                {
+                    return string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n", history.HistoryAppName, history.HistoryTypeName, history.HistoryChannelName, history.HistoryLink);
+                });
+
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyHistory);
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+            }
+        }
+
+        /// <summary>
+        /// 删除查询链接历史记录
+        /// </summary>
+        private void OnQueryLinksDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is HistoryModel history)
+            {
+                QueryLinksHistoryCollection.Remove(history);
+                HistoryStorageService.RemoveQueryLinksData(history.HistoryKey);
+
+                if (QueryLinksHistoryCollection.Count is 0)
+                {
+                    QueryLinksHistoryAutoSuggestBox.IsSuggestionListOpen = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 删除搜索应用历史记录
+        /// </summary>
+        private void OnSearchAppsDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is HistoryModel history)
+            {
+                SearchAppsHistoryCollection.Remove(history);
+                HistoryStorageService.RemoveSearchAppsData(history.HistoryKey);
+
+                if (SearchAppsHistoryCollection.Count is 0)
+                {
+                    SearchAppsHistoryAutoSuggestBox.IsSuggestionListOpen = false;
+                }
+            }
+        }
+
+        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+
+        #region 第二部分：商店选择器——挂载的事件
+
+        /// <summary>
+        /// 点击选择器栏选中项发生变化时发生的事件
+        /// </summary>
+        private void OnSelectorBarSelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+        {
+            SelectedItem = sender.SelectedItem;
+        }
+
+        /// <summary>
+        /// 打开设置中的语言和区域
+        /// </summary>
+        private void OnLanguageAndRegionClicked(object sender, RoutedEventArgs args)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("ms-settings:regionformatting"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 了解应用具体的使用说明
+        /// </summary>
+        private void OnUseInstructionClicked(object sender, RoutedEventArgs args)
+        {
+            storePage.ShowUseInstruction();
+        }
+
+        #endregion 第二部分：商店选择器——挂载的事件
+
+        #region 第三部分：查询链接控件——挂载的事件
+
+        /// <summary>
+        /// 清空查询链接输入的内容
+        /// </summary>
+        private void OnQueryLinksClearInputContentClicked(object sender, RoutedEventArgs args)
+        {
+            QueryLinksText = string.Empty;
+        }
+
+        /// <summary>
+        /// 显示查询链接结果
+        /// </summary>
+        private void OnQueryLinksShowResultClicked(object sender, RoutedEventArgs args)
+        {
+            // TODO：未完成
+        }
+
+        /// <summary>
+        /// 查询链接输入框获取焦点后触发的事件
+        /// </summary>
+        private void OnQueryLinksGotFocus(object sender, RoutedEventArgs args)
+        {
+            if (QueryLinksHistoryCollection.Count > 0 && sender.As<AutoSuggestBox>() is AutoSuggestBox autoSuggestBox)
+            {
+                autoSuggestBox.IsSuggestionListOpen = true;
+            }
+        }
+
+        /// <summary>
+        /// 查询链接输入框正在失去焦点时触发的事件
+        /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Button))]
+        private void OnQueryLinksLosingFocus(UIElement sender, LosingFocusEventArgs args)
+        {
+            if (args.NewFocusedElement is Button)
+            {
+                args.TryCancel();
+            }
+        }
+
+        /// <summary>
+        /// 查询链接输入框失去焦点后触发的事件
+        /// </summary>
+        private void OnQueryLinksLostFocus(object sender, RoutedEventArgs args)
+        {
+            if (sender.As<AutoSuggestBox>() is AutoSuggestBox autoSuggestBox)
+            {
+                autoSuggestBox.IsSuggestionListOpen = false;
+            }
+        }
+
+        /// <summary>
+        /// 当用户提交搜索查询时发生的事件
+        /// </summary>
+        private async void OnQueryLinksQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            if (!IsQueryingLinks && args.ChosenSuggestion is null)
+            {
+                await QueryLinksAsync();
+            }
+        }
+
+        /// <summary>
+        /// 在更新可编辑控件组件的文本内容之前引发的事件
+        /// </summary>
+        private void OnQueryLinksSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            if (!IsQueryingLinks && args.SelectedItem is HistoryModel history)
+            {
+                SelectedType = TypeList.Find(item => string.Equals(item.InternalName, history.HistoryType, StringComparison.OrdinalIgnoreCase));
+                SelectedChannel = ChannelList.Find(item => string.Equals(item.InternalName, history.HistoryChannel, StringComparison.OrdinalIgnoreCase));
+                QueryLinksText = history.HistoryLink;
+            }
+        }
+
+        /// <summary>
+        /// 查询链接输入框内容发生改变时响应的事件
+        /// </summary>
+        private void OnQueryLinksTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            QueryLinksText = sender.As<AutoSuggestBox>().Text;
+        }
+
+        /// <summary>
+        /// 类型修改选择后修改样例文本
+        /// </summary>
+        private void OnTypeSelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is TypeModel type && !Equals(SelectedType, type))
+            {
+                SelectedType = type;
+                sampleLink = SampleLinkList[TypeList.FindIndex(item => string.Equals(item.InternalName, SelectedType.InternalName))];
+                LinkPlaceHolderText = SampleTitleString + sampleLink;
+            }
+        }
+
+        /// <summary>
+        /// 通道选择修改
+        /// </summary>
+        private void OnChannelSelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ChannelModel channel && !Equals(SelectedChannel, channel))
+            {
+                SelectedChannel = channel;
+            }
+        }
+
+        /// <summary>
+        /// 查询链接
+        /// </summary>
+        private async void OnQueryLinksClicked(object sender, RoutedEventArgs args)
+        {
+            if (!IsQueryingLinks)
+            {
+                await QueryLinksAsync();
+            }
+        }
+
+        #endregion 第三部分：查询链接控件——挂载的事件
+
+        #region 第四部分：搜索应用控件——挂载的事件
+
+        /// <summary>
+        /// 选择搜索应用方式
+        /// </summary>
+        private void OnSearchTypeSelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel searchType && !Equals(SelectedSearchType, searchType))
+            {
+                SelectedSearchType = searchType;
+            }
+        }
+
+        /// <summary>
+        /// 清空搜索应用输入的内容
+        /// </summary>
+        private void OnSearchAppsClearInputContentClicked(object sender, RoutedEventArgs args)
+        {
+            SearchAppsText = string.Empty;
+        }
+
+        /// <summary>
+        /// 显示搜索应用结果
+        /// </summary>
+        private void OnSearchAppsShowResultClicked(object sender, RoutedEventArgs args)
+        {
+            // TODO：未完成
+        }
+
+        /// <summary>
+        /// 搜索应用输入框获取焦点后触发的事件
+        /// </summary>
+        private void OnSearchAppsGotFocus(object sender, RoutedEventArgs args)
+        {
+            if (SearchAppsHistoryCollection.Count > 0 && sender.As<AutoSuggestBox>() is AutoSuggestBox autoSuggestBox)
+            {
+                autoSuggestBox.IsSuggestionListOpen = true;
+            }
+        }
+
+        /// <summary>
+        /// 搜索应用输入框正在失去焦点时触发的事件
+        /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Button))]
+        private void OnSearchAppsLosingFocus(UIElement sender, LosingFocusEventArgs args)
+        {
+            if (args.NewFocusedElement is Button)
+            {
+                args.TryCancel();
+            }
+        }
+
+        /// <summary>
+        /// 搜索应用输入框失去焦点后触发的事件
+        /// </summary>
+        private void OnSearchAppsLostFocus(object sender, RoutedEventArgs args)
+        {
+            if (sender.As<AutoSuggestBox>() is AutoSuggestBox autoSuggestBox)
+            {
+                autoSuggestBox.IsSuggestionListOpen = false;
+            }
+        }
+
+        /// <summary>
+        /// 当用户提交搜索查询时发生的事件
+        /// </summary>
+        private async void OnSearchAppsQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            if (!IsSearchingApps && args.ChosenSuggestion is null)
+            {
+                await SearchAppsAsync();
+            }
+        }
+
+        /// <summary>
+        /// 在更新可编辑控件组件的文本内容之前引发的事件
+        /// </summary>
+        private void OnSearchAppsSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            if (!IsSearchingApps && args.SelectedItem is HistoryModel history && !string.IsNullOrEmpty(history.HistoryContent))
+            {
+                SearchAppsText = history.HistoryContent;
+            }
+        }
+
+        /// <summary>
+        /// 搜索应用文本框内容发生改变时响应的事件
+        /// </summary>
+        private void OnSearchAppsTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            SearchAppsText = sender.As<AutoSuggestBox>().Text;
+        }
+
+        /// <summary>
+        /// 搜索应用
+        /// </summary>
+        private async void OnSearchAppsClicked(object sender, RoutedEventArgs args)
+        {
+            await SearchAppsAsync();
+        }
+
+        #endregion 第四部分：搜索应用控件——挂载的事件
+
+        /// <summary>
+        /// 初始化商店选择器
+        /// </summary>
+        public async Task InitializeStoreSelectorAsync(StorePage storePageData)
+        {
+            if (!isInitialized)
+            {
+                isInitialized = true;
+                storePage = storePageData;
+
+                List<HistoryModel> queryLinksHistoryList = await Task.Run(HistoryStorageService.GetQueryLinksData);
+
+                QueryLinksHistoryCollection.Clear();
+
+                foreach (HistoryModel historyItem in queryLinksHistoryList)
+                {
+                    historyItem.HistoryTypeName = TypeList.Find(item => string.Equals(item.InternalName, historyItem.HistoryType, StringComparison.OrdinalIgnoreCase)) is TypeModel typeItem ? typeItem.DisplayName : string.Empty;
+                    historyItem.HistoryChannelName = ChannelList.Find(item => string.Equals(item.InternalName, historyItem.HistoryChannel, StringComparison.OrdinalIgnoreCase)) is ChannelModel channelItem ? channelItem.DisplayName : string.Empty;
+                    QueryLinksHistoryCollection.Add(historyItem);
+                }
+
+                HistoryStorageService.QueryLinksCleared += () =>
+                {
+                    DispatcherQueue.TryEnqueue(QueryLinksHistoryCollection.Clear);
+                };
+
+                HistoryStorageService.SearchAppsCleared += () =>
+                {
+                    DispatcherQueue.TryEnqueue(SearchAppsHistoryCollection.Clear);
+                };
+            }
+        }
+
+        /// <summary>
+        /// 更新数据
+        /// </summary>
+        public void UpdateData(List<string> dataList)
+        {
+            if (dataList.Count is 3)
+            {
+                SelectedItem = StoreSelectorBar.Items[0];
+                SelectedType = Convert.ToInt32(dataList[0]) is -1 ? TypeList[0] : TypeList[Convert.ToInt32(dataList[0])];
+                SelectedChannel = Convert.ToInt32(dataList[1]) is -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(dataList[1])];
+                QueryLinksText = dataList[2] is "PlaceHolderText" ? string.Empty : dataList[2];
+            }
+        }
+
+        /// <summary>
+        /// 获取商店选择器选择栏可使用状态
+        /// </summary>
+        private bool GetStoreSelectorBarIsEnabled(bool isQueryingLinks, bool isSearchingApps)
+        {
+            return !(isQueryingLinks || isSearchingApps);
+        }
+
+        /// <summary>
+        /// 获取选中项显示状态
+        /// </summary>
+        private Visibility GetSelectedItem(SelectorBarItem selectedItem, SelectorBarItem comparedSelectedItem)
+        {
+            return Equals(selectedItem, comparedSelectedItem) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// 查询链接
+        /// </summary>
+        private async Task QueryLinksAsync()
+        {
+        }
+
+        /// <summary>
+        /// 搜索应用
+        /// </summary>
+        private async Task SearchAppsAsync()
+        {
+        }
+    }
+}

@@ -1314,9 +1314,9 @@ namespace GetStoreApp.Views.Windows
             {
                 if (appLaunchArguments.SubParameters is not null && appLaunchArguments.SubParameters.Count is 3)
                 {
-                    if (GetFrameContent() is StorePage storePage)
+                    if (GetFrameContent() is StorePage storePage && storePage.StoreSelector is not null)
                     {
-                        storePage.InitializeQueryLinksContent(appLaunchArguments.SubParameters);
+                        storePage.StoreSelector.UpdateData(appLaunchArguments.SubParameters);
                     }
                     else
                     {
@@ -1426,9 +1426,9 @@ namespace GetStoreApp.Views.Windows
             // 从控制台启动
             else if (appLaunchArguments.AppLaunchKind is AppLaunchKind.Console)
             {
-                if (GetFrameContent() is StorePage storePage)
+                if (GetFrameContent() is StorePage storePage && storePage.StoreSelector is not null)
                 {
-                    storePage.InitializeQueryLinksContent(appLaunchArguments.SubParameters);
+                    storePage.StoreSelector.UpdateData(appLaunchArguments.SubParameters);
                 }
                 else
                 {
