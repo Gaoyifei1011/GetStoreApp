@@ -3,10 +3,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:model="using:GetStoreApp.Models"
-    xmlns:rootservice="using:GetStoreApp.Services.Root"
-    VerticalAlignment="Center">
+    xmlns:rootservice="using:GetStoreApp.Services.Root">
 
     <UserControl.Resources>
         <XamlUICommand x:Name="CopyHistoryCommand" ExecuteRequested="{x:Bind OnCopyHistoryExecuteRequested}" />
@@ -15,19 +13,67 @@
     </UserControl.Resources>
 
     <Grid
-        Margin="30,0,30,100"
+        Margin="30,0,30,85"
         VerticalAlignment="Center"
-        RowSpacing="10"
-        Visibility="Visible">
+        RowSpacing="6">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
+        <Grid
+            Grid.Row="0"
+            HorizontalAlignment="Center"
+            ColumnSpacing="10"
+            Visibility="{x:Bind GetSelectedItem(SelectedItem, StoreSelectorBar.Items[0]), Mode=OneWay}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Image
+                Grid.Column="0"
+                Width="40"
+                Source="ms-appx:///Assets/Store/QueryLinks.png"
+                Visibility="Visible" />
+
+            <TextBlock
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontSize="22"
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/QueryLinksDescription')}" />
+        </Grid>
+
+        <Grid
+            Grid.Row="0"
+            HorizontalAlignment="Center"
+            ColumnSpacing="10"
+            Visibility="{x:Bind GetSelectedItem(SelectedItem, StoreSelectorBar.Items[1]), Mode=OneWay}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Image
+                Grid.Column="0"
+                Width="40"
+                Source="ms-appx:///Assets/Store/SearchApps.png"
+                Visibility="Visible" />
+
+            <TextBlock
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontSize="22"
+                Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/SearchAppsDescription')}" />
+        </Grid>
 
         <!--  商店应用控制栏  -->
         <Grid
-            Grid.Row="0"
+            Grid.Row="1"
             HorizontalAlignment="Center"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
@@ -58,8 +104,8 @@
 
         <!--  查询链接控件  -->
         <Grid
-            Grid.Row="1"
-            Height="180"
+            Grid.Row="2"
+            Height="160"
             MaxWidth="800"
             Padding="8"
             Background="{ThemeResource LayerFillColorDefaultBrush}"
@@ -73,15 +119,159 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Image Grid.Column="0" Source="ms-appx:///Assets/Store/QueryLinks.png" />
-
             <Grid Grid.Column="1" RowSpacing="5">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0">
+                <AutoSuggestBox
+                    x:Name="QueryLinksHistoryAutoSuggestBox"
+                    Grid.Row="0"
+                    AutoMaximizeSuggestionArea="True"
+                    GotFocus="{x:Bind OnQueryLinksGotFocus}"
+                    IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}"
+                    ItemContainerStyle="{StaticResource AutoSuggestBoxListViewItemStyle}"
+                    ItemsSource="{x:Bind QueryLinksHistoryCollection}"
+                    LosingFocus="{x:Bind OnQueryLinksLosingFocus}"
+                    LostFocus="{x:Bind OnQueryLinksLostFocus}"
+                    MaxSuggestionListHeight="186"
+                    PlaceholderText="{x:Bind LinkPlaceHolderText, Mode=OneWay}"
+                    QuerySubmitted="{x:Bind OnQueryLinksQuerySubmitted}"
+                    Style="{StaticResource AutoSuggestBoxStyle}"
+                    SuggestionChosen="{x:Bind OnQueryLinksSuggestionChosen}"
+                    Text="{x:Bind QueryLinksText, Mode=OneWay}"
+                    TextChanged="{x:Bind OnQueryLinksTextChanged}"
+                    UpdateTextOnSelect="False">
+
+                    <AutoSuggestBox.TextBoxStyle>
+                        <Style BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}" TargetType="TextBox">
+                            <Setter Property="TextWrapping" Value="Wrap" />
+                        </Style>
+                    </AutoSuggestBox.TextBoxStyle>
+
+                    <AutoSuggestBox.ItemTemplate>
+                        <DataTemplate x:DataType="model:HistoryModel">
+                            <Grid Height="60" Background="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid
+                                    Grid.Column="0"
+                                    Width="30"
+                                    Height="30"
+                                    Margin="0,0,8,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="{ThemeResource CardStrokeColorDefaultBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="{StaticResource ControlCornerRadius}">
+
+                                    <FontIcon FontSize="16" Glyph="&#xE81C;" />
+                                </Grid>
+
+                                <StackPanel
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+
+                                    <TextBlock
+                                        HorizontalAlignment="Left"
+                                        Style="{StaticResource BodyTextBlockStyle}"
+                                        Text="{x:Bind HistoryAppName}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap" />
+
+                                    <TextBlock
+                                        HorizontalAlignment="Left"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <Run Text="{x:Bind HistoryTypeName}" />
+                                        <Run Text=" | " />
+                                        <Run Text="{x:Bind HistoryChannelName}" />
+                                        <Run Text=" | " />
+                                        <Run Text="{x:Bind HistoryLink}" />
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <Button
+                                    Grid.Column="2"
+                                    Width="32"
+                                    Height="32"
+                                    Margin="3,0,0,0"
+                                    Padding="0"
+                                    VerticalAlignment="Center"
+                                    Command="{StaticResource CopyHistoryCommand}"
+                                    CommandParameter="{x:Bind}"
+                                    CornerRadius="{StaticResource ControlCornerRadius}"
+                                    IsEnabled="{x:Bind IsQuerying.Equals(x:False), Mode=OneWay}"
+                                    Style="{StaticResource AlternateCloseButtonStyle}"
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/CopyHistory')}">
+
+                                    <FontIcon
+                                        Margin="4"
+                                        FontSize="16"
+                                        Glyph="&#xE8C8;" />
+                                </Button>
+
+                                <Button
+                                    Grid.Column="3"
+                                    Width="32"
+                                    Height="32"
+                                    Margin="3,0,3,0"
+                                    Padding="0"
+                                    VerticalAlignment="Center"
+                                    Command="{StaticResource QueryLinksDeleteCommand}"
+                                    CommandParameter="{x:Bind}"
+                                    CornerRadius="{StaticResource ControlCornerRadius}"
+                                    IsEnabled="{x:Bind IsQuerying.Equals(x:False), Mode=OneWay}"
+                                    Style="{StaticResource AlternateCloseButtonStyle}"
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/Delete')}">
+
+                                    <FontIcon
+                                        Margin="4"
+                                        FontSize="16"
+                                        Glyph="&#xE711;" />
+                                </Button>
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip>
+                                        <StackPanel>
+                                            <TextBlock>
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/HistoryAppName')}" />
+                                                <Run Text="{x:Bind HistoryAppName}" />
+                                            </TextBlock>
+
+                                            <TextBlock>
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/HistoryType')}" />
+                                                <Run Text="{x:Bind HistoryTypeName}" />
+                                            </TextBlock>
+
+                                            <TextBlock>
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/HistoryChannel')}" />
+                                                <Run Text="{x:Bind HistoryChannelName}" />
+                                            </TextBlock>
+
+                                            <TextBlock>
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/HistoryLink')}" />
+                                                <Run Text="{x:Bind HistoryLink}" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </Grid>
+                        </DataTemplate>
+                    </AutoSuggestBox.ItemTemplate>
+                </AutoSuggestBox>
+
+                <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
@@ -219,27 +409,53 @@
                         <FontIcon FontSize="16" Glyph="&#xE8BC;" />
                     </Button>
                 </Grid>
+            </Grid>
+        </Grid>
+
+        <!--  搜索应用控件  -->
+        <Grid
+            Grid.Row="2"
+            Width="800"
+            Height="160"
+            Padding="8"
+            Background="{ThemeResource LayerFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="{ThemeResource ControlCornerRadius}"
+            Visibility="{x:Bind GetSelectedItem(SelectedItem, StoreSelectorBar.Items[1]), Mode=OneWay}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="1" RowSpacing="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
                 <AutoSuggestBox
-                    x:Name="QueryLinksHistoryAutoSuggestBox"
-                    Grid.Row="1"
-                    GotFocus="{x:Bind OnQueryLinksGotFocus}"
-                    IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}"
+                    x:Name="SearchAppsHistoryAutoSuggestBox"
+                    Grid.Row="0"
+                    AutoMaximizeSuggestionArea="True"
+                    GotFocus="{x:Bind OnSearchAppsGotFocus}"
+                    IsEnabled="{x:Bind IsSearchingApps.Equals(x:False), Mode=OneWay}"
                     ItemContainerStyle="{StaticResource AutoSuggestBoxListViewItemStyle}"
-                    ItemsSource="{x:Bind QueryLinksHistoryCollection}"
-                    LosingFocus="{x:Bind OnQueryLinksLosingFocus}"
-                    LostFocus="{x:Bind OnQueryLinksLostFocus}"
+                    ItemsSource="{x:Bind SearchAppsHistoryCollection}"
+                    LosingFocus="{x:Bind OnSearchAppsLosingFocus}"
+                    LostFocus="{x:Bind OnSearchAppsLostFocus}"
                     MaxSuggestionListHeight="186"
-                    PlaceholderText="{x:Bind LinkPlaceHolderText, Mode=OneWay}"
-                    QuerySubmitted="{x:Bind OnQueryLinksQuerySubmitted}"
+                    PlaceholderText="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/SearchPlaceHolderText')}"
+                    QuerySubmitted="{x:Bind OnSearchAppsQuerySubmitted}"
                     Style="{StaticResource AutoSuggestBoxStyle}"
-                    SuggestionChosen="{x:Bind OnQueryLinksSuggestionChosen}"
-                    Text="{x:Bind QueryLinksText, Mode=OneWay}"
-                    TextChanged="{x:Bind OnQueryLinksTextChanged}"
+                    SuggestionChosen="{x:Bind OnSearchAppsSuggestionChosen}"
+                    Text="{x:Bind SearchAppsText, Mode=OneWay}"
+                    TextChanged="{x:Bind OnSearchAppsTextChanged}"
                     UpdateTextOnSelect="False">
 
                     <AutoSuggestBox.TextBoxStyle>
-                        <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+                        <Style BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}" TargetType="TextBox">
                             <Setter Property="TextWrapping" Value="Wrap" />
                         </Style>
                     </AutoSuggestBox.TextBoxStyle>
@@ -250,7 +466,6 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
@@ -268,61 +483,19 @@
                                     <FontIcon FontSize="16" Glyph="&#xE81C;" />
                                 </Grid>
 
-                                <StackPanel
+                                <TextBlock
                                     Grid.Column="1"
                                     VerticalAlignment="Center"
-                                    Orientation="Vertical">
-
-                                    <TextBlock
-                                        HorizontalAlignment="Left"
-                                        Style="{StaticResource BodyTextBlockStyle}"
-                                        Text="{x:Bind HistoryAppName}"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap" />
-
-                                    <TextBlock
-                                        HorizontalAlignment="Left"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                        Style="{StaticResource CaptionTextBlockStyle}"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
-
-                                        <Run Text="{x:Bind HistoryTypeName}" />
-                                        <Run Text=" | " />
-                                        <Run Text="{x:Bind HistoryChannelName}" />
-                                        <Run Text=" | " />
-                                        <Run Text="{x:Bind HistoryLink}" />
-                                    </TextBlock>
-                                </StackPanel>
+                                    Text="{x:Bind HistoryContent}" />
 
                                 <Button
                                     Grid.Column="2"
                                     Width="32"
                                     Height="32"
-                                    Margin="3,0,0,0"
-                                    Padding="0"
-                                    VerticalAlignment="Center"
-                                    Command="{StaticResource CopyHistoryCommand}"
-                                    CommandParameter="{x:Bind}"
-                                    CornerRadius="{StaticResource ControlCornerRadius}"
-                                    IsEnabled="{x:Bind IsQuerying.Equals(x:False), Mode=OneWay}"
-                                    Style="{StaticResource AlternateCloseButtonStyle}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/CopyHistory')}">
-
-                                    <FontIcon
-                                        Margin="4"
-                                        FontSize="16"
-                                        Glyph="&#xE8C8;" />
-                                </Button>
-
-                                <Button
-                                    Grid.Column="3"
-                                    Width="32"
-                                    Height="32"
                                     Margin="3,0,3,0"
                                     Padding="0"
                                     VerticalAlignment="Center"
-                                    Command="{StaticResource QueryLinksDeleteCommand}"
+                                    Command="{StaticResource SearchAppsDeleteCommand}"
                                     CommandParameter="{x:Bind}"
                                     CornerRadius="{StaticResource ControlCornerRadius}"
                                     IsEnabled="{x:Bind IsQuerying.Equals(x:False), Mode=OneWay}"
@@ -339,23 +512,8 @@
                                     <ToolTip>
                                         <StackPanel>
                                             <TextBlock>
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/HistoryAppName')}" />
-                                                <Run Text="{x:Bind HistoryAppName}" />
-                                            </TextBlock>
-
-                                            <TextBlock>
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/HistoryType')}" />
-                                                <Run Text="{x:Bind HistoryTypeName}" />
-                                            </TextBlock>
-
-                                            <TextBlock>
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/HistoryChannel')}" />
-                                                <Run Text="{x:Bind HistoryChannelName}" />
-                                            </TextBlock>
-
-                                            <TextBlock>
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/HistoryLink')}" />
-                                                <Run Text="{x:Bind HistoryLink}" />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/HistoryContent')}" />
+                                                <Run Text="{x:Bind HistoryContent}" />
                                             </TextBlock>
                                         </StackPanel>
                                     </ToolTip>
@@ -364,35 +522,8 @@
                         </DataTemplate>
                     </AutoSuggestBox.ItemTemplate>
                 </AutoSuggestBox>
-            </Grid>
-        </Grid>
 
-        <!--  搜索应用控件  -->
-        <Grid
-            Grid.Row="1"
-            Width="800"
-            Height="180"
-            Padding="8"
-            Background="{ThemeResource LayerFillColorDefaultBrush}"
-            BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
-            BorderThickness="1"
-            CornerRadius="{ThemeResource ControlCornerRadius}"
-            Visibility="{x:Bind GetSelectedItem(SelectedItem, StoreSelectorBar.Items[1]), Mode=OneWay}">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Image Grid.Column="0" Source="ms-appx:///Assets/Store/SearchApps.png" />
-
-            <Grid Grid.Column="1" RowSpacing="5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0">
+                <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -519,93 +650,6 @@
                         <FontIcon FontSize="16" Glyph="&#xE8BC;" />
                     </Button>
                 </Grid>
-
-                <AutoSuggestBox
-                    x:Name="SearchAppsHistoryAutoSuggestBox"
-                    Grid.Row="1"
-                    GotFocus="{x:Bind OnSearchAppsGotFocus}"
-                    IsEnabled="{x:Bind IsSearchingApps.Equals(x:False), Mode=OneWay}"
-                    ItemContainerStyle="{StaticResource AutoSuggestBoxListViewItemStyle}"
-                    ItemsSource="{x:Bind SearchAppsHistoryCollection}"
-                    LosingFocus="{x:Bind OnSearchAppsLosingFocus}"
-                    LostFocus="{x:Bind OnSearchAppsLostFocus}"
-                    MaxSuggestionListHeight="186"
-                    PlaceholderText="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/SearchPlaceHolderText')}"
-                    QuerySubmitted="{x:Bind OnSearchAppsQuerySubmitted}"
-                    Style="{StaticResource AutoSuggestBoxStyle}"
-                    SuggestionChosen="{x:Bind OnSearchAppsSuggestionChosen}"
-                    Text="{x:Bind SearchAppsText, Mode=OneWay}"
-                    TextChanged="{x:Bind OnSearchAppsTextChanged}"
-                    UpdateTextOnSelect="False">
-
-                    <AutoSuggestBox.TextBoxStyle>
-                        <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
-                            <Setter Property="TextWrapping" Value="Wrap" />
-                        </Style>
-                    </AutoSuggestBox.TextBoxStyle>
-
-                    <AutoSuggestBox.ItemTemplate>
-                        <DataTemplate x:DataType="model:HistoryModel">
-                            <Grid Height="60" Background="Transparent">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-
-                                <Grid
-                                    Grid.Column="0"
-                                    Width="30"
-                                    Height="30"
-                                    Margin="0,0,8,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Background="{ThemeResource CardStrokeColorDefaultBrush}"
-                                    BorderThickness="1"
-                                    CornerRadius="{StaticResource ControlCornerRadius}">
-
-                                    <FontIcon FontSize="16" Glyph="&#xE81C;" />
-                                </Grid>
-
-                                <TextBlock
-                                    Grid.Column="1"
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind HistoryContent}" />
-
-                                <Button
-                                    Grid.Column="2"
-                                    Width="32"
-                                    Height="32"
-                                    Margin="3,0,3,0"
-                                    Padding="0"
-                                    VerticalAlignment="Center"
-                                    Command="{StaticResource SearchAppsDeleteCommand}"
-                                    CommandParameter="{x:Bind}"
-                                    CornerRadius="{StaticResource ControlCornerRadius}"
-                                    IsEnabled="{x:Bind IsQuerying.Equals(x:False), Mode=OneWay}"
-                                    Style="{StaticResource AlternateCloseButtonStyle}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/Delete')}">
-
-                                    <FontIcon
-                                        Margin="4"
-                                        FontSize="16"
-                                        Glyph="&#xE711;" />
-                                </Button>
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip>
-                                        <StackPanel>
-                                            <TextBlock>
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/HistoryContent')}" />
-                                                <Run Text="{x:Bind HistoryContent}" />
-                                            </TextBlock>
-                                        </StackPanel>
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                            </Grid>
-                        </DataTemplate>
-                    </AutoSuggestBox.ItemTemplate>
-                </AutoSuggestBox>
             </Grid>
         </Grid>
     </Grid>

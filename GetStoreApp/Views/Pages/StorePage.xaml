@@ -18,21 +18,9 @@
         PanePlacement="Right">
 
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <TextBlock
-                Grid.Row="0"
-                Margin="30,10,30,0"
-                FontSize="22"
-                Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/MicrosoftStore')}" />
-
             <!--  商店选择器用户控件  -->
             <usercontrol:StoreSelectorUserControl
                 x:Name="StoreSelector"
-                Grid.Row="1"
                 x:FieldModifier="public"
                 Visibility="{x:Bind GetSelectedStoreControl(StoreControl, enum:StoreControl.StoreSelector), Mode=OneWay}" />
         </Grid>

@@ -62,11 +62,11 @@
                                 BorderBrush="{ThemeResource AutoSuggestBoxSuggestionsListBorderBrush}"
                                 BorderThickness="{ThemeResource AutoSuggestListBorderThemeThickness}"
                                 CornerRadius="{ThemeResource OverlayCornerRadius}">
-                                <!--<Border.RenderTransform />-->
+                                <Border.RenderTransform />
                                 <Grid>
                                     <SystemBackdropElement
                                         Margin="-2"
-                                        CornerRadius="0,0,8,8"
+                                        CornerRadius="{ThemeResource OverlayCornerRadius}"
                                         SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
                                     <ListView
                                         x:Name="SuggestionsList"

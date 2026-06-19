@@ -10,7 +10,6 @@
   "DownloadSettings": "下载设置",
   "LaunchParameters": "启动参数",
   "LaunchParametersDescription": "桌面应用程序现在已经开始支持参数运行了，具体的使用方法请点击下方的参数说明",
-  "MicrosoftStore": "微软商店",
   "PaidApps": "付费应用",
   "PaidAppsDescription": "微软在 Windows 系统中对付费应用的运行进行了限制，没有购买的付费应用是不能通过离线安装包安装后正常运行的。如果您有已经购买的付费应用，请从 Microsoft Store 中下载",
   "QueryLinksHelp1": "应用打开后，选择您要获取的链接类型和通道类型。选择完成后，输入您要获取的链接内容，输入完成后，点击‘获取链接’按钮即可获取到商店链接对应的应用安装包。在成功获取后，您的输入记录将被储存，下一次打开应用后就可以快速获取到商店链接对应的应用安装包",
