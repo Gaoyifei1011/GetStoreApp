@@ -16,7 +16,7 @@ namespace GetStoreApp.Services.History
     public static class HistoryStorageService
     {
         private const string QueryLinks = "QueryLinks";
-        private const string SearchStore = "SearchStore";
+        private const string SearchApps = "SearchApps";
         private const string CreateTimeStamp = "CreateTimeStamp";
         private const string HistoryKey = "HistoryKey";
         private const string HistoryAppName = "HistoryAppName";
@@ -28,7 +28,7 @@ namespace GetStoreApp.Services.History
         private static readonly Lock historyStorageLock = new();
         private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.GetDefault().LocalSettings;
         private static ApplicationDataContainer queryLinksContainer;
-        private static ApplicationDataContainer searchStoreContainer;
+        private static ApplicationDataContainer searchAppsContainer;
 
         private static List<TypeModel> TypeList { get; } =
         [
@@ -46,7 +46,7 @@ namespace GetStoreApp.Services.History
 
         public static event Action QueryLinksCleared;
 
-        public static event Action SearchStoreCleared;
+        public static event Action SearchAppsCleared;
 
         /// <summary>
         /// 初始化历史记录存储服务
@@ -54,7 +54,7 @@ namespace GetStoreApp.Services.History
         public static void Initialize()
         {
             queryLinksContainer = localSettingsContainer.CreateContainer(QueryLinks, ApplicationDataCreateDisposition.Always);
-            searchStoreContainer = localSettingsContainer.CreateContainer(SearchStore, ApplicationDataCreateDisposition.Always);
+            searchAppsContainer = localSettingsContainer.CreateContainer(SearchApps, ApplicationDataCreateDisposition.Always);
         }
 
         /// <summary>
@@ -106,26 +106,26 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 获取搜索应用历史记录数据
         /// </summary>
-        public static List<HistoryModel> GetSearchStoreData()
+        public static List<HistoryModel> GetSearchAppsData()
         {
-            List<HistoryModel> searchStoreHistoryList = [];
+            List<HistoryModel> searchAppsHistoryList = [];
 
             historyStorageLock.Enter();
 
             try
             {
-                if (searchStoreContainer is not null)
+                if (searchAppsContainer is not null)
                 {
-                    foreach (KeyValuePair<string, object> searchStoreContainerItem in searchStoreContainer.Values)
+                    foreach (KeyValuePair<string, object> searchAppsContainerItem in searchAppsContainer.Values)
                     {
-                        if (searchStoreContainerItem.Key.Length is 32 && searchStoreContainerItem.Value.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
+                        if (searchAppsContainerItem.Key.Length is 32 && searchAppsContainerItem.Value.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                         {
                             TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryType"] as string, StringComparison.OrdinalIgnoreCase));
                             ChannelModel channelItem = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryChannel"] as string, StringComparison.OrdinalIgnoreCase));
 
-                            searchStoreHistoryList.Add(new HistoryModel()
+                            searchAppsHistoryList.Add(new HistoryModel()
                             {
-                                HistoryKey = searchStoreContainerItem.Key,
+                                HistoryKey = searchAppsContainerItem.Key,
                                 CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
                                 HistoryContent = Convert.ToString(compositeValue[HistoryContent]),
                             });
@@ -135,15 +135,15 @@ namespace GetStoreApp.Services.History
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(GetSearchStoreData), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(GetSearchAppsData), 1, e);
             }
             finally
             {
                 historyStorageLock.Exit();
             }
 
-            searchStoreHistoryList.Sort((item1, item2) => item2.CreateTimeStamp.CompareTo(item1.CreateTimeStamp));
-            return searchStoreHistoryList;
+            searchAppsHistoryList.Sort((item1, item2) => item2.CreateTimeStamp.CompareTo(item1.CreateTimeStamp));
+            return searchAppsHistoryList;
         }
 
         /// <summary>
@@ -180,15 +180,15 @@ namespace GetStoreApp.Services.History
         }
 
         /// <summary>
-        /// 存储搜索商店历史记录数据
+        /// 存储搜索应用历史记录数据
         /// </summary>
-        public static void SaveSearchStoreData(List<HistoryModel> searchStoreHistoryList)
+        public static void SaveSearchAppsData(List<HistoryModel> searchAppsHistoryList)
         {
             historyStorageLock.Enter();
 
             try
             {
-                foreach (HistoryModel historyItem in searchStoreHistoryList)
+                foreach (HistoryModel historyItem in searchAppsHistoryList)
                 {
                     Windows.Storage.ApplicationDataCompositeValue compositeValue = new()
                     {
@@ -196,12 +196,12 @@ namespace GetStoreApp.Services.History
                         [HistoryContent] = historyItem.HistoryContent
                     };
 
-                    searchStoreContainer.Values[historyItem.HistoryKey] = compositeValue;
+                    searchAppsContainer.Values[historyItem.HistoryKey] = compositeValue;
                 }
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(SaveSearchStoreData), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(SaveSearchAppsData), 1, e);
             }
             finally
             {
@@ -222,10 +222,14 @@ namespace GetStoreApp.Services.History
         }
 
         /// <summary>
-        /// 更新搜索商店历史记录数据
+        /// 更新搜索应用历史记录数据
         /// </summary>
-        public static void UpdateSearchStoreData(HistoryModel historyItem)
+        public static void UpdateSearchAppsData(HistoryModel historyItem)
         {
+            if (searchAppsContainer.Values.TryGetValue(historyItem.HistoryKey, out object compositeValueObj) && compositeValueObj.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
+            {
+                compositeValue[CreateTimeStamp] = historyItem.CreateTimeStamp;
+            }
         }
 
         /// <summary>
@@ -253,19 +257,19 @@ namespace GetStoreApp.Services.History
         }
 
         /// <summary>
-        /// 移除查询链接记录数据
+        /// 移除搜索应用记录数据
         /// </summary>
-        public static void RemoveSearchStoreData(string historyKey)
+        public static void RemoveSearchAppsData(string historyKey)
         {
             historyStorageLock.Enter();
 
             try
             {
-                searchStoreContainer.Values.Remove(historyKey);
+                searchAppsContainer.Values.Remove(historyKey);
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(RemoveSearchStoreData), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(RemoveSearchAppsData), 1, e);
             }
             finally
             {
@@ -284,8 +288,8 @@ namespace GetStoreApp.Services.History
             {
                 queryLinksContainer.Values.Clear();
                 QueryLinksCleared?.Invoke();
-                searchStoreContainer.Values.Clear();
-                SearchStoreCleared?.Invoke();
+                searchAppsContainer.Values.Clear();
+                SearchAppsCleared?.Invoke();
                 return true;
             }
             catch (Exception e)

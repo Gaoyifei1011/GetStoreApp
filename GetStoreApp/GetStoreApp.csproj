@@ -172,7 +172,7 @@
     <Content Include="Assets\StoreLogo.scale-200.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\StoreLogo.scale-400.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Store\QueryLinks.png" CopyToOutputDirectory="Always" />
-    <Content Include="Assets\Store\SearchStore.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Store\SearchApps.png" CopyToOutputDirectory="Always" />
     
     <Content Remove="Assets\GetStoreApp.ico" />
     <Content Remove="Assets\Embed\cookie.xml" />
@@ -387,6 +387,7 @@
     <None Remove="Views\Pages\WinGetPage.xaml" />
     <None Remove="Views\Pages\WinGetSearchPage.xaml" />
     <None Remove="Views\Pages\WinGetUpgradePage.xaml" />
+    <None Remove="Views\UserControls\StoreSelectorUserControl.xaml" />
     <None Remove="Views\Windows\MainWindow.xaml" />
     <None Remove="MainApp.xaml" />
 
@@ -453,6 +454,7 @@
     <Page Update="Views\Pages\WinGetPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\WinGetSearchPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\WinGetUpgradePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\UserControls\StoreSelectorUserControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Windows\MainWindow.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Remove="MainApp.xaml" />
     
@@ -485,6 +487,7 @@
     <PRIResource Include="Strings\en-us\SettingsWinGetSource.resjson" />
     <PRIResource Include="Strings\en-us\ShellMenu.resjson" />
     <PRIResource Include="Strings\en-us\Store.resjson" />
+    <PRIResource Include="Strings\en-us\StoreSelector.resjson" />
     <PRIResource Include="Strings\en-us\WebView.resjson" />
     <PRIResource Include="Strings\en-us\Window.resjson" />
     <PRIResource Include="Strings\en-us\WinGet.resjson" />
@@ -522,6 +525,7 @@
     <PRIResource Include="Strings\he-il\SettingsWinGetSource.resjson" />
     <PRIResource Include="Strings\he-il\ShellMenu.resjson" />
     <PRIResource Include="Strings\he-il\Store.resjson" />
+    <PRIResource Include="Strings\he-il\StoreSelector.resjson" />
     <PRIResource Include="Strings\he-il\WebView.resjson" />
     <PRIResource Include="Strings\he-il\Window.resjson" />
     <PRIResource Include="Strings\he-il\WinGet.resjson" />
@@ -559,6 +563,7 @@
     <PRIResource Include="Strings\ru-ru\SettingsWinGetSource.resjson" />
     <PRIResource Include="Strings\ru-ru\ShellMenu.resjson" />
     <PRIResource Include="Strings\ru-ru\Store.resjson" />
+    <PRIResource Include="Strings\ru-ru\StoreSelector.resjson" />
     <PRIResource Include="Strings\ru-ru\WebView.resjson" />
     <PRIResource Include="Strings\ru-ru\Window.resjson" />
     <PRIResource Include="Strings\ru-ru\WinGet.resjson" />
@@ -582,6 +587,7 @@
     <PRIResource Include="Strings\zh-hans\Pinner.resjson" />
     <PRIResource Include="Strings\zh-hans\QueryLinks.resjson" />
     <PRIResource Include="Strings\zh-hans\Resources.resjson" />
+    <PRIResource Include="Strings\zh-hans\StoreSelector.resjson" />
     <PRIResource Include="Strings\zh-hans\SearchStore.resjson" />
     <PRIResource Include="Strings\zh-hans\Settings.resjson" />
     <PRIResource Include="Strings\zh-hans\SettingsAbout.resjson" />
