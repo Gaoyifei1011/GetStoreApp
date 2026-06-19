@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
+using Windows.Storage.Streams;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
@@ -16,7 +17,8 @@ namespace GetStoreApp.Helpers.Store
     /// </summary>
     public static partial class HtmlRequestHelper
     {
-        private static readonly Uri API = new("https://store.rg-adguard.net/api/GetFiles");
+        private static readonly string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36 Edg/149.0.0.0";
+        private static readonly Uri apiUri = new("https://store.rg-adguard.net/api/GetFiles");
 
         [GeneratedRegex("[\r\n]")]
         private static partial Regex WhiteSpaceRegex { get; }
@@ -38,7 +40,7 @@ namespace GetStoreApp.Helpers.Store
 
             try
             {
-                HttpStringContent httpStringContent = new(content);
+                HttpStringContent httpStringContent = new(content, UnicodeEncoding.Utf8);
                 httpStringContent.TryComputeLength(out ulong length);
                 httpStringContent.Headers.Expires = DateTimeOffset.Now;
                 httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/x-www-form-urlencoded");
@@ -47,7 +49,12 @@ namespace GetStoreApp.Helpers.Store
 
                 // 默认超时时间是 20 秒
                 HttpClient httpClient = new();
-                HttpRequestResult httpRequestResult = await httpClient.TryPostAsync(API, httpStringContent);
+                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                httpClient.DefaultRequestHeaders.Referer = apiUri;
+                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", apiUri.AbsolutePath);
+
+                HttpRequestResult httpRequestResult = await httpClient.TryPostAsync(apiUri, httpStringContent);
+
                 httpClient.Dispose();
 
                 // 请求成功

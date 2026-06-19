@@ -26,6 +26,7 @@ namespace GetStoreApp.Services.Download
         private static readonly string aria2FilePath = Path.Combine(InfoHelper.AppInstalledLocation, "Mile.Aria2.exe");
         private static readonly string defaultAria2Arguments = "-c --enable-rpc=true --rpc-allow-origin-all=true --rpc-listen-all=true --rpc-listen-port=6300 --stop-with-process={0} -D";
         private static readonly string rpcServerLink = "http://127.0.0.1:6300/jsonrpc";
+        private static readonly string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36 Edg/149.0.0.0";
         private static string aria2Arguments;
         private static ThreadPoolTimer aria2Timer;
 
@@ -119,11 +120,18 @@ namespace GetStoreApp.Services.Download
 
                 string versionString = jsonObject.Stringify();
                 byte[] contentBytes = Encoding.UTF8.GetBytes(versionString);
-                HttpStringContent httpStringContent = new(versionString);
+
+                Uri rpcServerLinkUri = new(rpcServerLink);
+                HttpStringContent httpStringContent = new(versionString, Windows.Storage.Streams.UnicodeEncoding.Utf8);
                 httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
+
                 HttpClient httpClient = new();
-                HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
+                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
+                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
+
+                HttpResponseMessage response = await httpClient.PostAsync(rpcServerLinkUri, httpStringContent);
                 return response.IsSuccessStatusCode;
             }
             catch (Exception e)
@@ -163,10 +171,17 @@ namespace GetStoreApp.Services.Download
 
                         string createDownloadString = jsonObject.Stringify();
                         byte[] contentBytes = Encoding.UTF8.GetBytes(createDownloadString);
-                        HttpStringContent httpStringContent = new(createDownloadString);
+
+                        Uri rpcServerLinkUri = new(rpcServerLink);
+                        HttpStringContent httpStringContent = new(createDownloadString, Windows.Storage.Streams.UnicodeEncoding.Utf8);
                         httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
                         httpStringContent.Headers.ContentType.CharSet = "utf-8";
+
                         HttpClient httpClient = new();
+                        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                        httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
+                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
+
                         HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
 
                         // 请求成功
@@ -236,10 +251,17 @@ namespace GetStoreApp.Services.Download
 
                         string pauseDownloadString = jsonObject.Stringify();
                         byte[] contentBytes = Encoding.UTF8.GetBytes(pauseDownloadString);
-                        HttpStringContent httpStringContent = new(pauseDownloadString);
+
+                        Uri rpcServerLinkUri = new(rpcServerLink);
+                        HttpStringContent httpStringContent = new(pauseDownloadString, Windows.Storage.Streams.UnicodeEncoding.Utf8);
                         httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
                         httpStringContent.Headers.ContentType.CharSet = "utf-8";
+
                         HttpClient httpClient = new();
+                        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                        httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
+                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
+
                         HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
 
                         // 请求成功
@@ -310,10 +332,17 @@ namespace GetStoreApp.Services.Download
 
                         string pauseDownloadString = jsonObject.Stringify();
                         byte[] contentBytes = Encoding.UTF8.GetBytes(pauseDownloadString);
-                        HttpStringContent httpStringContent = new(pauseDownloadString);
+
+                        Uri rpcServerLinkUri = new(rpcServerLink);
+                        HttpStringContent httpStringContent = new(pauseDownloadString, Windows.Storage.Streams.UnicodeEncoding.Utf8);
                         httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
                         httpStringContent.Headers.ContentType.CharSet = "utf-8";
+
                         HttpClient httpClient = new();
+                        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                        httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
+                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
+
                         HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
 
                         // 请求成功
@@ -371,10 +400,17 @@ namespace GetStoreApp.Services.Download
 
                         string deleteDownloadString = jsonObject.Stringify();
                         byte[] contentBytes = Encoding.UTF8.GetBytes(deleteDownloadString);
-                        HttpStringContent httpStringContent = new(deleteDownloadString);
+
+                        Uri rpcServerLinkUri = new(rpcServerLink);
+                        HttpStringContent httpStringContent = new(deleteDownloadString, Windows.Storage.Streams.UnicodeEncoding.Utf8);
                         httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
                         httpStringContent.Headers.ContentType.CharSet = "utf-8";
+
                         HttpClient httpClient = new();
+                        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                        httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
+                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
+
                         HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
 
                         // 请求成功
@@ -459,10 +495,17 @@ namespace GetStoreApp.Services.Download
 
                     string tellStatusString = jsonObject.Stringify();
                     byte[] contentBytes = Encoding.UTF8.GetBytes(tellStatusString);
-                    HttpStringContent httpStringContent = new(tellStatusString);
+
+                    Uri rpcServerLinkUri = new(rpcServerLink);
+                    HttpStringContent httpStringContent = new(tellStatusString, Windows.Storage.Streams.UnicodeEncoding.Utf8);
                     httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
                     httpStringContent.Headers.ContentType.CharSet = "utf-8";
+
                     HttpClient httpClient = new();
+                    httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                    httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
+                    httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
+
                     HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
 
                     // 请求成功
@@ -583,10 +626,17 @@ namespace GetStoreApp.Services.Download
 
                         string removeResultString = jsonObject.Stringify();
                         byte[] contentBytes = Encoding.UTF8.GetBytes(removeResultString);
-                        HttpStringContent httpStringContent = new(removeResultString);
+
+                        Uri rpcServerLinkUri = new(rpcServerLink);
+                        HttpStringContent httpStringContent = new(removeResultString, Windows.Storage.Streams.UnicodeEncoding.Utf8);
                         httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
                         httpStringContent.Headers.ContentType.CharSet = "utf-8";
+
                         HttpClient httpClient = new();
+                        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                        httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
+                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
+
                         await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
                     }
                 }

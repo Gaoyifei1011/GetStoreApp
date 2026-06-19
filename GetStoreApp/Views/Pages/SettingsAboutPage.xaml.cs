@@ -28,6 +28,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsAboutPage : Page, INotifyPropertyChanged
     {
+        private static readonly string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36 Edg/149.0.0.0";
+
         private bool _isChecking;
 
         public bool IsChecking
@@ -237,10 +239,15 @@ namespace GetStoreApp.Views.Pages
                         {
                             try
                             {
+                                Uri checkUpdateLinkUri = new("https://api.github.com/repos/Gaoyifei1011/GetStoreApp/releases/latest");
+
                                 // 默认超时时间是 20 秒
                                 HttpClient httpClient = new();
-                                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36");
-                                HttpRequestResult httpRequestResult = await httpClient.TryGetAsync(new Uri("https://api.github.com/repos/Gaoyifei1011/GetStoreApp/releases/latest"));
+                                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                                httpClient.DefaultRequestHeaders.Referer = checkUpdateLinkUri;
+                                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", checkUpdateLinkUri.AbsolutePath);
+
+                                HttpRequestResult httpRequestResult = await httpClient.TryGetAsync(checkUpdateLinkUri);
                                 httpClient.Dispose();
 
                                 // 请求成功

@@ -21,6 +21,7 @@ namespace GetStoreApp.Helpers.Store
     /// </summary>
     public static class QueryLinksHelper
     {
+        private static readonly string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36 Edg/149.0.0.0";
         private static readonly Uri cookieUri = new("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx");
         private static readonly Uri fileListXmlUri = new("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx");
         private static readonly Uri urlUri = new("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx/secured");
@@ -52,7 +53,7 @@ namespace GetStoreApp.Helpers.Store
             {
                 byte[] cookieByteArray = ResourceService.GetEmbeddedData("Files/Assets/Embed/cookie.xml");
 
-                HttpStringContent httpStringContent = new(Encoding.UTF8.GetString(cookieByteArray));
+                HttpStringContent httpStringContent = new(Encoding.UTF8.GetString(cookieByteArray), Windows.Storage.Streams.UnicodeEncoding.Utf8);
                 httpStringContent.TryComputeLength(out ulong length);
                 httpStringContent.Headers.Expires = DateTimeOffset.Now;
                 httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
@@ -61,6 +62,10 @@ namespace GetStoreApp.Helpers.Store
 
                 // 默认超时时间是 20 秒
                 HttpClient httpClient = new();
+                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                httpClient.DefaultRequestHeaders.Referer = cookieUri;
+                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", cookieUri.AbsolutePath);
+
                 HttpRequestResult httpRequestResult = await httpClient.TryPostAsync(cookieUri, httpStringContent);
                 httpClient.Dispose();
 
@@ -119,10 +124,15 @@ namespace GetStoreApp.Helpers.Store
             try
             {
                 string categoryIDAPI = string.Format("https://storeedgefd.dsx.mp.microsoft.com/v9.0/products/{0}?market={1}&locale={2}&deviceFamily=Windows.Desktop", productId, StoreRegionService.StoreRegion.CodeTwoLetter, LanguageService.AppLanguage.Key);
+                Uri categoryIDAPIUri = new(categoryIDAPI);
 
                 // 默认超时时间是 20 秒
                 HttpClient httpClient = new();
-                HttpRequestResult httpRequestResult = await httpClient.TryGetAsync(new(categoryIDAPI));
+                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                httpClient.DefaultRequestHeaders.Referer = categoryIDAPIUri;
+                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", categoryIDAPIUri.AbsolutePath);
+
+                HttpRequestResult httpRequestResult = await httpClient.TryGetAsync(categoryIDAPIUri);
                 httpClient.Dispose();
 
                 // 请求成功
@@ -199,7 +209,7 @@ namespace GetStoreApp.Helpers.Store
                 byte[] wubyteArray = ResourceService.GetEmbeddedData("Files/Assets/Embed/wu.xml");
                 string fileListXml = Encoding.UTF8.GetString(wubyteArray).Replace("{1}", cookie).Replace("{2}", categoryId).Replace("{3}", ring);
 
-                HttpStringContent httpStringContent = new(fileListXml);
+                HttpStringContent httpStringContent = new(fileListXml, Windows.Storage.Streams.UnicodeEncoding.Utf8);
                 httpStringContent.TryComputeLength(out ulong length);
                 httpStringContent.Headers.Expires = DateTimeOffset.Now;
                 httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
@@ -208,6 +218,10 @@ namespace GetStoreApp.Helpers.Store
 
                 // 默认超时时间是 20 秒
                 HttpClient httpClient = new();
+                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                httpClient.DefaultRequestHeaders.Referer = fileListXmlUri;
+                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", fileListXmlUri.AbsolutePath);
+
                 HttpRequestResult httpRequestResult = await httpClient.TryPostAsync(fileListXmlUri, httpStringContent);
                 httpClient.Dispose();
 
@@ -350,16 +364,20 @@ namespace GetStoreApp.Helpers.Store
                 byte[] urlbyteArray = ResourceService.GetEmbeddedData("Files/Assets/Embed/url.xml");
                 string url = Encoding.UTF8.GetString(ResourceService.GetEmbeddedData("Files/Assets/Embed/url.xml")).Replace("{1}", updateID).Replace("{2}", revisionNumber).Replace("{3}", ring);
 
-                HttpStringContent httpContent = new(url);
-                httpContent.TryComputeLength(out ulong length);
-                httpContent.Headers.Expires = DateTimeOffset.Now;
-                httpContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
-                httpContent.Headers.ContentLength = length;
-                httpContent.Headers.ContentType.CharSet = "utf-8";
+                HttpStringContent httpStringContent = new(url, Windows.Storage.Streams.UnicodeEncoding.Utf8);
+                httpStringContent.TryComputeLength(out ulong length);
+                httpStringContent.Headers.Expires = DateTimeOffset.Now;
+                httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
+                httpStringContent.Headers.ContentLength = length;
+                httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                 // 默认超时时间是 20 秒
                 HttpClient httpClient = new();
-                HttpRequestResult httpRequestResult = await httpClient.TryPostAsync(urlUri, httpContent);
+                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                httpClient.DefaultRequestHeaders.Referer = urlUri;
+                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", urlUri.AbsolutePath);
+
+                HttpRequestResult httpRequestResult = await httpClient.TryPostAsync(urlUri, httpStringContent);
                 httpClient.Dispose();
 
                 // 请求成功
@@ -421,10 +439,15 @@ namespace GetStoreApp.Helpers.Store
             try
             {
                 string url = string.Format("https://storeedgefd.dsx.mp.microsoft.com/v9.0/packageManifests/{0}?market={1}", productId, StoreRegionService.StoreRegion.CodeTwoLetter);
+                Uri urlUri = new(url);
 
                 // 默认超时时间是 20 秒
                 HttpClient httpClient = new();
-                HttpRequestResult httpRequestResult = await httpClient.TryGetAsync(new(url));
+                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                httpClient.DefaultRequestHeaders.Referer = urlUri;
+                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", urlUri.AbsolutePath);
+
+                HttpRequestResult httpRequestResult = await httpClient.TryGetAsync(urlUri);
                 httpClient.Dispose();
 
                 // 请求成功
@@ -542,10 +565,16 @@ namespace GetStoreApp.Helpers.Store
 
             try
             {
+                Uri urlUri = new(url);
+
                 // 默认超时时间是 20 秒
                 HttpClient httpClient = new();
-                HttpRequestMessage requestMessage = new(HttpMethod.Head, new(url));
-                HttpRequestResult httpRequestResult = await httpClient.TrySendRequestAsync(requestMessage);
+                HttpRequestMessage httpRequestMessage = new(HttpMethod.Head, urlUri);
+                httpRequestMessage.Headers.UserAgent.ParseAdd(userAgent);
+                httpRequestMessage.Headers.Referer = urlUri;
+                httpRequestMessage.Headers.TryAppendWithoutValidation("Origin", urlUri.AbsolutePath);
+
+                HttpRequestResult httpRequestResult = await httpClient.TrySendRequestAsync(httpRequestMessage);
                 httpClient.Dispose();
 
                 // 请求成功
