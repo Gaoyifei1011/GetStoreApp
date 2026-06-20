@@ -52,9 +52,9 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 解析网页数据中包含的打包应用所有信息
         /// </summary>
-        public static List<QueryLinksModel> HtmlParsePackagedAppLinks()
+        public static List<QueryLinksResultModel> HtmlParsePackagedAppLinks()
         {
-            List<QueryLinksModel> resultDataList = [];
+            List<QueryLinksResultModel> queryLinksResultList = [];
 
             if (!string.IsNullOrEmpty(parseContent))
             {
@@ -66,7 +66,7 @@ namespace GetStoreApp.Helpers.Store
 
                     if (ResultDataListGroups.Count is 6)
                     {
-                        QueryLinksModel queryLinksData = new()
+                        QueryLinksResultModel queryLinksResult = new()
                         {
                             FileLink = ResultDataListGroups[1].Value,
                             FileName = ResultDataListGroups[2].Value,
@@ -75,19 +75,19 @@ namespace GetStoreApp.Helpers.Store
                             FileSize = ResultDataListGroups[5].Value
                         };
 
-                        resultDataList.Add(queryLinksData);
+                        queryLinksResultList.Add(queryLinksResult);
                     }
                 }
             }
-            return resultDataList;
+            return queryLinksResultList;
         }
 
         /// <summary>
         /// 解析网页数据中包含的非打包应用所有信息
         /// </summary>
-        public static List<QueryLinksModel> HtmlParseNonPackagedAppLinks()
+        public static List<QueryLinksResultModel> HtmlParseNonPackagedAppLinks()
         {
-            List<QueryLinksModel> resultDataList = [];
+            List<QueryLinksResultModel> queryLinksResultList = [];
 
             if (!string.IsNullOrEmpty(parseContent))
             {
@@ -99,7 +99,7 @@ namespace GetStoreApp.Helpers.Store
 
                     if (ResultDataListGroups.Count is 4)
                     {
-                        QueryLinksModel queryLinksData = new()
+                        QueryLinksResultModel queryLinksResult = new()
                         {
                             FileLink = ResultDataListGroups[1].Value,
                             FileName = ResultDataListGroups[2].Value,
@@ -108,11 +108,11 @@ namespace GetStoreApp.Helpers.Store
                             FileSize = string.Empty
                         };
 
-                        resultDataList.Add(queryLinksData);
+                        queryLinksResultList.Add(queryLinksResult);
                     }
                 }
             }
-            return resultDataList;
+            return queryLinksResultList;
         }
     }
 }

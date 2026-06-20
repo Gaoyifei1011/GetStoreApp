@@ -693,9 +693,9 @@ namespace GetStoreApp.Views.UserControls
                 // 商店接口查询方式
                 if (string.Equals(QueryLinksModeService.QueryLinksMode, QueryLinksModeService.QueryLinksModeList[0]))
                 {
-                    (bool requestResult, bool isPackagedApp, AppInfoModel appInfoItem, List<QueryLinksModel> queryLinksList) = await Task.Run(async () =>
+                    (bool requestResult, bool isPackagedApp, AppInfoModel appInfoItem, List<QueryLinksResultModel> queryLinksResultList) = await Task.Run(async () =>
                     {
-                        (bool requestResult, bool isPackagedApp, AppInfoModel appInfoItem, List<QueryLinksModel> queryLinksList) queryLinksResult = ValueTuple.Create<bool, bool, AppInfoModel, List<QueryLinksModel>>(false, false, null, null);
+                        (bool requestResult, bool isPackagedApp, AppInfoModel appInfoItem, List<QueryLinksResultModel> queryLinksResultList) queryLinksResult = ValueTuple.Create<bool, bool, AppInfoModel, List<QueryLinksResultModel>>(false, false, null, null);
 
                         // 解析链接对应的产品 ID
                         string productId = Equals(SelectedType, TypeList[0]) ? QueryLinksHelper.ParseRequestContent(QueryLinksText) : QueryLinksText;
@@ -708,13 +708,13 @@ namespace GetStoreApp.Views.UserControls
 
                         if (appInformationResult.requestResult)
                         {
-                            List<QueryLinksModel> queryLinksList = [];
+                            List<QueryLinksResultModel> queryLinksResultList = [];
 
                             // 解析非商店应用数据
                             if (string.IsNullOrEmpty(appInformationResult.appInfo.CategoryID))
                             {
                                 queryLinksResult.isPackagedApp = false;
-                                queryLinksList.AddRange(await QueryLinksHelper.GetNonAppxPackagesAsync(productId));
+                                queryLinksResultList.AddRange(await QueryLinksHelper.GetNonAppxPackagesAsync(productId));
                             }
                             // 解析商店应用数据
                             else
@@ -724,13 +724,13 @@ namespace GetStoreApp.Views.UserControls
 
                                 if (!string.IsNullOrEmpty(fileListXml))
                                 {
-                                    List<QueryLinksModel> appxPackagesList = await QueryLinksHelper.GetAppxPackagesAsync(fileListXml, ChannelList[channelIndex].InternalName);
-                                    foreach (QueryLinksModel appxPackage in appxPackagesList)
+                                    List<QueryLinksResultModel> appxPackagesList = await QueryLinksHelper.GetAppxPackagesAsync(fileListXml, ChannelList[channelIndex].InternalName);
+                                    foreach (QueryLinksResultModel appxPackage in appxPackagesList)
                                     {
                                         bool isExisted = false;
-                                        foreach (QueryLinksModel queryLinksItem in queryLinksList)
+                                        foreach (QueryLinksResultModel queryLinksResultItem in queryLinksResultList)
                                         {
-                                            if (string.Equals(queryLinksItem.FileName, appxPackage.FileName) && Equals(queryLinksItem.FileLink, appxPackage.FileLink) && Equals(queryLinksItem.FileSize, queryLinksItem.FileSize))
+                                            if (string.Equals(queryLinksResultItem.FileName, appxPackage.FileName) && Equals(queryLinksResultItem.FileLink, appxPackage.FileLink) && Equals(queryLinksResultItem.FileSize, queryLinksResultItem.FileSize))
                                             {
                                                 isExisted = true;
                                             }
@@ -738,7 +738,7 @@ namespace GetStoreApp.Views.UserControls
 
                                         if (!isExisted && !string.IsNullOrEmpty(appxPackage.FileLink))
                                         {
-                                            queryLinksList.Add(appxPackage);
+                                            queryLinksResultList.Add(appxPackage);
                                         }
                                     }
                                 }
@@ -747,7 +747,7 @@ namespace GetStoreApp.Views.UserControls
                             // 按设置选项设置的内容过滤列表
                             if (LinkFilterService.EncryptedPackageFilterValue)
                             {
-                                queryLinksList.RemoveAll(item =>
+                                queryLinksResultList.RemoveAll(item =>
                                 string.Equals(Path.GetExtension(item.FileName), ".eappx", StringComparison.OrdinalIgnoreCase) ||
                                 string.Equals(Path.GetExtension(item.FileName), ".emsix", StringComparison.OrdinalIgnoreCase) ||
                                 string.Equals(Path.GetExtension(item.FileName), ".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
@@ -757,12 +757,12 @@ namespace GetStoreApp.Views.UserControls
 
                             if (LinkFilterService.BlockMapFilterValue)
                             {
-                                queryLinksList.RemoveAll(item => string.Equals(Path.GetExtension(item.FileName), ".blockmap", StringComparison.OrdinalIgnoreCase));
+                                queryLinksResultList.RemoveAll(item => string.Equals(Path.GetExtension(item.FileName), ".blockmap", StringComparison.OrdinalIgnoreCase));
                             }
 
                             // 排序
-                            queryLinksList.Sort((item1, item2) => item1.FileName.CompareTo(item2.FileName));
-                            queryLinksResult.queryLinksList = queryLinksList;
+                            queryLinksResultList.Sort((item1, item2) => item1.FileName.CompareTo(item2.FileName));
+                            queryLinksResult.queryLinksResultList = queryLinksResultList;
                         }
 
                         return queryLinksResult;
@@ -777,12 +777,12 @@ namespace GetStoreApp.Views.UserControls
                     if (requestResult)
                     {
                         // 获取成功
-                        if (queryLinksList is not null && queryLinksList.Count > 0)
+                        if (queryLinksResultList is not null && queryLinksResultList.Count > 0)
                         {
                             UpdateHistory(appInfoItem.Name, typeIndex, channelIndex, link);
                             IsQueryLinksResultVisible = true;
                             storePage.StoreControl = StoreControl.QueryLinksResult;
-                            storePage.QueryLinksResult.UpdateQueryLinksResultData(appInfoItem, isPackagedApp, queryLinksList);
+                            storePage.QueryLinksResult.UpdateQueryLinksResultData(appInfoItem, isPackagedApp, queryLinksResultList);
                         }
                         // 返回空数据
                         else
@@ -805,9 +805,9 @@ namespace GetStoreApp.Views.UserControls
                 // 第三方接口查询方式
                 else if (string.Equals(QueryLinksModeService.QueryLinksMode, QueryLinksModeService.QueryLinksModeList[1]))
                 {
-                    (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksModel> queryLinksList) = await Task.Run(async () =>
+                    (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksResultModel> queryLinksList) = await Task.Run(async () =>
                     {
-                        (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksModel> queryLinksList) queryLinksResult = ValueTuple.Create<InfoBarSeverity, bool, string, List<QueryLinksModel>>(InfoBarSeverity.Error, false, null, null);
+                        (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksResultModel> queryLinksList) queryLinksResult = ValueTuple.Create<InfoBarSeverity, bool, string, List<QueryLinksResultModel>>(InfoBarSeverity.Error, false, null, null);
 
                         // 生成请求的内容
                         string generateContent = HtmlRequestHelper.GenerateRequestContent(SelectedType.InternalName, link, SelectedChannel.InternalName);
@@ -824,19 +824,19 @@ namespace GetStoreApp.Views.UserControls
                             HtmlParseHelper.InitializeParseData(httpRequestData);
                             string categoryId = HtmlParseHelper.HtmlParseCID().ToUpperInvariant();
                             queryLinksResult.categoryId = categoryId;
-                            List<QueryLinksModel> queryLinksList = [];
+                            List<QueryLinksResultModel> queryLinksList = [];
 
                             // CategoryID 为空，非打包应用
                             if (string.IsNullOrEmpty(categoryId))
                             {
                                 queryLinksResult.isPackagedApp = false;
-                                List<QueryLinksModel> nonPackagedAppsList = HtmlParseHelper.HtmlParseNonPackagedAppLinks();
+                                List<QueryLinksResultModel> nonPackagedAppsList = HtmlParseHelper.HtmlParseNonPackagedAppLinks();
                                 queryLinksList.AddRange(HtmlParseHelper.HtmlParseNonPackagedAppLinks());
                             }
                             else
                             {
                                 queryLinksResult.isPackagedApp = true;
-                                List<QueryLinksModel> packagedAppsList = HtmlParseHelper.HtmlParsePackagedAppLinks();
+                                List<QueryLinksResultModel> packagedAppsList = HtmlParseHelper.HtmlParsePackagedAppLinks();
 
                                 // 按设置选项设置的内容过滤列表
                                 if (LinkFilterService.EncryptedPackageFilterValue)

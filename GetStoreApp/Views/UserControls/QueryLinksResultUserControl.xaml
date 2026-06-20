@@ -88,7 +88,7 @@
                             Visibility="{x:Bind IsPackagedApp, Mode=OneWay}" />
                     </Grid>
 
-                    <TextBlock Text="{x:Bind x:String.Format(QueryLinksCountInfoString, QueryLinksCollection.Count), Mode=OneWay}" />
+                    <TextBlock Text="{x:Bind x:String.Format(QueryLinksResultCountInfoString, QueryLinksResultCollection.Count), Mode=OneWay}" />
                 </StackPanel>
 
                 <CommandBar
@@ -117,7 +117,7 @@
             VerticalScrollBarVisibility="Auto"
             VerticalScrollMode="Enabled">
 
-            <Grid Margin="0,0,0,30" CornerRadius="{ThemeResource ControlCornerRadius}">
+            <Grid Margin="0,0,0,30">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -365,9 +365,9 @@
                         CornerRadius="0"
                         IsItemClickEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
                         ItemClick="{x:Bind OnItemClick}"
-                        ItemsSource="{x:Bind QueryLinksCollection}"
+                        ItemsSource="{x:Bind QueryLinksResultCollection}"
                         SelectionMode="None"
-                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(QueryLinksCollection.Count), Mode=OneWay}">
+                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(QueryLinksResultCollection.Count), Mode=OneWay}">
 
                         <ListView.ItemContainerStyle>
                             <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
@@ -454,7 +454,7 @@
                         </ListView.Header>
 
                         <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="model:QueryLinksModel">
+                            <DataTemplate x:DataType="model:QueryLinksResultModel">
                                 <Grid
                                     Height="35"
                                     Padding="6,0,0,0"

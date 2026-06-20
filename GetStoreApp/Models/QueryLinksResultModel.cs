@@ -3,9 +3,9 @@
 namespace GetStoreApp.Models
 {
     /// <summary>
-    /// 查询链接返回结果的数据模型
+    /// 查询链接结果的数据模型
     /// </summary>
-    public sealed partial class QueryLinksModel : INotifyPropertyChanged
+    public sealed partial class QueryLinksResultModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 在多选模式下，该行信息是否被选择的标志

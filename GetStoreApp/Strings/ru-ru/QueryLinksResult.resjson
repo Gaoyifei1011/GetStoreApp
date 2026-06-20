@@ -29,7 +29,7 @@
   "QueriedAppName": "Имя приложения: ",
   "QueriedAppPublisher": "Издатель: ",
   "QueriedAppType": "Тип приложения: ",
-  "QueryLinksCountInfo": "{0} результатов запрошено из Microsoft Store",
+  "QueryLinksResultCountInfo": "{0} результатов запрошено из Microsoft Store",
   "QueryResult": "Результат запроса",
   "Select": "Выбрать",
   "Selected": "Выбрано",

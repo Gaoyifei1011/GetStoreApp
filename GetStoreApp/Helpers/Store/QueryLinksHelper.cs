@@ -262,9 +262,9 @@ namespace GetStoreApp.Helpers.Store
         /// <param name="fileListXml">文件信息的字符串</param>
         /// <param name="ring">通道</param>
         /// <returns>带解析后文件信息的列表</returns>
-        public static async Task<List<QueryLinksModel>> GetAppxPackagesAsync(string fileListXml, string ring)
+        public static async Task<List<QueryLinksResultModel>> GetAppxPackagesAsync(string fileListXml, string ring)
         {
-            List<QueryLinksModel> appxPackagesList = [];
+            List<QueryLinksResultModel> appxPackagesList = [];
 
             try
             {
@@ -319,7 +319,7 @@ namespace GetStoreApp.Helpers.Store
 
                                 try
                                 {
-                                    appxPackagesList.Add(new QueryLinksModel()
+                                    appxPackagesList.Add(new QueryLinksResultModel()
                                     {
                                         FileName = fileName,
                                         FileLink = uri,
@@ -432,9 +432,9 @@ namespace GetStoreApp.Helpers.Store
         /// </summary>
         /// <param name="productId">产品 ID</param>
         /// <returns>带解析后文件信息的列表</returns>
-        public static async Task<List<QueryLinksModel>> GetNonAppxPackagesAsync(string productId)
+        public static async Task<List<QueryLinksResultModel>> GetNonAppxPackagesAsync(string productId)
         {
-            List<QueryLinksModel> nonAppxPackagesList = [];
+            List<QueryLinksResultModel> nonAppxPackagesList = [];
 
             try
             {
@@ -489,7 +489,7 @@ namespace GetStoreApp.Helpers.Store
 
                                     try
                                     {
-                                        nonAppxPackagesList.Add(new QueryLinksModel()
+                                        nonAppxPackagesList.Add(new QueryLinksResultModel()
                                         {
                                             FileName = installerUrl[..installerUrl.LastIndexOf('.')][(installerUrl.LastIndexOf('/') + 1)..],
                                             FileLink = installerUrl,
@@ -515,7 +515,7 @@ namespace GetStoreApp.Helpers.Store
 
                                     try
                                     {
-                                        nonAppxPackagesList.Add(new QueryLinksModel()
+                                        nonAppxPackagesList.Add(new QueryLinksResultModel()
                                         {
                                             FileName = string.Format("{0} ({1}).{2}", name, installerObject.GetNamedString("InstallerLocale"), installerType),
                                             FileLink = installerUrl,

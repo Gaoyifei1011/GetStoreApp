@@ -29,7 +29,7 @@
   "QueriedAppName": "App name: ",
   "QueriedAppPublisher": "Publisehr: ",
   "QueriedAppType": "AppType: ",
-  "QueryLinksCountInfo": "{0} results were queryed from the Microsoft Store",
+  "QueryLinksResultCountInfo": "{0} results were queryed from the Microsoft Store",
   "QueryResult": "Query result",
   "Select": "Select",
   "Selected": "Selected",

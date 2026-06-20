@@ -29,7 +29,7 @@
   "QueriedAppName": "שם היישום:",
   "QueriedAppPublisher": "מפרסם:",
   "QueriedAppType": "סוג היישום:",
-  "QueryLinksCountInfo": "נמצאו {0} תוצאות מחנות Microsoft",
+  "QueryLinksResultCountInfo": "נמצאו {0} תוצאות מחנות Microsoft",
   "QueryResult": "תוצאת שאילתה",
   "Select": "בחר",
   "Selected": "נבחר",
