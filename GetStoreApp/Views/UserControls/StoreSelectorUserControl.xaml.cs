@@ -673,7 +673,7 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         public async Task QueryLinksAsync()
         {
-            if (!IsQueryingLinks)
+            if (!IsQueryingLinks || !IsSearchingApps)
             {
                 // 设置获取数据时的相关控件状态
                 IsQueryingLinks = true;
@@ -779,7 +779,7 @@ namespace GetStoreApp.Views.UserControls
                         // 获取成功
                         if (queryLinksResultList is not null && queryLinksResultList.Count > 0)
                         {
-                            UpdateHistory(appInfoItem.Name, typeIndex, channelIndex, link);
+                            UpdateQueryLinksResultHistory(appInfoItem.Name, typeIndex, channelIndex, link);
                             IsQueryLinksResultVisible = true;
                             storePage.StoreControl = StoreControl.QueryLinksResult;
                             storePage.QueryLinksResult.UpdateQueryLinksResultData(appInfoItem, isPackagedApp, queryLinksResultList);
@@ -873,7 +873,7 @@ namespace GetStoreApp.Views.UserControls
 
                     if (requestState is InfoBarSeverity.Success)
                     {
-                        UpdateHistory(categoryId, typeIndex, channelIndex, link);
+                        UpdateQueryLinksResultHistory(categoryId, typeIndex, channelIndex, link);
                         IsQueryLinksResultVisible = true;
                         storePage.StoreControl = StoreControl.QueryLinksResult;
                         storePage.QueryLinksResult.UpdateQueryLinksResultData(null, isPackagedApp, queryLinksList);
@@ -897,9 +897,81 @@ namespace GetStoreApp.Views.UserControls
         }
 
         /// <summary>
-        /// 更新历史记录，包括主页历史记录内容、数据库中的内容和任务栏跳转列表中的内容
+        /// 搜索应用
         /// </summary>
-        private void UpdateHistory(string appName, int selectedType, int selectedChannel, string link)
+        public async Task SearchAppsAsync()
+        {
+            if (!IsQueryingLinks || !IsSearchingApps)
+            {
+                IsSearchingApps = true;
+                IsSearchAppsResultVisible = false;
+                SearchAppsHistoryAutoSuggestBox.IsSuggestionListOpen = false;
+                SearchAppsText = string.IsNullOrEmpty(SearchAppsText) ? "Microsoft Corporation" : SearchAppsText;
+                foreach (HistoryModel historyItem in SearchAppsHistoryCollection)
+                {
+                    historyItem.IsQuerying = true;
+                }
+
+                (bool requestResult, List<SearchAppsResultModel> searchAppsResultList) = await Task.Run(async () =>
+                {
+                    if (Equals(SelectedSearchType, SearchTypeList[0]))
+                    {
+                        string searchText = SearchAppsText;
+                        return await SearchAppsHelper.StoreExactSearchAsync(searchText);
+                    }
+                    else if (Equals(SelectedSearchType, SearchTypeList[1]))
+                    {
+                        string searchText = SearchAppsText;
+                        string generatedContent = SearchAppsHelper.GenerateManifestSearchString(searchText);
+                        return await SearchAppsHelper.ManifestSearchAsync(generatedContent);
+                    }
+                    else
+                    {
+                        return ValueTuple.Create<bool, List<SearchAppsResultModel>>(false, null);
+                    }
+                });
+
+                IsSearchingApps = false;
+                foreach (HistoryModel historyItem in SearchAppsHistoryCollection)
+                {
+                    historyItem.IsQuerying = false;
+                }
+
+                // 获取成功
+                if (requestResult)
+                {
+                    // 搜索成功，有数据
+                    if (searchAppsResultList.Count > 0)
+                    {
+                        UpdateSearchAppsHistory(SearchAppsText);
+                        IsSearchAppsResultVisible = true;
+                        storePage.StoreControl = StoreControl.SearchAppsResult;
+                        storePage.SearchAppsResult.UpdateSearchAppsResultData(searchAppsResultList);
+                    }
+                    // 返回空数据
+                    else
+                    {
+                        IsSearchAppsResultVisible = false;
+                        storePage.StoreControl = StoreControl.StoreSelector;
+                        storePage.SearchAppsResult.UpdateSearchAppsResultData([]);
+                        // TODO：未完成
+                    }
+                }
+                else
+                {
+                    // 搜索失败
+                    IsSearchAppsResultVisible = false;
+                    storePage.StoreControl = StoreControl.StoreSelector;
+                    storePage.SearchAppsResult.UpdateSearchAppsResultData([]);
+                    // TODO：未完成
+                }
+            }
+        }
+
+        /// <summary>
+        /// 更新查询链接历史记录，包括主页历史记录内容、数据库中的内容和任务栏跳转列表中的内容
+        /// </summary>
+        private void UpdateQueryLinksResultHistory(string appName, int selectedType, int selectedChannel, string link)
         {
             Task.Run(() =>
             {
@@ -961,10 +1033,61 @@ namespace GetStoreApp.Views.UserControls
         }
 
         /// <summary>
-        /// 搜索应用
+        /// 更新搜索应用历史记录，包括主页历史记录内容、数据库中的内容和任务栏跳转列表中的内容
         /// </summary>
-        private async Task SearchAppsAsync()
+        private void UpdateSearchAppsHistory(string inputContent)
         {
+            Task.Run(() =>
+            {
+                // 计算时间戳
+                long timeStamp = Convert.ToInt64((DateTimeOffset.UtcNow - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
+                string historyKey = HashAlgorithmHelper.GenerateHistoryKey(inputContent);
+                List<HistoryModel> historyList = [.. SearchAppsHistoryCollection];
+                int index = historyList.FindIndex(item => string.Equals(item.HistoryKey, historyKey, StringComparison.OrdinalIgnoreCase));
+
+                // 不存在直接添加
+                if (index is -1)
+                {
+                    HistoryModel history = new()
+                    {
+                        CreateTimeStamp = timeStamp,
+                        HistoryKey = historyKey,
+                        HistoryContent = inputContent
+                    };
+
+                    historyList.Insert(0, history);
+
+                    // 保留前 20 项
+                    if (historyList.Count > 20)
+                    {
+                        historyList.RemoveRange(20, historyList.Count - 20);
+                    }
+                    HistoryStorageService.SaveSearchAppsData(historyList);
+
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        SearchAppsHistoryCollection.Clear();
+
+                        foreach (HistoryModel historyItem in historyList)
+                        {
+                            SearchAppsHistoryCollection.Add(historyItem);
+                        }
+                    });
+                }
+                // 存在则修改原来项的时间戳，并调整顺序
+                else
+                {
+                    HistoryModel historyItem = historyList[index];
+                    historyItem.CreateTimeStamp = timeStamp;
+                    HistoryStorageService.UpdateSearchAppsData(historyItem);
+
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        SearchAppsHistoryCollection.RemoveAt(index);
+                        SearchAppsHistoryCollection.Insert(0, historyItem);
+                    });
+                }
+            });
         }
     }
 }

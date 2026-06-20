@@ -434,7 +434,6 @@
                     Grid.Row="0"
                     AutoMaximizeSuggestionArea="True"
                     GotFocus="{x:Bind OnSearchAppsGotFocus}"
-                    IsEnabled="{x:Bind IsSearchingApps.Equals(x:False), Mode=OneWay}"
                     ItemContainerStyle="{StaticResource AutoSuggestBoxListViewItemStyle}"
                     ItemsSource="{x:Bind SearchAppsHistoryCollection}"
                     LosingFocus="{x:Bind OnSearchAppsLosingFocus}"
@@ -531,7 +530,6 @@
                         Margin="0,0,5,0"
                         VerticalAlignment="Center"
                         DisplayMemberPath="DisplayMember"
-                        IsEnabled="{x:Bind IsSearchingApps.Equals(x:False), Mode=OneWay}"
                         ItemsSource="{x:Bind SearchTypeList}"
                         SelectedItem="{x:Bind SelectedSearchType, Mode=OneWay}"
                         SelectionChanged="{x:Bind OnSearchTypeSelectionChanged}"
@@ -613,7 +611,7 @@
                         Margin="5,0,0,0"
                         Padding="0"
                         HorizontalAlignment="Right"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/ViewMore')}">
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/ViewMore')}">
 
                         <FontIcon FontSize="16" Glyph="&#xE712;" />
 
@@ -621,8 +619,8 @@
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnLanguageAndRegionClicked}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/LanguageAndRegion')}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/LanguageAndRegionToolTip')}">
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/LanguageAndRegion')}"
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/LanguageAndRegionToolTip')}">
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xF2B7;" />
@@ -631,8 +629,8 @@
 
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnUseInstructionClicked}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstruction')}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Store/UseInstructionToolTip')}">
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/UseInstruction')}"
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/UseInstructionToolTip')}">
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xE946;" />

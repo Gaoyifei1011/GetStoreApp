@@ -203,7 +203,7 @@
     <None Remove="Strings\he-il\Pinner.resjson" />
     <None Remove="Strings\he-il\QueryLinksResult.resjson" />
     <None Remove="Strings\he-il\Resources.resjson" />
-    <None Remove="Strings\he-il\SearchStore.resjson" />
+    <None Remove="Strings\he-il\SearchAppsResult.resjson" />
     <None Remove="Strings\he-il\Settings.resjson" />
     <None Remove="Strings\he-il\SettingsAbout.resjson" />
     <None Remove="Strings\he-il\SettingsAdvanced.resjson" />
@@ -240,7 +240,7 @@
     <None Remove="Strings\en-us\Pinner.resjson" />
     <None Remove="Strings\en-us\QueryLinksResult.resjson" />
     <None Remove="Strings\en-us\Resources.resjson" />
-    <None Remove="Strings\en-us\SearchStore.resjson" />
+    <None Remove="Strings\en-us\SearchAppsResult.resjson" />
     <None Remove="Strings\en-us\Settings.resjson" />
     <None Remove="Strings\en-us\SettingsAbout.resjson" />
     <None Remove="Strings\en-us\SettingsAdvanced.resjson" />
@@ -277,7 +277,7 @@
     <None Remove="Strings\ru-ru\Pinner.resjson" />
     <None Remove="Strings\ru-ru\QueryLinksResult.resjson" />
     <None Remove="Strings\ru-ru\Resources.resjson" />
-    <None Remove="Strings\ru-ru\SearchStore.resjson" />
+    <None Remove="Strings\ru-ru\SearchAppsResult.resjson" />
     <None Remove="Strings\ru-ru\Settings.resjson" />
     <None Remove="Strings\ru-ru\SettingsAbout.resjson" />
     <None Remove="Strings\ru-ru\SettingsAdvanced.resjson" />
@@ -314,7 +314,7 @@
     <None Remove="Strings\zh-hans\Pinner.resjson" />
     <None Remove="Strings\zh-hans\QueryLinksResult.resjson" />
     <None Remove="Strings\zh-hans\Resources.resjson" />
-    <None Remove="Strings\zh-hans\SearchStore.resjson" />
+    <None Remove="Strings\zh-hans\SearchAppsResult.resjson" />
     <None Remove="Strings\zh-hans\Settings.resjson" />
     <None Remove="Strings\zh-hans\SettingsAbout.resjson" />
     <None Remove="Strings\zh-hans\SettingsAdvanced.resjson" />
@@ -367,7 +367,6 @@
     <None Remove="Views\Pages\DownloadingPage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
     <None Remove="Views\Pages\HomePage.xaml" />
-    <None Remove="Views\Pages\SearchStorePage.xaml" />
     <None Remove="Views\Pages\SettingsAboutPage.xaml" />
     <None Remove="Views\Pages\SettingsAdvancedPage.xaml" />
     <None Remove="Views\Pages\SettingsAppInstallPage.xaml" />
@@ -387,6 +386,7 @@
     <None Remove="Views\Pages\WinGetSearchPage.xaml" />
     <None Remove="Views\Pages\WinGetUpgradePage.xaml" />
     <None Remove="Views\UserControls\QueryLinksResultUserControl.xaml" />
+    <None Remove="Views\UserControls\SearchAppsResultUserControl.xaml" />
     <None Remove="Views\UserControls\StoreSelectorUserControl.xaml" />
     <None Remove="Views\Windows\MainWindow.xaml" />
     <None Remove="MainApp.xaml" />
@@ -434,7 +434,6 @@
     <Page Update="Views\Pages\DownloadingPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\DownloadPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\HomePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Views\Pages\SearchStorePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsAboutPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsAdvancedPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsAppInstallPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -454,6 +453,7 @@
     <Page Update="Views\Pages\WinGetSearchPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\WinGetUpgradePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\UserControls\QueryLinksResultUserControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\UserControls\SearchAppsResultUserControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\UserControls\StoreSelectorUserControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Windows\MainWindow.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Remove="MainApp.xaml" />
@@ -473,7 +473,7 @@
     <PRIResource Include="Strings\en-us\Pinner.resjson" />
     <PRIResource Include="Strings\en-us\QueryLinksResult.resjson" />
     <PRIResource Include="Strings\en-us\Resources.resjson" />
-    <PRIResource Include="Strings\en-us\SearchStore.resjson" />
+    <PRIResource Include="Strings\en-us\SearchAppsResult.resjson" />
     <PRIResource Include="Strings\en-us\Settings.resjson" />
     <PRIResource Include="Strings\en-us\SettingsAbout.resjson" />
     <PRIResource Include="Strings\en-us\SettingsAdvanced.resjson" />
@@ -511,7 +511,7 @@
     <PRIResource Include="Strings\he-il\Pinner.resjson" />
     <PRIResource Include="Strings\he-il\QueryLinksResult.resjson" />
     <PRIResource Include="Strings\he-il\Resources.resjson" />
-    <PRIResource Include="Strings\he-il\SearchStore.resjson" />
+    <PRIResource Include="Strings\he-il\SearchAppsResult.resjson" />
     <PRIResource Include="Strings\he-il\Settings.resjson" />
     <PRIResource Include="Strings\he-il\SettingsAbout.resjson" />
     <PRIResource Include="Strings\he-il\SettingsAdvanced.resjson" />
@@ -549,7 +549,7 @@
     <PRIResource Include="Strings\ru-ru\Pinner.resjson" />
     <PRIResource Include="Strings\ru-ru\QueryLinksResult.resjson" />
     <PRIResource Include="Strings\ru-ru\Resources.resjson" />
-    <PRIResource Include="Strings\ru-ru\SearchStore.resjson" />
+    <PRIResource Include="Strings\ru-ru\SearchAppsResult.resjson" />
     <PRIResource Include="Strings\ru-ru\Settings.resjson" />
     <PRIResource Include="Strings\ru-ru\SettingsAbout.resjson" />
     <PRIResource Include="Strings\ru-ru\SettingsAdvanced.resjson" />
@@ -587,8 +587,8 @@
     <PRIResource Include="Strings\zh-hans\Pinner.resjson" />
     <PRIResource Include="Strings\zh-hans\QueryLinksResult.resjson" />
     <PRIResource Include="Strings\zh-hans\Resources.resjson" />
+    <PRIResource Include="Strings\zh-hans\SearchAppsResult.resjson" />
     <PRIResource Include="Strings\zh-hans\StoreSelector.resjson" />
-    <PRIResource Include="Strings\zh-hans\SearchStore.resjson" />
     <PRIResource Include="Strings\zh-hans\Settings.resjson" />
     <PRIResource Include="Strings\zh-hans\SettingsAbout.resjson" />
     <PRIResource Include="Strings\zh-hans\SettingsAdvanced.resjson" />

@@ -1,0 +1,15 @@
+﻿{
+  "AppList": "App List",
+  "BackToHomePage": "Back to home page",
+  "CopyLink": "Copy link",
+  "CopyLinkToolTip": "Copy the app link to the clipboard",
+  "Options": "Options",
+  "OptionsToolTip": "Select the options you want to use",
+  "QueryLinks": "Query links",
+  "QueryLinksToolTip": "Query the download links for the current app and its dependencies",
+  "SearchResult": "Search Result",
+  "SearchAppsResultCountInfo": "{0} results were searched from the Microsoft Store",
+  "StoreAppLink": "App link",
+  "StoreAppName": "App name",
+  "StoreAppPublisher": "App publisher"
+}

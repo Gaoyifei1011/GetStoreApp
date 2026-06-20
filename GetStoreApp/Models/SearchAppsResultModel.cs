@@ -1,9 +1,9 @@
 ﻿namespace GetStoreApp.Models
 {
     /// <summary>
-    /// 查询链接返回结果的数据模型
+    /// 查询链接结果数据模型
     /// </summary>
-    public sealed class SearchStoreModel
+    public sealed class SearchAppsResultModel
     {
         /// <summary>
         /// 应用包名称

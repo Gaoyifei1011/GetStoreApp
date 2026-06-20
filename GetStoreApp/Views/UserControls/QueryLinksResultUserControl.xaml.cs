@@ -281,7 +281,7 @@ namespace GetStoreApp.Views.UserControls
 
         #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
 
-        #region 第二部分：查询链接结果页面——挂载的事件
+        #region 第二部分：查询链接结果用户控件——挂载的事件
 
         /// <summary>
         /// 返回主页
@@ -735,7 +735,7 @@ namespace GetStoreApp.Views.UserControls
             }
         }
 
-        #endregion 第二部分：查询链接结果页面——挂载的事件
+        #endregion 第二部分：查询链接结果用户控件——挂载的事件
 
         /// <summary>
         /// 初始化查询链接结果用户控件

@@ -61,6 +61,7 @@ namespace GetStoreApp.Views.Pages
                 isInitialized = true;
                 await StoreSelector.InitializeStoreSelectorAsync(this);
                 QueryLinksResult.InitializeQueryLinksResult(this);
+                SearchAppsResult.InitializeSearchAppsResult(this);
             }
 
             if (StoreSelector is not null && args.Parameter is List<string> dataList)

@@ -29,6 +29,12 @@
                 x:Name="QueryLinksResult"
                 x:FieldModifier="public"
                 Visibility="{x:Bind GetSelectedStoreControl(StoreControl, enum:StoreControl.QueryLinksResult), Mode=OneWay}" />
+
+            <!--  搜索应用结果用户控件  -->
+            <usercontrol:SearchAppsResultUserControl
+                x:Name="SearchAppsResult"
+                x:FieldModifier="public"
+                Visibility="{x:Bind GetSelectedStoreControl(StoreControl, enum:StoreControl.SearchAppsResult), Mode=OneWay}" />
         </Grid>
 
         <SplitView.Pane>

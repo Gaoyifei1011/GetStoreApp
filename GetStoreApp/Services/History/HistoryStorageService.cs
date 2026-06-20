@@ -18,7 +18,6 @@ namespace GetStoreApp.Services.History
         private const string QueryLinks = "QueryLinks";
         private const string SearchApps = "SearchApps";
         private const string CreateTimeStamp = "CreateTimeStamp";
-        private const string HistoryKey = "HistoryKey";
         private const string HistoryAppName = "HistoryAppName";
         private const string HistoryContent = "HistoryContent";
         private const string HistoryType = "HistoryType";

@@ -50,7 +50,7 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 
 ##### <p align="center">Search store</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/SearchStore.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/en-us/SearchApps.png" />
 </div>
 
 #### <p align="center">App update</p>

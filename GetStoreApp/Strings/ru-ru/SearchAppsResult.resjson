@@ -1,0 +1,15 @@
+﻿{
+  "AppList": "Список приложений",
+  "BackToHomePage": "Вернуться на главную",
+  "CopyLink": "Копировать ссылку",
+  "CopyLinkToolTip": "Копировать ссылку на приложение в буфер обмена",
+  "Options": "Параметры",
+  "OptionsToolTip": "Выберите параметры, которые вы хотите использовать",
+  "QueryLinks": "Запросить ссылки",
+  "QueryLinksToolTip": "Запросить ссылки загрузки для текущего приложения и его зависимостей",
+  "SearchResult": "Результат поиска",
+  "SearchAppsResultCountInfo": "{0} результатов найдено в Microsoft Store",
+  "StoreAppLink": "Ссылка на приложение",
+  "StoreAppName": "Имя приложения",
+  "StoreAppPublisher": "Издатель приложения"
+}

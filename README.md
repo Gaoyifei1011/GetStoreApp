@@ -58,7 +58,7 @@
 
 ##### <p align="center">搜索应用</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/SearchStore.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/zh-hans/SearchApps.png" />
 </div>
 
 #### <p align="center">应用更新</p>

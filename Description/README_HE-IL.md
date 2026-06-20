@@ -50,7 +50,7 @@
 
 ##### <p align="center">חפש חנות</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/SearchStore.png" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Images/he-il/SearchApps.png" />
 </div>
 
 #### <p align="center">עדכון אפליקציה</p>

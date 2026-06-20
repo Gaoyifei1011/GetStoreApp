@@ -15,7 +15,7 @@ namespace GetStoreApp.Helpers.Store
     /// <summary>
     /// 搜索应用辅助类
     /// </summary>
-    public static class SearchStoreHelper
+    public static class SearchAppsHelper
     {
         private static readonly string storeLink = "https://apps.microsoft.com/store/detail/{0}";
         private static readonly Uri manifestSearchUri = new("https://storeedgefd.dsx.mp.microsoft.com/v9.0/manifestSearch");
@@ -68,10 +68,10 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 使用商店精准搜索应用接口搜索应用
         /// </summary>
-        public static async Task<(bool requestResult, List<SearchStoreModel> searchStoreList)> StoreExactSearchAsync(string content)
+        public static async Task<(bool requestResult, List<SearchAppsResultModel> searchAppsResultList)> StoreExactSearchAsync(string content)
         {
             bool requestResult = false;
-            List<SearchStoreModel> searchStoreList = [];
+            List<SearchAppsResultModel> searchAppsResultList = [];
 
             try
             {
@@ -93,7 +93,7 @@ namespace GetStoreApp.Helpers.Store
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(StoreExactSearchAsync), 1, responseDict);
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchAppsHelper), nameof(StoreExactSearchAsync), 1, responseDict);
                     string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                     if (JsonArray.TryParse(responseString, out JsonArray responseStringArray) && responseStringArray.Count is 2)
@@ -114,7 +114,7 @@ namespace GetStoreApp.Helpers.Store
                                     string title = searchResultsObject.GetNamedString("Title");
                                     string publisherName = searchResultsObject.GetNamedString("PublisherName");
 
-                                    searchStoreList.Add(new SearchStoreModel()
+                                    searchAppsResultList.Add(new SearchAppsResultModel()
                                     {
                                         StoreAppLink = string.Format(storeLink, productId),
                                         StoreAppName = title,
@@ -128,7 +128,7 @@ namespace GetStoreApp.Helpers.Store
                 // 请求失败
                 else
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(StoreExactSearchAsync), 2, httpRequestResult.ExtendedError);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchAppsHelper), nameof(StoreExactSearchAsync), 2, httpRequestResult.ExtendedError);
                 }
 
                 httpRequestResult.Dispose();
@@ -136,19 +136,19 @@ namespace GetStoreApp.Helpers.Store
             // 其他异常
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(StoreExactSearchAsync), 3, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchAppsHelper), nameof(StoreExactSearchAsync), 3, e);
             }
 
-            return ValueTuple.Create(requestResult, searchStoreList);
+            return ValueTuple.Create(requestResult, searchAppsResultList);
         }
 
         /// <summary>
         /// 按照清单方式搜索应用
         /// </summary>
-        public static async Task<(bool requestResult, List<SearchStoreModel> searchStoreList)> ManifestSearchAsync(string generatedContent)
+        public static async Task<(bool requestResult, List<SearchAppsResultModel> searchAppsResultList)> ManifestSearchAsync(string generatedContent)
         {
             bool requestResult = false;
-            List<SearchStoreModel> searchStoreList = [];
+            List<SearchAppsResultModel> searchAppsResultList = [];
 
             try
             {
@@ -175,7 +175,7 @@ namespace GetStoreApp.Helpers.Store
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(ManifestSearchAsync), 1, responseDict);
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchAppsHelper), nameof(ManifestSearchAsync), 1, responseDict);
                     string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                     if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
@@ -185,7 +185,7 @@ namespace GetStoreApp.Helpers.Store
                         {
                             JsonObject jsonObject = jsonValue.GetObject();
 
-                            searchStoreList.Add(new SearchStoreModel()
+                            searchAppsResultList.Add(new SearchAppsResultModel()
                             {
                                 StoreAppLink = string.Format(storeLink, jsonObject.GetNamedString("PackageIdentifier")),
                                 StoreAppName = jsonObject.GetNamedString("PackageName"),
@@ -197,7 +197,7 @@ namespace GetStoreApp.Helpers.Store
                 // 请求失败
                 else
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(ManifestSearchAsync), 2, httpRequestResult.ExtendedError);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchAppsHelper), nameof(ManifestSearchAsync), 2, httpRequestResult.ExtendedError);
                 }
 
                 httpRequestResult.Dispose();
@@ -205,10 +205,10 @@ namespace GetStoreApp.Helpers.Store
             // 其他异常
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchStoreHelper), nameof(ManifestSearchAsync), 3, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SearchAppsHelper), nameof(ManifestSearchAsync), 3, e);
             }
 
-            return ValueTuple.Create(requestResult, searchStoreList);
+            return ValueTuple.Create(requestResult, searchAppsResultList);
         }
     }
 }
