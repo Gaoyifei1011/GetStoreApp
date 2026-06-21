@@ -220,6 +220,22 @@ namespace GetStoreApp.Views.UserControls
             }
         }
 
+        private StoreInfoResultKind _storeInfoResultKind;
+
+        public StoreInfoResultKind StoreInfoResultKind
+        {
+            get { return _storeInfoResultKind; }
+
+            set
+            {
+                if (!Equals(_storeInfoResultKind, value))
+                {
+                    _storeInfoResultKind = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StoreInfoResultKind)));
+                }
+            }
+        }
+
         private List<string> SampleLinkList { get; } = ["https://apps.microsoft.com/store/detail/9WZDNCRFJBMP", "9WZDNCRFJBMP",];
 
         public List<TypeModel> TypeList { get; } = [];
@@ -375,6 +391,22 @@ namespace GetStoreApp.Views.UserControls
         /// 了解应用具体的使用说明
         /// </summary>
         private void OnUseInstructionClicked(object sender, RoutedEventArgs args)
+        {
+            storePage.ShowUseInstruction();
+        }
+
+        /// <summary>
+        /// 关闭商店信息结果
+        /// </summary>
+        private void OnStoreInfoClosed(InfoBar sender, InfoBarClosedEventArgs args)
+        {
+            StoreInfoResultKind = StoreInfoResultKind.None;
+        }
+
+        /// <summary>
+        /// 显示错误原因
+        /// </summary>
+        private void OnShowErrorReasonClicked(object sender, RoutedEventArgs args)
         {
             storePage.ShowUseInstruction();
         }
@@ -789,8 +821,8 @@ namespace GetStoreApp.Views.UserControls
                         {
                             IsQueryLinksResultVisible = false;
                             storePage.StoreControl = StoreControl.StoreSelector;
+                            storePage.StoreSelector.StoreInfoResultKind = StoreInfoResultKind.QueryLinksWarning;
                             storePage.QueryLinksResult.UpdateQueryLinksResultData(null, false, []);
-                            // TODO：未完成
                         }
                     }
                     else
@@ -798,8 +830,8 @@ namespace GetStoreApp.Views.UserControls
                         // 获取错误
                         IsQueryLinksResultVisible = false;
                         storePage.StoreControl = StoreControl.StoreSelector;
+                        storePage.StoreSelector.StoreInfoResultKind = StoreInfoResultKind.QueryLinksError;
                         storePage.QueryLinksResult.UpdateQueryLinksResultData(null, false, []);
-                        // TODO：未完成
                     }
                 }
                 // 第三方接口查询方式
@@ -953,8 +985,8 @@ namespace GetStoreApp.Views.UserControls
                     {
                         IsSearchAppsResultVisible = false;
                         storePage.StoreControl = StoreControl.StoreSelector;
+                        storePage.StoreSelector.StoreInfoResultKind = StoreInfoResultKind.SearchAppsWarning;
                         storePage.SearchAppsResult.UpdateSearchAppsResultData([]);
-                        // TODO：未完成
                     }
                 }
                 else
@@ -962,8 +994,8 @@ namespace GetStoreApp.Views.UserControls
                     // 搜索失败
                     IsSearchAppsResultVisible = false;
                     storePage.StoreControl = StoreControl.StoreSelector;
+                    storePage.StoreSelector.StoreInfoResultKind = StoreInfoResultKind.SearchAppsError;
                     storePage.SearchAppsResult.UpdateSearchAppsResultData([]);
-                    // TODO：未完成
                 }
             }
         }
@@ -1088,6 +1120,45 @@ namespace GetStoreApp.Views.UserControls
                     });
                 }
             });
+        }
+
+        /// <summary>
+        /// 获取显示商店信息结果
+        /// </summary>
+        private bool GetShowStoreInfo(StoreInfoResultKind storeInfoResultKind)
+        {
+            return storeInfoResultKind is not StoreInfoResultKind.None;
+        }
+
+        /// <summary>
+        /// 获取商店信息结果显示状态
+        /// </summary>
+        private InfoBarSeverity GetStoreInfoSeverity(StoreInfoResultKind storeInfoResultKind)
+        {
+            if (storeInfoResultKind is StoreInfoResultKind.None)
+            {
+                return InfoBarSeverity.Informational;
+            }
+            else if (storeInfoResultKind is StoreInfoResultKind.QueryLinksWarning || storeInfoResultKind is StoreInfoResultKind.SearchAppsWarning)
+            {
+                return InfoBarSeverity.Warning;
+            }
+            else if (storeInfoResultKind is StoreInfoResultKind.QueryLinksError || storeInfoResultKind is StoreInfoResultKind.SearchAppsError)
+            {
+                return InfoBarSeverity.Error;
+            }
+            else
+            {
+                return InfoBarSeverity.Informational;
+            }
+        }
+
+        /// <summary>
+        /// 获取商店信息结果显示内容
+        /// </summary>
+        private Visibility GetStoreInfoResultKind(StoreInfoResultKind selectedStoreInfoResultKind, StoreInfoResultKind comparedStoreInfoResultKind)
+        {
+            return Equals(selectedStoreInfoResultKind, comparedStoreInfoResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }
