@@ -371,7 +371,7 @@
                 <StackPanel Padding="0" HorizontalAlignment="Stretch">
                     <Grid
                         Height="52"
-                        Padding="44,0,8,0"
+                        Padding="44,0,16,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center">
 
@@ -540,7 +540,7 @@
                 <StackPanel Padding="0" HorizontalAlignment="Stretch">
                     <Grid
                         Height="52"
-                        Padding="44,0,8,0"
+                        Padding="44,0,16,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center">
 
@@ -588,7 +588,7 @@
 
                     <Grid
                         Height="52"
-                        Padding="44,0,8,0"
+                        Padding="44,0,16,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center">
 
