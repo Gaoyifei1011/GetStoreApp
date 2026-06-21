@@ -20,11 +20,11 @@ namespace GetStoreApp.Views.DataTemplates
         {
             if (item is NavigationViewItemModel navigationViewItem)
             {
-                if(navigationViewItem.NavigationViewItemKind is NavigationViewItemKind.Item)
+                if (navigationViewItem.NavigationViewItemKind is NavigationViewItemKind.Item)
                 {
                     return navigationViewItem.NavigationTag is "Settings" ? NavigationViewSettingsItemTemplate : NavigationViewItemTemplate;
                 }
-                else if(navigationViewItem.NavigationViewItemKind is NavigationViewItemKind.Seperator)
+                else if (navigationViewItem.NavigationViewItemKind is NavigationViewItemKind.Seperator)
                 {
                     return NavigationViewItemSeparatorTemplate;
                 }

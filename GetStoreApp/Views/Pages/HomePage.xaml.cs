@@ -85,7 +85,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is ControlItemModel controlItem)
             {
-                if(controlItem.Tag is "Web")
+                if (controlItem.Tag is "Web")
                 {
                     Task.Run(async () =>
                     {
@@ -99,7 +99,7 @@ namespace GetStoreApp.Views.Pages
                         }
                     });
                 }
-                else if(MainWindow.Current.GetSelectedItem(controlItem.NavigationPage, MainWindow.Current.NavigationViewItemMenuItemsCollection) is NavigationViewItemModel navigationViewItem)
+                else if (MainWindow.Current.GetSelectedItem(controlItem.NavigationPage, MainWindow.Current.NavigationViewItemMenuItemsCollection) is NavigationViewItemModel navigationViewItem)
                 {
                     MainWindow.Current.NavigateTo(navigationViewItem.NavigationPage);
                 }
