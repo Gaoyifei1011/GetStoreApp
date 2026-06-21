@@ -89,10 +89,11 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private void OnQueryLinksExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            //if (args.Parameter is string appLink && MainWindow.Current.GetFrameContent() is StorePage storePage && !Equals(storePage.GetCurrentPageType(), storePage.PageList[0]))
-            //{
-            //    storePage.NavigateTo(storePage.PageList[0], new List<string> { "0", null, appLink }, false);
-            //}
+            if (args.Parameter is string appLink)
+            {
+                storePage.StoreControl = StoreControl.StoreSelector;
+                storePage.StoreSelector.QueryLinksText = appLink;
+            }
         }
 
         #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
