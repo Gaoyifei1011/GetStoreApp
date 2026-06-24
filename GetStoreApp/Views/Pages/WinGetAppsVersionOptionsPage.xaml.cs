@@ -587,7 +587,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnAllowHashMismatchToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(AllowHashMismatch, toggleSwitch.IsOn))
             {
                 AllowHashMismatch = toggleSwitch.IsOn;
             }

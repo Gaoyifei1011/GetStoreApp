@@ -285,7 +285,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnCancelAutoUpdateToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(CancelAutoUpdateValue, toggleSwitch.IsOn))
             {
                 CancelAutoUpdateService.SetCancelAutoUpdateValue(toggleSwitch.IsOn);
                 CancelAutoUpdateValue = toggleSwitch.IsOn;
@@ -326,7 +326,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnUseSystemRegionToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(UseSystemRegionValue, toggleSwitch.IsOn))
             {
                 StoreRegionService.SetUseSystemRegionValue(toggleSwitch.IsOn);
                 UseSystemRegionValue = toggleSwitch.IsOn;
@@ -364,7 +364,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnEncryptedPackageToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(EncryptedPackageFilterValue, toggleSwitch.IsOn))
             {
                 LinkFilterService.SetEncryptedPackageFilterValue(toggleSwitch.IsOn);
                 EncryptedPackageFilterValue = toggleSwitch.IsOn;
@@ -376,7 +376,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnBlockMapToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(BlockMapFilterValue, toggleSwitch.IsOn))
             {
                 LinkFilterService.SetBlockMapFilterValue(toggleSwitch.IsOn);
                 BlockMapFilterValue = toggleSwitch.IsOn;

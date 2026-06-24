@@ -236,7 +236,7 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private void OnUseWindowsAppsFolderToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(UseWindowsAppsFolderValue, toggleSwitch.IsOn))
             {
                 UseWindowsAppsFolderValue = toggleSwitch.IsOn;
                 if (SelectedPackageVolume is not null && SelectedPackageVolume.WinRTPackageVolume is not null)

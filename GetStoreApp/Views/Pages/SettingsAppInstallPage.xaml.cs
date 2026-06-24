@@ -99,7 +99,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnAllowUnsignedPackageToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(AllowUnsignedPackageValue, toggleSwitch.IsOn))
             {
                 AppInstallService.SetAllowUnsignedPackageValue(toggleSwitch.IsOn);
                 AllowUnsignedPackageValue = toggleSwitch.IsOn;
@@ -111,7 +111,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnForceAppShutdownToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(ForceAppShutdownValue, toggleSwitch.IsOn))
             {
                 AppInstallService.SetForceAppShutdownValue(toggleSwitch.IsOn);
                 ForceAppShutdownValue = toggleSwitch.IsOn;
@@ -123,7 +123,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnForceTargetAppShutdownToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(ForceTargetAppShutdownValue, toggleSwitch.IsOn))
             {
                 AppInstallService.SetForceTargetAppShutdownValue(toggleSwitch.IsOn);
                 ForceTargetAppShutdownValue = toggleSwitch.IsOn;

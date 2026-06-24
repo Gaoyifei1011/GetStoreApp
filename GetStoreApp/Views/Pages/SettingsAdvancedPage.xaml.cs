@@ -181,7 +181,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnShellMenuToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(ShellMenuValue, toggleSwitch.IsOn))
             {
                 ShellMenuService.SetShellMenuValue(toggleSwitch.IsOn);
                 ShellMenuValue = toggleSwitch.IsOn;
@@ -193,7 +193,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnNotificationToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(NotificationValue, toggleSwitch.IsOn))
             {
                 NotificationService.SetNotification(toggleSwitch.IsOn);
                 NotificationValue = toggleSwitch.IsOn;

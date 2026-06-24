@@ -195,7 +195,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnManualSetDownloadFolderToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(ManualSetDownloadFolder, toggleSwitch.IsOn))
             {
                 DownloadOptionsService.SetManualSetDownloadFolder(toggleSwitch.IsOn);
                 ManualSetDownloadFolder = toggleSwitch.IsOn;

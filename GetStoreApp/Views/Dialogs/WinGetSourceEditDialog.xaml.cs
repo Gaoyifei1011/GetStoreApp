@@ -251,7 +251,7 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private void OnExplicitToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch)
+            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(Explicit, toggleSwitch.IsOn))
             {
                 Explicit = toggleSwitch.IsOn;
             }
