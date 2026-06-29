@@ -29,6 +29,7 @@ namespace GetStoreAppWebView
         /// 应用程序的主入口点
         /// </summary>
         [STAThread]
+        [DynamicWindowsRuntimeCast(typeof(ProtocolActivatedEventArgs))]
         public static void Main()
         {
             ComWrappersSupport.InitializeComWrappers();
@@ -44,7 +45,7 @@ namespace GetStoreAppWebView
 
             if (AppActivationArguments.Kind is ExtendedActivationKind.Protocol && RuntimeHelper.WebView2Type is WebView2Type.None)
             {
-                ProtocolActivatedEventArgs protocolActivatedEventArgs = AppActivationArguments.Data.As<ProtocolActivatedEventArgs>();
+                ProtocolActivatedEventArgs protocolActivatedEventArgs = AppActivationArguments.Data as ProtocolActivatedEventArgs;
                 if (protocolActivatedEventArgs.Data.TryGetValue("AppLink", out object appLinkObj) && appLinkObj is string appLink && !string.IsNullOrEmpty(appLink))
                 {
                     Launcher.LaunchUriAsync(new Uri(appLink)).Wait();

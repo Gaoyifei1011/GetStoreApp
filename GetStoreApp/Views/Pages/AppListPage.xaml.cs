@@ -69,7 +69,6 @@ namespace GetStoreApp.Views.Pages
         private readonly string UninstallFailed5String = ResourceService.GetLocalized("AppList/UninstallFailed5");
         private readonly string UninstallSuccessfullyString = ResourceService.GetLocalized("AppList/UninstallSuccessfully");
         private readonly string YesString = ResourceService.GetLocalized("AppList/Yes");
-
         private bool isInitialized;
         private bool needToRefreshData;
         private PackageManager packageManager;
@@ -274,7 +273,6 @@ namespace GetStoreApp.Views.Pages
             if (!isInitialized)
             {
                 isInitialized = true;
-
                 packageManager = new();
                 packageDeploymentManager = PackageDeploymentManager.GetDefault();
                 await GetAppListAsync();
@@ -288,9 +286,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开应用
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Package))]
         private void OnOpenAppExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter.As<Package>() is Package package)
+            if (args.Parameter is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -309,9 +308,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开应用缓存目录
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Package))]
         private void OnOpenCacheFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter.As<Package>() is Package package)
+            if (args.Parameter is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -333,9 +333,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开应用安装目录
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Package))]
         private void OnOpenInstalledFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter.As<Package>() is Package package)
+            if (args.Parameter is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -354,9 +355,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开应用清单文件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Package))]
         private void OnOpenManifestExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter.As<Package>() is Package package)
+            if (args.Parameter is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -378,9 +380,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开商店
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Package))]
         private void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter.As<Package>() is Package package)
+            if (args.Parameter is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -846,10 +849,10 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is PackageModel package)
             {
-                AppInformation appInformation = new();
-
-                await Task.Run(() =>
+                AppInformation appInformation = await Task.Run(() =>
                 {
+                    AppInformation appInformation = new();
+
                     appInformation.DisplayName = package.DisplayName;
 
                     try
@@ -1032,6 +1035,8 @@ namespace GetStoreApp.Views.Pages
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                     }
+
+                    return appInformation;
                 });
 
                 if (MainWindow.Current.GetFrameContent() is AppManagerPage appManagerPage && Equals(appManagerPage.GetCurrentPageType(), appManagerPage.PageList[0]))
@@ -1373,12 +1378,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 根据排序方式对列表进行排序
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(RadioMenuFlyoutItem))]
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is bool increase)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is bool increase)
             {
                 IsIncrease = increase;
-
                 AppManagerResultKind = AppManagerResultKind.Loading;
                 AppManagerCollection.Clear();
 
@@ -1520,9 +1525,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 根据排序规则对列表进行排序
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(RadioMenuFlyoutItem))]
         private async void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is AppSortRuleKind appSortRuleKind)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind)
             {
                 SelectedAppSortRuleKind = appSortRuleKind;
 
@@ -1681,11 +1687,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 根据签名规则进行过滤
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(PackageSignatureKind)), DynamicWindowsRuntimeCast(typeof(ToggleButton))]
         private void OnSignatureRuleClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleButton>() is ToggleButton toggleButton && toggleButton.Tag is not null)
+            if (sender is ToggleButton toggleButton && toggleButton.Tag is PackageSignatureKind packageSignatureKind)
             {
-                PackageSignatureKind signatureKind = toggleButton.Tag.As<PackageSignatureKind>();
+                PackageSignatureKind signatureKind = packageSignatureKind;
 
                 if (signatureKind is PackageSignatureKind.Store)
                 {

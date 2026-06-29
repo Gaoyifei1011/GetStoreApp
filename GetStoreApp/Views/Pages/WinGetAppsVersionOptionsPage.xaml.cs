@@ -445,6 +445,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 下载应用
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(PackageInstallScope)), DynamicWindowsRuntimeCast(typeof(ProcessorArchitecture))]
         private async void OnDownloadClicked(object sender, RoutedEventArgs args)
         {
             PackageOperation.DownloadOptions = await Task.Run(() =>
@@ -452,10 +453,10 @@ namespace GetStoreApp.Views.Pages
                 DownloadOptions downloadOptions = WinGetFactoryHelper.CreateDownloadOptions();
                 downloadOptions.AcceptPackageAgreements = true;
                 downloadOptions.AllowHashMismatch = AllowHashMismatch;
-                downloadOptions.Architecture = PackageArchitecture.SelectedValue.As<ProcessorArchitecture>();
+                downloadOptions.Architecture = (ProcessorArchitecture)PackageArchitecture.SelectedValue;
                 downloadOptions.DownloadDirectory = PackageDownloadPath;
                 downloadOptions.PackageVersionId = PackageOperation.PackageVersionId;
-                downloadOptions.Scope = PackageInstallScope.SelectedValue.As<PackageInstallScope>();
+                downloadOptions.Scope = (PackageInstallScope)PackageInstallScope.SelectedValue;
                 downloadOptions.SkipDependencies = false;
                 return downloadOptions;
             });
@@ -467,6 +468,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 复制下载命令信息
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ProcessorArchitecture))]
         private async void OnCopyDownloadTextClicked(object sender, RoutedEventArgs args)
         {
             string downloadCommand = await Task.Run(() =>
@@ -479,7 +481,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(PackageArchitecture, PackageArchitectureList[0]))
                 {
                     argsList.Add("--architecture");
-                    argsList.Add(string.Format(@"""{0}""", Convert.ToString(PackageArchitecture.SelectedValue.As<ProcessorArchitecture>())));
+                    argsList.Add(string.Format(@"""{0}""", Convert.ToString((ProcessorArchitecture)PackageArchitecture.SelectedValue)));
                 }
 
                 if (!string.IsNullOrEmpty(PackageDownloadPath))
@@ -525,6 +527,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 使用命令下载当前版本应用
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ProcessorArchitecture))]
         private async void OnDownloadWithCmdClicked(object sender, RoutedEventArgs args)
         {
             string downloadParameter = await Task.Run(() =>
@@ -537,7 +540,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(PackageArchitecture, PackageArchitectureList[0]))
                 {
                     argsList.Add("--architecture");
-                    argsList.Add(string.Format(@"""{0}""", Convert.ToString(PackageArchitecture.As<ProcessorArchitecture>())));
+                    argsList.Add(string.Format(@"""{0}""", Convert.ToString((ProcessorArchitecture)PackageArchitecture.SelectedValue)));
                 }
 
                 if (!string.IsNullOrEmpty(PackageDownloadPath))
@@ -585,9 +588,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 是否跳过哈希检验选择发生改变时触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnAllowHashMismatchToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(AllowHashMismatch, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(AllowHashMismatch, toggleSwitch.IsOn))
             {
                 AllowHashMismatch = toggleSwitch.IsOn;
             }
@@ -636,9 +640,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 修改应用下载路径
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(MenuFlyoutItem))]
         private async void OnChangePackageDownloadPathClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<MenuFlyoutItem>().Tag is string tag)
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is string tag)
             {
                 switch (tag)
                 {
@@ -686,6 +691,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 安装当前版本应用
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(PackageInstallMode)), DynamicWindowsRuntimeCast(typeof(PackageInstallScope))]
         private async void OnInstallClicked(object sender, RoutedEventArgs args)
         {
             PackageOperation.InstallOptions = await Task.Run(() =>
@@ -698,8 +704,8 @@ namespace GetStoreApp.Views.Pages
                 installOptions.BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck;
                 installOptions.Force = ForceInstall;
                 installOptions.LogOutputPath = LogService.WinGetFolderPath;
-                installOptions.PackageInstallMode = PackageInstallMode.SelectedValue.As<PackageInstallMode>();
-                installOptions.PackageInstallScope = PackageInstallScope.As<PackageInstallScope>();
+                installOptions.PackageInstallMode = (PackageInstallMode)PackageInstallMode.SelectedValue;
+                installOptions.PackageInstallScope = (PackageInstallScope)PackageInstallScope.SelectedValue;
                 installOptions.PackageVersionId = PackageOperation.PackageVersionId;
                 installOptions.PreferredInstallLocation = PackageInstallPath;
                 installOptions.SkipDependencies = false;
@@ -876,25 +882,37 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 跳过商店策略检查选项
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnBypassIsStoreClientBlockedPolicyCheckToggled(object sender, RoutedEventArgs args)
         {
-            BypassIsStoreClientBlockedPolicyCheck = sender.As<ToggleSwitch>().IsOn;
+            if (sender is ToggleSwitch toggleSwitch && !Equals(BypassIsStoreClientBlockedPolicyCheck, toggleSwitch.IsOn))
+            {
+                BypassIsStoreClientBlockedPolicyCheck = toggleSwitch.IsOn;
+            }
         }
 
         /// <summary>
         /// 是否允许升级到某一个未知版本
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnAllowUpgradeToUnknownVersionToggled(object sender, RoutedEventArgs args)
         {
-            AllowUpgradeToUnknownVersion = sender.As<ToggleSwitch>().IsOn;
+            if (sender is ToggleSwitch toggleSwitch && !Equals(AllowUpgradeToUnknownVersion, toggleSwitch.IsOn))
+            {
+                AllowUpgradeToUnknownVersion = toggleSwitch.IsOn;
+            }
         }
 
         /// <summary>
         /// 是否强制安装 / 修复
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnForceInstallToggled(object sender, RoutedEventArgs args)
         {
-            ForceInstall = sender.As<ToggleSwitch>().IsOn;
+            if (sender is ToggleSwitch toggleSwitch && !Equals(ForceInstall, toggleSwitch.IsOn))
+            {
+                ForceInstall = toggleSwitch.IsOn;
+            }
         }
 
         /// <summary>
@@ -911,9 +929,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 额外安装参数文本框内容发生变化时触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(TextBox))]
         private void OnAdditionalInstallerArgumentsTextChanged(object sender, TextChangedEventArgs args)
         {
-            if (sender.As<TextBox>() is TextBox textBox)
+            if (sender is TextBox textBox)
             {
                 AdditionalInstallerArguments = textBox.Text;
             }
@@ -964,9 +983,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 允许的处理器架构发生更改时触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ProcessorArchitecture)), DynamicWindowsRuntimeCast(typeof(ToggleButton))]
         private void OnProcessorArchitectureClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleButton>().Tag.As<ProcessorArchitecture>() is ProcessorArchitecture processorArchitecture)
+            if (sender is ToggleButton toggleButton && toggleButton.Tag is ProcessorArchitecture processorArchitecture)
             {
                 switch (processorArchitecture)
                 {
@@ -992,6 +1012,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 修复当前版本应用
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(PackageRepairMode)), DynamicWindowsRuntimeCast(typeof(PackageRepairScope))]
         private async void OnRepairClicked(object sender, RoutedEventArgs args)
         {
             PackageOperation.RepairOptions = await Task.Run(() =>
@@ -1002,8 +1023,8 @@ namespace GetStoreApp.Views.Pages
                 repairOptions.BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck;
                 repairOptions.Force = ForceInstall;
                 repairOptions.LogOutputPath = LogService.WinGetFolderPath;
-                repairOptions.PackageRepairMode = PackageRepairMode.SelectedValue.As<PackageRepairMode>();
-                repairOptions.PackageRepairScope = PackageRepairScope.SelectedValue.As<PackageRepairScope>();
+                repairOptions.PackageRepairMode = (PackageRepairMode)PackageRepairMode.SelectedValue;
+                repairOptions.PackageRepairScope = (PackageRepairScope)PackageRepairScope.SelectedValue;
                 repairOptions.PackageVersionId = PackageOperation.PackageVersionId;
                 return repairOptions;
             });
@@ -1157,6 +1178,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 更新当前版本应用
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(PackageInstallMode)), DynamicWindowsRuntimeCast(typeof(PackageInstallScope))]
         private async void OnUpgradeClicked(object sender, RoutedEventArgs args)
         {
             PackageOperation.InstallOptions = await Task.Run(() =>
@@ -1170,8 +1192,8 @@ namespace GetStoreApp.Views.Pages
                     BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck,
                     Force = ForceInstall,
                     LogOutputPath = LogService.WinGetFolderPath,
-                    PackageInstallMode = PackageInstallMode.SelectedValue.As<PackageInstallMode>(),
-                    PackageInstallScope = PackageInstallScope.SelectedValue.As<PackageInstallScope>(),
+                    PackageInstallMode = (PackageInstallMode)PackageInstallMode.SelectedValue,
+                    PackageInstallScope = (PackageInstallScope)PackageInstallScope.SelectedValue,
                     PackageVersionId = PackageOperation.PackageVersionId,
                     PreferredInstallLocation = PackageInstallPath,
                     SkipDependencies = false,

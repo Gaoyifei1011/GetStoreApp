@@ -434,9 +434,10 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 查询链接输入框获取焦点后触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(AutoSuggestBox))]
         private void OnQueryLinksGotFocus(object sender, RoutedEventArgs args)
         {
-            if (QueryLinksHistoryCollection.Count > 0 && sender.As<AutoSuggestBox>() is AutoSuggestBox autoSuggestBox)
+            if (QueryLinksHistoryCollection.Count > 0 && sender is AutoSuggestBox autoSuggestBox)
             {
                 autoSuggestBox.IsSuggestionListOpen = true;
             }
@@ -457,9 +458,10 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 查询链接输入框失去焦点后触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(AutoSuggestBox))]
         private void OnQueryLinksLostFocus(object sender, RoutedEventArgs args)
         {
-            if (sender.As<AutoSuggestBox>() is AutoSuggestBox autoSuggestBox)
+            if (sender is AutoSuggestBox autoSuggestBox)
             {
                 autoSuggestBox.IsSuggestionListOpen = false;
             }
@@ -492,9 +494,13 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 查询链接输入框内容发生改变时响应的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(AutoSuggestBox))]
         private void OnQueryLinksTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            QueryLinksText = sender.As<AutoSuggestBox>().Text;
+            if (sender is AutoSuggestBox autoSuggestBox)
+            {
+                QueryLinksText = autoSuggestBox.Text;
+            }
         }
 
         /// <summary>
@@ -566,9 +572,10 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 搜索应用输入框获取焦点后触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(AutoSuggestBox))]
         private void OnSearchAppsGotFocus(object sender, RoutedEventArgs args)
         {
-            if (SearchAppsHistoryCollection.Count > 0 && sender.As<AutoSuggestBox>() is AutoSuggestBox autoSuggestBox)
+            if (SearchAppsHistoryCollection.Count > 0 && sender is AutoSuggestBox autoSuggestBox)
             {
                 autoSuggestBox.IsSuggestionListOpen = true;
             }
@@ -589,9 +596,10 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 搜索应用输入框失去焦点后触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(AutoSuggestBox))]
         private void OnSearchAppsLostFocus(object sender, RoutedEventArgs args)
         {
-            if (sender.As<AutoSuggestBox>() is AutoSuggestBox autoSuggestBox)
+            if (sender is AutoSuggestBox autoSuggestBox)
             {
                 autoSuggestBox.IsSuggestionListOpen = false;
             }
@@ -622,9 +630,13 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 搜索应用文本框内容发生改变时响应的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(AutoSuggestBox))]
         private void OnSearchAppsTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            SearchAppsText = sender.As<AutoSuggestBox>().Text;
+            if (sender is AutoSuggestBox autoSuggestBox)
+            {
+                SearchAppsText = autoSuggestBox.Text;
+            }
         }
 
         /// <summary>
@@ -682,14 +694,6 @@ namespace GetStoreApp.Views.UserControls
                 SelectedChannel = Convert.ToInt32(dataList[1]) is -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(dataList[1])];
                 QueryLinksText = dataList[2] is "PlaceHolderText" ? string.Empty : dataList[2];
             }
-        }
-
-        /// <summary>
-        /// 获取商店选择器选择栏可使用状态
-        /// </summary>
-        private bool GetStoreSelectorBarIsEnabled(bool isQueryingLinks, bool isSearchingApps)
-        {
-            return !(isQueryingLinks || isSearchingApps);
         }
 
         /// <summary>

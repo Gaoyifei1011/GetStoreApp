@@ -97,36 +97,42 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 是否允许安装未签名的安装包
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnAllowUnsignedPackageToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(AllowUnsignedPackageValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(AllowUnsignedPackageValue, toggleSwitch.IsOn))
             {
-                AppInstallService.SetAllowUnsignedPackageValue(toggleSwitch.IsOn);
                 AllowUnsignedPackageValue = toggleSwitch.IsOn;
+                AppInstallService.SetAllowUnsignedPackageValue(toggleSwitch.IsOn);
+                AllowUnsignedPackageValue = AppInstallService.AllowUnsignedPackageValue;
             }
         }
 
         /// <summary>
         /// 是否在安装应用时强制关闭与包关联的进程
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnForceAppShutdownToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(ForceAppShutdownValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(ForceAppShutdownValue, toggleSwitch.IsOn))
             {
-                AppInstallService.SetForceAppShutdownValue(toggleSwitch.IsOn);
                 ForceAppShutdownValue = toggleSwitch.IsOn;
+                AppInstallService.SetForceAppShutdownValue(toggleSwitch.IsOn);
+                ForceAppShutdownValue = AppInstallService.ForceAppShutdownValue;
             }
         }
 
         /// <summary>
         /// 是否在安装应用时强制关闭与包关联的进程
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnForceTargetAppShutdownToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(ForceTargetAppShutdownValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(ForceTargetAppShutdownValue, toggleSwitch.IsOn))
             {
-                AppInstallService.SetForceTargetAppShutdownValue(toggleSwitch.IsOn);
                 ForceTargetAppShutdownValue = toggleSwitch.IsOn;
+                AppInstallService.SetForceTargetAppShutdownValue(toggleSwitch.IsOn);
+                ForceTargetAppShutdownValue = AppInstallService.ForceTargetAppShutdownValue;
             }
         }
 

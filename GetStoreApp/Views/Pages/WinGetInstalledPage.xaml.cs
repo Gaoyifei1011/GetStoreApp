@@ -364,9 +364,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 根据排序方式对列表进行排序
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(RadioMenuFlyoutItem))]
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is bool increase && (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult))
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is bool increase && (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult))
             {
                 IsIncrease = increase;
                 if (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult)
@@ -379,9 +380,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 根据排序规则对列表进行排序
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(RadioMenuFlyoutItem))]
         private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is AppSortRuleKind appSortRuleKind && (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult))
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind && (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult))
             {
                 SelectedAppSortRuleKind = appSortRuleKind;
                 if (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult)
@@ -394,17 +396,22 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 是否强制卸载
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnForceUninstallToggled(object sender, RoutedEventArgs args)
         {
-            ForceUninstall = sender.As<ToggleSwitch>().IsOn;
+            if (sender is ToggleSwitch toggleSwitch && !Equals(ForceUninstall, toggleSwitch.IsOn))
+            {
+                ForceUninstall = toggleSwitch.IsOn;
+            }
         }
 
         /// <summary>
         /// 应用卸载范围发生更改时触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(RadioButtons))]
         private void OnPackageUninstallScopeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender.As<RadioButtons>() is RadioButtons radioButtons && radioButtons.SelectedIndex >= 0)
+            if (sender is RadioButtons radioButtons && radioButtons.SelectedIndex >= 0)
             {
                 SelectedPackageUninstallScopeIndex = radioButtons.SelectedIndex;
             }
@@ -413,9 +420,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用卸载模式发生更改时触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(RadioButtons))]
         private void OnPackageUninstallModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender.As<RadioButtons>() is RadioButtons radioButtons && radioButtons.SelectedIndex >= 0)
+            if (sender is RadioButtons radioButtons && radioButtons.SelectedIndex >= 0)
             {
                 SelectedPackageUninstallModeIndex = radioButtons.SelectedIndex;
             }

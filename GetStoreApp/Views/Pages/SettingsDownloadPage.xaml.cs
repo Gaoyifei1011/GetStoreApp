@@ -110,9 +110,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 修改下载文件存放目录
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(MenuFlyoutItem))]
         private async void OnDownloadChangeFolderClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<MenuFlyoutItem>().Tag is string tag)
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is string tag)
             {
                 switch (tag)
                 {
@@ -193,12 +194,14 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 设置手动设置下载目录
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnManualSetDownloadFolderToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(ManualSetDownloadFolder, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(ManualSetDownloadFolder, toggleSwitch.IsOn))
             {
-                DownloadOptionsService.SetManualSetDownloadFolder(toggleSwitch.IsOn);
                 ManualSetDownloadFolder = toggleSwitch.IsOn;
+                DownloadOptionsService.SetManualSetDownloadFolder(toggleSwitch.IsOn);
+                ManualSetDownloadFolder = DownloadOptionsService.ManualSetDownloadFolder;
             }
         }
 
@@ -211,6 +214,7 @@ namespace GetStoreApp.Views.Pages
             {
                 DoEngineMode = doEngineMode;
                 DownloadOptionsService.SetDoEngineMode(Convert.ToString(DoEngineMode.SelectedValue));
+                DoEngineMode = DoEngineModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), DownloadOptionsService.DoEngineMode, StringComparison.OrdinalIgnoreCase));
             }
         }
 

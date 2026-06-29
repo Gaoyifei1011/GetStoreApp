@@ -268,9 +268,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 根据排序方式对列表进行排序
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(RadioMenuFlyoutItem))]
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is bool increase && SearchAppsResultKind is SearchAppsResultKind.Successfully)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is bool increase && SearchAppsResultKind is SearchAppsResultKind.Successfully)
             {
                 IsIncrease = increase;
                 SearchAppsResultKind = SearchAppsResultKind.Searching;
@@ -296,9 +297,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 更新应用搜索过滤方式
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(PackageMatchField)), DynamicWindowsRuntimeCast(typeof(RadioMenuFlyoutItem))]
         private void OnPackageMatchFieldClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag.As<PackageMatchField>() is PackageMatchField packageMatchField)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is PackageMatchField packageMatchField)
             {
                 PackageMatchField = packageMatchField;
             }
@@ -307,9 +309,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 更新应用搜索过滤规则
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(PackageFieldMatchOption)), DynamicWindowsRuntimeCast(typeof(RadioMenuFlyoutItem))]
         private void OnPackageFieldMatchOptionClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag.As<PackageFieldMatchOption>() is PackageFieldMatchOption packageFieldMatchOption)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is PackageFieldMatchOption packageFieldMatchOption)
             {
                 PackageFieldMatchOption = packageFieldMatchOption;
             }

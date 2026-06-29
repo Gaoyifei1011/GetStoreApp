@@ -180,20 +180,23 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0)
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is PackageVolumeModel packageVolume && !Equals(SelectedPackageVolume, packageVolume))
             {
-                SelectedPackageVolume = args.AddedItems[0] as PackageVolumeModel;
+                SelectedPackageVolume = packageVolume;
                 IsPrimaryEnabled = true;
-                if (UseWindowsAppsFolderValue && SelectedPackageVolume is not null && SelectedPackageVolume.WinRTPackageVolume is not null)
+                if (SelectedPackageVolume is not null && SelectedPackageVolume.WinRTPackageVolume is not null)
                 {
-                    SelectedFolder = Path.Combine(SelectedPackageVolume.WinRTPackageVolume.MountPoint, "WindowsApps");
-                }
-                else
-                {
-                    if (!string.IsNullOrEmpty(SelectedFolder) && SelectedPackageVolume is not null && SelectedPackageVolume.WinRTPackageVolume is not null)
+                    if (UseWindowsAppsFolderValue)
                     {
-                        string rootPath = Path.GetPathRoot(SelectedFolder);
-                        SelectedFolder = SelectedFolder.Replace(rootPath, SelectedPackageVolume.WinRTPackageVolume.MountPoint);
+                        SelectedFolder = Path.Combine(SelectedPackageVolume.WinRTPackageVolume.MountPoint, "WindowsApps");
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(SelectedFolder))
+                        {
+                            string rootPath = Path.GetPathRoot(SelectedFolder);
+                            SelectedFolder = SelectedFolder.Replace(rootPath, SelectedPackageVolume.WinRTPackageVolume.MountPoint);
+                        }
                     }
                 }
             }
@@ -234,9 +237,10 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 使用 WindowsApps 默认目录
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnUseWindowsAppsFolderToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(UseWindowsAppsFolderValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(UseWindowsAppsFolderValue, toggleSwitch.IsOn))
             {
                 UseWindowsAppsFolderValue = toggleSwitch.IsOn;
                 if (SelectedPackageVolume is not null && SelectedPackageVolume.WinRTPackageVolume is not null)
@@ -249,10 +253,13 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 设置为默认卷
         /// </summary>
-
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnSetDefaultVolumeToggled(object sender, RoutedEventArgs args)
         {
-            SetDefaultVolumeValue = sender.As<ToggleSwitch>().IsOn;
+            if (sender is ToggleSwitch toggleSwitch && !Equals(SetDefaultVolumeValue, toggleSwitch.IsOn))
+            {
+                SetDefaultVolumeValue = toggleSwitch.IsOn;
+            }
         }
 
         /// <summary>

@@ -59,6 +59,7 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 获取查询链接历史记录数据
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
         public static List<HistoryModel> GetQueryLinksData()
         {
             List<HistoryModel> queryLinksHistoryList = [];
@@ -71,7 +72,7 @@ namespace GetStoreApp.Services.History
                 {
                     foreach (KeyValuePair<string, object> queryLinksContainerItem in queryLinksContainer.Values)
                     {
-                        if (queryLinksContainerItem.Key.Length is 32 && queryLinksContainerItem.Value.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
+                        if (queryLinksContainerItem.Key.Length is 32 && queryLinksContainerItem.Value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                         {
                             TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
                             ChannelModel channel = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
@@ -105,6 +106,7 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 获取搜索应用历史记录数据
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
         public static List<HistoryModel> GetSearchAppsData()
         {
             List<HistoryModel> searchAppsHistoryList = [];
@@ -117,7 +119,7 @@ namespace GetStoreApp.Services.History
                 {
                     foreach (KeyValuePair<string, object> searchAppsContainerItem in searchAppsContainer.Values)
                     {
-                        if (searchAppsContainerItem.Key.Length is 32 && searchAppsContainerItem.Value.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
+                        if (searchAppsContainerItem.Key.Length is 32 && searchAppsContainerItem.Value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                         {
                             TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryType"] as string, StringComparison.OrdinalIgnoreCase));
                             ChannelModel channelItem = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryChannel"] as string, StringComparison.OrdinalIgnoreCase));
@@ -211,9 +213,10 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 更新查询链接历史记录数据
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
         public static void UpdateQueryLinksData(HistoryModel historyItem)
         {
-            if (queryLinksContainer.Values.TryGetValue(historyItem.HistoryKey, out object compositeValueObj) && compositeValueObj.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
+            if (queryLinksContainer.Values.TryGetValue(historyItem.HistoryKey, out object compositeValueObj) && compositeValueObj is Windows.Storage.ApplicationDataCompositeValue compositeValue)
             {
                 compositeValue[CreateTimeStamp] = historyItem.CreateTimeStamp;
                 compositeValue[HistoryAppName] = historyItem.HistoryAppName;
@@ -223,9 +226,10 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 更新搜索应用历史记录数据
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
         public static void UpdateSearchAppsData(HistoryModel historyItem)
         {
-            if (searchAppsContainer.Values.TryGetValue(historyItem.HistoryKey, out object compositeValueObj) && compositeValueObj.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
+            if (searchAppsContainer.Values.TryGetValue(historyItem.HistoryKey, out object compositeValueObj) && compositeValueObj is Windows.Storage.ApplicationDataCompositeValue compositeValue)
             {
                 compositeValue[CreateTimeStamp] = historyItem.CreateTimeStamp;
             }

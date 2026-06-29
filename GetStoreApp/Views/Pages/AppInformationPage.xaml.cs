@@ -423,9 +423,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开安装目录
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Package))]
         private void OnOpenFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter.As<Package>() is Package package)
+            if (args.Parameter is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -444,9 +445,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开商店
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Package))]
         private void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter.As<Package>() is Package package)
+            if (args.Parameter is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -467,10 +469,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnPinToDesktopExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            bool isPinnedSuccessfully = false;
-
-            await Task.Run(() =>
+            bool isPinnedSuccessfully = await Task.Run(() =>
             {
+                bool isPinnedSuccessfully = false;
+
                 try
                 {
                     if (StoreConfiguration.IsPinToDesktopSupported())
@@ -483,6 +485,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OnPinToDesktopExecuteRequested), 1, e);
                 }
+                return isPinnedSuccessfully;
             });
 
             await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Desktop, isPinnedSuccessfully));
@@ -495,10 +498,10 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is AppListEntryModel appListEntry)
             {
-                bool isPinnedSuccessfully = false;
-
-                await Task.Run(async () =>
+                bool isPinnedSuccessfully = await Task.Run(async () =>
                 {
+                    bool isPinnedSuccessfully = false;
+
                     try
                     {
                         StartScreenManager startScreenManager = StartScreenManager.GetDefault();
@@ -509,6 +512,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OnPinToStartScreenExecuteRequested), 1, e);
                     }
+                    return isPinnedSuccessfully;
                 });
 
                 await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.StartScreen, isPinnedSuccessfully));

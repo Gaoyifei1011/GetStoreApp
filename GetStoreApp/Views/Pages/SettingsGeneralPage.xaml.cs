@@ -233,6 +233,7 @@ namespace GetStoreApp.Views.Pages
             {
                 Theme = theme;
                 ThemeService.SetTheme(Convert.ToString(Theme.SelectedValue));
+                Theme = ThemeList.Find(item => Equals(Convert.ToString(item.SelectedValue), ThemeService.AppTheme));
             }
         }
 
@@ -245,6 +246,7 @@ namespace GetStoreApp.Views.Pages
             {
                 Backdrop = backdrop;
                 BackdropService.SetBackdrop(Convert.ToString(Backdrop.SelectedValue));
+                Backdrop = BackdropList.Find(item => Equals(Convert.ToString(item.SelectedValue), BackdropService.AppBackdrop));
                 AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Convert.ToString(Backdrop.SelectedValue), Convert.ToString(BackdropList[0].SelectedValue));
 
                 if (Equals(Backdrop, BackdropList[0]))
@@ -294,12 +296,14 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 是否开启始终显示背景色
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnAlwaysShowBackdropToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(AlwaysShowBackdropValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(AlwaysShowBackdropValue, toggleSwitch.IsOn))
             {
-                AlwaysShowBackdropService.SetAlwaysShowBackdropValue(toggleSwitch.IsOn);
                 AlwaysShowBackdropValue = toggleSwitch.IsOn;
+                AlwaysShowBackdropService.SetAlwaysShowBackdropValue(toggleSwitch.IsOn);
+                AlwaysShowBackdropValue = AlwaysShowBackdropService.AlwaysShowBackdropValue;
             }
         }
 
@@ -311,8 +315,15 @@ namespace GetStoreApp.Views.Pages
             if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel language && !Equals(AppLanguage, language))
             {
                 AppLanguage = language;
-
                 LanguageService.SetLanguage(LanguageService.LanguageList.Find(item => string.Equals(Convert.ToString(AppLanguage.SelectedValue), item.Key)));
+                foreach (ComboBoxItemModel languageItem in LanguageCollection)
+                {
+                    if (string.Equals(Convert.ToString(languageItem.SelectedValue), LanguageService.AppLanguage.Key, StringComparison.OrdinalIgnoreCase))
+                    {
+                        AppLanguage = languageItem;
+                        break;
+                    }
+                }
                 await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.LanguageChange));
             }
         }
@@ -320,12 +331,14 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 是否开启应用窗口置顶
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnTopMostToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(TopMostValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(TopMostValue, toggleSwitch.IsOn))
             {
-                TopMostService.SetTopMostValue(toggleSwitch.IsOn);
                 TopMostValue = toggleSwitch.IsOn;
+                TopMostService.SetTopMostValue(toggleSwitch.IsOn);
+                TopMostValue = TopMostService.TopMostValue;
             }
         }
 

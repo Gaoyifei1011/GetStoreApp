@@ -14,6 +14,7 @@ namespace GetStoreApp.Helpers.Controls
         /// <summary>
         /// 寻找当前控件的子控件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(FrameworkElement))]
         public static T FindDescendant<T>(DependencyObject parent, string childName = null) where T : DependencyObject
         {
             if (parent is not null)
@@ -24,7 +25,7 @@ namespace GetStoreApp.Helpers.Controls
 
                     try
                     {
-                        if (child is T result && (childName is null || child.As<FrameworkElement>() is FrameworkElement frameworkElement && string.Equals(frameworkElement.Name, childName)))
+                        if (child is T result && (childName is null || child is FrameworkElement frameworkElement && string.Equals(frameworkElement.Name, childName)))
                         {
                             return result;
                         }

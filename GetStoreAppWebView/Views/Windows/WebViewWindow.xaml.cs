@@ -217,6 +217,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        [DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
         public WebViewWindow()
         {
             InitializeComponent();
@@ -224,7 +225,7 @@ namespace GetStoreAppWebView.Views.Windows
             // 窗口部分初始化
             WebTitle = WebTitleString;
             WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
-            overlappedPresenter = AppWindow.Presenter.As<OverlappedPresenter>();
+            overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
             AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
@@ -241,7 +242,7 @@ namespace GetStoreAppWebView.Views.Windows
             inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
 
             // 标题栏和右键菜单设置
-            SetClassicMenuTheme(Content.As<FrameworkElement>().ActualTheme);
+            SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
 
             // 为应用主窗口添加窗口过程
             webViewWindowSubClassProc = new SUBCLASSPROC(WebViewWindowSubClassProc);
@@ -396,9 +397,10 @@ namespace GetStoreAppWebView.Views.Windows
         /// <summary>
         /// 窗口移动
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(MenuFlyout)), DynamicWindowsRuntimeCast(typeof(MenuFlyoutItem))]
         private void OnMoveClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<MenuFlyoutItem>().Tag.As<MenuFlyout>() is MenuFlyout menuFlyout)
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
                 User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MOVE, 0);
@@ -408,9 +410,10 @@ namespace GetStoreAppWebView.Views.Windows
         /// <summary>
         /// 窗口大小
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(MenuFlyout)), DynamicWindowsRuntimeCast(typeof(MenuFlyoutItem))]
         private void OnSizeClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<MenuFlyoutItem>().Tag.As<MenuFlyout>() is MenuFlyout menuFlyout)
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
                 User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_SIZE, 0);
@@ -457,6 +460,7 @@ namespace GetStoreAppWebView.Views.Windows
         /// <summary>
         /// 内容加载完成后触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(ProtocolActivatedEventArgs))]
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
             CoreWebView2Environment coreWebView2Environment = null;
@@ -480,7 +484,7 @@ namespace GetStoreAppWebView.Views.Windows
                 await WebViewBrowser.EnsureCoreWebView2Async(coreWebView2Environment);
                 if (Program.AppActivationArguments.Kind is ExtendedActivationKind.Protocol)
                 {
-                    ProtocolActivatedEventArgs protocolActivatedEventArgs = Program.AppActivationArguments.Data.As<ProtocolActivatedEventArgs>();
+                    ProtocolActivatedEventArgs protocolActivatedEventArgs = Program.AppActivationArguments.Data as ProtocolActivatedEventArgs;
                     if (protocolActivatedEventArgs.Data is ValueSet protocolData && protocolData.TryGetValue("AppLink", out object appLinkObj) && appLinkObj is string appLink && !string.IsNullOrEmpty(appLink))
                     {
                         WebViewBrowser.CoreWebView2.Navigate(appLink);
@@ -500,7 +504,7 @@ namespace GetStoreAppWebView.Views.Windows
             }
 
             // 设置标题栏主题
-            SetTitleBarTheme(Content.As<FrameworkElement>().ActualTheme);
+            SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
         }
 
         /// <summary>

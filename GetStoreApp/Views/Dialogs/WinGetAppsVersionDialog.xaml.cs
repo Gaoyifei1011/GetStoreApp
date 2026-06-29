@@ -73,9 +73,10 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 单击痕迹栏条目时发生的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ContentLinkInfo))]
         private void OnItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
         {
-            if (args.Item.As<ContentLinkInfo>() is ContentLinkInfo contentLinkInfo && BreadCollection.Count is 2 && string.Equals(contentLinkInfo.SecondaryText, BreadCollection[0].SecondaryText))
+            if (args.Item is ContentLinkInfo contentLinkInfo && BreadCollection.Count is 2 && string.Equals(contentLinkInfo.SecondaryText, BreadCollection[0].SecondaryText))
             {
                 NavigateTo(PageList[0], null, false);
             }

@@ -81,6 +81,7 @@ namespace GetStoreApp.Views.Pages
             {
                 WinGetSource = wingetSource;
                 WinGetConfigService.SetWinGetSource(Convert.ToString(WinGetSource.SelectedValue));
+                WinGetSource = WinGetSourceList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), WinGetConfigService.WinGetSource, StringComparison.OrdinalIgnoreCase));
             }
         }
 

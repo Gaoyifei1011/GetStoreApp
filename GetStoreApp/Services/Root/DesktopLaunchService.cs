@@ -43,6 +43,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 处理桌面应用启动的方式
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(LaunchActivatedEventArgs)), DynamicWindowsRuntimeCast(typeof(ShareTargetActivatedEventArgs)), DynamicWindowsRuntimeCast(typeof(ProtocolActivatedEventArgs)), DynamicWindowsRuntimeCast(typeof(ToastNotificationActivatedEventArgs))]
         public static async Task InitializeLaunchAsync(AppActivationArguments appActivationArguments, bool isLaunched)
         {
             // 正常参数启动
@@ -51,7 +52,7 @@ namespace GetStoreApp.Services.Root
                 string executableFileName = Path.GetFileName(Environment.ProcessPath);
                 List<string> argumentsList = [];
                 AppLaunchArguments appLaunchArguments = new();
-                LaunchActivatedEventArgs launchActivatedEventArgs = appActivationArguments.Data is IInspectable inspectable ? LaunchActivatedEventArgs.FromAbi(inspectable.ThisPtr) : appActivationArguments.Data.As<LaunchActivatedEventArgs>();
+                LaunchActivatedEventArgs launchActivatedEventArgs = appActivationArguments.Data is IInspectable inspectable ? LaunchActivatedEventArgs.FromAbi(inspectable.ThisPtr) : appActivationArguments.Data as LaunchActivatedEventArgs;
 
                 // 解析参数
                 if (!string.IsNullOrEmpty(launchActivatedEventArgs.Arguments))
@@ -165,7 +166,7 @@ namespace GetStoreApp.Services.Root
             // 通过共享目标启动
             else if (appActivationArguments.Kind is ExtendedActivationKind.ShareTarget)
             {
-                ShareTargetActivatedEventArgs shareTargetActivatedEventArgs = appActivationArguments.Data.As<ShareTargetActivatedEventArgs>();
+                ShareTargetActivatedEventArgs shareTargetActivatedEventArgs = appActivationArguments.Data as ShareTargetActivatedEventArgs;
                 ShareOperation shareOperation = shareTargetActivatedEventArgs.ShareOperation;
                 shareOperation.ReportCompleted();
 
@@ -191,7 +192,7 @@ namespace GetStoreApp.Services.Root
             // 通过协议启动
             else if (appActivationArguments.Kind is ExtendedActivationKind.Protocol)
             {
-                ProtocolActivatedEventArgs protocolActivatedEventArgs = appActivationArguments.Data.As<ProtocolActivatedEventArgs>();
+                ProtocolActivatedEventArgs protocolActivatedEventArgs = appActivationArguments.Data as ProtocolActivatedEventArgs;
                 AppLaunchArguments appLaunchArguments = new()
                 {
                     AppLaunchKind = AppLaunchKind.Protocol,
@@ -208,7 +209,7 @@ namespace GetStoreApp.Services.Root
             // 应用通知启动
             else if (appActivationArguments.Kind is ExtendedActivationKind.ToastNotification)
             {
-                ToastNotificationActivatedEventArgs toastNotificationActivatedEventArgs = appActivationArguments.Data.As<ToastNotificationActivatedEventArgs>();
+                ToastNotificationActivatedEventArgs toastNotificationActivatedEventArgs = appActivationArguments.Data as ToastNotificationActivatedEventArgs;
                 await ToastNotificationService.HandleToastNotificationAsync(toastNotificationActivatedEventArgs.Argument, isLaunched);
             }
             else

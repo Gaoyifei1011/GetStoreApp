@@ -1,8 +1,6 @@
-﻿using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models;
+﻿using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
-using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -253,6 +251,7 @@ namespace GetStoreApp.Views.Pages
             {
                 QueryLinksMode = queryLinksMode;
                 QueryLinksModeService.SetQueryLinksMode(Convert.ToString(QueryLinksMode.SelectedValue));
+                QueryLinksMode = QueryLinksModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), QueryLinksModeService.QueryLinksMode, StringComparison.OrdinalIgnoreCase));
             }
         }
 
@@ -265,6 +264,7 @@ namespace GetStoreApp.Views.Pages
             {
                 AppLinkOpenMode = appLinkOpenMode;
                 AppLinkOpenModeService.SetAppLinkOpenMode(Convert.ToString(AppLinkOpenMode.SelectedValue));
+                AppLinkOpenMode = AppLinkOpenModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), AppLinkOpenModeService.AppLinkOpenMode, StringComparison.OrdinalIgnoreCase));
             }
         }
 
@@ -277,18 +277,21 @@ namespace GetStoreApp.Views.Pages
             {
                 InstallMode = installMode;
                 InstallModeService.SetInstallMode(Convert.ToString(InstallMode.SelectedValue));
+                InstallMode = InstallModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), InstallModeService.InstallMode, StringComparison.OrdinalIgnoreCase));
             }
         }
 
         /// <summary>
         /// 设置是否取消自动更新应用
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnCancelAutoUpdateToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(CancelAutoUpdateValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(CancelAutoUpdateValue, toggleSwitch.IsOn))
             {
-                CancelAutoUpdateService.SetCancelAutoUpdateValue(toggleSwitch.IsOn);
                 CancelAutoUpdateValue = toggleSwitch.IsOn;
+                CancelAutoUpdateService.SetCancelAutoUpdateValue(toggleSwitch.IsOn);
+                CancelAutoUpdateValue = CancelAutoUpdateService.CancelAutoUpdateValue;
             }
         }
 
@@ -324,12 +327,14 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 设置是否使用系统默认区域
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnUseSystemRegionToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(UseSystemRegionValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(UseSystemRegionValue, toggleSwitch.IsOn))
             {
-                StoreRegionService.SetUseSystemRegionValue(toggleSwitch.IsOn);
                 UseSystemRegionValue = toggleSwitch.IsOn;
+                StoreRegionService.SetUseSystemRegionValue(toggleSwitch.IsOn);
+                UseSystemRegionValue = StoreRegionService.UseSystemRegionValue;
 
                 if (UseSystemRegionValue)
                 {
@@ -356,30 +361,42 @@ namespace GetStoreApp.Views.Pages
             {
                 StoreRegion = storeRegion;
                 StoreRegionService.SetRegion(StoreRegion.GeographicRegion);
+                foreach (StoreRegionModel storeRegionItem in StoreRegionCollection)
+                {
+                    if (string.Equals(StoreRegionService.StoreRegion.CodeTwoLetter, storeRegionItem.CodeTwoLetter))
+                    {
+                        StoreRegion = storeRegionItem;
+                        break;
+                    }
+                }
             }
         }
 
         /// <summary>
         /// 设置是否过滤加密包文件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnEncryptedPackageToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(EncryptedPackageFilterValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(EncryptedPackageFilterValue, toggleSwitch.IsOn))
             {
-                LinkFilterService.SetEncryptedPackageFilterValue(toggleSwitch.IsOn);
                 EncryptedPackageFilterValue = toggleSwitch.IsOn;
+                LinkFilterService.SetEncryptedPackageFilterValue(toggleSwitch.IsOn);
+                EncryptedPackageFilterValue = LinkFilterService.EncryptedPackageFilterValue;
             }
         }
 
         /// <summary>
         /// 设置是否过滤包块映射文件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnBlockMapToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(BlockMapFilterValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(BlockMapFilterValue, toggleSwitch.IsOn))
             {
-                LinkFilterService.SetBlockMapFilterValue(toggleSwitch.IsOn);
                 BlockMapFilterValue = toggleSwitch.IsOn;
+                LinkFilterService.SetBlockMapFilterValue(toggleSwitch.IsOn);
+                BlockMapFilterValue = LinkFilterService.BlockMapFilterValue;
             }
         }
 

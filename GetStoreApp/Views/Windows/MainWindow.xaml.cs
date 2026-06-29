@@ -177,6 +177,7 @@ namespace GetStoreApp.Views.Windows
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        [DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
         public MainWindow()
         {
             Current = this;
@@ -184,7 +185,7 @@ namespace GetStoreApp.Views.Windows
 
             // 窗口部分初始化
             WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
-            overlappedPresenter = AppWindow.Presenter.As<OverlappedPresenter>();
+            overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
             AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
@@ -207,7 +208,7 @@ namespace GetStoreApp.Views.Windows
             DesktopLaunchService.AppLaunchActivated += OnAppLaunchActivated;
 
             // 标题栏和右键菜单设置
-            SetClassicMenuTheme(Content.As<FrameworkElement>().ActualTheme);
+            SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
 
             // 为应用主窗口添加窗口过程
             mainWindowSubClassProc = new SUBCLASSPROC(MainWindowSubClassProc);
@@ -507,9 +508,10 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 窗口移动
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(MenuFlyout)), DynamicWindowsRuntimeCast(typeof(MenuFlyoutItem))]
         private void OnMoveClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<MenuFlyoutItem>().Tag.As<MenuFlyout>() is MenuFlyout menuFlyout)
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
                 User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MOVE, 0);
@@ -519,9 +521,10 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 窗口大小
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(MenuFlyout)), DynamicWindowsRuntimeCast(typeof(MenuFlyoutItem))]
         private void OnSizeClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<MenuFlyoutItem>().Tag.As<MenuFlyout>() is MenuFlyout menuFlyout)
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
                 User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_SIZE, 0);
@@ -777,11 +780,11 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 导航控件加载完成后初始化内容，初始化导航控件属性、屏幕缩放比例值和应用的背景色
         /// </summary>
-        [DynamicWindowsRuntimeCast(typeof(NavigationViewItem))]
+        [DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(NavigationViewItem))]
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
             // 设置标题栏主题
-            SetTitleBarTheme(Content.As<FrameworkElement>().ActualTheme);
+            SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
 
             SelectedItem = NavigationViewItemMenuItemsCollection[0];
             NavigateTo(typeof(HomePage));
@@ -1206,11 +1209,12 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 使用教学提示显示应用内通知
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Grid))]
         public async Task ShowNotificationAsync(TeachingTip teachingTip, int duration = 2000)
         {
             try
             {
-                if (teachingTip is not null && MainPage.Content.As<Grid>() is Grid grid)
+                if (teachingTip is not null && MainPage.Content is Grid grid)
                 {
                     grid.Children.Add(teachingTip);
 

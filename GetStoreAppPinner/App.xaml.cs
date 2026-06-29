@@ -39,12 +39,13 @@ namespace GetStoreAppPinner
         /// <summary>
         /// 在通过常规启动以外的某种方式激活应用程序时调用。
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ProtocolActivatedEventArgs))]
         protected override async void OnActivated(IActivatedEventArgs args)
         {
             base.OnActivated(args);
             applicationView = ApplicationView.GetForCurrentView();
 
-            if (args.Kind is ActivationKind.Protocol && args.As<ProtocolActivatedEventArgs>() is ProtocolActivatedEventArgs protocolActivatedEventArgs)
+            if (args.Kind is ActivationKind.Protocol && args is ProtocolActivatedEventArgs protocolActivatedEventArgs)
             {
                 if (protocolActivatedEventArgs.Uri.AbsoluteUri is "getstoreapppinner:")
                 {

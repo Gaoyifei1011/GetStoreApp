@@ -357,10 +357,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnPinToDesktopClicked(object sender, RoutedEventArgs args)
         {
-            bool isCreatedSuccessfully = false;
-
-            await Task.Run(() =>
+            bool isCreatedSuccessfully = await Task.Run(() =>
             {
+                bool isCreatedSuccessfully = false;
+
                 try
                 {
                     if (StoreConfiguration.IsPinToDesktopSupported())
@@ -373,6 +373,8 @@ namespace GetStoreApp.Views.Pages
                 {
                     LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsItemPage), nameof(OnPinToDesktopClicked), 1, e);
                 }
+
+                return isCreatedSuccessfully;
             });
 
             await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Desktop, isCreatedSuccessfully));
@@ -383,10 +385,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
         {
-            bool isPinnedSuccessfully = false;
-
-            await Task.Run(async () =>
+            bool isPinnedSuccessfully = await Task.Run(async () =>
             {
+                bool isPinnedSuccessfully = false;
+
                 try
                 {
                     IReadOnlyList<AppListEntry> appEntries = await Package.Current.GetAppListEntriesAsync();
@@ -402,6 +404,8 @@ namespace GetStoreApp.Views.Pages
                 {
                     LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsItemPage), nameof(OnPinToStartScreenClicked), 1, e);
                 }
+
+                return isPinnedSuccessfully;
             });
 
             await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.StartScreen, isPinnedSuccessfully));

@@ -205,9 +205,10 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 数据源名称文本输入框内容发生更改时触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(TextBox))]
         private void OnSourceNameTextChanged(object sender, TextChangedEventArgs args)
         {
-            if (sender.As<TextBox>() is TextBox textBox)
+            if (sender is TextBox textBox)
             {
                 SourceName = textBox.Text;
             }
@@ -216,9 +217,10 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 数据源链接文本输入框内容发生更改时触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(TextBox))]
         private void OnSourceUriTextChanged(object sender, TextChangedEventArgs args)
         {
-            if (sender.As<TextBox>() is TextBox textBox)
+            if (sender is TextBox textBox)
             {
                 SourceUri = textBox.Text;
             }
@@ -227,9 +229,10 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 自定义标头文本输入框内容发生更改时触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(TextBox))]
         private void OnCustomHeaderTextChanged(object sender, TextChangedEventArgs args)
         {
-            if (sender.As<TextBox>() is TextBox textBox)
+            if (sender is TextBox textBox)
             {
                 CustomHeader = textBox.Text;
             }
@@ -238,9 +241,10 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 数据源类型文本输入框内容发生更改时触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(TextBox))]
         private void OnSourceTypeTextChanged(object sender, TextChangedEventArgs args)
         {
-            if (sender.As<TextBox>() is TextBox textBox)
+            if (sender is TextBox textBox)
             {
                 SourceType = textBox.Text;
             }
@@ -249,9 +253,10 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 是否为显性开关发生更改时触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnExplicitToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(Explicit, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(Explicit, toggleSwitch.IsOn))
             {
                 Explicit = toggleSwitch.IsOn;
             }
@@ -271,6 +276,7 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 保存添加或修改的 WinGet 数据源
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(PackageCatalogTrustLevel))]
         private async void OnSaveClicked(object sender, ContentDialogButtonClickEventArgs args)
         {
             ContentDialogButtonClickDeferral contentDialogButtonClickDeferral = args.GetDeferral();
@@ -302,7 +308,7 @@ namespace GetStoreApp.Views.Dialogs
                         addPackageCatalogOptions.Name = SourceName;
                         addPackageCatalogOptions.SourceUri = SourceUri;
                         addPackageCatalogOptions.Explicit = Explicit;
-                        addPackageCatalogOptions.TrustLevel = SelectedCatalogTrustLevel.SelectedValue.As<PackageCatalogTrustLevel>();
+                        addPackageCatalogOptions.TrustLevel = (PackageCatalogTrustLevel)SelectedCatalogTrustLevel.SelectedValue;
                         addPackageCatalogOptions.CustomHeader = string.IsNullOrEmpty(CustomHeader) ? string.Empty : CustomHeader;
                         addPackageCatalogOptions.Type = string.IsNullOrEmpty(SourceType) ? string.Empty : SourceType;
 
@@ -378,7 +384,7 @@ namespace GetStoreApp.Views.Dialogs
                             addPackageCatalogOptions.Name = SourceName;
                             addPackageCatalogOptions.SourceUri = SourceUri;
                             addPackageCatalogOptions.Explicit = Explicit;
-                            addPackageCatalogOptions.TrustLevel = SelectedCatalogTrustLevel.SelectedValue.As<PackageCatalogTrustLevel>();
+                            addPackageCatalogOptions.TrustLevel = (PackageCatalogTrustLevel)SelectedCatalogTrustLevel.SelectedValue;
                             addPackageCatalogOptions.CustomHeader = string.IsNullOrEmpty(CustomHeader) ? string.Empty : CustomHeader;
                             addPackageCatalogOptions.Type = string.IsNullOrEmpty(SourceType) ? string.Empty : SourceType;
 

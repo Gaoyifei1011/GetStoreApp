@@ -179,24 +179,28 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 是否开启显示文件右键菜单
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnShellMenuToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(ShellMenuValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(ShellMenuValue, toggleSwitch.IsOn))
             {
-                ShellMenuService.SetShellMenuValue(toggleSwitch.IsOn);
                 ShellMenuValue = toggleSwitch.IsOn;
+                ShellMenuService.SetShellMenuValue(toggleSwitch.IsOn);
+                ShellMenuValue = ShellMenuService.ShellMenuValue;
             }
         }
 
         /// <summary>
         /// 设置是否开启应用通知
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnNotificationToggled(object sender, RoutedEventArgs args)
         {
-            if (sender.As<ToggleSwitch>() is ToggleSwitch toggleSwitch && !Equals(NotificationValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(NotificationValue, toggleSwitch.IsOn))
             {
-                NotificationService.SetNotification(toggleSwitch.IsOn);
                 NotificationValue = toggleSwitch.IsOn;
+                NotificationService.SetNotification(toggleSwitch.IsOn);
+                NotificationValue = NotificationService.AppNotification;
             }
         }
 

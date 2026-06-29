@@ -199,9 +199,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 根据排序方式对列表进行排序
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(RadioMenuFlyoutItem))]
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is bool increase && UpgradableAppsResultKind is UpgradableAppsResultKind.Successfully)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is bool increase && UpgradableAppsResultKind is UpgradableAppsResultKind.Successfully)
             {
                 IsIncrease = Convert.ToBoolean(increase);
                 InitializeMatchedUpgradableApps();
@@ -211,9 +212,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 根据排序规则对列表进行排序
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(RadioMenuFlyoutItem))]
         private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
-            if (sender.As<RadioMenuFlyoutItem>().Tag is AppSortRuleKind appSortRuleKind && UpgradableAppsResultKind is UpgradableAppsResultKind.Successfully)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind && UpgradableAppsResultKind is UpgradableAppsResultKind.Successfully)
             {
                 SelectedAppSortRuleKind = appSortRuleKind;
                 InitializeMatchedUpgradableApps();

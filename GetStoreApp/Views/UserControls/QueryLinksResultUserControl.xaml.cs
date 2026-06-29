@@ -119,23 +119,6 @@ namespace GetStoreApp.Views.UserControls
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
-        /// 复制历史记录
-        /// </summary>
-        private async void OnCopyHistoryExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is HistoryModel history)
-            {
-                string copyHistory = await Task.Run(() =>
-                {
-                    return string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n", history.HistoryAppName, history.HistoryTypeName, history.HistoryChannelName, history.HistoryLink);
-                });
-
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyHistory);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
-            }
-        }
-
-        /// <summary>
         /// 根据设置存储的文件链接操作方式操作获取到的文件链接
         /// </summary>
         private async void OnDownloadExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
@@ -172,9 +155,9 @@ namespace GetStoreApp.Views.UserControls
 
                 if (!string.IsNullOrEmpty(downloadFolder))
                 {
-                    bool isDownloadSuccessfully = false;
-                    await Task.Run(() =>
+                    bool isDownloadSuccessfully = await Task.Run(() =>
                     {
+                        bool isDownloadSuccessfully = false;
                         List<DownloadSchedulerModel> downloadSchedulerList = [];
                         DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
 
@@ -221,6 +204,7 @@ namespace GetStoreApp.Views.UserControls
 
                         DownloadSchedulerService.CreateDownload(queryLinksResult.FileLink, downloadFilePath);
                         isDownloadSuccessfully = true;
+                        return isDownloadSuccessfully;
                     });
 
                     // 显示下载任务创建成功消息
@@ -419,10 +403,9 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private async void OnCopySelectedClicked(object sender, RoutedEventArgs args)
         {
-            List<QueryLinksResultModel> selectedQueryLinksResultList = [];
-
-            await Task.Run(() =>
+            List<QueryLinksResultModel> selectedQueryLinksResultList = await Task.Run(() =>
             {
+                List<QueryLinksResultModel> selectedQueryLinksResultList = [];
                 queryLinksResultLock.Enter();
 
                 try
@@ -443,6 +426,8 @@ namespace GetStoreApp.Views.UserControls
                 {
                     queryLinksResultLock.Exit();
                 }
+
+                return selectedQueryLinksResultList;
             });
 
             // 内容为空时显示空提示对话框

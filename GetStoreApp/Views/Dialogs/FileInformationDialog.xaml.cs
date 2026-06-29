@@ -78,10 +78,7 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
-            string fileShA256 = await Task.Run(async () =>
-            {
-                return await IOHelper.GetFileSHA256Async(FilePath);
-            });
+            string fileShA256 = await Task.Run(async () => await IOHelper.GetFileSHA256Async(FilePath));
 
             FileSHA256 = fileShA256;
             IsLoadCompleted = true;
@@ -104,14 +101,17 @@ namespace GetStoreApp.Views.Dialogs
         private async void OnCopyFileInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             args.Cancel = true;
-            List<string> copyFileInformationCopyStringList = [];
 
-            await Task.Run(() =>
+            List<string> copyFileInformationCopyStringList = await Task.Run(() =>
             {
+                List<string> copyFileInformationCopyStringList = [];
+
                 copyFileInformationCopyStringList.Add(FileNameString + FileName);
                 copyFileInformationCopyStringList.Add(FilePathString + FilePath);
                 copyFileInformationCopyStringList.Add(FileSizeString + FileSize);
                 copyFileInformationCopyStringList.Add(FileSHA256String + FileSHA256);
+
+                return copyFileInformationCopyStringList;
             });
 
             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyFileInformationCopyStringList));

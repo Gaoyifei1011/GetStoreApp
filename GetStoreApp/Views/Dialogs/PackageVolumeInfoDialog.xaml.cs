@@ -151,9 +151,9 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0)
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is PackageVolumeModel packageVolume && !Equals(SelectedPackageVolume, packageVolume))
             {
-                SelectedPackageVolume = args.AddedItems[0] as PackageVolumeModel;
+                SelectedPackageVolume = packageVolume;
                 IsRemovePackageVolumeEnabled = true;
                 IsPrimaryEnabled = true;
             }
@@ -164,7 +164,6 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            PackageVolumeResultKind = PackageVolumeResultKind.Loading;
             SelectedPackageVolume = null;
             IsRemovePackageVolumeEnabled = false;
             IsPrimaryEnabled = false;
@@ -178,6 +177,8 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async Task GetPackageVolumeInfoAsync()
         {
+            PackageVolumeResultKind = PackageVolumeResultKind.Loading;
+
             (PackageVolumeModel currentPackageVolume, List<PackageVolumeModel> packageVolumeList) = await Task.Run(async () =>
             {
                 PackageVolumeModel currentPackageVolume = null;

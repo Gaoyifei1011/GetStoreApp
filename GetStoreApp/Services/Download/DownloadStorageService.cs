@@ -116,6 +116,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 获取已下载完成任务数据，为保证安全访问，需要手动对访问的锁进行加锁和释放
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
         public static List<DownloadSchedulerModel> GetDownloadData()
         {
             List<DownloadSchedulerModel> downloadSchedulerList = [];
@@ -126,7 +127,7 @@ namespace GetStoreApp.Services.Download
                 {
                     try
                     {
-                        if (downloadStorageItem.Value.As<Windows.Storage.ApplicationDataCompositeValue>() is Windows.Storage.ApplicationDataCompositeValue compositeValue)
+                        if (downloadStorageItem.Value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                         {
                             downloadSchedulerList.Add(new DownloadSchedulerModel()
                             {
