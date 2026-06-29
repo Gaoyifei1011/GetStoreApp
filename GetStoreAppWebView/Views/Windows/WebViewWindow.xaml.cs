@@ -272,7 +272,7 @@ namespace GetStoreAppWebView.Views.Windows
             {
                 if (contentIsland is not null && !contentIsland.IsClosed && WindowSystemBackdrop is MaterialBackdrop materialBackdrop && materialBackdrop.BackdropConfiguration is not null)
                 {
-                    materialBackdrop.BackdropConfiguration.IsInputActive = AlwaysShowBackdropService.AlwaysShowBackdropValue || args.WindowActivationState is not WindowActivationState.Deactivated;
+                    materialBackdrop.BackdropConfiguration.IsInputActive = AlwaysShowBackdropService.AlwaysShowBackdrop || args.WindowActivationState is not WindowActivationState.Deactivated;
                 }
             }
             catch (Exception e)
