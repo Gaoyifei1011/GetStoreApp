@@ -82,7 +82,7 @@
                 <ToggleSwitch
                     Grid.Column="3"
                     IsEnabled="{x:Bind NotificationEnabled, Mode=OneWay}"
-                    IsOn="{x:Bind NotificationValue, Mode=OneWay}"
+                    IsOn="{x:Bind Notification, Mode=OneWay}"
                     OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/NotificationOffContent')}"
                     OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/NotificationOnContent')}"
                     Style="{StaticResource ToggleSwitchStyle}"
@@ -154,7 +154,7 @@
 
                 <ToggleSwitch
                     Grid.Column="3"
-                    IsOn="{x:Bind ShellMenuValue, Mode=OneWay}"
+                    IsOn="{x:Bind ShellMenu, Mode=OneWay}"
                     OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ShellMenuOffContent')}"
                     OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ShellMenuOnContent')}"
                     Style="{StaticResource ToggleSwitchStyle}"

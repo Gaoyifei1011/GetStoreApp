@@ -20,7 +20,7 @@ namespace GetStoreApp.Services.Settings
         private static readonly string downloadFolderKey = ConfigKey.DownloadFolderKey;
         private static readonly string doEngineModeKey = ConfigKey.DoEngineModeKey;
         private static readonly string manualSetDownloadFolderKey = ConfigKey.ManualSetDownloadFolderKey;
-        private static readonly bool defaultManualSetDownloadFolderValue = false;
+        private static readonly bool defaultManualSetDownloadFolder = false;
         private static string defaultDoEngineMode;
 
         public static string DefaultDownloadFolder { get; private set; }
@@ -98,8 +98,8 @@ namespace GetStoreApp.Services.Settings
 
             if (!manualSetDownloadFolder.HasValue)
             {
-                SetManualSetDownloadFolder(defaultManualSetDownloadFolderValue);
-                return defaultManualSetDownloadFolderValue;
+                SetManualSetDownloadFolder(defaultManualSetDownloadFolder);
+                return defaultManualSetDownloadFolder;
             }
 
             return manualSetDownloadFolder.Value;

@@ -253,7 +253,7 @@
 
                 <ToggleSwitch
                     Grid.Column="2"
-                    IsOn="{x:Bind CancelAutoUpdateValue, Mode=OneWay}"
+                    IsOn="{x:Bind CancelAutoUpdate, Mode=OneWay}"
                     OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdateOffContent')}"
                     OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdateOnContent')}"
                     Style="{StaticResource ToggleSwitchStyle}"
@@ -423,7 +423,7 @@
 
                         <ToggleSwitch
                             Grid.Column="2"
-                            IsOn="{x:Bind UseSystemRegionValue, Mode=OneWay}"
+                            IsOn="{x:Bind UseSystemRegion, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/UseSystemRegionOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/UseSystemRegionOnContent')}"
                             Style="{StaticResource ToggleSwitchStyle}"
@@ -474,7 +474,7 @@
                             Grid.Column="3"
                             VerticalAlignment="Center"
                             DisplayMemberPath="DisplayMember"
-                            IsEnabled="{x:Bind UseSystemRegionValue.Equals(x:False), Mode=OneWay}"
+                            IsEnabled="{x:Bind UseSystemRegion.Equals(x:False), Mode=OneWay}"
                             ItemsSource="{x:Bind StoreRegionCollection}"
                             SelectedItem="{x:Bind StoreRegion, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnStoreRegionSelectionChanged}"
@@ -577,7 +577,7 @@
 
                         <ToggleSwitch
                             Grid.Column="1"
-                            IsOn="{x:Bind EncryptedPackageFilterValue, Mode=OneWay}"
+                            IsOn="{x:Bind EncryptedPackageFilter, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageOnContent')}"
                             Style="{StaticResource ToggleSwitchStyle}"
@@ -625,7 +625,7 @@
 
                         <ToggleSwitch
                             Grid.Column="1"
-                            IsOn="{x:Bind BlockMapFilterValue, Mode=OneWay}"
+                            IsOn="{x:Bind BlockMapFilter, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapOnContent')}"
                             Style="{StaticResource ToggleSwitchStyle}"

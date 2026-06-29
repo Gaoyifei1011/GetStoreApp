@@ -80,12 +80,12 @@ namespace GetStoreAppShellExtension.Commands
                 shellItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string filePath);
                 string arguments = "Add-AppxPackage -Register " + filePath;
 
-                if (AppInstallService.ForceAppShutdownValue)
+                if (AppInstallService.ForceAppShutdown)
                 {
                     arguments += " -ForceApplicationShutdown";
                 }
 
-                if (AppInstallService.ForceTargetAppShutdownValue)
+                if (AppInstallService.ForceTargetAppShutdown)
                 {
                     arguments += " -ForceTargetApplicationShutdown";
                 }

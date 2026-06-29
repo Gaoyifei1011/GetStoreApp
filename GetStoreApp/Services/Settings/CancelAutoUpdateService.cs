@@ -12,20 +12,20 @@ namespace GetStoreApp.Services.Settings
     {
         private static readonly string settingsKey = ConfigKey.CancelAutoUpdateKey;
 
-        private static readonly bool defaultCancelAutoUpdateValue = false;
+        private static readonly bool defaultCancelAutoUpdate = false;
 
-        private static bool _cancelAutoUpdateValue;
+        private static bool _cancelAutoUpdate;
 
-        public static bool CancelAutoUpdateValue
+        public static bool CancelAutoUpdate
         {
-            get { return _cancelAutoUpdateValue; }
+            get { return _cancelAutoUpdate; }
 
             private set
             {
-                if (!Equals(_cancelAutoUpdateValue, value))
+                if (!Equals(_cancelAutoUpdate, value))
                 {
-                    _cancelAutoUpdateValue = value;
-                    PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(CancelAutoUpdateValue)));
+                    _cancelAutoUpdate = value;
+                    PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(CancelAutoUpdate)));
                 }
             }
         }
@@ -37,32 +37,32 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         public static void InitializeCancelAutoUpdate()
         {
-            CancelAutoUpdateValue = GetCancelAutoUpdateValue();
+            CancelAutoUpdate = GetCancelAutoUpdate();
         }
 
         /// <summary>
         /// 获取设置存储的检测到新更新时是否自动取消值，如果设置没有存储，使用默认值
         /// </summary>
-        private static bool GetCancelAutoUpdateValue()
+        private static bool GetCancelAutoUpdate()
         {
-            bool? cancelAutoUpdateValue = LocalSettingsService.ReadSetting<bool?>(settingsKey);
+            bool? cancelAutoUpdate = LocalSettingsService.ReadSetting<bool?>(settingsKey);
 
-            if (!cancelAutoUpdateValue.HasValue)
+            if (!cancelAutoUpdate.HasValue)
             {
-                SetCancelAutoUpdateValue(defaultCancelAutoUpdateValue);
-                return defaultCancelAutoUpdateValue;
+                SetCancelAutoUpdate(defaultCancelAutoUpdate);
+                return defaultCancelAutoUpdate;
             }
 
-            return Convert.ToBoolean(cancelAutoUpdateValue);
+            return Convert.ToBoolean(cancelAutoUpdate);
         }
 
         /// <summary>
         /// 使用说明按钮显示发生修改时修改设置存储的检测到新更新时是否自动取消值
         /// </summary>
-        public static void SetCancelAutoUpdateValue(bool cancelAutoUpdateValue)
+        public static void SetCancelAutoUpdate(bool cancelAutoUpdate)
         {
-            CancelAutoUpdateValue = cancelAutoUpdateValue;
-            LocalSettingsService.SaveSetting(settingsKey, cancelAutoUpdateValue);
+            CancelAutoUpdate = cancelAutoUpdate;
+            LocalSettingsService.SaveSetting(settingsKey, cancelAutoUpdate);
         }
     }
 }

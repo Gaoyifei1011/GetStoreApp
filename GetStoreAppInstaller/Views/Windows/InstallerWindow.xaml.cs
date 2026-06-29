@@ -971,7 +971,7 @@ namespace GetStoreAppInstaller.Views.Windows
             {
                 if (contentIsland is not null && !contentIsland.IsClosed && WindowSystemBackdrop is MaterialBackdrop materialBackdrop && materialBackdrop.BackdropConfiguration is not null)
                 {
-                    materialBackdrop.BackdropConfiguration.IsInputActive = AlwaysShowBackdropService.AlwaysShowBackdropValue || args.WindowActivationState is not WindowActivationState.Deactivated;
+                    materialBackdrop.BackdropConfiguration.IsInputActive = AlwaysShowBackdropService.AlwaysShowBackdrop || args.WindowActivationState is not WindowActivationState.Deactivated;
                 }
             }
             catch (Exception e)
@@ -1636,9 +1636,9 @@ namespace GetStoreAppInstaller.Views.Windows
 
                             AddPackageOptions addPackageOptions = new()
                             {
-                                AllowUnsigned = AppInstallService.AllowUnsignedPackageValue,
-                                ForceAppShutdown = AppInstallService.ForceAppShutdownValue,
-                                ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdownValue,
+                                AllowUnsigned = AppInstallService.AllowUnsignedPackage,
+                                ForceAppShutdown = AppInstallService.ForceAppShutdown,
+                                ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdown,
                                 TargetVolume = PackageVolume.GetDefault()
                             };
 

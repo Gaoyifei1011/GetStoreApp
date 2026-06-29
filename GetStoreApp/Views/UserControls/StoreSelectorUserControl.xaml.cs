@@ -781,7 +781,7 @@ namespace GetStoreApp.Views.UserControls
                             }
 
                             // 按设置选项设置的内容过滤列表
-                            if (LinkFilterService.EncryptedPackageFilterValue)
+                            if (LinkFilterService.EncryptedPackageFilter)
                             {
                                 queryLinksResultList.RemoveAll(item =>
                                 string.Equals(Path.GetExtension(item.FileName), ".eappx", StringComparison.OrdinalIgnoreCase) ||
@@ -791,7 +791,7 @@ namespace GetStoreApp.Views.UserControls
                                 );
                             }
 
-                            if (LinkFilterService.BlockMapFilterValue)
+                            if (LinkFilterService.BlockMapFilter)
                             {
                                 queryLinksResultList.RemoveAll(item => string.Equals(Path.GetExtension(item.FileName), ".blockmap", StringComparison.OrdinalIgnoreCase));
                             }
@@ -875,7 +875,7 @@ namespace GetStoreApp.Views.UserControls
                                 List<QueryLinksResultModel> packagedAppsList = HtmlParseHelper.HtmlParsePackagedAppLinks();
 
                                 // 按设置选项设置的内容过滤列表
-                                if (LinkFilterService.EncryptedPackageFilterValue)
+                                if (LinkFilterService.EncryptedPackageFilter)
                                 {
                                     packagedAppsList.RemoveAll(item =>
                                     string.Equals(Path.GetExtension(item.FileName), ".eappx", StringComparison.OrdinalIgnoreCase) ||
@@ -885,7 +885,7 @@ namespace GetStoreApp.Views.UserControls
                                     );
                                 }
 
-                                if (LinkFilterService.BlockMapFilterValue)
+                                if (LinkFilterService.BlockMapFilter)
                                 {
                                     packagedAppsList.RemoveAll(item => string.Equals(Path.GetExtension(item.FileName), ".blockmap", StringComparison.OrdinalIgnoreCase));
                                 }

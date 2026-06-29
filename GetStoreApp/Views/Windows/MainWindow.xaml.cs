@@ -327,7 +327,7 @@ namespace GetStoreApp.Views.Windows
             {
                 if (contentIsland is not null && !contentIsland.IsClosed && WindowSystemBackdrop is MaterialBackdrop materialBackdrop && materialBackdrop.BackdropConfiguration is not null)
                 {
-                    materialBackdrop.BackdropConfiguration.IsInputActive = AlwaysShowBackdropService.AlwaysShowBackdropValue || args.WindowActivationState is not WindowActivationState.Deactivated;
+                    materialBackdrop.BackdropConfiguration.IsInputActive = AlwaysShowBackdropService.AlwaysShowBackdrop || args.WindowActivationState is not WindowActivationState.Deactivated;
                     Task.Run(NotificationService.UpdateNotificationSetting);
                 }
             }
@@ -920,7 +920,7 @@ namespace GetStoreApp.Views.Windows
                 {
                     SetSystemBackdrop();
                 }
-                if (string.Equals(args.PropertyName, nameof(TopMostService.TopMostValue)))
+                if (string.Equals(args.PropertyName, nameof(TopMostService.TopMost)))
                 {
                     SetTopMost();
                 }
@@ -1036,7 +1036,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void SetTopMost()
         {
-            overlappedPresenter.IsAlwaysOnTop = TopMostService.TopMostValue;
+            overlappedPresenter.IsAlwaysOnTop = TopMostService.TopMost;
         }
 
         #endregion 第八部分：窗口及内容属性设置

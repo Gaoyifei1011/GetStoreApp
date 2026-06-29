@@ -12,100 +12,100 @@ namespace GetStoreApp.Services.Settings
         private static readonly string forceAppShutdownKey = ConfigKey.ForceAppShutdownKey;
         private static readonly string forceTargetAppShutdownKey = ConfigKey.ForceTargetAppShutdownKey;
 
-        private static readonly bool defaultAllowUnsignedPackageValue = false;
-        private static readonly bool defaultForceAppShutdownValue = false;
-        private static readonly bool defaultForceTargetAppShutdownValue = false;
+        private static readonly bool defaultAllowUnsignedPackage = false;
+        private static readonly bool defaultForceAppShutdown = false;
+        private static readonly bool defaultForceTargetAppShutdown = false;
 
-        public static bool AllowUnsignedPackageValue { get; private set; }
+        public static bool AllowUnsignedPackage { get; private set; }
 
-        public static bool ForceAppShutdownValue { get; private set; }
+        public static bool ForceAppShutdown { get; private set; }
 
-        public static bool ForceTargetAppShutdownValue { get; private set; }
+        public static bool ForceTargetAppShutdown { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的应用安装选项值
         /// </summary>
         public static void InitializeAppInstall()
         {
-            AllowUnsignedPackageValue = GetAllowUnsignedPackageValue();
-            ForceAppShutdownValue = GetForceAppShutdownValue();
-            ForceTargetAppShutdownValue = GetForceTargetAppShutdownValue();
+            AllowUnsignedPackage = GetAllowUnsignedPackage();
+            ForceAppShutdown = GetForceAppShutdown();
+            ForceTargetAppShutdown = GetForceTargetAppShutdown();
         }
 
         /// <summary>
         /// 获取设置存储的允许安装未签名的安装包值，如果设置没有存储，使用默认值
         /// </summary>
-        private static bool GetAllowUnsignedPackageValue()
+        private static bool GetAllowUnsignedPackage()
         {
-            bool? allowUnsignedPackageValue = LocalSettingsService.ReadSetting<bool?>(allowUnsignedPackageKey);
+            bool? allowUnsignedPackage = LocalSettingsService.ReadSetting<bool?>(allowUnsignedPackageKey);
 
-            if (!allowUnsignedPackageValue.HasValue)
+            if (!allowUnsignedPackage.HasValue)
             {
-                SetAllowUnsignedPackageValue(defaultAllowUnsignedPackageValue);
-                return defaultAllowUnsignedPackageValue;
+                SetAllowUnsignedPackage(defaultAllowUnsignedPackage);
+                return defaultAllowUnsignedPackage;
             }
 
-            return allowUnsignedPackageValue.Value;
+            return allowUnsignedPackage.Value;
         }
 
         /// <summary>
         /// 获取设置存储的安装应用时强制关闭与包关联的进程的选项值，如果设置没有存储，使用默认值
         /// </summary>
-        private static bool GetForceAppShutdownValue()
+        private static bool GetForceAppShutdown()
         {
-            bool? forceAppShutdownValue = LocalSettingsService.ReadSetting<bool?>(forceAppShutdownKey);
+            bool? forceAppShutdown = LocalSettingsService.ReadSetting<bool?>(forceAppShutdownKey);
 
-            if (!forceAppShutdownValue.HasValue)
+            if (!forceAppShutdown.HasValue)
             {
-                SetForceAppShutdownValue(defaultForceAppShutdownValue);
-                return defaultForceAppShutdownValue;
+                SetForceAppShutdown(defaultForceAppShutdown);
+                return defaultForceAppShutdown;
             }
 
-            return forceAppShutdownValue.Value;
+            return forceAppShutdown.Value;
         }
 
         /// <summary>
         /// 获取设置存储的安装应用时强制关闭与包关联的进程的选项值，如果设置没有存储，使用默认值
         /// </summary>
-        private static bool GetForceTargetAppShutdownValue()
+        private static bool GetForceTargetAppShutdown()
         {
-            bool? forceTargetAppShutdownValue = LocalSettingsService.ReadSetting<bool?>(forceTargetAppShutdownKey);
+            bool? forceTargetAppShutdown = LocalSettingsService.ReadSetting<bool?>(forceTargetAppShutdownKey);
 
-            if (!forceTargetAppShutdownValue.HasValue)
+            if (!forceTargetAppShutdown.HasValue)
             {
-                SetForceTargetAppShutdownValue(defaultForceTargetAppShutdownValue);
-                return defaultForceTargetAppShutdownValue;
+                SetForceTargetAppShutdown(defaultForceTargetAppShutdown);
+                return defaultForceTargetAppShutdown;
             }
 
-            return forceTargetAppShutdownValue.Value;
+            return forceTargetAppShutdown.Value;
         }
 
         /// <summary>
         /// 允许安装未签名的安装包值发生修改时修改设置存储的允许安装未签名的安装包值
         /// </summary>
-        public static void SetAllowUnsignedPackageValue(bool allowUnsignedPackageValue)
+        public static void SetAllowUnsignedPackage(bool allowUnsignedPackage)
         {
-            AllowUnsignedPackageValue = allowUnsignedPackageValue;
-            LocalSettingsService.SaveSetting(allowUnsignedPackageKey, allowUnsignedPackageValue);
+            AllowUnsignedPackage = allowUnsignedPackage;
+            LocalSettingsService.SaveSetting(allowUnsignedPackageKey, allowUnsignedPackage);
         }
 
         /// <summary>
         /// 安装应用时强制关闭与包关联的进程的选项值发生修改时修改设置存储的安装应用时强制关闭与包关联的进程的选项值
         /// </summary>
-        public static void SetForceAppShutdownValue(bool forceAppShutdownValue)
+        public static void SetForceAppShutdown(bool forceAppShutdown)
         {
-            ForceAppShutdownValue = forceAppShutdownValue;
-            LocalSettingsService.SaveSetting(forceAppShutdownKey, forceAppShutdownValue);
+            ForceAppShutdown = forceAppShutdown;
+            LocalSettingsService.SaveSetting(forceAppShutdownKey, forceAppShutdown);
         }
 
         /// <summary>
         /// 安装应用时强制关闭与包关联的进程的选项值发生修改时修改设置存储的安装应用时强制关闭与包关联的进程的选项值
         /// </summary>
-        public static void SetForceTargetAppShutdownValue(bool forceTargetAppShutdownValue)
+        public static void SetForceTargetAppShutdown(bool forceTargetAppShutdown)
         {
-            ForceTargetAppShutdownValue = forceTargetAppShutdownValue;
+            ForceTargetAppShutdown = forceTargetAppShutdown;
 
-            LocalSettingsService.SaveSetting(forceTargetAppShutdownKey, forceTargetAppShutdownValue);
+            LocalSettingsService.SaveSetting(forceTargetAppShutdownKey, forceTargetAppShutdown);
         }
     }
 }

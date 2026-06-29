@@ -337,14 +337,14 @@ namespace GetStoreApp.Views.Pages
                             if (isExisted)
                             {
                                 // 已经检测到的应用暂未进行更新，取消自动安装当前更新
-                                if (CancelAutoUpdateService.CancelAutoUpdateValue && !isUpdating)
+                                if (CancelAutoUpdateService.CancelAutoUpdate && !isUpdating)
                                 {
                                     upgradableAppItem.Cancel();
                                 }
                             }
                             else
                             {
-                                if (CancelAutoUpdateService.CancelAutoUpdateValue)
+                                if (CancelAutoUpdateService.CancelAutoUpdate)
                                 {
                                     upgradableAppItem.Cancel();
                                 }

@@ -11,69 +11,69 @@ namespace GetStoreApp.Services.Settings
     {
         private static readonly string encryptedPackageSettingsKey = ConfigKey.EncryptedPackageFilterKey;
         private static readonly string blockMapSettingsKey = ConfigKey.BlockMapFilterKey;
-        private static readonly bool defaultLinkFilterValue = true;
+        private static readonly bool defaultLinkFilter = true;
 
-        public static bool EncryptedPackageFilterValue { get; private set; }
+        public static bool EncryptedPackageFilter { get; private set; }
 
-        public static bool BlockMapFilterValue { get; private set; }
+        public static bool BlockMapFilter { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的链接过滤值
         /// </summary>
         public static void InitializeLinkFilter()
         {
-            EncryptedPackageFilterValue = GetEncryptedPackageFilterValue();
-            BlockMapFilterValue = GetBlockMapFilterValue();
+            EncryptedPackageFilter = GetEncryptedPackageFilter();
+            BlockMapFilter = GetBlockMapFilter();
         }
 
         /// <summary>
         /// 获取设置存储的加密包显示设置的过滤值，如果设置没有存储，使用默认值
         /// </summary>
-        private static bool GetEncryptedPackageFilterValue()
+        private static bool GetEncryptedPackageFilter()
         {
-            bool? encryptedPackageFilterValue = LocalSettingsService.ReadSetting<bool?>(encryptedPackageSettingsKey);
+            bool? encryptedPackageFilter = LocalSettingsService.ReadSetting<bool?>(encryptedPackageSettingsKey);
 
-            if (!encryptedPackageFilterValue.HasValue)
+            if (!encryptedPackageFilter.HasValue)
             {
-                SetEncryptedPackageFilterValue(defaultLinkFilterValue);
-                return defaultLinkFilterValue;
+                SetEncryptedPackageFilter(defaultLinkFilter);
+                return defaultLinkFilter;
             }
 
-            return Convert.ToBoolean(encryptedPackageFilterValue);
+            return Convert.ToBoolean(encryptedPackageFilter);
         }
 
         /// <summary>
         /// 获取设置存储的以".blockmap"的文件扩展名的过滤值，如果设置没有存储，使用默认值
         /// </summary>
-        private static bool GetBlockMapFilterValue()
+        private static bool GetBlockMapFilter()
         {
-            bool? blockMapFilterValue = LocalSettingsService.ReadSetting<bool?>(blockMapSettingsKey);
+            bool? blockMapFilter = LocalSettingsService.ReadSetting<bool?>(blockMapSettingsKey);
 
-            if (!blockMapFilterValue.HasValue)
+            if (!blockMapFilter.HasValue)
             {
-                SetBlockMapFilterValue(defaultLinkFilterValue);
-                return defaultLinkFilterValue;
+                SetBlockMapFilter(defaultLinkFilter);
+                return defaultLinkFilter;
             }
 
-            return Convert.ToBoolean(blockMapFilterValue);
+            return Convert.ToBoolean(blockMapFilter);
         }
 
         /// <summary>
         /// 加密包显示设置的过滤值发生修改时修改设置存储的加密包显示设置的过滤值
         /// </summary>
-        public static void SetEncryptedPackageFilterValue(bool encryptedPackageFilterValue)
+        public static void SetEncryptedPackageFilter(bool encryptedPackageFilter)
         {
-            EncryptedPackageFilterValue = encryptedPackageFilterValue;
-            LocalSettingsService.SaveSetting(encryptedPackageSettingsKey, encryptedPackageFilterValue);
+            EncryptedPackageFilter = encryptedPackageFilter;
+            LocalSettingsService.SaveSetting(encryptedPackageSettingsKey, encryptedPackageFilter);
         }
 
         /// <summary>
         /// 以".blockmap"的文件扩展名的过滤值发生修改时修改设置存储的以".blockmap"的文件扩展名的过滤值
         /// </summary>
-        public static void SetBlockMapFilterValue(bool blockMapFilterValue)
+        public static void SetBlockMapFilter(bool blockMapFilter)
         {
-            BlockMapFilterValue = blockMapFilterValue;
-            LocalSettingsService.SaveSetting(blockMapSettingsKey, blockMapFilterValue);
+            BlockMapFilter = blockMapFilter;
+            LocalSettingsService.SaveSetting(blockMapSettingsKey, blockMapFilter);
         }
     }
 }

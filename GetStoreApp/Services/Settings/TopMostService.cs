@@ -12,20 +12,20 @@ namespace GetStoreApp.Services.Settings
     {
         private static readonly string settingsKey = ConfigKey.TopMostKey;
 
-        private static readonly bool defaultTopMostValue = false;
+        private static readonly bool defaultTopMost = false;
 
-        private static bool _topMostValue;
+        private static bool _topMost;
 
-        public static bool TopMostValue
+        public static bool TopMost
         {
-            get { return _topMostValue; }
+            get { return _topMost; }
 
             private set
             {
-                if (!Equals(_topMostValue, value))
+                if (!Equals(_topMost, value))
                 {
-                    _topMostValue = value;
-                    PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(TopMostValue)));
+                    _topMost = value;
+                    PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(TopMost)));
                 }
             }
         }
@@ -37,33 +37,33 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         public static void InitializeTopMost()
         {
-            TopMostValue = GetTopMostValue();
+            TopMost = GetTopMost();
         }
 
         /// <summary>
         /// 获取设置存储的窗口置顶值，如果设置没有存储，使用默认值
         /// </summary>
-        private static bool GetTopMostValue()
+        private static bool GetTopMost()
         {
-            bool? topMostValue = LocalSettingsService.ReadSetting<bool?>(settingsKey);
+            bool? topMost = LocalSettingsService.ReadSetting<bool?>(settingsKey);
 
-            if (!topMostValue.HasValue)
+            if (!topMost.HasValue)
             {
-                SetTopMostValue(defaultTopMostValue);
-                return defaultTopMostValue;
+                SetTopMost(defaultTopMost);
+                return defaultTopMost;
             }
 
-            return Convert.ToBoolean(topMostValue);
+            return Convert.ToBoolean(topMost);
         }
 
         /// <summary>
         /// 使用说明按钮显示发生修改时修改设置存储的窗口置顶值
         /// </summary>
-        public static void SetTopMostValue(bool topMostValue)
+        public static void SetTopMost(bool topMost)
         {
-            TopMostValue = topMostValue;
+            TopMost = topMost;
 
-            LocalSettingsService.SaveSetting(settingsKey, topMostValue);
+            LocalSettingsService.SaveSetting(settingsKey, topMost);
         }
     }
 }

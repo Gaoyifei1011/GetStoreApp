@@ -49,15 +49,15 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private static string GetAppLinkOpenMode()
         {
-            string appLinkOpenModeValue = LocalSettingsService.ReadSetting<string>(appLinkOpenModeSettingsKey);
+            string appLinkOpenMode = LocalSettingsService.ReadSetting<string>(appLinkOpenModeSettingsKey);
 
-            if (string.IsNullOrEmpty(appLinkOpenModeValue))
+            if (string.IsNullOrEmpty(appLinkOpenMode))
             {
                 SetAppLinkOpenMode(defaultAppLinkOpenMode);
                 return defaultAppLinkOpenMode;
             }
 
-            string selectedAppLinkOpenMode = AppLinkOpenModeList.Find(item => string.Equals(item, appLinkOpenModeValue, StringComparison.OrdinalIgnoreCase));
+            string selectedAppLinkOpenMode = AppLinkOpenModeList.Find(item => string.Equals(item, appLinkOpenMode, StringComparison.OrdinalIgnoreCase));
             return selectedAppLinkOpenMode is null ? defaultAppLinkOpenMode : selectedAppLinkOpenMode;
         }
 

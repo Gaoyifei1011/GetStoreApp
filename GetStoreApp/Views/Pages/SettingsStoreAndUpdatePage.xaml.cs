@@ -96,34 +96,34 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _cancelAutoUpdateValue = CancelAutoUpdateService.CancelAutoUpdateValue;
+        private bool _cancelAutoUpdate = CancelAutoUpdateService.CancelAutoUpdate;
 
-        public bool CancelAutoUpdateValue
+        public bool CancelAutoUpdate
         {
-            get { return _cancelAutoUpdateValue; }
+            get { return _cancelAutoUpdate; }
 
             set
             {
-                if (!Equals(_cancelAutoUpdateValue, value))
+                if (!Equals(_cancelAutoUpdate, value))
                 {
-                    _cancelAutoUpdateValue = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CancelAutoUpdateValue)));
+                    _cancelAutoUpdate = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CancelAutoUpdate)));
                 }
             }
         }
 
-        private bool _useSystemRegionValue = StoreRegionService.UseSystemRegionValue;
+        private bool _useSystemRegion = StoreRegionService.UseSystemRegion;
 
-        public bool UseSystemRegionValue
+        public bool UseSystemRegion
         {
-            get { return _useSystemRegionValue; }
+            get { return _useSystemRegion; }
 
             set
             {
-                if (!Equals(_useSystemRegionValue, value))
+                if (!Equals(_useSystemRegion, value))
                 {
-                    _useSystemRegionValue = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UseSystemRegionValue)));
+                    _useSystemRegion = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UseSystemRegion)));
                 }
             }
         }
@@ -160,34 +160,34 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _encryptedPackageFilterValue = LinkFilterService.EncryptedPackageFilterValue;
+        private bool _encryptedPackageFilter = LinkFilterService.EncryptedPackageFilter;
 
-        public bool EncryptedPackageFilterValue
+        public bool EncryptedPackageFilter
         {
-            get { return _encryptedPackageFilterValue; }
+            get { return _encryptedPackageFilter; }
 
             set
             {
-                if (!Equals(_encryptedPackageFilterValue, value))
+                if (!Equals(_encryptedPackageFilter, value))
                 {
-                    _encryptedPackageFilterValue = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EncryptedPackageFilterValue)));
+                    _encryptedPackageFilter = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EncryptedPackageFilter)));
                 }
             }
         }
 
-        private bool _blockMapFilterValue = LinkFilterService.BlockMapFilterValue;
+        private bool _blockMapFilter = LinkFilterService.BlockMapFilter;
 
-        public bool BlockMapFilterValue
+        public bool BlockMapFilter
         {
-            get { return _blockMapFilterValue; }
+            get { return _blockMapFilter; }
 
             set
             {
-                if (!Equals(_blockMapFilterValue, value))
+                if (!Equals(_blockMapFilter, value))
                 {
-                    _blockMapFilterValue = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BlockMapFilterValue)));
+                    _blockMapFilter = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BlockMapFilter)));
                 }
             }
         }
@@ -287,11 +287,11 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnCancelAutoUpdateToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch && !Equals(CancelAutoUpdateValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(CancelAutoUpdate, toggleSwitch.IsOn))
             {
-                CancelAutoUpdateValue = toggleSwitch.IsOn;
-                CancelAutoUpdateService.SetCancelAutoUpdateValue(toggleSwitch.IsOn);
-                CancelAutoUpdateValue = CancelAutoUpdateService.CancelAutoUpdateValue;
+                CancelAutoUpdate = toggleSwitch.IsOn;
+                CancelAutoUpdateService.SetCancelAutoUpdate(toggleSwitch.IsOn);
+                CancelAutoUpdate = CancelAutoUpdateService.CancelAutoUpdate;
             }
         }
 
@@ -330,13 +330,13 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnUseSystemRegionToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch && !Equals(UseSystemRegionValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(UseSystemRegion, toggleSwitch.IsOn))
             {
-                UseSystemRegionValue = toggleSwitch.IsOn;
-                StoreRegionService.SetUseSystemRegionValue(toggleSwitch.IsOn);
-                UseSystemRegionValue = StoreRegionService.UseSystemRegionValue;
+                UseSystemRegion = toggleSwitch.IsOn;
+                StoreRegionService.SetUseSystemRegion(toggleSwitch.IsOn);
+                UseSystemRegion = StoreRegionService.UseSystemRegion;
 
-                if (UseSystemRegionValue)
+                if (UseSystemRegion)
                 {
                     foreach (StoreRegionModel storeRegion in StoreRegionCollection)
                     {
@@ -378,11 +378,11 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnEncryptedPackageToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch && !Equals(EncryptedPackageFilterValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(EncryptedPackageFilter, toggleSwitch.IsOn))
             {
-                EncryptedPackageFilterValue = toggleSwitch.IsOn;
-                LinkFilterService.SetEncryptedPackageFilterValue(toggleSwitch.IsOn);
-                EncryptedPackageFilterValue = LinkFilterService.EncryptedPackageFilterValue;
+                EncryptedPackageFilter = toggleSwitch.IsOn;
+                LinkFilterService.SetEncryptedPackageFilter(toggleSwitch.IsOn);
+                EncryptedPackageFilter = LinkFilterService.EncryptedPackageFilter;
             }
         }
 
@@ -392,11 +392,11 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnBlockMapToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch && !Equals(BlockMapFilterValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(BlockMapFilter, toggleSwitch.IsOn))
             {
-                BlockMapFilterValue = toggleSwitch.IsOn;
-                LinkFilterService.SetBlockMapFilterValue(toggleSwitch.IsOn);
-                BlockMapFilterValue = LinkFilterService.BlockMapFilterValue;
+                BlockMapFilter = toggleSwitch.IsOn;
+                LinkFilterService.SetBlockMapFilter(toggleSwitch.IsOn);
+                BlockMapFilter = LinkFilterService.BlockMapFilter;
             }
         }
 
@@ -434,7 +434,7 @@ namespace GetStoreApp.Views.Pages
                         CurrentCountryOrRegion = StoreRegionService.DefaultStoreRegion;
                     }
 
-                    if (UseSystemRegionValue)
+                    if (UseSystemRegion)
                     {
                         foreach (StoreRegionModel storeRegion in StoreRegionCollection)
                         {

@@ -19,50 +19,50 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsAppInstallPage : Page, INotifyPropertyChanged
     {
-        private bool _allowUnsignedPackageValue = AppInstallService.AllowUnsignedPackageValue;
+        private bool _allowUnsignedPackage = AppInstallService.AllowUnsignedPackage;
 
-        public bool AllowUnsignedPackageValue
+        public bool AllowUnsignedPackage
         {
-            get { return _allowUnsignedPackageValue; }
+            get { return _allowUnsignedPackage; }
 
             set
             {
-                if (!Equals(_allowUnsignedPackageValue, value))
+                if (!Equals(_allowUnsignedPackage, value))
                 {
-                    _allowUnsignedPackageValue = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AllowUnsignedPackageValue)));
+                    _allowUnsignedPackage = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AllowUnsignedPackage)));
                 }
             }
         }
 
-        private bool _forceAppShutdownValue = AppInstallService.ForceAppShutdownValue;
+        private bool _forceAppShutdown = AppInstallService.ForceAppShutdown;
 
-        public bool ForceAppShutdownValue
+        public bool ForceAppShutdown
         {
-            get { return _forceAppShutdownValue; }
+            get { return _forceAppShutdown; }
 
             set
             {
-                if (!Equals(_forceAppShutdownValue, value))
+                if (!Equals(_forceAppShutdown, value))
                 {
-                    _forceAppShutdownValue = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ForceAppShutdownValue)));
+                    _forceAppShutdown = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ForceAppShutdown)));
                 }
             }
         }
 
-        private bool _forceTargetAppShutdownValue = AppInstallService.ForceTargetAppShutdownValue;
+        private bool _forceTargetAppShutdown = AppInstallService.ForceTargetAppShutdown;
 
-        public bool ForceTargetAppShutdownValue
+        public bool ForceTargetAppShutdown
         {
-            get { return _forceTargetAppShutdownValue; }
+            get { return _forceTargetAppShutdown; }
 
             set
             {
-                if (!Equals(_forceTargetAppShutdownValue, value))
+                if (!Equals(_forceTargetAppShutdown, value))
                 {
-                    _forceTargetAppShutdownValue = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ForceTargetAppShutdownValue)));
+                    _forceTargetAppShutdown = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ForceTargetAppShutdown)));
                 }
             }
         }
@@ -100,11 +100,11 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnAllowUnsignedPackageToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch && !Equals(AllowUnsignedPackageValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(AllowUnsignedPackage, toggleSwitch.IsOn))
             {
-                AllowUnsignedPackageValue = toggleSwitch.IsOn;
-                AppInstallService.SetAllowUnsignedPackageValue(toggleSwitch.IsOn);
-                AllowUnsignedPackageValue = AppInstallService.AllowUnsignedPackageValue;
+                AllowUnsignedPackage = toggleSwitch.IsOn;
+                AppInstallService.SetAllowUnsignedPackage(toggleSwitch.IsOn);
+                AllowUnsignedPackage = AppInstallService.AllowUnsignedPackage;
             }
         }
 
@@ -114,11 +114,11 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnForceAppShutdownToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch && !Equals(ForceAppShutdownValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(ForceAppShutdown, toggleSwitch.IsOn))
             {
-                ForceAppShutdownValue = toggleSwitch.IsOn;
-                AppInstallService.SetForceAppShutdownValue(toggleSwitch.IsOn);
-                ForceAppShutdownValue = AppInstallService.ForceAppShutdownValue;
+                ForceAppShutdown = toggleSwitch.IsOn;
+                AppInstallService.SetForceAppShutdown(toggleSwitch.IsOn);
+                ForceAppShutdown = AppInstallService.ForceAppShutdown;
             }
         }
 
@@ -128,11 +128,11 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnForceTargetAppShutdownToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch && !Equals(ForceTargetAppShutdownValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(ForceTargetAppShutdown, toggleSwitch.IsOn))
             {
-                ForceTargetAppShutdownValue = toggleSwitch.IsOn;
-                AppInstallService.SetForceTargetAppShutdownValue(toggleSwitch.IsOn);
-                ForceTargetAppShutdownValue = AppInstallService.ForceTargetAppShutdownValue;
+                ForceTargetAppShutdown = toggleSwitch.IsOn;
+                AppInstallService.SetForceTargetAppShutdown(toggleSwitch.IsOn);
+                ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdown;
             }
         }
 

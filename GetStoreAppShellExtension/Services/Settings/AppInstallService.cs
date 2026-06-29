@@ -12,26 +12,24 @@ namespace GetStoreAppShellExtension.Services.Settings
         private static readonly string forceAppShutdownKey = ConfigKey.ForceAppShutdownKey;
         private static readonly string forceTargetAppShutdownKey = ConfigKey.ForceTargetAppShutdownKey;
 
-        private static readonly bool defaultAllowUnsignedPackageValue = false;
-        private static readonly bool defaultForceAppShutdownValue = false;
-        private static readonly bool defaultForceTargetAppShutdownValue = false;
+        private static readonly bool defaultAllowUnsignedPackage = false;
+        private static readonly bool defaultForceAppShutdown = false;
+        private static readonly bool defaultForceTargetAppShutdown = false;
 
-        public static bool AllowUnsignedPackageValue { get; private set; }
+        public static bool AllowUnsignedPackage { get; private set; }
 
-        public static bool ForceAppShutdownValue { get; private set; }
+        public static bool ForceAppShutdown { get; private set; }
 
-        public static bool ForceTargetAppShutdownValue { get; private set; }
+        public static bool ForceTargetAppShutdown { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的应用安装选项值
         /// </summary>
         public static void InitializeAppInstall()
         {
-            AllowUnsignedPackageValue = GetAllowUnsignedPackage();
-
-            ForceAppShutdownValue = GetForceAppShutdownValue();
-
-            ForceTargetAppShutdownValue = GetForceTargetAppShutdownValue();
+            AllowUnsignedPackage = GetAllowUnsignedPackage();
+            ForceAppShutdown = GetForceAppShutdown();
+            ForceTargetAppShutdown = GetForceTargetAppShutdown();
         }
 
         /// <summary>
@@ -39,44 +37,44 @@ namespace GetStoreAppShellExtension.Services.Settings
         /// </summary>
         private static bool GetAllowUnsignedPackage()
         {
-            bool? allowUnsignedPackageValue = LocalSettingsService.ReadSetting<bool?>(allowUnsignedPackageKey);
+            bool? allowUnsignedPackage = LocalSettingsService.ReadSetting<bool?>(allowUnsignedPackageKey);
 
-            if (!allowUnsignedPackageValue.HasValue)
+            if (!allowUnsignedPackage.HasValue)
             {
-                return defaultAllowUnsignedPackageValue;
+                return defaultAllowUnsignedPackage;
             }
 
-            return allowUnsignedPackageValue.Value;
+            return allowUnsignedPackage.Value;
         }
 
         /// <summary>
         /// 获取设置存储的安装应用时强制关闭与包关联的进程的选项值，如果设置没有存储，使用默认值
         /// </summary>
-        private static bool GetForceAppShutdownValue()
+        private static bool GetForceAppShutdown()
         {
-            bool? forceAppShutdownValue = LocalSettingsService.ReadSetting<bool?>(forceAppShutdownKey);
+            bool? forceAppShutdown = LocalSettingsService.ReadSetting<bool?>(forceAppShutdownKey);
 
-            if (!forceAppShutdownValue.HasValue)
+            if (!forceAppShutdown.HasValue)
             {
-                return defaultForceAppShutdownValue;
+                return defaultForceAppShutdown;
             }
 
-            return forceAppShutdownValue.Value;
+            return forceAppShutdown.Value;
         }
 
         /// <summary>
         /// 获取设置存储的安装应用时强制关闭与包关联的进程的选项值，如果设置没有存储，使用默认值
         /// </summary>
-        private static bool GetForceTargetAppShutdownValue()
+        private static bool GetForceTargetAppShutdown()
         {
-            bool? forceTargetAppShutdownValue = LocalSettingsService.ReadSetting<bool?>(forceTargetAppShutdownKey);
+            bool? forceTargetAppShutdown = LocalSettingsService.ReadSetting<bool?>(forceTargetAppShutdownKey);
 
-            if (!forceTargetAppShutdownValue.HasValue)
+            if (!forceTargetAppShutdown.HasValue)
             {
-                return defaultForceTargetAppShutdownValue;
+                return defaultForceTargetAppShutdown;
             }
 
-            return forceTargetAppShutdownValue.Value;
+            return forceTargetAppShutdown.Value;
         }
     }
 }

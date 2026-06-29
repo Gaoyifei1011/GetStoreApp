@@ -10,41 +10,41 @@ namespace GetStoreApp.Services.Settings
     {
         private static readonly string settingsKey = ConfigKey.ShellMenuKey;
 
-        private static readonly bool defaultShellMenuValue = true;
+        private static readonly bool defaultShellMenu = true;
 
-        public static bool ShellMenuValue { get; private set; }
+        public static bool ShellMenu { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的文件右键菜单显示值
         /// </summary>
         public static void InitializeShellMenu()
         {
-            ShellMenuValue = GetShellMenuValue();
+            ShellMenu = GetShellMenu();
         }
 
         /// <summary>
         /// 获取设置存储的文件右键菜单显示值，如果设置没有存储，使用默认值
         /// </summary>
-        private static bool GetShellMenuValue()
+        private static bool GetShellMenu()
         {
-            bool? shellMenuValue = LocalSettingsService.ReadSetting<bool?>(settingsKey);
+            bool? shellMenu = LocalSettingsService.ReadSetting<bool?>(settingsKey);
 
-            if (!shellMenuValue.HasValue)
+            if (!shellMenu.HasValue)
             {
-                SetShellMenuValue(defaultShellMenuValue);
-                return defaultShellMenuValue;
+                SetShellMenu(defaultShellMenu);
+                return defaultShellMenu;
             }
 
-            return shellMenuValue.Value;
+            return shellMenu.Value;
         }
 
         /// <summary>
         /// 文件右键菜单显示值发生修改时修改设置存储的文件右键菜单显示值
         /// </summary>
-        public static void SetShellMenuValue(bool shellMenuValue)
+        public static void SetShellMenu(bool shellMenu)
         {
-            ShellMenuValue = shellMenuValue;
-            LocalSettingsService.SaveSetting(settingsKey, shellMenuValue);
+            ShellMenu = shellMenu;
+            LocalSettingsService.SaveSetting(settingsKey, shellMenu);
         }
     }
 }

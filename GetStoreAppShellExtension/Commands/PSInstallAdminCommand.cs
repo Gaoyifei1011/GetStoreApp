@@ -81,17 +81,17 @@ namespace GetStoreAppShellExtension.Commands
                 shellItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string filePath);
                 string arguments = "Add-AppxPackage " + filePath;
 
-                if (AppInstallService.AllowUnsignedPackageValue)
+                if (AppInstallService.AllowUnsignedPackage)
                 {
                     arguments += " -AllowUnsigned";
                 }
 
-                if (AppInstallService.ForceAppShutdownValue)
+                if (AppInstallService.ForceAppShutdown)
                 {
                     arguments += " -ForceApplicationShutdown";
                 }
 
-                if (AppInstallService.ForceTargetAppShutdownValue)
+                if (AppInstallService.ForceTargetAppShutdown)
                 {
                     arguments += " -ForceTargetApplicationShutdown";
                 }

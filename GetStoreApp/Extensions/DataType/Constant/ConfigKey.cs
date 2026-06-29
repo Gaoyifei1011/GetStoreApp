@@ -13,9 +13,9 @@
 
         public const string BackdropKey = "AppBackdrop";
 
-        public const string BlockMapFilterKey = "BlockMapFilterValue";
+        public const string BlockMapFilterKey = "BlockMapFilter";
 
-        public const string CancelAutoUpdateKey = "CancelAutoUpdateValue";
+        public const string CancelAutoUpdateKey = "CancelAutoUpdate";
 
         public const string DownloadFolderKey = "DownloadFolder";
 
@@ -33,7 +33,7 @@
 
         public const string NotificationKey = "AppNotification";
 
-        public const string EncryptedPackageFilterKey = "EncryptedPackageFilterValue";
+        public const string EncryptedPackageFilterKey = "EncryptedPackageFilter";
 
         public const string QueryLinksModeKey = "QueryLinksMode";
 
@@ -45,7 +45,7 @@
 
         public const string ThemeKey = "AppTheme";
 
-        public const string TopMostKey = "TopMostValue";
+        public const string TopMostKey = "TopMost";
 
         public const string UseSystemRegionKey = "UseSystemRegion";
 

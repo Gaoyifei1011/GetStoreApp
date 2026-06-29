@@ -31,18 +31,18 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsAdvancedPage : Page, INotifyPropertyChanged
     {
-        private bool _notificationValue = NotificationService.AppNotification;
+        private bool _notification = NotificationService.AppNotification;
 
-        public bool NotificationValue
+        public bool Notification
         {
-            get { return _notificationValue; }
+            get { return _notification; }
 
             set
             {
-                if (!Equals(_notificationValue, value))
+                if (!Equals(_notification, value))
                 {
-                    _notificationValue = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NotificationValue)));
+                    _notification = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Notification)));
                 }
             }
         }
@@ -79,18 +79,18 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _shellMenuValue = ShellMenuService.ShellMenuValue;
+        private bool _shellMenu = ShellMenuService.ShellMenu;
 
-        public bool ShellMenuValue
+        public bool ShellMenu
         {
-            get { return _shellMenuValue; }
+            get { return _shellMenu; }
 
             set
             {
-                if (!Equals(_shellMenuValue, value))
+                if (!Equals(_shellMenu, value))
                 {
-                    _shellMenuValue = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShellMenuValue)));
+                    _shellMenu = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShellMenu)));
                 }
             }
         }
@@ -182,11 +182,11 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnShellMenuToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch && !Equals(ShellMenuValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(ShellMenu, toggleSwitch.IsOn))
             {
-                ShellMenuValue = toggleSwitch.IsOn;
-                ShellMenuService.SetShellMenuValue(toggleSwitch.IsOn);
-                ShellMenuValue = ShellMenuService.ShellMenuValue;
+                ShellMenu = toggleSwitch.IsOn;
+                ShellMenuService.SetShellMenu(toggleSwitch.IsOn);
+                ShellMenu = ShellMenuService.ShellMenu;
             }
         }
 
@@ -196,11 +196,11 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnNotificationToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch && !Equals(NotificationValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(Notification, toggleSwitch.IsOn))
             {
-                NotificationValue = toggleSwitch.IsOn;
+                Notification = toggleSwitch.IsOn;
                 NotificationService.SetNotification(toggleSwitch.IsOn);
-                NotificationValue = NotificationService.AppNotification;
+                Notification = NotificationService.AppNotification;
             }
         }
 

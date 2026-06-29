@@ -207,7 +207,7 @@
                 <TextBox
                     Grid.Column="0"
                     Height="34"
-                    IsEnabled="{x:Bind UseWindowsAppsFolderValue.Equals(x:False), Mode=OneWay}"
+                    IsEnabled="{x:Bind UseWindowsAppsFolder.Equals(x:False), Mode=OneWay}"
                     IsReadOnly="True"
                     Text="{x:Bind SelectedFolder, Mode=OneWay}" />
 
@@ -217,7 +217,7 @@
                     Height="34"
                     Padding="0"
                     Click="{x:Bind OnSelectFolderClicked}"
-                    IsEnabled="{x:Bind UseWindowsAppsFolderValue.Equals(x:False), Mode=OneWay}"
+                    IsEnabled="{x:Bind UseWindowsAppsFolder.Equals(x:False), Mode=OneWay}"
                     ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SelectFolder')}">
 
                     <FontIcon FontSize="16" Glyph="&#xE8B7;" />
@@ -238,7 +238,7 @@
 
                 <ToggleSwitch
                     Grid.Column="1"
-                    IsOn="{x:Bind UseWindowsAppsFolderValue, Mode=OneWay}"
+                    IsOn="{x:Bind UseWindowsAppsFolder, Mode=OneWay}"
                     OffContent="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UseWindowsAppsFolderOffContent')}"
                     OnContent="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UseWindowsAppsFolderOnContent')}"
                     Style="{StaticResource ToggleSwitchStyle}"
@@ -259,7 +259,7 @@
 
                 <ToggleSwitch
                     Grid.Column="1"
-                    IsOn="{x:Bind SetDefaultVolumeValue, Mode=OneWay}"
+                    IsOn="{x:Bind SetDefaultVolume, Mode=OneWay}"
                     OffContent="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SetDefaultVolumeOffContent')}"
                     OnContent="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SetDefaultVolumeOnContent')}"
                     Style="{StaticResource ToggleSwitchStyle}"

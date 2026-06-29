@@ -17,10 +17,9 @@ namespace GetStoreApp.Services.Settings
         private static readonly string useSystemRegionKey = ConfigKey.UseSystemRegionKey;
         private static readonly string storeRegionKey = ConfigKey.StoreRegionKey;
         private static GEO_ENUMNAMEPROC enumNameProc;
+        private static readonly bool defaultUseSystemRegion = true;
 
-        private static readonly bool defaultUseSystemRegionValue = true;
-
-        public static bool UseSystemRegionValue { get; private set; }
+        public static bool UseSystemRegion { get; private set; }
 
         public static GeographicRegion DefaultStoreRegion { get; private set; }
 
@@ -38,7 +37,7 @@ namespace GetStoreApp.Services.Settings
             InitializeStoreRegionList();
             GeographicRegion systemRegion = new();
             DefaultStoreRegion = StoreRegionList.Find(item => string.Equals(item.CodeTwoLetter, systemRegion.CodeTwoLetter, StringComparison.OrdinalIgnoreCase));
-            UseSystemRegionValue = GetUseSystemRegionValue();
+            UseSystemRegion = GetUseSystemRegion();
             StoreRegion = GetRegion();
         }
 
@@ -53,7 +52,7 @@ namespace GetStoreApp.Services.Settings
             {
                 DefaultStoreRegion = StoreRegionList.Find(item => string.Equals(item.CodeTwoLetter, systemRegion.CodeTwoLetter, StringComparison.OrdinalIgnoreCase));
 
-                if (UseSystemRegionValue)
+                if (UseSystemRegion)
                 {
                     StoreRegion = DefaultStoreRegion;
                 }
@@ -75,17 +74,17 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 获取设置存储的使用系统区域值，如果设置没有存储，使用默认值
         /// </summary>
-        private static bool GetUseSystemRegionValue()
+        private static bool GetUseSystemRegion()
         {
-            bool? useSystemRegionValue = LocalSettingsService.ReadSetting<bool?>(useSystemRegionKey);
+            bool? useSystemRegion = LocalSettingsService.ReadSetting<bool?>(useSystemRegionKey);
 
-            if (!useSystemRegionValue.HasValue)
+            if (!useSystemRegion.HasValue)
             {
-                SetUseSystemRegionValue(defaultUseSystemRegionValue);
-                return defaultUseSystemRegionValue;
+                SetUseSystemRegion(defaultUseSystemRegion);
+                return defaultUseSystemRegion;
             }
 
-            return useSystemRegionValue.Value;
+            return useSystemRegion.Value;
         }
 
         /// <summary>
@@ -103,7 +102,7 @@ namespace GetStoreApp.Services.Settings
 
             GeographicRegion selectedRegion = StoreRegionList.Find(item => string.Equals(item.CodeTwoLetter, storeRegion, StringComparison.OrdinalIgnoreCase));
 
-            if (UseSystemRegionValue)
+            if (UseSystemRegion)
             {
                 SetRegion(DefaultStoreRegion);
                 return DefaultStoreRegion;
@@ -117,11 +116,11 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 使用系统区域值发生修改时修改设置存储的始终显示背景色值
         /// </summary>
-        public static void SetUseSystemRegionValue(bool useSystemRegionValue)
+        public static void SetUseSystemRegion(bool useSystemRegion)
         {
-            UseSystemRegionValue = useSystemRegionValue;
+            UseSystemRegion = useSystemRegion;
 
-            LocalSettingsService.SaveSetting(useSystemRegionKey, useSystemRegionValue);
+            LocalSettingsService.SaveSetting(useSystemRegionKey, useSystemRegion);
         }
 
         /// <summary>

@@ -73,18 +73,18 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _alwaysShowBackdropValue = AlwaysShowBackdropService.AlwaysShowBackdropValue;
+        private bool _alwaysShowBackdrop = AlwaysShowBackdropService.AlwaysShowBackdrop;
 
-        public bool AlwaysShowBackdropValue
+        public bool AlwaysShowBackdrop
         {
-            get { return _alwaysShowBackdropValue; }
+            get { return _alwaysShowBackdrop; }
 
             set
             {
-                if (!Equals(_alwaysShowBackdropValue, value))
+                if (!Equals(_alwaysShowBackdrop, value))
                 {
-                    _alwaysShowBackdropValue = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AlwaysShowBackdropValue)));
+                    _alwaysShowBackdrop = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AlwaysShowBackdrop)));
                 }
             }
         }
@@ -137,18 +137,18 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _topMostValue = TopMostService.TopMostValue;
+        private bool _topMost = TopMostService.TopMost;
 
-        public bool TopMostValue
+        public bool TopMost
         {
-            get { return _topMostValue; }
+            get { return _topMost; }
 
             set
             {
-                if (!Equals(_topMostValue, value))
+                if (!Equals(_topMost, value))
                 {
-                    _topMostValue = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TopMostValue)));
+                    _topMost = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TopMost)));
                 }
             }
         }
@@ -251,8 +251,8 @@ namespace GetStoreApp.Views.Pages
 
                 if (Equals(Backdrop, BackdropList[0]))
                 {
-                    AlwaysShowBackdropService.SetAlwaysShowBackdropValue(false);
-                    AlwaysShowBackdropValue = false;
+                    AlwaysShowBackdropService.SetAlwaysShowBackdrop(false);
+                    AlwaysShowBackdrop = false;
                 }
             }
         }
@@ -299,11 +299,11 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnAlwaysShowBackdropToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch && !Equals(AlwaysShowBackdropValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(AlwaysShowBackdrop, toggleSwitch.IsOn))
             {
-                AlwaysShowBackdropValue = toggleSwitch.IsOn;
-                AlwaysShowBackdropService.SetAlwaysShowBackdropValue(toggleSwitch.IsOn);
-                AlwaysShowBackdropValue = AlwaysShowBackdropService.AlwaysShowBackdropValue;
+                AlwaysShowBackdrop = toggleSwitch.IsOn;
+                AlwaysShowBackdropService.SetAlwaysShowBackdrop(toggleSwitch.IsOn);
+                AlwaysShowBackdrop = AlwaysShowBackdropService.AlwaysShowBackdrop;
             }
         }
 
@@ -334,11 +334,11 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnTopMostToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch && !Equals(TopMostValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(TopMost, toggleSwitch.IsOn))
             {
-                TopMostValue = toggleSwitch.IsOn;
-                TopMostService.SetTopMostValue(toggleSwitch.IsOn);
-                TopMostValue = TopMostService.TopMostValue;
+                TopMost = toggleSwitch.IsOn;
+                TopMostService.SetTopMost(toggleSwitch.IsOn);
+                TopMost = TopMostService.TopMost;
             }
         }
 

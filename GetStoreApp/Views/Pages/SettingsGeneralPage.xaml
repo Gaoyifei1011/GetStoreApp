@@ -210,7 +210,7 @@
                 <ToggleSwitch
                     Grid.Column="2"
                     IsEnabled="{x:Bind AlwaysShowBackdropEnabled, Mode=OneWay}"
-                    IsOn="{x:Bind AlwaysShowBackdropValue, Mode=OneWay}"
+                    IsOn="{x:Bind AlwaysShowBackdrop, Mode=OneWay}"
                     OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/AlwaysShowBackdropOffContent')}"
                     OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/AlwaysShowBackdropOnContent')}"
                     Style="{StaticResource ToggleSwitchStyle}"
@@ -332,7 +332,7 @@
 
                 <ToggleSwitch
                     Grid.Column="2"
-                    IsOn="{x:Bind TopMostValue, Mode=OneWay}"
+                    IsOn="{x:Bind TopMost, Mode=OneWay}"
                     OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/TopMostOffContent')}"
                     OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/TopMostOnContent')}"
                     Style="{StaticResource ToggleSwitchStyle}"

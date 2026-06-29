@@ -76,7 +76,7 @@
 
                 <ToggleSwitch
                     Grid.Column="3"
-                    IsOn="{x:Bind AllowUnsignedPackageValue, Mode=OneWay}"
+                    IsOn="{x:Bind AllowUnsignedPackage, Mode=OneWay}"
                     OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/AllowUnsignedPackageOffContent')}"
                     OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/AllowUnsignedPackageOnContent')}"
                     Style="{StaticResource ToggleSwitchStyle}"
@@ -133,7 +133,7 @@
 
                 <ToggleSwitch
                     Grid.Column="2"
-                    IsOn="{x:Bind ForceAppShutdownValue, Mode=OneWay}"
+                    IsOn="{x:Bind ForceAppShutdown, Mode=OneWay}"
                     OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceAppShutdownOffContent')}"
                     OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceAppShutdownOnContent')}"
                     Style="{StaticResource ToggleSwitchStyle}"
@@ -190,7 +190,7 @@
 
                 <ToggleSwitch
                     Grid.Column="2"
-                    IsOn="{x:Bind ForceTargetAppShutdownValue, Mode=OneWay}"
+                    IsOn="{x:Bind ForceTargetAppShutdown, Mode=OneWay}"
                     OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceTargetAppShutdownOffContent')}"
                     OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceTargetAppShutdownOnContent')}"
                     Style="{StaticResource ToggleSwitchStyle}"

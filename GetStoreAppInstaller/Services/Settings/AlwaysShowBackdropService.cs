@@ -10,31 +10,31 @@ namespace GetStoreAppInstaller.Services.Settings
     {
         private static readonly string settingsKey = ConfigKey.AlwaysShowBackdropKey;
 
-        private static readonly bool defaultAlwaysShowBackdropValue = false;
+        private static readonly bool defaultAlwaysShowBackdrop = false;
 
-        public static bool AlwaysShowBackdropValue { get; private set; }
+        public static bool AlwaysShowBackdrop { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的始终显示背景色值
         /// </summary>
         public static void InitializeAlwaysShowBackdrop()
         {
-            AlwaysShowBackdropValue = GetAlwaysShowBackdropValue();
+            AlwaysShowBackdrop = GetAlwaysShowBackdrop();
         }
 
         /// <summary>
         /// 获取设置存储的始终显示背景色值，如果设置没有存储，使用默认值
         /// </summary>
-        private static bool GetAlwaysShowBackdropValue()
+        private static bool GetAlwaysShowBackdrop()
         {
-            bool? alwaysShowBackdropValue = LocalSettingsService.ReadSetting<bool?>(settingsKey);
+            bool? alwaysShowBackdrop = LocalSettingsService.ReadSetting<bool?>(settingsKey);
 
-            if (!alwaysShowBackdropValue.HasValue)
+            if (!alwaysShowBackdrop.HasValue)
             {
-                return defaultAlwaysShowBackdropValue;
+                return defaultAlwaysShowBackdrop;
             }
 
-            return alwaysShowBackdropValue.Value;
+            return alwaysShowBackdrop.Value;
         }
     }
 }

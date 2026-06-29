@@ -284,9 +284,9 @@ namespace GetStoreApp.Views.Pages
                                     {
                                         AddPackageOptions addPackageOptions = new()
                                         {
-                                            AllowUnsigned = AppInstallService.AllowUnsignedPackageValue,
-                                            ForceAppShutdown = AppInstallService.ForceAppShutdownValue,
-                                            ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdownValue,
+                                            AllowUnsigned = AppInstallService.AllowUnsignedPackage,
+                                            ForceAppShutdown = AppInstallService.ForceAppShutdown,
+                                            ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdown,
                                             TargetVolume = PackageVolume.GetDefault()
                                         };
 

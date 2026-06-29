@@ -103,34 +103,34 @@ namespace GetStoreApp.Views.Dialogs
             }
         }
 
-        private bool _useWindowsAppsFolderValue = true;
+        private bool _useWindowsAppsFolder = true;
 
-        public bool UseWindowsAppsFolderValue
+        public bool UseWindowsAppsFolder
         {
-            get { return _useWindowsAppsFolderValue; }
+            get { return _useWindowsAppsFolder; }
 
             set
             {
-                if (!Equals(_useWindowsAppsFolderValue, value))
+                if (!Equals(_useWindowsAppsFolder, value))
                 {
-                    _useWindowsAppsFolderValue = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UseWindowsAppsFolderValue)));
+                    _useWindowsAppsFolder = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UseWindowsAppsFolder)));
                 }
             }
         }
 
-        private bool _setDefaultVolumeValue;
+        private bool _setDefaultVolume;
 
-        public bool SetDefaultVolumeValue
+        public bool SetDefaultVolume
         {
-            get { return _setDefaultVolumeValue; }
+            get { return _setDefaultVolume; }
 
             set
             {
-                if (!Equals(_setDefaultVolumeValue, value))
+                if (!Equals(_setDefaultVolume, value))
                 {
-                    _setDefaultVolumeValue = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SetDefaultVolumeValue)));
+                    _setDefaultVolume = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SetDefaultVolume)));
                 }
             }
         }
@@ -169,8 +169,8 @@ namespace GetStoreApp.Views.Dialogs
         {
             SelectedPackageVolume = null;
             SelectedFolder = string.Empty;
-            UseWindowsAppsFolderValue = true;
-            SetDefaultVolumeValue = false;
+            UseWindowsAppsFolder = true;
+            SetDefaultVolume = false;
             IsPrimaryEnabled = false;
             await GetAvailablePackageVolumeAsync();
         }
@@ -186,7 +186,7 @@ namespace GetStoreApp.Views.Dialogs
                 IsPrimaryEnabled = true;
                 if (SelectedPackageVolume is not null && SelectedPackageVolume.WinRTPackageVolume is not null)
                 {
-                    if (UseWindowsAppsFolderValue)
+                    if (UseWindowsAppsFolder)
                     {
                         SelectedFolder = Path.Combine(SelectedPackageVolume.WinRTPackageVolume.MountPoint, "WindowsApps");
                     }
@@ -240,9 +240,9 @@ namespace GetStoreApp.Views.Dialogs
         [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnUseWindowsAppsFolderToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch && !Equals(UseWindowsAppsFolderValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(UseWindowsAppsFolder, toggleSwitch.IsOn))
             {
-                UseWindowsAppsFolderValue = toggleSwitch.IsOn;
+                UseWindowsAppsFolder = toggleSwitch.IsOn;
                 if (SelectedPackageVolume is not null && SelectedPackageVolume.WinRTPackageVolume is not null)
                 {
                     SelectedFolder = Path.Combine(SelectedPackageVolume.WinRTPackageVolume.MountPoint, "WindowsApps");
@@ -256,9 +256,9 @@ namespace GetStoreApp.Views.Dialogs
         [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnSetDefaultVolumeToggled(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch && !Equals(SetDefaultVolumeValue, toggleSwitch.IsOn))
+            if (sender is ToggleSwitch toggleSwitch && !Equals(SetDefaultVolume, toggleSwitch.IsOn))
             {
-                SetDefaultVolumeValue = toggleSwitch.IsOn;
+                SetDefaultVolume = toggleSwitch.IsOn;
             }
         }
 
@@ -313,7 +313,7 @@ namespace GetStoreApp.Views.Dialogs
                         PackageVolumeResultKind = PackageVolumeResultKind.Successfully;
                         IsAddingPackageVolume = false;
 
-                        if (SetDefaultVolumeValue)
+                        if (SetDefaultVolume)
                         {
                             // 设置默认卷
                             await Task.Run(() =>

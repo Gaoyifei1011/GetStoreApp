@@ -49,15 +49,15 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private static string GetQueryLinksMode()
         {
-            string queryLinksModeValue = LocalSettingsService.ReadSetting<string>(queryLinksModeSettingsKey);
+            string queryLinksMode = LocalSettingsService.ReadSetting<string>(queryLinksModeSettingsKey);
 
-            if (string.IsNullOrEmpty(queryLinksModeValue))
+            if (string.IsNullOrEmpty(queryLinksMode))
             {
                 SetQueryLinksMode(defaultQueryLinksMode);
                 return defaultQueryLinksMode;
             }
 
-            string selectedQueryLinksMode = QueryLinksModeList.Find(item => string.Equals(item, queryLinksModeValue, StringComparison.OrdinalIgnoreCase));
+            string selectedQueryLinksMode = QueryLinksModeList.Find(item => string.Equals(item, queryLinksMode, StringComparison.OrdinalIgnoreCase));
             return selectedQueryLinksMode is null ? defaultQueryLinksMode : selectedQueryLinksMode;
         }
 
