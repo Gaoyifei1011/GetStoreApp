@@ -55,7 +55,7 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        #region 第一部分：重载父类事件
+        #region 第一部分：重写父类事件
 
         /// <summary>
         /// 导航到该页面触发的事件
@@ -130,7 +130,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：重载父类事件
+        #endregion 第一部分：重写父类事件
 
         #region 第二部分：XamlUICommand 命令调用时挂载的事件
 
