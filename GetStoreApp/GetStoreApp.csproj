@@ -337,6 +337,7 @@
     <None Remove="Strings\zh-hans\WinGetSearch.resjson" />
     <None Remove="Strings\zh-hans\WinGetUpgrade.resjson" />
     <None Remove="Styles\AutoSuggestBox.xaml" />
+    <None Remove="Styles\CalendarDatePicker.xaml" />
     <None Remove="Styles\ComboBox.xaml" />
     <None Remove="Styles\CommandBar.xaml" />
     <None Remove="Styles\ListView.xaml" />
@@ -404,6 +405,7 @@
     <PackageReference Include="Mile.Aria2" Version="1.0.1050" />
 
     <Page Update="Styles\AutoSuggestBox.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\CalendarDatePicker.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\ComboBox.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\CommandBar.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\ListView.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

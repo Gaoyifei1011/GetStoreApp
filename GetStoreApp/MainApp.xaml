@@ -154,6 +154,7 @@
                         </ResourceDictionary>
 
                         <ResourceDictionary Source="ms-appx:///Styles/AutoSuggestBox.xaml" />
+                        <ResourceDictionary Source="ms-appx:///Styles/CalendarDatePicker.xaml" />
                         <ResourceDictionary Source="ms-appx:///Styles/ComboBox.xaml" />
                         <ResourceDictionary Source="ms-appx:///Styles/CommandBar.xaml" />
                         <ResourceDictionary Source="ms-appx:///Styles/ListView.xaml" />
