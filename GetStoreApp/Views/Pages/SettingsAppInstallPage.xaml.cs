@@ -2,6 +2,7 @@
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
@@ -19,7 +20,7 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsAppInstallPage : Page, INotifyPropertyChanged
     {
-        private bool _allowUnsignedPackage = AppInstallService.AllowUnsignedPackage;
+        private bool _allowUnsignedPackage;
 
         public bool AllowUnsignedPackage
         {
@@ -35,7 +36,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _forceAppShutdown = AppInstallService.ForceAppShutdown;
+        private bool _forceAppShutdown;
 
         public bool ForceAppShutdown
         {
@@ -51,7 +52,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _forceTargetAppShutdown = AppInstallService.ForceTargetAppShutdown;
+        private bool _forceTargetAppShutdown;
 
         public bool ForceTargetAppShutdown
         {
@@ -74,7 +75,22 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        #region 第一部分：设置应用安装页面——挂载的事件
+        #region 第一部分：重写父类事件
+
+        /// <summary>
+        /// 导航到该页面后触发的事件
+        /// </summary>
+        protected override void OnNavigatedTo(NavigationEventArgs args)
+        {
+            base.OnNavigatedTo(args);
+            AllowUnsignedPackage = AppInstallService.AllowUnsignedPackage;
+            ForceAppShutdown = AppInstallService.ForceAppShutdown;
+            ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdown;
+        }
+
+        #endregion 第一部分：重写父类事件
+
+        #region 第二部分：设置应用安装页面——挂载的事件
 
         /// <summary>
         /// 打开开发者选项
@@ -148,6 +164,6 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：设置应用安装页面——挂载的事件
+        #endregion 第二部分：设置应用安装页面——挂载的事件
     }
 }

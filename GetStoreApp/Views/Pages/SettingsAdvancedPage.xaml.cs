@@ -9,6 +9,7 @@ using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.Rstrtmgr;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,7 +32,7 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsAdvancedPage : Page, INotifyPropertyChanged
     {
-        private bool _notification = NotificationService.AppNotification;
+        private bool _notification;
 
         public bool Notification
         {
@@ -47,7 +48,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _notificationEnabled = NotificationService.NotificationSetting is NotificationSetting.Enabled;
+        private bool _notificationEnabled;
 
         public bool NotificationEnabled
         {
@@ -79,7 +80,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _shellMenu = ShellMenuService.ShellMenu;
+        private bool _shellMenu;
 
         public bool ShellMenu
         {
@@ -104,7 +105,22 @@ namespace GetStoreApp.Views.Pages
             GlobalNotificationService.ApplicationExit += OnApplicationExit;
         }
 
-        #region 第一部分：设置高级页面——挂载的事件
+        #region 第一部分：重写父类事件
+
+        /// <summary>
+        /// 导航到该页面后触发的事件
+        /// </summary>
+        protected override void OnNavigatedTo(NavigationEventArgs args)
+        {
+            base.OnNavigatedTo(args);
+            Notification = NotificationService.AppNotification;
+            NotificationEnabled = NotificationService.NotificationSetting is NotificationSetting.Enabled;
+            ShellMenu = ShellMenuService.ShellMenu;
+        }
+
+        #endregion 第一部分：重写父类事件
+
+        #region 第二部分：设置高级页面——挂载的事件
 
         /// <summary>
         /// 打开系统通知设置
@@ -236,9 +252,9 @@ namespace GetStoreApp.Views.Pages
             await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.LogClean, result));
         }
 
-        #endregion 第一部分：设置高级页面——挂载的事件
+        #endregion 第二部分：设置高级页面——挂载的事件
 
-        #region 第二部分：设置高级页面——自定义事件
+        #region 第三部分：设置高级页面——自定义事件
 
         /// <summary>
         /// 应用程序退出时触发的事件
@@ -270,6 +286,6 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第二部分：设置高级页面——自定义事件
+        #endregion 第三部分：设置高级页面——自定义事件
     }
 }

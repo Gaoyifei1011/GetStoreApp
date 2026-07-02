@@ -7,6 +7,7 @@ using GetStoreApp.Views.Windows;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -73,7 +74,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _alwaysShowBackdrop = AlwaysShowBackdropService.AlwaysShowBackdrop;
+        private bool _alwaysShowBackdrop;
 
         public bool AlwaysShowBackdrop
         {
@@ -137,7 +138,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _topMost = TopMostService.TopMost;
+        private bool _topMost;
 
         public bool TopMost
         {
@@ -165,11 +166,9 @@ namespace GetStoreApp.Views.Pages
         {
             InitializeComponent();
 
-            AdvancedEffectsEnabled = uiSettings.AdvancedEffectsEnabled;
             ThemeList.Add(new ComboBoxItemModel() { SelectedValue = ThemeService.ThemeList[0], DisplayMember = ThemeDefaultString });
             ThemeList.Add(new ComboBoxItemModel() { SelectedValue = ThemeService.ThemeList[1], DisplayMember = ThemeLightAltString });
             ThemeList.Add(new ComboBoxItemModel() { SelectedValue = ThemeService.ThemeList[2], DisplayMember = ThemeDarkString });
-            Theme = ThemeList.Find(item => Equals(Convert.ToString(item.SelectedValue), ThemeService.AppTheme));
 
             BackdropList.Add(new ComboBoxItemModel() { SelectedValue = BackdropService.BackdropList[0], DisplayMember = BackdropDefaultString });
             if (MicaController.IsSupported())
@@ -183,13 +182,29 @@ namespace GetStoreApp.Views.Pages
                 BackdropList.Add(new ComboBoxItemModel() { SelectedValue = BackdropService.BackdropList[4], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicBaseString) });
                 BackdropList.Add(new ComboBoxItemModel() { SelectedValue = BackdropService.BackdropList[5], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicThinString) });
             }
-            Backdrop = BackdropList.Find(item => Equals(Convert.ToString(item.SelectedValue), BackdropService.AppBackdrop));
 
             foreach (KeyValuePair<string, string> languageItem in LanguageService.LanguageList)
             {
                 LanguageCollection.Add(new ComboBoxItemModel() { SelectedValue = languageItem.Key, DisplayMember = languageItem.Value });
             }
 
+            uiSettings.AdvancedEffectsEnabledChanged += OnAdvancedEffectsEnabledChanged;
+            GlobalNotificationService.ApplicationExit += OnApplicationExit;
+        }
+
+        #region 第一部分：重写父类事件
+
+        /// <summary>
+        /// 导航到该页面后触发的事件
+        /// </summary>
+        protected override void OnNavigatedTo(NavigationEventArgs args)
+        {
+            base.OnNavigatedTo(args);
+            AdvancedEffectsEnabled = uiSettings.AdvancedEffectsEnabled;
+            AlwaysShowBackdrop = AlwaysShowBackdropService.AlwaysShowBackdrop;
+            TopMost = TopMostService.TopMost;
+            Theme = ThemeList.Find(item => Equals(Convert.ToString(item.SelectedValue), ThemeService.AppTheme));
+            Backdrop = BackdropList.Find(item => Equals(Convert.ToString(item.SelectedValue), BackdropService.AppBackdrop));
             foreach (ComboBoxItemModel languageItem in LanguageCollection)
             {
                 if (string.Equals(Convert.ToString(languageItem.SelectedValue), LanguageService.AppLanguage.Key, StringComparison.OrdinalIgnoreCase))
@@ -198,13 +213,12 @@ namespace GetStoreApp.Views.Pages
                     break;
                 }
             }
-
             AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Convert.ToString(Backdrop.SelectedValue), Convert.ToString(BackdropList[0].SelectedValue));
-            uiSettings.AdvancedEffectsEnabledChanged += OnAdvancedEffectsEnabledChanged;
-            GlobalNotificationService.ApplicationExit += OnApplicationExit;
         }
 
-        #region 第一部分：设置通用选项页面——挂载的事件
+        #endregion 第一部分：重写父类事件
+
+        #region 第二部分：设置通用选项页面——挂载的事件
 
         /// <summary>
         /// 打开系统主题设置
@@ -342,9 +356,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：设置通用选项页面——挂载的事件
+        #endregion 第二部分：设置通用选项页面——挂载的事件
 
-        #region 第二部分：设置通用选项页面——自定义事件
+        #region 第三部分：设置通用选项页面——自定义事件
 
         /// <summary>
         /// 应用程序退出时触发的事件
@@ -374,6 +388,6 @@ namespace GetStoreApp.Views.Pages
             });
         }
 
-        #endregion 第二部分：设置通用选项页面——自定义事件
+        #endregion 第三部分：设置通用选项页面——自定义事件
     }
 }

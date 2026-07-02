@@ -5,6 +5,7 @@ using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
@@ -68,9 +69,23 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
             WinGetSourceList.Add(new ComboBoxItemModel() { SelectedValue = WinGetConfigService.WinGetSourceList[0], DisplayMember = BuiltInAppString });
             WinGetSourceList.Add(new ComboBoxItemModel() { SelectedValue = WinGetConfigService.WinGetSourceList[1], DisplayMember = AppInstallerString });
+        }
+
+        #region 第一部分：重写父类事件
+
+        /// <summary>
+        /// 导航到该页面后触发的事件
+        /// </summary>
+        protected override async void OnNavigatedTo(NavigationEventArgs args)
+        {
+            base.OnNavigatedTo(args);
             WinGetSource = WinGetSourceList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), WinGetConfigService.WinGetSource, StringComparison.OrdinalIgnoreCase));
             CurrentWinGetSource = WinGetSourceList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), WinGetConfigService.CurrentWinGetSource, StringComparison.OrdinalIgnoreCase));
         }
+
+        #endregion 第一部分：重写父类事件
+
+        #region 第二部分：设置 WinGet 程序包选项页面——挂载的事件
 
         /// <summary>
         /// 设置 WinGet 来源
@@ -119,5 +134,7 @@ namespace GetStoreApp.Views.Pages
                 }
             });
         }
+
+        #endregion 第二部分：设置 WinGet 程序包选项页面——挂载的事件
     }
 }

@@ -8,8 +8,8 @@ using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Documents;
+using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.Storage.Pickers;
 using System;
 using System.Collections.Generic;
@@ -36,7 +36,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string DoEngineBitsString = ResourceService.GetLocalized("SettingsDownload/DoEngineBits");
         private readonly string DoEngineDoString = ResourceService.GetLocalized("SettingsDownload/DoEngineDo");
 
-        private string _downloadFolder = DownloadOptionsService.DownloadFolder;
+        private string _downloadFolder;
 
         public string DownloadFolder
         {
@@ -52,7 +52,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _manualSetDownloadFolder = DownloadOptionsService.ManualSetDownloadFolder;
+        private bool _manualSetDownloadFolder;
 
         public bool ManualSetDownloadFolder
         {
@@ -94,10 +94,24 @@ namespace GetStoreApp.Views.Pages
             DoEngineModeList.Add(new ComboBoxItemModel() { SelectedValue = DownloadOptionsService.DoEngineModeList[0], DisplayMember = DoEngineDoString });
             DoEngineModeList.Add(new ComboBoxItemModel() { SelectedValue = DownloadOptionsService.DoEngineModeList[1], DisplayMember = DoEngineBitsString });
             DoEngineModeList.Add(new ComboBoxItemModel() { SelectedValue = DownloadOptionsService.DoEngineModeList[2], DisplayMember = DoEngineAria2String });
+        }
+
+        #region 第一部分：重写父类事件
+
+        /// <summary>
+        /// 导航到该页面后触发的事件
+        /// </summary>
+        protected override void OnNavigatedTo(NavigationEventArgs args)
+        {
+            base.OnNavigatedTo(args);
+            DownloadFolder = DownloadOptionsService.DownloadFolder;
+            ManualSetDownloadFolder = DownloadOptionsService.ManualSetDownloadFolder;
             DoEngineMode = DoEngineModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), DownloadOptionsService.DoEngineMode, StringComparison.OrdinalIgnoreCase));
         }
 
-        #region 第一部分：设置下载管理页面——挂载的事件
+        #endregion 第一部分：重写父类事件
+
+        #region 第二部分：设置下载管理页面——挂载的事件
 
         /// <summary>
         /// 打开下载文件存放目录
@@ -241,6 +255,6 @@ namespace GetStoreApp.Views.Pages
             });
         }
 
-        #endregion 第一部分：设置下载管理页面——挂载的事件
+        #endregion 第二部分：设置下载管理页面——挂载的事件
     }
 }
