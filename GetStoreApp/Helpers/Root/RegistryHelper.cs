@@ -109,5 +109,109 @@ namespace GetStoreApp.Helpers.Root
 
             return value;
         }
+
+        /// <summary>
+        /// 保存注册表指定项的内容
+        /// </summary>
+        public static bool SaveRegistryKey<T>(nuint rootRegistryKey, string rootKey, string key, T value, bool isExpandString = false)
+        {
+            try
+            {
+                if ((Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CLASSES_ROOT) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_CONFIG) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_USER) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_LOCAL_MACHINE) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_PERFORMANCE_DATA) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_USERS)) && Advapi32Library.RegOpenKeyEx(rootRegistryKey, rootKey, 0, RegistryAccessRights.KEY_ALL_ACCESS, out nint hKey) is 0)
+                {
+                    REG_VALUE_TYPE regValueType = REG_VALUE_TYPE.REG_NONE;
+                    byte[] saveData = [];
+                    int cbData = 0;
+
+                    // 存储布尔值
+                    if (Equals(typeof(T), typeof(bool)))
+                    {
+                        regValueType = REG_VALUE_TYPE.REG_DWORD;
+                        saveData = BitConverter.GetBytes(Convert.ToInt32(value));
+                        cbData = saveData.Length;
+                    }
+                    // 存储 32 位整数类型
+                    else if (Equals(typeof(T), typeof(int)))
+                    {
+                        regValueType = REG_VALUE_TYPE.REG_DWORD;
+                        saveData = BitConverter.GetBytes(Convert.ToInt32(value));
+                        cbData = saveData.Length;
+                    }
+                    // 存储 32 位整数无符号类型
+                    else if (Equals(typeof(T), typeof(uint)))
+                    {
+                        regValueType = REG_VALUE_TYPE.REG_DWORD;
+                        saveData = BitConverter.GetBytes(Convert.ToUInt32(value));
+                        cbData = saveData.Length;
+                    }
+                    // 存储 64 位整数类型
+                    else if (Equals(typeof(T), typeof(long)))
+                    {
+                        regValueType = REG_VALUE_TYPE.REG_QWORD;
+                        saveData = BitConverter.GetBytes(Convert.ToInt64(value));
+                        cbData = saveData.Length;
+                    }
+                    // 存储 64 位整数无符号类型
+                    else if (Equals(typeof(T), typeof(ulong)))
+                    {
+                        regValueType = REG_VALUE_TYPE.REG_QWORD;
+                        saveData = BitConverter.GetBytes(Convert.ToUInt64(value));
+                        cbData = saveData.Length;
+                    }
+                    // 存储字符串类型
+                    else if (Equals(typeof(T), typeof(string)))
+                    {
+                        regValueType = isExpandString ? REG_VALUE_TYPE.REG_EXPAND_SZ : REG_VALUE_TYPE.REG_SZ;
+                        saveData = Encoding.Unicode.GetBytes(Convert.ToString(value) + "\0");
+                        cbData = saveData.Length;
+                    }
+                    // 存储二进制数据
+                    else if (Equals(typeof(T), typeof(byte[])))
+                    {
+                        regValueType = REG_VALUE_TYPE.REG_BINARY;
+                        saveData = (byte[])(object)value;
+                        cbData = saveData.Length;
+                    }
+                    // 存储字符串数组
+                    else if (Equals(typeof(T), typeof(string[])))
+                    {
+                        regValueType = REG_VALUE_TYPE.REG_MULTI_SZ;
+                        string[] values = (string[])(object)value;
+                        string combined = string.Join("\0", values) + "\0\0";
+                        saveData = Encoding.Unicode.GetBytes(combined);
+                        cbData = saveData.Length;
+                    }
+                    int Result = Advapi32Library.RegSetValueEx(hKey, key, 0, regValueType, saveData, cbData);
+                    Advapi32Library.RegCloseKey(hKey);
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(RegistryHelper), nameof(SaveRegistryKey), 1, e);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 删除注册表指定项的内容
+        /// </summary>
+        public static bool RemoveRegistryKey(nuint rootRegistryKey, string rootKey, string key)
+        {
+            try
+            {
+                if ((Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CLASSES_ROOT) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_CONFIG) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_USER) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_LOCAL_MACHINE) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_PERFORMANCE_DATA) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_USERS)) && Advapi32Library.RegOpenKeyEx(rootRegistryKey, rootKey, 0, RegistryAccessRights.KEY_ALL_ACCESS, out nint hKey) is 0)
+                {
+                    Advapi32Library.RegDeleteValue(hKey, key);
+                    Advapi32Library.RegCloseKey(hKey);
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(RegistryHelper), nameof(SaveRegistryKey), 1, e);
+                return false;
+            }
+        }
     }
 }

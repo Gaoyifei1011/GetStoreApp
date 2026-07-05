@@ -75,10 +75,19 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// <summary>
         /// 关闭指定注册表项的句柄。
         /// </summary>
-        /// <param name="hKey">要关闭的打开键的句柄。 该句柄必须由 <see cref="RegOpenKeyEx"> 函数打开。</param>
+        /// <param name="hKey">打开的注册表项的句柄。</param>
         /// <returns>如果函数成功，则返回值为 ERROR_SUCCESS。如果函数失败，则返回值为 Winerror.h 中定义的非零错误代码。</returns>
         [LibraryImport(Advapi32, EntryPoint = "RegCloseKey", SetLastError = false), PreserveSig]
         public static partial int RegCloseKey(nint hKey);
+
+        /// <summary>
+        /// 从指定的注册表项中删除命名值。 请注意，值名称不区分大小写。
+        /// </summary>
+        /// <param name="hKey">打开的注册表项的句柄。</param>
+        /// <param name="lpValueName">要删除的注册表值。 如果此参数 NULL 或空字符串，则删除由 RegSetValue 函数设置的值。</param>
+        /// <returns>如果函数成功，则返回值为 ERROR_SUCCESS。如果函数失败，则返回值为 Winerror.h 中定义的非零错误代码。</returns>
+        [LibraryImport(Advapi32, EntryPoint = "RegDeleteValueW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
+        public static partial int RegDeleteValue(nint hKey, [MarshalAs(UnmanagedType.LPWStr)] string lpValueName);
 
         /// <summary>
         /// 打开指定的注册表项。 请注意，键名称不区分大小写。
@@ -107,5 +116,18 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// </returns>
         [LibraryImport(Advapi32, EntryPoint = "RegQueryValueExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
         public static partial int RegQueryValueEx(nint hKey, [MarshalAs(UnmanagedType.LPWStr)] string lpValueName, nint lpReserved, out REG_VALUE_TYPE lpType, [Out] byte[] lpData, ref int lpcbData);
+
+        /// <summary>
+        /// 设置注册表项下指定值的数据和类型。
+        /// </summary>
+        /// <param name="hKey">打开的注册表项的句柄。 密钥必须使用KEY_SET_VALUE访问权限打开。</param>
+        /// <param name="lpValueName">要设置的值的名称。 如果键中尚不存在具有此名称的值，该函数会将其添加到键中。如果 lpValueNameNULL 或空字符串“”，则该函数将设置键未命名或默认值的类型和数据。注册表项没有默认值，但它们可以有一个未命名的值，可以是任何类型的值。</param>
+        /// <param name="Reserved">此参数是保留的，必须为零。</param>
+        /// <param name="dwType">lpData 参数指向的数据类型。</param>
+        /// <param name="lpData">要存储的数据。对于基于字符串的类型（如REG_SZ），字符串必须 null-terminated。 使用REG_MULTI_SZ数据类型时，字符串必须以两个 null 字符终止。</param>
+        /// <param name="cbData">lpData 参数指向的信息的大小（以字节为单位）。 如果数据的类型为 REG_SZ、REG_EXPAND_SZ 或 REG_MULTI_SZ，cbData 必须包含终止 null 字符或字符的大小。</param>
+        /// <returns>如果函数成功，则返回值ERROR_SUCCESS。如果函数失败，则返回值为 Winerror.h 中定义的非零错误代码。 </returns>
+        [LibraryImport(Advapi32, EntryPoint = "RegSetValueExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
+        public static partial int RegSetValueEx(nint hKey, [MarshalAs(UnmanagedType.LPWStr)] string lpValueName, nint Reserved, REG_VALUE_TYPE dwType, [In] byte[] lpData, int cbData);
     }
 }

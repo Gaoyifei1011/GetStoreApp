@@ -1,9 +1,15 @@
-﻿using GetStoreApp.Models;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
+using GetStoreApp.Views.NotificationTips;
+using GetStoreApp.Views.Windows;
+using GetStoreApp.WindowsAPI.PInvoke.Advapi32;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,8 +21,8 @@ using Windows.Globalization;
 using Windows.System;
 using WinRT;
 
-// 抑制 IDE0060 警告
-#pragma warning disable IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
@@ -25,6 +31,9 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsStoreAndUpdatePage : Page, INotifyPropertyChanged
     {
+        private readonly string AppUpdateDisabledString = ResourceService.GetLocalized("SettingsStoreAndUpdate/AppUpdateDisabled");
+        private readonly string AppUpdateEnabledString = ResourceService.GetLocalized("SettingsStoreAndUpdate/AppUpdateEnabled");
+        private readonly string AppUpdatePausedString = ResourceService.GetLocalized("SettingsStoreAndUpdate/AppUpdatePaused");
         private readonly string AppLinkOpenModeBuiltInAppString = ResourceService.GetLocalized("SettingsStoreAndUpdate/AppLinkOpenModeBuiltInApp");
         private readonly string AppLinkOpenModeSystemBrowserString = ResourceService.GetLocalized("SettingsStoreAndUpdate/AppLinkOpenModeSystemBrowser");
         private readonly string QueryLinksModeOfficialString = ResourceService.GetLocalized("SettingsStoreAndUpdate/QueryLinksModeOfficial");
@@ -96,7 +105,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _cancelAutoUpdate = CancelAutoUpdateService.CancelAutoUpdate;
+        private bool _cancelAutoUpdate;
 
         public bool CancelAutoUpdate
         {
@@ -112,7 +121,39 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _useSystemRegion = StoreRegionService.UseSystemRegion;
+        private ComboBoxItemModel _appUpdateStatus;
+
+        public ComboBoxItemModel AppUpdateStatus
+        {
+            get { return _appUpdateStatus; }
+
+            set
+            {
+                if (!Equals(_appUpdateStatus, value))
+                {
+                    _appUpdateStatus = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppUpdateStatus)));
+                }
+            }
+        }
+
+        private DateTimeOffset _appUpdatePauseEndTime;
+
+        public DateTimeOffset AppUpdatePauseEndTime
+        {
+            get { return _appUpdatePauseEndTime; }
+
+            set
+            {
+                if (!Equals(_appUpdatePauseEndTime, value))
+                {
+                    _appUpdatePauseEndTime = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppUpdatePauseEndTime)));
+                }
+            }
+        }
+
+        private bool _useSystemRegion;
 
         public bool UseSystemRegion
         {
@@ -128,7 +169,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private GeographicRegion _currentCountryOrRegion = StoreRegionService.DefaultStoreRegion;
+        private GeographicRegion _currentCountryOrRegion;
 
         public GeographicRegion CurrentCountryOrRegion
         {
@@ -160,7 +201,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _encryptedPackageFilter = LinkFilterService.EncryptedPackageFilter;
+        private bool _encryptedPackageFilter;
 
         public bool EncryptedPackageFilter
         {
@@ -198,6 +239,8 @@ namespace GetStoreApp.Views.Pages
 
         private List<ComboBoxItemModel> InstallModeList { get; } = [];
 
+        private List<ComboBoxItemModel> AppUpdateStatusList { get; } = [];
+
         private ObservableCollection<StoreRegionModel> StoreRegionCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -207,15 +250,16 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
             QueryLinksModeList.Add(new ComboBoxItemModel() { SelectedValue = QueryLinksModeService.QueryLinksModeList[0], DisplayMember = QueryLinksModeOfficialString });
             QueryLinksModeList.Add(new ComboBoxItemModel() { SelectedValue = QueryLinksModeService.QueryLinksModeList[1], DisplayMember = QueryLinksModeThirdPartyString });
-            QueryLinksMode = QueryLinksModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), QueryLinksModeService.QueryLinksMode, StringComparison.OrdinalIgnoreCase));
 
             AppLinkOpenModeList.Add(new ComboBoxItemModel() { SelectedValue = AppLinkOpenModeService.AppLinkOpenModeList[0], DisplayMember = AppLinkOpenModeBuiltInAppString });
             AppLinkOpenModeList.Add(new ComboBoxItemModel() { SelectedValue = AppLinkOpenModeService.AppLinkOpenModeList[1], DisplayMember = AppLinkOpenModeSystemBrowserString });
-            AppLinkOpenMode = AppLinkOpenModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), AppLinkOpenModeService.AppLinkOpenMode, StringComparison.OrdinalIgnoreCase));
 
             InstallModeList.Add(new ComboBoxItemModel() { SelectedValue = InstallModeService.InstallModeList[0], DisplayMember = InstallModeAppInstallString });
             InstallModeList.Add(new ComboBoxItemModel() { SelectedValue = InstallModeService.InstallModeList[1], DisplayMember = InstallModeCodeInstallString });
-            InstallMode = InstallModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), InstallModeService.InstallMode, StringComparison.OrdinalIgnoreCase));
+
+            AppUpdateStatusList.Add(new ComboBoxItemModel() { SelectedValue = "AppUpdateEnabled", DisplayMember = AppUpdateEnabledString });
+            AppUpdateStatusList.Add(new ComboBoxItemModel() { SelectedValue = "AppUpdatePaused", DisplayMember = AppUpdatePausedString });
+            AppUpdateStatusList.Add(new ComboBoxItemModel() { SelectedValue = "AppUpdateDisabled", DisplayMember = AppUpdateDisabledString });
 
             foreach (GeographicRegion geographicRegionItem in StoreRegionService.StoreRegionList)
             {
@@ -227,6 +271,45 @@ namespace GetStoreApp.Views.Pages
                 });
             }
 
+            GlobalNotificationService.ApplicationExit += OnApplicationExit;
+            StoreRegionService.PropertyChanged += OnServicePropertyChanged;
+        }
+
+        #region 第一部分：重写父类事件
+
+        /// <summary>
+        /// 导航到该页面后触发的事件
+        /// </summary>
+        protected override async void OnNavigatedTo(NavigationEventArgs args)
+        {
+            base.OnNavigatedTo(args);
+            CancelAutoUpdate = CancelAutoUpdateService.CancelAutoUpdate;
+            UseSystemRegion = StoreRegionService.UseSystemRegion;
+            CurrentCountryOrRegion = StoreRegionService.DefaultStoreRegion;
+            EncryptedPackageFilter = LinkFilterService.EncryptedPackageFilter;
+            AppUpdateStatus = await Task.Run(() =>
+            {
+                string appUpdateStatus = "AppUpdateDisabled";
+                int? autoDownload = RegistryHelper.ReadRegistryKey<int?>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
+                if (autoDownload.HasValue)
+                {
+                    appUpdateStatus = autoDownload.Value is 4 ? "AppUpdateEnabled" : "AppUpdateDisabled";
+                }
+                else
+                {
+                    autoDownload = RegistryHelper.ReadRegistryKey<int?>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload");
+                    appUpdateStatus = autoDownload.HasValue ? autoDownload.Value is 4 ? "AppUpdateEnabled" : "AppUpdatePaused" : "AppUpdateEnabled";
+                }
+                return AppUpdateStatusList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), appUpdateStatus, StringComparison.OrdinalIgnoreCase)); ;
+            });
+            AppUpdatePauseEndTime = await Task.Run(() =>
+            {
+                string appUpdatePauseEndTime = RegistryHelper.ReadRegistryKey<string>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\InstallService\State", "AutoUpdatePauseEndTime");
+                return !string.IsNullOrEmpty(appUpdatePauseEndTime) && DateTimeOffset.TryParse(appUpdatePauseEndTime, out DateTimeOffset appUpdatePauseEndTimeDateTimeOffset) ? appUpdatePauseEndTimeDateTimeOffset.Date : DateTimeOffset.UnixEpoch.Date;
+            });
+            QueryLinksMode = QueryLinksModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), QueryLinksModeService.QueryLinksMode, StringComparison.OrdinalIgnoreCase));
+            AppLinkOpenMode = AppLinkOpenModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), AppLinkOpenModeService.AppLinkOpenMode, StringComparison.OrdinalIgnoreCase));
+            InstallMode = InstallModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), InstallModeService.InstallMode, StringComparison.OrdinalIgnoreCase));
             foreach (StoreRegionModel storeRegion in StoreRegionCollection)
             {
                 if (string.Equals(StoreRegionService.StoreRegion.CodeTwoLetter, storeRegion.CodeTwoLetter))
@@ -235,12 +318,11 @@ namespace GetStoreApp.Views.Pages
                     break;
                 }
             }
-
-            GlobalNotificationService.ApplicationExit += OnApplicationExit;
-            StoreRegionService.PropertyChanged += OnServicePropertyChanged;
         }
 
-        #region 第一部分：设置商店与更新页面——挂载的事件
+        #endregion 第一部分：重写父类事件
+
+        #region 第二部分：设置商店与更新页面——挂载的事件
 
         /// <summary>
         /// 选择查询链接方式
@@ -325,6 +407,79 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 设置应用更新状态
+        /// </summary>
+        private async void OnAppUpdateStatusSelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel appUpdateStatus && !Equals(AppUpdateStatus, appUpdateStatus))
+            {
+                AppUpdateStatus = appUpdateStatus;
+                await Task.Run(() =>
+                {
+                    if (AppUpdateStatus.SelectedValue is "AppUpdateEnabled")
+                    {
+                        RegistryHelper.RemoveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
+                        RegistryHelper.RemoveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload");
+                    }
+                    else if (AppUpdateStatus.SelectedValue is "AppUpdatePaused")
+                    {
+                        RegistryHelper.RemoveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
+                        RegistryHelper.SaveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload", 2);
+                    }
+                    else if (AppUpdateStatus.SelectedValue is "AppUpdateDisabled")
+                    {
+                        RegistryHelper.SaveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload", 2);
+                    }
+                });
+                AppUpdateStatus = await Task.Run(() =>
+                {
+                    string appUpdateStatus = "AppUpdateDisabled";
+                    int? autoDownload = RegistryHelper.ReadRegistryKey<int?>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
+                    if (autoDownload.HasValue)
+                    {
+                        appUpdateStatus = autoDownload.Value is 4 ? "AppUpdateEnabled" : "AppUpdateDisabled";
+                    }
+                    else
+                    {
+                        autoDownload = RegistryHelper.ReadRegistryKey<int?>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload");
+                        appUpdateStatus = autoDownload.HasValue ? autoDownload.Value is 4 ? "AppUpdateEnabled" : "AppUpdatePaused" : "AppUpdateEnabled";
+                    }
+                    return AppUpdateStatusList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), appUpdateStatus, StringComparison.OrdinalIgnoreCase)); ;
+                });
+                AppUpdatePauseEndTime = await Task.Run(() =>
+                {
+                    string appUpdatePauseEndTime = RegistryHelper.ReadRegistryKey<string>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\InstallService\State", "AutoUpdatePauseEndTime");
+                    return !string.IsNullOrEmpty(appUpdatePauseEndTime) && DateTimeOffset.TryParse(appUpdatePauseEndTime, out DateTimeOffset appUpdatePauseEndTimeDateTimeOffset) ? appUpdatePauseEndTimeDateTimeOffset.Date : DateTimeOffset.UnixEpoch.Date;
+                });
+                if (!RuntimeHelper.IsElevated)
+                {
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.NotElevated));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 暂停更新结束时间发生变化时触发的事件
+        /// </summary>
+        private async void OnAppUpdatePauseEndTimeDateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
+        {
+            if (sender.IsLoaded && args.NewDate.HasValue && !Equals(AppUpdatePauseEndTime.Date, args.NewDate.Value.Date))
+            {
+                AppUpdatePauseEndTime = args.NewDate.Value.Date;
+                AppUpdatePauseEndTime = await Task.Run(() =>
+                {
+                    RegistryHelper.SaveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\InstallService\State", "AutoUpdatePauseEndTime", AppUpdatePauseEndTime.ToString("yyyy-MM-dd'T'HH:mm:sszzz"));
+                    string appUpdatePauseEndTime = RegistryHelper.ReadRegistryKey<string>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\InstallService\State", "AutoUpdatePauseEndTime");
+                    return !string.IsNullOrEmpty(appUpdatePauseEndTime) && DateTimeOffset.TryParse(appUpdatePauseEndTime, out DateTimeOffset appUpdatePauseEndTimeDateTimeOffset) ? appUpdatePauseEndTimeDateTimeOffset.Date : DateTimeOffset.UnixEpoch.Date;
+                });
+                if (!RuntimeHelper.IsElevated)
+                {
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.NotElevated));
+                }
+            }
+        }
+
+        /// <summary>
         /// 设置是否使用系统默认区域
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
@@ -400,9 +555,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：设置商店与更新页面——挂载的事件
+        #endregion 第二部分：设置商店与更新页面——挂载的事件
 
-        #region 第二部分：设置商店与更新页面——自定义事件
+        #region 第三部分：设置商店与更新页面——自定义事件
 
         /// <summary>
         /// 应用程序退出时触发的事件
@@ -449,6 +604,14 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第二部分：设置商店与更新页面——自定义事件
+        #endregion 第三部分：设置商店与更新页面——自定义事件
+
+        /// <summary>
+        /// 获取选中的应用更新状态
+        /// </summary>
+        private Visibility GetAppUpdateStatus(object selectedValue, object comparedValue)
+        {
+            return Equals(selectedValue, comparedValue) ? Visibility.Visible : Visibility.Collapsed;
+        }
     }
 }
