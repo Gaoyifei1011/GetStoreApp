@@ -366,7 +366,10 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private void OnSelectorBarSelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
         {
-            SelectedItem = sender.SelectedItem;
+            if (!Equals(SelectedItem, sender.SelectedItem))
+            {
+                SelectedItem = sender.SelectedItem;
+            }
         }
 
         /// <summary>
@@ -506,11 +509,12 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 类型修改选择后修改样例文本
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnTypeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is TypeModel type && !Equals(SelectedType, type))
+            if (sender is ComboBox comboBox && !Equals(SelectedType, comboBox.SelectedItem))
             {
-                SelectedType = type;
+                SelectedType = comboBox.SelectedItem is TypeModel type ? type : null;
                 sampleLink = SampleLinkList[TypeList.FindIndex(item => string.Equals(item.InternalName, SelectedType.InternalName))];
                 LinkPlaceHolderText = SampleTitleString + sampleLink;
             }
@@ -519,11 +523,12 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 通道选择修改
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnChannelSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ChannelModel channel && !Equals(SelectedChannel, channel))
+            if (sender is ComboBox comboBox && !Equals(SelectedChannel, comboBox.SelectedItem))
             {
-                SelectedChannel = channel;
+                SelectedChannel = comboBox.SelectedItem is ChannelModel channel ? channel : null;
             }
         }
 
@@ -545,11 +550,12 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 选择搜索应用方式
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnSearchTypeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel searchType && !Equals(SelectedSearchType, searchType))
+            if (sender is ComboBox comboBox && !Equals(SelectedSearchType, comboBox.SelectedItem))
             {
-                SelectedSearchType = searchType;
+                SelectedSearchType = comboBox.SelectedItem is ComboBoxItemModel searchType ? searchType : null;
             }
         }
 

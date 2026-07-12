@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.Storage;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -149,11 +150,12 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 应用包存储卷选中项发生变化时触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ListView))]
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is PackageVolumeModel packageVolume && !Equals(SelectedPackageVolume, packageVolume))
+            if (sender is ListView listView && !Equals(SelectedPackageVolume, listView.SelectedItem))
             {
-                SelectedPackageVolume = packageVolume;
+                SelectedPackageVolume = listView.SelectedItem is PackageVolumeModel packageVolume ? packageVolume : null;
                 IsRemovePackageVolumeEnabled = true;
                 IsPrimaryEnabled = true;
             }

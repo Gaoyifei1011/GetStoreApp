@@ -178,11 +178,12 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 应用包可用存储卷选中项发生变化时触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ListView))]
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is PackageVolumeModel packageVolume && !Equals(SelectedPackageVolume, packageVolume))
+            if (sender is ListView listView && !Equals(SelectedPackageVolume, listView.SelectedItem))
             {
-                SelectedPackageVolume = packageVolume;
+                SelectedPackageVolume = listView.SelectedItem is PackageVolumeModel packageVolume ? packageVolume : null;
                 IsPrimaryEnabled = true;
                 if (SelectedPackageVolume is not null && SelectedPackageVolume.WinRTPackageVolume is not null)
                 {

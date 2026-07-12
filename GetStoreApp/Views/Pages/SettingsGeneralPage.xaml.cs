@@ -241,11 +241,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 主题选项修改后触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnThemeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel theme && !Equals(Theme, theme))
+            if (sender is ComboBox comboBox && !Equals(Theme, comboBox.SelectedItem))
             {
-                Theme = theme;
+                Theme = comboBox.SelectedItem is ComboBoxItemModel theme ? theme : null;
                 ThemeService.SetTheme(Convert.ToString(Theme.SelectedValue));
                 Theme = ThemeList.Find(item => Equals(Convert.ToString(item.SelectedValue), ThemeService.AppTheme));
             }
@@ -254,11 +255,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 背景色选项修改后触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnBackdropSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel backdrop && !Equals(Backdrop, backdrop))
+            if (sender is ComboBox comboBox && !Equals(Backdrop, comboBox.SelectedItem))
             {
-                Backdrop = backdrop;
+                Backdrop = comboBox.SelectedItem is ComboBoxItemModel backdrop ? backdrop : null;
                 BackdropService.SetBackdrop(Convert.ToString(Backdrop.SelectedValue));
                 Backdrop = BackdropList.Find(item => Equals(Convert.ToString(item.SelectedValue), BackdropService.AppBackdrop));
                 AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Convert.ToString(Backdrop.SelectedValue), Convert.ToString(BackdropList[0].SelectedValue));
@@ -324,11 +326,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 语言设置选项修改后触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private async void OnLanguageSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel language && !Equals(AppLanguage, language))
+            if (sender is ComboBox comboBox && !Equals(AppLanguage, comboBox.SelectedItem))
             {
-                AppLanguage = language;
+                AppLanguage = comboBox.SelectedItem is ComboBoxItemModel language ? language : null;
                 LanguageService.SetLanguage(LanguageService.LanguageList.Find(item => string.Equals(Convert.ToString(AppLanguage.SelectedValue), item.Key)));
                 foreach (ComboBoxItemModel languageItem in LanguageCollection)
                 {

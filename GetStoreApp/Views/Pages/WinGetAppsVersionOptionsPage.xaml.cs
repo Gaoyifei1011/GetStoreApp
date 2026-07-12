@@ -600,22 +600,24 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用包架构发生更改时触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnPackageArchitectureSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel packageArchitecture && !Equals(PackageArchitecture, packageArchitecture))
+            if (sender is ComboBox comboBox && !Equals(PackageArchitecture, comboBox.SelectedItem))
             {
-                PackageArchitecture = packageArchitecture;
+                PackageArchitecture = comboBox.SelectedItem is ComboBoxItemModel packageArchitecture ? packageArchitecture : null;
             }
         }
 
         /// <summary>
         /// 应用安装包安装范围发生更改时触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnPackageInstallScopeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel packageInstallScope && !Equals(PackageInstallScope, packageInstallScope))
+            if (sender is ComboBox comboBox && !Equals(PackageInstallScope, comboBox.SelectedItem))
             {
-                PackageInstallScope = packageInstallScope;
+                PackageInstallScope = comboBox.SelectedItem is ComboBoxItemModel packageInstallScope ? packageInstallScope : null;
             }
         }
 
@@ -918,11 +920,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用包安装模式
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnPackageInstallModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel packageInstallMode && !Equals(PackageInstallMode, packageInstallMode))
+            if (sender is ComboBox comboBox && !Equals(PackageInstallMode, comboBox.SelectedItem))
             {
-                PackageInstallMode = packageInstallMode;
+                PackageInstallMode = comboBox.SelectedItem is ComboBoxItemModel packageInstallMode ? packageInstallMode : null;
             }
         }
 
@@ -1156,22 +1159,24 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用安装包修复范围发生更改时触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnPackageRepairScopeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel packageRepairScope && !Equals(PackageRepairScope, packageRepairScope))
+            if (sender is ComboBox comboBox && !Equals(PackageRepairScope, comboBox.SelectedItem))
             {
-                PackageRepairScope = packageRepairScope;
+                PackageRepairScope = comboBox.SelectedItem is ComboBoxItemModel packageRepairScope ? packageRepairScope : null;
             }
         }
 
         /// <summary>
         /// 应用包修复模式
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnPackageRepairModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel packageRepairMode && !Equals(PackageRepairMode, packageRepairMode))
+            if (sender is ComboBox comboBox && !Equals(PackageRepairMode, comboBox.SelectedItem))
             {
-                PackageRepairMode = packageRepairMode;
+                PackageRepairMode = comboBox.SelectedItem is ComboBoxItemModel packageRepairMode ? packageRepairMode : null;
             }
         }
 

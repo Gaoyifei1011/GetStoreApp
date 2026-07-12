@@ -327,11 +327,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 选择查询链接方式
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnQueryLinksModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel queryLinksMode && !Equals(QueryLinksMode, queryLinksMode))
+            if (sender is ComboBox comboBox && !Equals(QueryLinksMode, comboBox.SelectedItem))
             {
-                QueryLinksMode = queryLinksMode;
+                QueryLinksMode = comboBox.SelectedItem is ComboBoxItemModel queryLinksMode ? queryLinksMode : null;
                 QueryLinksModeService.SetQueryLinksMode(Convert.ToString(QueryLinksMode.SelectedValue));
                 QueryLinksMode = QueryLinksModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), QueryLinksModeService.QueryLinksMode, StringComparison.OrdinalIgnoreCase));
             }
@@ -340,11 +341,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 选择应用链接打开方式
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnAppLinkOpenModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel appLinkOpenMode && !Equals(AppLinkOpenMode, appLinkOpenMode))
+            if (sender is ComboBox comboBox && !Equals(AppLinkOpenMode, comboBox.SelectedItem))
             {
-                AppLinkOpenMode = appLinkOpenMode;
+                AppLinkOpenMode = comboBox.SelectedItem is ComboBoxItemModel appLinkOpenMode ? appLinkOpenMode : null;
                 AppLinkOpenModeService.SetAppLinkOpenMode(Convert.ToString(AppLinkOpenMode.SelectedValue));
                 AppLinkOpenMode = AppLinkOpenModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), AppLinkOpenModeService.AppLinkOpenMode, StringComparison.OrdinalIgnoreCase));
             }
@@ -353,11 +355,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用安装方式设置
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnInstallModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel installMode && !Equals(InstallMode, installMode))
+            if (sender is ComboBox comboBox && !Equals(InstallMode, comboBox.SelectedItem))
             {
-                InstallMode = installMode;
+                InstallMode = comboBox.SelectedItem is ComboBoxItemModel installMode ? installMode : null;
                 InstallModeService.SetInstallMode(Convert.ToString(InstallMode.SelectedValue));
                 InstallMode = InstallModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), InstallModeService.InstallMode, StringComparison.OrdinalIgnoreCase));
             }
@@ -409,11 +412,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 设置应用更新状态
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private async void OnAppUpdateStatusSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel appUpdateStatus && !Equals(AppUpdateStatus, appUpdateStatus))
+            if (sender is ComboBox comboBox && !Equals(AppUpdateStatus, comboBox.SelectedItem))
             {
-                AppUpdateStatus = appUpdateStatus;
+                AppUpdateStatus = comboBox.SelectedItem is ComboBoxItemModel appUpdateStatus ? appUpdateStatus : null;
                 await Task.Run(() =>
                 {
                     if (AppUpdateStatus.SelectedValue is "AppUpdateEnabled")
@@ -510,11 +514,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 区域设置菜单打开时自动定位到选中项
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnStoreRegionSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is StoreRegionModel storeRegion && !Equals(StoreRegion, storeRegion))
+            if (sender is ComboBox comboBox && !Equals(StoreRegion, comboBox.SelectedItem))
             {
-                StoreRegion = storeRegion;
+                StoreRegion = comboBox.SelectedItem is StoreRegionModel storeRegion ? storeRegion : null;
                 StoreRegionService.SetRegion(StoreRegion.GeographicRegion);
                 foreach (StoreRegionModel storeRegionItem in StoreRegionCollection)
                 {

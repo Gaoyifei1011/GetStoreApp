@@ -411,7 +411,7 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(RadioButtons))]
         private void OnPackageUninstallScopeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender is RadioButtons radioButtons && radioButtons.SelectedIndex >= 0)
+            if (sender is RadioButtons radioButtons && !Equals(SelectedPackageUninstallScopeIndex, radioButtons.SelectedIndex))
             {
                 SelectedPackageUninstallScopeIndex = radioButtons.SelectedIndex;
             }
@@ -423,7 +423,7 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(RadioButtons))]
         private void OnPackageUninstallModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (sender is RadioButtons radioButtons && radioButtons.SelectedIndex >= 0)
+            if (sender is RadioButtons radioButtons && !Equals(SelectedPackageUninstallModeIndex, radioButtons.SelectedIndex))
             {
                 SelectedPackageUninstallModeIndex = radioButtons.SelectedIndex;
             }

@@ -222,11 +222,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 下载引擎方式设置
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnDoEngineModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel doEngineMode && !Equals(DoEngineMode, doEngineMode))
+            if (sender is ComboBox comboBox && !Equals(DoEngineMode, comboBox.SelectedItem))
             {
-                DoEngineMode = doEngineMode;
+                DoEngineMode = comboBox.SelectedItem is ComboBoxItemModel doEngineMode ? doEngineMode : null;
                 DownloadOptionsService.SetDoEngineMode(Convert.ToString(DoEngineMode.SelectedValue));
                 DoEngineMode = DoEngineModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), DownloadOptionsService.DoEngineMode, StringComparison.OrdinalIgnoreCase));
             }

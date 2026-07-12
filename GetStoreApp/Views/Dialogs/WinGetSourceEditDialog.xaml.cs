@@ -265,11 +265,12 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 数据源信任等级发生更改时触发的事件
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnCatalogTrustLevelSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel catalogTrustLevel && !Equals(SelectedCatalogTrustLevel, catalogTrustLevel))
+            if (sender is ComboBox comboBox && !Equals(SelectedCatalogTrustLevel, comboBox.SelectedItem))
             {
-                SelectedCatalogTrustLevel = catalogTrustLevel;
+                SelectedCatalogTrustLevel = comboBox.SelectedItem is ComboBoxItemModel catalogTrustLevel ? catalogTrustLevel : null;
             }
         }
 

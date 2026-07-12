@@ -90,11 +90,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 设置 WinGet 来源
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnWinGetSourceSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.AddedItems.Count > 0 && args.AddedItems[0] is ComboBoxItemModel wingetSource && !Equals(WinGetSource, wingetSource))
+            if (sender is ComboBox comboBox && !Equals(WinGetSource, comboBox.SelectedItem))
             {
-                WinGetSource = wingetSource;
+                WinGetSource = comboBox.SelectedItem is ComboBoxItemModel wingetSource ? wingetSource : null;
                 WinGetConfigService.SetWinGetSource(Convert.ToString(WinGetSource.SelectedValue));
                 WinGetSource = WinGetSourceList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), WinGetConfigService.WinGetSource, StringComparison.OrdinalIgnoreCase));
             }
