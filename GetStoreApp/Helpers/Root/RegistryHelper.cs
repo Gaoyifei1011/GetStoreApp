@@ -71,34 +71,7 @@ namespace GetStoreApp.Helpers.Root
 
                     if (getValue is not null)
                     {
-                        if (Equals(typeof(T), typeof(bool)) || Equals(typeof(T), typeof(bool?)))
-                        {
-                            value = (T)(object)Convert.ToBoolean(getValue);
-                        }
-                        else if (Equals(typeof(T), typeof(int)) || Equals(typeof(T), typeof(int?)))
-                        {
-                            value = (T)(object)Convert.ToInt32(getValue);
-                        }
-                        else if (Equals(typeof(T), typeof(uint)) || Equals(typeof(T), typeof(uint?)))
-                        {
-                            value = (T)(object)Convert.ToUInt32(getValue);
-                        }
-                        else if (Equals(typeof(T), typeof(long)) || Equals(typeof(T), typeof(long?)))
-                        {
-                            value = (T)(object)Convert.ToInt64(getValue);
-                        }
-                        else if (Equals(typeof(T), typeof(ulong)) || Equals(typeof(T), typeof(ulong?)))
-                        {
-                            value = (T)(object)Convert.ToUInt64(getValue);
-                        }
-                        else if (Equals(typeof(T), typeof(string)))
-                        {
-                            value = (T)(object)Convert.ToString(getValue);
-                        }
-                        else
-                        {
-                            value = Equals(typeof(T), typeof(byte[])) || Equals(typeof(T), typeof(string[])) ? (T)getValue : (T)getValue;
-                        }
+                        value = (T)getValue;
                     }
                 }
             }
