@@ -852,7 +852,7 @@ namespace GetStoreApp.Views.UserControls
                         (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksResultModel> queryLinksList) queryLinksResult = ValueTuple.Create<InfoBarSeverity, bool, string, List<QueryLinksResultModel>>(InfoBarSeverity.Error, false, null, null);
 
                         // 生成请求的内容
-                        string generateContent = HtmlRequestHelper.GenerateRequestContent(SelectedType.InternalName, link, SelectedChannel.InternalName);
+                        string generateContent = await HtmlRequestHelper.GenerateRequestContentAsync(SelectedType.InternalName, link, SelectedChannel.InternalName);
 
                         // 获取网页反馈回的原始数据
                         RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);

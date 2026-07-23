@@ -26,9 +26,15 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 生成要请求的内容
         /// </summary>
-        public static string GenerateRequestContent(string type, string url, string ring)
+        public static async Task<string> GenerateRequestContentAsync(string type, string url, string ring)
         {
-            return string.Format("type={0}&url={1}&ring={2}", type, url, ring);
+            HttpFormUrlEncodedContent httpFormUrlEncodedContent = new((List<KeyValuePair<string, string>>)
+            [
+                new("type", type),
+                new("url", url),
+                new("ring", ring)
+            ]);
+            return await httpFormUrlEncodedContent.ReadAsStringAsync();
         }
 
         /// <summary>
