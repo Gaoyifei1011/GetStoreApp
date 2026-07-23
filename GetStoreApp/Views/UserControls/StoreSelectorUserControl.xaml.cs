@@ -925,6 +925,7 @@ namespace GetStoreApp.Views.UserControls
                         IsQueryingLinks = false;
                         IsQueryLinksResultVisible = false;
                         storePage.StoreControl = StoreControl.StoreSelector;
+                        storePage.StoreSelector.StoreInfoResultKind = StoreInfoResultKind.QueryLinksWarning;
                         storePage.QueryLinksResult.UpdateQueryLinksResultData(null, false, []);
                     }
                     else if (requestState is InfoBarSeverity.Error)
@@ -932,6 +933,7 @@ namespace GetStoreApp.Views.UserControls
                         IsQueryingLinks = false;
                         IsQueryLinksResultVisible = false;
                         storePage.StoreControl = StoreControl.StoreSelector;
+                        storePage.StoreSelector.StoreInfoResultKind = StoreInfoResultKind.QueryLinksError;
                         storePage.QueryLinksResult.UpdateQueryLinksResultData(null, false, []);
                     }
                 }
