@@ -30,6 +30,7 @@
   "StoreInfoSearchAppsError": "An error occured when searching apps",
   "StoreInfoQueryLinksWarning": "No data was retrieved when querying links",
   "StoreInfoSearchAppsWarning": "No data was retrieved when searching apps",
+  "Unknown": "[Unknown]",
   "URL": "URL (link)",
   "UseInstruction": "Use instruction",
   "UseInstructionToolTip": "Click to learn how to use the app",

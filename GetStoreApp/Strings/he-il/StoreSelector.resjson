@@ -30,6 +30,7 @@
   "StoreInfoSearchAppsError": "נתקל שגיאה בעת חיפוש האפליקציות",
   "StoreInfoQueryLinksWarning": "לא נמצאו נתונים כשחיפשתי את הקישורים",
   "StoreInfoSearchAppsWarning": "לא נמצאו נתונים כשחיפשתי אפליקציות",
+  "Unknown": "[לא נודע]",
   "URL": "URL (קישור)",
   "UseInstruction": "הוראות שימוש",
   "UseInstructionToolTip": "לחץ לדעת איך להשתמש באפליקציה בפועל",

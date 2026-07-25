@@ -30,6 +30,7 @@
   "StoreInfoSearchAppsError": "搜索应用发生了错误",
   "StoreInfoQueryLinksWarning": "查询链接未获取到数据",
   "StoreInfoSearchAppsWarning": "搜索应用未获取到数据",
+  "Unknown": "[未知]",
   "URL": "URL（链接）",
   "UseInstruction": "使用说明",
   "UseInstructionToolTip": "点击了解应用的具体使用方法",

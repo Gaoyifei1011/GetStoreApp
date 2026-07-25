@@ -737,7 +737,7 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 更新查询链接结果
         /// </summary>
-        public void UpdateQueryLinksResultData(AppInfoModel appInfo, bool isPackagedApp, List<QueryLinksResultModel> queryLinksList)
+        public void UpdateQueryLinksResultData(AppInfoModel appInfo, bool isPackagedApp, List<QueryLinksResultModel> queryLinksResultList)
         {
             IsAppInfoVisible = false;
             IsPackagedApp = isPackagedApp;
@@ -758,7 +758,7 @@ namespace GetStoreApp.Views.UserControls
 
             try
             {
-                foreach (QueryLinksResultModel queryLinksResultItem in queryLinksList)
+                foreach (QueryLinksResultModel queryLinksResultItem in queryLinksResultList)
                 {
                     QueryLinksResultCollection.Add(queryLinksResultItem);
                 }

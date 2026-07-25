@@ -30,6 +30,7 @@
   "StoreInfoSearchAppsError": "Произошла ошибка при поиске приложений",
   "StoreInfoQueryLinksWarning": "При запросе ссылок данные не были получены",
   "StoreInfoSearchAppsWarning": "При поиске приложений данные не были найдены",
+  "Unknown": "[Неизвестно]",
   "URL": "URL (ссылка)",
   "UseInstruction": "Инструкция по использованию",
   "UseInstructionToolTip": "Нажмите, чтобы узнать, как пользоваться приложением",

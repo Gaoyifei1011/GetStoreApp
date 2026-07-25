@@ -39,6 +39,7 @@ namespace GetStoreApp.Views.UserControls
         private readonly string RPString = ResourceService.GetLocalized("StoreSelector/RP");
         private readonly string SampleTitleString = ResourceService.GetLocalized("StoreSelector/SampleTitle");
         private readonly string SlowString = ResourceService.GetLocalized("StoreSelector/Slow");
+        private readonly string UnknownString = ResourceService.GetLocalized("StoreSelector/Unknown");
         private readonly string URLString = ResourceService.GetLocalized("StoreSelector/URL");
         private bool isInitialized;
         private string sampleLink;
@@ -847,9 +848,9 @@ namespace GetStoreApp.Views.UserControls
                 // 第三方接口查询方式
                 else if (string.Equals(QueryLinksModeService.QueryLinksMode, QueryLinksModeService.QueryLinksModeList[1]))
                 {
-                    (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksResultModel> queryLinksList) = await Task.Run(async () =>
+                    (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksResultModel> queryLinksResultList) = await Task.Run(async () =>
                     {
-                        (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksResultModel> queryLinksList) queryLinksResult = ValueTuple.Create<InfoBarSeverity, bool, string, List<QueryLinksResultModel>>(InfoBarSeverity.Error, false, null, null);
+                        (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksResultModel> queryLinksResultList) queryLinksResult = ValueTuple.Create<InfoBarSeverity, bool, string, List<QueryLinksResultModel>>(InfoBarSeverity.Error, false, null, null);
 
                         // 生成请求的内容
                         string generateContent = await HtmlRequestHelper.GenerateRequestContentAsync(SelectedType.InternalName, link, SelectedChannel.InternalName);
@@ -866,14 +867,15 @@ namespace GetStoreApp.Views.UserControls
                             HtmlParseHelper.InitializeParseData(httpRequestData);
                             string categoryId = HtmlParseHelper.HtmlParseCID().ToUpperInvariant();
                             queryLinksResult.categoryId = categoryId;
-                            List<QueryLinksResultModel> queryLinksList = [];
+                            List<QueryLinksResultModel> queryLinksResultList = [];
 
                             // CategoryID 为空，非打包应用
                             if (string.IsNullOrEmpty(categoryId))
                             {
+                                queryLinksResult.categoryId = UnknownString;
                                 queryLinksResult.isPackagedApp = false;
                                 List<QueryLinksResultModel> nonPackagedAppsList = HtmlParseHelper.HtmlParseNonPackagedAppLinks();
-                                queryLinksList.AddRange(HtmlParseHelper.HtmlParseNonPackagedAppLinks());
+                                queryLinksResultList.AddRange(HtmlParseHelper.HtmlParseNonPackagedAppLinks());
                             }
                             else
                             {
@@ -896,12 +898,12 @@ namespace GetStoreApp.Views.UserControls
                                     packagedAppsList.RemoveAll(item => string.Equals(Path.GetExtension(item.FileName), ".blockmap", StringComparison.OrdinalIgnoreCase));
                                 }
 
-                                queryLinksList.AddRange(packagedAppsList);
+                                queryLinksResultList.AddRange(packagedAppsList);
                             }
 
                             // 排序
-                            queryLinksList.Sort((item1, item2) => item1.FileName.CompareTo(item2.FileName));
-                            queryLinksResult.queryLinksList = queryLinksList;
+                            queryLinksResultList.Sort((item1, item2) => item1.FileName.CompareTo(item2.FileName));
+                            queryLinksResult.queryLinksResultList = queryLinksResultList;
                         }
 
                         return queryLinksResult;
@@ -918,7 +920,7 @@ namespace GetStoreApp.Views.UserControls
                         UpdateQueryLinksResultHistory(categoryId, typeIndex, channelIndex, link);
                         IsQueryLinksResultVisible = true;
                         storePage.StoreControl = StoreControl.QueryLinksResult;
-                        storePage.QueryLinksResult.UpdateQueryLinksResultData(null, isPackagedApp, queryLinksList);
+                        storePage.QueryLinksResult.UpdateQueryLinksResultData(null, isPackagedApp, queryLinksResultList);
                     }
                     else if (requestState is InfoBarSeverity.Warning)
                     {
