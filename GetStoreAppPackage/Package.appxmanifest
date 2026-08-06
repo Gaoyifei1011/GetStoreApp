@@ -190,6 +190,24 @@
     </desktop2:Extension>
     <Extension Category="windows.activatableClass.inProcessServer">
       <InProcessServer>
+        <Path>Microsoft.Management.Deployment.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Management.Deployment.DownloadOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Management.Deployment.PackageManagerSettings" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Management.Deployment.EditPackageCatalogOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Management.Deployment.RemovePackageCatalogOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Management.Deployment.UninstallOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Management.Deployment.PackageMatchFilter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Management.Deployment.PackageManager" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Management.Deployment.InstallOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Management.Deployment.AddPackageCatalogOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Management.Deployment.RepairOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Management.Deployment.CreateCompositePackageCatalogOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Management.Deployment.FindPackagesOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Management.Deployment.AuthenticationArguments" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
         <Path>Microsoft.Web.WebView2.Core.dll</Path>
         <ActivatableClass ActivatableClassId="Microsoft.Web.WebView2.Core.CoreWebView2Controller" ThreadingModel="both" />
         <ActivatableClass ActivatableClassId="Microsoft.Web.WebView2.Core.CoreWebView2Environment" ThreadingModel="both" />
