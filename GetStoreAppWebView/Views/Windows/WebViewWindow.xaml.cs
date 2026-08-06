@@ -217,7 +217,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
+        [DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(OverlappedPresenter)), DynamicWindowsRuntimeCast(typeof(ProtocolActivatedEventArgs))]
         public WebViewWindow()
         {
             InitializeComponent();
@@ -259,6 +259,52 @@ namespace GetStoreAppWebView.Views.Windows
                 RectInt32 workArea = displayArea.WorkArea;
                 AppWindow.Move(new PointInt32((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
             }
+
+            // 初始化 WebView2
+            DispatcherQueue.TryEnqueue(async () =>
+            {
+                CoreWebView2Environment coreWebView2Environment = null;
+                if (RuntimeHelper.WebView2Type is WebView2Type.User)
+                {
+                    coreWebView2Environment = await CoreWebView2Environment.CreateWithOptionsAsync(null, null, new()
+                    {
+                        Language = LanguageService.AppLanguage,
+                        ScrollBarStyle = CoreWebView2ScrollbarStyle.FluentOverlay
+                    });
+                }
+                else if (RuntimeHelper.WebView2Type is WebView2Type.System)
+                {
+                    coreWebView2Environment = await CoreWebView2Environment.CreateWithOptionsAsync(Path.Combine(global::Windows.Storage.SystemDataPaths.GetDefault().System, "Microsoft-Edge-WebView"), null, new()
+                    {
+                        Language = LanguageService.AppLanguage,
+                        ScrollBarStyle = CoreWebView2ScrollbarStyle.FluentOverlay
+                    });
+                }
+
+                if (coreWebView2Environment is not null)
+                {
+                    await WebViewBrowser.EnsureCoreWebView2Async(coreWebView2Environment);
+                    if (Program.AppActivationArguments.Kind is ExtendedActivationKind.Protocol)
+                    {
+                        ProtocolActivatedEventArgs protocolActivatedEventArgs = Program.AppActivationArguments.Data as ProtocolActivatedEventArgs;
+                        if (protocolActivatedEventArgs.Data is ValueSet protocolData && protocolData.TryGetValue("AppLink", out object appLinkObj) && appLinkObj is string appLink && !string.IsNullOrEmpty(appLink))
+                        {
+                            WebViewBrowser.CoreWebView2.Navigate(appLink);
+                        }
+                        else
+                        {
+                            WebViewBrowser.CoreWebView2.Navigate("https://apps.microsoft.com");
+                        }
+                    }
+                    else
+                    {
+                        WebViewBrowser.CoreWebView2.Navigate("https://apps.microsoft.com");
+                    }
+
+                    CoreWebView2Profile coreWebView2Profile = WebViewBrowser.CoreWebView2.Profile;
+                    coreWebView2Profile.DefaultDownloadFolderPath = DownloadOptionsService.DownloadFolder;
+                }
+            });
         }
 
         #region 第一部分：窗口类事件
@@ -332,6 +378,7 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void OnAppWindowClosing(AppWindow sender, AppWindowClosingEventArgs args)
         {
+            WebViewBrowser?.Close();
             AppWindow.Changed -= OnAppWindowChanged;
             contentIsland.Environment.SettingChanged -= OnSettingChanged;
             inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
@@ -460,49 +507,9 @@ namespace GetStoreAppWebView.Views.Windows
         /// <summary>
         /// 内容加载完成后触发的事件
         /// </summary>
-        [DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(ProtocolActivatedEventArgs))]
-        private async void OnLoaded(object sender, RoutedEventArgs args)
+        [DynamicWindowsRuntimeCast(typeof(FrameworkElement))]
+        private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            CoreWebView2Environment coreWebView2Environment = null;
-            if (RuntimeHelper.WebView2Type is WebView2Type.User)
-            {
-                coreWebView2Environment = await CoreWebView2Environment.CreateWithOptionsAsync(null, null, new()
-                {
-                    Language = LanguageService.AppLanguage,
-                });
-            }
-            else if (RuntimeHelper.WebView2Type is WebView2Type.System)
-            {
-                coreWebView2Environment = await CoreWebView2Environment.CreateWithOptionsAsync(Path.Combine(global::Windows.Storage.SystemDataPaths.GetDefault().System, "Microsoft-Edge-WebView"), null, new()
-                {
-                    Language = LanguageService.AppLanguage,
-                });
-            }
-
-            if (coreWebView2Environment is not null)
-            {
-                await WebViewBrowser.EnsureCoreWebView2Async(coreWebView2Environment);
-                if (Program.AppActivationArguments.Kind is ExtendedActivationKind.Protocol)
-                {
-                    ProtocolActivatedEventArgs protocolActivatedEventArgs = Program.AppActivationArguments.Data as ProtocolActivatedEventArgs;
-                    if (protocolActivatedEventArgs.Data is ValueSet protocolData && protocolData.TryGetValue("AppLink", out object appLinkObj) && appLinkObj is string appLink && !string.IsNullOrEmpty(appLink))
-                    {
-                        WebViewBrowser.CoreWebView2.Navigate(appLink);
-                    }
-                    else
-                    {
-                        WebViewBrowser.CoreWebView2.Navigate("https://apps.microsoft.com");
-                    }
-                }
-                else
-                {
-                    WebViewBrowser.CoreWebView2.Navigate("https://apps.microsoft.com");
-                }
-
-                CoreWebView2Profile coreWebView2Profile = WebViewBrowser.CoreWebView2.Profile;
-                coreWebView2Profile.DefaultDownloadFolderPath = DownloadOptionsService.DownloadFolder;
-            }
-
             // 设置标题栏主题
             SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
         }
