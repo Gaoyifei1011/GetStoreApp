@@ -228,8 +228,12 @@ namespace GetStoreApp.Views.Pages
             if (sender is ComboBox comboBox && !Equals(DoEngineMode, comboBox.SelectedItem))
             {
                 DoEngineMode = comboBox.SelectedItem is ComboBoxItemModel doEngineMode ? doEngineMode : null;
-                DownloadOptionsService.SetDoEngineMode(Convert.ToString(DoEngineMode.SelectedValue));
-                DoEngineMode = DoEngineModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), DownloadOptionsService.DoEngineMode, StringComparison.OrdinalIgnoreCase));
+
+                if (DoEngineMode is not null)
+                {
+                    DownloadOptionsService.SetDoEngineMode(Convert.ToString(DoEngineMode.SelectedValue));
+                    DoEngineMode = DoEngineModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), DownloadOptionsService.DoEngineMode, StringComparison.OrdinalIgnoreCase));
+                }
             }
         }
 

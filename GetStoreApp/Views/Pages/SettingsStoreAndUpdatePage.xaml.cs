@@ -333,8 +333,12 @@ namespace GetStoreApp.Views.Pages
             if (sender is ComboBox comboBox && !Equals(QueryLinksMode, comboBox.SelectedItem))
             {
                 QueryLinksMode = comboBox.SelectedItem is ComboBoxItemModel queryLinksMode ? queryLinksMode : null;
-                QueryLinksModeService.SetQueryLinksMode(Convert.ToString(QueryLinksMode.SelectedValue));
-                QueryLinksMode = QueryLinksModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), QueryLinksModeService.QueryLinksMode, StringComparison.OrdinalIgnoreCase));
+
+                if (QueryLinksMode is not null)
+                {
+                    QueryLinksModeService.SetQueryLinksMode(Convert.ToString(QueryLinksMode.SelectedValue));
+                    QueryLinksMode = QueryLinksModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), QueryLinksModeService.QueryLinksMode, StringComparison.OrdinalIgnoreCase));
+                }
             }
         }
 
@@ -347,8 +351,12 @@ namespace GetStoreApp.Views.Pages
             if (sender is ComboBox comboBox && !Equals(AppLinkOpenMode, comboBox.SelectedItem))
             {
                 AppLinkOpenMode = comboBox.SelectedItem is ComboBoxItemModel appLinkOpenMode ? appLinkOpenMode : null;
-                AppLinkOpenModeService.SetAppLinkOpenMode(Convert.ToString(AppLinkOpenMode.SelectedValue));
-                AppLinkOpenMode = AppLinkOpenModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), AppLinkOpenModeService.AppLinkOpenMode, StringComparison.OrdinalIgnoreCase));
+
+                if (AppLinkOpenMode is not null)
+                {
+                    AppLinkOpenModeService.SetAppLinkOpenMode(Convert.ToString(AppLinkOpenMode.SelectedValue));
+                    AppLinkOpenMode = AppLinkOpenModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), AppLinkOpenModeService.AppLinkOpenMode, StringComparison.OrdinalIgnoreCase));
+                }
             }
         }
 
@@ -361,8 +369,12 @@ namespace GetStoreApp.Views.Pages
             if (sender is ComboBox comboBox && !Equals(InstallMode, comboBox.SelectedItem))
             {
                 InstallMode = comboBox.SelectedItem is ComboBoxItemModel installMode ? installMode : null;
-                InstallModeService.SetInstallMode(Convert.ToString(InstallMode.SelectedValue));
-                InstallMode = InstallModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), InstallModeService.InstallMode, StringComparison.OrdinalIgnoreCase));
+
+                if (InstallMode is not null)
+                {
+                    InstallModeService.SetInstallMode(Convert.ToString(InstallMode.SelectedValue));
+                    InstallMode = InstallModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), InstallModeService.InstallMode, StringComparison.OrdinalIgnoreCase));
+                }
             }
         }
 
@@ -418,46 +430,48 @@ namespace GetStoreApp.Views.Pages
             if (sender is ComboBox comboBox && !Equals(AppUpdateStatus, comboBox.SelectedItem))
             {
                 AppUpdateStatus = comboBox.SelectedItem is ComboBoxItemModel appUpdateStatus ? appUpdateStatus : null;
-                await Task.Run(() =>
+
+                if (AppUpdateStatus is not null)
                 {
-                    if (AppUpdateStatus.SelectedValue is "AppUpdateEnabled")
+                    AppUpdateStatus = await Task.Run(() =>
                     {
-                        RegistryHelper.RemoveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
-                        RegistryHelper.RemoveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload");
-                    }
-                    else if (AppUpdateStatus.SelectedValue is "AppUpdatePaused")
+                        if (AppUpdateStatus.SelectedValue is "AppUpdateEnabled")
+                        {
+                            RegistryHelper.RemoveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
+                            RegistryHelper.RemoveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload");
+                        }
+                        else if (AppUpdateStatus.SelectedValue is "AppUpdatePaused")
+                        {
+                            RegistryHelper.RemoveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
+                            RegistryHelper.SaveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload", 2);
+                        }
+                        else if (AppUpdateStatus.SelectedValue is "AppUpdateDisabled")
+                        {
+                            RegistryHelper.SaveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload", 2);
+                        }
+
+                        string appUpdateStatus = "AppUpdateDisabled";
+                        int? autoDownload = RegistryHelper.ReadRegistryKey<int?>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
+                        if (autoDownload.HasValue)
+                        {
+                            appUpdateStatus = autoDownload.Value is 4 ? "AppUpdateEnabled" : "AppUpdateDisabled";
+                        }
+                        else
+                        {
+                            autoDownload = RegistryHelper.ReadRegistryKey<int?>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload");
+                            appUpdateStatus = autoDownload.HasValue ? autoDownload.Value is 4 ? "AppUpdateEnabled" : "AppUpdatePaused" : "AppUpdateEnabled";
+                        }
+                        return AppUpdateStatusList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), appUpdateStatus, StringComparison.OrdinalIgnoreCase)); ;
+                    });
+                    AppUpdatePauseEndTime = await Task.Run(() =>
                     {
-                        RegistryHelper.RemoveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
-                        RegistryHelper.SaveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload", 2);
-                    }
-                    else if (AppUpdateStatus.SelectedValue is "AppUpdateDisabled")
+                        string appUpdatePauseEndTime = RegistryHelper.ReadRegistryKey<string>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\InstallService\State", "AutoUpdatePauseEndTime");
+                        return !string.IsNullOrEmpty(appUpdatePauseEndTime) && DateTimeOffset.TryParse(appUpdatePauseEndTime, out DateTimeOffset appUpdatePauseEndTimeDateTimeOffset) ? appUpdatePauseEndTimeDateTimeOffset.Date : DateTimeOffset.UnixEpoch.Date;
+                    });
+                    if (!RuntimeHelper.IsElevated)
                     {
-                        RegistryHelper.SaveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload", 2);
+                        await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.NotElevated));
                     }
-                });
-                AppUpdateStatus = await Task.Run(() =>
-                {
-                    string appUpdateStatus = "AppUpdateDisabled";
-                    int? autoDownload = RegistryHelper.ReadRegistryKey<int?>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
-                    if (autoDownload.HasValue)
-                    {
-                        appUpdateStatus = autoDownload.Value is 4 ? "AppUpdateEnabled" : "AppUpdateDisabled";
-                    }
-                    else
-                    {
-                        autoDownload = RegistryHelper.ReadRegistryKey<int?>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload");
-                        appUpdateStatus = autoDownload.HasValue ? autoDownload.Value is 4 ? "AppUpdateEnabled" : "AppUpdatePaused" : "AppUpdateEnabled";
-                    }
-                    return AppUpdateStatusList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), appUpdateStatus, StringComparison.OrdinalIgnoreCase)); ;
-                });
-                AppUpdatePauseEndTime = await Task.Run(() =>
-                {
-                    string appUpdatePauseEndTime = RegistryHelper.ReadRegistryKey<string>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\InstallService\State", "AutoUpdatePauseEndTime");
-                    return !string.IsNullOrEmpty(appUpdatePauseEndTime) && DateTimeOffset.TryParse(appUpdatePauseEndTime, out DateTimeOffset appUpdatePauseEndTimeDateTimeOffset) ? appUpdatePauseEndTimeDateTimeOffset.Date : DateTimeOffset.UnixEpoch.Date;
-                });
-                if (!RuntimeHelper.IsElevated)
-                {
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.NotElevated));
                 }
             }
         }
@@ -520,13 +534,17 @@ namespace GetStoreApp.Views.Pages
             if (sender is ComboBox comboBox && !Equals(StoreRegion, comboBox.SelectedItem))
             {
                 StoreRegion = comboBox.SelectedItem is StoreRegionModel storeRegion ? storeRegion : null;
-                StoreRegionService.SetRegion(StoreRegion.GeographicRegion);
-                foreach (StoreRegionModel storeRegionItem in StoreRegionCollection)
+
+                if (StoreRegion is not null)
                 {
-                    if (string.Equals(StoreRegionService.StoreRegion.CodeTwoLetter, storeRegionItem.CodeTwoLetter))
+                    StoreRegionService.SetRegion(StoreRegion.GeographicRegion);
+                    foreach (StoreRegionModel storeRegionItem in StoreRegionCollection)
                     {
-                        StoreRegion = storeRegionItem;
-                        break;
+                        if (string.Equals(StoreRegionService.StoreRegion.CodeTwoLetter, storeRegionItem.CodeTwoLetter))
+                        {
+                            StoreRegion = storeRegionItem;
+                            break;
+                        }
                     }
                 }
             }

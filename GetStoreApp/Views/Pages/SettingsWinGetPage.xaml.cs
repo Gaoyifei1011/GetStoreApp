@@ -96,8 +96,12 @@ namespace GetStoreApp.Views.Pages
             if (sender is ComboBox comboBox && !Equals(WinGetSource, comboBox.SelectedItem))
             {
                 WinGetSource = comboBox.SelectedItem is ComboBoxItemModel wingetSource ? wingetSource : null;
-                WinGetConfigService.SetWinGetSource(Convert.ToString(WinGetSource.SelectedValue));
-                WinGetSource = WinGetSourceList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), WinGetConfigService.WinGetSource, StringComparison.OrdinalIgnoreCase));
+
+                if (WinGetSource is not null)
+                {
+                    WinGetConfigService.SetWinGetSource(Convert.ToString(WinGetSource.SelectedValue));
+                    WinGetSource = WinGetSourceList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), WinGetConfigService.WinGetSource, StringComparison.OrdinalIgnoreCase));
+                }
             }
         }
 

@@ -516,8 +516,12 @@ namespace GetStoreApp.Views.UserControls
             if (sender is ComboBox comboBox && !Equals(SelectedType, comboBox.SelectedItem))
             {
                 SelectedType = comboBox.SelectedItem is TypeModel type ? type : null;
-                sampleLink = SampleLinkList[TypeList.FindIndex(item => string.Equals(item.InternalName, SelectedType.InternalName))];
-                LinkPlaceHolderText = SampleTitleString + sampleLink;
+
+                if (SelectedType is not null)
+                {
+                    sampleLink = SampleLinkList[TypeList.FindIndex(item => string.Equals(item.InternalName, SelectedType.InternalName))];
+                    LinkPlaceHolderText = SampleTitleString + sampleLink;
+                }
             }
         }
 
