@@ -175,7 +175,7 @@
                                         TextWrapping="NoWrap" />
 
                                     <TextBlock
-                                        x:Name="DescriptionText"
+                                        x:Name="DescriptionTextBlock"
                                         HorizontalAlignment="Left"
                                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                         RelativePanel.Below="titleText"
@@ -184,7 +184,7 @@
                                         TextTrimming="CharacterEllipsis">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind Description}" Visibility="{Binding ElementName=DescriptionText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip Content="{x:Bind Description}" Visibility="{Binding ElementName=DescriptionTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
                                 </StackPanel>

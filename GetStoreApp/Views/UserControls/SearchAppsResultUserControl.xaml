@@ -164,7 +164,7 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock
-                                x:Name="StoreAppNameHeaderText"
+                                x:Name="StoreAppNameHeaderTextBlock"
                                 Grid.Column="0"
                                 Margin="10,0,0,0"
                                 HorizontalAlignment="Left"
@@ -174,12 +174,12 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchAppsResult/StoreAppName')}" Visibility="{x:Bind StoreAppNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchAppsResult/StoreAppName')}" Visibility="{x:Bind StoreAppNameHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
                             <TextBlock
-                                x:Name="StoreAppPublisherHeaderText"
+                                x:Name="StoreAppPublisherHeaderTextBlock"
                                 Grid.Column="1"
                                 Margin="10,0,0,0"
                                 HorizontalAlignment="Left"
@@ -189,12 +189,12 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchAppsResult/StoreAppPublisher')}" Visibility="{x:Bind StoreAppPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchAppsResult/StoreAppPublisher')}" Visibility="{x:Bind StoreAppPublisherHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
                             <TextBlock
-                                x:Name="StoreAppLinkHeaderText"
+                                x:Name="StoreAppLinkHeaderTextBlock"
                                 Grid.Column="2"
                                 Margin="10,0,0,0"
                                 HorizontalAlignment="Left"
@@ -204,7 +204,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchAppsResult/StoreAppLink')}" Visibility="{x:Bind StoreAppLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SearchAppsResult/StoreAppLink')}" Visibility="{x:Bind StoreAppLinkHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
@@ -235,7 +235,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock
-                                    x:Name="StoreAppNameText"
+                                    x:Name="StoreAppNameTextBlock"
                                     Grid.Column="0"
                                     MinWidth="50"
                                     Margin="10,0,0,0"
@@ -249,12 +249,12 @@
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind StoreAppName}" Visibility="{Binding ElementName=StoreAppNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind StoreAppName}" Visibility="{Binding ElementName=StoreAppNameTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
                                 <TextBlock
-                                    x:Name="StoreAppPublisherText"
+                                    x:Name="StoreAppPublisherTextBlock"
                                     Grid.Column="1"
                                     MinWidth="50"
                                     Margin="10,0,0,0"
@@ -268,7 +268,7 @@
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind StoreAppPublisher}" Visibility="{Binding ElementName=StoreAppPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind StoreAppPublisher}" Visibility="{Binding ElementName=StoreAppPublisherTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 

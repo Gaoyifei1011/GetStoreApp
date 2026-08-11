@@ -377,7 +377,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock
-                                    x:Name="FileNameText"
+                                    x:Name="FileNameTextBlock"
                                     Grid.Column="0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
@@ -388,7 +388,7 @@
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 

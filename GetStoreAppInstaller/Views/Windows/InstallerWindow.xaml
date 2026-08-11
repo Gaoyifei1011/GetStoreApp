@@ -256,7 +256,7 @@
                                 </Grid.RowDefinitions>
 
                                 <TextBlock
-                                    x:Name="PackageNameText"
+                                    x:Name="PackageNameTextBlock"
                                     Grid.Row="0"
                                     HorizontalAlignment="Left"
                                     FontSize="26"
@@ -266,12 +266,12 @@
                                     TextTrimming="CharacterEllipsis">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind PackageName, Mode=OneWay}" Visibility="{Binding ElementName=PackageNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind PackageName, Mode=OneWay}" Visibility="{Binding ElementName=PackageNameTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
                                 <TextBlock
-                                    x:Name="PublisherText"
+                                    x:Name="PublisherTextBlock"
                                     Grid.Row="1"
                                     HorizontalAlignment="Left"
                                     IsTextSelectionEnabled="True"
@@ -280,7 +280,7 @@
                                     <Run Text="{x:Bind PublisherDisplayName, Mode=OneWay}" />
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Visibility="{Binding ElementName=PublisherText, Path=IsTextTrimmed, Mode=OneWay}">
+                                        <ToolTip Visibility="{Binding ElementName=PublisherTextBlock, Path=IsTextTrimmed, Mode=OneWay}">
                                             <TextBlock>
                                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Publisher')}" />
                                                 <Run Text="{x:Bind PublisherDisplayName, Mode=OneWay}" />
@@ -290,7 +290,7 @@
                                 </TextBlock>
 
                                 <TextBlock
-                                    x:Name="PackageVersionText"
+                                    x:Name="PackageVersionTextBlock"
                                     Grid.Row="2"
                                     HorizontalAlignment="Left"
                                     IsTextSelectionEnabled="True"
@@ -299,7 +299,7 @@
                                     <Run Text="{x:Bind system:Convert.ToString(Version), Mode=OneWay}" />
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Visibility="{Binding ElementName=PackageVersionText, Path=IsTextTrimmed, Mode=OneWay}">
+                                        <ToolTip Visibility="{Binding ElementName=PackageVersionTextBlock, Path=IsTextTrimmed, Mode=OneWay}">
                                             <TextBlock>
                                                 <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/PackageVersion')}" />
                                                 <Run Text="{x:Bind system:Convert.ToString(Version), Mode=OneWay}" />
@@ -525,7 +525,7 @@
                                                                                 </Grid.RowDefinitions>
 
                                                                                 <TextBlock
-                                                                                    x:Name="DependencyNameText"
+                                                                                    x:Name="DependencyNameTextBlock"
                                                                                     Grid.Row="0"
                                                                                     MinWidth="50"
                                                                                     Margin="0,0,5,0"
@@ -538,12 +538,12 @@
                                                                                     TextTrimming="CharacterEllipsis">
 
                                                                                     <ToolTipService.ToolTip>
-                                                                                        <ToolTip Content="{x:Bind DependencyName}" Visibility="{Binding ElementName=DependencyNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                                        <ToolTip Content="{x:Bind DependencyName}" Visibility="{Binding ElementName=DependencyNameTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                                     </ToolTipService.ToolTip>
                                                                                 </TextBlock>
 
                                                                                 <TextBlock
-                                                                                    x:Name="DependencyInfoText"
+                                                                                    x:Name="DependencyInfoTextBlock"
                                                                                     Grid.Row="1"
                                                                                     MinWidth="50"
                                                                                     Margin="0,0,5,0"
@@ -559,7 +559,7 @@
                                                                                     <Run Text="{x:Bind DependencyPublisher}" />
 
                                                                                     <ToolTipService.ToolTip>
-                                                                                        <ToolTip Visibility="{Binding ElementName=DependencyInfoText, Path=IsTextTrimmed, Mode=OneWay}">
+                                                                                        <ToolTip Visibility="{Binding ElementName=DependencyInfoTextBlock, Path=IsTextTrimmed, Mode=OneWay}">
                                                                                             <TextBlock>
                                                                                                 <Run Text="{x:Bind DependencyVersion}" />
                                                                                                 <Run Text=" | " />
@@ -1425,7 +1425,7 @@
                                                     </Grid.ColumnDefinitions>
 
                                                     <TextBlock
-                                                        x:Name="TargetDeviceNameHeaderText"
+                                                        x:Name="TargetDeviceNameHeaderTextBlock"
                                                         Grid.Column="0"
                                                         Margin="6,0,0,0"
                                                         HorizontalAlignment="Left"
@@ -1436,12 +1436,12 @@
                                                         TextWrapping="NoWrap">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/TargetDeviceName')}" Visibility="{x:Bind TargetDeviceNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/TargetDeviceName')}" Visibility="{x:Bind TargetDeviceNameHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                                         </ToolTipService.ToolTip>
                                                     </TextBlock>
 
                                                     <TextBlock
-                                                        x:Name="MinVersionHeaderText"
+                                                        x:Name="MinVersionHeaderTextBlock"
                                                         Grid.Column="1"
                                                         Margin="6,0,0,0"
                                                         HorizontalAlignment="Left"
@@ -1452,12 +1452,12 @@
                                                         TextWrapping="NoWrap">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MinVersion')}" Visibility="{x:Bind MinVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MinVersion')}" Visibility="{x:Bind MinVersionHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                                         </ToolTipService.ToolTip>
                                                     </TextBlock>
 
                                                     <TextBlock
-                                                        x:Name="MaxVersionTestedHeaderText"
+                                                        x:Name="MaxVersionTestedHeaderTextBlock"
                                                         Grid.Column="2"
                                                         Margin="6,0,0,0"
                                                         HorizontalAlignment="Left"
@@ -1468,7 +1468,7 @@
                                                         TextWrapping="NoWrap">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MaxVersionTested')}" Visibility="{x:Bind MaxVersionTestedHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/MaxVersionTested')}" Visibility="{x:Bind MaxVersionTestedHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                                         </ToolTipService.ToolTip>
                                                     </TextBlock>
                                                 </Grid>
@@ -1489,7 +1489,7 @@
                                                         </Grid.ColumnDefinitions>
 
                                                         <TextBlock
-                                                            x:Name="TargetDeviceNameText"
+                                                            x:Name="TargetDeviceNameTextBlock"
                                                             Grid.Column="0"
                                                             Margin="6,0,0,0"
                                                             HorizontalAlignment="Left"
@@ -1501,12 +1501,12 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip Content="{x:Bind TargetDeviceName}" Visibility="{Binding ElementName=TargetDeviceNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                <ToolTip Content="{x:Bind TargetDeviceName}" Visibility="{Binding ElementName=TargetDeviceNameTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
                                                         <TextBlock
-                                                            x:Name="MinVersionText"
+                                                            x:Name="MinVersionTextBlock"
                                                             Grid.Column="1"
                                                             Margin="6,0,0,0"
                                                             HorizontalAlignment="Left"
@@ -1518,12 +1518,12 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip Content="{x:Bind system:Convert.ToString(MinVersion)}" Visibility="{Binding ElementName=MinVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                <ToolTip Content="{x:Bind system:Convert.ToString(MinVersion)}" Visibility="{Binding ElementName=MinVersionTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
                                                         <TextBlock
-                                                            x:Name="MaxVersionTestedText"
+                                                            x:Name="MaxVersionTestedTextBlock"
                                                             Grid.Column="2"
                                                             Margin="6,0,0,0"
                                                             HorizontalAlignment="Left"
@@ -1535,7 +1535,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip Content="{x:Bind system:Convert.ToString(MaxVersionTested)}" Visibility="{Binding ElementName=MaxVersionTestedText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                <ToolTip Content="{x:Bind system:Convert.ToString(MaxVersionTested)}" Visibility="{Binding ElementName=MaxVersionTestedTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
                                                     </Grid>
@@ -1615,7 +1615,7 @@
                                                         </Grid.ColumnDefinitions>
 
                                                         <TextBlock
-                                                            x:Name="PackageDependencyNameHeaderText"
+                                                            x:Name="PackageDependencyNameHeaderTextBlock"
                                                             Grid.Column="0"
                                                             Margin="6,0,0,0"
                                                             HorizontalAlignment="Left"
@@ -1626,12 +1626,12 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}" Visibility="{x:Bind PackageDependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}" Visibility="{x:Bind PackageDependencyNameHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
                                                         <TextBlock
-                                                            x:Name="PackageDependencyPublisherHeaderText"
+                                                            x:Name="PackageDependencyPublisherHeaderTextBlock"
                                                             Grid.Column="1"
                                                             Margin="6,0,0,0"
                                                             HorizontalAlignment="Left"
@@ -1642,12 +1642,12 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}" Visibility="{x:Bind PackageDependencyPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}" Visibility="{x:Bind PackageDependencyPublisherHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
                                                         <TextBlock
-                                                            x:Name="PackageDependencyMinVersionHeaderText"
+                                                            x:Name="PackageDependencyMinVersionHeaderTextBlock"
                                                             Grid.Column="2"
                                                             Margin="6,0,0,0"
                                                             HorizontalAlignment="Left"
@@ -1658,7 +1658,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyMinVersion')}" Visibility="{x:Bind PackageDependencyMinVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyMinVersion')}" Visibility="{x:Bind PackageDependencyMinVersionHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
                                                     </Grid>
@@ -1679,7 +1679,7 @@
                                                             </Grid.ColumnDefinitions>
 
                                                             <TextBlock
-                                                                x:Name="PackageDependencyNameText"
+                                                                x:Name="PackageDependencyNameTextBlock"
                                                                 Grid.Column="0"
                                                                 Margin="6,0,0,0"
                                                                 HorizontalAlignment="Left"
@@ -1691,12 +1691,12 @@
                                                                 TextWrapping="NoWrap">
 
                                                                 <ToolTipService.ToolTip>
-                                                                    <ToolTip Content="{x:Bind DependencyName}" Visibility="{Binding ElementName=PackageDependencyNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                    <ToolTip Content="{x:Bind DependencyName}" Visibility="{Binding ElementName=PackageDependencyNameTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>
 
                                                             <TextBlock
-                                                                x:Name="PackageDependencyPublisherText"
+                                                                x:Name="PackageDependencyPublisherTextBlock"
                                                                 Grid.Column="1"
                                                                 Margin="6,0,0,0"
                                                                 HorizontalAlignment="Left"
@@ -1708,12 +1708,12 @@
                                                                 TextWrapping="NoWrap">
 
                                                                 <ToolTipService.ToolTip>
-                                                                    <ToolTip Content="{x:Bind DependencyPublisher}" Visibility="{Binding ElementName=PackageDependencyPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                    <ToolTip Content="{x:Bind DependencyPublisher}" Visibility="{Binding ElementName=PackageDependencyPublisherTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>
 
                                                             <TextBlock
-                                                                x:Name="PackageDependencyMinVersionText"
+                                                                x:Name="PackageDependencyMinVersionTextBlock"
                                                                 Grid.Column="2"
                                                                 Margin="6,0,0,0"
                                                                 HorizontalAlignment="Left"
@@ -1725,7 +1725,7 @@
                                                                 TextWrapping="NoWrap">
 
                                                                 <ToolTipService.ToolTip>
-                                                                    <ToolTip Content="{x:Bind system:Convert.ToString(DependencyMinVersion)}" Visibility="{Binding ElementName=PackageDependencyMinVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                    <ToolTip Content="{x:Bind system:Convert.ToString(DependencyMinVersion)}" Visibility="{Binding ElementName=PackageDependencyMinVersionTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>
                                                         </Grid>
@@ -1768,7 +1768,7 @@
                                                         </Grid.ColumnDefinitions>
 
                                                         <TextBlock
-                                                            x:Name="AppInstallerDependencyNameHeaderText"
+                                                            x:Name="AppInstallerDependencyNameHeaderTextBlock"
                                                             Grid.Column="0"
                                                             Margin="6,0,0,0"
                                                             HorizontalAlignment="Left"
@@ -1779,12 +1779,12 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}" Visibility="{x:Bind AppInstallerDependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyName')}" Visibility="{x:Bind AppInstallerDependencyNameHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
                                                         <TextBlock
-                                                            x:Name="AppInstallerDependencyPublisherHeaderText"
+                                                            x:Name="AppInstallerDependencyPublisherHeaderTextBlock"
                                                             Grid.Column="1"
                                                             Margin="6,0,0,0"
                                                             HorizontalAlignment="Left"
@@ -1795,12 +1795,12 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}" Visibility="{x:Bind AppInstallerDependencyPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyPublisher')}" Visibility="{x:Bind AppInstallerDependencyPublisherHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
                                                         <TextBlock
-                                                            x:Name="AppInstallerDependencyVersionHeaderText"
+                                                            x:Name="AppInstallerDependencyVersionHeaderTextBlock"
                                                             Grid.Column="2"
                                                             Margin="6,0,0,0"
                                                             HorizontalAlignment="Left"
@@ -1811,12 +1811,12 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyVersion')}" Visibility="{x:Bind AppInstallerDependencyVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyVersion')}" Visibility="{x:Bind AppInstallerDependencyVersionHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
                                                         <TextBlock
-                                                            x:Name="AppInstallerDependencyProcessorArchitectureHeaderText"
+                                                            x:Name="AppInstallerDependencyProcessorArchitectureHeaderTextBlock"
                                                             Grid.Column="3"
                                                             Margin="6,0,0,0"
                                                             HorizontalAlignment="Left"
@@ -1827,12 +1827,12 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyProcessorArchitecture')}" Visibility="{x:Bind AppInstallerDependencyProcessorArchitectureHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyProcessorArchitecture')}" Visibility="{x:Bind AppInstallerDependencyProcessorArchitectureHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
                                                         <TextBlock
-                                                            x:Name="AppInstallerDependencyOperationHeaderText"
+                                                            x:Name="AppInstallerDependencyOperationHeaderTextBlock"
                                                             Grid.Column="4"
                                                             Margin="6,0,0,0"
                                                             HorizontalAlignment="Left"
@@ -1843,7 +1843,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyOperation')}" Visibility="{x:Bind AppInstallerDependencyOperationHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/DependencyOperation')}" Visibility="{x:Bind AppInstallerDependencyOperationHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
                                                     </Grid>
@@ -1866,7 +1866,7 @@
                                                             </Grid.ColumnDefinitions>
 
                                                             <TextBlock
-                                                                x:Name="AppInstallerDependencyNameText"
+                                                                x:Name="AppInstallerDependencyNameTextBlock"
                                                                 Grid.Column="0"
                                                                 Margin="6,0,0,0"
                                                                 HorizontalAlignment="Left"
@@ -1878,12 +1878,12 @@
                                                                 TextWrapping="NoWrap">
 
                                                                 <ToolTipService.ToolTip>
-                                                                    <ToolTip Content="{x:Bind DependencyName}" Visibility="{Binding ElementName=AppInstallerDependencyNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                    <ToolTip Content="{x:Bind DependencyName}" Visibility="{Binding ElementName=AppInstallerDependencyNameTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>
 
                                                             <TextBlock
-                                                                x:Name="AppInstallerDependencyPublisherText"
+                                                                x:Name="AppInstallerDependencyPublisherTextBlock"
                                                                 Grid.Column="1"
                                                                 Margin="6,0,0,0"
                                                                 HorizontalAlignment="Left"
@@ -1895,12 +1895,12 @@
                                                                 TextWrapping="NoWrap">
 
                                                                 <ToolTipService.ToolTip>
-                                                                    <ToolTip Content="{x:Bind DependencyPublisher}" Visibility="{Binding ElementName=AppInstallerDependencyPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                    <ToolTip Content="{x:Bind DependencyPublisher}" Visibility="{Binding ElementName=AppInstallerDependencyPublisherTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>
 
                                                             <TextBlock
-                                                                x:Name="AppInstallerDependencyVersionText"
+                                                                x:Name="AppInstallerDependencyVersionTextBlock"
                                                                 Grid.Column="2"
                                                                 Margin="6,0,0,0"
                                                                 HorizontalAlignment="Left"
@@ -1912,12 +1912,12 @@
                                                                 TextWrapping="NoWrap">
 
                                                                 <ToolTipService.ToolTip>
-                                                                    <ToolTip Content="{x:Bind system:Convert.ToString(DependencyVersion)}" Visibility="{Binding ElementName=AppInstallerDependencyVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                    <ToolTip Content="{x:Bind system:Convert.ToString(DependencyVersion)}" Visibility="{Binding ElementName=AppInstallerDependencyVersionTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>
 
                                                             <TextBlock
-                                                                x:Name="AppInstallerDependencyProcessorArchitectureText"
+                                                                x:Name="AppInstallerDependencyProcessorArchitectureTextBlock"
                                                                 Grid.Column="3"
                                                                 Margin="6,0,0,0"
                                                                 HorizontalAlignment="Left"
@@ -1929,7 +1929,7 @@
                                                                 TextWrapping="NoWrap">
 
                                                                 <ToolTipService.ToolTip>
-                                                                    <ToolTip Content="{x:Bind ProcessorArchitecture}" Visibility="{Binding ElementName=AppInstallerDependencyProcessorArchitectureText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                    <ToolTip Content="{x:Bind ProcessorArchitecture}" Visibility="{Binding ElementName=AppInstallerDependencyProcessorArchitectureTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                                                 </ToolTipService.ToolTip>
                                                             </TextBlock>
 
@@ -2111,7 +2111,7 @@
                                                     </Grid.ColumnDefinitions>
 
                                                     <TextBlock
-                                                        x:Name="AppIDHeaderText"
+                                                        x:Name="AppIDHeaderTextBlock"
                                                         Grid.Column="0"
                                                         Margin="6,0,0,0"
                                                         HorizontalAlignment="Left"
@@ -2122,12 +2122,12 @@
                                                         TextWrapping="NoWrap">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppID')}" Visibility="{x:Bind AppIDHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppID')}" Visibility="{x:Bind AppIDHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                                         </ToolTipService.ToolTip>
                                                     </TextBlock>
 
                                                     <TextBlock
-                                                        x:Name="AppDescriptionHeaderText"
+                                                        x:Name="AppDescriptionHeaderTextBlock"
                                                         Grid.Column="1"
                                                         Margin="6,0,0,0"
                                                         HorizontalAlignment="Left"
@@ -2138,12 +2138,12 @@
                                                         TextWrapping="NoWrap">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppDescription')}" Visibility="{x:Bind AppDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppDescription')}" Visibility="{x:Bind AppDescriptionHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                                         </ToolTipService.ToolTip>
                                                     </TextBlock>
 
                                                     <TextBlock
-                                                        x:Name="ExecutableHeaderText"
+                                                        x:Name="ExecutableHeaderTextBlock"
                                                         Grid.Column="2"
                                                         Margin="6,0,0,0"
                                                         HorizontalAlignment="Left"
@@ -2154,12 +2154,12 @@
                                                         TextWrapping="NoWrap">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Executable')}" Visibility="{x:Bind ExecutableHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/Executable')}" Visibility="{x:Bind ExecutableHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                                         </ToolTipService.ToolTip>
                                                     </TextBlock>
 
                                                     <TextBlock
-                                                        x:Name="EntryPointHeaderText"
+                                                        x:Name="EntryPointHeaderTextBlock"
                                                         Grid.Column="3"
                                                         Margin="6,0,0,0"
                                                         HorizontalAlignment="Left"
@@ -2170,12 +2170,12 @@
                                                         TextWrapping="NoWrap">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/EntryPoint')}" Visibility="{x:Bind EntryPointHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/EntryPoint')}" Visibility="{x:Bind EntryPointHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                                         </ToolTipService.ToolTip>
                                                     </TextBlock>
 
                                                     <TextBlock
-                                                        x:Name="AppUserModelIdHeaderText"
+                                                        x:Name="AppUserModelIdHeaderTextBlock"
                                                         Grid.Column="4"
                                                         Margin="6,0,0,0"
                                                         HorizontalAlignment="Left"
@@ -2186,7 +2186,7 @@
                                                         TextWrapping="NoWrap">
 
                                                         <ToolTipService.ToolTip>
-                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppUserModelId')}" Visibility="{x:Bind AppUserModelIdHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/AppUserModelId')}" Visibility="{x:Bind AppUserModelIdHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                                         </ToolTipService.ToolTip>
                                                     </TextBlock>
                                                 </Grid>
@@ -2209,7 +2209,7 @@
                                                         </Grid.ColumnDefinitions>
 
                                                         <TextBlock
-                                                            x:Name="AppIDText"
+                                                            x:Name="AppIDTextBlock"
                                                             Grid.Column="0"
                                                             Margin="6,0,0,0"
                                                             HorizontalAlignment="Left"
@@ -2221,12 +2221,12 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip Content="{x:Bind AppID}" Visibility="{Binding ElementName=AppIDText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                <ToolTip Content="{x:Bind AppID}" Visibility="{Binding ElementName=AppIDTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
                                                         <TextBlock
-                                                            x:Name="AppDescriptionText"
+                                                            x:Name="AppDescriptionTextBlock"
                                                             Grid.Column="1"
                                                             Margin="6,0,0,0"
                                                             HorizontalAlignment="Left"
@@ -2238,12 +2238,12 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip Content="{x:Bind AppDescription}" Visibility="{Binding ElementName=AppDescriptionText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                <ToolTip Content="{x:Bind AppDescription}" Visibility="{Binding ElementName=AppDescriptionTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
                                                         <TextBlock
-                                                            x:Name="ExecutableText"
+                                                            x:Name="ExecutableTextBlock"
                                                             Grid.Column="2"
                                                             Margin="6,0,0,0"
                                                             HorizontalAlignment="Left"
@@ -2255,12 +2255,12 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip Content="{x:Bind Executable}" Visibility="{Binding ElementName=ExecutableText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                <ToolTip Content="{x:Bind Executable}" Visibility="{Binding ElementName=ExecutableTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
                                                         <TextBlock
-                                                            x:Name="EntryPointText"
+                                                            x:Name="EntryPointTextBlock"
                                                             Grid.Column="3"
                                                             Margin="6,0,0,0"
                                                             HorizontalAlignment="Left"
@@ -2272,12 +2272,12 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip Content="{x:Bind EntryPoint}" Visibility="{Binding ElementName=EntryPointText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                <ToolTip Content="{x:Bind EntryPoint}" Visibility="{Binding ElementName=EntryPointTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
                                                         <TextBlock
-                                                            x:Name="AppUserModelIdText"
+                                                            x:Name="AppUserModelIdTextBlock"
                                                             Grid.Column="4"
                                                             Margin="6,0,0,0"
                                                             HorizontalAlignment="Left"
@@ -2289,7 +2289,7 @@
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip Content="{x:Bind AppUserModelId}" Visibility="{Binding ElementName=AppUserModelIdText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                <ToolTip Content="{x:Bind AppUserModelId}" Visibility="{Binding ElementName=AppUserModelIdTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
                                                     </Grid>

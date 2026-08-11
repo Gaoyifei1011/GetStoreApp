@@ -388,7 +388,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock
-                                    x:Name="FileNameText"
+                                    x:Name="FileNameTextBlock"
                                     Grid.Column="0"
                                     MinWidth="50"
                                     HorizontalAlignment="Left"
@@ -400,7 +400,7 @@
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -437,7 +437,7 @@
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalling), Mode=OneWay}" />
 
                             <Grid
-                                x:Name="InstallInfo"
+                                x:Name="InstallInfoGrid"
                                 Grid.Row="1"
                                 x:Load="{x:Bind IsInstalling, Mode=OneWay}"
                                 ColumnSpacing="10">

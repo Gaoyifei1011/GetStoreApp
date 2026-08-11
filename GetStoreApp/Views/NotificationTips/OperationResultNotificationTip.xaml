@@ -27,14 +27,14 @@
         <SystemBackdropElement CornerRadius="{StaticResource OverlayCornerRadius}" SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}" />
 
         <TextBlock
-            x:Name="OperationResultSuccess"
+            x:Name="OperationResultSuccessTextBlock"
             Padding="12"
             Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind OperationContent, Mode=OneWay}"
             Visibility="{x:Bind IsSuccessOperation, Mode=OneWay}" />
 
         <TextBlock
-            x:Name="OperationResultFailed"
+            x:Name="OperationResultFailedTextBlock"
             Padding="12"
             Foreground="{ThemeResource SystemFillColorCriticalBrush}"
             Text="{x:Bind OperationContent, Mode=OneWay}"

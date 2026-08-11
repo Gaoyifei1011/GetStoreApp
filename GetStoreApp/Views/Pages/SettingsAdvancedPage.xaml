@@ -58,7 +58,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/Notification')}" />
 
                     <TextBlock
-                        x:Name="NotificationDescription"
+                        x:Name="NotificationDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -67,7 +67,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/NotificationDescription')}" Visibility="{x:Bind NotificationDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/NotificationDescription')}" Visibility="{x:Bind NotificationDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -125,7 +125,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ShellMenu')}" />
 
                     <TextBlock
-                        x:Name="ShellMenuDescription"
+                        x:Name="ShellMenuDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -134,7 +134,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ShellMenuDescription')}" Visibility="{x:Bind ShellMenuDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ShellMenuDescription')}" Visibility="{x:Bind ShellMenuDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -195,7 +195,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/TraceCleanup')}" />
 
                     <TextBlock
-                        x:Name="TraceCleanupDescription"
+                        x:Name="TraceCleanupDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -204,7 +204,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/TraceCleanupDescription')}" Visibility="{x:Bind TraceCleanupDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/TraceCleanupDescription')}" Visibility="{x:Bind TraceCleanupDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -254,7 +254,7 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/LogRecord')}" />
 
                             <TextBlock
-                                x:Name="LogRecordDescription"
+                                x:Name="LogRecordDescriptionTextBlock"
                                 HorizontalAlignment="Left"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
@@ -263,7 +263,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/LogRecordDescription')}" Visibility="{x:Bind LogRecordDescription.IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/LogRecordDescription')}" Visibility="{x:Bind LogRecordDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>
@@ -294,7 +294,7 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/LogFolder')}" />
 
                             <TextBlock
-                                x:Name="LogFolderDescription"
+                                x:Name="LogFolderDescriptionTextBlock"
                                 HorizontalAlignment="Left"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
@@ -303,7 +303,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/LogFolderDescription')}" Visibility="{x:Bind LogFolderDescription.IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/LogFolderDescription')}" Visibility="{x:Bind LogFolderDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>
@@ -340,7 +340,7 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ClearLog')}" />
 
                             <TextBlock
-                                x:Name="ClearLogDescription"
+                                x:Name="ClearLogDescriptionTextBlock"
                                 HorizontalAlignment="Left"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
@@ -349,7 +349,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ClearLogDescription')}" Visibility="{x:Bind ClearLogDescription.IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ClearLogDescription')}" Visibility="{x:Bind ClearLogDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>

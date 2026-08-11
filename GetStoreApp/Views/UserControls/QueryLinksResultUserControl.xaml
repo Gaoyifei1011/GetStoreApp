@@ -594,7 +594,7 @@
                                         </Grid.ColumnDefinitions>
 
                                         <TextBlock
-                                            x:Name="FileNameHeaderText"
+                                            x:Name="FileNameHeaderTextBlock"
                                             Grid.Column="0"
                                             Margin="10,0,0,0"
                                             HorizontalAlignment="Left"
@@ -604,12 +604,12 @@
                                             TextWrapping="NoWrap">
 
                                             <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/FileName')}" Visibility="{x:Bind FileNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/FileName')}" Visibility="{x:Bind FileNameHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
 
                                         <TextBlock
-                                            x:Name="FileSizeHeaderText"
+                                            x:Name="FileSizeHeaderTextBlock"
                                             Grid.Column="1"
                                             Margin="10,0,0,0"
                                             HorizontalAlignment="Left"
@@ -619,7 +619,7 @@
                                             TextWrapping="NoWrap">
 
                                             <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/FileSize')}" Visibility="{x:Bind FileSizeHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/FileSize')}" Visibility="{x:Bind FileSizeHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
 
@@ -669,14 +669,14 @@
                                         </HyperlinkButton.Resources>
 
                                         <TextBlock
-                                            x:Name="FileNameHyperText"
+                                            x:Name="FileNameHyperTextBlock"
                                             HorizontalAlignment="Left"
                                             Text="{x:Bind FileName}"
                                             TextTrimming="CharacterEllipsis"
                                             TextWrapping="NoWrap">
 
                                             <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameHyperText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameHyperTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
 
@@ -698,7 +698,7 @@
                                     </HyperlinkButton>
 
                                     <TextBlock
-                                        x:Name="FileNameText"
+                                        x:Name="FileNameTextBlock"
                                         Grid.Column="0"
                                         Margin="10,0,0,0"
                                         HorizontalAlignment="Left"
@@ -709,12 +709,12 @@
                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionMode(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
 
                                     <TextBlock
-                                        x:Name="FileSizeText"
+                                        x:Name="FileSizeTextBlock"
                                         Grid.Column="1"
                                         MinWidth="50"
                                         Margin="10,0,0,0"
@@ -728,7 +728,7 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind FileSize}" Visibility="{Binding ElementName=FileSizeText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip Content="{x:Bind FileSize}" Visibility="{Binding ElementName=FileSizeTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
 

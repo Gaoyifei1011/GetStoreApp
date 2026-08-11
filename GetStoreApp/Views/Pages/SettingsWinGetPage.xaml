@@ -57,7 +57,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSource')}" />
 
                     <TextBlock
-                        x:Name="WinGetSourceDescription"
+                        x:Name="WinGetSourceDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -66,7 +66,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceDescription')}" Visibility="{x:Bind WinGetSourceDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceDescription')}" Visibility="{x:Bind WinGetSourceDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -135,7 +135,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceConfiguration')}" />
 
                     <TextBlock
-                        x:Name="WinGetSourceConfigurationDescription"
+                        x:Name="WinGetSourceConfigurationDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -144,7 +144,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceConfigurationDescription')}" Visibility="{x:Bind WinGetSourceConfigurationDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSourceConfigurationDescription')}" Visibility="{x:Bind WinGetSourceConfigurationDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -191,7 +191,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSettings')}" />
 
                     <TextBlock
-                        x:Name="WinGetSettingsDescription"
+                        x:Name="WinGetSettingsDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -200,7 +200,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSettingsDescription')}" Visibility="{x:Bind WinGetSettingsDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGet/WinGetSettingsDescription')}" Visibility="{x:Bind WinGetSettingsDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>

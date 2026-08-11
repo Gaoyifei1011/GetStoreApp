@@ -58,13 +58,18 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/AllowUnsignedPackage')}" />
 
                     <TextBlock
-                        x:Name="AllowUnsignedPackageDescription"
+                        x:Name="AllowUnsignedPackageDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/AllowUnsignedPackageDescription')}"
                         TextTrimming="CharacterEllipsis"
-                        TextWrapping="NoWrap" />
+                        TextWrapping="NoWrap">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/AllowUnsignedPackageDescription')}" Visibility="{x:Bind AllowUnsignedPackageDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
                 </StackPanel>
 
                 <HyperlinkButton
@@ -117,7 +122,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceAppShutdown')}" />
 
                     <TextBlock
-                        x:Name="ForceAppShutdownDescription"
+                        x:Name="ForceAppShutdownDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -126,7 +131,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceAppShutdownDescription')}" Visibility="{x:Bind ForceAppShutdownDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceAppShutdownDescription')}" Visibility="{x:Bind ForceAppShutdownDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -174,7 +179,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceTargetAppShutdown')}" />
 
                     <TextBlock
-                        x:Name="ForceTargetAppShutdownDescription"
+                        x:Name="ForceTargetAppShutdownDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -183,7 +188,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceTargetAppShutdownDescription')}" Visibility="{x:Bind ForceTargetAppShutdownDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/ForceTargetAppShutdownDescription')}" Visibility="{x:Bind ForceTargetAppShutdownDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -231,7 +236,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/PackageVolume')}" />
 
                     <TextBlock
-                        x:Name="PackageVolumeDescription"
+                        x:Name="PackageVolumeDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -240,7 +245,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/PackageVolumeDescription')}" Visibility="{x:Bind PackageVolumeDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAppInstall/PackageVolumeDescription')}" Visibility="{x:Bind PackageVolumeDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>

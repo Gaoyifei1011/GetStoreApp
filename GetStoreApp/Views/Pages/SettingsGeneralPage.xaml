@@ -61,7 +61,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/Theme')}" />
 
                     <TextBlock
-                        x:Name="ThemeDescription"
+                        x:Name="ThemeDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -70,7 +70,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/ThemeDescription')}" Visibility="{x:Bind ThemeDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/ThemeDescription')}" Visibility="{x:Bind ThemeDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -127,7 +127,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/Backdrop')}" />
 
                     <TextBlock
-                        x:Name="BackdropDescription"
+                        x:Name="BackdropDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -136,7 +136,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/BackdropDescription')}" Visibility="{x:Bind BackdropDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/BackdropDescription')}" Visibility="{x:Bind BackdropDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -193,7 +193,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/AlwaysShowBackdrop')}" />
 
                     <TextBlock
-                        x:Name="AlwaysShowBackdropDescription"
+                        x:Name="AlwaysShowBackdropDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -202,7 +202,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/AlwaysShowBackdropDescription')}" Visibility="{x:Bind AlwaysShowBackdropDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/AlwaysShowBackdropDescription')}" Visibility="{x:Bind AlwaysShowBackdropDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -252,7 +252,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/Language')}" />
 
                     <TextBlock
-                        x:Name="LanguageDescription"
+                        x:Name="LanguageDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -261,7 +261,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/LanguageDescription')}" Visibility="{x:Bind LanguageDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/LanguageDescription')}" Visibility="{x:Bind LanguageDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -316,7 +316,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/TopMost')}" />
 
                     <TextBlock
-                        x:Name="TopMostDescription"
+                        x:Name="TopMostDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -325,7 +325,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/TopMostDescription')}" Visibility="{x:Bind TopMostDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsGeneral/TopMostDescription')}" Visibility="{x:Bind TopMostDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>

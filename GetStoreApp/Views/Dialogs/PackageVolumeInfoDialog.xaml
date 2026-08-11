@@ -114,7 +114,7 @@
                     Orientation="Vertical">
 
                     <TextBlock
-                        x:Name="CurrentPackageVolumeNameText"
+                        x:Name="CurrentPackageVolumeNameTextBlock"
                         HorizontalAlignment="Left"
                         Style="{StaticResource BodyTextBlockStyle}"
                         Text="{x:Bind CurrentPackageVolume.Name, Mode=OneWay}"
@@ -122,7 +122,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind CurrentPackageVolume.Name, Mode=OneWay}" Visibility="{x:Bind CurrentPackageVolumeNameText.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind CurrentPackageVolume.Name, Mode=OneWay}" Visibility="{x:Bind CurrentPackageVolumeNameTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
 
@@ -138,7 +138,7 @@
                         Value="{x:Bind CurrentPackageVolume.PackageVolumeUsedPercentage, Mode=OneWay}" />
 
                     <TextBlock
-                        x:Name="CurrentPackageVolumeSpaceText"
+                        x:Name="CurrentPackageVolumeSpaceTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -147,7 +147,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind CurrentPackageVolume.Space, Mode=OneWay}" Visibility="{x:Bind CurrentPackageVolumeSpaceText.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind CurrentPackageVolume.Space, Mode=OneWay}" Visibility="{x:Bind CurrentPackageVolumeSpaceTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -233,7 +233,7 @@
                                 Orientation="Vertical">
 
                                 <TextBlock
-                                    x:Name="PackageVolumeNameText"
+                                    x:Name="PackageVolumeNameTextBlock"
                                     HorizontalAlignment="Left"
                                     Style="{StaticResource BodyTextBlockStyle}"
                                     Text="{x:Bind Name}"
@@ -241,7 +241,7 @@
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind Name}" Visibility="{Binding ElementName=PackageVolumeNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind Name}" Visibility="{Binding ElementName=PackageVolumeNameTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -257,7 +257,7 @@
                                     Value="{x:Bind PackageVolumeUsedPercentage}" />
 
                                 <TextBlock
-                                    x:Name="PackageVolumeSpaceText"
+                                    x:Name="PackageVolumeSpaceTextBlock"
                                     HorizontalAlignment="Left"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
@@ -266,7 +266,7 @@
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind Space}" Visibility="{Binding ElementName=PackageVolumeSpaceText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind Space}" Visibility="{Binding ElementName=PackageVolumeSpaceTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
                             </StackPanel>

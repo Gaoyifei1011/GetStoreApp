@@ -142,7 +142,7 @@
                             Text="{x:Bind DisplayName}" />
 
                         <TextBlock
-                            x:Name="CleanFailed"
+                            x:Name="CleanFailedTextBlock"
                             Margin="0,5,0,4"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
@@ -153,7 +153,7 @@
                             Visibility="{x:Bind IsCleanFailed, Mode=OneWay}">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind CleanFailedText}" Visibility="{Binding ElementName=CleanFailed, Path=IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip Content="{x:Bind CleanFailedText}" Visibility="{Binding ElementName=CleanFailedTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </StackPanel>

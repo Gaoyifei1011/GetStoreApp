@@ -543,7 +543,6 @@
                                         CornerRadius="{StaticResource ControlCornerRadius}">
 
                                         <TextBlock
-                                            x:Name="TagText"
                                             Margin="10,5"
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"

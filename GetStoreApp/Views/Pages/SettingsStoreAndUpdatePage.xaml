@@ -61,7 +61,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/QueryLinksMode')}" />
 
                     <TextBlock
-                        x:Name="QueryLinksModeDescription"
+                        x:Name="QueryLinksModeDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -70,7 +70,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/QueryLinksModeDescription')}" Visibility="{x:Bind QueryLinksModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/QueryLinksModeDescription')}" Visibility="{x:Bind QueryLinksModeDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -120,7 +120,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/AppLinkOpenMode')}" />
 
                     <TextBlock
-                        x:Name="AppLinkOpenModeDescription"
+                        x:Name="AppLinkOpenModeDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -129,7 +129,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/AppLinkOpenModeDescription')}" Visibility="{x:Bind AppLinkOpenModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/AppLinkOpenModeDescription')}" Visibility="{x:Bind AppLinkOpenModeDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -178,7 +178,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/InstallMode')}" />
 
                     <TextBlock
-                        x:Name="InstallModeDescription"
+                        x:Name="InstallModeDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -187,7 +187,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/InstallModeDescription')}" Visibility="{x:Bind InstallModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/InstallModeDescription')}" Visibility="{x:Bind InstallModeDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -236,7 +236,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdate')}" />
 
                     <TextBlock
-                        x:Name="CancelAutoUpdateDescription"
+                        x:Name="CancelAutoUpdateDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -245,7 +245,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdateDescription')}" Visibility="{x:Bind CancelAutoUpdateDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdateDescription')}" Visibility="{x:Bind CancelAutoUpdateDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -293,7 +293,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/ResetStoreCache')}" />
 
                     <TextBlock
-                        x:Name="ResetStoreCacheDescription"
+                        x:Name="ResetStoreCacheDescriptionTextBlock"
                         HorizontalAlignment="Left"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -302,7 +302,7 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/ResetStoreCacheDescription')}" Visibility="{x:Bind ResetStoreCacheDescription.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/ResetStoreCacheDescription')}" Visibility="{x:Bind ResetStoreCacheDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </StackPanel>
@@ -351,7 +351,7 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/AppUpdate')}" />
 
                             <TextBlock
-                                x:Name="AppUpdateDescription"
+                                x:Name="AppUpdateDescriptionTextBlock"
                                 HorizontalAlignment="Left"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
@@ -360,7 +360,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/AppUpdateDescription')}" Visibility="{x:Bind AppUpdateDescription.IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/AppUpdateDescription')}" Visibility="{x:Bind AppUpdateDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>
@@ -391,7 +391,7 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/AppUpdateStatus')}" />
 
                             <TextBlock
-                                x:Name="AppUpdateStatusDescriptionText"
+                                x:Name="AppUpdateStatusDescriptionTextBlock"
                                 HorizontalAlignment="Left"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
@@ -400,7 +400,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/AppUpdateStatusDescription')}" Visibility="{x:Bind AppUpdateStatusDescriptionText.IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/AppUpdateStatusDescription')}" Visibility="{x:Bind AppUpdateStatusDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>
@@ -442,7 +442,7 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/AppUpdatePauseEndTime')}" />
 
                             <TextBlock
-                                x:Name="AppUpdatePauseEndTimeDescription"
+                                x:Name="AppUpdatePauseEndTimeDescriptionTextBlock"
                                 HorizontalAlignment="Left"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
@@ -451,7 +451,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/AppUpdatePauseEndTimeDescription')}" Visibility="{x:Bind AppUpdatePauseEndTimeDescription.IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/AppUpdatePauseEndTimeDescription')}" Visibility="{x:Bind AppUpdatePauseEndTimeDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>
@@ -505,7 +505,7 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreCountryOrRegion')}" />
 
                             <TextBlock
-                                x:Name="StoreCountryOrRegionDescription"
+                                x:Name="StoreCountryOrRegionDescriptionTextBlock"
                                 HorizontalAlignment="Left"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
@@ -514,7 +514,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreCountryOrRegionDescription')}" Visibility="{x:Bind StoreCountryOrRegionDescription.IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreCountryOrRegionDescription')}" Visibility="{x:Bind StoreCountryOrRegionDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>
@@ -546,7 +546,7 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/UseSystemRegion')}" />
 
                             <TextBlock
-                                x:Name="CurrentCountryOrRegionText"
+                                x:Name="CurrentCountryOrRegionTextBlock"
                                 HorizontalAlignment="Left"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
@@ -557,7 +557,7 @@
                                 <Run Text="{x:Bind CurrentCountryOrRegion.DisplayName, Mode=OneWay}" />
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Visibility="{x:Bind CurrentCountryOrRegionText.IsTextTrimmed, Mode=OneWay}">
+                                    <ToolTip Visibility="{x:Bind CurrentCountryOrRegionTextBlock.IsTextTrimmed, Mode=OneWay}">
                                         <TextBlock>
                                             <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CurrentCountryOrRegion')}" />
                                             <Run Text="{x:Bind CurrentCountryOrRegion.DisplayName, Mode=OneWay}" />
@@ -609,7 +609,7 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreRegion')}" />
 
                             <TextBlock
-                                x:Name="StoreRegionDescription"
+                                x:Name="StoreRegionDescriptionTextBlock"
                                 HorizontalAlignment="Left"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
@@ -618,7 +618,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreRegionDescription')}" Visibility="{x:Bind StoreRegionDescription.IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/StoreRegionDescription')}" Visibility="{x:Bind StoreRegionDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>
@@ -674,7 +674,7 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/LinkFilter')}" />
 
                             <TextBlock
-                                x:Name="LinkFilterDescription"
+                                x:Name="LinkFilterDescriptionTextBlock"
                                 HorizontalAlignment="Left"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
@@ -683,7 +683,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/LinkFilterDescription')}" Visibility="{x:Bind LinkFilterDescription.IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/LinkFilterDescription')}" Visibility="{x:Bind LinkFilterDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>
@@ -714,7 +714,7 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackage')}" />
 
                             <TextBlock
-                                x:Name="EncryptedPackageDescription"
+                                x:Name="EncryptedPackageDescriptionTextBlock"
                                 HorizontalAlignment="Left"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
@@ -723,7 +723,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageDescription')}" Visibility="{x:Bind EncryptedPackageDescription.IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageDescription')}" Visibility="{x:Bind EncryptedPackageDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>
@@ -762,7 +762,7 @@
                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMap')}" />
 
                             <TextBlock
-                                x:Name="BlockMapDescription"
+                                x:Name="BlockMapDescriptionTextBlock"
                                 HorizontalAlignment="Left"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
@@ -771,7 +771,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapDescription')}" Visibility="{x:Bind BlockMapDescription.IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapDescription')}" Visibility="{x:Bind BlockMapDescriptionTextBlock.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </StackPanel>

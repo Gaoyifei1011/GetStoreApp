@@ -44,7 +44,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock
-                x:Name="ArgumentNameHeaderText"
+                x:Name="ArgumentNameHeaderTextBlock"
                 Grid.Column="0"
                 Margin="10,0,0,0"
                 HorizontalAlignment="Left"
@@ -54,12 +54,12 @@
                 TextWrapping="NoWrap">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/ArgumentName')}" Visibility="{x:Bind ArgumentNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/ArgumentName')}" Visibility="{x:Bind ArgumentNameHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
             </TextBlock>
 
             <TextBlock
-                x:Name="ArgumentHeaderText"
+                x:Name="ArgumentHeaderTextBlock"
                 Grid.Column="1"
                 Margin="10,0,0,0"
                 HorizontalAlignment="Left"
@@ -69,12 +69,12 @@
                 TextWrapping="NoWrap">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Argument')}" Visibility="{x:Bind ArgumentHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Argument')}" Visibility="{x:Bind ArgumentHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
             </TextBlock>
 
             <TextBlock
-                x:Name="IsRequiredHeaderText"
+                x:Name="IsRequiredHeaderTextBlock"
                 Grid.Column="2"
                 Margin="10,0,0,0"
                 HorizontalAlignment="Left"
@@ -84,12 +84,12 @@
                 TextWrapping="NoWrap">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/IsRequired')}" Visibility="{x:Bind IsRequiredHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/IsRequired')}" Visibility="{x:Bind IsRequiredHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
             </TextBlock>
 
             <TextBlock
-                x:Name="InputContentHeaderText"
+                x:Name="InputContentHeaderTextBlock"
                 Grid.Column="3"
                 Margin="10,0,0,0"
                 HorizontalAlignment="Left"
@@ -99,7 +99,7 @@
                 TextWrapping="NoWrap">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/InputContent')}" Visibility="{x:Bind InputContentHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                    <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/InputContent')}" Visibility="{x:Bind InputContentHeaderTextBlock.IsTextTrimmed, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
             </TextBlock>
         </Grid>
@@ -140,7 +140,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock
-                            x:Name="ArgumentNameText"
+                            x:Name="ArgumentNameTextBlock"
                             Grid.Column="0"
                             MinWidth="50"
                             Margin="10,0,0,0"
@@ -153,12 +153,12 @@
                             TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind ArgumentName}" Visibility="{Binding ElementName=ArgumentNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip Content="{x:Bind ArgumentName}" Visibility="{Binding ElementName=ArgumentNameTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
 
                         <TextBlock
-                            x:Name="ArgumentText"
+                            x:Name="ArgumentTextBlock"
                             Grid.Column="1"
                             MinWidth="50"
                             Margin="10,0,0,0"
@@ -171,12 +171,12 @@
                             TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind Argument}" Visibility="{Binding ElementName=ArgumentText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip Content="{x:Bind Argument}" Visibility="{Binding ElementName=ArgumentTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
 
                         <TextBlock
-                            x:Name="IsRequiredText"
+                            x:Name="IsRequiredTextBlock"
                             Grid.Column="2"
                             MinWidth="50"
                             Margin="10,0,0,0"
@@ -189,12 +189,12 @@
                             TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind IsRequired}" Visibility="{Binding ElementName=IsRequiredText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip Content="{x:Bind IsRequired}" Visibility="{Binding ElementName=IsRequiredTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
 
                         <TextBlock
-                            x:Name="ArgumentContentText"
+                            x:Name="ArgumentContentTextBlock"
                             Grid.Column="3"
                             MinWidth="50"
                             Margin="10,0,0,0"
@@ -207,7 +207,7 @@
                             TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind ArgumentContent}" Visibility="{Binding ElementName=ArgumentContentText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip Content="{x:Bind ArgumentContent}" Visibility="{Binding ElementName=ArgumentContentTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </Grid>
