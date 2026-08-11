@@ -200,6 +200,11 @@ namespace GetStoreApp.Views.Dialogs
                         }
                     }
                 }
+                else
+                {
+                    SelectedFolder = null;
+                    IsPrimaryEnabled = false;
+                }
             }
         }
 

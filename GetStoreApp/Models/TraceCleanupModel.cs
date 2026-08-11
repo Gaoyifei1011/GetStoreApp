@@ -9,25 +9,6 @@ namespace GetStoreApp.Models
     public sealed partial class TraceCleanupModel : INotifyPropertyChanged
     {
         /// <summary>
-        /// 清理选项是否被选择的标志
-        /// </summary>
-        private bool _isSelected;
-
-        public bool IsSelected
-        {
-            get { return _isSelected; }
-
-            set
-            {
-                if (!Equals(_isSelected, value))
-                {
-                    _isSelected = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
-                }
-            }
-        }
-
-        /// <summary>
         /// 标志该清理选项是否清理失败
         /// </summary>
         private bool _isCleanFailed;

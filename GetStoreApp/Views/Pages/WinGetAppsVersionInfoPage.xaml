@@ -45,10 +45,9 @@
 
             <ListView
                 Grid.Column="0"
-                IsItemClickEnabled="True"
-                ItemClick="{x:Bind OnItemClick}"
                 ItemsSource="{x:Bind WinGetAppsVersionCollection}"
                 SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
+                SelectionChanged="{x:Bind OnSelectionChanged}"
                 SelectionMode="Single">
 
                 <ListView.ItemTemplate>

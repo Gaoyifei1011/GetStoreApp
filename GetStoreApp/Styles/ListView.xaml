@@ -8,7 +8,7 @@
         <XamlControlsResources />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Name="AutoSuggestBoxListViewItemStyle" TargetType="ListViewItem">
+    <Style x:Key="AutoSuggestBoxListViewItemStyle" TargetType="ListViewItem">
         <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
         <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
         <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />

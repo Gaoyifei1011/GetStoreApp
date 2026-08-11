@@ -72,18 +72,18 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _isSelectMode;
+        private ListViewSelectionMode _selectionMode;
 
-        public bool IsSelectMode
+        public ListViewSelectionMode SelectionMode
         {
-            get { return _isSelectMode; }
+            get { return _selectionMode; }
 
             set
             {
-                if (!Equals(_isSelectMode, value))
+                if (!Equals(_selectionMode, value))
                 {
-                    _isSelectMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
+                    _selectionMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectionMode)));
                 }
             }
         }
@@ -122,13 +122,12 @@ namespace GetStoreApp.Views.Pages
                     {
                         CompletedCollection.Add(new CompletedModel()
                         {
+                            SelectionMode = SelectionMode,
                             IconImage = await GetFileIconImageAsync(downloadSchedulerItem.FilePath),
                             DownloadKey = downloadSchedulerItem.DownloadKey,
                             FileName = downloadSchedulerItem.FileName,
                             FilePath = downloadSchedulerItem.FilePath,
-                            TotalSize = downloadSchedulerItem.TotalSize,
-                            IsSelected = false,
-                            IsSelectMode = false
+                            TotalSize = downloadSchedulerItem.TotalSize
                         });
                     }
                 }
@@ -497,24 +496,19 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectClicked(object sender, RoutedEventArgs args)
         {
+            SelectionMode = ListViewSelectionMode.Multiple;
             foreach (CompletedModel completedItem in CompletedCollection)
             {
-                completedItem.IsSelectMode = true;
-                completedItem.IsSelected = false;
+                completedItem.SelectionMode = ListViewSelectionMode.Multiple;
             }
-
-            IsSelectMode = true;
         }
 
         /// <summary>
-        /// 全部选择
+        /// 全选
         /// </summary>
         private void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
-            foreach (CompletedModel completedItem in CompletedCollection)
-            {
-                completedItem.IsSelected = true;
-            }
+            CompletedListView.SelectAll();
         }
 
         /// <summary>
@@ -522,9 +516,26 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
-            foreach (CompletedModel completedItem in CompletedCollection)
+            CompletedListView.DeselectRange(new(0, (uint)CompletedListView.Items.Count));
+        }
+
+        /// <summary>
+        /// 全部反选
+        /// </summary>
+        private void OnSelectReverseClicked(object sender, RoutedEventArgs args)
+        {
+            List<object> selectedItemList = [.. CompletedListView.SelectedItems];
+
+            foreach (object item in CompletedListView.Items)
             {
-                completedItem.IsSelected = false;
+                if (selectedItemList.Contains(item))
+                {
+                    CompletedListView.SelectedItems.Remove(item);
+                }
+                else
+                {
+                    CompletedListView.SelectedItems.Add(item);
+                }
             }
         }
 
@@ -535,9 +546,9 @@ namespace GetStoreApp.Views.Pages
         {
             List<CompletedModel> selectedCompletedDataList = [];
 
-            foreach (CompletedModel completedItem in CompletedCollection)
+            foreach (object completedItemObj in CompletedListView.SelectedItems)
             {
-                if (completedItem.IsSelected)
+                if (completedItemObj is CompletedModel completedItem)
                 {
                     selectedCompletedDataList.Add(completedItem);
                 }
@@ -563,42 +574,34 @@ namespace GetStoreApp.Views.Pages
 
             if (contentDialogResult is ContentDialogResult.Primary)
             {
-                IsSelectMode = false;
+                SelectionMode = ListViewSelectionMode.None;
+                foreach (CompletedModel completedItem in CompletedCollection)
+                {
+                    completedItem.SelectionMode = ListViewSelectionMode.None;
+                }
 
                 // 同时删除文件
                 if (deleteFileDialog.DeleteFileSameTime)
                 {
-                    for (int index = CompletedCollection.Count - 1; index >= 0; index--)
+                    foreach (CompletedModel completedItem in selectedCompletedDataList)
                     {
-                        CompletedModel completedItem = CompletedCollection[index];
-                        completedItem.IsSelectMode = false;
-
-                        if (completedItem.IsSelected)
+                        await Task.Run(() =>
                         {
-                            await Task.Run(() =>
+                            if (!File.Exists(completedItem.FilePath) || DeleteFileHelper.DeleteFileToRecycleBin(completedItem.FilePath))
                             {
-                                if (!File.Exists(completedItem.FilePath) || DeleteFileHelper.DeleteFileToRecycleBin(completedItem.FilePath))
-                                {
-                                    DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
-                                }
-                            });
-                        }
+                                DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
+                            }
+                        });
                     }
                 }
                 else
                 {
-                    for (int index = CompletedCollection.Count - 1; index >= 0; index--)
+                    foreach (CompletedModel completedItem in selectedCompletedDataList)
                     {
-                        CompletedModel completedItem = CompletedCollection[index];
-                        completedItem.IsSelectMode = false;
-
-                        if (completedItem.IsSelected)
+                        await Task.Run(() =>
                         {
-                            await Task.Run(() =>
-                            {
-                                DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
-                            });
-                        }
+                            DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
+                        });
                     }
                 }
                 CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
@@ -612,9 +615,9 @@ namespace GetStoreApp.Views.Pages
         {
             List<CompletedModel> selectedCompletedDataList = [];
 
-            foreach (CompletedModel completedItem in CompletedCollection)
+            foreach (object completedItemObj in CompletedListView.SelectedItems)
             {
-                if (completedItem.IsSelected)
+                if (completedItemObj is CompletedModel completedItem)
                 {
                     selectedCompletedDataList.Add(completedItem);
                 }
@@ -669,9 +672,9 @@ namespace GetStoreApp.Views.Pages
         {
             List<CompletedModel> selectedCompletedDataList = [];
 
-            foreach (CompletedModel completedItem in CompletedCollection)
+            foreach (object completedItemObj in CompletedListView.SelectedItems)
             {
-                if (completedItem.IsSelected)
+                if (completedItemObj is CompletedModel completedItem)
                 {
                     selectedCompletedDataList.Add(completedItem);
                 }
@@ -712,22 +715,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnCancelClicked(object sender, RoutedEventArgs args)
         {
-            IsSelectMode = false;
-
+            SelectionMode = ListViewSelectionMode.None;
             foreach (CompletedModel completedItem in CompletedCollection)
             {
-                completedItem.IsSelectMode = false;
-            }
-        }
-
-        /// <summary>
-        /// 在多选模式下点击项目选择相应的条目
-        /// </summary>
-        private void OnItemClick(object sender, ItemClickEventArgs args)
-        {
-            if (args.ClickedItem is CompletedModel completed)
-            {
-                completed.IsSelected = !completed.IsSelected;
+                completedItem.SelectionMode = ListViewSelectionMode.None;
             }
         }
 
@@ -784,13 +775,12 @@ namespace GetStoreApp.Views.Pages
             {
                 CompletedCollection.Add(new CompletedModel()
                 {
+                    SelectionMode = SelectionMode,
                     IconImage = await GetFileIconImageAsync(downloadScheduler.FilePath),
                     DownloadKey = downloadScheduler.DownloadKey,
                     FileName = downloadScheduler.FileName,
                     FilePath = downloadScheduler.FilePath,
                     TotalSize = downloadScheduler.TotalSize,
-                    IsSelected = false,
-                    IsSelectMode = false
                 });
 
                 CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
@@ -913,6 +903,14 @@ namespace GetStoreApp.Views.Pages
         private bool GetIsLoading(CompletedResultKind completedResultKind)
         {
             return completedResultKind is not CompletedResultKind.Loading;
+        }
+
+        /// <summary>
+        /// 获取选中的选择模式
+        /// </summary>
+        private Visibility GetSelectionMode(ListViewSelectionMode selectedSelectionMode, ListViewSelectionMode comparedSelectionMode)
+        {
+            return Equals(selectedSelectionMode, comparedSelectionMode) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

@@ -17,6 +17,7 @@
   "DownloadPaused": "Download paused",
   "DownloadQueued": "Download waiting",
   "FileSize": "File size:",
+  "MultiSelect": "Multi-select",
   "OpenFolder": "Open folder",
   "OpenFolderToolTip": "Open the folder for default downloads",
   "Operation": "Operation",
@@ -25,10 +26,9 @@
   "PauseAllToolTip": "Pauses all tasks that are in the process of being downloaded or waiting to be downloaded",
   "Select": "Select",
   "SelectAll": "Select all",
-  "Selected": "Selected",
   "SelectNone": "Select none",
+  "SelectReverse": "Select reverse",
   "SelectToolTip": "Enter multi-select mode",
-  "UnSelected": "Not selected",
   "UseInstruction": "Use instruction",
   "UseInstructionToolTip": "Click to learn how to use the Download management"
 }

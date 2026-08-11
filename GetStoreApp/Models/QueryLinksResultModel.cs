@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.UI.Xaml.Controls;
+using System.ComponentModel;
 
 namespace GetStoreApp.Models
 {
@@ -8,39 +9,20 @@ namespace GetStoreApp.Models
     public sealed partial class QueryLinksResultModel : INotifyPropertyChanged
     {
         /// <summary>
-        /// 在多选模式下，该行信息是否被选择的标志
-        /// </summary>
-        private bool _isSelected;
-
-        public bool IsSelected
-        {
-            get { return _isSelected; }
-
-            set
-            {
-                if (!Equals(_isSelected, value))
-                {
-                    _isSelected = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
-                }
-            }
-        }
-
-        /// <summary>
         /// 是否处于多选模式
         /// </summary>
-        private bool _isSelectMode;
+        private ListViewSelectionMode _selectionMode;
 
-        public bool IsSelectMode
+        public ListViewSelectionMode SelectionMode
         {
-            get { return _isSelectMode; }
+            get { return _selectionMode; }
 
             set
             {
-                if (!Equals(_isSelectMode, value))
+                if (!Equals(_selectionMode, value))
                 {
-                    _isSelectMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
+                    _selectionMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectionMode)));
                 }
             }
         }

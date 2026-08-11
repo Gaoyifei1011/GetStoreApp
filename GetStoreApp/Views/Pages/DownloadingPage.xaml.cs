@@ -30,18 +30,18 @@ namespace GetStoreApp.Views.Pages
         private readonly string DownloadingCountInfoString = ResourceService.GetLocalized("Downloading/DownloadingCountInfo");
         private bool isInitialized;
 
-        private bool _isSelectMode;
+        private ListViewSelectionMode _selectionMode;
 
-        public bool IsSelectMode
+        public ListViewSelectionMode SelectionMode
         {
-            get { return _isSelectMode; }
+            get { return _selectionMode; }
 
             set
             {
-                if (!Equals(_isSelectMode, value))
+                if (!Equals(_selectionMode, value))
                 {
-                    _isSelectMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
+                    _selectionMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectionMode)));
                 }
             }
         }
@@ -76,8 +76,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         DownloadingCollection.Add(new DownloadingModel()
                         {
-                            IsSelected = false,
-                            IsSelectMode = false,
+                            SelectionMode = SelectionMode,
                             IsOperating = false,
                             DownloadID = downloadSchedulerItem.DownloadID,
                             FileName = downloadSchedulerItem.FileName,
@@ -97,8 +96,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             DownloadingCollection.Add(new DownloadingModel()
                             {
-                                IsSelected = false,
-                                IsSelectMode = false,
+                                SelectionMode = SelectionMode,
                                 IsOperating = false,
                                 DownloadID = downloadSchedulerItem.DownloadID,
                                 FileName = downloadSchedulerItem.FileName,
@@ -215,24 +213,19 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectClicked(object sender, RoutedEventArgs args)
         {
+            SelectionMode = ListViewSelectionMode.Multiple;
             foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
-                downloadingItem.IsSelectMode = true;
-                downloadingItem.IsSelected = false;
+                downloadingItem.SelectionMode = ListViewSelectionMode.Multiple;
             }
-
-            IsSelectMode = true;
         }
 
         /// <summary>
-        /// 全部选择
+        /// 全选
         /// </summary>
         private void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
-            foreach (DownloadingModel downloadingItem in DownloadingCollection)
-            {
-                downloadingItem.IsSelected = true;
-            }
+            DownloadingListView.SelectAll();
         }
 
         /// <summary>
@@ -240,9 +233,26 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
-            foreach (DownloadingModel downloadingItem in DownloadingCollection)
+            DownloadingListView.DeselectRange(new(0, (uint)DownloadingListView.Items.Count));
+        }
+
+        /// <summary>
+        /// 全部反选
+        /// </summary>
+        private void OnSelectReverseClicked(object sender, RoutedEventArgs args)
+        {
+            List<object> selectedItemList = [.. DownloadingListView.SelectedItems];
+
+            foreach (object item in DownloadingListView.Items)
             {
-                downloadingItem.IsSelected = false;
+                if (selectedItemList.Contains(item))
+                {
+                    DownloadingListView.SelectedItems.Remove(item);
+                }
+                else
+                {
+                    DownloadingListView.SelectedItems.Add(item);
+                }
             }
         }
 
@@ -272,9 +282,9 @@ namespace GetStoreApp.Views.Pages
         {
             List<DownloadingModel> selectedDownloadingList = [];
 
-            foreach (DownloadingModel downloadingItem in DownloadingCollection)
+            foreach (object downloadingItemObj in DownloadingCollection)
             {
-                if (downloadingItem.IsSelected)
+                if (downloadingItemObj is DownloadingModel downloadingItem)
                 {
                     selectedDownloadingList.Add(downloadingItem);
                 }
@@ -287,26 +297,19 @@ namespace GetStoreApp.Views.Pages
                 return;
             }
 
-            IsSelectMode = false;
+            SelectionMode = ListViewSelectionMode.None;
 
-            for (int index = DownloadingCollection.Count - 1; index >= 0; index--)
+            foreach (DownloadingModel downloadingItem in selectedDownloadingList)
             {
-                DownloadingModel downloadingItem = DownloadingCollection[index];
-                downloadingItem.IsSelectMode = false;
+                downloadingItem.IsOperating = true;
 
-                if (downloadingItem.IsSelected)
+                if (downloadingItem.DownloadProgressState is DownloadProgressState.Queued || downloadingItem.DownloadProgressState is DownloadProgressState.Downloading || downloadingItem.DownloadProgressState is DownloadProgressState.Paused)
                 {
-                    downloadingItem.IsSelected = false;
-                    downloadingItem.IsOperating = true;
-
-                    if (downloadingItem.DownloadProgressState is DownloadProgressState.Queued || downloadingItem.DownloadProgressState is DownloadProgressState.Downloading || downloadingItem.DownloadProgressState is DownloadProgressState.Paused)
-                    {
-                        DownloadSchedulerService.DeleteDownload(downloadingItem.DownloadID);
-                    }
-                    else
-                    {
-                        DownloadingCollection.RemoveAt(index);
-                    }
+                    DownloadSchedulerService.DeleteDownload(downloadingItem.DownloadID);
+                }
+                else
+                {
+                    DownloadingCollection.Remove(downloadingItem);
                 }
             }
         }
@@ -316,22 +319,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnCancelClicked(object sender, RoutedEventArgs args)
         {
-            IsSelectMode = false;
+            SelectionMode = ListViewSelectionMode.None;
 
             foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
-                downloadingItem.IsSelectMode = false;
-            }
-        }
-
-        /// <summary>
-        /// 在多选模式下点击项目选择相应的条目
-        /// </summary>
-        private void OnItemClick(object sender, ItemClickEventArgs args)
-        {
-            if (args.ClickedItem is DownloadingModel downloading)
-            {
-                downloading.IsSelected = !downloading.IsSelected;
+                downloadingItem.SelectionMode = ListViewSelectionMode.None;
             }
         }
 
@@ -377,10 +369,9 @@ namespace GetStoreApp.Views.Pages
                     }
 
                     // 不存在则添加任务
-                    DownloadingModel downloading = new()
+                    DownloadingCollection.Add(new()
                     {
-                        IsSelected = false,
-                        IsSelectMode = false,
+                        SelectionMode = SelectionMode,
                         IsOperating = false,
                         DownloadID = downloadScheduler.DownloadID,
                         FileName = downloadScheduler.FileName,
@@ -389,9 +380,7 @@ namespace GetStoreApp.Views.Pages
                         CompletedSize = downloadScheduler.CompletedSize,
                         TotalSize = downloadScheduler.TotalSize,
                         DownloadSpeed = downloadScheduler.DownloadSpeed
-                    };
-
-                    DownloadingCollection.Add(downloading);
+                    });
                 });
             }
             // 下载任务正在下载中
@@ -466,5 +455,13 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第四部分：下载中页面——自定义事件
+
+        /// <summary>
+        /// 获取选中的选择模式
+        /// </summary>
+        private Visibility GetSelectionMode(ListViewSelectionMode selectedSelectionMode, ListViewSelectionMode comparedSelectionMode)
+        {
+            return Equals(selectedSelectionMode, comparedSelectionMode) ? Visibility.Visible : Visibility.Collapsed;
+        }
     }
 }

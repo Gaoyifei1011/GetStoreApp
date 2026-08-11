@@ -19,6 +19,7 @@ using System.IO;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.UI.Text;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -697,14 +698,20 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：WinGet 应用版本信息页面——挂载的事件
 
-        /// 在多选模式下点击项目选择相应的条目
+        /// <summary>
+        /// 选中项发生变化时触发的事件
         /// </summary>
-        private async void OnItemClick(object sender, ItemClickEventArgs args)
+        [DynamicWindowsRuntimeCast(typeof(ListView))]
+        private async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (args.ClickedItem is AvailableVersionModel availableVersion && !Equals(SelectedItem, availableVersion))
+            if (sender is ListView listView && !Equals(SelectedItem, listView.SelectedItem))
             {
-                SelectedItem = availableVersion;
-                await InitializeVersionInformationAsync(availableVersion);
+                SelectedItem = listView.SelectedItem is AvailableVersionModel availableVersion ? availableVersion : null;
+
+                if (SelectedItem is not null)
+                {
+                    await InitializeVersionInformationAsync(SelectedItem);
+                }
             }
         }
 

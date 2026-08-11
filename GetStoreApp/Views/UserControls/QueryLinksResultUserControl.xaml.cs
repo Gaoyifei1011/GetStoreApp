@@ -9,7 +9,6 @@ using GetStoreApp.Views.Pages;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.Windows.Storage.Pickers;
 using System;
@@ -17,6 +16,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
@@ -91,18 +91,18 @@ namespace GetStoreApp.Views.UserControls
             }
         }
 
-        private bool _isSelectMode;
+        private ListViewSelectionMode _selectionMode;
 
-        public bool IsSelectMode
+        public ListViewSelectionMode SelectionMode
         {
-            get { return _isSelectMode; }
+            get { return _selectionMode; }
 
             set
             {
-                if (!Equals(_isSelectMode, value))
+                if (!Equals(_selectionMode, value))
                 {
-                    _isSelectMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
+                    _selectionMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectionMode)));
                 }
             }
         }
@@ -144,7 +144,7 @@ namespace GetStoreApp.Views.UserControls
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksResultUserControl), nameof(OnDownloadSelectedClicked), 1, e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksResultUserControl), nameof(OnDownloadExecuteRequested), 1, e);
                         downloadFolder = DownloadOptionsService.DownloadFolder;
                     }
                 }
@@ -332,13 +332,11 @@ namespace GetStoreApp.Views.UserControls
 
             try
             {
+                SelectionMode = ListViewSelectionMode.Multiple;
                 foreach (QueryLinksResultModel queryLinksResultItem in QueryLinksResultCollection)
                 {
-                    queryLinksResultItem.IsSelectMode = true;
-                    queryLinksResultItem.IsSelected = false;
+                    queryLinksResultItem.SelectionMode = ListViewSelectionMode.Multiple;
                 }
-
-                IsSelectMode = true;
             }
             catch (Exception e)
             {
@@ -351,50 +349,77 @@ namespace GetStoreApp.Views.UserControls
         }
 
         /// <summary>
-        /// 全选 / 全部不选
+        /// 全选
         /// </summary>
-        private void OnSelectHeaderClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        private void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
-            if (IsSelectMode)
+            queryLinksResultLock.Enter();
+
+            try
             {
-                queryLinksResultLock.Enter();
+                QueryLinksResultListView.SelectAll();
+            }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
+            finally
+            {
+                queryLinksResultLock.Exit();
+            }
+        }
 
-                try
+        /// <summary>
+        /// 全部不选
+        /// </summary>
+        private void OnSelectNoneClicked(object sender, RoutedEventArgs args)
+        {
+            queryLinksResultLock.Enter();
+
+            try
+            {
+                QueryLinksResultListView.DeselectRange(new(0, (uint)QueryLinksResultListView.Items.Count));
+            }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
+            finally
+            {
+                queryLinksResultLock.Exit();
+            }
+        }
+
+        /// <summary>
+        /// 全部反选
+        /// </summary>
+        private void OnSelectReverseClicked(object sender, RoutedEventArgs args)
+        {
+            queryLinksResultLock.Enter();
+
+            try
+            {
+                List<object> selectedItemList = [.. QueryLinksResultListView.SelectedItems];
+
+                foreach (object item in QueryLinksResultListView.Items)
                 {
-                    bool isAllSelected = true;
-
-                    foreach (QueryLinksResultModel queryLinksResultItem in QueryLinksResultCollection)
+                    if (selectedItemList.Contains(item))
                     {
-                        if (!queryLinksResultItem.IsSelected)
-                        {
-                            isAllSelected = false;
-                            break;
-                        }
-                    }
-
-                    if (!isAllSelected)
-                    {
-                        foreach (QueryLinksResultModel queryLinksResultItem in QueryLinksResultCollection)
-                        {
-                            queryLinksResultItem.IsSelected = true;
-                        }
+                        QueryLinksResultListView.SelectedItems.Remove(item);
                     }
                     else
                     {
-                        foreach (QueryLinksResultModel queryLinksResultItem in QueryLinksResultCollection)
-                        {
-                            queryLinksResultItem.IsSelected = false;
-                        }
+                        QueryLinksResultListView.SelectedItems.Add(item);
                     }
                 }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-                finally
-                {
-                    queryLinksResultLock.Exit();
-                }
+            }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
+            finally
+            {
+                queryLinksResultLock.Exit();
             }
         }
 
@@ -403,32 +428,27 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private async void OnCopySelectedClicked(object sender, RoutedEventArgs args)
         {
-            List<QueryLinksResultModel> selectedQueryLinksResultList = await Task.Run(() =>
-            {
-                List<QueryLinksResultModel> selectedQueryLinksResultList = [];
-                queryLinksResultLock.Enter();
+            List<QueryLinksResultModel> selectedQueryLinksResultList = [];
+            queryLinksResultLock.Enter();
 
-                try
+            try
+            {
+                foreach (object queryLinksResultItemObj in QueryLinksResultListView.SelectedItems)
                 {
-                    foreach (QueryLinksResultModel queryLinksResultItem in QueryLinksResultCollection)
+                    if (queryLinksResultItemObj is QueryLinksResultModel queryLinksResultItem)
                     {
-                        if (queryLinksResultItem.IsSelected)
-                        {
-                            selectedQueryLinksResultList.Add(queryLinksResultItem);
-                        }
+                        selectedQueryLinksResultList.Add(queryLinksResultItem);
                     }
                 }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-                finally
-                {
-                    queryLinksResultLock.Exit();
-                }
-
-                return selectedQueryLinksResultList;
-            });
+            }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
+            finally
+            {
+                queryLinksResultLock.Exit();
+            }
 
             // 内容为空时显示空提示对话框
             if (selectedQueryLinksResultList.Count is 0)
@@ -460,32 +480,27 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private async void OnCopySelectedLinkClicked(object sender, RoutedEventArgs args)
         {
-            List<QueryLinksResultModel> selectedQueryLinksResultList = await Task.Run(() =>
-            {
-                List<QueryLinksResultModel> selectedQueryLinksResultList = [];
-                queryLinksResultLock.Enter();
+            List<QueryLinksResultModel> selectedQueryLinksResultList = [];
+            queryLinksResultLock.Enter();
 
-                try
+            try
+            {
+                foreach (object queryLinksResultItemObj in QueryLinksResultListView.SelectedItems)
                 {
-                    foreach (QueryLinksResultModel queryLinksResultItem in QueryLinksResultCollection)
+                    if (queryLinksResultItemObj is QueryLinksResultModel queryLinksResultItem)
                     {
-                        if (queryLinksResultItem.IsSelected)
-                        {
-                            selectedQueryLinksResultList.Add(queryLinksResultItem);
-                        }
+                        selectedQueryLinksResultList.Add(queryLinksResultItem);
                     }
                 }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-                finally
-                {
-                    queryLinksResultLock.Exit();
-                }
-
-                return selectedQueryLinksResultList;
-            });
+            }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
+            finally
+            {
+                queryLinksResultLock.Exit();
+            }
 
             // 内容为空时显示空提示对话框
             if (selectedQueryLinksResultList.Count is 0)
@@ -515,27 +530,8 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 下载选定项目
         /// </summary>
-        private async void OnDownloadSelectedClicked(object sender, RoutedEventArgs args)
+        private async void OnDownloadClicked(object sender, RoutedEventArgs args)
         {
-            IsSelectMode = false;
-            queryLinksResultLock.Enter();
-
-            try
-            {
-                foreach (QueryLinksResultModel queryLinksResultItem in QueryLinksResultCollection)
-                {
-                    queryLinksResultItem.IsSelectMode = false;
-                }
-            }
-            catch (Exception e)
-            {
-                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-            }
-            finally
-            {
-                queryLinksResultLock.Exit();
-            }
-
             string downloadFolder = string.Empty;
 
             // 手动设置下载目录
@@ -555,7 +551,7 @@ namespace GetStoreApp.Views.UserControls
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksResultUserControl), nameof(OnDownloadSelectedClicked), 1, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksResultUserControl), nameof(OnDownloadClicked), 1, e);
                     downloadFolder = DownloadOptionsService.DownloadFolder;
                 }
             }
@@ -566,32 +562,48 @@ namespace GetStoreApp.Views.UserControls
 
             if (!string.IsNullOrEmpty(downloadFolder))
             {
-                List<QueryLinksResultModel> selectedQueryLinksResultList = await Task.Run(() =>
-                {
-                    List<QueryLinksResultModel> selectedQueryLinksResultList = [];
-                    queryLinksResultLock.Enter();
+                // 获取选中项
+                List<QueryLinksResultModel> selectedQueryLinksResultList = [];
+                queryLinksResultLock.Enter();
 
-                    try
+                try
+                {
+                    foreach (object queryLinksResultItemObj in QueryLinksResultListView.SelectedItems)
                     {
-                        foreach (QueryLinksResultModel queryLinksResultItem in QueryLinksResultCollection)
+                        if (queryLinksResultItemObj is QueryLinksResultModel queryLinksResultItem)
                         {
-                            if (queryLinksResultItem.IsSelected)
-                            {
-                                selectedQueryLinksResultList.Add(queryLinksResultItem);
-                            }
+                            selectedQueryLinksResultList.Add(queryLinksResultItem);
                         }
                     }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    }
-                    finally
-                    {
-                        queryLinksResultLock.Exit();
-                    }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+                finally
+                {
+                    queryLinksResultLock.Exit();
+                }
 
-                    return selectedQueryLinksResultList;
-                });
+                // 退出多选模式
+                SelectionMode = ListViewSelectionMode.None;
+                queryLinksResultLock.Enter();
+
+                try
+                {
+                    foreach (QueryLinksResultModel queryLinksResultItem in QueryLinksResultCollection)
+                    {
+                        queryLinksResultItem.SelectionMode = ListViewSelectionMode.None;
+                    }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+                finally
+                {
+                    queryLinksResultLock.Exit();
+                }
 
                 // 内容为空时显示空提示对话框
                 if (selectedQueryLinksResultList.Count is 0)
@@ -601,6 +613,7 @@ namespace GetStoreApp.Views.UserControls
                 }
                 else
                 {
+                    // 下载选中项
                     bool isDownloadSuccessfully = false;
 
                     List<DownloadSchedulerModel> downloadSchedulerList = await Task.Run(() =>
@@ -621,7 +634,7 @@ namespace GetStoreApp.Views.UserControls
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksResultUserControl), nameof(OnDownloadSelectedClicked), 2, e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksResultUserControl), nameof(OnDownloadClicked), 2, e);
                         }
                         finally
                         {
@@ -648,7 +661,7 @@ namespace GetStoreApp.Views.UserControls
                             }
                             catch (Exception e)
                             {
-                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksResultUserControl), nameof(OnDownloadSelectedClicked), 3, e);
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksResultUserControl), nameof(OnDownloadClicked), 3, e);
                                 continue;
                             }
 
@@ -678,11 +691,11 @@ namespace GetStoreApp.Views.UserControls
 
             try
             {
-                IsSelectMode = false;
+                SelectionMode = ListViewSelectionMode.None;
 
                 foreach (QueryLinksResultModel queryLinksResultItem in QueryLinksResultCollection)
                 {
-                    queryLinksResultItem.IsSelectMode = false;
+                    queryLinksResultItem.SelectionMode = ListViewSelectionMode.None;
                 }
             }
             catch (Exception e)
@@ -692,31 +705,6 @@ namespace GetStoreApp.Views.UserControls
             finally
             {
                 queryLinksResultLock.Exit();
-            }
-        }
-
-        /// <summary>
-        /// 在多选模式下点击项目选择相应的条目
-        /// </summary>
-        private void OnItemClick(object sender, ItemClickEventArgs args)
-        {
-            if (args.ClickedItem is QueryLinksResultModel queryLinksResult)
-            {
-                queryLinksResultLock.Enter();
-
-                try
-                {
-                    int ClickedIndex = QueryLinksResultCollection.IndexOf(queryLinksResult);
-                    QueryLinksResultCollection[ClickedIndex].IsSelected = !QueryLinksResultCollection[ClickedIndex].IsSelected;
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-                finally
-                {
-                    queryLinksResultLock.Exit();
-                }
             }
         }
 
@@ -760,6 +748,7 @@ namespace GetStoreApp.Views.UserControls
             {
                 foreach (QueryLinksResultModel queryLinksResultItem in queryLinksResultList)
                 {
+                    queryLinksResultItem.SelectionMode = SelectionMode;
                     QueryLinksResultCollection.Add(queryLinksResultItem);
                 }
             }
@@ -792,6 +781,14 @@ namespace GetStoreApp.Views.UserControls
             }
             filePath = newFullPath;
             return filePath;
+        }
+
+        /// <summary>
+        /// 获取选中的选择模式
+        /// </summary>
+        private Visibility GetSelectionMode(ListViewSelectionMode selectedSelectionMode, ListViewSelectionMode comparedSelectionMode)
+        {
+            return Equals(selectedSelectionMode, comparedSelectionMode) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

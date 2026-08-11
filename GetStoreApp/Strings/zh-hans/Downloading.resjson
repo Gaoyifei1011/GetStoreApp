@@ -17,6 +17,7 @@
   "DownloadPaused": "已暂停下载",
   "DownloadQueued": "等待下载",
   "FileSize": "文件大小：",
+  "MultiSelect": "多选",
   "OpenFolder": "打开文件夹",
   "OpenFolderToolTip": "打开默认下载的文件夹",
   "Operation": "操作",
@@ -25,10 +26,9 @@
   "PauseAllToolTip": "暂停所有处于正在下载或等待下载的任务",
   "Select": "选择",
   "SelectAll": "全选",
-  "Selected": "已选择",
-  "SelectNone": "全部不选",
+  "SelectNone": "不选",
+  "SelectReverse": "反选",
   "SelectToolTip": "进入多选模式",
-  "UnSelected": "未选择",
   "UseInstruction": "使用说明",
   "UseInstructionToolTip": "点击了解下载管理的的具体使用方法"
 }

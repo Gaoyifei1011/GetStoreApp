@@ -2,6 +2,7 @@
 using GetStoreApp.Helpers.Root;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Store.Preview.InstallControl;
@@ -171,6 +172,14 @@ namespace GetStoreApp.Helpers.Converters
         public static Visibility CheckUpdateAppResultKind(UpdateAppResultKind updateAppResultKind, UpdateAppResultKind comparedUpdateAppResultKind)
         {
             return Equals(updateAppResultKind, comparedUpdateAppResultKind) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// 检查列表控件选中项样式
+        /// </summary>
+        public static Visibility CheckListViewSelectionMode(ListViewSelectionMode listViewSelectionMode, ListViewSelectionMode comparedListViewSelectionMode)
+        {
+            return Equals(listViewSelectionMode, comparedListViewSelectionMode) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

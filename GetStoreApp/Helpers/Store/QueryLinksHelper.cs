@@ -323,9 +323,7 @@ namespace GetStoreApp.Helpers.Store
                                     {
                                         FileName = fileName,
                                         FileLink = uri,
-                                        FileSize = fileSizeString,
-                                        IsSelected = false,
-                                        IsSelectMode = false
+                                        FileSize = fileSizeString
                                     });
                                 }
                                 catch (Exception e)
@@ -493,9 +491,7 @@ namespace GetStoreApp.Helpers.Store
                                         {
                                             FileName = installerUrl[..installerUrl.LastIndexOf('.')][(installerUrl.LastIndexOf('/') + 1)..],
                                             FileLink = installerUrl,
-                                            FileSize = fileSizeString,
-                                            IsSelected = false,
-                                            IsSelectMode = false,
+                                            FileSize = fileSizeString
                                         });
                                     }
                                     catch (Exception e)
@@ -519,9 +515,7 @@ namespace GetStoreApp.Helpers.Store
                                         {
                                             FileName = string.Format("{0} ({1}).{2}", name, installerObject.GetNamedString("InstallerLocale"), installerType),
                                             FileLink = installerUrl,
-                                            FileSize = fileSizeString,
-                                            IsSelected = false,
-                                            IsSelectMode = false,
+                                            FileSize = fileSizeString
                                         });
                                     }
                                     catch (Exception e)

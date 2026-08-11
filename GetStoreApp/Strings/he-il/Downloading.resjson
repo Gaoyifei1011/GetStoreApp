@@ -17,6 +17,7 @@
   "DownloadPaused": "ההורדה הושהתה",
   "DownloadQueued": "ממתין להורדה",
   "FileSize": "גודל קובץ:",
+  "MultiSelect": "בחירה מרובה",
   "OpenFolder": "פתח תיקייה",
   "OpenFolderToolTip": "פתח את תיקיית ברירת המחדל להורדות",
   "Operation": "פעולה",
@@ -25,10 +26,9 @@
   "PauseAllToolTip": "השהה את כל המשימות הנמצאות בתהליך הורדה או ממתינות להורדה",
   "Select": "בחר",
   "SelectAll": "בחר הכל",
-  "Selected": "נבחר",
-  "SelectNone": "בטל בחירת הכל",
+  "SelectNone": "לא בוחר",
+  "SelectReverse": "בחירה הפוכה",
   "SelectToolTip": "היכנס למצב בחירה מרובה",
-  "UnSelected": "לא נבחר",
   "UseInstruction": "הוראות שימוש",
   "UseInstructionToolTip": "לחץ למידע על אופן השימוש בניהול ההורדות"
 }

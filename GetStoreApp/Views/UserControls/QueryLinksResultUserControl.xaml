@@ -2,7 +2,9 @@
     x:Class="GetStoreApp.Views.UserControls.QueryLinksResultUserControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
+    xmlns:customcontrol="using:GetStoreApp.Views.CustomControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models"
@@ -288,14 +290,14 @@
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/FileList')}" />
 
                         <CommandBar
-                            x:Name="NormalMode"
+                            x:Name="NormalModeCommandBar"
                             Grid.Column="2"
                             Margin="0,0,-15,0"
                             VerticalAlignment="Center"
                             Background="Transparent"
                             DefaultLabelPosition="Right"
                             Style="{StaticResource CommandBarStyle}"
-                            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelectMode), Mode=OneWay}">
+                            Visibility="{x:Bind GetSelectionMode(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
 
                             <CommandBar.PrimaryCommands>
                                 <AppBarButton
@@ -311,17 +313,49 @@
                         </CommandBar>
 
                         <CommandBar
-                            x:Name="SelectMode"
+                            x:Name="SelectionModeCommandBar"
                             Grid.Column="2"
                             Margin="0,0,-15,0"
                             VerticalAlignment="Center"
                             Background="Transparent"
                             DefaultLabelPosition="Right"
                             Style="{StaticResource CommandBarStyle}"
-                            Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
+                            Visibility="{x:Bind GetSelectionMode(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
 
                             <CommandBar.PrimaryCommands>
-                                <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/CopyOptions')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/CopyOptionsToolTip')}">
+                                <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/MultiSelect')}">
+
+                                    <AppBarButton.Icon>
+                                        <FontIcon Glyph="&#xE762;" />
+                                    </AppBarButton.Icon>
+
+                                    <AppBarButton.Flyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem Click="{x:Bind OnSelectAllClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/SelectAll')}">
+
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE8B3;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+
+                                            <MenuFlyoutItem Click="{x:Bind OnSelectNoneClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/SelectNone')}">
+
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE8E6;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+
+                                            <MenuFlyoutItem Click="{x:Bind OnSelectReverseClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/SelectReverse')}">
+
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xEA98;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </AppBarButton.Flyout>
+                                </AppBarButton>
+
+                                <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/Copy')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/CopyToolTip')}">
 
                                     <AppBarButton.Icon>
                                         <FontIcon Glyph="&#xE8C8;" />
@@ -342,7 +376,7 @@
                                     </AppBarButton.Flyout>
                                 </AppBarButton>
 
-                                <AppBarButton Click="{x:Bind OnDownloadSelectedClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/DownloadSelected')}">
+                                <AppBarButton Click="{x:Bind OnDownloadClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/Download')}">
 
                                     <AppBarButton.Icon>
                                         <FontIcon Glyph="&#xE74B;" />
@@ -363,20 +397,95 @@
                     </Grid>
 
                     <ListView
+                        x:Name="QueryLinksResultListView"
                         Grid.Row="1"
                         CornerRadius="0"
-                        IsItemClickEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
-                        ItemClick="{x:Bind OnItemClick}"
                         ItemsSource="{x:Bind QueryLinksResultCollection}"
-                        SelectionMode="None"
+                        SelectionMode="{x:Bind SelectionMode, Mode=OneWay}"
                         Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(QueryLinksResultCollection.Count), Mode=OneWay}">
 
                         <ListView.ItemContainerStyle>
-                            <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                <Setter Property="Background" Value="Transparent" />
-                                <Setter Property="Margin" Value="0" />
-                                <Setter Property="MinHeight" Value="0" />
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                                <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+                                <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+                                <Setter Property="Foreground" Value="{ThemeResource ListViewItemForeground}" />
+                                <Setter Property="TabNavigation" Value="Local" />
+                                <Setter Property="IsHoldingEnabled" Value="True" />
                                 <Setter Property="Padding" Value="0" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}" />
+                                <Setter Property="MinHeight" Value="0" />
+                                <Setter Property="AllowDrop" Value="False" />
+                                <Setter Property="UseSystemFocusVisuals" Value="True" />
+                                <Setter Property="FocusVisualMargin" Value="1" />
+
+                                <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource ListViewItemFocusVisualPrimaryBrush}" />
+                                <Setter Property="FocusVisualPrimaryThickness" Value="2" />
+                                <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource ListViewItemFocusVisualSecondaryBrush}" />
+                                <Setter Property="FocusVisualSecondaryThickness" Value="1" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewItem">
+                                            <customcontrol:BorderedListViewItemPresenter
+                                                x:Name="Root"
+                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                BorderThickness="0,0,0,1"
+                                                CheckBoxBorderBrush="{ThemeResource ListViewItemCheckBoxBorderBrush}"
+                                                CheckBoxBrush="{ThemeResource ListViewItemCheckBoxBrush}"
+                                                CheckBoxCornerRadius="{ThemeResource ListViewItemCheckBoxCornerRadius}"
+                                                CheckBoxDisabledBorderBrush="{ThemeResource ListViewItemCheckBoxDisabledBorderBrush}"
+                                                CheckBoxDisabledBrush="{ThemeResource ListViewItemCheckBoxDisabledBrush}"
+                                                CheckBoxPointerOverBorderBrush="{ThemeResource ListViewItemCheckBoxPointerOverBorderBrush}"
+                                                CheckBoxPointerOverBrush="{ThemeResource ControlAltFillColorTertiaryBrush}"
+                                                CheckBoxPressedBorderBrush="{ThemeResource ListViewItemCheckBoxPressedBorderBrush}"
+                                                CheckBoxPressedBrush="{ThemeResource ListViewItemCheckBoxPressedBrush}"
+                                                CheckBoxSelectedBrush="{ThemeResource ListViewItemCheckBoxSelectedBrush}"
+                                                CheckBoxSelectedDisabledBrush="{ThemeResource ListViewItemCheckBoxSelectedDisabledBrush}"
+                                                CheckBoxSelectedPointerOverBrush="{ThemeResource ListViewItemCheckBoxSelectedPointerOverBrush}"
+                                                CheckBoxSelectedPressedBrush="{ThemeResource ListViewItemCheckBoxSelectedPressedBrush}"
+                                                CheckBrush="{ThemeResource ListViewItemCheckBrush}"
+                                                CheckDisabledBrush="{ThemeResource ListViewItemCheckDisabledBrush}"
+                                                CheckMode="{ThemeResource ListViewItemCheckMode}"
+                                                CheckPressedBrush="{ThemeResource ListViewItemCheckPressedBrush}"
+                                                ContentMargin="{TemplateBinding Padding}"
+                                                ContentTransitions="{TemplateBinding ContentTransitions}"
+                                                Control.IsTemplateFocusTarget="True"
+                                                CornerRadius="0"
+                                                DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                                                DragBackground="{ThemeResource ListViewItemDragBackground}"
+                                                DragForeground="{ThemeResource ListViewItemDragForeground}"
+                                                DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                                                FocusBorderBrush="{ThemeResource ListViewItemFocusBorderBrush}"
+                                                FocusSecondaryBorderBrush="{ThemeResource ListViewItemFocusSecondaryBorderBrush}"
+                                                FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
+                                                FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}"
+                                                FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}"
+                                                FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}"
+                                                FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}"
+                                                PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackground}"
+                                                PointerOverBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                PointerOverForeground="{ThemeResource ListViewItemForegroundPointerOver}"
+                                                PressedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+                                                SelectedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                SelectedDisabledBackground="{ThemeResource ListViewItemBackgroundSelectedDisabled}"
+                                                SelectedForeground="{ThemeResource ListViewItemForegroundSelected}"
+                                                SelectedPointerOverBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                SelectedPressedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                SelectionCheckMarkVisualEnabled="{ThemeResource ListViewItemSelectionCheckMarkVisualEnabled}"
+                                                SelectionIndicatorBrush="{ThemeResource ListViewItemSelectionIndicatorBrush}"
+                                                SelectionIndicatorCornerRadius="{ThemeResource ListViewItemSelectionIndicatorCornerRadius}"
+                                                SelectionIndicatorDisabledBrush="{ThemeResource ListViewItemSelectionIndicatorDisabledBrush}"
+                                                SelectionIndicatorPointerOverBrush="{ThemeResource ListViewItemSelectionIndicatorPointerOverBrush}"
+                                                SelectionIndicatorPressedBrush="{ThemeResource ListViewItemSelectionIndicatorPressedBrush}"
+                                                SelectionIndicatorVisualEnabled="{ThemeResource ListViewItemSelectionIndicatorVisualEnabled}" />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
                             </Style>
                         </ListView.ItemContainerStyle>
 
@@ -385,129 +494,189 @@
                         </ItemsControl.ItemContainerTransitions>
 
                         <ListView.Header>
-                            <Grid
-                                Height="35"
-                                Padding="6,0,0,0"
-                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                BorderThickness="0,0,0,1">
+                            <ListView ItemContainerTransitions="{x:Bind QueryLinksResultListView.ItemContainerTransitions, Mode=OneWay}" SelectionMode="{x:Bind QueryLinksResultListView.SelectionMode, Mode=OneWay}">
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="100" />
-                                    <ColumnDefinition Width="80" />
-                                </Grid.ColumnDefinitions>
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                                        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+                                        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+                                        <Setter Property="Foreground" Value="{ThemeResource ListViewItemForeground}" />
+                                        <Setter Property="TabNavigation" Value="Local" />
+                                        <Setter Property="IsHoldingEnabled" Value="True" />
+                                        <Setter Property="Padding" Value="0" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                                        <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}" />
+                                        <Setter Property="MinHeight" Value="0" />
+                                        <Setter Property="AllowDrop" Value="False" />
+                                        <Setter Property="UseSystemFocusVisuals" Value="True" />
+                                        <Setter Property="FocusVisualMargin" Value="1" />
+                                        <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource ListViewItemFocusVisualPrimaryBrush}" />
+                                        <Setter Property="FocusVisualPrimaryThickness" Value="2" />
+                                        <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource ListViewItemFocusVisualSecondaryBrush}" />
+                                        <Setter Property="FocusVisualSecondaryThickness" Value="1" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListViewItem">
+                                                    <customcontrol:BorderedListViewItemPresenter
+                                                        x:Name="Root"
+                                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                        BorderThickness="0,0,0,1"
+                                                        CheckBoxBorderBrush="Transparent"
+                                                        CheckBoxBrush="Transparent"
+                                                        CheckBoxCornerRadius="0"
+                                                        CheckBoxDisabledBorderBrush="Transparent"
+                                                        CheckBoxDisabledBrush="Transparent"
+                                                        CheckBoxPointerOverBorderBrush="Transparent"
+                                                        CheckBoxPointerOverBrush="Transparent"
+                                                        CheckBoxPressedBorderBrush="Transparent"
+                                                        CheckBoxPressedBrush="Transparent"
+                                                        CheckBoxSelectedBrush="Transparent"
+                                                        CheckBoxSelectedDisabledBrush="Transparent"
+                                                        CheckBoxSelectedPointerOverBrush="Transparent"
+                                                        CheckBoxSelectedPressedBrush="Transparent"
+                                                        CheckBrush="{ThemeResource ListViewItemCheckBrush}"
+                                                        CheckDisabledBrush="{ThemeResource ListViewItemCheckDisabledBrush}"
+                                                        CheckMode="{ThemeResource ListViewItemCheckMode}"
+                                                        CheckPressedBrush="{ThemeResource ListViewItemCheckPressedBrush}"
+                                                        ContentMargin="{TemplateBinding Padding}"
+                                                        ContentTransitions="{TemplateBinding ContentTransitions}"
+                                                        Control.IsTemplateFocusTarget="True"
+                                                        CornerRadius="0"
+                                                        DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                                                        DragBackground="{ThemeResource ListViewItemDragBackground}"
+                                                        DragForeground="{ThemeResource ListViewItemDragForeground}"
+                                                        DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                                                        FocusBorderBrush="{ThemeResource ListViewItemFocusBorderBrush}"
+                                                        FocusSecondaryBorderBrush="{ThemeResource ListViewItemFocusSecondaryBorderBrush}"
+                                                        FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
+                                                        FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}"
+                                                        FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}"
+                                                        FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}"
+                                                        FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}"
+                                                        PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackground}"
+                                                        PointerOverBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                        PointerOverForeground="{ThemeResource ListViewItemForegroundPointerOver}"
+                                                        PressedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                        ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+                                                        SelectedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                        SelectedDisabledBackground="{ThemeResource ListViewItemBackgroundSelectedDisabled}"
+                                                        SelectedForeground="{ThemeResource ListViewItemForegroundSelected}"
+                                                        SelectedPointerOverBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                        SelectedPressedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                        SelectionCheckMarkVisualEnabled="{ThemeResource ListViewItemSelectionCheckMarkVisualEnabled}"
+                                                        SelectionIndicatorBrush="{ThemeResource ListViewItemSelectionIndicatorBrush}"
+                                                        SelectionIndicatorCornerRadius="{ThemeResource ListViewItemSelectionIndicatorCornerRadius}"
+                                                        SelectionIndicatorDisabledBrush="{ThemeResource ListViewItemSelectionIndicatorDisabledBrush}"
+                                                        SelectionIndicatorPointerOverBrush="{ThemeResource ListViewItemSelectionIndicatorPointerOverBrush}"
+                                                        SelectionIndicatorPressedBrush="{ThemeResource ListViewItemSelectionIndicatorPressedBrush}"
+                                                        SelectionIndicatorVisualEnabled="{ThemeResource ListViewItemSelectionIndicatorVisualEnabled}" />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
 
-                                <TextBlock
-                                    x:Name="SelectHeaderText"
-                                    Grid.Column="0"
-                                    Margin="10,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/SelectHeader')}"
-                                    Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
+                                <ListViewItem>
+                                    <Grid
+                                        Height="35"
+                                        Padding="6,0,0,0"
+                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                        BorderThickness="0,0,0,1">
 
-                                    <Hyperlink Click="{x:Bind OnSelectHeaderClicked}" UnderlineStyle="None">
-                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/Select')}" />
-                                    </Hyperlink>
-                                </TextBlock>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="80" />
+                                        </Grid.ColumnDefinitions>
 
-                                <TextBlock
-                                    x:Name="FileNameHeaderText"
-                                    Grid.Column="1"
-                                    Margin="10,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/FileName')}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                                        <TextBlock
+                                            x:Name="FileNameHeaderText"
+                                            Grid.Column="0"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/FileName')}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/FileName')}" Visibility="{x:Bind FileNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/FileName')}" Visibility="{x:Bind FileNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
 
-                                <TextBlock
-                                    x:Name="FileSizeHeaderText"
-                                    Grid.Column="2"
-                                    Margin="10,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/FileSize')}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                                        <TextBlock
+                                            x:Name="FileSizeHeaderText"
+                                            Grid.Column="1"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/FileSize')}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/FileSize')}" Visibility="{x:Bind FileSizeHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/FileSize')}" Visibility="{x:Bind FileSizeHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
 
-                                <TextBlock
-                                    Grid.Column="3"
-                                    Margin="0,0,10,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/Options')}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/OptionsToolTip')}" />
-                            </Grid>
+                                        <TextBlock
+                                            Grid.Column="2"
+                                            Margin="0,0,10,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/Options')}"
+                                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/OptionsToolTip')}" />
+                                    </Grid>
+                                </ListViewItem>
+                            </ListView>
                         </ListView.Header>
 
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="model:QueryLinksResultModel">
-                                <Grid
-                                    Height="35"
-                                    Padding="6,0,0,0"
-                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                    BorderThickness="0,0,0,1">
+                                <Grid Height="35" Padding="6,0,0,0">
 
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="100" />
                                         <ColumnDefinition Width="80" />
                                     </Grid.ColumnDefinitions>
 
-                                    <CheckBox
-                                        Grid.Column="0"
-                                        Width="50"
-                                        MinWidth="0"
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
-                                        IsThreeState="False"
-                                        Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip>
-                                                <Grid>
-                                                    <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/Selected')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
-                                                    <TextBlock Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/UnSelected')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
-                                                </Grid>
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                    </CheckBox>
-
                                     <HyperlinkButton
-                                        Grid.Column="1"
+                                        Grid.Column="0"
                                         Margin="10,0,0,0"
                                         Padding="0"
                                         VerticalAlignment="Center"
                                         Command="{StaticResource DownloadCommand}"
                                         CommandParameter="{x:Bind}"
-                                        IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}">
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionMode(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
+
+                                        <HyperlinkButton.Resources>
+                                            <ResourceDictionary>
+                                                <ResourceDictionary x:Key="Default">
+                                                    <StaticResource x:Key="HyperlinkButtonForegroundDisabled" ResourceKey="TextFillColorPrimaryBrush" />
+                                                </ResourceDictionary>
+                                                <ResourceDictionary x:Key="HighContrast">
+                                                    <StaticResource x:Key="HyperlinkButtonForegroundDisabled" ResourceKey="SystemColorButtonTextColorBrush" />
+                                                </ResourceDictionary>
+                                                <ResourceDictionary x:Key="Light">
+                                                    <StaticResource x:Key="HyperlinkButtonForegroundDisabled" ResourceKey="TextFillColorPrimaryBrush" />
+                                                </ResourceDictionary>
+                                            </ResourceDictionary>
+                                        </HyperlinkButton.Resources>
 
                                         <TextBlock
-                                            x:Name="FileNameText"
+                                            x:Name="FileNameHyperText"
                                             HorizontalAlignment="Left"
                                             Text="{x:Bind FileName}"
                                             TextTrimming="CharacterEllipsis"
                                             TextWrapping="NoWrap">
 
                                             <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameHyperText, Path=IsTextTrimmed, Mode=OneWay}" />
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
 
@@ -516,7 +685,7 @@
                                                 <MenuFlyoutItem
                                                     Command="{StaticResource CopyLinkCommand}"
                                                     CommandParameter="{x:Bind FileLink}"
-                                                    IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
+                                                    IsEnabled="{x:Bind x:Object.Equals(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}"
                                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/CopyLink')}"
                                                     ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/CopyLinkToolTip')}">
 
@@ -529,8 +698,24 @@
                                     </HyperlinkButton>
 
                                     <TextBlock
+                                        x:Name="FileNameText"
+                                        Grid.Column="0"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind FileName}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap"
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionMode(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+
+                                    <TextBlock
                                         x:Name="FileSizeText"
-                                        Grid.Column="2"
+                                        Grid.Column="1"
                                         MinWidth="50"
                                         Margin="10,0,0,0"
                                         HorizontalAlignment="Left"
@@ -548,7 +733,7 @@
                                     </TextBlock>
 
                                     <HyperlinkButton
-                                        Grid.Column="3"
+                                        Grid.Column="2"
                                         Margin="0,0,5,0"
                                         Padding="0"
                                         HorizontalAlignment="Left"
@@ -556,7 +741,7 @@
                                         Command="{StaticResource OpenLinkCommand}"
                                         CommandParameter="{x:Bind FileLink}"
                                         Content="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/OpenLink')}"
-                                        IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
+                                        IsEnabled="{x:Bind x:Object.Equals(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}"
                                         ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/OpenLinkToolTip')}" />
 
                                     <Grid.ContextFlyout>
@@ -564,7 +749,7 @@
                                             <MenuFlyoutItem
                                                 Command="{StaticResource CopyInformationCommand}"
                                                 CommandParameter="{x:Bind}"
-                                                IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
+                                                IsEnabled="{x:Bind x:Object.Equals(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/CopyInformation')}"
                                                 ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/CopyInformationToolTip')}">
 

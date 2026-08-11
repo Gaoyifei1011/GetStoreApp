@@ -156,8 +156,17 @@ namespace GetStoreApp.Views.Dialogs
             if (sender is ListView listView && !Equals(SelectedPackageVolume, listView.SelectedItem))
             {
                 SelectedPackageVolume = listView.SelectedItem is PackageVolumeModel packageVolume ? packageVolume : null;
-                IsRemovePackageVolumeEnabled = true;
-                IsPrimaryEnabled = true;
+
+                if (SelectedPackageVolume is not null)
+                {
+                    IsRemovePackageVolumeEnabled = true;
+                    IsPrimaryEnabled = true;
+                }
+                else
+                {
+                    IsRemovePackageVolumeEnabled = false;
+                    IsPrimaryEnabled = false;
+                }
             }
         }
 

@@ -3,7 +3,6 @@ using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -70,7 +69,6 @@ namespace GetStoreApp.Views.Dialogs
 
             TraceCleanupList.Add(new TraceCleanupModel
             {
-                IsSelected = false,
                 IsCleanFailed = false,
                 DisplayName = HistoryRecordString,
                 InternalName = CleanKind.History,
@@ -78,7 +76,6 @@ namespace GetStoreApp.Views.Dialogs
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
-                IsSelected = false,
                 IsCleanFailed = false,
                 DisplayName = ActionCenterString,
                 InternalName = CleanKind.ActionCenter,
@@ -86,7 +83,6 @@ namespace GetStoreApp.Views.Dialogs
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
-                IsSelected = false,
                 IsCleanFailed = false,
                 DisplayName = DownloadRecordString,
                 InternalName = CleanKind.Download,
@@ -94,14 +90,21 @@ namespace GetStoreApp.Views.Dialogs
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
-                IsSelected = false,
                 IsCleanFailed = false,
                 DisplayName = LocalFileString,
                 InternalName = CleanKind.LocalFile,
                 CleanFailedText = LocalFileCleanErrorString
             });
 
-            IsSelected = TraceCleanupList.Exists(item => item.IsSelected);
+            IsSelected = TraceCleanupListView.SelectedItems.Count > 0;
+        }
+
+        /// <summary>
+        /// 选中项发生变化时触发的事件
+        /// </summary>
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            IsSelected = TraceCleanupListView.SelectedItems.Count > 0;
         }
 
         /// <summary>
@@ -118,17 +121,22 @@ namespace GetStoreApp.Views.Dialogs
 
             IsCleaning = true;
             List<(CleanKind cleanKind, bool cleanResult)> cleanSuccessfullyDict = [];
+            List<TraceCleanupModel> selectedItemsList = [];
+            foreach (object traceCleanupItemObj in TraceCleanupListView.SelectedItems)
+            {
+                if (traceCleanupItemObj is TraceCleanupModel traceCleanupItem)
+                {
+                    selectedItemsList.Add(traceCleanupItem);
+                }
+            }
 
             await Task.Run(async () =>
             {
                 List<CleanKind> selectedCleanList = [];
 
-                foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
+                foreach (TraceCleanupModel traceCleanupItem in selectedItemsList)
                 {
-                    if (traceCleanupItem.IsSelected)
-                    {
-                        selectedCleanList.Add(traceCleanupItem.InternalName);
-                    }
+                    selectedCleanList.Add(traceCleanupItem.InternalName);
                 }
 
                 foreach (CleanKind cleanArgs in selectedCleanList)
@@ -153,15 +161,8 @@ namespace GetStoreApp.Views.Dialogs
                 }
             }
 
+            TraceCleanupListView.SelectedItems.Clear();
             IsCleaning = false;
-        }
-
-        /// <summary>
-        /// 复选框选中时的状态发生更改时触发的事件
-        /// </summary>
-        private void OnCheckBoxExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            IsSelected = TraceCleanupList.Exists(item => item.IsSelected);
         }
     }
 }
