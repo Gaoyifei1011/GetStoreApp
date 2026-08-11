@@ -603,7 +603,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取加载应用更新是否成功
         /// </summary>
-        private Visibility GetAppUpdateSuccessfullyState(AppUpdateResultKind appUpdateResultKind, bool isSuccessfully)
+        private Visibility GetAppUpdateSuccessfullyVisibility(AppUpdateResultKind appUpdateResultKind, bool isSuccessfully)
         {
             return isSuccessfully ? appUpdateResultKind is AppUpdateResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed : appUpdateResultKind is AppUpdateResultKind.Successfully ? Visibility.Collapsed : Visibility.Visible;
         }
@@ -611,7 +611,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查搜索应用更新是否成功
         /// </summary>
-        private Visibility CheckAppUpdateState(AppUpdateResultKind appUpdateResultKind, AppUpdateResultKind comparedAppUpdateResultKind)
+        private Visibility CheckAppUpdateResultKindVisibility(AppUpdateResultKind appUpdateResultKind, AppUpdateResultKind comparedAppUpdateResultKind)
         {
             return Equals(appUpdateResultKind, comparedAppUpdateResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }

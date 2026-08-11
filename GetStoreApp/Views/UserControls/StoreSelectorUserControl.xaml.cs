@@ -708,11 +708,11 @@ namespace GetStoreApp.Views.UserControls
         }
 
         /// <summary>
-        /// 获取选中项显示状态
+        /// 获取选中的选择栏项
         /// </summary>
-        private Visibility GetSelectedItem(SelectorBarItem selectedItem, SelectorBarItem comparedSelectedItem)
+        private Visibility GetSelectorBarItemVisibility(SelectorBarItem selectorBarItem, SelectorBarItem comparedSelectorBarItem)
         {
-            return Equals(selectedItem, comparedSelectedItem) ? Visibility.Visible : Visibility.Collapsed;
+            return Equals(selectorBarItem, comparedSelectorBarItem) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
@@ -1172,9 +1172,9 @@ namespace GetStoreApp.Views.UserControls
         }
 
         /// <summary>
-        /// 获取商店信息结果显示内容
+        /// 检查商店信息结果显示内容
         /// </summary>
-        private Visibility GetStoreInfoResultKind(StoreInfoResultKind selectedStoreInfoResultKind, StoreInfoResultKind comparedStoreInfoResultKind)
+        private Visibility CheckStoreInfoResultKindVisibility(StoreInfoResultKind selectedStoreInfoResultKind, StoreInfoResultKind comparedStoreInfoResultKind)
         {
             return Equals(selectedStoreInfoResultKind, comparedStoreInfoResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }

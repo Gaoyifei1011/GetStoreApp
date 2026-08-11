@@ -2839,7 +2839,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查 WinGet 程序包浮出面板状态
         /// </summary>
-        private Visibility CheckWinGetPaneKindState(WinGetPaneKind winGetPaneKind, WinGetPaneKind comparedWinGetPaneKind)
+        private Visibility CheckWinGetPaneKindVisibility(WinGetPaneKind winGetPaneKind, WinGetPaneKind comparedWinGetPaneKind)
         {
             return Equals(winGetPaneKind, comparedWinGetPaneKind) ? Visibility.Visible : Visibility.Collapsed;
         }

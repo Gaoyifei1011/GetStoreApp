@@ -5,6 +5,7 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
+    xmlns:installcontrol="using:Windows.ApplicationModel.Store.Preview.InstallControl"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
@@ -173,7 +174,7 @@
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
             CornerRadius="{StaticResource ControlCornerRadius}"
-            Visibility="{x:Bind GetAppUpdateSuccessfullyState(AppUpdateResultKind, x:False), Mode=OneWay}">
+            Visibility="{x:Bind GetAppUpdateSuccessfullyVisibility(AppUpdateResultKind, x:False), Mode=OneWay}">
 
             <Grid>
                 <!--  未检查更新  -->
@@ -182,7 +183,7 @@
                     VerticalAlignment="Center"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/NotCheckUpdate')}"
                     TextAlignment="Center"
-                    Visibility="{x:Bind CheckAppUpdateState(AppUpdateResultKind, enum:AppUpdateResultKind.NotCheckUpdate), Mode=OneWay}" />
+                    Visibility="{x:Bind CheckAppUpdateResultKindVisibility(AppUpdateResultKind, enum:AppUpdateResultKind.NotCheckUpdate), Mode=OneWay}" />
 
                 <!--  检查更新失败  -->
                 <TextBlock
@@ -190,7 +191,7 @@
                     VerticalAlignment="Center"
                     Text="{x:Bind AppUpdateFailedContent, Mode=OneWay}"
                     TextAlignment="Center"
-                    Visibility="{x:Bind CheckAppUpdateState(AppUpdateResultKind, enum:AppUpdateResultKind.Failed), Mode=OneWay}" />
+                    Visibility="{x:Bind CheckAppUpdateResultKindVisibility(AppUpdateResultKind, enum:AppUpdateResultKind.Failed), Mode=OneWay}" />
             </Grid>
         </Grid>
 
@@ -200,7 +201,7 @@
             Padding="30,0,30,30"
             ItemsSource="{x:Bind AppUpdateCollection}"
             SelectionMode="None"
-            Visibility="{x:Bind GetAppUpdateSuccessfullyState(AppUpdateResultKind, x:True), Mode=OneWay}">
+            Visibility="{x:Bind GetAppUpdateSuccessfullyVisibility(AppUpdateResultKind, x:True), Mode=OneWay}">
 
             <ListView.ItemContainerStyle>
                 <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
@@ -315,7 +316,7 @@
                                     TextAlignment="Left"
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.IsAppInstallDownloading(AppInstallState), Mode=OneWay}" />
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckAppInstallStateVisibility(AppInstallState, installcontrol:AppInstallState.Downloading), Mode=OneWay}" />
                             </StackPanel>
 
                             <Button

@@ -291,7 +291,7 @@
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
             CornerRadius="{StaticResource ControlCornerRadius}"
-            Visibility="{x:Bind GetSearchAppsSuccessfullyState(SearchAppsResultKind, x:False), Mode=OneWay}">
+            Visibility="{x:Bind GetSearchAppsSuccessfullyVisibility(SearchAppsResultKind, x:False), Mode=OneWay}">
 
             <Grid>
                 <!--  未搜索  -->
@@ -301,7 +301,7 @@
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/NotSearch')}"
                     TextAlignment="Center"
                     ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/NotSearch')}"
-                    Visibility="{x:Bind CheckSearchAppsState(SearchAppsResultKind, enum:SearchAppsResultKind.NotSearch), Mode=OneWay}" />
+                    Visibility="{x:Bind CheckSearchAppsResultKindVisibility(SearchAppsResultKind, enum:SearchAppsResultKind.NotSearch), Mode=OneWay}" />
 
                 <!--  正在搜索中  -->
                 <StackPanel
@@ -309,7 +309,7 @@
                     VerticalAlignment="Center"
                     Orientation="Horizontal"
                     Spacing="10"
-                    Visibility="{x:Bind CheckSearchAppsState(SearchAppsResultKind, enum:SearchAppsResultKind.Searching), Mode=OneWay}">
+                    Visibility="{x:Bind CheckSearchAppsResultKindVisibility(SearchAppsResultKind, enum:SearchAppsResultKind.Searching), Mode=OneWay}">
 
                     <ProgressRing IsActive="True" IsEnabled="True" />
 
@@ -326,7 +326,7 @@
                     VerticalAlignment="Center"
                     Text="{x:Bind SearchFailedContent, Mode=OneWay}"
                     TextAlignment="Center"
-                    Visibility="{x:Bind CheckSearchAppsState(SearchAppsResultKind, enum:SearchAppsResultKind.Failed), Mode=OneWay}" />
+                    Visibility="{x:Bind CheckSearchAppsResultKindVisibility(SearchAppsResultKind, enum:SearchAppsResultKind.Failed), Mode=OneWay}" />
             </Grid>
         </Grid>
 
@@ -336,7 +336,7 @@
             Padding="30,3,30,30"
             ItemsSource="{x:Bind SearchAppsCollection}"
             SelectionMode="None"
-            Visibility="{x:Bind GetSearchAppsSuccessfullyState(SearchAppsResultKind, x:True), Mode=OneWay}">
+            Visibility="{x:Bind GetSearchAppsSuccessfullyVisibility(SearchAppsResultKind, x:True), Mode=OneWay}">
 
             <ListView.ItemContainerStyle>
                 <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">

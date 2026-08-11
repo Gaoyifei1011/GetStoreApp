@@ -604,7 +604,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取可更新应用是否成功
         /// </summary>
-        private Visibility GetUpgradableAppsSuccessfullyState(UpgradableAppsResultKind upgradableAppsResultKind, bool isSuccessfully)
+        private Visibility GetUpgradableAppsSuccessfullyVisibility(UpgradableAppsResultKind upgradableAppsResultKind, bool isSuccessfully)
         {
             return isSuccessfully ? upgradableAppsResultKind is UpgradableAppsResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed : upgradableAppsResultKind is not UpgradableAppsResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -612,7 +612,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查可更新应用是否成功
         /// </summary>
-        private Visibility CheckUpgradableAppsState(UpgradableAppsResultKind upgradableAppsResultKind, UpgradableAppsResultKind comparedSearchAppsResultKind)
+        private Visibility CheckUpgradableAppsResultKindVisibility(UpgradableAppsResultKind upgradableAppsResultKind, UpgradableAppsResultKind comparedSearchAppsResultKind)
         {
             return Equals(upgradableAppsResultKind, comparedSearchAppsResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }

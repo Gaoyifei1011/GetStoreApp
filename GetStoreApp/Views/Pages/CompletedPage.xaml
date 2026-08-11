@@ -90,14 +90,14 @@
                         IsEnabled="{x:Bind system:Convert.ToBoolean(CompletedCollection.Count), Mode=OneWay}"
                         Label="{x:Bind rootservice:ResourceService.GetLocalized('Completed/Select')}"
                         ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Completed/SelectToolTip')}"
-                        Visibility="{x:Bind GetSelectionMode(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
+                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE762;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
 
-                    <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('Completed/MultiSelect')}" Visibility="{x:Bind GetSelectionMode(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
+                    <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('Completed/MultiSelect')}" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE762;" />
@@ -134,7 +134,7 @@
                         IsEnabled="{x:Bind GetIsLoading(CompletedResultKind), Mode=OneWay}"
                         Label="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DeleteSelected')}"
                         ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DeleteSelectedToolTip')}"
-                        Visibility="{x:Bind GetSelectionMode(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
+                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE74D;" />
@@ -145,7 +145,7 @@
                         Click="{x:Bind OnCancelClicked}"
                         Label="{x:Bind rootservice:ResourceService.GetLocalized('Completed/Cancel')}"
                         ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Completed/CancelToolTip')}"
-                        Visibility="{x:Bind GetSelectionMode(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
+                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE711;" />
@@ -157,7 +157,7 @@
                     <AppBarButton
                         IsEnabled="{x:Bind GetIsLoading(CompletedResultKind), Mode=OneWay}"
                         Label="{x:Bind rootservice:ResourceService.GetLocalized('Completed/Share')}"
-                        Visibility="{x:Bind GetSelectionMode(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
+                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE72D;" />
@@ -172,7 +172,7 @@
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnShowShareUIClicked}"
                                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/ShowShareUI')}"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckShareUIVisibilityConvert()}">
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckShareUIVisibility()}">
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xE70A;" />
@@ -222,7 +222,7 @@
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
             CornerRadius="{StaticResource ControlCornerRadius}"
-            Visibility="{x:Bind GetCompletedSuccessfullyState(CompletedResultKind, x:False), Mode=OneWay}">
+            Visibility="{x:Bind GetCompletedSuccessfullyVisibility(CompletedResultKind, x:False), Mode=OneWay}">
 
             <Grid>
                 <!--  正在加载中  -->
@@ -231,7 +231,7 @@
                     VerticalAlignment="Center"
                     Orientation="Horizontal"
                     Spacing="10"
-                    Visibility="{x:Bind CheckCompletedState(CompletedResultKind, enum:CompletedResultKind.Loading), Mode=OneWay}">
+                    Visibility="{x:Bind CheckCompletedResultKindVisibility(CompletedResultKind, enum:CompletedResultKind.Loading), Mode=OneWay}">
 
                     <ProgressRing IsActive="True" IsEnabled="True" />
 
@@ -248,7 +248,7 @@
                     VerticalAlignment="Center"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/CompletedEmptyDescription')}"
                     TextAlignment="Center"
-                    Visibility="{x:Bind CheckCompletedState(CompletedResultKind, enum:CompletedResultKind.Empty), Mode=OneWay}" />
+                    Visibility="{x:Bind CheckCompletedResultKindVisibility(CompletedResultKind, enum:CompletedResultKind.Empty), Mode=OneWay}" />
             </Grid>
         </Grid>
 
@@ -258,7 +258,7 @@
             Padding="30,0,30,30"
             ItemsSource="{x:Bind CompletedCollection}"
             SelectionMode="{x:Bind SelectionMode, Mode=OneWay}"
-            Visibility="{x:Bind GetCompletedSuccessfullyState(CompletedResultKind, x:True), Mode=OneWay}">
+            Visibility="{x:Bind GetCompletedSuccessfullyVisibility(CompletedResultKind, x:True), Mode=OneWay}">
 
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
@@ -548,7 +548,7 @@
                                                         Command="{StaticResource ShowShareUICommand}"
                                                         CommandParameter="{x:Bind}"
                                                         Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/ShowShareUI')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckShareUIVisibilityConvert()}">
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckShareUIVisibility()}">
 
                                                         <MenuFlyoutItem.Icon>
                                                             <FontIcon Glyph="&#xE70A;" />

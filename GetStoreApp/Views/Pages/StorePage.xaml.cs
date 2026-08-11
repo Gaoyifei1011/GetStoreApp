@@ -159,7 +159,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取当前选择的商店控件
         /// </summary>
-        private Visibility GetSelectedStoreControl(StoreControl selectedStoreControl, StoreControl comparedStoreControl)
+        private Visibility GetStoreControlVisibility(StoreControl selectedStoreControl, StoreControl comparedStoreControl)
         {
             return Equals(selectedStoreControl, comparedStoreControl) ? Visibility.Visible : Visibility.Collapsed;
         }

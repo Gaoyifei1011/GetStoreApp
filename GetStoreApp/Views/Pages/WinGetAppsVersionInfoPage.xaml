@@ -95,7 +95,7 @@
                         Background="Transparent"
                         DefaultLabelPosition="Right"
                         Style="{StaticResource CommandBarStyle}"
-                        Visibility="{x:Bind GetWinGetAppsType(SearchApps)}">
+                        Visibility="{x:Bind GetWinGetAppsVisibility(SearchApps)}">
 
                         <CommandBar.PrimaryCommands>
                             <AppBarButton Click="{x:Bind OnCopyInformationClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/CopyInformation')}">
@@ -133,7 +133,7 @@
                         Background="Transparent"
                         DefaultLabelPosition="Right"
                         Style="{StaticResource CommandBarStyle}"
-                        Visibility="{x:Bind GetWinGetAppsType(UpgradableApps)}">
+                        Visibility="{x:Bind GetWinGetAppsVisibility(UpgradableApps)}">
 
                         <CommandBar.PrimaryCommands>
                             <AppBarButton Click="{x:Bind OnCopyInformationClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/CopyInformation')}">

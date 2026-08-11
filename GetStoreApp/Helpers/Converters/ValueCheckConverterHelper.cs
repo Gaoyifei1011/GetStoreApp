@@ -17,7 +17,7 @@ namespace GetStoreApp.Helpers.Converters
         /// <summary>
         /// 检查是否支持显示分享面板
         /// </summary>
-        public static Visibility CheckShareUIVisibilityConvert()
+        public static Visibility CheckShareUIVisibility()
         {
             return DataTransferManager.IsSupported() && !RuntimeHelper.IsElevated ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -31,41 +31,25 @@ namespace GetStoreApp.Helpers.Converters
         }
 
         /// <summary>
-        /// 确定当前选择的索引是否为目标控件
+        /// 检查商店应用安装状态
         /// </summary>
-        public static Visibility IsCurrentControl(int selectedIndex, int index)
+        public static Visibility CheckAppInstallStateVisibility(AppInstallState appInstallState, AppInstallState comparedAppInstallState)
         {
-            return Equals(selectedIndex, index) ? Visibility.Visible : Visibility.Collapsed;
+            return Equals(appInstallState, comparedAppInstallState) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
-        /// 检查商店应用是否在下载
+        /// 检查商店应用类型
         /// </summary>
-        public static Visibility IsAppInstallDownloading(AppInstallState appInstallState)
+        public static Visibility CheckPackageSignatureKindVisibility(PackageSignatureKind packageSignatureKind, PackageSignatureKind comparedPackageSignatureKind, bool needReverse)
         {
-            return appInstallState is AppInstallState.Downloading ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        /// <summary>
-        /// 检测当前应用是否为商店应用
-        /// </summary>
-        public static Visibility IsStorePackage(PackageSignatureKind packageSignatureKind)
-        {
-            return packageSignatureKind is PackageSignatureKind.Store ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        /// <summary>
-        /// 检测当前应用是否为系统应用（系统应用无法卸载）
-        /// </summary>
-        public static Visibility IsNotSystemPackage(PackageSignatureKind packageSignatureKind)
-        {
-            return packageSignatureKind is PackageSignatureKind.System ? Visibility.Collapsed : Visibility.Visible;
+            return needReverse ? Equals(packageSignatureKind, comparedPackageSignatureKind) ? Visibility.Visible : Visibility.Collapsed : Equals(packageSignatureKind, comparedPackageSignatureKind) ? Visibility.Collapsed : Visibility.Visible;
         }
 
         /// <summary>
         /// 检查下载任务状态
         /// </summary>
-        public static Visibility CheckDownloadProgressState(DownloadProgressState downloadProgressState, DownloadProgressState comparedDownloadProgressState)
+        public static Visibility CheckDownloadProgressStateVisibility(DownloadProgressState downloadProgressState, DownloadProgressState comparedDownloadProgressState)
         {
             return Equals(downloadProgressState, comparedDownloadProgressState) ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -73,7 +57,7 @@ namespace GetStoreApp.Helpers.Converters
         /// <summary>
         /// 检查文件是否正在下载中
         /// </summary>
-        public static Visibility CheckDownloadingState(DownloadProgressState downloadProgressState)
+        public static Visibility CheckDownloadingStateVisibility(DownloadProgressState downloadProgressState)
         {
             return downloadProgressState is DownloadProgressState.Queued || downloadProgressState is DownloadProgressState.Downloading ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -121,7 +105,7 @@ namespace GetStoreApp.Helpers.Converters
         /// <summary>
         /// 检查 WinGet 应用的下载状态
         /// </summary>
-        public static Visibility CheckPackageDownloadProgressState(PackageDownloadProgressState packageDownloadProgressState, PackageDownloadProgressState comparedPackageDownloadProgressState, bool isReverse)
+        public static Visibility CheckPackageDownloadProgressStateVisibility(PackageDownloadProgressState packageDownloadProgressState, PackageDownloadProgressState comparedPackageDownloadProgressState, bool isReverse)
         {
             return isReverse ? Equals(packageDownloadProgressState, comparedPackageDownloadProgressState) ? Visibility.Collapsed : Visibility.Visible : Equals(packageDownloadProgressState, comparedPackageDownloadProgressState) ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -129,7 +113,7 @@ namespace GetStoreApp.Helpers.Converters
         /// <summary>
         /// 检查 WinGet 应用的安装状态
         /// </summary>
-        public static Visibility CheckPackageInstallProgressState(PackageInstallProgressState packageInstallProgressState, PackageInstallProgressState comparedPackageInstallProgressState, bool isReverse)
+        public static Visibility CheckPackageInstallProgressStateVisibility(PackageInstallProgressState packageInstallProgressState, PackageInstallProgressState comparedPackageInstallProgressState, bool isReverse)
         {
             return isReverse ? Equals(packageInstallProgressState, comparedPackageInstallProgressState) ? Visibility.Collapsed : Visibility.Visible : Equals(packageInstallProgressState, comparedPackageInstallProgressState) ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -137,7 +121,7 @@ namespace GetStoreApp.Helpers.Converters
         /// <summary>
         /// 检查 WinGet 应用的卸载状态
         /// </summary>
-        public static Visibility CheckPackageUninstallProgressState(PackageUninstallProgressState packageUninstallProgressState, PackageUninstallProgressState comparedPackageUninstallProgressState, bool isReverse)
+        public static Visibility CheckPackageUninstallProgressStateVisibility(PackageUninstallProgressState packageUninstallProgressState, PackageUninstallProgressState comparedPackageUninstallProgressState, bool isReverse)
         {
             return isReverse ? Equals(packageUninstallProgressState, comparedPackageUninstallProgressState) ? Visibility.Collapsed : Visibility.Visible : Equals(packageUninstallProgressState, comparedPackageUninstallProgressState) ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -145,7 +129,7 @@ namespace GetStoreApp.Helpers.Converters
         /// <summary>
         /// 检查 WinGet 应用的修复状态
         /// </summary>
-        public static Visibility CheckPackageRepairProgressState(PackageRepairProgressState packageRepairProgressState, PackageRepairProgressState comparedPackageRepairProgressState, bool isReverse)
+        public static Visibility CheckPackageRepairProgressStateVisibility(PackageRepairProgressState packageRepairProgressState, PackageRepairProgressState comparedPackageRepairProgressState, bool isReverse)
         {
             return isReverse ? Equals(packageRepairProgressState, comparedPackageRepairProgressState) ? Visibility.Collapsed : Visibility.Visible : Equals(packageRepairProgressState, comparedPackageRepairProgressState) ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -153,7 +137,7 @@ namespace GetStoreApp.Helpers.Converters
         /// <summary>
         /// 检查 WinGet 应用的安装状态
         /// </summary>
-        public static Visibility CheckPackageUpgradeProgressState(PackageInstallProgressState packageInstallProgressState, PackageInstallProgressState comparedPackageInstallProgressState, bool isReverse)
+        public static Visibility CheckPackageUpgradeProgressStateVisibility(PackageInstallProgressState packageInstallProgressState, PackageInstallProgressState comparedPackageInstallProgressState, bool isReverse)
         {
             return isReverse ? Equals(packageInstallProgressState, comparedPackageInstallProgressState) ? Visibility.Collapsed : Visibility.Visible : Equals(packageInstallProgressState, comparedPackageInstallProgressState) ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -161,7 +145,7 @@ namespace GetStoreApp.Helpers.Converters
         /// <summary>
         /// 检查 WinGet 应用的安装状态
         /// </summary>
-        public static Visibility CheckPackageOperationResultKind(PackageOperationResultKind packageOperationResultKind, PackageOperationResultKind comparedPackageOperationResultKind)
+        public static Visibility CheckPackageOperationResultKindVisibility(PackageOperationResultKind packageOperationResultKind, PackageOperationResultKind comparedPackageOperationResultKind)
         {
             return Equals(packageOperationResultKind, comparedPackageOperationResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -169,7 +153,7 @@ namespace GetStoreApp.Helpers.Converters
         /// <summary>
         /// 检查更新应用状态
         /// </summary>
-        public static Visibility CheckUpdateAppResultKind(UpdateAppResultKind updateAppResultKind, UpdateAppResultKind comparedUpdateAppResultKind)
+        public static Visibility CheckUpdateAppResultKindVisibility(UpdateAppResultKind updateAppResultKind, UpdateAppResultKind comparedUpdateAppResultKind)
         {
             return Equals(updateAppResultKind, comparedUpdateAppResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -177,7 +161,7 @@ namespace GetStoreApp.Helpers.Converters
         /// <summary>
         /// 检查列表控件选中项样式
         /// </summary>
-        public static Visibility CheckListViewSelectionMode(ListViewSelectionMode listViewSelectionMode, ListViewSelectionMode comparedListViewSelectionMode)
+        public static Visibility CheckListViewSelectionModeVisibility(ListViewSelectionMode listViewSelectionMode, ListViewSelectionMode comparedListViewSelectionMode)
         {
             return Equals(listViewSelectionMode, comparedListViewSelectionMode) ? Visibility.Visible : Visibility.Collapsed;
         }

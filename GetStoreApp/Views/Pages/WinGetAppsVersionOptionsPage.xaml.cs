@@ -1375,7 +1375,7 @@ namespace GetStoreApp.Views.Pages
 
         #endregion 第二部分：WinGet 应用版本信息操作选项页面——挂载的事件
 
-        private Visibility CheckPackagePath(string packagePath)
+        private Visibility CheckPackagePathVisibility(string packagePath)
         {
             return string.IsNullOrEmpty(packagePath) ? Visibility.Collapsed : Visibility.Visible;
         }

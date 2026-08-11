@@ -125,7 +125,7 @@
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
             CornerRadius="{StaticResource ControlCornerRadius}"
-            Visibility="{x:Bind GetPackageVolumeSuccessfullyState(PackageVolumeResultKind, x:False), Mode=OneWay}">
+            Visibility="{x:Bind GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind, x:False), Mode=OneWay}">
 
             <Grid>
                 <!--  正在加载中  -->
@@ -134,7 +134,7 @@
                     VerticalAlignment="Center"
                     Orientation="Horizontal"
                     Spacing="10"
-                    Visibility="{x:Bind CheckPackageVolumeState(PackageVolumeResultKind, enum:PackageVolumeResultKind.Loading, x:False), Mode=OneWay}">
+                    Visibility="{x:Bind CheckPackageVolumeResultKindVisibility(PackageVolumeResultKind, enum:PackageVolumeResultKind.Loading, x:False), Mode=OneWay}">
 
                     <ProgressRing IsActive="True" IsEnabled="True" />
 
@@ -151,7 +151,7 @@
                     VerticalAlignment="Center"
                     Text="{x:Bind PackageVolumeFailedContent, Mode=OneWay}"
                     TextAlignment="Center"
-                    Visibility="{x:Bind CheckPackageVolumeState(PackageVolumeResultKind, enum:PackageVolumeResultKind.Failed, x:False), Mode=OneWay}" />
+                    Visibility="{x:Bind CheckPackageVolumeResultKindVisibility(PackageVolumeResultKind, enum:PackageVolumeResultKind.Failed, x:False), Mode=OneWay}" />
             </Grid>
         </Grid>
 
@@ -161,7 +161,7 @@
             Padding="0,0,0,30"
             ItemsSource="{x:Bind PackageVolumeCollection}"
             SelectionMode="None"
-            Visibility="{x:Bind GetPackageVolumeSuccessfullyState(PackageVolumeResultKind, x:True), Mode=OneWay}">
+            Visibility="{x:Bind GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind, x:True), Mode=OneWay}">
 
             <ListView.ItemContainerStyle>
                 <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">

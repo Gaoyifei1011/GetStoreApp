@@ -415,14 +415,14 @@
                             Style="{StaticResource ComboBoxStyle}" />
                     </Grid>
 
-                    <MenuFlyoutSeparator Visibility="{x:Bind GetAppUpdateStatus(AppUpdateStatus.SelectedValue, AppUpdateStatusList[1].SelectedValue), Mode=OneWay}" />
+                    <MenuFlyoutSeparator Visibility="{x:Bind GetAppUpdateStatusVisibility(AppUpdateStatus.SelectedValue, AppUpdateStatusList[1].SelectedValue), Mode=OneWay}" />
 
                     <Grid
                         Height="52"
                         Padding="44,0,16,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
-                        Visibility="{x:Bind GetAppUpdateStatus(AppUpdateStatus.SelectedValue, AppUpdateStatusList[1].SelectedValue), Mode=OneWay}">
+                        Visibility="{x:Bind GetAppUpdateStatusVisibility(AppUpdateStatus.SelectedValue, AppUpdateStatusList[1].SelectedValue), Mode=OneWay}">
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />

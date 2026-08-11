@@ -869,7 +869,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取搜索应用是否成功
         /// </summary>
-        private Visibility GetInstalledAppsSuccessfullyState(InstalledAppsResultKind installedAppsResultKind, int count, bool isSuccessfully)
+        private Visibility GetInstalledAppsSuccessfullyVisibility(InstalledAppsResultKind installedAppsResultKind, int count, bool isSuccessfully)
         {
             if (isSuccessfully)
             {
@@ -906,7 +906,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查搜索应用是否成功
         /// </summary>
-        private Visibility CheckInstalledAppsState(InstalledAppsResultKind installedAppsResultKind, InstalledAppsResultKind comparedInstalledAppsResultKind)
+        private Visibility CheckInstalledAppsResultKindVisibility(InstalledAppsResultKind installedAppsResultKind, InstalledAppsResultKind comparedInstalledAppsResultKind)
         {
             return Equals(installedAppsResultKind, comparedInstalledAppsResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }

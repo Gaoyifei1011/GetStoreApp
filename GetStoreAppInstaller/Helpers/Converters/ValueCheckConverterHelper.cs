@@ -11,7 +11,7 @@ namespace GetStoreAppInstaller.Helpers.Converters
         /// <summary>
         /// 检查包文件类型
         /// </summary>
-        public static Visibility CheckPackageFileType(PackageFileType packageFileType, PackageFileType comparedPackageFileType)
+        public static Visibility CheckPackageFileTypeVisibility(PackageFileType packageFileType, PackageFileType comparedPackageFileType)
         {
             return Equals(packageFileType, comparedPackageFileType) ? Visibility.Visible : Visibility.Collapsed;
         }

@@ -1050,7 +1050,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取显示的应用类型
         /// </summary>
-        private Visibility GetWinGetAppsType(object winGetApps)
+        private Visibility GetWinGetAppsVisibility(object winGetApps)
         {
             return winGetApps is null ? Visibility.Collapsed : Visibility.Visible;
         }

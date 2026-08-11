@@ -2111,7 +2111,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取加载应用是否成功
         /// </summary>
-        private Visibility GetAppManagerSuccessfullyState(AppManagerResultKind appManagerResultKind, bool isSuccessfully)
+        private Visibility GetAppManagerSuccessfullyVisibility(AppManagerResultKind appManagerResultKind, bool isSuccessfully)
         {
             return isSuccessfully ? appManagerResultKind is AppManagerResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed : appManagerResultKind is AppManagerResultKind.Successfully ? Visibility.Collapsed : Visibility.Visible;
         }
@@ -2119,7 +2119,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查搜索应用是否成功
         /// </summary>
-        private Visibility CheckAppManagerState(AppManagerResultKind appManagerResultKind, AppManagerResultKind comparedAppManagerResultKind)
+        private Visibility CheckAppManagerResultKindVisibility(AppManagerResultKind appManagerResultKind, AppManagerResultKind comparedAppManagerResultKind)
         {
             return Equals(appManagerResultKind, comparedAppManagerResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }

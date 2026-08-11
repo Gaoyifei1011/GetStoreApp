@@ -782,13 +782,5 @@ namespace GetStoreApp.Views.UserControls
             filePath = newFullPath;
             return filePath;
         }
-
-        /// <summary>
-        /// 获取选中的选择模式
-        /// </summary>
-        private Visibility GetSelectionMode(ListViewSelectionMode selectedSelectionMode, ListViewSelectionMode comparedSelectionMode)
-        {
-            return Equals(selectedSelectionMode, comparedSelectionMode) ? Visibility.Visible : Visibility.Collapsed;
-        }
     }
 }

@@ -237,7 +237,7 @@
                                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                 BorderThickness="1"
                                 CornerRadius="{StaticResource ControlCornerRadius}"
-                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageFileType(PackageFileType, enum:PackageFileType.Package), Mode=OneWay}">
+                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageFileTypeVisibility(PackageFileType, enum:PackageFileType.Package), Mode=OneWay}">
 
                                 <Image
                                     HorizontalAlignment="Center"
@@ -856,7 +856,7 @@
 
                                         <StackPanel Spacing="3">
                                             <!--  应用包信息  -->
-                                            <Grid Margin="16,0,10,0" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageFileType(PackageFileType, enum:PackageFileType.Package), Mode=OneWay}">
+                                            <Grid Margin="16,0,10,0" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageFileTypeVisibility(PackageFileType, enum:PackageFileType.Package), Mode=OneWay}">
 
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto" />
@@ -1038,7 +1038,7 @@
                                             </Grid>
 
                                             <!--  应用安装程序文件信息  -->
-                                            <Grid Margin="16,0,10,0" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageFileType(PackageFileType, enum:PackageFileType.AppInstaller), Mode=OneWay}">
+                                            <Grid Margin="16,0,10,0" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageFileTypeVisibility(PackageFileType, enum:PackageFileType.AppInstaller), Mode=OneWay}">
 
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto" />
@@ -1585,7 +1585,7 @@
                                             <ListView
                                                 ItemsSource="{x:Bind DependencyCollection}"
                                                 SelectionMode="None"
-                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageFileType(PackageFileType, enum:PackageFileType.Package), Mode=OneWay}">
+                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageFileTypeVisibility(PackageFileType, enum:PackageFileType.Package), Mode=OneWay}">
 
                                                 <ListView.ItemContainerStyle>
                                                     <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
@@ -1736,7 +1736,7 @@
                                             <ListView
                                                 ItemsSource="{x:Bind DependencyCollection}"
                                                 SelectionMode="None"
-                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageFileType(PackageFileType, enum:PackageFileType.AppInstaller), Mode=OneWay}">
+                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageFileTypeVisibility(PackageFileType, enum:PackageFileType.AppInstaller), Mode=OneWay}">
 
                                                 <ListView.ItemContainerStyle>
                                                     <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">

@@ -297,7 +297,7 @@
                             Background="Transparent"
                             DefaultLabelPosition="Right"
                             Style="{StaticResource CommandBarStyle}"
-                            Visibility="{x:Bind GetSelectionMode(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
+                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
 
                             <CommandBar.PrimaryCommands>
                                 <AppBarButton
@@ -320,7 +320,7 @@
                             Background="Transparent"
                             DefaultLabelPosition="Right"
                             Style="{StaticResource CommandBarStyle}"
-                            Visibility="{x:Bind GetSelectionMode(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
+                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
 
                             <CommandBar.PrimaryCommands>
                                 <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/MultiSelect')}">
@@ -652,7 +652,7 @@
                                         VerticalAlignment="Center"
                                         Command="{StaticResource DownloadCommand}"
                                         CommandParameter="{x:Bind}"
-                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionMode(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
 
                                         <HyperlinkButton.Resources>
                                             <ResourceDictionary>
@@ -706,7 +706,7 @@
                                         Text="{x:Bind FileName}"
                                         TextTrimming="CharacterEllipsis"
                                         TextWrapping="NoWrap"
-                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionMode(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />

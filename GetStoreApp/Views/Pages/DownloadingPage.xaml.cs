@@ -455,13 +455,5 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第四部分：下载中页面——自定义事件
-
-        /// <summary>
-        /// 获取选中的选择模式
-        /// </summary>
-        private Visibility GetSelectionMode(ListViewSelectionMode selectedSelectionMode, ListViewSelectionMode comparedSelectionMode)
-        {
-            return Equals(selectedSelectionMode, comparedSelectionMode) ? Visibility.Visible : Visibility.Collapsed;
-        }
     }
 }

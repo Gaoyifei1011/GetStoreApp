@@ -883,7 +883,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取加载下载已完成文件是否成功
         /// </summary>
-        private Visibility GetCompletedSuccessfullyState(CompletedResultKind completedResultKind, bool isSuccessfully)
+        private Visibility GetCompletedSuccessfullyVisibility(CompletedResultKind completedResultKind, bool isSuccessfully)
         {
             return isSuccessfully ? completedResultKind is CompletedResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed : completedResultKind is CompletedResultKind.Successfully ? Visibility.Collapsed : Visibility.Visible;
         }
@@ -891,7 +891,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查加载下载已完成文件是否成功
         /// </summary>
-        private Visibility CheckCompletedState(CompletedResultKind completedResultKind, CompletedResultKind comparedCompletedResultKind)
+        private Visibility CheckCompletedResultKindVisibility(CompletedResultKind completedResultKind, CompletedResultKind comparedCompletedResultKind)
         {
             return Equals(completedResultKind, comparedCompletedResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -903,14 +903,6 @@ namespace GetStoreApp.Views.Pages
         private bool GetIsLoading(CompletedResultKind completedResultKind)
         {
             return completedResultKind is not CompletedResultKind.Loading;
-        }
-
-        /// <summary>
-        /// 获取选中的选择模式
-        /// </summary>
-        private Visibility GetSelectionMode(ListViewSelectionMode selectedSelectionMode, ListViewSelectionMode comparedSelectionMode)
-        {
-            return Equals(selectedSelectionMode, comparedSelectionMode) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

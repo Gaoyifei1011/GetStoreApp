@@ -329,7 +329,7 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 检查应用是否正在更新中
         /// </summary>
-        private Visibility GetUpdateProgressState(UpdateAppResultKind updateAppResultKind)
+        private Visibility GetUpdatingAppVisibility(UpdateAppResultKind updateAppResultKind)
         {
             return (updateAppResultKind is UpdateAppResultKind.Pending || UpdateAppResultKind is UpdateAppResultKind.Downloading || UpdateAppResultKind is UpdateAppResultKind.Canceling || UpdateAppResultKind is UpdateAppResultKind.Deploying) ? Visibility.Visible : Visibility.Collapsed;
         }

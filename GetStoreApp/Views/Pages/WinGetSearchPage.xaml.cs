@@ -572,7 +572,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取搜索应用是否成功
         /// </summary>
-        public Visibility GetSearchAppsSuccessfullyState(SearchAppsResultKind searchAppsResultKind, bool isSuccessfully)
+        public Visibility GetSearchAppsSuccessfullyVisibility(SearchAppsResultKind searchAppsResultKind, bool isSuccessfully)
         {
             return isSuccessfully ? Equals(searchAppsResultKind, SearchAppsResultKind.Successfully) ? Visibility.Visible : Visibility.Collapsed : !Equals(searchAppsResultKind, SearchAppsResultKind.Successfully) ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -580,7 +580,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查搜索应用是否成功
         /// </summary>
-        public Visibility CheckSearchAppsState(SearchAppsResultKind searchAppsResultKind, SearchAppsResultKind comparedSearchAppsResultKind)
+        public Visibility CheckSearchAppsResultKindVisibility(SearchAppsResultKind searchAppsResultKind, SearchAppsResultKind comparedSearchAppsResultKind)
         {
             return Equals(searchAppsResultKind, comparedSearchAppsResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }

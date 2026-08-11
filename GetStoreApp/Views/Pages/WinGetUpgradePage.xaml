@@ -198,7 +198,7 @@
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
             CornerRadius="{StaticResource ControlCornerRadius}"
-            Visibility="{x:Bind GetUpgradableAppsSuccessfullyState(UpgradableAppsResultKind, x:False), Mode=OneWay}">
+            Visibility="{x:Bind GetUpgradableAppsSuccessfullyVisibility(UpgradableAppsResultKind, x:False), Mode=OneWay}">
 
             <Grid>
                 <!--  未检查更新  -->
@@ -208,7 +208,7 @@
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/NotCheckUpdate')}"
                     TextAlignment="Center"
                     ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/NotCheckUpdate')}"
-                    Visibility="{x:Bind CheckUpgradableAppsState(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.NotCheckUpdate), Mode=OneWay}" />
+                    Visibility="{x:Bind CheckUpgradableAppsResultKindVisibility(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.NotCheckUpdate), Mode=OneWay}" />
 
                 <!--  正在检查更新中  -->
                 <StackPanel
@@ -216,7 +216,7 @@
                     VerticalAlignment="Center"
                     Orientation="Horizontal"
                     Spacing="10"
-                    Visibility="{x:Bind CheckUpgradableAppsState(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.Querying), Mode=OneWay}">
+                    Visibility="{x:Bind CheckUpgradableAppsResultKindVisibility(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.Querying), Mode=OneWay}">
 
                     <ProgressRing IsActive="True" IsEnabled="True" />
 
@@ -233,7 +233,7 @@
                     VerticalAlignment="Center"
                     Text="{x:Bind UpgradableFailedContent, Mode=OneWay}"
                     TextAlignment="Center"
-                    Visibility="{x:Bind CheckUpgradableAppsState(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.Failed), Mode=OneWay}" />
+                    Visibility="{x:Bind CheckUpgradableAppsResultKindVisibility(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.Failed), Mode=OneWay}" />
             </Grid>
         </Grid>
 

@@ -212,7 +212,7 @@
                                 VerticalAlignment="Center"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap"
-                                Visibility="{x:Bind CheckPackagePath(PackageDownloadPath), Mode=OneWay}">
+                                Visibility="{x:Bind CheckPackagePathVisibility(PackageDownloadPath), Mode=OneWay}">
 
                                 <Hyperlink Click="{x:Bind OnPackageDownloadPathClicked}" UnderlineStyle="None">
                                     <Run Text="{x:Bind PackageDownloadPath, Mode=OneWay}" />
@@ -583,7 +583,7 @@
                                 VerticalAlignment="Center"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap"
-                                Visibility="{x:Bind CheckPackagePath(PackageInstallPath), Mode=OneWay}">
+                                Visibility="{x:Bind CheckPackagePathVisibility(PackageInstallPath), Mode=OneWay}">
 
                                 <Hyperlink Click="{x:Bind OnPackageInstallPathClicked}" UnderlineStyle="None">
                                     <Run Text="{x:Bind PackageInstallPath, Mode=OneWay}" />
@@ -1227,7 +1227,7 @@
                                 VerticalAlignment="Center"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap"
-                                Visibility="{x:Bind CheckPackagePath(PackageInstallPath), Mode=OneWay}">
+                                Visibility="{x:Bind CheckPackagePathVisibility(PackageInstallPath), Mode=OneWay}">
 
                                 <Hyperlink Click="{x:Bind OnPackageInstallPathClicked}" UnderlineStyle="None">
                                     <Run Text="{x:Bind PackageInstallPath, Mode=OneWay}" />

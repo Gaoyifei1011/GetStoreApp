@@ -632,7 +632,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取选中的应用更新状态
         /// </summary>
-        private Visibility GetAppUpdateStatus(object selectedValue, object comparedValue)
+        private Visibility GetAppUpdateStatusVisibility(object selectedValue, object comparedValue)
         {
             return Equals(selectedValue, comparedValue) ? Visibility.Visible : Visibility.Collapsed;
         }

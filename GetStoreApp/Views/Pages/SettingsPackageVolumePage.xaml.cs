@@ -598,7 +598,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取包存储卷是否加载完成
         /// </summary>
-        private Visibility GetPackageVolumeSuccessfullyState(PackageVolumeResultKind packageVolumeResultKind, bool isSuccessfully)
+        private Visibility GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind packageVolumeResultKind, bool isSuccessfully)
         {
             return isSuccessfully ? packageVolumeResultKind is PackageVolumeResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed : packageVolumeResultKind is PackageVolumeResultKind.Successfully ? Visibility.Collapsed : Visibility.Visible;
         }
@@ -606,7 +606,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查包存储卷是否加载成功
         /// </summary>
-        private Visibility CheckPackageVolumeState(PackageVolumeResultKind packageVolumeResultKind, PackageVolumeResultKind comparedPackageVolumeResultKind, bool needReverse)
+        private Visibility CheckPackageVolumeResultKindVisibility(PackageVolumeResultKind packageVolumeResultKind, PackageVolumeResultKind comparedPackageVolumeResultKind, bool needReverse)
         {
             return needReverse ? Equals(packageVolumeResultKind, comparedPackageVolumeResultKind) ? Visibility.Collapsed : Visibility.Visible : Equals(packageVolumeResultKind, comparedPackageVolumeResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }

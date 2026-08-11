@@ -287,7 +287,7 @@
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
             CornerRadius="{StaticResource ControlCornerRadius}"
-            Visibility="{x:Bind GetInstalledAppsSuccessfullyState(InstalledAppsResultKind, InstalledAppsCollection.Count, x:False), Mode=OneWay}">
+            Visibility="{x:Bind GetInstalledAppsSuccessfullyVisibility(InstalledAppsResultKind, InstalledAppsCollection.Count, x:False), Mode=OneWay}">
 
             <Grid>
                 <!--  正在搜索中  -->
@@ -296,7 +296,7 @@
                     VerticalAlignment="Center"
                     Orientation="Horizontal"
                     Spacing="10"
-                    Visibility="{x:Bind CheckInstalledAppsState(InstalledAppsResultKind, enum:InstalledAppsResultKind.Querying), Mode=OneWay}">
+                    Visibility="{x:Bind CheckInstalledAppsResultKindVisibility(InstalledAppsResultKind, enum:InstalledAppsResultKind.Querying), Mode=OneWay}">
 
                     <ProgressRing IsActive="True" IsEnabled="True" />
 
@@ -313,7 +313,7 @@
                     VerticalAlignment="Center"
                     Text="{x:Bind InstalledFailedContent, Mode=OneWay}"
                     TextAlignment="Center"
-                    Visibility="{x:Bind CheckInstalledAppsState(InstalledAppsResultKind, enum:InstalledAppsResultKind.Failed), Mode=OneWay}" />
+                    Visibility="{x:Bind CheckInstalledAppsResultKindVisibility(InstalledAppsResultKind, enum:InstalledAppsResultKind.Failed), Mode=OneWay}" />
 
                 <!--  搜索结果为空  -->
                 <TextBlock
@@ -321,7 +321,7 @@
                     VerticalAlignment="Center"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/InstalledAppsSearchEmptyDescription')}"
                     TextAlignment="Center"
-                    Visibility="{x:Bind CheckInstalledAppsState(InstalledAppsResultKind, enum:InstalledAppsResultKind.SearchResult), Mode=OneWay}" />
+                    Visibility="{x:Bind CheckInstalledAppsResultKindVisibility(InstalledAppsResultKind, enum:InstalledAppsResultKind.SearchResult), Mode=OneWay}" />
             </Grid>
         </Grid>
 
@@ -331,7 +331,7 @@
             Padding="30,0,30,30"
             ItemsSource="{x:Bind InstalledAppsCollection, Mode=OneWay}"
             SelectionMode="None"
-            Visibility="{x:Bind GetInstalledAppsSuccessfullyState(InstalledAppsResultKind, InstalledAppsCollection.Count, x:True), Mode=OneWay}">
+            Visibility="{x:Bind GetInstalledAppsSuccessfullyVisibility(InstalledAppsResultKind, InstalledAppsCollection.Count, x:True), Mode=OneWay}">
 
             <ListView.ItemContainerStyle>
                 <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
