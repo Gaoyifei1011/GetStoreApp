@@ -350,28 +350,31 @@ namespace GetStoreApp.Views.Pages
                 SelectedItem = sender.SelectedItem;
             }
 
-            int index = sender.Items.IndexOf(SelectedItem);
-            Type currentPage = GetCurrentPageType();
-            int currentIndex = PageList.FindIndex(item => Equals(item, currentPage));
+            if (SelectedItem is not null)
+            {
+                int index = sender.Items.IndexOf(SelectedItem);
+                Type currentPage = GetCurrentPageType();
+                int currentIndex = PageList.FindIndex(item => Equals(item, currentPage));
 
-            if (index is 0)
-            {
-                if (currentPage is null)
+                if (index is 0)
                 {
-                    NavigateTo(PageList[0]);
+                    if (currentPage is null)
+                    {
+                        NavigateTo(PageList[0]);
+                    }
+                    else if (!Equals(currentPage, PageList[0]))
+                    {
+                        NavigateTo(PageList[0], null, index > currentIndex);
+                    }
                 }
-                else if (!Equals(currentPage, PageList[0]))
+                else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
                 {
-                    NavigateTo(PageList[0], null, index > currentIndex);
+                    NavigateTo(PageList[1], this, index > currentIndex);
                 }
-            }
-            else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
-            {
-                NavigateTo(PageList[1], this, index > currentIndex);
-            }
-            else if (index is 2 && !Equals(GetCurrentPageType(), PageList[2]))
-            {
-                NavigateTo(PageList[2], this, index > currentIndex);
+                else if (index is 2 && !Equals(GetCurrentPageType(), PageList[2]))
+                {
+                    NavigateTo(PageList[2], this, index > currentIndex);
+                }
             }
         }
 

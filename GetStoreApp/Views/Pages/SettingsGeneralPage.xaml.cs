@@ -251,8 +251,9 @@ namespace GetStoreApp.Views.Pages
                 if (Theme is not null)
                 {
                     ThemeService.SetTheme(Convert.ToString(Theme.SelectedValue));
-                    Theme = ThemeList.Find(item => Equals(Convert.ToString(item.SelectedValue), ThemeService.AppTheme));
                 }
+
+                Theme = ThemeList.Find(item => Equals(Convert.ToString(item.SelectedValue), ThemeService.AppTheme));
             }
         }
 
@@ -269,14 +270,15 @@ namespace GetStoreApp.Views.Pages
                 if (Backdrop is not null)
                 {
                     BackdropService.SetBackdrop(Convert.ToString(Backdrop.SelectedValue));
-                    Backdrop = BackdropList.Find(item => Equals(Convert.ToString(item.SelectedValue), BackdropService.AppBackdrop));
-                    AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Convert.ToString(Backdrop.SelectedValue), Convert.ToString(BackdropList[0].SelectedValue));
+                }
 
-                    if (Equals(Backdrop, BackdropList[0]))
-                    {
-                        AlwaysShowBackdropService.SetAlwaysShowBackdrop(false);
-                        AlwaysShowBackdrop = false;
-                    }
+                Backdrop = BackdropList.Find(item => Equals(Convert.ToString(item.SelectedValue), BackdropService.AppBackdrop));
+                AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Convert.ToString(Backdrop.SelectedValue), Convert.ToString(BackdropList[0].SelectedValue));
+
+                if (Equals(Backdrop, BackdropList[0]))
+                {
+                    AlwaysShowBackdropService.SetAlwaysShowBackdrop(false);
+                    AlwaysShowBackdrop = false;
                 }
             }
         }
@@ -344,16 +346,17 @@ namespace GetStoreApp.Views.Pages
                 if (AppLanguage is not null)
                 {
                     LanguageService.SetLanguage(LanguageService.LanguageList.Find(item => string.Equals(Convert.ToString(AppLanguage.SelectedValue), item.Key)));
-                    foreach (ComboBoxItemModel languageItem in LanguageCollection)
-                    {
-                        if (string.Equals(Convert.ToString(languageItem.SelectedValue), LanguageService.AppLanguage.Key, StringComparison.OrdinalIgnoreCase))
-                        {
-                            AppLanguage = languageItem;
-                            break;
-                        }
-                    }
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.LanguageChange));
                 }
+
+                foreach (ComboBoxItemModel languageItem in LanguageCollection)
+                {
+                    if (string.Equals(Convert.ToString(languageItem.SelectedValue), LanguageService.AppLanguage.Key, StringComparison.OrdinalIgnoreCase))
+                    {
+                        AppLanguage = languageItem;
+                        break;
+                    }
+                }
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.LanguageChange));
             }
         }
 

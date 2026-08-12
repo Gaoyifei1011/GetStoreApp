@@ -232,8 +232,9 @@ namespace GetStoreApp.Views.Pages
                 if (DoEngineMode is not null)
                 {
                     DownloadOptionsService.SetDoEngineMode(Convert.ToString(DoEngineMode.SelectedValue));
-                    DoEngineMode = DoEngineModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), DownloadOptionsService.DoEngineMode, StringComparison.OrdinalIgnoreCase));
                 }
+
+                DoEngineMode = DoEngineModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), DownloadOptionsService.DoEngineMode, StringComparison.OrdinalIgnoreCase));
             }
         }
 

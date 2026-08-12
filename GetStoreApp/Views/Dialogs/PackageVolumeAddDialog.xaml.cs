@@ -185,6 +185,7 @@ namespace GetStoreApp.Views.Dialogs
             {
                 SelectedPackageVolume = listView.SelectedItem is PackageVolumeModel packageVolume ? packageVolume : null;
                 IsPrimaryEnabled = true;
+
                 if (SelectedPackageVolume is not null && SelectedPackageVolume.WinRTPackageVolume is not null)
                 {
                     if (UseWindowsAppsFolder)

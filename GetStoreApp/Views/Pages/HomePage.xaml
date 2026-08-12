@@ -104,7 +104,6 @@
             <!--  选择栏  -->
             <ListView
                 Margin="0,10,0,0"
-                IsSwipeEnabled="False"
                 ItemsSource="{x:Bind HomeList}"
                 SelectionMode="None"
                 TabIndex="1">

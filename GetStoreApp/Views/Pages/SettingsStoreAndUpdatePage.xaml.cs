@@ -337,8 +337,9 @@ namespace GetStoreApp.Views.Pages
                 if (QueryLinksMode is not null)
                 {
                     QueryLinksModeService.SetQueryLinksMode(Convert.ToString(QueryLinksMode.SelectedValue));
-                    QueryLinksMode = QueryLinksModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), QueryLinksModeService.QueryLinksMode, StringComparison.OrdinalIgnoreCase));
                 }
+
+                QueryLinksMode = QueryLinksModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), QueryLinksModeService.QueryLinksMode, StringComparison.OrdinalIgnoreCase));
             }
         }
 
@@ -355,8 +356,9 @@ namespace GetStoreApp.Views.Pages
                 if (AppLinkOpenMode is not null)
                 {
                     AppLinkOpenModeService.SetAppLinkOpenMode(Convert.ToString(AppLinkOpenMode.SelectedValue));
-                    AppLinkOpenMode = AppLinkOpenModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), AppLinkOpenModeService.AppLinkOpenMode, StringComparison.OrdinalIgnoreCase));
                 }
+
+                AppLinkOpenMode = AppLinkOpenModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), AppLinkOpenModeService.AppLinkOpenMode, StringComparison.OrdinalIgnoreCase));
             }
         }
 
@@ -373,8 +375,9 @@ namespace GetStoreApp.Views.Pages
                 if (InstallMode is not null)
                 {
                     InstallModeService.SetInstallMode(Convert.ToString(InstallMode.SelectedValue));
-                    InstallMode = InstallModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), InstallModeService.InstallMode, StringComparison.OrdinalIgnoreCase));
                 }
+
+                InstallMode = InstallModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), InstallModeService.InstallMode, StringComparison.OrdinalIgnoreCase));
             }
         }
 
@@ -433,7 +436,7 @@ namespace GetStoreApp.Views.Pages
 
                 if (AppUpdateStatus is not null)
                 {
-                    AppUpdateStatus = await Task.Run(() =>
+                    await Task.Run(() =>
                     {
                         if (AppUpdateStatus.SelectedValue is "AppUpdateEnabled")
                         {
@@ -449,29 +452,32 @@ namespace GetStoreApp.Views.Pages
                         {
                             RegistryHelper.SaveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload", 2);
                         }
+                    });
+                }
 
-                        string appUpdateStatus = "AppUpdateDisabled";
-                        int? autoDownload = RegistryHelper.ReadRegistryKey<int?>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
-                        if (autoDownload.HasValue)
-                        {
-                            appUpdateStatus = autoDownload.Value is 4 ? "AppUpdateEnabled" : "AppUpdateDisabled";
-                        }
-                        else
-                        {
-                            autoDownload = RegistryHelper.ReadRegistryKey<int?>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload");
-                            appUpdateStatus = autoDownload.HasValue ? autoDownload.Value is 4 ? "AppUpdateEnabled" : "AppUpdatePaused" : "AppUpdateEnabled";
-                        }
-                        return AppUpdateStatusList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), appUpdateStatus, StringComparison.OrdinalIgnoreCase)); ;
-                    });
-                    AppUpdatePauseEndTime = await Task.Run(() =>
+                AppUpdateStatus = await Task.Run(() =>
+                {
+                    string appUpdateStatus = "AppUpdateDisabled";
+                    int? autoDownload = RegistryHelper.ReadRegistryKey<int?>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
+                    if (autoDownload.HasValue)
                     {
-                        string appUpdatePauseEndTime = RegistryHelper.ReadRegistryKey<string>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\InstallService\State", "AutoUpdatePauseEndTime");
-                        return !string.IsNullOrEmpty(appUpdatePauseEndTime) && DateTimeOffset.TryParse(appUpdatePauseEndTime, out DateTimeOffset appUpdatePauseEndTimeDateTimeOffset) ? appUpdatePauseEndTimeDateTimeOffset.Date : DateTimeOffset.UnixEpoch.Date;
-                    });
-                    if (!RuntimeHelper.IsElevated)
-                    {
-                        await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.NotElevated));
+                        appUpdateStatus = autoDownload.Value is 4 ? "AppUpdateEnabled" : "AppUpdateDisabled";
                     }
+                    else
+                    {
+                        autoDownload = RegistryHelper.ReadRegistryKey<int?>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload");
+                        appUpdateStatus = autoDownload.HasValue ? autoDownload.Value is 4 ? "AppUpdateEnabled" : "AppUpdatePaused" : "AppUpdateEnabled";
+                    }
+                    return AppUpdateStatusList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), appUpdateStatus, StringComparison.OrdinalIgnoreCase));
+                });
+                AppUpdatePauseEndTime = await Task.Run(() =>
+                {
+                    string appUpdatePauseEndTime = RegistryHelper.ReadRegistryKey<string>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\InstallService\State", "AutoUpdatePauseEndTime");
+                    return !string.IsNullOrEmpty(appUpdatePauseEndTime) && DateTimeOffset.TryParse(appUpdatePauseEndTime, out DateTimeOffset appUpdatePauseEndTimeDateTimeOffset) ? appUpdatePauseEndTimeDateTimeOffset.Date : DateTimeOffset.UnixEpoch.Date;
+                });
+                if (!RuntimeHelper.IsElevated)
+                {
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.NotElevated));
                 }
             }
         }
@@ -538,13 +544,14 @@ namespace GetStoreApp.Views.Pages
                 if (StoreRegion is not null)
                 {
                     StoreRegionService.SetRegion(StoreRegion.GeographicRegion);
-                    foreach (StoreRegionModel storeRegionItem in StoreRegionCollection)
+                }
+
+                foreach (StoreRegionModel storeRegionItem in StoreRegionCollection)
+                {
+                    if (string.Equals(StoreRegionService.StoreRegion.CodeTwoLetter, storeRegionItem.CodeTwoLetter))
                     {
-                        if (string.Equals(StoreRegionService.StoreRegion.CodeTwoLetter, storeRegionItem.CodeTwoLetter))
-                        {
-                            StoreRegion = storeRegionItem;
-                            break;
-                        }
+                        StoreRegion = storeRegionItem;
+                        break;
                     }
                 }
             }
