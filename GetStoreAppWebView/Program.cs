@@ -59,11 +59,8 @@ namespace GetStoreAppWebView
 
             InitializeResourcesAsync().Wait();
 
-            Application.Start((param) =>
-            {
-                SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread()));
-                new WebViewApp();
-            });
+            // 启动桌面程序
+            XamlGeneratedProgram.XamlGeneratedMain();
         }
 
         /// <summary>

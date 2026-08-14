@@ -61,11 +61,7 @@ namespace GetStoreAppInstaller
             InitializeResources();
 
             // 启动桌面程序
-            Application.Start((param) =>
-            {
-                SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread()));
-                new InstallerApp();
-            });
+            XamlGeneratedProgram.XamlGeneratedMain();
         }
 
         /// <summary>

@@ -74,11 +74,7 @@ namespace GetStoreApp
             DesktopLaunchService.InitializeLaunchAsync(appActivationArguments, false).Wait();
 
             // 启动桌面程序
-            Application.Start((param) =>
-            {
-                SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread()));
-                new MainApp();
-            });
+            XamlGeneratedProgram.XamlGeneratedMain();
         }
 
         /// <summary>
