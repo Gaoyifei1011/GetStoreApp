@@ -803,41 +803,44 @@ namespace GetStoreApp.Views.Windows
             {
                 SelectedItem = args.SelectedItem as NavigationViewItemModel;
 
-                // 对应的页面为空，选中项修改为已经选择的页面
-                if (SelectedItem.NavigationPage is null)
+                if(SelectedItem is not null)
                 {
-                    if (Equals(SelectedItem.NavigationTag, "Web"))
+                    // 对应的页面为空，选中项修改为已经选择的页面
+                    if (SelectedItem.NavigationPage is null)
                     {
-                        Task.Run(async () =>
+                        if (Equals(SelectedItem.NavigationTag, "Web"))
                         {
-                            try
+                            Task.Run(async () =>
                             {
-                                await global::Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreappwebview:"));
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                        });
-                    }
+                                try
+                                {
+                                    await global::Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreappwebview:"));
+                                }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
+                            });
+                        }
 
-                    Type currentPageType = GetCurrentPageType();
-                    NavigationViewItemModel selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemMenuItemsCollection);
-                    if (selectedNavigationViewItem is not null)
-                    {
-                        SelectedItem = selectedNavigationViewItem;
+                        Type currentPageType = GetCurrentPageType();
+                        NavigationViewItemModel selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemMenuItemsCollection);
+                        if (selectedNavigationViewItem is not null)
+                        {
+                            SelectedItem = selectedNavigationViewItem;
+                        }
+                        else
+                        {
+                            selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemFooterMenuItemsCollection);
+                            SelectedItem = selectedNavigationViewItem is not null ? selectedNavigationViewItem : null;
+                        }
                     }
+                    // 切换到选中项对应的页面
                     else
                     {
-                        selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemFooterMenuItemsCollection);
-                        SelectedItem = selectedNavigationViewItem is not null ? selectedNavigationViewItem : null;
+                        NavigateTo(SelectedItem.NavigationPage);
                     }
-                }
-                // 切换到选中项对应的页面
-                else
-                {
-                    NavigateTo(SelectedItem.NavigationPage);
-                }
+                }   
             }
         }
 

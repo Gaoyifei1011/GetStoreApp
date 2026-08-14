@@ -5,8 +5,9 @@
     /// </summary>
     public enum AppManagerResultKind
     {
-        Loading = 0,
-        Failed = 1,
-        Successfully = 2,
+        None = 0,
+        Loading = 1,
+        Failed = 2,
+        Successfully = 3
     }
 }

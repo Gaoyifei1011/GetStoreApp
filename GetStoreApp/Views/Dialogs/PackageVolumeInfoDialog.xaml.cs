@@ -44,7 +44,7 @@ namespace GetStoreApp.Views.Dialogs
             }
         }
 
-        private PackageVolumeResultKind _packageVolumeResultKind = PackageVolumeResultKind.Loading;
+        private PackageVolumeResultKind _packageVolumeResultKind;
 
         public PackageVolumeResultKind PackageVolumeResultKind
         {
@@ -188,103 +188,106 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async Task GetPackageVolumeInfoAsync()
         {
-            PackageVolumeResultKind = PackageVolumeResultKind.Loading;
-
-            (PackageVolumeModel currentPackageVolume, List<PackageVolumeModel> packageVolumeList) = await Task.Run(async () =>
+            if (PackageVolumeResultKind is not PackageVolumeResultKind.Loading)
             {
-                PackageVolumeModel currentPackageVolume = null;
-                List<PackageVolumeModel> packageVolumeList = [];
-                IList<PackageVolume> requestedPackageVolumeList = PackageVolume.FindPackageVolumes();
+                PackageVolumeResultKind = PackageVolumeResultKind.Loading;
 
-                foreach (PackageVolume packageVolume in requestedPackageVolumeList)
+                (PackageVolumeModel currentPackageVolume, List<PackageVolumeModel> packageVolumeList) = await Task.Run(async () =>
                 {
-                    if (packageVolume.IsAppxInstallSupported && packageVolume.IsFullTrustPackageSupported && packageVolume.SupportsHardLinks && !string.Equals(packageVolume.MountPoint, packageVolume.PackageStorePath))
+                    PackageVolumeModel currentPackageVolume = null;
+                    List<PackageVolumeModel> packageVolumeList = [];
+                    IList<PackageVolume> requestedPackageVolumeList = PackageVolume.FindPackageVolumes();
+
+                    foreach (PackageVolume packageVolume in requestedPackageVolumeList)
                     {
-                        double availableSpace = await packageVolume.GetAvailableSpaceAsync();
-                        string displayName = string.Empty;
-                        double totalSpace = 0;
-
-                        if (!string.IsNullOrEmpty(packageVolume.MountPoint))
+                        if (packageVolume.IsAppxInstallSupported && packageVolume.IsFullTrustPackageSupported && packageVolume.SupportsHardLinks && !string.Equals(packageVolume.MountPoint, packageVolume.PackageStorePath))
                         {
-                            StorageFolder rootFolder = null;
+                            double availableSpace = await packageVolume.GetAvailableSpaceAsync();
+                            string displayName = string.Empty;
+                            double totalSpace = 0;
 
-                            try
+                            if (!string.IsNullOrEmpty(packageVolume.MountPoint))
                             {
-                                rootFolder = await StorageFolder.GetFolderFromPathAsync(packageVolume.MountPoint);
-                                displayName = rootFolder.DisplayName;
-                                if (rootFolder is not null)
-                                {
-                                    IDictionary<string, object> propertiesDict = await rootFolder.Properties.RetrievePropertiesAsync((string[])["System.Capacity"]);
+                                StorageFolder rootFolder = null;
 
-                                    if (propertiesDict.TryGetValue("System.Capacity", out object value))
+                                try
+                                {
+                                    rootFolder = await StorageFolder.GetFolderFromPathAsync(packageVolume.MountPoint);
+                                    displayName = rootFolder.DisplayName;
+                                    if (rootFolder is not null)
                                     {
-                                        totalSpace = Convert.ToDouble(value);
+                                        IDictionary<string, object> propertiesDict = await rootFolder.Properties.RetrievePropertiesAsync((string[])["System.Capacity"]);
+
+                                        if (propertiesDict.TryGetValue("System.Capacity", out object value))
+                                        {
+                                            totalSpace = Convert.ToDouble(value);
+                                        }
                                     }
                                 }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
                             }
-                            catch (Exception e)
+
+                            double usedPercentage = totalSpace is 0 ? 0 : (totalSpace - availableSpace) / totalSpace * 100;
+                            string availableSpaceString = VolumeSizeHelper.ConvertVolumeSizeToString(availableSpace);
+                            string totalSpaceString = VolumeSizeHelper.ConvertVolumeSizeToString(totalSpace);
+
+                            PackageVolumeModel packageVolumeItem = new()
                             {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                        }
+                                Name = string.Format("{0}[{1}]", displayName, packageVolume.PackageStorePath),
+                                Space = string.Format(VolumeSpaceString, availableSpaceString, totalSpaceString),
+                                PackageVolumeId = packageVolume.Name,
+                                PackageVolumePath = packageVolume.PackageStorePath,
+                                PackageVolumeUsedPercentage = usedPercentage,
+                                PackageVolume = packageVolume,
+                                IsAvailableSpaceWarning = usedPercentage > 90,
+                                IsAvailableSpaceError = usedPercentage > 95,
+                            };
 
-                        double usedPercentage = totalSpace is 0 ? 0 : (totalSpace - availableSpace) / totalSpace * 100;
-                        string availableSpaceString = VolumeSizeHelper.ConvertVolumeSizeToString(availableSpace);
-                        string totalSpaceString = VolumeSizeHelper.ConvertVolumeSizeToString(totalSpace);
-
-                        PackageVolumeModel packageVolumeItem = new()
-                        {
-                            Name = string.Format("{0}[{1}]", displayName, packageVolume.PackageStorePath),
-                            Space = string.Format(VolumeSpaceString, availableSpaceString, totalSpaceString),
-                            PackageVolumeId = packageVolume.Name,
-                            PackageVolumePath = packageVolume.PackageStorePath,
-                            PackageVolumeUsedPercentage = usedPercentage,
-                            PackageVolume = packageVolume,
-                            IsAvailableSpaceWarning = usedPercentage > 90,
-                            IsAvailableSpaceError = usedPercentage > 95,
-                        };
-
-                        global::Windows.Management.Deployment.PackageVolume winRTPackageVolume = null;
-                        foreach (global::Windows.Management.Deployment.PackageVolume winRTPackageVolumeItem in packageManager.FindPackageVolumes())
-                        {
-                            if (string.Equals(winRTPackageVolumeItem.PackageStorePath, packageVolume.PackageStorePath))
+                            global::Windows.Management.Deployment.PackageVolume winRTPackageVolume = null;
+                            foreach (global::Windows.Management.Deployment.PackageVolume winRTPackageVolumeItem in packageManager.FindPackageVolumes())
                             {
-                                winRTPackageVolume = winRTPackageVolumeItem;
-                                break;
+                                if (string.Equals(winRTPackageVolumeItem.PackageStorePath, packageVolume.PackageStorePath))
+                                {
+                                    winRTPackageVolume = winRTPackageVolumeItem;
+                                    break;
+                                }
                             }
-                        }
-                        if (currentPackageVolume is null && winRTPackageVolume.FindPackageForUser(string.Empty, Package.Package.Id.FullName).Count > 0)
-                        {
-                            currentPackageVolume = packageVolumeItem;
-                        }
-                        else
-                        {
-                            packageVolumeList.Add(packageVolumeItem);
+                            if (currentPackageVolume is null && winRTPackageVolume.FindPackageForUser(string.Empty, Package.Package.Id.FullName).Count > 0)
+                            {
+                                currentPackageVolume = packageVolumeItem;
+                            }
+                            else
+                            {
+                                packageVolumeList.Add(packageVolumeItem);
+                            }
                         }
                     }
-                }
 
-                return ValueTuple.Create(currentPackageVolume, packageVolumeList);
-            });
+                    return ValueTuple.Create(currentPackageVolume, packageVolumeList);
+                });
 
-            if (currentPackageVolume is not null)
-            {
-                CurrentPackageVolume = currentPackageVolume;
-            }
-
-            if (packageVolumeList.Count is 0)
-            {
-                PackageVolumeResultKind = PackageVolumeResultKind.Failed;
-            }
-            else
-            {
-                PackageVolumeCollection.Clear();
-                foreach (PackageVolumeModel packageVolumeItem in packageVolumeList)
+                if (currentPackageVolume is not null)
                 {
-                    PackageVolumeCollection.Add(packageVolumeItem);
+                    CurrentPackageVolume = currentPackageVolume;
                 }
 
-                PackageVolumeResultKind = PackageVolumeResultKind.Successfully;
+                if (packageVolumeList.Count is 0)
+                {
+                    PackageVolumeResultKind = PackageVolumeResultKind.Failed;
+                }
+                else
+                {
+                    PackageVolumeCollection.Clear();
+                    foreach (PackageVolumeModel packageVolumeItem in packageVolumeList)
+                    {
+                        PackageVolumeCollection.Add(packageVolumeItem);
+                    }
+
+                    PackageVolumeResultKind = PackageVolumeResultKind.Successfully;
+                }
             }
         }
 

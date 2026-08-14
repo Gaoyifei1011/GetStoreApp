@@ -512,7 +512,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        ///  全部不选
+        /// 全部不选
         /// </summary>
         private void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {

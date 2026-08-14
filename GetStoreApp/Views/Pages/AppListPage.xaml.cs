@@ -1099,7 +1099,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            if (!string.IsNullOrEmpty(SearchText))
+            if (!string.IsNullOrEmpty(SearchText) && AppManagerResultKind is not AppManagerResultKind.Loading)
             {
                 AppManagerResultKind = AppManagerResultKind.Loading;
                 AppManagerCollection.Clear();
@@ -1243,7 +1243,7 @@ namespace GetStoreApp.Views.Pages
         private async void OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             SearchText = sender.Text;
-            if (string.IsNullOrEmpty(SearchText))
+            if (string.IsNullOrEmpty(SearchText) && AppManagerResultKind is not AppManagerResultKind.Loading)
             {
                 AppManagerResultKind = AppManagerResultKind.Loading;
                 AppManagerCollection.Clear();
@@ -1381,7 +1381,7 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(RadioMenuFlyoutItem))]
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is bool increase)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && AppManagerResultKind is not AppManagerResultKind.Loading && radioMenuFlyoutItem.Tag is bool increase)
             {
                 IsIncrease = increase;
                 AppManagerResultKind = AppManagerResultKind.Loading;
@@ -1528,7 +1528,7 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(RadioMenuFlyoutItem))]
         private async void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && AppManagerResultKind is not AppManagerResultKind.Loading && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind)
             {
                 SelectedAppSortRuleKind = appSortRuleKind;
 
@@ -1732,7 +1732,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnClosed(object sender, object args)
         {
-            if (needToRefreshData)
+            if (needToRefreshData && AppManagerResultKind is not AppManagerResultKind.Loading)
             {
                 AppManagerResultKind = AppManagerResultKind.Loading;
                 AppManagerCollection.Clear();
@@ -1934,177 +1934,180 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task GetAppListAsync()
         {
-            AppManagerResultKind = AppManagerResultKind.Loading;
-            AppManagerList.Clear();
-            AppManagerCollection.Clear();
-
-            List<PackageModel> packageList = await Task.Run(() =>
+            if (AppManagerResultKind is not AppManagerResultKind.Loading)
             {
-                List<PackageModel> packageList = [];
+                AppManagerResultKind = AppManagerResultKind.Loading;
+                AppManagerList.Clear();
+                AppManagerCollection.Clear();
 
-                try
+                List<PackageModel> packageList = await Task.Run(() =>
                 {
-                    foreach (Package package in packageManager.FindPackagesForUser(string.Empty))
-                    {
-                        packageList.Add(new PackageModel()
-                        {
-                            LogoImage = package.Logo,
-                            IsFramework = GetIsFramework(package),
-                            AppListEntryCount = GetAppListEntriesCount(package),
-                            DisplayName = GetDisplayName(package),
-                            InstallDate = GetInstallDate(package),
-                            PublisherDisplayName = GetPublisherDisplayName(package),
-                            Version = GetVersion(package),
-                            SignatureKind = GetSignatureKind(package),
-                            InstalledDate = GetInstalledDate(package),
-                            Package = package,
-                            IsOperating = false
-                        });
-                    }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnRefreshClicked), 1, e);
-                }
-
-                return packageList;
-            });
-
-            AppManagerList.AddRange(packageList);
-
-            if (AppManagerList.Count is 0)
-            {
-                AppManagerResultKind = AppManagerResultKind.Failed;
-                AppManagerFailedContent = PackageEmptyDescriptionString;
-            }
-            else
-            {
-                List<PackageModel> filterSortPackageList = await Task.Run(() =>
-                {
-                    List<PackageModel> filterSortPackageList = [];
+                    List<PackageModel> packageList = [];
 
                     try
                     {
-                        List<PackageModel> conditionWithFrameworkList = [];
-
-                        // 根据选项是否筛选包含框架包的数据
-                        if (IsAppFramework)
+                        foreach (Package package in packageManager.FindPackagesForUser(string.Empty))
                         {
-                            foreach (PackageModel packageItem in AppManagerList)
+                            packageList.Add(new PackageModel()
                             {
-                                if (Equals(packageItem.IsFramework, IsAppFramework))
-                                {
-                                    conditionWithFrameworkList.Add(packageItem);
-                                }
-                            }
+                                LogoImage = package.Logo,
+                                IsFramework = GetIsFramework(package),
+                                AppListEntryCount = GetAppListEntriesCount(package),
+                                DisplayName = GetDisplayName(package),
+                                InstallDate = GetInstallDate(package),
+                                PublisherDisplayName = GetPublisherDisplayName(package),
+                                Version = GetVersion(package),
+                                SignatureKind = GetSignatureKind(package),
+                                InstalledDate = GetInstalledDate(package),
+                                Package = package,
+                                IsOperating = false
+                            });
                         }
-                        else
-                        {
-                            conditionWithFrameworkList.AddRange(AppManagerList);
-                        }
-
-                        // 根据选项是否筛选包含特定签名类型的数据
-                        List<PackageModel> conditionWithSignatureKindList = [];
-                        foreach (PackageModel packageItem in conditionWithFrameworkList)
-                        {
-                            if (Equals(packageItem.SignatureKind, PackageSignatureKind.Store) && IsStoreSignatureSelected)
-                            {
-                                conditionWithSignatureKindList.Add(packageItem);
-                            }
-                            else if (Equals(packageItem.SignatureKind, PackageSignatureKind.System) && IsSystemSignatureSelected)
-                            {
-                                conditionWithSignatureKindList.Add(packageItem);
-                            }
-                            else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
-                            {
-                                conditionWithSignatureKindList.Add(packageItem);
-                            }
-                            else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
-                            {
-                                conditionWithSignatureKindList.Add(packageItem);
-                            }
-                            else if (Equals(packageItem.SignatureKind, PackageSignatureKind.None) && IsNoneSignatureSelected)
-                            {
-                                conditionWithSignatureKindList.Add(packageItem);
-                            }
-                        }
-
-                        List<PackageModel> searchedList = [];
-
-                        // 根据搜索内容筛选包含特定签名类型的数据
-                        if (string.IsNullOrEmpty(SearchText))
-                        {
-                            searchedList.AddRange(conditionWithSignatureKindList);
-                        }
-                        else
-                        {
-                            foreach (PackageModel packageItem in conditionWithSignatureKindList)
-                            {
-                                if (packageItem.DisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase) || packageItem.PublisherDisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
-                                {
-                                    searchedList.Add(packageItem);
-                                }
-                            }
-                        }
-
-                        // 对过滤后的列表数据进行排序
-                        switch (SelectedAppSortRuleKind)
-                        {
-                            case AppSortRuleKind.DisplayName:
-                                {
-                                    if (IsIncrease)
-                                    {
-                                        searchedList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
-                                    }
-                                    else
-                                    {
-                                        searchedList.Sort((item1, item2) => item2.DisplayName.CompareTo(item1.DisplayName));
-                                    }
-                                    break;
-                                }
-                            case AppSortRuleKind.PublisherName:
-                                {
-                                    if (IsIncrease)
-                                    {
-                                        searchedList.Sort((item1, item2) => item1.PublisherDisplayName.CompareTo(item2.PublisherDisplayName));
-                                    }
-                                    else
-                                    {
-                                        searchedList.Sort((item1, item2) => item2.PublisherDisplayName.CompareTo(item1.PublisherDisplayName));
-                                    }
-                                    break;
-                                }
-                            case AppSortRuleKind.InstallDate:
-                                {
-                                    if (IsIncrease)
-                                    {
-                                        searchedList.Sort((item1, item2) => item1.InstalledDate.CompareTo(item2.InstalledDate));
-                                    }
-                                    else
-                                    {
-                                        searchedList.Sort((item1, item2) => item2.InstalledDate.CompareTo(item1.InstalledDate));
-                                    }
-                                    break;
-                                }
-                        }
-
-                        filterSortPackageList.AddRange(searchedList);
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(GetAppListAsync), 2, e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OnRefreshClicked), 1, e);
                     }
 
-                    return filterSortPackageList;
+                    return packageList;
                 });
 
-                foreach (PackageModel packageItem in filterSortPackageList)
-                {
-                    AppManagerCollection.Add(packageItem);
-                }
+                AppManagerList.AddRange(packageList);
 
-                AppManagerResultKind = AppManagerCollection.Count is 0 ? AppManagerResultKind.Failed : AppManagerResultKind.Successfully;
-                AppManagerFailedContent = AppManagerCollection.Count is 0 ? PackageEmptyWithConditionDescriptionString : string.Empty;
+                if (AppManagerList.Count is 0)
+                {
+                    AppManagerResultKind = AppManagerResultKind.Failed;
+                    AppManagerFailedContent = PackageEmptyDescriptionString;
+                }
+                else
+                {
+                    List<PackageModel> filterSortPackageList = await Task.Run(() =>
+                    {
+                        List<PackageModel> filterSortPackageList = [];
+
+                        try
+                        {
+                            List<PackageModel> conditionWithFrameworkList = [];
+
+                            // 根据选项是否筛选包含框架包的数据
+                            if (IsAppFramework)
+                            {
+                                foreach (PackageModel packageItem in AppManagerList)
+                                {
+                                    if (Equals(packageItem.IsFramework, IsAppFramework))
+                                    {
+                                        conditionWithFrameworkList.Add(packageItem);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                conditionWithFrameworkList.AddRange(AppManagerList);
+                            }
+
+                            // 根据选项是否筛选包含特定签名类型的数据
+                            List<PackageModel> conditionWithSignatureKindList = [];
+                            foreach (PackageModel packageItem in conditionWithFrameworkList)
+                            {
+                                if (Equals(packageItem.SignatureKind, PackageSignatureKind.Store) && IsStoreSignatureSelected)
+                                {
+                                    conditionWithSignatureKindList.Add(packageItem);
+                                }
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.System) && IsSystemSignatureSelected)
+                                {
+                                    conditionWithSignatureKindList.Add(packageItem);
+                                }
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
+                                {
+                                    conditionWithSignatureKindList.Add(packageItem);
+                                }
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
+                                {
+                                    conditionWithSignatureKindList.Add(packageItem);
+                                }
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.None) && IsNoneSignatureSelected)
+                                {
+                                    conditionWithSignatureKindList.Add(packageItem);
+                                }
+                            }
+
+                            List<PackageModel> searchedList = [];
+
+                            // 根据搜索内容筛选包含特定签名类型的数据
+                            if (string.IsNullOrEmpty(SearchText))
+                            {
+                                searchedList.AddRange(conditionWithSignatureKindList);
+                            }
+                            else
+                            {
+                                foreach (PackageModel packageItem in conditionWithSignatureKindList)
+                                {
+                                    if (packageItem.DisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase) || packageItem.PublisherDisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        searchedList.Add(packageItem);
+                                    }
+                                }
+                            }
+
+                            // 对过滤后的列表数据进行排序
+                            switch (SelectedAppSortRuleKind)
+                            {
+                                case AppSortRuleKind.DisplayName:
+                                    {
+                                        if (IsIncrease)
+                                        {
+                                            searchedList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
+                                        }
+                                        else
+                                        {
+                                            searchedList.Sort((item1, item2) => item2.DisplayName.CompareTo(item1.DisplayName));
+                                        }
+                                        break;
+                                    }
+                                case AppSortRuleKind.PublisherName:
+                                    {
+                                        if (IsIncrease)
+                                        {
+                                            searchedList.Sort((item1, item2) => item1.PublisherDisplayName.CompareTo(item2.PublisherDisplayName));
+                                        }
+                                        else
+                                        {
+                                            searchedList.Sort((item1, item2) => item2.PublisherDisplayName.CompareTo(item1.PublisherDisplayName));
+                                        }
+                                        break;
+                                    }
+                                case AppSortRuleKind.InstallDate:
+                                    {
+                                        if (IsIncrease)
+                                        {
+                                            searchedList.Sort((item1, item2) => item1.InstalledDate.CompareTo(item2.InstalledDate));
+                                        }
+                                        else
+                                        {
+                                            searchedList.Sort((item1, item2) => item2.InstalledDate.CompareTo(item1.InstalledDate));
+                                        }
+                                        break;
+                                    }
+                            }
+
+                            filterSortPackageList.AddRange(searchedList);
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(GetAppListAsync), 2, e);
+                        }
+
+                        return filterSortPackageList;
+                    });
+
+                    foreach (PackageModel packageItem in filterSortPackageList)
+                    {
+                        AppManagerCollection.Add(packageItem);
+                    }
+
+                    AppManagerResultKind = AppManagerCollection.Count is 0 ? AppManagerResultKind.Failed : AppManagerResultKind.Successfully;
+                    AppManagerFailedContent = AppManagerCollection.Count is 0 ? PackageEmptyWithConditionDescriptionString : string.Empty;
+                }
             }
         }
 

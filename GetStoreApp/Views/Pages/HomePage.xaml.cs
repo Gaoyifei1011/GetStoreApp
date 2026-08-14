@@ -76,7 +76,7 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        #region 第一部分：主页面——挂载的事件
+        #region 第一部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
         /// 点击条目时进入条目对应的页面
@@ -106,6 +106,6 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：主页面——挂载的事件
+        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
     }
 }
