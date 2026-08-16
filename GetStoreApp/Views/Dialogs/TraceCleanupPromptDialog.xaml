@@ -11,7 +11,7 @@
     Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/TraceCleanup')}"
     DefaultButton="Primary"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
-    IsPrimaryButtonEnabled="{x:Bind converter:ValueCheckConverterHelper.IsTraceCleanupButtonEnabled(IsSelected, IsCleaning), Mode=OneWay}"
+    IsPrimaryButtonEnabled="{x:Bind converter:ValueCheckConverterHelper.IsTraceCleanupButtonEnabled(IsItemSelected, IsCleaning), Mode=OneWay}"
     IsSecondaryButtonEnabled="{x:Bind IsCleaning.Equals(x:False), Mode=OneWay}"
     PrimaryButtonClick="{x:Bind OnCleanupNowClicked}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"

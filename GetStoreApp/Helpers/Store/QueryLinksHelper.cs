@@ -56,7 +56,7 @@ namespace GetStoreApp.Helpers.Store
                 HttpStringContent httpStringContent = new(Encoding.UTF8.GetString(cookieByteArray), Windows.Storage.Streams.UnicodeEncoding.Utf8);
                 httpStringContent.TryComputeLength(out ulong length);
                 httpStringContent.Headers.Expires = DateTimeOffset.Now;
-                httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
+                httpStringContent.Headers.ContentType = new("application/soap+xml");
                 httpStringContent.Headers.ContentLength = length;
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
@@ -212,7 +212,7 @@ namespace GetStoreApp.Helpers.Store
                 HttpStringContent httpStringContent = new(fileListXml, Windows.Storage.Streams.UnicodeEncoding.Utf8);
                 httpStringContent.TryComputeLength(out ulong length);
                 httpStringContent.Headers.Expires = DateTimeOffset.Now;
-                httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
+                httpStringContent.Headers.ContentType = new("application/soap+xml");
                 httpStringContent.Headers.ContentLength = length;
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
@@ -319,7 +319,7 @@ namespace GetStoreApp.Helpers.Store
 
                                 try
                                 {
-                                    appxPackagesList.Add(new QueryLinksResultModel()
+                                    appxPackagesList.Add(new()
                                     {
                                         FileName = fileName,
                                         FileLink = uri,
@@ -365,7 +365,7 @@ namespace GetStoreApp.Helpers.Store
                 HttpStringContent httpStringContent = new(url, Windows.Storage.Streams.UnicodeEncoding.Utf8);
                 httpStringContent.TryComputeLength(out ulong length);
                 httpStringContent.Headers.Expires = DateTimeOffset.Now;
-                httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
+                httpStringContent.Headers.ContentType = new("application/soap+xml");
                 httpStringContent.Headers.ContentLength = length;
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
@@ -487,7 +487,7 @@ namespace GetStoreApp.Helpers.Store
 
                                     try
                                     {
-                                        nonAppxPackagesList.Add(new QueryLinksResultModel()
+                                        nonAppxPackagesList.Add(new()
                                         {
                                             FileName = installerUrl[..installerUrl.LastIndexOf('.')][(installerUrl.LastIndexOf('/') + 1)..],
                                             FileLink = installerUrl,
@@ -511,7 +511,7 @@ namespace GetStoreApp.Helpers.Store
 
                                     try
                                     {
-                                        nonAppxPackagesList.Add(new QueryLinksResultModel()
+                                        nonAppxPackagesList.Add(new()
                                         {
                                             FileName = string.Format("{0} ({1}).{2}", name, installerObject.GetNamedString("InstallerLocale"), installerType),
                                             FileLink = installerUrl,

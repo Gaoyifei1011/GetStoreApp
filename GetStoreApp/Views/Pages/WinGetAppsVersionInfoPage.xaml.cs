@@ -71,7 +71,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isLoadCompleted, value))
                 {
                     _isLoadCompleted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoadCompleted)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsLoadCompleted)));
                 }
             }
         }
@@ -87,7 +87,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_selectedItem, value))
                 {
                     _selectedItem = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedItem)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedItem)));
                 }
             }
         }
@@ -103,7 +103,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_displayName, value))
                 {
                     _displayName = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayName)));
+                    PropertyChanged?.Invoke(this, new(nameof(DisplayName)));
                 }
             }
         }
@@ -119,7 +119,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_description, value))
                 {
                     _description = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Description)));
+                    PropertyChanged?.Invoke(this, new(nameof(Description)));
                 }
             }
         }
@@ -135,7 +135,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_version, value))
                 {
                     _version = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Version)));
+                    PropertyChanged?.Invoke(this, new(nameof(Version)));
                 }
             }
         }
@@ -151,7 +151,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isPackageLinkExisted, value))
                 {
                     _isPackageLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPackageLinkExisted)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsPackageLinkExisted)));
                 }
             }
         }
@@ -167,7 +167,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_packageLink, value))
                 {
                     _packageLink = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageLink)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageLink)));
                 }
             }
         }
@@ -183,7 +183,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_author, value))
                 {
                     _author = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Author)));
+                    PropertyChanged?.Invoke(this, new(nameof(Author)));
                 }
             }
         }
@@ -199,7 +199,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_publisher, value))
                 {
                     _publisher = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Publisher)));
+                    PropertyChanged?.Invoke(this, new(nameof(Publisher)));
                 }
             }
         }
@@ -215,7 +215,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isPublisherLinkExisted, value))
                 {
                     _isPublisherLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPublisherLinkExisted)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsPublisherLinkExisted)));
                 }
             }
         }
@@ -231,7 +231,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_publisherLink, value))
                 {
                     _publisherLink = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PublisherLink)));
+                    PropertyChanged?.Invoke(this, new(nameof(PublisherLink)));
                 }
             }
         }
@@ -247,7 +247,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isPublisherSupportLinkExisted, value))
                 {
                     _isPublisherSupportLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPublisherSupportLinkExisted)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsPublisherSupportLinkExisted)));
                 }
             }
         }
@@ -263,7 +263,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_publisherSupportLink, value))
                 {
                     _publisherSupportLink = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PublisherSupportLink)));
+                    PropertyChanged?.Invoke(this, new(nameof(PublisherSupportLink)));
                 }
             }
         }
@@ -279,7 +279,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_locale, value))
                 {
                     _locale = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Locale)));
+                    PropertyChanged?.Invoke(this, new(nameof(Locale)));
                 }
             }
         }
@@ -295,7 +295,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_copyRight, value))
                 {
                     _copyRight = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CopyRight)));
+                    PropertyChanged?.Invoke(this, new(nameof(CopyRight)));
                 }
             }
         }
@@ -311,7 +311,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isCopyRightLinkExisted, value))
                 {
                     _isCopyRightLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCopyRightLinkExisted)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsCopyRightLinkExisted)));
                 }
             }
         }
@@ -327,7 +327,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_copyRightLink, value))
                 {
                     _copyRightLink = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CopyRightLink)));
+                    PropertyChanged?.Invoke(this, new(nameof(CopyRightLink)));
                 }
             }
         }
@@ -343,7 +343,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_license, value))
                 {
                     _license = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(License)));
+                    PropertyChanged?.Invoke(this, new(nameof(License)));
                 }
             }
         }
@@ -359,7 +359,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isLicenseLinkExisted, value))
                 {
                     _isLicenseLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLicenseLinkExisted)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsLicenseLinkExisted)));
                 }
             }
         }
@@ -375,7 +375,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_licenseLink, value))
                 {
                     _licenseLink = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LicenseLink)));
+                    PropertyChanged?.Invoke(this, new(nameof(LicenseLink)));
                 }
             }
         }
@@ -391,7 +391,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isPrivacyLinkExisted, value))
                 {
                     _isPrivacyLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPrivacyLinkExisted)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsPrivacyLinkExisted)));
                 }
             }
         }
@@ -407,7 +407,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_privacyLink, value))
                 {
                     _privacyLink = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PrivacyLink)));
+                    PropertyChanged?.Invoke(this, new(nameof(PrivacyLink)));
                 }
             }
         }
@@ -423,7 +423,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isPurchaseLinkExisted, value))
                 {
                     _isPurchaseLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPurchaseLinkExisted)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsPurchaseLinkExisted)));
                 }
             }
         }
@@ -439,7 +439,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_purchaseLink, value))
                 {
                     _purchaseLink = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PurchaseLink)));
+                    PropertyChanged?.Invoke(this, new(nameof(PurchaseLink)));
                 }
             }
         }
@@ -455,7 +455,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_releaseNotes, value))
                 {
                     _releaseNotes = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ReleaseNotes)));
+                    PropertyChanged?.Invoke(this, new(nameof(ReleaseNotes)));
                 }
             }
         }
@@ -471,7 +471,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isReleaseNotesLinkExisted, value))
                 {
                     _isReleaseNotesLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsReleaseNotesLinkExisted)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsReleaseNotesLinkExisted)));
                 }
             }
         }
@@ -487,7 +487,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_releaseNotesLink, value))
                 {
                     _releaseNotesLink = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ReleaseNotesLink)));
+                    PropertyChanged?.Invoke(this, new(nameof(ReleaseNotesLink)));
                 }
             }
         }
@@ -586,7 +586,7 @@ namespace GetStoreApp.Views.Pages
                                     }
 
                                     // 添加所有已经获取到的所有版本
-                                    availableVersionList.Add(new AvailableVersionModel()
+                                    availableVersionList.Add(new()
                                     {
                                         IsDefaultVersion = isDefaultVersion,
                                         Version = packageVersionId.Version,
@@ -598,7 +598,7 @@ namespace GetStoreApp.Views.Pages
                             // 没有默认版本，把默认版本添加在第一项
                             if (!hasDefaultVersion)
                             {
-                                availableVersionList.Insert(0, new AvailableVersionModel()
+                                availableVersionList.Insert(0, new()
                                 {
                                     IsDefaultVersion = true,
                                     Version = SearchApps.CatalogPackage.DefaultInstallVersion.Version,
@@ -652,7 +652,7 @@ namespace GetStoreApp.Views.Pages
                                         }
 
                                         // 添加所有已经获取到的所有版本
-                                        availableVersionList.Add(new AvailableVersionModel()
+                                        availableVersionList.Add(new()
                                         {
                                             IsDefaultVersion = isDefaultVersion,
                                             Version = packageVersionId.Version,
@@ -665,7 +665,7 @@ namespace GetStoreApp.Views.Pages
                             // 没有默认版本，把默认版本添加在第一项
                             if (!hasDefaultVersion)
                             {
-                                availableVersionList.Insert(0, new AvailableVersionModel()
+                                availableVersionList.Insert(0, new()
                                 {
                                     IsDefaultVersion = true,
                                     Version = UpgradableApps.CatalogPackage.DefaultInstallVersion.Version,
@@ -889,7 +889,7 @@ namespace GetStoreApp.Views.Pages
                 DisplayName = string.IsNullOrEmpty(catalogPackageMetadata.PackageName) ? NotAvailableString : catalogPackageMetadata.PackageName;
                 Description = string.IsNullOrEmpty(catalogPackageMetadata.Description) ? NotAvailableString : catalogPackageMetadata.Description;
                 Version = string.IsNullOrEmpty(packageVersionInfo.Version) ? NotAvailableString : packageVersionInfo.Version;
-                if (Uri.TryCreate(catalogPackageMetadata.PackageUrl, new UriCreationOptions(), out Uri packageLinkUri))
+                if (Uri.TryCreate(catalogPackageMetadata.PackageUrl, new(), out Uri packageLinkUri))
                 {
                     IsPackageLinkExisted = true;
                     PackageLink = packageLinkUri;
@@ -901,7 +901,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 Author = string.IsNullOrEmpty(catalogPackageMetadata.Author) ? NotAvailableString : catalogPackageMetadata.Author;
                 Publisher = string.IsNullOrEmpty(catalogPackageMetadata.Publisher) ? NotAvailableString : packageVersionInfo.Publisher;
-                if (Uri.TryCreate(catalogPackageMetadata.PublisherUrl, new UriCreationOptions(), out Uri publisherLinkUri))
+                if (Uri.TryCreate(catalogPackageMetadata.PublisherUrl, new(), out Uri publisherLinkUri))
                 {
                     IsPublisherLinkExisted = true;
                     PublisherLink = publisherLinkUri;
@@ -911,7 +911,7 @@ namespace GetStoreApp.Views.Pages
                     IsPublisherLinkExisted = false;
                     PublisherLink = null;
                 }
-                if (Uri.TryCreate(catalogPackageMetadata.PublisherSupportUrl, new UriCreationOptions(), out Uri appPublisherSupportLinkUri))
+                if (Uri.TryCreate(catalogPackageMetadata.PublisherSupportUrl, new(), out Uri appPublisherSupportLinkUri))
                 {
                     IsPublisherSupportLinkExisted = true;
                     PublisherSupportLink = appPublisherSupportLinkUri;
@@ -946,7 +946,7 @@ namespace GetStoreApp.Views.Pages
                     }
                 }
                 CopyRight = string.IsNullOrEmpty(catalogPackageMetadata.Copyright) ? NotAvailableString : catalogPackageMetadata.Copyright;
-                if (Uri.TryCreate(catalogPackageMetadata.CopyrightUrl, new UriCreationOptions(), out Uri copyRightLinkUri))
+                if (Uri.TryCreate(catalogPackageMetadata.CopyrightUrl, new(), out Uri copyRightLinkUri))
                 {
                     IsCopyRightLinkExisted = true;
                     CopyRightLink = copyRightLinkUri;
@@ -957,7 +957,7 @@ namespace GetStoreApp.Views.Pages
                     CopyRightLink = null;
                 }
                 License = string.IsNullOrEmpty(catalogPackageMetadata.License) ? NotAvailableString : catalogPackageMetadata.License;
-                if (Uri.TryCreate(catalogPackageMetadata.LicenseUrl, new UriCreationOptions(), out Uri licenseLinkUri))
+                if (Uri.TryCreate(catalogPackageMetadata.LicenseUrl, new(), out Uri licenseLinkUri))
                 {
                     IsLicenseLinkExisted = true;
                     LicenseLink = licenseLinkUri;
@@ -967,7 +967,7 @@ namespace GetStoreApp.Views.Pages
                     IsLicenseLinkExisted = false;
                     LicenseLink = null;
                 }
-                if (Uri.TryCreate(catalogPackageMetadata.PrivacyUrl, new UriCreationOptions(), out Uri privacyLinkUri))
+                if (Uri.TryCreate(catalogPackageMetadata.PrivacyUrl, new(), out Uri privacyLinkUri))
                 {
                     IsPrivacyLinkExisted = true;
                     PrivacyLink = privacyLinkUri;
@@ -977,7 +977,7 @@ namespace GetStoreApp.Views.Pages
                     IsPrivacyLinkExisted = false;
                     PrivacyLink = null;
                 }
-                if (Uri.TryCreate(catalogPackageMetadata.PurchaseUrl, new UriCreationOptions(), out Uri purchaseLinkUri))
+                if (Uri.TryCreate(catalogPackageMetadata.PurchaseUrl, new(), out Uri purchaseLinkUri))
                 {
                     IsPurchaseLinkExisted = true;
                     PurchaseLink = purchaseLinkUri;
@@ -988,7 +988,7 @@ namespace GetStoreApp.Views.Pages
                     PurchaseLink = null;
                 }
                 ReleaseNotes = string.IsNullOrEmpty(catalogPackageMetadata.ReleaseNotes) ? NotAvailableString : catalogPackageMetadata.ReleaseNotes;
-                if (Uri.TryCreate(catalogPackageMetadata.ReleaseNotesUrl, new UriCreationOptions(), out Uri releaseNotesLinkUri))
+                if (Uri.TryCreate(catalogPackageMetadata.ReleaseNotesUrl, new(), out Uri releaseNotesLinkUri))
                 {
                     IsReleaseNotesLinkExisted = true;
                     ReleaseNotesLink = releaseNotesLinkUri;
@@ -1009,9 +1009,9 @@ namespace GetStoreApp.Views.Pages
                 for (int index = 0; index < catalogPackageMetadata.Documentations.Count; index++)
                 {
                     Documentation documentation = catalogPackageMetadata.Documentations[index];
-                    if (Uri.TryCreate(documentation.DocumentUrl, new UriCreationOptions(), out Uri documentUrlUri))
+                    if (Uri.TryCreate(documentation.DocumentUrl, new(), out Uri documentUrlUri))
                     {
-                        DocumentationCollection.Add(new ContentLinkInfo() { DisplayText = documentation.DocumentLabel, Uri = documentUrlUri });
+                        DocumentationCollection.Add(new() { DisplayText = documentation.DocumentLabel, Uri = documentUrlUri });
                     }
                 }
             }

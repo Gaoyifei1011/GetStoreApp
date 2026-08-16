@@ -7,13 +7,19 @@ namespace GetStoreApp.Views.Dialogs
     /// <summary>
     /// 重启设备对话框
     /// </summary>
-    public sealed partial class RebootDialog : ContentDialog
+    internal sealed partial class RebootDialog : ContentDialog
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string InstallNeedRebootString = ResourceService.GetLocalized("Dialog/InstallNeedReboot");
         private readonly string UninstallNeedRebootString = ResourceService.GetLocalized("Dialog/UninstallNeedReboot");
         private readonly string UpgradeNeedRebootString = ResourceService.GetLocalized("Dialog/UpgradeNeedReboot");
 
-        public RebootDialog(WinGetOperationKind winGetOperationKind, string appName)
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：构造函数
+
+        internal RebootDialog(WinGetOperationKind winGetOperationKind, string appName)
         {
             InitializeComponent();
             switch (winGetOperationKind)
@@ -35,5 +41,7 @@ namespace GetStoreApp.Views.Dialogs
                     }
             }
         }
+
+        #endregion 第二部分：构造函数
     }
 }

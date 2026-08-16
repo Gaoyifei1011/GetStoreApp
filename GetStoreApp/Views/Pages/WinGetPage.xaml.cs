@@ -115,7 +115,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_selectedItem, value))
                 {
                     _selectedItem = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedItem)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedItem)));
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_winGetPaneKind, value))
                 {
                     _winGetPaneKind = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WinGetPaneKind)));
+                    PropertyChanged?.Invoke(this, new(nameof(WinGetPaneKind)));
                 }
             }
         }

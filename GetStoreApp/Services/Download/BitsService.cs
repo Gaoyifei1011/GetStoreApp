@@ -119,7 +119,7 @@ namespace GetStoreApp.Services.Download
                             bitsLock.Exit();
                         }
 
-                        DownloadProgress?.Invoke(new DownloadProgress()
+                        DownloadProgress?.Invoke(new()
                         {
                             DownloadID = backgroundCopyCallback.DownloadID,
                             DownloadProgressState = DownloadProgressState.Queued,
@@ -157,7 +157,7 @@ namespace GetStoreApp.Services.Download
 
                         if (continueResult is 0)
                         {
-                            DownloadProgress?.Invoke(new DownloadProgress()
+                            DownloadProgress?.Invoke(new()
                             {
                                 DownloadID = downloadID,
                                 DownloadProgressState = DownloadProgressState.Queued,
@@ -198,7 +198,7 @@ namespace GetStoreApp.Services.Download
 
                         if (pauseResult is 0)
                         {
-                            DownloadProgress?.Invoke(new DownloadProgress()
+                            DownloadProgress?.Invoke(new()
                             {
                                 DownloadID = downloadID,
                                 DownloadProgressState = DownloadProgressState.Paused,
@@ -241,7 +241,7 @@ namespace GetStoreApp.Services.Download
                         {
                             downloadValue.backgroundCopyCallback.StatusChanged -= OnStatusChanged;
                             BitsDict.Remove(downloadID);
-                            DownloadProgress?.Invoke(new DownloadProgress()
+                            DownloadProgress?.Invoke(new()
                             {
                                 DownloadID = downloadID,
                                 DownloadProgressState = DownloadProgressState.Deleted,
@@ -277,7 +277,7 @@ namespace GetStoreApp.Services.Download
 
                 if (BitsDict.TryGetValue(callback.DownloadID, out (string saveFilePath, IBackgroundCopyJob backgroundCopyJob, BackgroundCopyCallback backgroundCopyCallback) downloadValue))
                 {
-                    DownloadProgress?.Invoke(new DownloadProgress()
+                    DownloadProgress?.Invoke(new()
                     {
                         DownloadID = callback.DownloadID,
                         DownloadProgressState = DownloadProgressState.Downloading,
@@ -305,7 +305,7 @@ namespace GetStoreApp.Services.Download
                     {
                         if (BitsDict.TryGetValue(callback.DownloadID, out (string saveFilePath, IBackgroundCopyJob backgroundCopyJob, BackgroundCopyCallback backgroundCopyCallback) downloadValue))
                         {
-                            DownloadProgress?.Invoke(new DownloadProgress()
+                            DownloadProgress?.Invoke(new()
                             {
                                 DownloadID = callback.DownloadID,
                                 DownloadProgressState = DownloadProgressState.Finished,
@@ -346,7 +346,7 @@ namespace GetStoreApp.Services.Download
                     {
                         if (BitsDict.TryGetValue(callback.DownloadID, out (string saveFilePath, IBackgroundCopyJob backgroundCopyJob, BackgroundCopyCallback backgroundCopyCallback) downloadValue))
                         {
-                            DownloadProgress?.Invoke(new DownloadProgress()
+                            DownloadProgress?.Invoke(new()
                             {
                                 DownloadID = callback.DownloadID,
                                 DownloadProgressState = DownloadProgressState.Failed,

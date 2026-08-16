@@ -26,7 +26,7 @@ namespace GetStoreApp.Services.Settings
                 if (!string.Equals(_appBackdrop, value))
                 {
                     _appBackdrop = value;
-                    PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(AppBackdrop)));
+                    PropertyChanged?.Invoke(null, new(nameof(AppBackdrop)));
                 }
             }
         }

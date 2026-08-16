@@ -56,7 +56,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!Equals(_selectedItem, value))
                 {
                     _selectedItem = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedItem)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedItem)));
                 }
             }
         }
@@ -72,7 +72,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!Equals(_selectedType, value))
                 {
                     _selectedType = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedType)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedType)));
                 }
             }
         }
@@ -88,7 +88,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!Equals(_selectedChannel, value))
                 {
                     _selectedChannel = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedChannel)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedChannel)));
                 }
             }
         }
@@ -104,7 +104,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!string.Equals(_linkPlaceHolderText, value))
                 {
                     _linkPlaceHolderText = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LinkPlaceHolderText)));
+                    PropertyChanged?.Invoke(this, new(nameof(LinkPlaceHolderText)));
                 }
             }
         }
@@ -120,7 +120,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!string.Equals(_queryLinksText, value))
                 {
                     _queryLinksText = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(QueryLinksText)));
+                    PropertyChanged?.Invoke(this, new(nameof(QueryLinksText)));
                 }
             }
         }
@@ -136,7 +136,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!Equals(_isQueryingLinks, value))
                 {
                     _isQueryingLinks = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsQueryingLinks)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsQueryingLinks)));
                 }
             }
         }
@@ -152,7 +152,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!Equals(_isQueryLinksResultVisible, value))
                 {
                     _isQueryLinksResultVisible = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsQueryLinksResultVisible)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsQueryLinksResultVisible)));
                 }
             }
         }
@@ -168,7 +168,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!Equals(_selectedSearchType, value))
                 {
                     _selectedSearchType = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSearchType)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedSearchType)));
                 }
             }
         }
@@ -184,7 +184,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!string.Equals(_searchAppsText, value))
                 {
                     _searchAppsText = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchAppsText)));
+                    PropertyChanged?.Invoke(this, new(nameof(SearchAppsText)));
                 }
             }
         }
@@ -200,7 +200,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!Equals(_isSearchingApps, value))
                 {
                     _isSearchingApps = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSearchingApps)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsSearchingApps)));
                 }
             }
         }
@@ -216,7 +216,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!Equals(_isSearchAppsResultVisible, value))
                 {
                     _isSearchAppsResultVisible = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSearchAppsResultVisible)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsSearchAppsResultVisible)));
                 }
             }
         }
@@ -232,7 +232,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!Equals(_storeInfoResultKind, value))
                 {
                     _storeInfoResultKind = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StoreInfoResultKind)));
+                    PropertyChanged?.Invoke(this, new(nameof(StoreInfoResultKind)));
                 }
             }
         }
@@ -255,46 +255,46 @@ namespace GetStoreApp.Views.UserControls
         {
             InitializeComponent();
 
-            TypeList.Add(new TypeModel
+            TypeList.Add(new()
             {
                 DisplayName = URLString,
                 InternalName = "url",
                 ShortName = "url"
             });
-            TypeList.Add(new TypeModel
+            TypeList.Add(new()
             {
                 DisplayName = ProductIDString,
                 InternalName = "ProductId",
                 ShortName = "pid"
             });
 
-            ChannelList.Add(new ChannelModel
+            ChannelList.Add(new()
             {
                 DisplayName = FastString,
                 InternalName = "WIF",
                 ShortName = "wif"
             });
-            ChannelList.Add(new ChannelModel
+            ChannelList.Add(new()
             {
                 DisplayName = SlowString,
                 InternalName = "WIS",
                 ShortName = "wis"
             });
-            ChannelList.Add(new ChannelModel
+            ChannelList.Add(new()
             {
                 DisplayName = RPString,
                 InternalName = "RP",
                 ShortName = "rp"
             });
-            ChannelList.Add(new ChannelModel
+            ChannelList.Add(new()
             {
                 DisplayName = RetailString,
                 InternalName = "Retail",
                 ShortName = "rt"
             });
 
-            SearchTypeList.Add(new ComboBoxItemModel() { SelectedValue = "ExactSearch", DisplayMember = ExactSearchString });
-            SearchTypeList.Add(new ComboBoxItemModel() { SelectedValue = "ManifestSearch", DisplayMember = ManifestSearchString });
+            SearchTypeList.Add(new() { SelectedValue = "ExactSearch", DisplayMember = ExactSearchString });
+            SearchTypeList.Add(new() { SelectedValue = "ManifestSearch", DisplayMember = ManifestSearchString });
 
             SelectedType = TypeList[0];
             SelectedChannel = ChannelList[3];
@@ -382,7 +382,7 @@ namespace GetStoreApp.Views.UserControls
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:regionformatting"));
+                    await Launcher.LaunchUriAsync(new("ms-settings:regionformatting"));
                 }
                 catch (Exception e)
                 {

@@ -20,7 +20,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_isSelected, value))
                 {
                     _isSelected = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsSelected)));
                 }
             }
         }
@@ -36,7 +36,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_isOperating, value))
                 {
                     _isOperating = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsOperating)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsOperating)));
                 }
             }
         }

@@ -41,6 +41,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class CompletedPage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string CompletedCountInfoString = ResourceService.GetLocalized("Completed/CompletedCountInfo");
         private readonly string FileShareString = ResourceService.GetLocalized("Completed/FileShare");
         private readonly string InstallProgressString = ResourceService.GetLocalized("Completed/InstallProgress");
@@ -56,9 +58,13 @@ namespace GetStoreApp.Views.Pages
         private bool isInitialized;
         private PackageDeploymentManager packageDeploymentManager;
 
-        private CompletedResultKind _completedResultKind = CompletedResultKind.Loading;
+        #endregion 第一部分：常量、资源与状态字段
 
-        public CompletedResultKind CompletedResultKind
+        #region 第二部分：属性、集合与事件
+
+        private CompletedResultKind _completedResultKind;
+
+        private CompletedResultKind CompletedResultKind
         {
             get { return _completedResultKind; }
 
@@ -67,14 +73,14 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_completedResultKind, value))
                 {
                     _completedResultKind = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CompletedResultKind)));
+                    PropertyChanged?.Invoke(this, new(nameof(CompletedResultKind)));
                 }
             }
         }
 
         private ListViewSelectionMode _selectionMode;
 
-        public ListViewSelectionMode SelectionMode
+        private ListViewSelectionMode SelectionMode
         {
             get { return _selectionMode; }
 
@@ -83,7 +89,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_selectionMode, value))
                 {
                     _selectionMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectionMode)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectionMode)));
                 }
             }
         }
@@ -92,12 +98,18 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
         public CompletedPage()
         {
             InitializeComponent();
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面触发的事件
@@ -109,18 +121,13 @@ namespace GetStoreApp.Views.Pages
             if (!isInitialized)
             {
                 isInitialized = true;
-                List<DownloadSchedulerModel> downloadStorageList = await Task.Run(() =>
-                {
-                    packageDeploymentManager = PackageDeploymentManager.GetDefault();
-                    DownloadStorageService.DownloadStorageSemaphoreSlim?.Wait();
-                    return DownloadStorageService.GetDownloadData();
-                });
+                List<DownloadSchedulerModel> downloadStorageList = await GetDownloadStorageListAsync();
 
                 if (downloadStorageList is not null)
                 {
                     foreach (DownloadSchedulerModel downloadSchedulerItem in downloadStorageList)
                     {
-                        CompletedCollection.Add(new CompletedModel()
+                        CompletedCollection.Add(new()
                         {
                             SelectionMode = SelectionMode,
                             IconImage = await GetFileIconImageAsync(downloadSchedulerItem.FilePath),
@@ -132,20 +139,12 @@ namespace GetStoreApp.Views.Pages
                     }
                 }
 
-                await Task.Run(() =>
-                {
-                    GlobalNotificationService.ApplicationExit += OnApplicationExit;
-                    DownloadStorageService.StorageDataAdded += OnStorageDataAdded;
-                    DownloadStorageService.StorageDataDeleted += OnStorageDataDeleted;
-                    DownloadStorageService.StorageDataCleared += OnStorageDataCleared;
-                    DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
-                });
-
+                await MountDownloadEventAsync();
                 CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
             }
         }
 
-        #endregion 第一部分：重写父类事件
+        #endregion 第四部分：父类虚方法重写
 
         #region 第二部分：XamlUICommand 命令调用时挂载的事件
 
@@ -158,7 +157,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    List<StorageFile> fileList = [await StorageFile.GetFileFromPathAsync(completed.FilePath)];
+                    List<StorageFile> fileList = await GetFileListAsync(completed.FilePath);
                     bool copyResult = CopyPasteHelper.CopyFileToClipBoard(fileList);
                     await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
                 }
@@ -290,7 +289,7 @@ namespace GetStoreApp.Views.Pages
                                         };
 
                                         // 安装目标应用，并获取安装进度
-                                        IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> installPackageWithProgress = packageDeploymentManager.AddPackageByUriAsync(new Uri(completed.FilePath), addPackageOptions);
+                                        IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> installPackageWithProgress = packageDeploymentManager.AddPackageByUriAsync(new(completed.FilePath), addPackageOptions);
 
                                         // 更新安装进度
                                         installPackageWithProgress.Progress = (result, progress) => OnPackageInstallProgress(result, progress, completed);
@@ -773,7 +772,7 @@ namespace GetStoreApp.Views.Pages
         {
             DispatcherQueue.TryEnqueue(async () =>
             {
-                CompletedCollection.Add(new CompletedModel()
+                CompletedCollection.Add(new()
                 {
                     SelectionMode = SelectionMode,
                     IconImage = await GetFileIconImageAsync(downloadScheduler.FilePath),
@@ -841,6 +840,42 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第四部分：已下载完成页面——自定义事件
+
+        /// <summary>
+        /// 获取下载存储数据
+        /// </summary>
+        private async Task<List<DownloadSchedulerModel>> GetDownloadStorageListAsync()
+        {
+            return await Task.Run(() =>
+            {
+                packageDeploymentManager = PackageDeploymentManager.GetDefault();
+                DownloadStorageService.DownloadStorageSemaphoreSlim?.Wait();
+                return DownloadStorageService.GetDownloadData();
+            });
+        }
+
+        /// <summary>
+        /// 挂载与下载相关事件
+        /// </summary>
+        private async Task MountDownloadEventAsync()
+        {
+            await Task.Run(() =>
+            {
+                GlobalNotificationService.ApplicationExit += OnApplicationExit;
+                DownloadStorageService.StorageDataAdded += OnStorageDataAdded;
+                DownloadStorageService.StorageDataDeleted += OnStorageDataDeleted;
+                DownloadStorageService.StorageDataCleared += OnStorageDataCleared;
+                DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
+            });
+        }
+
+        /// <summary>
+        /// 获取文件列表
+        /// </summary>
+        private async Task<List<StorageFile>> GetFileListAsync(string filePath)
+        {
+            return [await StorageFile.GetFileFromPathAsync(filePath)];
+        }
 
         /// <summary>
         /// 获取文件缩略图

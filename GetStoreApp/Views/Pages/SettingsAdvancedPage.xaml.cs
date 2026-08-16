@@ -43,7 +43,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_notification, value))
                 {
                     _notification = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Notification)));
+                    PropertyChanged?.Invoke(this, new(nameof(Notification)));
                 }
             }
         }
@@ -59,7 +59,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_notificationEnabled, value))
                 {
                     _notificationEnabled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NotificationEnabled)));
+                    PropertyChanged?.Invoke(this, new(nameof(NotificationEnabled)));
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isRestarting, value))
                 {
                     _isRestarting = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRestarting)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsRestarting)));
                 }
             }
         }
@@ -91,7 +91,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_shellMenu, value))
                 {
                     _shellMenu = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShellMenu)));
+                    PropertyChanged?.Invoke(this, new(nameof(ShellMenu)));
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:notifications"));
+                    await Launcher.LaunchUriAsync(new("ms-settings:notifications"));
                 }
                 catch (Exception e)
                 {

@@ -66,7 +66,7 @@ namespace GetStoreAppWebView.Views.Windows
                 if (!string.Equals(_windowTitle, value))
                 {
                     _windowTitle = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowTitle)));
+                    PropertyChanged?.Invoke(this, new(nameof(WindowTitle)));
                 }
             }
         }
@@ -82,7 +82,7 @@ namespace GetStoreAppWebView.Views.Windows
                 if (!Equals(_windowSystemBackdrop, value))
                 {
                     _windowSystemBackdrop = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowSystemBackdrop)));
+                    PropertyChanged?.Invoke(this, new(nameof(WindowSystemBackdrop)));
                 }
             }
         }
@@ -98,7 +98,7 @@ namespace GetStoreAppWebView.Views.Windows
                 if (!Equals(_windowTheme, value))
                 {
                     _windowTheme = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowTheme)));
+                    PropertyChanged?.Invoke(this, new(nameof(WindowTheme)));
                 }
             }
         }
@@ -114,7 +114,7 @@ namespace GetStoreAppWebView.Views.Windows
                 if (!Equals(_isWindowMaximized, value))
                 {
                     _isWindowMaximized = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsWindowMaximized)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsWindowMaximized)));
                 }
             }
         }
@@ -130,7 +130,7 @@ namespace GetStoreAppWebView.Views.Windows
                 if (!Equals(_canGoBack, value))
                 {
                     _canGoBack = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CanGoBack)));
+                    PropertyChanged?.Invoke(this, new(nameof(CanGoBack)));
                 }
             }
         }
@@ -146,7 +146,7 @@ namespace GetStoreAppWebView.Views.Windows
                 if (!Equals(_canGoForward, value))
                 {
                     _canGoForward = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CanGoForward)));
+                    PropertyChanged?.Invoke(this, new(nameof(CanGoForward)));
                 }
             }
         }
@@ -162,7 +162,7 @@ namespace GetStoreAppWebView.Views.Windows
                 if (!Equals(_isLoading, value))
                 {
                     _isLoading = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoading)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsLoading)));
                 }
             }
         }
@@ -178,7 +178,7 @@ namespace GetStoreAppWebView.Views.Windows
                 if (!string.Equals(_webTitle, value))
                 {
                     _webTitle = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WebTitle)));
+                    PropertyChanged?.Invoke(this, new(nameof(WebTitle)));
                 }
             }
         }
@@ -194,7 +194,7 @@ namespace GetStoreAppWebView.Views.Windows
                 if (!Equals(_isDownloadClickEnabled, value))
                 {
                     _isDownloadClickEnabled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDownloadClickEnabled)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsDownloadClickEnabled)));
                 }
             }
         }
@@ -210,7 +210,7 @@ namespace GetStoreAppWebView.Views.Windows
                 if (!Equals(_isEnabled, value))
                 {
                     _isEnabled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsEnabled)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsEnabled)));
                 }
             }
         }
@@ -245,19 +245,19 @@ namespace GetStoreAppWebView.Views.Windows
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
 
             // 为应用主窗口添加窗口过程
-            webViewWindowSubClassProc = new SUBCLASSPROC(WebViewWindowSubClassProc);
+            webViewWindowSubClassProc = new(WebViewWindowSubClassProc);
             Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), webViewWindowSubClassProc, 0, nint.Zero);
 
             SetWindowTheme();
             SetSystemBackdrop();
 
-            AppWindow.Resize(new SizeInt32(Convert.ToInt32(1000 * contentIsland.RasterizationScale), Convert.ToInt32(700 * contentIsland.RasterizationScale)));
+            AppWindow.Resize(new(Convert.ToInt32(1000 * contentIsland.RasterizationScale), Convert.ToInt32(700 * contentIsland.RasterizationScale)));
 
             // 默认直接显示到窗口中间
             if (DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
             {
                 RectInt32 workArea = displayArea.WorkArea;
-                AppWindow.Move(new PointInt32((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
+                AppWindow.Move(new((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
             }
 
             // 初始化 WebView2
@@ -422,7 +422,7 @@ namespace GetStoreAppWebView.Views.Windows
                 args.Handled = true;
                 FlyoutShowOptions options = new()
                 {
-                    Position = new Point(0, 45),
+                    Position = new(0, 45),
                     ShowMode = FlyoutShowMode.Standard
                 };
                 TitlebarMenuFlyout.ShowAt(null, options);
@@ -572,7 +572,7 @@ namespace GetStoreAppWebView.Views.Windows
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("https://apps.microsoft.com"));
+                    await Launcher.LaunchUriAsync(new("https://apps.microsoft.com"));
                 }
                 catch (Exception e)
                 {
@@ -628,7 +628,7 @@ namespace GetStoreAppWebView.Views.Windows
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("getstoreapp:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                    await Launcher.LaunchUriAsync(new("getstoreapp:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
                     {
                         { "Parameter", "DownloadSettings" }
                     });
@@ -873,7 +873,7 @@ namespace GetStoreAppWebView.Views.Windows
                             FlyoutShowOptions options = new()
                             {
                                 ShowMode = FlyoutShowMode.Standard,
-                                Position = Environment.OSVersion.Version.Build > 22000 ? new Point(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale) : new Point(localPoint.X, localPoint.Y)
+                                Position = Environment.OSVersion.Version.Build > 22000 ? new(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale) : new(localPoint.X, localPoint.Y)
                             };
 
                             TitlebarMenuFlyout.ShowAt(Content, options);

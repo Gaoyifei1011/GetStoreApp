@@ -20,16 +20,22 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 下载页面
     /// </summary>
-    public sealed partial class DownloadPage : Page, INotifyPropertyChanged
+    internal sealed partial class DownloadPage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private bool needNavigate;
         private Type navigateType;
         private object navigateParameter;
         private bool? slideDirection;
 
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
+
         private SelectorBarItem _selectedItem;
 
-        public SelectorBarItem SelectedItem
+        private SelectorBarItem SelectedItem
         {
             get { return _selectedItem; }
 
@@ -38,21 +44,27 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_selectedItem, value))
                 {
                     _selectedItem = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedItem)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedItem)));
                 }
             }
         }
 
-        public List<Type> PageList { get; } = [typeof(DownloadingPage), typeof(CompletedPage)];
+        internal List<Type> PageList { get; } = [typeof(DownloadingPage), typeof(CompletedPage)];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public DownloadPage()
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
+        internal DownloadPage()
         {
             InitializeComponent();
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面触发的事件
@@ -76,9 +88,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：重写父类事件
+        #endregion 第四部分：父类虚方法重写
 
-        #region 第二部分：下载页面——挂载的事件
+        #region 第五部分：挂载事件处理
 
         /// <summary>
         /// 下载页面加载完成后触发的事件
@@ -130,7 +142,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 导航完成后发生
+        /// 导航完成后发生的事件
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
@@ -143,7 +155,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 导航失败时发生
+        /// 导航失败后发生的事件
         /// </summary>
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
@@ -193,7 +205,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:network-status"));
+                    await Launcher.LaunchUriAsync(new("ms-settings:network-status"));
                 }
                 catch (Exception e)
                 {
@@ -212,7 +224,9 @@ namespace GetStoreApp.Views.Pages
             MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.Download);
         }
 
-        #endregion 第二部分：下载页面——挂载的事件
+        #endregion 第五部分：挂载事件处理
+
+        #region 第六部分：数据操作与业务逻辑
 
         /// <summary>
         /// 页面向前导航
@@ -262,5 +276,7 @@ namespace GetStoreApp.Views.Pages
             this.navigateParameter = navigateParameter;
             this.slideDirection = slideDirection;
         }
+
+        #endregion 第六部分：数据操作与业务逻辑
     }
 }

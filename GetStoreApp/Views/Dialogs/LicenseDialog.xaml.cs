@@ -2,18 +2,19 @@
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
 using System.Text;
-using Windows.Security.Cryptography;
 
 namespace GetStoreApp.Views.Dialogs
 {
     /// <summary>
     /// 许可证文字内容对话框
     /// </summary>
-    public sealed partial class LicenseDialog : ContentDialog, INotifyPropertyChanged
+    internal sealed partial class LicenseDialog : ContentDialog, INotifyPropertyChanged
     {
+        #region 第一部分：属性、集合与事件
+
         private string _licenseText = Encoding.UTF8.GetString(ResourceService.GetEmbeddedData("Files/Assets/Embed/LICENSE"));
 
-        public string LicenseText
+        private string LicenseText
         {
             get { return _licenseText; }
 
@@ -22,16 +23,22 @@ namespace GetStoreApp.Views.Dialogs
                 if (!string.Equals(_licenseText, value))
                 {
                     _licenseText = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LicenseText)));
+                    PropertyChanged?.Invoke(this, new(nameof(LicenseText)));
                 }
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public LicenseDialog()
+        #endregion 第一部分：属性、集合与事件
+
+        #region 第二部分：构造函数
+
+        internal LicenseDialog()
         {
             InitializeComponent();
         }
+
+        #endregion 第二部分：构造函数
     }
 }

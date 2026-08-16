@@ -26,7 +26,7 @@ namespace GetStoreApp.Services.Settings
                 if (!string.Equals(_appLinkOpenMode, value))
                 {
                     _appLinkOpenMode = value;
-                    PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(AppLinkOpenMode)));
+                    PropertyChanged?.Invoke(null, new(nameof(AppLinkOpenMode)));
                 }
             }
         }

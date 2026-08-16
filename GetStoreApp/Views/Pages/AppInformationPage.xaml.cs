@@ -31,8 +31,10 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 应用管理信息页
     /// </summary>
-    public sealed partial class AppInformationPage : Page, INotifyPropertyChanged
+    internal sealed partial class AppInformationPage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string AppDescriptionString = ResourceService.GetLocalized("AppInformation/AppDescription");
         private readonly string AppDisplayNameString = ResourceService.GetLocalized("AppInformation/AppDisplayName");
         private readonly string ArchitectureString = ResourceService.GetLocalized("AppInformation/Architecture");
@@ -51,10 +53,15 @@ namespace GetStoreApp.Views.Pages
         private readonly string SignatureKindString = ResourceService.GetLocalized("AppInformation/SignatureKind");
         private readonly string VerifyIsOKString = ResourceService.GetLocalized("AppInformation/VerifyIsOK");
         private readonly string VersionString = ResourceService.GetLocalized("AppInformation/Version");
+        private AppInformation appInformation;
 
-        private string _displayName = string.Empty;
+        #endregion 第一部分：常量、资源与状态字段
 
-        public string DisplayName
+        #region 第二部分：属性、集合与事件
+
+        private string _displayName;
+
+        private string DisplayName
         {
             get { return _displayName; }
 
@@ -63,14 +70,14 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_displayName, value))
                 {
                     _displayName = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayName)));
+                    PropertyChanged?.Invoke(this, new(nameof(DisplayName)));
                 }
             }
         }
 
-        private string _packageFamilyName = string.Empty;
+        private string _packageFamilyName;
 
-        public string PackageFamilyName
+        private string PackageFamilyName
         {
             get { return _packageFamilyName; }
 
@@ -79,14 +86,14 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_packageFamilyName, value))
                 {
                     _packageFamilyName = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageFamilyName)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageFamilyName)));
                 }
             }
         }
 
-        private string _packageFullName = string.Empty;
+        private string _packageFullName;
 
-        public string PackageFullName
+        private string PackageFullName
         {
             get { return _packageFullName; }
 
@@ -95,14 +102,14 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_packageFullName, value))
                 {
                     _packageFullName = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageFullName)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageFullName)));
                 }
             }
         }
 
-        private string _description = string.Empty;
+        private string _description;
 
-        public string Description
+        private string Description
         {
             get { return _description; }
 
@@ -111,14 +118,14 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_description, value))
                 {
                     _description = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Description)));
+                    PropertyChanged?.Invoke(this, new(nameof(Description)));
                 }
             }
         }
 
-        private string _publisherDisplayName = string.Empty;
+        private string _publisherDisplayName;
 
-        public string PublisherDisplayName
+        private string PublisherDisplayName
         {
             get { return _publisherDisplayName; }
 
@@ -127,14 +134,14 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_publisherDisplayName, value))
                 {
                     _publisherDisplayName = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PublisherDisplayName)));
+                    PropertyChanged?.Invoke(this, new(nameof(PublisherDisplayName)));
                 }
             }
         }
 
-        private string _publisherId = string.Empty;
+        private string _publisherId;
 
-        public string PublisherId
+        private string PublisherId
         {
             get { return _publisherId; }
 
@@ -143,14 +150,14 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_publisherId, value))
                 {
                     _publisherId = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PublisherId)));
+                    PropertyChanged?.Invoke(this, new(nameof(PublisherId)));
                 }
             }
         }
 
         private string _version;
 
-        public string Version
+        private string Version
         {
             get { return _version; }
 
@@ -159,14 +166,14 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_version, value))
                 {
                     _version = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Version)));
+                    PropertyChanged?.Invoke(this, new(nameof(Version)));
                 }
             }
         }
 
         private string _installedDate;
 
-        public string InstalledDate
+        private string InstalledDate
         {
             get { return _installedDate; }
 
@@ -175,14 +182,14 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_installedDate, value))
                 {
                     _installedDate = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstalledDate)));
+                    PropertyChanged?.Invoke(this, new(nameof(InstalledDate)));
                 }
             }
         }
 
         private string _architecture;
 
-        public string Architecture
+        private string Architecture
         {
             get { return _architecture; }
 
@@ -191,7 +198,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_architecture, value))
                 {
                     _architecture = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Architecture)));
+                    PropertyChanged?.Invoke(this, new(nameof(Architecture)));
                 }
             }
         }
@@ -207,14 +214,14 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_signatureKind, value))
                 {
                     _signatureKind = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SignatureKind)));
+                    PropertyChanged?.Invoke(this, new(nameof(SignatureKind)));
                 }
             }
         }
 
         private string _resourceId;
 
-        public string ResourceId
+        private string ResourceId
         {
             get { return _resourceId; }
 
@@ -223,14 +230,14 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_resourceId, value))
                 {
                     _resourceId = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResourceId)));
+                    PropertyChanged?.Invoke(this, new(nameof(ResourceId)));
                 }
             }
         }
 
         private string _isBundle;
 
-        public string IsBundle
+        private string IsBundle
         {
             get { return _isBundle; }
 
@@ -239,14 +246,14 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_isBundle, value))
                 {
                     _isBundle = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsBundle)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsBundle)));
                 }
             }
         }
 
         private string _isDevelopmentMode;
 
-        public string IsDevelopmentMode
+        private string IsDevelopmentMode
         {
             get { return _isDevelopmentMode; }
 
@@ -255,14 +262,14 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_isDevelopmentMode, value))
                 {
                     _isDevelopmentMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDevelopmentMode)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsDevelopmentMode)));
                 }
             }
         }
 
         private string _isFramework;
 
-        public string IsFramework
+        private string IsFramework
         {
             get { return _isFramework; }
 
@@ -271,14 +278,14 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_isFramework, value))
                 {
                     _isFramework = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsFramework)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsFramework)));
                 }
             }
         }
 
         private string _isOptional;
 
-        public string IsOptional
+        private string IsOptional
         {
             get { return _isOptional; }
 
@@ -287,14 +294,14 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_isOptional, value))
                 {
                     _isOptional = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsOptional)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsOptional)));
                 }
             }
         }
 
         private string _isResourcePackage;
 
-        public string IsResourcePackage
+        private string IsResourcePackage
         {
             get { return _isResourcePackage; }
 
@@ -303,14 +310,14 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_isResourcePackage, value))
                 {
                     _isResourcePackage = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsResourcePackage)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsResourcePackage)));
                 }
             }
         }
 
         private string _isStub;
 
-        public string IsStub
+        private string IsStub
         {
             get { return _isStub; }
 
@@ -319,14 +326,14 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_isStub, value))
                 {
                     _isStub = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsStub)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsStub)));
                 }
             }
         }
 
         private string _verifyIsOK;
 
-        public string VerifyIsOK
+        private string VerifyIsOK
         {
             get { return _verifyIsOK; }
 
@@ -335,7 +342,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_verifyIsOK, value))
                 {
                     _verifyIsOK = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VerifyIsOK)));
+                    PropertyChanged?.Invoke(this, new(nameof(VerifyIsOK)));
                 }
             }
         }
@@ -346,12 +353,18 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public AppInformationPage()
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
+        internal AppInformationPage()
         {
             InitializeComponent();
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面触发的事件
@@ -362,6 +375,111 @@ namespace GetStoreApp.Views.Pages
 
             if (args.Parameter is AppInformation appInformation)
             {
+                InitializeData(appInformation);
+            }
+        }
+
+        #endregion 第四部分：父类虚方法重写
+
+        #region 第五部分：命令调用处理
+
+        /// <summary>
+        /// 启动对应入口的应用
+        /// </summary>
+        private void OnLaunchExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is AppListEntryModel appListEntry)
+            {
+                LaunchApp(appListEntry);
+            }
+        }
+
+        /// <summary>
+        /// 打开安装目录
+        /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Package))]
+        private void OnOpenFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is Package package)
+            {
+                OpenInstalledPath(package);
+            }
+        }
+
+        /// <summary>
+        /// 打开商店
+        /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(Package))]
+        private void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is Package package)
+            {
+                OpenStore(package);
+            }
+        }
+
+        /// <summary>
+        /// 固定应用到桌面
+        /// </summary>
+        private async void OnPinToDesktopExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            bool isPinnedSuccessfully = await PinToDesktopAsync(PackageFamilyName);
+            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Desktop, isPinnedSuccessfully));
+        }
+
+        /// <summary>
+        /// 固定应用入口到开始“屏幕”
+        /// </summary>
+        private async void OnPinToStartScreenExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is AppListEntryModel appListEntry)
+            {
+                bool isPinnedSuccessfully = await PinToStartScreenAsync(appListEntry);
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.StartScreen, isPinnedSuccessfully));
+            }
+        }
+
+        /// <summary>
+        /// 固定应用入口到任务栏
+        /// </summary>
+        private void OnPinToTaskbarExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is AppListEntryModel appListEntry)
+            {
+                PinToTaskbar(appListEntry);
+            }
+        }
+
+        #endregion 第五部分：命令调用处理
+
+        #region 第六部分：挂载事件处理
+
+        /// <summary>
+        /// 复制应用信息
+        /// </summary>
+        private async void OnCopyClicked(object sender, RoutedEventArgs args)
+        {
+            List<string> appInformationCopyStringList = await GetAppInformationCopyListAsync(appInformation);
+
+            if (appInformationCopyStringList is not null)
+            {
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, appInformationCopyStringList));
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+            }
+        }
+
+        #endregion 第六部分：挂载事件处理
+
+        #region 第七部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private void InitializeData(AppInformation appInformationItem)
+        {
+            if (appInformationItem is not null)
+            {
+                appInformation = appInformationItem;
                 DisplayName = appInformation.DisplayName;
                 PackageFamilyName = appInformation.PackageFamilyName;
                 PackageFullName = appInformation.PackageFullName;
@@ -395,16 +513,12 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：重写父类事件
-
-        #region 第二部分：XamlUICommand 命令调用时挂载的事件
-
         /// <summary>
-        /// 启动对应入口的应用
+        /// 启动应用
         /// </summary>
-        private void OnLaunchExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void LaunchApp(AppListEntryModel appListEntry)
         {
-            if (args.Parameter is AppListEntryModel appListEntry)
+            if (appListEntry is not null)
             {
                 Task.Run(async () =>
                 {
@@ -414,7 +528,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OnLaunchExecuteRequested), 1, e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(LaunchApp), 1, e);
                     }
                 });
             }
@@ -423,10 +537,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开安装目录
         /// </summary>
-        [DynamicWindowsRuntimeCast(typeof(Package))]
-        private void OnOpenFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OpenInstalledPath(Package package)
         {
-            if (args.Parameter is Package package)
+            if (package is not null)
             {
                 Task.Run(async () =>
                 {
@@ -436,7 +549,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OnOpenFolderExecuteRequested), 1, e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OpenInstalledPath), 1, e);
                     }
                 });
             }
@@ -445,20 +558,19 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开商店
         /// </summary>
-        [DynamicWindowsRuntimeCast(typeof(Package))]
-        private void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OpenStore(Package package)
         {
-            if (args.Parameter is Package package)
+            if (package is not null)
             {
                 Task.Run(async () =>
                 {
                     try
                     {
-                        await Launcher.LaunchUriAsync(new Uri($"ms-windows-store://pdp/?PFN={package.Id.FamilyName}"));
+                        await Launcher.LaunchUriAsync(new($"ms-windows-store://pdp/?PFN={package.Id.FamilyName}"));
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OnOpenStoreExecuteRequested), 1, e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OpenStore), 1, e);
                     }
                 });
             }
@@ -467,38 +579,43 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 固定应用到桌面
         /// </summary>
-        private async void OnPinToDesktopExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async Task<bool> PinToDesktopAsync(string packageFamilyName)
         {
-            bool isPinnedSuccessfully = await Task.Run(() =>
+            if (!string.IsNullOrEmpty(packageFamilyName))
             {
-                bool isPinnedSuccessfully = false;
-
-                try
+                return await Task.Run(() =>
                 {
-                    if (StoreConfiguration.IsPinToDesktopSupported())
+                    bool isPinnedSuccessfully = false;
+
+                    try
                     {
-                        StoreConfiguration.PinToDesktop(PackageFamilyName);
-                        isPinnedSuccessfully = true;
+                        if (StoreConfiguration.IsPinToDesktopSupported())
+                        {
+                            StoreConfiguration.PinToDesktop(packageFamilyName);
+                            isPinnedSuccessfully = true;
+                        }
                     }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OnPinToDesktopExecuteRequested), 1, e);
-                }
-                return isPinnedSuccessfully;
-            });
-
-            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Desktop, isPinnedSuccessfully));
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(PinToDesktopAsync), 1, e);
+                    }
+                    return isPinnedSuccessfully;
+                });
+            }
+            else
+            {
+                return default;
+            }
         }
 
         /// <summary>
-        /// 固定应用入口到开始“屏幕”
+        /// 固定应用到开始屏幕
         /// </summary>
-        private async void OnPinToStartScreenExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async Task<bool> PinToStartScreenAsync(AppListEntryModel appListEntry)
         {
-            if (args.Parameter is AppListEntryModel appListEntry)
+            if (appListEntry is not null)
             {
-                bool isPinnedSuccessfully = await Task.Run(async () =>
+                return await Task.Run(async () =>
                 {
                     bool isPinnedSuccessfully = false;
 
@@ -510,79 +627,78 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OnPinToStartScreenExecuteRequested), 1, e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(PinToStartScreenAsync), 1, e);
                     }
                     return isPinnedSuccessfully;
                 });
-
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.StartScreen, isPinnedSuccessfully));
+            }
+            else
+            {
+                return default;
             }
         }
 
         /// <summary>
-        /// 固定应用入口到任务栏
+        /// 固定应用到任务栏
         /// </summary>
-        private void OnPinToTaskbarExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void PinToTaskbar(AppListEntryModel appListEntry)
         {
-            if (args.Parameter is AppListEntryModel appListEntry)
+            Task.Run(async () =>
             {
-                Task.Run(async () =>
+                try
                 {
-                    try
-                    {
-                        await Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                    await Launcher.LaunchUriAsync(new("getstoreapppinner:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
                         {
                             {"Type", nameof(TaskbarManager) },
                             { "AppUserModelId", appListEntry.AppUserModelId },
                             { "PackageFullName", appListEntry.PackageFullName },
                         });
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OnPinToTaskbarExecuteRequested), 1, e);
-                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(PinToTaskbar), 1, e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 获取应用信息要准备复制的字符串内容
+        /// </summary>
+        private async Task<List<string>> GetAppInformationCopyListAsync(AppInformation appInformation)
+        {
+            if (appInformation is not null)
+            {
+                return await Task.Run(() =>
+                {
+                    List<string> copyStringList = [];
+
+                    copyStringList.Add(string.Format("{0}:\t{1}", AppDisplayNameString, appInformation.DisplayName));
+                    copyStringList.Add(string.Format("{0}:\t{1}", PackageFamilyNameString, appInformation.PackageFamilyName));
+                    copyStringList.Add(string.Format("{0}:\t{1}", PackageFullNameString, appInformation.PackageFullName));
+                    copyStringList.Add(string.Format("{0}:\t{1}", AppDescriptionString, appInformation.Description));
+                    copyStringList.Add(string.Format("{0}:\t{1}", PublisherDisplayNameString, appInformation.PublisherDisplayName));
+                    copyStringList.Add(string.Format("{0}:\t{1}", PublisherIdString, appInformation.PublisherId));
+                    copyStringList.Add(string.Format("{0}:\t{1}", VersionString, appInformation.Version));
+                    copyStringList.Add(string.Format("{0}:\t{1}", InstalledDateString, appInformation.InstallDate));
+                    copyStringList.Add(string.Format("{0}:\t{1}", ArchitectureString, appInformation.Architecture));
+                    copyStringList.Add(string.Format("{0}:\t{1}", SignatureKindString, appInformation.SignatureKind));
+                    copyStringList.Add(string.Format("{0}:\t{1}", ResourceIdString, appInformation.ResourceId));
+                    copyStringList.Add(string.Format("{0}:\t{1}", IsBundleString, appInformation.IsBundle));
+                    copyStringList.Add(string.Format("{0}:\t{1}", IsDevelopmentModeString, appInformation.IsDevelopmentMode));
+                    copyStringList.Add(string.Format("{0}:\t{1}", IsFrameworkString, appInformation.IsFramework));
+                    copyStringList.Add(string.Format("{0}:\t{1}", IsOptionalString, appInformation.IsOptional));
+                    copyStringList.Add(string.Format("{0}:\t{1}", IsResourcePackageString, appInformation.IsResourcePackage));
+                    copyStringList.Add(string.Format("{0}:\t{1}", IsStubString, appInformation.IsStub));
+                    copyStringList.Add(string.Format("{0}:\t{1}", VerifyIsOKString, appInformation.VerifyIsOK));
+                    return copyStringList;
                 });
+            }
+            else
+            {
+                return default;
             }
         }
 
-        #endregion 第二部分：XamlUICommand 命令调用时挂载的事件
-
-        #region 第三部分：应用信息页面——挂载的事件
-
-        /// <summary>
-        /// 复制应用信息
-        /// </summary>
-        private async void OnCopyClicked(object sender, RoutedEventArgs args)
-        {
-            List<string> copyStringList = await Task.Run(() =>
-            {
-                List<string> copyStringList = [];
-
-                copyStringList.Add(string.Format("{0}:\t{1}", AppDisplayNameString, DisplayName));
-                copyStringList.Add(string.Format("{0}:\t{1}", PackageFamilyNameString, PackageFamilyName));
-                copyStringList.Add(string.Format("{0}:\t{1}", PackageFullNameString, PackageFullName));
-                copyStringList.Add(string.Format("{0}:\t{1}", AppDescriptionString, Description));
-                copyStringList.Add(string.Format("{0}:\t{1}", PublisherDisplayNameString, PublisherDisplayName));
-                copyStringList.Add(string.Format("{0}:\t{1}", PublisherIdString, PublisherId));
-                copyStringList.Add(string.Format("{0}:\t{1}", VersionString, Version));
-                copyStringList.Add(string.Format("{0}:\t{1}", InstalledDateString, InstalledDate));
-                copyStringList.Add(string.Format("{0}:\t{1}", ArchitectureString, Architecture));
-                copyStringList.Add(string.Format("{0}:\t{1}", SignatureKindString, SignatureKind));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceIdString, ResourceId));
-                copyStringList.Add(string.Format("{0}:\t{1}", IsBundleString, IsBundle));
-                copyStringList.Add(string.Format("{0}:\t{1}", IsDevelopmentModeString, IsDevelopmentMode));
-                copyStringList.Add(string.Format("{0}:\t{1}", IsFrameworkString, IsFramework));
-                copyStringList.Add(string.Format("{0}:\t{1}", IsOptionalString, IsOptional));
-                copyStringList.Add(string.Format("{0}:\t{1}", IsResourcePackageString, IsResourcePackage));
-                copyStringList.Add(string.Format("{0}:\t{1}", IsStubString, IsStub));
-                copyStringList.Add(string.Format("{0}:\t{1}", VerifyIsOKString, VerifyIsOK));
-                return copyStringList;
-            });
-
-            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyStringList));
-            await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
-        }
-
-        #endregion 第三部分：应用信息页面——挂载的事件
+        #endregion 第七部分：数据操作与业务逻辑
     }
 }

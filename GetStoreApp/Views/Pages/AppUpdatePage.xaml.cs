@@ -29,8 +29,10 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 商店应用更新页面
     /// </summary>
-    public sealed partial class AppUpdatePage : Page, INotifyPropertyChanged
+    internal sealed partial class AppUpdatePage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string AcquiringLicenseString = ResourceService.GetLocalized("AppUpdate/AcquiringLicense");
         private readonly string AppUpdateCountInfoString = ResourceService.GetLocalized("AppUpdate/AppUpdateCountInfo");
         private readonly string AppUpdateEmptyString = ResourceService.GetLocalized("AppUpdate/AppUpdateEmpty");
@@ -46,15 +48,18 @@ namespace GetStoreApp.Views.Pages
         private readonly string ReadyToDownloadString = ResourceService.GetLocalized("AppUpdate/ReadyToDownload");
         private readonly string RestoringDataString = ResourceService.GetLocalized("AppUpdate/RestoringData");
         private readonly string StartingString = ResourceService.GetLocalized("AppUpdate/Starting");
-
         private readonly Lock AppUpdateLock = new();
         private bool isInitialized;
         private AppInstallManager appInstallManager;
         private PackageManager packageManager;
 
-        private AppUpdateResultKind _appUpdateResultKind = AppUpdateResultKind.NotCheckUpdate;
+        #endregion 第一部分：常量、资源与状态字段
 
-        public AppUpdateResultKind AppUpdateResultKind
+        #region 第二部分：属性、集合与事件
+
+        private AppUpdateResultKind _appUpdateResultKind;
+
+        private AppUpdateResultKind AppUpdateResultKind
         {
             get { return _appUpdateResultKind; }
 
@@ -63,14 +68,14 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_appUpdateResultKind, value))
                 {
                     _appUpdateResultKind = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppUpdateResultKind)));
+                    PropertyChanged?.Invoke(this, new(nameof(AppUpdateResultKind)));
                 }
             }
         }
 
         private bool _isCheckingUpdate;
 
-        public bool IsCheckingUpdate
+        private bool IsCheckingUpdate
         {
             get { return _isCheckingUpdate; }
 
@@ -79,14 +84,14 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isCheckingUpdate, value))
                 {
                     _isCheckingUpdate = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCheckingUpdate)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsCheckingUpdate)));
                 }
             }
         }
 
         private string _appUpdateFailedContent;
 
-        public string AppUpdateFailedContent
+        private string AppUpdateFailedContent
         {
             get { return _appUpdateFailedContent; }
 
@@ -95,7 +100,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_appUpdateFailedContent, value))
                 {
                     _appUpdateFailedContent = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppUpdateFailedContent)));
+                    PropertyChanged?.Invoke(this, new(nameof(AppUpdateFailedContent)));
                 }
             }
         }
@@ -106,12 +111,18 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public AppUpdatePage()
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
+        internal AppUpdatePage()
         {
             InitializeComponent();
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面触发的事件
@@ -123,6 +134,7 @@ namespace GetStoreApp.Views.Pages
             if (!isInitialized)
             {
                 isInitialized = true;
+                AppUpdateResultKind = AppUpdateResultKind.NotCheckUpdate;
                 appInstallManager = new();
                 packageManager = new();
 
@@ -131,9 +143,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：重写父类事件
+        #endregion 第四部分：父类虚方法重写
 
-        #region 第二部分：XamlUICommand 命令调用时挂载的事件
+        #region 第五部分：命令调用处理
 
         /// <summary>
         /// 更新选定的应用
@@ -151,18 +163,7 @@ namespace GetStoreApp.Views.Pages
                         if (string.Equals(appUpdateItem.PackageFamilyName, packageFamilyName))
                         {
                             appUpdateItem.IsOperating = true;
-                            AppInstallItem appInstallItem = await Task.Run(async () =>
-                            {
-                                try
-                                {
-                                    return await appInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
-                                }
-                                catch (Exception e)
-                                {
-                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppUpdatePage), nameof(OnUpdateExecuteRequested), 1, e);
-                                    return null;
-                                }
-                            });
+                            AppInstallItem appInstallItem = await UpdatAppAsync(appUpdateItem.PackageFamilyName);
 
                             // 安装更新添加成功
                             if (appInstallItem is not null)
@@ -225,47 +226,20 @@ namespace GetStoreApp.Views.Pages
                     AppUpdateLock.Exit();
                 }
 
-                await Task.Run(() =>
-                {
-                    try
-                    {
-                        foreach (AppInstallItem appInstallItem in appInstallManager.AppInstallItems)
-                        {
-                            if (string.Equals(packageFamilyName, appInstallItem.PackageFamilyName))
-                            {
-                                appInstallItem.Cancel();
-                                break;
-                            }
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    }
-                });
+                await CancelUpdateAppAsync(packageFamilyName);
             }
         }
 
-        #endregion 第二部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第五部分：命令调用处理
 
-        #region 第三部分：商店应用更新页面——挂载的事件
+        #region 第六部分：挂载事件处理
 
         /// <summary>
         /// 打开微软商店并更新微软商店应用
         /// </summary>
         private void OnOpenStoreClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new Uri("ms-windows-store://downloadsandupdates"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenStore();
         }
 
         /// <summary>
@@ -273,17 +247,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnInsiderProgramClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:windowsinsider"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenInsiderProgram();
         }
 
         /// <summary>
@@ -294,132 +258,43 @@ namespace GetStoreApp.Views.Pages
             if (!IsCheckingUpdate)
             {
                 IsCheckingUpdate = true;
-                List<AppUpdateModel> appUpdateList = await Task.Run(async () =>
+                List<AppUpdateModel> appUpdateList = await GetAppUpdateListAsync(AppUpdateList);
+
+                if (appUpdateList is not null)
                 {
-                    List<AppUpdateModel> appUpdateList = [];
+                    // 只添加未有的项
+                    AppUpdateLock.Enter();
 
                     try
                     {
-                        AppUpdateOptions updateOptions = new()
+                        AppUpdateList.AddRange(appUpdateList);
+                        AppUpdateList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
+                        AppUpdateCollection.Clear();
+                        foreach (AppUpdateModel appUpdateItem in AppUpdateList)
                         {
-                            AutomaticallyDownloadAndInstallUpdateIfFound = false,
-                            AllowForcedAppRestart = true,
-                        };
+                            AppUpdateCollection.Add(appUpdateItem);
+                        }
 
-                        IReadOnlyList<AppInstallItem> upgradableAppsList = await appInstallManager.SearchForAllUpdatesAsync(string.Empty, string.Empty, updateOptions);
-
-                        foreach (AppInstallItem upgradableAppItem in upgradableAppsList)
+                        if (AppUpdateList.Count > 0)
                         {
-                            // 判断是否已经添加到应用更新队列中，没有则添加
-                            bool isExisted = false;
-                            bool isUpdating = false;
-                            AppUpdateLock.Enter();
-
-                            try
-                            {
-                                foreach (AppUpdateModel appUpdateItem in AppUpdateList)
-                                {
-                                    if (string.Equals(appUpdateItem.PackageFamilyName, upgradableAppItem.PackageFamilyName))
-                                    {
-                                        isExisted = true;
-                                        isUpdating = appUpdateItem.IsUpdating;
-                                        break;
-                                    }
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-
-                            AppUpdateLock.Exit();
-
-                            if (isExisted)
-                            {
-                                // 已经检测到的应用暂未进行更新，取消自动安装当前更新
-                                if (CancelAutoUpdateService.CancelAutoUpdate && !isUpdating)
-                                {
-                                    upgradableAppItem.Cancel();
-                                }
-                            }
-                            else
-                            {
-                                if (CancelAutoUpdateService.CancelAutoUpdate)
-                                {
-                                    upgradableAppItem.Cancel();
-                                }
-
-                                foreach (Package packageItem in packageManager.FindPackagesForUser(string.Empty))
-                                {
-                                    if (string.Equals(packageItem.Id.FamilyName, upgradableAppItem.PackageFamilyName, StringComparison.OrdinalIgnoreCase))
-                                    {
-                                        AppInstallStatus appInstallStatus = upgradableAppItem.GetCurrentStatus();
-                                        string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
-                                        string installSubInformation = string.Format(InstallingSubInformationString, VolumeSizeHelper.ConvertVolumeSizeToString(appInstallStatus.DownloadSizeInBytes), VolumeSizeHelper.ConvertVolumeSizeToString(appInstallStatus.BytesDownloaded));
-
-                                        appUpdateList.Add(new AppUpdateModel()
-                                        {
-                                            LogoImage = packageItem.Logo,
-                                            AppInstallState = appInstallStatus.InstallState,
-                                            DisplayName = packageItem.DisplayName,
-                                            PublisherDisplayName = packageItem.PublisherDisplayName,
-                                            InstallInformation = installInformation,
-                                            InstallSubInformation = installSubInformation,
-                                            IsUpdating = appInstallStatus.InstallState is AppInstallState.Pending ||
-                                                         appInstallStatus.InstallState is AppInstallState.Starting ||
-                                                         appInstallStatus.InstallState is AppInstallState.AcquiringLicense ||
-                                                         appInstallStatus.InstallState is AppInstallState.Downloading ||
-                                                         appInstallStatus.InstallState is AppInstallState.RestoringData ||
-                                                         appInstallStatus.InstallState is AppInstallState.Installing,
-                                            PackageFamilyName = upgradableAppItem.PackageFamilyName,
-                                            PercentComplete = appInstallStatus.PercentComplete,
-                                            ProductId = upgradableAppItem.ProductId
-                                        });
-                                        break;
-                                    }
-                                }
-                            }
+                            AppUpdateResultKind = AppUpdateResultKind.Successfully;
+                            AppUpdateFailedContent = string.Empty;
+                        }
+                        else
+                        {
+                            AppUpdateResultKind = AppUpdateResultKind.Failed;
+                            AppUpdateFailedContent = AppUpdateEmptyString;
                         }
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppUpdatePage), nameof(OnCheckUpdateClicked), 1, e);
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                     }
 
-                    return appUpdateList;
-                });
+                    AppUpdateLock.Exit();
 
-                // 只添加未有的项
-                AppUpdateLock.Enter();
-
-                try
-                {
-                    AppUpdateList.AddRange(appUpdateList);
-                    AppUpdateList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
-                    AppUpdateCollection.Clear();
-                    foreach (AppUpdateModel appUpdateItem in AppUpdateList)
-                    {
-                        AppUpdateCollection.Add(appUpdateItem);
-                    }
+                    IsCheckingUpdate = false;
                 }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-
-                AppUpdateLock.Exit();
-
-                if (AppUpdateList.Count > 0)
-                {
-                    AppUpdateResultKind = AppUpdateResultKind.Successfully;
-                    AppUpdateFailedContent = string.Empty;
-                }
-                else
-                {
-                    AppUpdateResultKind = AppUpdateResultKind.Failed;
-                    AppUpdateFailedContent = AppUpdateEmptyString;
-                }
-                IsCheckingUpdate = false;
             }
         }
 
@@ -442,18 +317,7 @@ namespace GetStoreApp.Views.Pages
             {
                 if (!appUpdateItem.IsUpdating && appUpdateItem.IsOperating)
                 {
-                    AppInstallItem appInstallItem = await Task.Run(async () =>
-                    {
-                        try
-                        {
-                            return await appInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppUpdatePage), nameof(OnUpdateAllClicked), 1, e);
-                            return null;
-                        }
-                    });
+                    AppInstallItem appInstallItem = await UpdatAppAsync(appUpdateItem.PackageFamilyName);
 
                     // 安装更新添加成功
                     if (appInstallItem is not null)
@@ -475,10 +339,6 @@ namespace GetStoreApp.Views.Pages
                 }
             }
         }
-
-        #endregion 第三部分：商店应用更新页面——挂载的事件
-
-        #region 第四部分：商店应用更新页面——自定义事件
 
         /// <summary>
         /// 应用程序退出时触发的事件
@@ -523,11 +383,11 @@ namespace GetStoreApp.Views.Pages
                                 appUpdateItem.InstallInformation = installInformation;
                                 appUpdateItem.InstallSubInformation = installSubInformation;
                                 appUpdateItem.IsUpdating = appInstallStatus.InstallState is AppInstallState.Pending ||
-                                        appInstallStatus.InstallState is AppInstallState.Starting ||
-                                        appInstallStatus.InstallState is AppInstallState.AcquiringLicense ||
-                                        appInstallStatus.InstallState is AppInstallState.Downloading ||
-                                        appInstallStatus.InstallState is AppInstallState.RestoringData ||
-                                        appInstallStatus.InstallState is AppInstallState.Installing;
+                                                           appInstallStatus.InstallState is AppInstallState.Starting ||
+                                                           appInstallStatus.InstallState is AppInstallState.AcquiringLicense ||
+                                                           appInstallStatus.InstallState is AppInstallState.Downloading ||
+                                                           appInstallStatus.InstallState is AppInstallState.RestoringData ||
+                                                           appInstallStatus.InstallState is AppInstallState.Installing;
 
                                 // 更新已取消
                                 if (appInstallStatus.InstallState is AppInstallState.Canceled && appUpdateItem.IsOperating)
@@ -537,13 +397,7 @@ namespace GetStoreApp.Views.Pages
                                 // 更新已完成
                                 else if (appUpdateItem.AppInstallState is AppInstallState.Completed)
                                 {
-                                    Task.Run(() =>
-                                    {
-                                        AppNotificationBuilder appNotificationBuilder = new();
-                                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                                        appNotificationBuilder.AddText(string.Format(AppUpdateSuccessfullyString, appUpdateItem.DisplayName));
-                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                    });
+                                    ShowAppUpdateNotification(appUpdateItem.DisplayName);
 
                                     AppUpdateList.Remove(appUpdateItem);
                                     AppUpdateCollection.Remove(appUpdateItem);
@@ -573,7 +427,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第四部分：商店应用更新页面——自定义事件
+        #endregion 第六部分：挂载事件处理
+
+        #region 第七部分：数据操作与业务逻辑
 
         /// <summary>
         /// 获取应用安装的描述信息
@@ -601,6 +457,221 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 更新应用
+        /// </summary>
+        private async Task<AppInstallItem> UpdatAppAsync(string packageFamilyName)
+        {
+            if (!string.IsNullOrEmpty(packageFamilyName))
+            {
+                return await Task.Run(async () =>
+                {
+                    try
+                    {
+                        return await appInstallManager.UpdateAppByPackageFamilyNameAsync(packageFamilyName);
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppUpdatePage), nameof(UpdatAppAsync), 1, e);
+                        return null;
+                    }
+                });
+            }
+            else
+            {
+                return default;
+            }
+        }
+
+        /// <summary>
+        /// 取消更新应用
+        /// </summary>
+        private async Task CancelUpdateAppAsync(string packageFamilyName)
+        {
+            if (!string.IsNullOrEmpty(packageFamilyName))
+            {
+                await Task.Run(() =>
+                {
+                    try
+                    {
+                        foreach (AppInstallItem appInstallItem in appInstallManager.AppInstallItems)
+                        {
+                            if (string.Equals(packageFamilyName, appInstallItem.PackageFamilyName))
+                            {
+                                appInstallItem.Cancel();
+                                break;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 打开商店
+        /// </summary>
+        private void OpenStore()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("ms-windows-store://downloadsandupdates"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 打开预览体验计划
+        /// </summary>
+        private void OpenInsiderProgram()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("ms-settings:windowsinsider"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 获取应用更新信息
+        /// </summary>
+        private async Task<List<AppUpdateModel>> GetAppUpdateListAsync(List<AppUpdateModel> appUpdateList)
+        {
+            if (appUpdateList is not null)
+            {
+                return await Task.Run(async () =>
+                {
+                    List<AppUpdateModel> appUpdateList = [];
+
+                    try
+                    {
+                        AppUpdateOptions updateOptions = new()
+                        {
+                            AutomaticallyDownloadAndInstallUpdateIfFound = false,
+                            AllowForcedAppRestart = true,
+                        };
+
+                        IReadOnlyList<AppInstallItem> upgradableAppsList = await appInstallManager.SearchForAllUpdatesAsync(string.Empty, string.Empty, updateOptions);
+
+                        foreach (AppInstallItem upgradableAppItem in upgradableAppsList)
+                        {
+                            // 判断是否已经添加到应用更新队列中，没有则添加
+                            bool isExisted = false;
+                            bool isUpdating = false;
+                            AppUpdateLock.Enter();
+
+                            try
+                            {
+                                foreach (AppUpdateModel appUpdateItem in appUpdateList)
+                                {
+                                    if (string.Equals(appUpdateItem.PackageFamilyName, upgradableAppItem.PackageFamilyName))
+                                    {
+                                        isExisted = true;
+                                        isUpdating = appUpdateItem.IsUpdating;
+                                        break;
+                                    }
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                            }
+
+                            AppUpdateLock.Exit();
+
+                            if (isExisted)
+                            {
+                                // 已经检测到的应用暂未进行更新，取消自动安装当前更新
+                                if (CancelAutoUpdateService.CancelAutoUpdate && !isUpdating)
+                                {
+                                    upgradableAppItem.Cancel();
+                                }
+                            }
+                            else
+                            {
+                                if (CancelAutoUpdateService.CancelAutoUpdate)
+                                {
+                                    upgradableAppItem.Cancel();
+                                }
+
+                                foreach (Package packageItem in packageManager.FindPackagesForUser(string.Empty))
+                                {
+                                    if (string.Equals(packageItem.Id.FamilyName, upgradableAppItem.PackageFamilyName, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        AppInstallStatus appInstallStatus = upgradableAppItem.GetCurrentStatus();
+                                        string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
+                                        string installSubInformation = string.Format(InstallingSubInformationString, VolumeSizeHelper.ConvertVolumeSizeToString(appInstallStatus.DownloadSizeInBytes), VolumeSizeHelper.ConvertVolumeSizeToString(appInstallStatus.BytesDownloaded));
+
+                                        appUpdateList.Add(new()
+                                        {
+                                            LogoImage = packageItem.Logo,
+                                            AppInstallState = appInstallStatus.InstallState,
+                                            DisplayName = packageItem.DisplayName,
+                                            PublisherDisplayName = packageItem.PublisherDisplayName,
+                                            InstallInformation = installInformation,
+                                            InstallSubInformation = installSubInformation,
+                                            IsUpdating = appInstallStatus.InstallState is AppInstallState.Pending ||
+                                                         appInstallStatus.InstallState is AppInstallState.Starting ||
+                                                         appInstallStatus.InstallState is AppInstallState.AcquiringLicense ||
+                                                         appInstallStatus.InstallState is AppInstallState.Downloading ||
+                                                         appInstallStatus.InstallState is AppInstallState.RestoringData ||
+                                                         appInstallStatus.InstallState is AppInstallState.Installing,
+                                            PackageFamilyName = upgradableAppItem.PackageFamilyName,
+                                            PercentComplete = appInstallStatus.PercentComplete,
+                                            ProductId = upgradableAppItem.ProductId
+                                        });
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppUpdatePage), nameof(OnCheckUpdateClicked), 1, e);
+                    }
+
+                    return appUpdateList;
+                });
+            }
+            else
+            {
+                return default;
+            }
+        }
+
+        /// <summary>
+        /// 显示应用更新通知
+        /// </summary>
+        private void ShowAppUpdateNotification(string displayName)
+        {
+            if (!string.IsNullOrEmpty(displayName))
+            {
+                Task.Run(() =>
+                {
+                    AppNotificationBuilder appNotificationBuilder = new();
+                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                    appNotificationBuilder.AddText(string.Format(AppUpdateSuccessfullyString, displayName));
+                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                });
+            }
+        }
+
+        /// <summary>
         /// 获取加载应用更新是否成功
         /// </summary>
         private Visibility GetAppUpdateSuccessfullyVisibility(AppUpdateResultKind appUpdateResultKind, bool isSuccessfully)
@@ -623,5 +694,7 @@ namespace GetStoreApp.Views.Pages
         {
             return !isCheckingUpdate && count > 0;
         }
+
+        #endregion 第七部分：数据操作与业务逻辑
     }
 }

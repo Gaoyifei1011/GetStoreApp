@@ -56,7 +56,7 @@ namespace GetStoreApp.Services.Download
                         if (string.Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
                             downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
-                            DownloadProgress?.Invoke(new DownloadSchedulerModel()
+                            DownloadProgress?.Invoke(new()
                             {
                                 DownloadID = downloadSchedulerItem.DownloadID,
                                 FileName = downloadSchedulerItem.FileName,
@@ -99,7 +99,7 @@ namespace GetStoreApp.Services.Download
                         downloadSchedulerLock.Exit();
                     }
 
-                    DownloadProgress?.Invoke(new DownloadSchedulerModel()
+                    DownloadProgress?.Invoke(new()
                     {
                         DownloadID = downloadScheduler.DownloadID,
                         FileName = downloadScheduler.FileName,
@@ -134,7 +134,7 @@ namespace GetStoreApp.Services.Download
                             downloadSchedulerItem.DownloadSpeed = downloadProgress.CompletedSize - downloadSchedulerItem.CompletedSize;
                             downloadSchedulerItem.CompletedSize = downloadProgress.CompletedSize;
                             downloadSchedulerItem.TotalSize = downloadProgress.TotalSize;
-                            DownloadProgress?.Invoke(new DownloadSchedulerModel()
+                            DownloadProgress?.Invoke(new()
                             {
                                 DownloadID = downloadSchedulerItem.DownloadID,
                                 FileName = downloadSchedulerItem.FileName,
@@ -169,7 +169,7 @@ namespace GetStoreApp.Services.Download
                         if (string.Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
                             downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
-                            DownloadProgress?.Invoke(new DownloadSchedulerModel()
+                            DownloadProgress?.Invoke(new()
                             {
                                 DownloadID = downloadSchedulerItem.DownloadID,
                                 FileName = downloadSchedulerItem.FileName,
@@ -206,7 +206,7 @@ namespace GetStoreApp.Services.Download
                             downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
                             downloadSchedulerItem.CompletedSize = 1;
                             downloadProgress.TotalSize = 1;
-                            DownloadProgress?.Invoke(new DownloadSchedulerModel()
+                            DownloadProgress?.Invoke(new()
                             {
                                 DownloadID = downloadSchedulerItem.DownloadID,
                                 FileName = downloadSchedulerItem.FileName,
@@ -220,7 +220,7 @@ namespace GetStoreApp.Services.Download
                             // 下载页面未初始化前将下载内容存放到下载失败记录列表中
                             if (!IsDownloadingPageInitialized)
                             {
-                                DownloadFailedList.Add(new DownloadSchedulerModel()
+                                DownloadFailedList.Add(new()
                                 {
                                     DownloadID = downloadSchedulerItem.DownloadID,
                                     FileName = downloadSchedulerItem.FileName,
@@ -276,7 +276,7 @@ namespace GetStoreApp.Services.Download
                             downloadSchedulerItem.DownloadSpeed = downloadProgress.CompletedSize - downloadSchedulerItem.CompletedSize;
                             downloadSchedulerItem.CompletedSize = downloadProgress.CompletedSize;
                             downloadSchedulerItem.TotalSize = downloadProgress.TotalSize;
-                            DownloadProgress?.Invoke(new DownloadSchedulerModel()
+                            DownloadProgress?.Invoke(new()
                             {
                                 DownloadID = downloadSchedulerItem.DownloadID,
                                 FileName = downloadSchedulerItem.FileName,
@@ -328,7 +328,7 @@ namespace GetStoreApp.Services.Download
                         if (string.Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
                             downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
-                            DownloadProgress?.Invoke(new DownloadSchedulerModel()
+                            DownloadProgress?.Invoke(new()
                             {
                                 DownloadID = downloadSchedulerItem.DownloadID,
                                 FileName = downloadSchedulerItem.FileName,

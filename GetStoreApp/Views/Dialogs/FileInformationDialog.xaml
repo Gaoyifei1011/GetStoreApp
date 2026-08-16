@@ -13,7 +13,7 @@
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
     IsPrimaryButtonEnabled="{x:Bind IsLoadCompleted, Mode=OneWay}"
     IsSecondaryButtonEnabled="{x:Bind IsLoadCompleted, Mode=OneWay}"
-    Loaded="{x:Bind OnLoaded}"
+    Opened="{x:Bind OnOpened}"
     PrimaryButtonClick="{x:Bind OnCopyFileInformationClicked}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
     PrimaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CopyFileInformation')}"
@@ -64,7 +64,7 @@
                 Grid.Column="1"
                 HorizontalAlignment="Left"
                 IsTextSelectionEnabled="True"
-                Text="{x:Bind FileName}"
+                Text="{x:Bind FileName, Mode=OneWay}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
 
@@ -81,7 +81,7 @@
                 Grid.Column="1"
                 HorizontalAlignment="Left"
                 IsTextSelectionEnabled="True"
-                Text="{x:Bind FilePath}"
+                Text="{x:Bind FilePath, Mode=OneWay}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
 
@@ -98,7 +98,7 @@
                 Grid.Column="1"
                 HorizontalAlignment="Left"
                 IsTextSelectionEnabled="True"
-                Text="{x:Bind FileSize}"
+                Text="{x:Bind FileSize, Mode=OneWay}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
 

@@ -31,7 +31,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_allowUnsignedPackage, value))
                 {
                     _allowUnsignedPackage = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AllowUnsignedPackage)));
+                    PropertyChanged?.Invoke(this, new(nameof(AllowUnsignedPackage)));
                 }
             }
         }
@@ -47,7 +47,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_forceAppShutdown, value))
                 {
                     _forceAppShutdown = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ForceAppShutdown)));
+                    PropertyChanged?.Invoke(this, new(nameof(ForceAppShutdown)));
                 }
             }
         }
@@ -63,7 +63,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_forceTargetAppShutdown, value))
                 {
                     _forceTargetAppShutdown = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ForceTargetAppShutdown)));
+                    PropertyChanged?.Invoke(this, new(nameof(ForceTargetAppShutdown)));
                 }
             }
         }
@@ -101,7 +101,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:developers"));
+                    await Launcher.LaunchUriAsync(new("ms-settings:developers"));
                 }
                 catch (Exception e)
                 {

@@ -54,7 +54,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isIncrease, value))
                 {
                     _isIncrease = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsIncrease)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsIncrease)));
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_selectedAppSortRuleKind, value))
                 {
                     _selectedAppSortRuleKind = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedAppSortRuleKind)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedAppSortRuleKind)));
                 }
             }
         }
@@ -86,7 +86,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_upgradableAppsResultKind, value))
                 {
                     _upgradableAppsResultKind = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UpgradableAppsResultKind)));
+                    PropertyChanged?.Invoke(this, new(nameof(UpgradableAppsResultKind)));
                 }
             }
         }
@@ -102,7 +102,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_upgradableFailedContent, value))
                 {
                     _upgradableFailedContent = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UpgradableFailedContent)));
+                    PropertyChanged?.Invoke(this, new(nameof(UpgradableFailedContent)));
                 }
             }
         }
@@ -161,7 +161,7 @@ namespace GetStoreApp.Views.Pages
 
                 InstallOptions installOptions = await Task.Run(WinGetFactoryHelper.CreateInstallOptions);
 
-                await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
+                await WinGetPageInstance.AddTaskAsync(new()
                 {
                     PackageOperationKind = PackageOperationKind.Upgrade,
                     AppID = upgradableApps.AppID,
@@ -553,7 +553,7 @@ namespace GetStoreApp.Views.Pages
                                     WinGetPageInstance.PackageOperationLock.Exit();
                                 }
 
-                                upgradableAppsList.Add(new UpgradableAppsModel()
+                                upgradableAppsList.Add(new()
                                 {
                                     AppID = matchItem.CatalogPackage.DefaultInstallVersion.Id,
                                     AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) ? NotAvailableString : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,

@@ -27,7 +27,7 @@ namespace GetStoreAppPinner
 
             if (!RuntimeHelper.IsMSIX)
             {
-                Launcher.LaunchUriAsync(new Uri("getstoreapp:")).Wait();
+                Launcher.LaunchUriAsync(new("getstoreapp:")).Wait();
                 return;
             }
 

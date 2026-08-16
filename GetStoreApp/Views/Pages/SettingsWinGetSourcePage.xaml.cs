@@ -60,7 +60,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isLoadedCompleted, value))
                 {
                     _isLoadedCompleted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoadedCompleted)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsLoadedCompleted)));
                 }
             }
         }

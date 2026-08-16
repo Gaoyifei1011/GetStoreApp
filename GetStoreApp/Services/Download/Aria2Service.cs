@@ -182,7 +182,7 @@ namespace GetStoreApp.Services.Download
                         httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
                         httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
 
-                        HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
+                        HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
                         // 请求成功
                         if (response.IsSuccessStatusCode)
@@ -206,7 +206,7 @@ namespace GetStoreApp.Services.Download
                                 Aria2SemaphoreSlim?.Release();
                             }
 
-                            DownloadProgress?.Invoke(new DownloadProgress()
+                            DownloadProgress?.Invoke(new()
                             {
                                 DownloadID = gid,
                                 DownloadProgressState = DownloadProgressState.Queued,
@@ -262,7 +262,7 @@ namespace GetStoreApp.Services.Download
                         httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
                         httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
 
-                        HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
+                        HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
                         // 请求成功
                         if (response.IsSuccessStatusCode)
@@ -277,7 +277,7 @@ namespace GetStoreApp.Services.Download
                             {
                                 if (Aria2DownloadDict.TryGetValue(gid, out string saveFilePath))
                                 {
-                                    DownloadProgress?.Invoke(new DownloadProgress()
+                                    DownloadProgress?.Invoke(new()
                                     {
                                         DownloadID = gid,
                                         DownloadProgressState = DownloadProgressState.Queued,
@@ -343,7 +343,7 @@ namespace GetStoreApp.Services.Download
                         httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
                         httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
 
-                        HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
+                        HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
                         // 请求成功
                         if (response.IsSuccessStatusCode)
@@ -354,7 +354,7 @@ namespace GetStoreApp.Services.Download
 
                             if (Aria2DownloadDict.TryGetValue(gid, out string saveFilePath))
                             {
-                                DownloadProgress?.Invoke(new DownloadProgress()
+                                DownloadProgress?.Invoke(new()
                                 {
                                     DownloadID = gid,
                                     DownloadProgressState = DownloadProgressState.Paused,
@@ -411,7 +411,7 @@ namespace GetStoreApp.Services.Download
                         httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
                         httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
 
-                        HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
+                        HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
                         // 请求成功
                         if (response.IsSuccessStatusCode)
@@ -427,7 +427,7 @@ namespace GetStoreApp.Services.Download
                                 if (Aria2DownloadDict.TryGetValue(gid, out string saveFilePath))
                                 {
                                     Aria2DownloadDict.Remove(gid);
-                                    DownloadProgress?.Invoke(new DownloadProgress()
+                                    DownloadProgress?.Invoke(new()
                                     {
                                         DownloadID = gid,
                                         DownloadProgressState = DownloadProgressState.Deleted,
@@ -506,7 +506,7 @@ namespace GetStoreApp.Services.Download
                     httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
                     httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
 
-                    HttpResponseMessage response = await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
+                    HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
                     // 请求成功
                     if (response.IsSuccessStatusCode)
@@ -569,7 +569,7 @@ namespace GetStoreApp.Services.Download
 
                     if (isTellStatusSuccessfully)
                     {
-                        DownloadProgress?.Invoke(new DownloadProgress()
+                        DownloadProgress?.Invoke(new()
                         {
                             DownloadID = aria2DownloadItem.Key,
                             DownloadProgressState = downloadProgressState,
@@ -637,7 +637,7 @@ namespace GetStoreApp.Services.Download
                         httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
                         httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
 
-                        await httpClient.PostAsync(new Uri(rpcServerLink), httpStringContent);
+                        await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
                     }
                 }
                 catch (Exception e)

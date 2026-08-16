@@ -51,7 +51,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isPreviousEnabled, value))
                 {
                     _isPreviousEnabled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPreviousEnabled)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsPreviousEnabled)));
                 }
             }
         }
@@ -67,7 +67,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isNextEnabled, value))
                 {
                     _isNextEnabled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNextEnabled)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsNextEnabled)));
                 }
             }
         }
@@ -83,7 +83,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_selectedItem, value))
                 {
                     _selectedItem = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedItem)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedItem)));
                 }
             }
         }
@@ -431,7 +431,7 @@ namespace GetStoreApp.Views.Pages
 
                 if (RuntimeHelper.IsElevated)
                 {
-                    await Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                    await Launcher.LaunchUriAsync(new("getstoreapppinner:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
                     {
                         {"Type", nameof(TaskbarManager) },
                         { "AppUserModelId", Package.Current.GetAppListEntries()[0].AppUserModelId },
@@ -471,7 +471,7 @@ namespace GetStoreApp.Views.Pages
 
                     if (needUnlock && (limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unavailable || limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unknown) && !isPinnedSuccessfully)
                     {
-                        await Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                        await Launcher.LaunchUriAsync(new("getstoreapppinner:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
                         {
                             {"Type", nameof(TaskbarManager) },
                             { "AppUserModelId", Package.Current.GetAppListEntries()[0].AppUserModelId },

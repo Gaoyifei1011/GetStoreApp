@@ -9,11 +9,13 @@ namespace GetStoreApp.Views.NotificationTips
     /// <summary>
     /// 复制剪贴应用内通知
     /// </summary>
-    public sealed partial class CopyPasteMainNotificationTip : TeachingTip, INotifyPropertyChanged
+    internal sealed partial class CopyPasteMainNotificationTip : TeachingTip, INotifyPropertyChanged
     {
+        #region 第一部分：属性、集合与事件
+
         private bool _isSuccessfully;
 
-        public bool IsSuccessfully
+        private bool IsSuccessfully
         {
             get { return _isSuccessfully; }
 
@@ -22,17 +24,23 @@ namespace GetStoreApp.Views.NotificationTips
                 if (!Equals(_isSuccessfully, value))
                 {
                     _isSuccessfully = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSuccessfully)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsSuccessfully)));
                 }
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public CopyPasteMainNotificationTip(bool isSuccessfully)
+        #endregion 第一部分：属性、集合与事件
+
+        #region 第二部分：构造函数
+
+        internal CopyPasteMainNotificationTip(bool isSuccessfully)
         {
             InitializeComponent();
             IsSuccessfully = isSuccessfully;
         }
+
+        #endregion 第二部分：构造函数
     }
 }

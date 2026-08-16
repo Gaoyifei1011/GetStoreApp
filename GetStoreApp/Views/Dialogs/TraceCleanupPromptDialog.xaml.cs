@@ -8,16 +8,18 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-// 抑制 IDE0060 警告
-#pragma warning disable IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Dialogs
 {
     /// <summary>
     /// 痕迹清理对话框
     /// </summary>
-    public sealed partial class TraceCleanupPromptDialog : ContentDialog, INotifyPropertyChanged
+    internal sealed partial class TraceCleanupPromptDialog : ContentDialog, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string ActionCenterErrorString = ResourceService.GetLocalized("Dialog/ActionCenterError");
         private readonly string ActionCenterString = ResourceService.GetLocalized("Dialog/ActionCenter");
         private readonly string DownloadCleanErrorString = ResourceService.GetLocalized("Dialog/DownloadCleanError");
@@ -27,25 +29,29 @@ namespace GetStoreApp.Views.Dialogs
         private readonly string LocalFileString = ResourceService.GetLocalized("Dialog/LocalFile");
         private readonly string LocalFileCleanErrorString = ResourceService.GetLocalized("Dialog/LocalFileCleanError");
 
-        private bool _isSelected;
+        #endregion 第一部分：常量、资源与状态字段
 
-        public bool IsSelected
+        #region 第二部分：属性、集合与事件
+
+        private bool _isItemSelected;
+
+        private bool IsItemSelected
         {
-            get { return _isSelected; }
+            get { return _isItemSelected; }
 
             set
             {
-                if (!Equals(_isSelected, value))
+                if (!Equals(_isItemSelected, value))
                 {
-                    _isSelected = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
+                    _isItemSelected = value;
+                    PropertyChanged?.Invoke(this, new(nameof(IsItemSelected)));
                 }
             }
         }
 
         private bool _isCleaning;
 
-        public bool IsCleaning
+        private bool IsCleaning
         {
             get { return _isCleaning; }
 
@@ -54,57 +60,65 @@ namespace GetStoreApp.Views.Dialogs
                 if (!Equals(_isCleaning, value))
                 {
                     _isCleaning = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCleaning)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsCleaning)));
                 }
             }
         }
 
-        private List<TraceCleanupModel> TraceCleanupList { get; } = [];
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public TraceCleanupPromptDialog()
-        {
-            InitializeComponent();
-
-            TraceCleanupList.Add(new TraceCleanupModel
+        private List<TraceCleanupModel> TraceCleanupList =>
+        [
+            new()
             {
                 IsCleanFailed = false,
                 DisplayName = HistoryRecordString,
                 InternalName = CleanKind.History,
                 CleanFailedText = HistoryCleanErrorString
-            });
-            TraceCleanupList.Add(new TraceCleanupModel
+            },
+            new()
             {
                 IsCleanFailed = false,
                 DisplayName = ActionCenterString,
                 InternalName = CleanKind.ActionCenter,
                 CleanFailedText = ActionCenterErrorString
-            });
-            TraceCleanupList.Add(new TraceCleanupModel
+            },
+            new()
             {
                 IsCleanFailed = false,
                 DisplayName = DownloadRecordString,
                 InternalName = CleanKind.Download,
                 CleanFailedText = DownloadCleanErrorString
-            });
-            TraceCleanupList.Add(new TraceCleanupModel
+            },
+            new()
             {
                 IsCleanFailed = false,
                 DisplayName = LocalFileString,
                 InternalName = CleanKind.LocalFile,
                 CleanFailedText = LocalFileCleanErrorString
-            });
+            }
+        ];
 
-            IsSelected = TraceCleanupListView.SelectedItems.Count > 0;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
+        internal TraceCleanupPromptDialog()
+        {
+            InitializeComponent();
+            IsItemSelected = TraceCleanupListView.SelectedItems.Count > 0;
         }
+
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：挂载事件处理
 
         /// <summary>
         /// 选中项发生变化时触发的事件
         /// </summary>
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            IsSelected = TraceCleanupListView.SelectedItems.Count > 0;
+            IsItemSelected = TraceCleanupListView.SelectedItems.Count > 0;
         }
 
         /// <summary>
@@ -120,7 +134,7 @@ namespace GetStoreApp.Views.Dialogs
             }
 
             IsCleaning = true;
-            List<(CleanKind cleanKind, bool cleanResult)> cleanSuccessfullyDict = [];
+
             List<TraceCleanupModel> selectedItemsList = [];
             foreach (object traceCleanupItemObj in TraceCleanupListView.SelectedItems)
             {
@@ -130,25 +144,7 @@ namespace GetStoreApp.Views.Dialogs
                 }
             }
 
-            await Task.Run(async () =>
-            {
-                List<CleanKind> selectedCleanList = [];
-
-                foreach (TraceCleanupModel traceCleanupItem in selectedItemsList)
-                {
-                    selectedCleanList.Add(traceCleanupItem.InternalName);
-                }
-
-                foreach (CleanKind cleanArgs in selectedCleanList)
-                {
-                    // 清理并反馈回结果，修改相应的状态信息
-                    bool cleanResult = TraceCleanupService.CleanAppTraceAsync(cleanArgs);
-                    cleanSuccessfullyDict.Add(ValueTuple.Create(cleanArgs, cleanResult));
-                }
-
-                await Task.Delay(1000);
-            });
-
+            List<(CleanKind cleanKind, bool cleanResult)> cleanSuccessfullyDict = await TraceCleanupAsync(selectedItemsList);
             foreach ((CleanKind cleanKind, bool cleanResult) in cleanSuccessfullyDict)
             {
                 foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
@@ -164,5 +160,38 @@ namespace GetStoreApp.Views.Dialogs
             TraceCleanupListView.SelectedItems.Clear();
             IsCleaning = false;
         }
+
+        #endregion 第四部分：挂载事件处理
+
+        #region 第五部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 痕迹清理
+        /// </summary>
+        private async Task<List<(CleanKind cleanKind, bool cleanResult)>> TraceCleanupAsync(List<TraceCleanupModel> selectedItemsList)
+        {
+            return await Task.Run(async () =>
+            {
+                List<(CleanKind cleanKind, bool cleanResult)> cleanSuccessfullyDict = [];
+                List<CleanKind> selectedCleanList = [];
+
+                foreach (TraceCleanupModel traceCleanupItem in selectedItemsList)
+                {
+                    selectedCleanList.Add(traceCleanupItem.InternalName);
+                }
+
+                foreach (CleanKind cleanArgs in selectedCleanList)
+                {
+                    // 清理并反馈回结果，修改相应的状态信息
+                    bool cleanResult = TraceCleanupService.CleanAppTraceAsync(cleanArgs);
+                    cleanSuccessfullyDict.Add(ValueTuple.Create(cleanArgs, cleanResult));
+                }
+
+                await Task.Delay(1000);
+                return cleanSuccessfullyDict;
+            });
+        }
+
+        #endregion 第五部分：数据操作与业务逻辑
     }
 }

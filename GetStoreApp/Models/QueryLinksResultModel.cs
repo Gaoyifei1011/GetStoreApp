@@ -22,7 +22,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_selectionMode, value))
                 {
                     _selectionMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectionMode)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectionMode)));
                 }
             }
         }

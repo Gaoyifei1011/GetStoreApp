@@ -29,7 +29,7 @@ namespace GetStoreAppPinner.Views.Pages
                 if (!Equals(_windowTheme, value))
                 {
                     _windowTheme = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowTheme)));
+                    PropertyChanged?.Invoke(this, new(nameof(WindowTheme)));
                 }
             }
         }

@@ -4,12 +4,9 @@ using GetStoreApp.Services.History;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
 using GetStoreApp.WindowsAPI.PInvoke.Ole32;
-using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Runtime.InteropServices.Marshalling;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Foundation.Diagnostics;
@@ -41,7 +38,7 @@ namespace GetStoreApp
 
             if (!RuntimeHelper.IsMSIX)
             {
-                Launcher.LaunchUriAsync(new Uri("getstoreapp:")).Wait();
+                Launcher.LaunchUriAsync(new("getstoreapp:")).Wait();
                 return;
             }
 

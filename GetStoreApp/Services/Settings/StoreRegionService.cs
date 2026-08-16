@@ -57,7 +57,7 @@ namespace GetStoreApp.Services.Settings
                     StoreRegion = DefaultStoreRegion;
                 }
 
-                PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(StoreRegion)));
+                PropertyChanged?.Invoke(null, new(nameof(StoreRegion)));
             }
         }
 
@@ -66,7 +66,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private static void InitializeStoreRegionList()
         {
-            enumNameProc = new GEO_ENUMNAMEPROC(EnumNameProc);
+            enumNameProc = new(EnumNameProc);
             Kernel32Library.EnumSystemGeoNames(SYSGEOCLASS.GEOCLASS_NATION, enumNameProc, nint.Zero);
             StoreRegionList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
         }

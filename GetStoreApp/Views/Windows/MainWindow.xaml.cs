@@ -86,7 +86,7 @@ namespace GetStoreApp.Views.Windows
                 if (!string.Equals(_windowTitle, value))
                 {
                     _windowTitle = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowTitle)));
+                    PropertyChanged?.Invoke(this, new(nameof(WindowTitle)));
                 }
             }
         }
@@ -102,7 +102,7 @@ namespace GetStoreApp.Views.Windows
                 if (!Equals(_windowSystemBackdrop, value))
                 {
                     _windowSystemBackdrop = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowSystemBackdrop)));
+                    PropertyChanged?.Invoke(this, new(nameof(WindowSystemBackdrop)));
                 }
             }
         }
@@ -118,7 +118,7 @@ namespace GetStoreApp.Views.Windows
                 if (!Equals(_windowTheme, value))
                 {
                     _windowTheme = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowTheme)));
+                    PropertyChanged?.Invoke(this, new(nameof(WindowTheme)));
                 }
             }
         }
@@ -134,7 +134,7 @@ namespace GetStoreApp.Views.Windows
                 if (!Equals(_isWindowMaximized, value))
                 {
                     _isWindowMaximized = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsWindowMaximized)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsWindowMaximized)));
                 }
             }
         }
@@ -150,7 +150,7 @@ namespace GetStoreApp.Views.Windows
                 if (!Equals(_isBackEnabled, value))
                 {
                     _isBackEnabled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsBackEnabled)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsBackEnabled)));
                 }
             }
         }
@@ -166,7 +166,7 @@ namespace GetStoreApp.Views.Windows
                 if (!Equals(_selectedItem, value))
                 {
                     _selectedItem = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedItem)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedItem)));
                 }
             }
         }
@@ -211,7 +211,7 @@ namespace GetStoreApp.Views.Windows
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
 
             // 为应用主窗口添加窗口过程
-            mainWindowSubClassProc = new SUBCLASSPROC(MainWindowSubClassProc);
+            mainWindowSubClassProc = new(MainWindowSubClassProc);
             Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0, nint.Zero);
 
             SetWindowTheme();
@@ -223,18 +223,18 @@ namespace GetStoreApp.Views.Windows
             if (DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
             {
                 RectInt32 workArea = displayArea.WorkArea;
-                AppWindow.Move(new PointInt32((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
+                AppWindow.Move(new((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
             }
 
-            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            NavigationViewItemMenuItemsCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Item,
-                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/Icon/Control/Home.png") } },
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Home.png") } },
                 NavigationTitle = HomeString,
                 NavigationTag = "Home",
                 NavigationPage = typeof(HomePage)
             });
-            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            NavigationViewItemMenuItemsCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Seperator,
                 NavigationIcon = null,
@@ -242,23 +242,23 @@ namespace GetStoreApp.Views.Windows
                 NavigationTag = null,
                 NavigationPage = null
             });
-            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            NavigationViewItemMenuItemsCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Item,
-                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/Icon/Control/Store.png") } },
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Store.png") } },
                 NavigationTitle = StoreString,
                 NavigationTag = "Store",
                 NavigationPage = typeof(StorePage)
             });
-            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            NavigationViewItemMenuItemsCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Item,
-                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/Icon/Control/AppUpdate.png") } },
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/AppUpdate.png") } },
                 NavigationTitle = AppUpdateString,
                 NavigationTag = "AppUpdate",
                 NavigationPage = typeof(AppUpdatePage)
             });
-            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            NavigationViewItemMenuItemsCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Seperator,
                 NavigationIcon = null,
@@ -266,23 +266,23 @@ namespace GetStoreApp.Views.Windows
                 NavigationTag = null,
                 NavigationPage = null
             });
-            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            NavigationViewItemMenuItemsCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Item,
-                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/Icon/Control/WinGet.png") } },
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/WinGet.png") } },
                 NavigationTitle = WinGetString,
                 NavigationTag = "WinGet",
                 NavigationPage = typeof(WinGetPage)
             });
-            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            NavigationViewItemMenuItemsCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Item,
-                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/Icon/Control/AppManager.png") } },
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/AppManager.png") } },
                 NavigationTitle = AppManagerString,
                 NavigationTag = "AppManager",
                 NavigationPage = typeof(AppManagerPage)
             });
-            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            NavigationViewItemMenuItemsCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Seperator,
                 NavigationIcon = null,
@@ -290,26 +290,26 @@ namespace GetStoreApp.Views.Windows
                 NavigationTag = null,
                 NavigationPage = null
             });
-            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            NavigationViewItemMenuItemsCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Item,
-                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/Icon/Control/Download.png") } },
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Download.png") } },
                 NavigationTitle = DownloadString,
                 NavigationTag = "Download",
                 NavigationPage = typeof(DownloadPage)
             });
-            NavigationViewItemMenuItemsCollection.Add(new NavigationViewItemModel()
+            NavigationViewItemMenuItemsCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Item,
-                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/Icon/Control/Web.png") } },
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Web.png") } },
                 NavigationTitle = WebString,
                 NavigationTag = "Web",
                 NavigationPage = null
             });
-            NavigationViewItemFooterMenuItemsCollection.Add(new NavigationViewItemModel()
+            NavigationViewItemFooterMenuItemsCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Item,
-                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/Icon/Control/Settings.png") } },
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Settings.png") } },
                 NavigationTitle = SettingsString,
                 NavigationTag = "Settings",
                 NavigationPage = typeof(SettingsPage)
@@ -486,7 +486,7 @@ namespace GetStoreApp.Views.Windows
                 args.Handled = true;
                 FlyoutShowOptions options = new()
                 {
-                    Position = new Point(0, 45),
+                    Position = new(0, 45),
                     ShowMode = FlyoutShowMode.Standard
                 };
                 TitlebarMenuFlyout.ShowAt(null, options);
@@ -610,7 +610,7 @@ namespace GetStoreApp.Views.Windows
                     {
                         try
                         {
-                            await global::Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new global::Windows.System.LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                            await global::Windows.System.Launcher.LaunchUriAsync(new("getstoreapppinner:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
                             {
                                 {"Type", nameof(SecondaryTile) },
                                 { "DisplayName", displayName },
@@ -637,9 +637,9 @@ namespace GetStoreApp.Views.Windows
                         };
 
                         secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
-                        secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                        secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                        secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                        secondaryTile.VisualElements.Square150x150Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                        secondaryTile.VisualElements.Square71x71Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                        secondaryTile.VisualElements.Square44x44Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
                         secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
                         InitializeWithWindow.Initialize(secondaryTile, Win32Interop.GetWindowFromWindowId(AppWindow.Id));
                         isPinnedSuccessfully = await secondaryTile.RequestCreateAsync();
@@ -674,7 +674,7 @@ namespace GetStoreApp.Views.Windows
 
                     if (RuntimeHelper.IsElevated)
                     {
-                        await global::Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new global::Windows.System.LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                        await global::Windows.System.Launcher.LaunchUriAsync(new("getstoreapppinner:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
                         {
                             {"Type", nameof(SecondaryTile) },
                             { "DisplayName", displayName },
@@ -693,9 +693,9 @@ namespace GetStoreApp.Views.Windows
                             };
 
                             secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
-                            secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                            secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                            secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                            secondaryTile.VisualElements.Square150x150Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                            secondaryTile.VisualElements.Square71x71Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                            secondaryTile.VisualElements.Square44x44Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
                             secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
 
                             string feature = "com.microsoft.windows.taskbar.requestPinSecondaryTile";
@@ -724,7 +724,7 @@ namespace GetStoreApp.Views.Windows
 
                         if (needUnlock && (limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unavailable || limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unknown) && !isPinnedSuccessfully)
                         {
-                            await global::Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new global::Windows.System.LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                            await global::Windows.System.Launcher.LaunchUriAsync(new("getstoreapppinner:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
                             {
                                 {"Type", nameof(SecondaryTile) },
                                 { "DisplayName", displayName },
@@ -803,7 +803,7 @@ namespace GetStoreApp.Views.Windows
             {
                 SelectedItem = args.SelectedItem as NavigationViewItemModel;
 
-                if(SelectedItem is not null)
+                if (SelectedItem is not null)
                 {
                     // 对应的页面为空，选中项修改为已经选择的页面
                     if (SelectedItem.NavigationPage is null)
@@ -814,7 +814,7 @@ namespace GetStoreApp.Views.Windows
                             {
                                 try
                                 {
-                                    await global::Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreappwebview:"));
+                                    await global::Windows.System.Launcher.LaunchUriAsync(new("getstoreappwebview:"));
                                 }
                                 catch (Exception e)
                                 {
@@ -840,7 +840,7 @@ namespace GetStoreApp.Views.Windows
                     {
                         NavigateTo(SelectedItem.NavigationPage);
                     }
-                }   
+                }
             }
         }
 
@@ -1073,7 +1073,7 @@ namespace GetStoreApp.Views.Windows
                             FlyoutShowOptions options = new()
                             {
                                 ShowMode = FlyoutShowMode.Standard,
-                                Position = Environment.OSVersion.Version.Build > 22000 ? new Point(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale) : new Point(localPoint.X, localPoint.Y)
+                                Position = Environment.OSVersion.Version.Build > 22000 ? new(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale) : new(localPoint.X, localPoint.Y)
                             };
 
                             TitlebarMenuFlyout.ShowAt(Content, options);

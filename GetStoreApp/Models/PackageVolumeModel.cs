@@ -22,7 +22,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_isOperating, value))
                 {
                     _isOperating = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsOperating)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsOperating)));
                 }
             }
         }
@@ -91,7 +91,7 @@ namespace GetStoreApp.Models
                 if (!string.Equals(_defaultVolume, value))
                 {
                     _defaultVolume = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DefaultVolume)));
+                    PropertyChanged?.Invoke(this, new(nameof(DefaultVolume)));
                 }
             }
         }
@@ -110,7 +110,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_isDefaultVolume, value))
                 {
                     _isDefaultVolume = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDefaultVolume)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsDefaultVolume)));
                 }
             }
         }
@@ -129,7 +129,7 @@ namespace GetStoreApp.Models
                 if (!string.Equals(_isAppxInstallSupported, value))
                 {
                     _isAppxInstallSupported = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAppxInstallSupported)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsAppxInstallSupported)));
                 }
             }
         }
@@ -148,7 +148,7 @@ namespace GetStoreApp.Models
                 if (!string.Equals(_isFullTrustPackageSupported, value))
                 {
                     _isFullTrustPackageSupported = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsFullTrustPackageSupported)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsFullTrustPackageSupported)));
                 }
             }
         }
@@ -167,7 +167,7 @@ namespace GetStoreApp.Models
                 if (!string.Equals(_offline, value))
                 {
                     _offline = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Offline)));
+                    PropertyChanged?.Invoke(this, new(nameof(Offline)));
                 }
             }
         }
@@ -186,7 +186,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_isOffline, value))
                 {
                     _isOffline = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsFullTrustPackageSupported)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsFullTrustPackageSupported)));
                 }
             }
         }
@@ -205,7 +205,7 @@ namespace GetStoreApp.Models
                 if (!string.Equals(_isSystemVolume, value))
                 {
                     _isSystemVolume = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSystemVolume)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsSystemVolume)));
                 }
             }
         }
@@ -224,7 +224,7 @@ namespace GetStoreApp.Models
                 if (!string.Equals(_supportedHardLinks, value))
                 {
                     _supportedHardLinks = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSystemVolume)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsSystemVolume)));
                 }
             }
         }

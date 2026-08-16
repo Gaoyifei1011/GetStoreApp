@@ -27,7 +27,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_selectionMode, value))
                 {
                     _selectionMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectionMode)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectionMode)));
                 }
             }
         }
@@ -46,7 +46,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_isOperating, value))
                 {
                     _isOperating = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsOperating)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsOperating)));
                 }
             }
         }
@@ -88,7 +88,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_downloadProgressState, value))
                 {
                     _downloadProgressState = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadProgressState)));
+                    PropertyChanged?.Invoke(this, new(nameof(DownloadProgressState)));
                 }
             }
         }
@@ -107,7 +107,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_completedSize, value))
                 {
                     _completedSize = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CompletedSize)));
+                    PropertyChanged?.Invoke(this, new(nameof(CompletedSize)));
                 }
             }
         }
@@ -126,7 +126,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_totalSize, value))
                 {
                     _totalSize = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalSize)));
+                    PropertyChanged?.Invoke(this, new(nameof(TotalSize)));
                 }
             }
         }
@@ -145,7 +145,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_downloadSpeed, value))
                 {
                     _downloadSpeed = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadSpeed)));
+                    PropertyChanged?.Invoke(this, new(nameof(DownloadSpeed)));
                 }
             }
         }

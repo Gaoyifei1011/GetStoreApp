@@ -141,7 +141,7 @@ namespace GetStoreApp.Views.Pages
             {
                 if (Equals(GetCurrentPageType(), PageList[0]))
                 {
-                    BreadCollection.Add(new ContentLinkInfo()
+                    BreadCollection.Add(new()
                     {
                         DisplayText = SettingsString,
                         SecondaryText = "Settings"
@@ -149,12 +149,12 @@ namespace GetStoreApp.Views.Pages
                 }
                 else if (Equals(GetCurrentPageType(), PageList[1]))
                 {
-                    BreadCollection.Add(new ContentLinkInfo()
+                    BreadCollection.Add(new()
                     {
                         DisplayText = SettingsString,
                         SecondaryText = "Settings"
                     });
-                    BreadCollection.Add(new ContentLinkInfo()
+                    BreadCollection.Add(new()
                     {
                         DisplayText = WinGetSourceConfigurationString,
                         SecondaryText = "WinGetSourceConfiguration"
@@ -162,12 +162,12 @@ namespace GetStoreApp.Views.Pages
                 }
                 else if (Equals(GetCurrentPageType(), PageList[2]))
                 {
-                    BreadCollection.Add(new ContentLinkInfo()
+                    BreadCollection.Add(new()
                     {
                         DisplayText = SettingsString,
                         SecondaryText = "Settings"
                     });
-                    BreadCollection.Add(new ContentLinkInfo()
+                    BreadCollection.Add(new()
                     {
                         DisplayText = PackageVolumeConfigurationString,
                         SecondaryText = "PackageVolumeConfiguration"
@@ -177,7 +177,7 @@ namespace GetStoreApp.Views.Pages
 
             if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageList[1]))
             {
-                BreadCollection.Add(new ContentLinkInfo()
+                BreadCollection.Add(new()
                 {
                     DisplayText = WinGetSourceConfigurationString,
                     SecondaryText = "WinGetSourceConfiguration"
@@ -185,7 +185,7 @@ namespace GetStoreApp.Views.Pages
             }
             else if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageList[2]))
             {
-                BreadCollection.Add(new ContentLinkInfo()
+                BreadCollection.Add(new()
                 {
                     DisplayText = PackageVolumeConfigurationString,
                     SecondaryText = "PackageVolumeConfiguration"
@@ -227,7 +227,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures-app"));
+                    await Launcher.LaunchUriAsync(new("ms-settings:appsfeatures-app"));
                 }
                 catch (Exception e)
                 {
@@ -286,7 +286,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:troubleshoot"));
+                    await Launcher.LaunchUriAsync(new("ms-settings:troubleshoot"));
                 }
                 catch (Exception e)
                 {

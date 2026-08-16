@@ -41,7 +41,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_selectionMode, value))
                 {
                     _selectionMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectionMode)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectionMode)));
                 }
             }
         }
@@ -74,7 +74,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadSchedulerList)
                     {
-                        DownloadingCollection.Add(new DownloadingModel()
+                        DownloadingCollection.Add(new()
                         {
                             SelectionMode = SelectionMode,
                             IsOperating = false,
@@ -94,7 +94,7 @@ namespace GetStoreApp.Views.Pages
 
                         foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadFailedList)
                         {
-                            DownloadingCollection.Add(new DownloadingModel()
+                            DownloadingCollection.Add(new()
                             {
                                 SelectionMode = SelectionMode,
                                 IsOperating = false,

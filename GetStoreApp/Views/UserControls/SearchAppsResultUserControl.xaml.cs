@@ -66,14 +66,14 @@ namespace GetStoreApp.Views.UserControls
                     {
                         if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[0]))
                         {
-                            await Launcher.LaunchUriAsync(new Uri("getstoreappwebview:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                            await Launcher.LaunchUriAsync(new("getstoreappwebview:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
                             {
                                 {"AppLink", appLink },
                             });
                         }
                         else if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[1]))
                         {
-                            await Launcher.LaunchUriAsync(new Uri(appLink));
+                            await Launcher.LaunchUriAsync(new(appLink));
                         }
                     }
                     catch (Exception e)

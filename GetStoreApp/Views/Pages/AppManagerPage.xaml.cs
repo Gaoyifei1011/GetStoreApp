@@ -16,21 +16,33 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 应用管理页面
     /// </summary>
-    public sealed partial class AppManagerPage : Page
+    internal sealed partial class AppManagerPage : Page
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string AppListString = ResourceService.GetLocalized("AppManager/AppList");
         private readonly string AppInformationString = ResourceService.GetLocalized("AppManager/AppInformation");
 
-        public List<Type> PageList { get; } = [typeof(AppListPage), typeof(AppInformationPage)];
+        #endregion 第一部分：常量、资源与状态字段
 
-        public ObservableCollection<ContentLinkInfo> BreadCollection { get; } = [];
+        #region 第二部分：属性、集合与事件
 
-        public AppManagerPage()
+        internal List<Type> PageList { get; } = [typeof(AppListPage), typeof(AppInformationPage)];
+
+        internal ObservableCollection<ContentLinkInfo> BreadCollection { get; } = [];
+
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
+        internal AppManagerPage()
         {
             InitializeComponent();
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面触发的事件
@@ -47,9 +59,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：重写父类事件
+        #endregion 第四部分：父类虚方法重写
 
-        #region 第二部分：应用管理页面——挂载的事件
+        #region 第五部分：挂载事件处理
 
         /// <summary>
         /// 单击痕迹栏条目时发生的事件
@@ -64,13 +76,13 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 导航完成后发生
+        /// 导航完成后发生的事件
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
             if (BreadCollection.Count is 0 && Equals(GetCurrentPageType(), PageList[0]))
             {
-                BreadCollection.Add(new ContentLinkInfo()
+                BreadCollection.Add(new()
                 {
                     DisplayText = AppListString,
                     SecondaryText = "AppList"
@@ -78,7 +90,7 @@ namespace GetStoreApp.Views.Pages
             }
             else if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageList[1]))
             {
-                BreadCollection.Add(new ContentLinkInfo()
+                BreadCollection.Add(new()
                 {
                     DisplayText = AppInformationString,
                     SecondaryText = "AppInformation"
@@ -91,7 +103,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 导航失败时发生
+        /// 导航失败后发生的事件
         /// </summary>
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
@@ -99,7 +111,9 @@ namespace GetStoreApp.Views.Pages
             LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppManagerPage), nameof(OnNavigationFailed), 1, args.Exception);
         }
 
-        #endregion 第二部分：应用管理页面——挂载的事件
+        #endregion 第五部分：挂载事件处理
+
+        #region 第六部分：数据操作与业务逻辑
 
         /// <summary>
         /// 页面向前导航
@@ -126,5 +140,7 @@ namespace GetStoreApp.Views.Pages
         {
             return AppManagerFrame.CurrentSourcePageType;
         }
+
+        #endregion 第六部分：数据操作与业务逻辑
     }
 }

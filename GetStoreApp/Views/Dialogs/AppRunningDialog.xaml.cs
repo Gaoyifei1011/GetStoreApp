@@ -5,11 +5,15 @@ namespace GetStoreApp.Views.Dialogs
     /// <summary>
     /// 应用程序正在运行中对话框
     /// </summary>
-    public sealed partial class AppRunningDialog : ContentDialog
+    internal sealed partial class AppRunningDialog : ContentDialog
     {
-        public AppRunningDialog()
+        #region 第一部分：构造函数
+
+        internal AppRunningDialog()
         {
             InitializeComponent();
         }
+
+        #endregion 第一部分：构造函数
     }
 }

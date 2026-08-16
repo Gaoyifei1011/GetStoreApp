@@ -17,11 +17,13 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 主页面
     /// </summary>
-    public sealed partial class HomePage : Page
+    internal sealed partial class HomePage : Page
     {
+        #region 第一部分：属性、集合与事件
+
         private List<ControlItemModel> HomeList { get; } =
         [
-            new ControlItemModel()
+            new()
             {
                 Title = ResourceService.GetLocalized("Home/Store"),
                 Description = ResourceService.GetLocalized("Home/StoreDescription"),
@@ -29,7 +31,7 @@ namespace GetStoreApp.Views.Pages
                 Tag = "Store",
                 NavigationPage = typeof(StorePage)
             },
-            new ControlItemModel()
+            new()
             {
                 Title = ResourceService.GetLocalized("Home/AppUpdate"),
                 Description = ResourceService.GetLocalized("Home/AppUpdateDescription"),
@@ -37,7 +39,7 @@ namespace GetStoreApp.Views.Pages
                 Tag = "AppUpdate",
                 NavigationPage = typeof(AppUpdatePage)
             },
-            new ControlItemModel()
+            new()
             {
                 Title = ResourceService.GetLocalized("Home/WinGet"),
                 Description = ResourceService.GetLocalized("Home/WinGetDescription"),
@@ -45,7 +47,7 @@ namespace GetStoreApp.Views.Pages
                 Tag = "WinGet",
                 NavigationPage = typeof(WinGetPage)
             },
-            new ControlItemModel()
+            new()
             {
                 Title = ResourceService.GetLocalized("Home/AppManager"),
                 Description = ResourceService.GetLocalized("Home/AppManagerDescription"),
@@ -53,7 +55,7 @@ namespace GetStoreApp.Views.Pages
                 Tag = "AppManager",
                 NavigationPage = typeof(AppManagerPage)
             },
-            new ControlItemModel()
+            new()
             {
                 Title = ResourceService.GetLocalized("Home/Download"),
                 Description = ResourceService.GetLocalized("Home/DownloadDescription"),
@@ -61,7 +63,7 @@ namespace GetStoreApp.Views.Pages
                 Tag = "Download",
                 NavigationPage = typeof(DownloadPage)
             },
-            new ControlItemModel()
+            new()
             {
                 Title = ResourceService.GetLocalized("Home/Web"),
                 Description = ResourceService.GetLocalized("Home/WebDescription"),
@@ -71,12 +73,18 @@ namespace GetStoreApp.Views.Pages
             },
         ];
 
-        public HomePage()
+        #endregion 第一部分：属性、集合与事件
+
+        #region 第二部分：构造函数
+
+        internal HomePage()
         {
             InitializeComponent();
         }
 
-        #region 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第二部分：构造函数
+
+        #region 第三部分：命令调用处理
 
         /// <summary>
         /// 点击条目时进入条目对应的页面
@@ -87,17 +95,7 @@ namespace GetStoreApp.Views.Pages
             {
                 if (controlItem.Tag is "Web")
                 {
-                    Task.Run(async () =>
-                    {
-                        try
-                        {
-                            await Launcher.LaunchUriAsync(new Uri("getstoreappwebview:"));
-                        }
-                        catch (Exception e)
-                        {
-                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        }
-                    });
+                    LaunchWebView();
                 }
                 else if (MainWindow.Current.GetSelectedItem(controlItem.NavigationPage, MainWindow.Current.NavigationViewItemMenuItemsCollection) is NavigationViewItemModel navigationViewItem)
                 {
@@ -106,6 +104,28 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第三部分：命令调用处理
+
+        #region 第四部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 启动网页
+        /// </summary>
+        private void LaunchWebView()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("getstoreappwebview:"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        #endregion 第四部分：数据操作与业务逻辑
     }
 }

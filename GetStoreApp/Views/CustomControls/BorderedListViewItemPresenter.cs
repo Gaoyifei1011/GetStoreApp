@@ -20,7 +20,7 @@ namespace GetStoreApp.Views.CustomControls
                 {
                     listViewItemPresenterBorder.BorderBrush = BorderBrush;
                     listViewItemPresenterBorder.BorderThickness = BorderThickness;
-                    listViewItemPresenterBorder.Margin = new Thickness(0);
+                    listViewItemPresenterBorder.Margin = new(0);
                 }
             };
         }

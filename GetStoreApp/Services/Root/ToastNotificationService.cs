@@ -30,7 +30,7 @@ namespace GetStoreApp.Services.Root
 
             if (notificationArgs is "CheckNetWorkConnection")
             {
-                await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
+                await Launcher.LaunchUriAsync(new("ms-settings:network"));
                 if (!isLaunched)
                 {
                     Environment.Exit(Environment.ExitCode);
@@ -58,7 +58,7 @@ namespace GetStoreApp.Services.Root
             }
             else if (notificationArgs is "OpenSettings")
             {
-                await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
+                await Launcher.LaunchUriAsync(new("ms-settings:appsfeatures"));
                 if (!isLaunched)
                 {
                     Environment.Exit(Environment.ExitCode);

@@ -57,7 +57,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_searchText, value))
                 {
                     _searchText = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchText)));
+                    PropertyChanged?.Invoke(this, new(nameof(SearchText)));
                 }
             }
         }
@@ -73,7 +73,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isIncrease, value))
                 {
                     _isIncrease = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsIncrease)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsIncrease)));
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_selectedAppSortRuleKind, value))
                 {
                     _selectedAppSortRuleKind = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedAppSortRuleKind)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedAppSortRuleKind)));
                 }
             }
         }
@@ -105,7 +105,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_forceUninstall, value))
                 {
                     _forceUninstall = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ForceUninstall)));
+                    PropertyChanged?.Invoke(this, new(nameof(ForceUninstall)));
                 }
             }
         }
@@ -121,7 +121,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_selectedPackageUninstallScopeIndex, value))
                 {
                     _selectedPackageUninstallScopeIndex = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedPackageUninstallScopeIndex)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedPackageUninstallScopeIndex)));
                 }
             }
         }
@@ -137,7 +137,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_selectedPackageUninstallModeIndex, value))
                 {
                     _selectedPackageUninstallModeIndex = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedPackageUninstallModeIndex)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedPackageUninstallModeIndex)));
                 }
             }
         }
@@ -153,7 +153,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_installedAppsResultKind, value))
                 {
                     _installedAppsResultKind = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstalledAppsResultKind)));
+                    PropertyChanged?.Invoke(this, new(nameof(InstalledAppsResultKind)));
                 }
             }
         }
@@ -169,7 +169,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_installedFailedContent, value))
                 {
                     _installedFailedContent = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstalledFailedContent)));
+                    PropertyChanged?.Invoke(this, new(nameof(InstalledFailedContent)));
                 }
             }
         }
@@ -339,7 +339,7 @@ namespace GetStoreApp.Views.Pages
                     return uninstallOptions;
                 });
 
-                await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
+                await WinGetPageInstance.AddTaskAsync(new()
                 {
                     PackageOperationKind = PackageOperationKind.Uninstall,
                     AppID = installedApps.AppID,
@@ -819,7 +819,7 @@ namespace GetStoreApp.Views.Pages
                                     WinGetPageInstance.PackageOperationLock.Exit();
                                 }
 
-                                installedAppsList.Add(new InstalledAppsModel()
+                                installedAppsList.Add(new()
                                 {
                                     AppID = matchItem.CatalogPackage.InstalledVersion.Id,
                                     AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.DisplayName) ? NotAvailableString : matchItem.CatalogPackage.InstalledVersion.DisplayName,

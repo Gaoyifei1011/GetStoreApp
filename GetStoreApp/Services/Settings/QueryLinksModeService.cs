@@ -26,7 +26,7 @@ namespace GetStoreApp.Services.Settings
                 if (!string.Equals(_queryLinksMode, value))
                 {
                     _queryLinksMode = value;
-                    PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(QueryLinksMode)));
+                    PropertyChanged?.Invoke(null, new(nameof(QueryLinksMode)));
                 }
             }
         }

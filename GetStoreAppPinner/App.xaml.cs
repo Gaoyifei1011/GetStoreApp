@@ -57,7 +57,7 @@ namespace GetStoreAppPinner
                     await appWindow.TryShowAsync();
                     await applicationView.TryConsolidateAsync();
                     appWindow.Presenter.RequestPresentation(AppWindowPresentationKind.CompactOverlay);
-                    appWindow.RequestSize(new Size(400, 200));
+                    appWindow.RequestSize(new(400, 200));
 
                     if (protocolActivatedEventArgs.Data.Count is 4 && protocolActivatedEventArgs.Data["Type"] is nameof(SecondaryTile))
                     {
@@ -71,9 +71,9 @@ namespace GetStoreAppPinner
                         };
 
                         secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
-                        secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                        secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                        secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                        secondaryTile.VisualElements.Square150x150Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                        secondaryTile.VisualElements.Square71x71Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                        secondaryTile.VisualElements.Square44x44Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
                         secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
 
                         if (position is "StartScreen")

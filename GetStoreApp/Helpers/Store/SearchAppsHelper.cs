@@ -114,7 +114,7 @@ namespace GetStoreApp.Helpers.Store
                                     string title = searchResultsObject.GetNamedString("Title");
                                     string publisherName = searchResultsObject.GetNamedString("PublisherName");
 
-                                    searchAppsResultList.Add(new SearchAppsResultModel()
+                                    searchAppsResultList.Add(new()
                                     {
                                         StoreAppLink = string.Format(storeLink, productId),
                                         StoreAppName = title,
@@ -155,7 +155,7 @@ namespace GetStoreApp.Helpers.Store
                 HttpStringContent httpStringContent = new(generatedContent);
                 httpStringContent.TryComputeLength(out ulong length);
                 httpStringContent.Headers.Expires = DateTimeOffset.Now;
-                httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("text/json");
+                httpStringContent.Headers.ContentType = new("text/json");
                 httpStringContent.Headers.ContentLength = length;
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
@@ -185,7 +185,7 @@ namespace GetStoreApp.Helpers.Store
                         {
                             JsonObject jsonObject = jsonValue.GetObject();
 
-                            searchAppsResultList.Add(new SearchAppsResultModel()
+                            searchAppsResultList.Add(new()
                             {
                                 StoreAppLink = string.Format(storeLink, jsonObject.GetNamedString("PackageIdentifier")),
                                 StoreAppName = jsonObject.GetNamedString("PackageName"),

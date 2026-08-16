@@ -24,16 +24,16 @@ namespace GetStoreApp.Services.Root
     {
         private static List<TypeModel> TypeList { get; } =
         [
-            new TypeModel { InternalName = "url", ShortName = "url" },
-            new TypeModel { InternalName = "ProductId", ShortName = "pid" }
+            new() { InternalName = "url", ShortName = "url" },
+            new() { InternalName = "ProductId", ShortName = "pid" }
         ];
 
         private static List<ChannelModel> ChannelList { get; } =
         [
-            new ChannelModel { InternalName = "WIF", ShortName = "wif" },
-            new ChannelModel { InternalName = "WIS", ShortName = "wis" },
-            new ChannelModel { InternalName = "RP", ShortName = "rp" },
-            new ChannelModel { InternalName = "Retail", ShortName = "rt" }
+            new() { InternalName = "WIF", ShortName = "wif" },
+            new() { InternalName = "WIS", ShortName = "wis" },
+            new() { InternalName = "RP", ShortName = "rp" },
+            new() { InternalName = "Retail", ShortName = "rt" }
         ];
 
         public static AppLaunchArguments AppLaunchArguments { get; private set; }
@@ -116,7 +116,7 @@ namespace GetStoreApp.Services.Root
                     {
                         if (argumentsList[1] is "Web")
                         {
-                            await Launcher.LaunchUriAsync(new Uri("getstoreappwebview:"));
+                            await Launcher.LaunchUriAsync(new("getstoreappwebview:"));
                             if (!isLaunched)
                             {
                                 Environment.Exit(Environment.ExitCode);

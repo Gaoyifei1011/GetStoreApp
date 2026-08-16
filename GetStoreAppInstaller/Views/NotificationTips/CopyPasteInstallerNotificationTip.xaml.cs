@@ -22,7 +22,7 @@ namespace GetStoreAppInstaller.Views.NotificationTips
                 if (!Equals(_isSuccessfully, value))
                 {
                     _isSuccessfully = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSuccessfully)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsSuccessfully)));
                 }
             }
         }

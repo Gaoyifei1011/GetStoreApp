@@ -52,7 +52,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_queryLinksMode, value))
                 {
                     _queryLinksMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(QueryLinksMode)));
+                    PropertyChanged?.Invoke(this, new(nameof(QueryLinksMode)));
                 }
             }
         }
@@ -68,7 +68,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_searchAppsMode, value))
                 {
                     _searchAppsMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchAppsMode)));
+                    PropertyChanged?.Invoke(this, new(nameof(SearchAppsMode)));
                 }
             }
         }
@@ -84,7 +84,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_appLinkOpenMode, value))
                 {
                     _appLinkOpenMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppLinkOpenMode)));
+                    PropertyChanged?.Invoke(this, new(nameof(AppLinkOpenMode)));
                 }
             }
         }
@@ -100,7 +100,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_installMode, value))
                 {
                     _installMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallMode)));
+                    PropertyChanged?.Invoke(this, new(nameof(InstallMode)));
                 }
             }
         }
@@ -116,7 +116,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_cancelAutoUpdate, value))
                 {
                     _cancelAutoUpdate = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CancelAutoUpdate)));
+                    PropertyChanged?.Invoke(this, new(nameof(CancelAutoUpdate)));
                 }
             }
         }
@@ -132,7 +132,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_appUpdateStatus, value))
                 {
                     _appUpdateStatus = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppUpdateStatus)));
+                    PropertyChanged?.Invoke(this, new(nameof(AppUpdateStatus)));
                 }
             }
         }
@@ -148,7 +148,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_appUpdatePauseEndTime, value))
                 {
                     _appUpdatePauseEndTime = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppUpdatePauseEndTime)));
+                    PropertyChanged?.Invoke(this, new(nameof(AppUpdatePauseEndTime)));
                 }
             }
         }
@@ -164,7 +164,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_useSystemRegion, value))
                 {
                     _useSystemRegion = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UseSystemRegion)));
+                    PropertyChanged?.Invoke(this, new(nameof(UseSystemRegion)));
                 }
             }
         }
@@ -180,7 +180,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_currentCountryOrRegion, value))
                 {
                     _currentCountryOrRegion = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentCountryOrRegion)));
+                    PropertyChanged?.Invoke(this, new(nameof(CurrentCountryOrRegion)));
                 }
             }
         }
@@ -196,7 +196,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_storeRegion, value))
                 {
                     _storeRegion = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StoreRegion)));
+                    PropertyChanged?.Invoke(this, new(nameof(StoreRegion)));
                 }
             }
         }
@@ -212,7 +212,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_encryptedPackageFilter, value))
                 {
                     _encryptedPackageFilter = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EncryptedPackageFilter)));
+                    PropertyChanged?.Invoke(this, new(nameof(EncryptedPackageFilter)));
                 }
             }
         }
@@ -228,7 +228,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_blockMapFilter, value))
                 {
                     _blockMapFilter = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BlockMapFilter)));
+                    PropertyChanged?.Invoke(this, new(nameof(BlockMapFilter)));
                 }
             }
         }
@@ -248,22 +248,22 @@ namespace GetStoreApp.Views.Pages
         public SettingsStoreAndUpdatePage()
         {
             InitializeComponent();
-            QueryLinksModeList.Add(new ComboBoxItemModel() { SelectedValue = QueryLinksModeService.QueryLinksModeList[0], DisplayMember = QueryLinksModeOfficialString });
-            QueryLinksModeList.Add(new ComboBoxItemModel() { SelectedValue = QueryLinksModeService.QueryLinksModeList[1], DisplayMember = QueryLinksModeThirdPartyString });
+            QueryLinksModeList.Add(new() { SelectedValue = QueryLinksModeService.QueryLinksModeList[0], DisplayMember = QueryLinksModeOfficialString });
+            QueryLinksModeList.Add(new() { SelectedValue = QueryLinksModeService.QueryLinksModeList[1], DisplayMember = QueryLinksModeThirdPartyString });
 
-            AppLinkOpenModeList.Add(new ComboBoxItemModel() { SelectedValue = AppLinkOpenModeService.AppLinkOpenModeList[0], DisplayMember = AppLinkOpenModeBuiltInAppString });
-            AppLinkOpenModeList.Add(new ComboBoxItemModel() { SelectedValue = AppLinkOpenModeService.AppLinkOpenModeList[1], DisplayMember = AppLinkOpenModeSystemBrowserString });
+            AppLinkOpenModeList.Add(new() { SelectedValue = AppLinkOpenModeService.AppLinkOpenModeList[0], DisplayMember = AppLinkOpenModeBuiltInAppString });
+            AppLinkOpenModeList.Add(new() { SelectedValue = AppLinkOpenModeService.AppLinkOpenModeList[1], DisplayMember = AppLinkOpenModeSystemBrowserString });
 
-            InstallModeList.Add(new ComboBoxItemModel() { SelectedValue = InstallModeService.InstallModeList[0], DisplayMember = InstallModeAppInstallString });
-            InstallModeList.Add(new ComboBoxItemModel() { SelectedValue = InstallModeService.InstallModeList[1], DisplayMember = InstallModeCodeInstallString });
+            InstallModeList.Add(new() { SelectedValue = InstallModeService.InstallModeList[0], DisplayMember = InstallModeAppInstallString });
+            InstallModeList.Add(new() { SelectedValue = InstallModeService.InstallModeList[1], DisplayMember = InstallModeCodeInstallString });
 
-            AppUpdateStatusList.Add(new ComboBoxItemModel() { SelectedValue = "AppUpdateEnabled", DisplayMember = AppUpdateEnabledString });
-            AppUpdateStatusList.Add(new ComboBoxItemModel() { SelectedValue = "AppUpdatePaused", DisplayMember = AppUpdatePausedString });
-            AppUpdateStatusList.Add(new ComboBoxItemModel() { SelectedValue = "AppUpdateDisabled", DisplayMember = AppUpdateDisabledString });
+            AppUpdateStatusList.Add(new() { SelectedValue = "AppUpdateEnabled", DisplayMember = AppUpdateEnabledString });
+            AppUpdateStatusList.Add(new() { SelectedValue = "AppUpdatePaused", DisplayMember = AppUpdatePausedString });
+            AppUpdateStatusList.Add(new() { SelectedValue = "AppUpdateDisabled", DisplayMember = AppUpdateDisabledString });
 
             foreach (GeographicRegion geographicRegionItem in StoreRegionService.StoreRegionList)
             {
-                StoreRegionCollection.Add(new StoreRegionModel()
+                StoreRegionCollection.Add(new()
                 {
                     DisplayMember = geographicRegionItem.DisplayName,
                     CodeTwoLetter = geographicRegionItem.CodeTwoLetter,
@@ -415,7 +415,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:regionformatting"));
+                    await Launcher.LaunchUriAsync(new("ms-settings:regionformatting"));
                 }
                 catch (Exception e)
                 {

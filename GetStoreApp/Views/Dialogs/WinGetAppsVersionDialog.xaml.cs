@@ -20,33 +20,45 @@ namespace GetStoreApp.Views.Dialogs
     /// <summary>
     /// WinGet 应用版本信息对话框
     /// </summary>
-    public sealed partial class WinGetAppsVersionDialog : ContentDialog
+    internal sealed partial class WinGetAppsVersionDialog : ContentDialog
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string AppVersionInformationString = ResourceService.GetLocalized("Dialog/AppVersionInformation");
         private readonly string WinGetAppsDownloadOptionString = ResourceService.GetLocalized("Dialog/WinGetAppsDownloadOption");
         private readonly string WinGetAppsInstallOptionString = ResourceService.GetLocalized("Dialog/WinGetAppsInstallOption");
         private readonly string WinGetAppsRepairOptionString = ResourceService.GetLocalized("Dialog/WinGetAppsRepairOption");
         private readonly string WinGetAppsUpgradeOptionString = ResourceService.GetLocalized("Dialog/WinGetAppsUpgradeOption");
 
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
+
         private WinGetPage WinGetPage { get; }
 
         private object WinGetApps { get; }
 
-        public List<Type> PageList { get; } = [typeof(WinGetAppsVersionInfoPage), typeof(WinGetAppsVersionOptionsPage)];
+        internal List<Type> PageList { get; } = [typeof(WinGetAppsVersionInfoPage), typeof(WinGetAppsVersionOptionsPage)];
 
         private ObservableCollection<ContentLinkInfo> BreadCollection { get; } = [];
 
-        public WinGetAppsVersionDialog(WinGetOperationKind winGetOptionKind, WinGetPage winGetPage, object winGetApps)
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
+        internal WinGetAppsVersionDialog(WinGetOperationKind winGetOptionKind, WinGetPage winGetPage, object winGetApps)
         {
             InitializeComponent();
             WinGetPage = winGetPage;
             WinGetApps = winGetApps;
         }
 
-        #region 第一部分：WinGet 应用版本信息对话框——挂载的事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：挂载事件处理
 
         /// <summary>
-        /// 打开对话框时触发的事件
+        /// 打开内容对话框时触发的事件
         /// </summary>
         private void OnOpened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
@@ -83,13 +95,13 @@ namespace GetStoreApp.Views.Dialogs
         }
 
         /// <summary>
-        /// 导航完成后发生
+        /// 导航完成后发生的事件
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
             if (BreadCollection.Count is 0 && Equals(GetCurrentPageType(), PageList[0]))
             {
-                BreadCollection.Add(new ContentLinkInfo()
+                BreadCollection.Add(new()
                 {
                     DisplayText = AppVersionInformationString,
                     SecondaryText = "AppVersionInformation"
@@ -103,7 +115,7 @@ namespace GetStoreApp.Views.Dialogs
                     {
                         case PackageOperationKind.Download:
                             {
-                                BreadCollection.Add(new ContentLinkInfo()
+                                BreadCollection.Add(new()
                                 {
                                     DisplayText = WinGetAppsDownloadOptionString,
                                     SecondaryText = "DownloadOption"
@@ -112,7 +124,7 @@ namespace GetStoreApp.Views.Dialogs
                             }
                         case PackageOperationKind.Install:
                             {
-                                BreadCollection.Add(new ContentLinkInfo()
+                                BreadCollection.Add(new()
                                 {
                                     DisplayText = WinGetAppsInstallOptionString,
                                     SecondaryText = "InstallOption"
@@ -121,7 +133,7 @@ namespace GetStoreApp.Views.Dialogs
                             }
                         case PackageOperationKind.Repair:
                             {
-                                BreadCollection.Add(new ContentLinkInfo()
+                                BreadCollection.Add(new()
                                 {
                                     DisplayText = WinGetAppsRepairOptionString,
                                     SecondaryText = "RepairOption"
@@ -130,7 +142,7 @@ namespace GetStoreApp.Views.Dialogs
                             }
                         case PackageOperationKind.Upgrade:
                             {
-                                BreadCollection.Add(new ContentLinkInfo()
+                                BreadCollection.Add(new()
                                 {
                                     DisplayText = WinGetAppsUpgradeOptionString,
                                     SecondaryText = "UpgradeOption"
@@ -147,7 +159,7 @@ namespace GetStoreApp.Views.Dialogs
         }
 
         /// <summary>
-        /// 导航失败时发生
+        /// 导航失败后发生的事件
         /// </summary>
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
@@ -163,12 +175,14 @@ namespace GetStoreApp.Views.Dialogs
             Hide();
         }
 
-        #endregion 第一部分：WinGet 应用版本信息对话框——挂载的事件
+        #endregion 第四部分：挂载事件处理
+
+        #region 第五部分：数据操作与业务逻辑
 
         /// <summary>
         /// 页面向前导航
         /// </summary>
-        public void NavigateTo(Type navigationPageType, object parameter = null, bool? slideDirection = null)
+        internal void NavigateTo(Type navigationPageType, object parameter = null, bool? slideDirection = null)
         {
             try
             {
@@ -198,5 +212,7 @@ namespace GetStoreApp.Views.Dialogs
         {
             return WinGetAppsVersionFrame.CurrentSourcePageType;
         }
+
+        #endregion 第五部分：数据操作与业务逻辑
     }
 }

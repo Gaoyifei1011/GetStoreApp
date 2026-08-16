@@ -53,7 +53,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_theme, value))
                 {
                     _theme = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Theme)));
+                    PropertyChanged?.Invoke(this, new(nameof(Theme)));
                 }
             }
         }
@@ -69,7 +69,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_backdrop, value))
                 {
                     _backdrop = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Backdrop)));
+                    PropertyChanged?.Invoke(this, new(nameof(Backdrop)));
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_alwaysShowBackdrop, value))
                 {
                     _alwaysShowBackdrop = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AlwaysShowBackdrop)));
+                    PropertyChanged?.Invoke(this, new(nameof(AlwaysShowBackdrop)));
                 }
             }
         }
@@ -101,7 +101,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_alwaysShowBackdropEnabled, value))
                 {
                     _alwaysShowBackdropEnabled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AlwaysShowBackdropEnabled)));
+                    PropertyChanged?.Invoke(this, new(nameof(AlwaysShowBackdropEnabled)));
                 }
             }
         }
@@ -117,7 +117,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_advancedEffectsEnabled, value))
                 {
                     _advancedEffectsEnabled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AdvancedEffectsEnabled)));
+                    PropertyChanged?.Invoke(this, new(nameof(AdvancedEffectsEnabled)));
                 }
             }
         }
@@ -133,7 +133,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_appLanguage, value))
                 {
                     _appLanguage = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppLanguage)));
+                    PropertyChanged?.Invoke(this, new(nameof(AppLanguage)));
                 }
             }
         }
@@ -149,7 +149,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_topMost, value))
                 {
                     _topMost = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TopMost)));
+                    PropertyChanged?.Invoke(this, new(nameof(TopMost)));
                 }
             }
         }
@@ -166,26 +166,26 @@ namespace GetStoreApp.Views.Pages
         {
             InitializeComponent();
 
-            ThemeList.Add(new ComboBoxItemModel() { SelectedValue = ThemeService.ThemeList[0], DisplayMember = ThemeDefaultString });
-            ThemeList.Add(new ComboBoxItemModel() { SelectedValue = ThemeService.ThemeList[1], DisplayMember = ThemeLightAltString });
-            ThemeList.Add(new ComboBoxItemModel() { SelectedValue = ThemeService.ThemeList[2], DisplayMember = ThemeDarkString });
+            ThemeList.Add(new() { SelectedValue = ThemeService.ThemeList[0], DisplayMember = ThemeDefaultString });
+            ThemeList.Add(new() { SelectedValue = ThemeService.ThemeList[1], DisplayMember = ThemeLightAltString });
+            ThemeList.Add(new() { SelectedValue = ThemeService.ThemeList[2], DisplayMember = ThemeDarkString });
 
-            BackdropList.Add(new ComboBoxItemModel() { SelectedValue = BackdropService.BackdropList[0], DisplayMember = BackdropDefaultString });
+            BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[0], DisplayMember = BackdropDefaultString });
             if (MicaController.IsSupported())
             {
-                BackdropList.Add(new ComboBoxItemModel() { SelectedValue = BackdropService.BackdropList[1], DisplayMember = string.Format("{0} {1}", MicaString, BackdropMicaString) });
-                BackdropList.Add(new ComboBoxItemModel() { SelectedValue = BackdropService.BackdropList[2], DisplayMember = string.Format("{0} {1}", MicaString, BackdropMicaAltString) });
+                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[1], DisplayMember = string.Format("{0} {1}", MicaString, BackdropMicaString) });
+                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[2], DisplayMember = string.Format("{0} {1}", MicaString, BackdropMicaAltString) });
             }
             if (DesktopAcrylicController.IsSupported())
             {
-                BackdropList.Add(new ComboBoxItemModel() { SelectedValue = BackdropService.BackdropList[3], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicString) });
-                BackdropList.Add(new ComboBoxItemModel() { SelectedValue = BackdropService.BackdropList[4], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicBaseString) });
-                BackdropList.Add(new ComboBoxItemModel() { SelectedValue = BackdropService.BackdropList[5], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicThinString) });
+                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[3], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicString) });
+                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[4], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicBaseString) });
+                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[5], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicThinString) });
             }
 
             foreach (KeyValuePair<string, string> languageItem in LanguageService.LanguageList)
             {
-                LanguageCollection.Add(new ComboBoxItemModel() { SelectedValue = languageItem.Key, DisplayMember = languageItem.Value });
+                LanguageCollection.Add(new() { SelectedValue = languageItem.Key, DisplayMember = languageItem.Value });
             }
 
             uiSettings.AdvancedEffectsEnabledChanged += OnAdvancedEffectsEnabledChanged;
@@ -229,7 +229,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
+                    await Launcher.LaunchUriAsync(new("ms-settings:colors"));
                 }
                 catch (Exception e)
                 {
@@ -292,7 +292,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:easeofaccess-visualeffects"));
+                    await Launcher.LaunchUriAsync(new("ms-settings:easeofaccess-visualeffects"));
                 }
                 catch (Exception e)
                 {
@@ -310,7 +310,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:regionlanguage-languageoptions"));
+                    await Launcher.LaunchUriAsync(new("ms-settings:regionlanguage-languageoptions"));
                 }
                 catch (Exception e)
                 {

@@ -14,7 +14,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
 
         public const int MAX_PATH = 260;
 
-        public static nint INVALID_HANDLE_VALUE { get; } = new nint(-1);
+        public static nint INVALID_HANDLE_VALUE { get; } = -1;
 
         /// <summary>
         /// 获取指定进程的快照，以及这些进程使用的堆、模块和线程。

@@ -125,7 +125,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_windowTitle, value))
                 {
                     _windowTitle = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowTitle)));
+                    PropertyChanged?.Invoke(this, new(nameof(WindowTitle)));
                 }
             }
         }
@@ -141,7 +141,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_windowSystemBackdrop, value))
                 {
                     _windowSystemBackdrop = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowSystemBackdrop)));
+                    PropertyChanged?.Invoke(this, new(nameof(WindowSystemBackdrop)));
                 }
             }
         }
@@ -157,7 +157,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_windowTheme, value))
                 {
                     _windowTheme = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowTheme)));
+                    PropertyChanged?.Invoke(this, new(nameof(WindowTheme)));
                 }
             }
         }
@@ -173,7 +173,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_isWindowMaximized, value))
                 {
                     _isWindowMaximized = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsWindowMaximized)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsWindowMaximized)));
                 }
             }
         }
@@ -189,7 +189,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_isParseEmpty, value))
                 {
                     _isParseEmpty = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsParseEmpty)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsParseEmpty)));
                 }
             }
         }
@@ -205,7 +205,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_isLoadCompleted, value))
                 {
                     _isLoadCompleted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoadCompleted)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsLoadCompleted)));
                 }
             }
         }
@@ -221,7 +221,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_canDragFile, value))
                 {
                     _canDragFile = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CanDragFile)));
+                    PropertyChanged?.Invoke(this, new(nameof(CanDragFile)));
                 }
             }
         }
@@ -237,7 +237,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_isParseSuccessfully, value))
                 {
                     _isParseSuccessfully = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsParseSuccessfully)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsParseSuccessfully)));
                 }
             }
         }
@@ -253,7 +253,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_packageFileType, value))
                 {
                     _packageFileType = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageFileType)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageFileType)));
                 }
             }
         }
@@ -269,7 +269,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_packageIconImage, value))
                 {
                     _packageIconImage = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageIconImage)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageIconImage)));
                 }
             }
         }
@@ -285,7 +285,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_packageName, value))
                 {
                     _packageName = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageName)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageName)));
                 }
             }
         }
@@ -301,7 +301,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_publisherDisplayName, value))
                 {
                     _publisherDisplayName = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PublisherDisplayName)));
+                    PropertyChanged?.Invoke(this, new(nameof(PublisherDisplayName)));
                 }
             }
         }
@@ -317,7 +317,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_version, value))
                 {
                     _version = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Version)));
+                    PropertyChanged?.Invoke(this, new(nameof(Version)));
                 }
             }
         }
@@ -333,7 +333,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_packageDescription, value))
                 {
                     _packageDescription = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageDescription)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageDescription)));
                 }
             }
         }
@@ -349,7 +349,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_packageFamilyName, value))
                 {
                     _packageFamilyName = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageFamilyName)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageFamilyName)));
                 }
             }
         }
@@ -365,7 +365,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_packageFullName, value))
                 {
                     _packageFullName = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageFullName)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageFullName)));
                 }
             }
         }
@@ -381,7 +381,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_supportedArchitecture, value))
                 {
                     _supportedArchitecture = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SupportedArchitecture)));
+                    PropertyChanged?.Invoke(this, new(nameof(SupportedArchitecture)));
                 }
             }
         }
@@ -397,7 +397,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_isFramework, value))
                 {
                     _isFramework = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsFramework)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsFramework)));
                 }
             }
         }
@@ -413,7 +413,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_appInstalledState, value))
                 {
                     _appInstalledState = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppInstalledState)));
+                    PropertyChanged?.Invoke(this, new(nameof(AppInstalledState)));
                 }
             }
         }
@@ -429,7 +429,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_appInstallerSourceLink, value))
                 {
                     _appInstallerSourceLink = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppInstallerSourceLink)));
+                    PropertyChanged?.Invoke(this, new(nameof(AppInstallerSourceLink)));
                 }
             }
         }
@@ -445,7 +445,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_isAppInstallerSourceLinkExisted, value))
                 {
                     _isAppInstallerSourceLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAppInstallerSourceLinkExisted)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsAppInstallerSourceLinkExisted)));
                 }
             }
         }
@@ -461,7 +461,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_packageSourceLink, value))
                 {
                     _packageSourceLink = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageSourceLink)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageSourceLink)));
                 }
             }
         }
@@ -477,7 +477,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_isPackageSourceLinkExisted, value))
                 {
                     _isPackageSourceLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPackageSourceLinkExisted)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsPackageSourceLinkExisted)));
                 }
             }
         }
@@ -493,7 +493,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_packageType, value))
                 {
                     _packageType = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageType)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageType)));
                 }
             }
         }
@@ -509,7 +509,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_hoursBetweenUpdateChecks, value))
                 {
                     _hoursBetweenUpdateChecks = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HoursBetweenUpdateChecks)));
+                    PropertyChanged?.Invoke(this, new(nameof(HoursBetweenUpdateChecks)));
                 }
             }
         }
@@ -525,7 +525,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_updateBlocksActivation, value))
                 {
                     _updateBlocksActivation = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UpdateBlocksActivation)));
+                    PropertyChanged?.Invoke(this, new(nameof(UpdateBlocksActivation)));
                 }
             }
         }
@@ -541,7 +541,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_showPrompt, value))
                 {
                     _showPrompt = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShowPrompt)));
+                    PropertyChanged?.Invoke(this, new(nameof(ShowPrompt)));
                 }
             }
         }
@@ -557,7 +557,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_forceUpdateFromAnyVersion, value))
                 {
                     _forceUpdateFromAnyVersion = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ForceUpdateFromAnyVersion)));
+                    PropertyChanged?.Invoke(this, new(nameof(ForceUpdateFromAnyVersion)));
                 }
             }
         }
@@ -573,7 +573,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_automaticBackgroundTask, value))
                 {
                     _automaticBackgroundTask = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AutomaticBackgroundTask)));
+                    PropertyChanged?.Invoke(this, new(nameof(AutomaticBackgroundTask)));
                 }
             }
         }
@@ -589,7 +589,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_isAppInstalled, value))
                 {
                     _isAppInstalled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAppInstalled)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsAppInstalled)));
                 }
             }
         }
@@ -605,7 +605,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_isUpdateSettingsExisted, value))
                 {
                     _isUpdateSettingsExisted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUpdateSettingsExisted)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsUpdateSettingsExisted)));
                 }
             }
         }
@@ -621,7 +621,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_isInstalling, value))
                 {
                     _isInstalling = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsInstalling)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsInstalling)));
                 }
             }
         }
@@ -637,7 +637,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_installProgressValue, value))
                 {
                     _installProgressValue = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallProgressValue)));
+                    PropertyChanged?.Invoke(this, new(nameof(InstallProgressValue)));
                 }
             }
         }
@@ -653,7 +653,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_isInstallWaiting, value))
                 {
                     _isInstallWaiting = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsInstallWaiting)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsInstallWaiting)));
                 }
             }
         }
@@ -669,7 +669,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_isInstallFailed, value))
                 {
                     _isInstallFailed = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsInstallFailed)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsInstallFailed)));
                 }
             }
         }
@@ -685,7 +685,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!Equals(_isCancelInstall, value))
                 {
                     _isCancelInstall = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCancelInstall)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsCancelInstall)));
                 }
             }
         }
@@ -701,7 +701,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_installStateString, value))
                 {
                     _installStateString = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallStateString)));
+                    PropertyChanged?.Invoke(this, new(nameof(InstallStateString)));
                 }
             }
         }
@@ -717,7 +717,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (!string.Equals(_installFailedInformation, value))
                 {
                     _installFailedInformation = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallFailedInformation)));
+                    PropertyChanged?.Invoke(this, new(nameof(InstallFailedInformation)));
                 }
             }
         }
@@ -926,7 +926,7 @@ namespace GetStoreAppInstaller.Views.Windows
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
 
             // 为应用主窗口添加窗口过程
-            installerWindowSubClassProc = new SUBCLASSPROC(InstallerWindowSubClassProc);
+            installerWindowSubClassProc = new(InstallerWindowSubClassProc);
             Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), installerWindowSubClassProc, 0, nint.Zero);
 
             SetWindowTheme();
@@ -950,13 +950,13 @@ namespace GetStoreAppInstaller.Views.Windows
             }
 
             rasterizationScale = contentIsland.RasterizationScale;
-            AppWindow.Resize(new SizeInt32(Convert.ToInt32(800 * contentIsland.RasterizationScale), Convert.ToInt32(560 * contentIsland.RasterizationScale)));
+            AppWindow.Resize(new(Convert.ToInt32(800 * contentIsland.RasterizationScale), Convert.ToInt32(560 * contentIsland.RasterizationScale)));
 
             // 默认直接显示到窗口中间
             if (DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
             {
                 RectInt32 workArea = displayArea.WorkArea;
-                AppWindow.Move(new PointInt32((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
+                AppWindow.Move(new((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
             }
         }
 
@@ -1082,7 +1082,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 args.Handled = true;
                 FlyoutShowOptions options = new()
                 {
-                    Position = new Point(0, 45),
+                    Position = new(0, 45),
                     ShowMode = FlyoutShowMode.Standard
                 };
                 TitlebarMenuFlyout.ShowAt(null, options);
@@ -1305,7 +1305,7 @@ namespace GetStoreAppInstaller.Views.Windows
         [DynamicWindowsRuntimeCast(typeof(FileActivatedEventArgs)), DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(ShareTargetActivatedEventArgs))]
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
-            AppWindow.Resize(new SizeInt32(Convert.ToInt32(800 * contentIsland.RasterizationScale), Convert.ToInt32(560 * contentIsland.RasterizationScale)));
+            AppWindow.Resize(new(Convert.ToInt32(800 * contentIsland.RasterizationScale), Convert.ToInt32(560 * contentIsland.RasterizationScale)));
             IsParseEmpty = true;
             CanDragFile = true;
             fileName = string.Empty;
@@ -1407,11 +1407,11 @@ namespace GetStoreAppInstaller.Views.Windows
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("getstoreapp:"), new LauncherOptions()
+                    await Launcher.LaunchUriAsync(new("getstoreapp:"), new()
                     {
                         TargetApplicationPackageFamilyName = global::Windows.ApplicationModel.Package.Current.Id.FamilyName
                     },
-                    new ValueSet()
+                    new()
                     {
                         { "Parameter", "AppInstallSettings" }
                     });
@@ -1545,10 +1545,10 @@ namespace GetStoreAppInstaller.Views.Windows
                         {
                             DependencyAppInformation dependencyAppInformation = parseResult.dependencyAppInformation;
 
-                            InstallDependencyCollection.Add(new InstallDependencyModel()
+                            InstallDependencyCollection.Add(new()
                             {
                                 DependencyName = Path.GetFileName(pickFileResult.Path),
-                                DependencyVersion = dependencyAppInformation.Version is Version version ? version : new Version(),
+                                DependencyVersion = dependencyAppInformation.Version is Version version ? version : new(),
                                 DependencyPublisher = string.IsNullOrEmpty(dependencyAppInformation.PublisherDisplayName) ? NotAvailableString : dependencyAppInformation.PublisherDisplayName,
                                 DependencyFullName = string.IsNullOrEmpty(dependencyAppInformation.PackageFullName) ? Convert.ToString(GuidHelper.CreateNewGuid()) : dependencyAppInformation.PackageFullName,
                                 DependencyPath = pickFileResult.Path
@@ -1644,11 +1644,11 @@ namespace GetStoreAppInstaller.Views.Windows
 
                             foreach (InstallDependencyModel installDependencyItem in InstallDependencyCollection)
                             {
-                                addPackageOptions.DependencyPackageUris.Add(new Uri(installDependencyItem.DependencyPath));
+                                addPackageOptions.DependencyPackageUris.Add(new(installDependencyItem.DependencyPath));
                             }
 
                             // 安装目标应用，并获取安装进度
-                            installPackageWithProgress = packageDeploymentManager.AddPackageByUriAsync(new Uri(fileName), addPackageOptions);
+                            installPackageWithProgress = packageDeploymentManager.AddPackageByUriAsync(new(fileName), addPackageOptions);
 
                             // 更新安装进度
                             installPackageWithProgress.Progress = (result, progress) => OnPackageInstallProgress(result, progress);
@@ -1863,7 +1863,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 {
                     try
                     {
-                        await Launcher.LaunchUriAsync(new Uri(AppInstallerSourceLink));
+                        await Launcher.LaunchUriAsync(new(AppInstallerSourceLink));
                     }
                     catch (Exception e)
                     {
@@ -1884,7 +1884,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 {
                     try
                     {
-                        await Launcher.LaunchUriAsync(new Uri(PackageSourceLink));
+                        await Launcher.LaunchUriAsync(new(PackageSourceLink));
                     }
                     catch (Exception e)
                     {
@@ -2058,7 +2058,7 @@ namespace GetStoreAppInstaller.Views.Windows
                             FlyoutShowOptions options = new()
                             {
                                 ShowMode = FlyoutShowMode.Standard,
-                                Position = Environment.OSVersion.Version.Build > 22000 ? new Point(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale) : new Point(localPoint.X, localPoint.Y)
+                                Position = Environment.OSVersion.Version.Build > 22000 ? new(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale) : new(localPoint.X, localPoint.Y)
                             };
 
                             TitlebarMenuFlyout.ShowAt(Content, options);
@@ -2370,7 +2370,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
                                 if (mainPackageNodeList[0].Attributes.GetNamedItem("Version") is IXmlNode versionNode)
                                 {
-                                    packageInformation.Version = new Version(versionNode.InnerText);
+                                    packageInformation.Version = new(versionNode.InnerText);
                                 }
 
                                 if (mainPackageNodeList[0].Attributes.GetNamedItem("Uri") is IXmlNode packageUriNode)
@@ -2396,7 +2396,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
                                 if (mainBundleNodeList[0].Attributes.GetNamedItem("Version") is IXmlNode versionNode)
                                 {
-                                    packageInformation.Version = new Version(versionNode.InnerText);
+                                    packageInformation.Version = new(versionNode.InnerText);
                                 }
 
                                 if (mainBundleNodeList[0].Attributes.GetNamedItem("Uri") is IXmlNode packageUriNode)
@@ -2465,7 +2465,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
                                 if (packageNode.Attributes.GetNamedItem("Version") is IXmlNode versionNode)
                                 {
-                                    dependencyInformation.DependencyVersion = new Version(versionNode.InnerText);
+                                    dependencyInformation.DependencyVersion = new(versionNode.InnerText);
                                 }
 
                                 if (packageNode.Attributes.GetNamedItem("ProcessorArchitecture") is IXmlNode processorArchitectureNode)
@@ -2479,7 +2479,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
                                 if (packageNode.Attributes.GetNamedItem("Uri") is IXmlNode uriNode)
                                 {
-                                    dependencyInformation.Uri = new Uri(uriNode.InnerText);
+                                    dependencyInformation.Uri = new(uriNode.InnerText);
                                 }
 
                                 packageInformation.DependencyList.Add(dependencyInformation);
@@ -2646,12 +2646,12 @@ namespace GetStoreAppInstaller.Views.Windows
                         DependencyInformation dependencyInformation = new();
 
                         PackageVersion dependencyMinPackageVersion = new(dependencyMinVersion);
-                        dependencyInformation.DependencyMinVersion = new Version(dependencyMinPackageVersion.Major, dependencyMinPackageVersion.Minor, dependencyMinPackageVersion.Build, dependencyMinPackageVersion.Revision);
+                        dependencyInformation.DependencyMinVersion = new(dependencyMinPackageVersion.Major, dependencyMinPackageVersion.Minor, dependencyMinPackageVersion.Build, dependencyMinPackageVersion.Revision);
                         dependencyInformation.DependencyName = dependencyName;
                         dependencyInformation.DependencyPublisher = dependencyPublisher;
 
                         PackageVersion dependencyMaxPackageMajorVersionTested = new(dependencyMaxMajorVersionTested);
-                        dependencyInformation.DependencyMaxMajorVersionTested = new Version(dependencyMaxPackageMajorVersionTested.Major, dependencyMaxPackageMajorVersionTested.Minor, dependencyMaxPackageMajorVersionTested.Build, dependencyMaxPackageMajorVersionTested.Revision);
+                        dependencyInformation.DependencyMaxMajorVersionTested = new(dependencyMaxPackageMajorVersionTested.Major, dependencyMaxPackageMajorVersionTested.Minor, dependencyMaxPackageMajorVersionTested.Build, dependencyMaxPackageMajorVersionTested.Revision);
                         dependencyList.Add(dependencyInformation);
                     }
 
@@ -2697,7 +2697,7 @@ namespace GetStoreAppInstaller.Views.Windows
                         manifestInformation.PackageFullName = packageFullName;
 
                         PackageVersion packageVersion = new(version);
-                        manifestInformation.Version = new Version(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision);
+                        manifestInformation.Version = new(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision);
                     }
 
                     // 获取包的目标设备系列
@@ -2858,9 +2858,9 @@ namespace GetStoreAppInstaller.Views.Windows
 
                     targetDeviceFamily.TargetDeviceName = targetDeviceName;
                     PackageVersion minPackageVersion = new(minVersion);
-                    targetDeviceFamily.MinVersion = new Version(minPackageVersion.Major, minPackageVersion.Minor, minPackageVersion.Build, minPackageVersion.Revision);
+                    targetDeviceFamily.MinVersion = new(minPackageVersion.Major, minPackageVersion.Minor, minPackageVersion.Build, minPackageVersion.Revision);
                     PackageVersion maxPackageVersionTested = new(maxVersionTested);
-                    targetDeviceFamily.MaxVersionTested = new Version(maxPackageVersionTested.Major, maxPackageVersionTested.Minor, maxPackageVersionTested.Build, maxPackageVersionTested.Revision);
+                    targetDeviceFamily.MaxVersionTested = new(maxPackageVersionTested.Major, maxPackageVersionTested.Minor, maxPackageVersionTested.Build, maxPackageVersionTested.Revision);
 
                     targetDeviceFamilyList.Add(targetDeviceFamily);
                     appxManifestTargetDeviceFamiliesEnumerator.MoveNext(out _);
@@ -2891,7 +2891,7 @@ namespace GetStoreAppInstaller.Views.Windows
                     dependencyAppInformation.PublisherDisplayName = publisher;
 
                     PackageVersion packageVersion = new(version);
-                    dependencyAppInformation.Version = new Version(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision);
+                    dependencyAppInformation.Version = new(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision);
                 }
             }
             catch (Exception e)
@@ -2922,7 +2922,7 @@ namespace GetStoreAppInstaller.Views.Windows
                     dependencyAppInformation.PublisherDisplayName = publisher;
 
                     PackageVersion packageVersion = new(version);
-                    dependencyAppInformation.Version = new Version(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision);
+                    dependencyAppInformation.Version = new(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision);
                 }
             }
             catch (Exception e)
@@ -3481,7 +3481,7 @@ namespace GetStoreAppInstaller.Views.Windows
             PackageIconImage = null;
             PackageName = string.Empty;
             PublisherDisplayName = string.Empty;
-            Version = new Version();
+            Version = new();
             PackageDescription = string.Empty;
             PackageFamilyName = string.Empty;
             PackageFullName = string.Empty;
@@ -3529,7 +3529,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 PackageFileType = packageInformation.PackageFileType;
                 PackageName = string.IsNullOrEmpty(packageInformation.DisplayName) ? NotAvailableString : packageInformation.DisplayName;
                 PublisherDisplayName = string.IsNullOrEmpty(packageInformation.PublisherDisplayName) ? NotAvailableString : packageInformation.PublisherDisplayName;
-                Version = packageInformation.Version is not null ? packageInformation.Version : new Version();
+                Version = packageInformation.Version is not null ? packageInformation.Version : new();
                 PackageDescription = string.IsNullOrEmpty(packageInformation.Description) ? NoneString : packageInformation.Description;
                 PackageFamilyName = string.IsNullOrEmpty(packageInformation.PackageFamilyName) ? NotAvailableString : packageInformation.PackageFamilyName;
                 PackageFullName = string.IsNullOrEmpty(packageInformation.PackageFullName) ? NotAvailableString : packageInformation.PackageFullName;
@@ -3561,7 +3561,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 {
                     foreach (DependencyInformation dependencyItem in packageInformation.DependencyList)
                     {
-                        DependencyCollection.Add(new DependencyModel()
+                        DependencyCollection.Add(new()
                         {
                             DependencyName = dependencyItem.DependencyName,
                             DependencyPublisher = dependencyItem.DependencyPublisher,
@@ -3579,7 +3579,7 @@ namespace GetStoreAppInstaller.Views.Windows
                     {
                         if (CapabilityDict.TryGetValue(capability.ToLowerInvariant(), out string capabilityValue))
                         {
-                            CapabilitiesCollection.Add(new CapabilityModel()
+                            CapabilitiesCollection.Add(new()
                             {
                                 CapabilityLocalizedName = capabilityValue,
                                 CapabilityName = capability
@@ -3587,7 +3587,7 @@ namespace GetStoreAppInstaller.Views.Windows
                         }
                         else
                         {
-                            CapabilitiesCollection.Add(new CapabilityModel()
+                            CapabilitiesCollection.Add(new()
                             {
                                 CapabilityLocalizedName = capability,
                                 CapabilityName = capability
@@ -3608,7 +3608,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 {
                     foreach (string language in packageInformation.LanguageList)
                     {
-                        LanguageCollection.Add(new CultureInfo(language));
+                        LanguageCollection.Add(new(language));
                     }
                 }
 

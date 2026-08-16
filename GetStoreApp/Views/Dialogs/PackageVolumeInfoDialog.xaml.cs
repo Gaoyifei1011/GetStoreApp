@@ -22,31 +22,37 @@ namespace GetStoreApp.Views.Dialogs
     /// <summary>
     /// 应用包存储卷信息对话框
     /// </summary>
-    public sealed partial class PackageVolumeInfoDialog : ContentDialog, INotifyPropertyChanged
+    internal sealed partial class PackageVolumeInfoDialog : ContentDialog, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string VolumeSpaceString = ResourceService.GetLocalized("Dialog/VolumeSpace");
         private readonly global::Windows.Management.Deployment.PackageManager packageManager = new();
         private readonly PackageModel Package;
 
-        private bool _isPrimaryEnabled;
+        #endregion 第一部分：常量、资源与状态字段
 
-        public bool IsPrimaryEnabled
+        #region 第二部分：属性、集合与事件
+
+        private bool _isItemSelected;
+
+        private bool IsItemSelected
         {
-            get { return _isPrimaryEnabled; }
+            get { return _isItemSelected; }
 
             set
             {
-                if (!Equals(_isPrimaryEnabled, value))
+                if (!Equals(_isItemSelected, value))
                 {
-                    _isPrimaryEnabled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPrimaryEnabled)));
+                    _isItemSelected = value;
+                    PropertyChanged?.Invoke(this, new(nameof(IsItemSelected)));
                 }
             }
         }
 
         private PackageVolumeResultKind _packageVolumeResultKind;
 
-        public PackageVolumeResultKind PackageVolumeResultKind
+        private PackageVolumeResultKind PackageVolumeResultKind
         {
             get { return _packageVolumeResultKind; }
 
@@ -55,14 +61,14 @@ namespace GetStoreApp.Views.Dialogs
                 if (!Equals(_packageVolumeResultKind, value))
                 {
                     _packageVolumeResultKind = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageVolumeResultKind)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageVolumeResultKind)));
                 }
             }
         }
 
         private PackageVolumeModel _currentPackageVolume = new();
 
-        public PackageVolumeModel CurrentPackageVolume
+        private PackageVolumeModel CurrentPackageVolume
         {
             get { return _currentPackageVolume; }
 
@@ -71,14 +77,14 @@ namespace GetStoreApp.Views.Dialogs
                 if (!Equals(_currentPackageVolume, value))
                 {
                     _currentPackageVolume = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentPackageVolume)));
+                    PropertyChanged?.Invoke(this, new(nameof(CurrentPackageVolume)));
                 }
             }
         }
 
         private PackageVolumeModel _selectedPackageVolume;
 
-        public PackageVolumeModel SelectedPackageVolume
+        internal PackageVolumeModel SelectedPackageVolume
         {
             get { return _selectedPackageVolume; }
 
@@ -87,14 +93,14 @@ namespace GetStoreApp.Views.Dialogs
                 if (!Equals(_selectedPackageVolume, value))
                 {
                     _selectedPackageVolume = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedPackageVolume)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedPackageVolume)));
                 }
             }
         }
 
         private bool _isRemovingPackageVolume;
 
-        public bool IsRemovingPackageVolume
+        private bool IsRemovingPackageVolume
         {
             get { return _isRemovingPackageVolume; }
 
@@ -103,14 +109,14 @@ namespace GetStoreApp.Views.Dialogs
                 if (!Equals(_isRemovingPackageVolume, value))
                 {
                     _isRemovingPackageVolume = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRemovingPackageVolume)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsRemovingPackageVolume)));
                 }
             }
         }
 
         private bool _isRemovePackageVolumeEnabled;
 
-        public bool IsRemovePackageVolumeEnabled
+        private bool IsRemovePackageVolumeEnabled
         {
             get { return _isRemovePackageVolumeEnabled; }
 
@@ -119,31 +125,37 @@ namespace GetStoreApp.Views.Dialogs
                 if (!Equals(_isRemovePackageVolumeEnabled, value))
                 {
                     _isRemovePackageVolumeEnabled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRemovePackageVolumeEnabled)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsRemovePackageVolumeEnabled)));
                 }
             }
         }
 
-        public ObservableCollection<PackageVolumeModel> PackageVolumeCollection = [];
+        private ObservableCollection<PackageVolumeModel> PackageVolumeCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public PackageVolumeInfoDialog(PackageModel package)
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
+        internal PackageVolumeInfoDialog(PackageModel package)
         {
             InitializeComponent();
             Package = package;
         }
 
-        #region 第一部分：应用包存储卷对话框——挂载的事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：挂载事件处理
 
         /// <summary>
-        /// 打开对话框时触发的事件
+        /// 打开内容对话框后发生的事件
         /// </summary>
         private async void OnOpened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
             SelectedPackageVolume = null;
             IsRemovePackageVolumeEnabled = false;
-            IsPrimaryEnabled = false;
+            IsItemSelected = false;
             await GetPackageVolumeInfoAsync();
         }
 
@@ -160,12 +172,12 @@ namespace GetStoreApp.Views.Dialogs
                 if (SelectedPackageVolume is not null)
                 {
                     IsRemovePackageVolumeEnabled = true;
-                    IsPrimaryEnabled = true;
+                    IsItemSelected = true;
                 }
                 else
                 {
                     IsRemovePackageVolumeEnabled = false;
-                    IsPrimaryEnabled = false;
+                    IsItemSelected = false;
                 }
             }
         }
@@ -177,11 +189,13 @@ namespace GetStoreApp.Views.Dialogs
         {
             SelectedPackageVolume = null;
             IsRemovePackageVolumeEnabled = false;
-            IsPrimaryEnabled = false;
+            IsItemSelected = false;
             await GetPackageVolumeInfoAsync();
         }
 
-        #endregion 第一部分：应用包存储卷对话框——挂载的事件
+        #endregion 第四部分：挂载事件处理
+
+        #region 第五部分：数据操作与业务逻辑
 
         /// <summary>
         /// 获取应用包存储卷信息
@@ -192,82 +206,7 @@ namespace GetStoreApp.Views.Dialogs
             {
                 PackageVolumeResultKind = PackageVolumeResultKind.Loading;
 
-                (PackageVolumeModel currentPackageVolume, List<PackageVolumeModel> packageVolumeList) = await Task.Run(async () =>
-                {
-                    PackageVolumeModel currentPackageVolume = null;
-                    List<PackageVolumeModel> packageVolumeList = [];
-                    IList<PackageVolume> requestedPackageVolumeList = PackageVolume.FindPackageVolumes();
-
-                    foreach (PackageVolume packageVolume in requestedPackageVolumeList)
-                    {
-                        if (packageVolume.IsAppxInstallSupported && packageVolume.IsFullTrustPackageSupported && packageVolume.SupportsHardLinks && !string.Equals(packageVolume.MountPoint, packageVolume.PackageStorePath))
-                        {
-                            double availableSpace = await packageVolume.GetAvailableSpaceAsync();
-                            string displayName = string.Empty;
-                            double totalSpace = 0;
-
-                            if (!string.IsNullOrEmpty(packageVolume.MountPoint))
-                            {
-                                StorageFolder rootFolder = null;
-
-                                try
-                                {
-                                    rootFolder = await StorageFolder.GetFolderFromPathAsync(packageVolume.MountPoint);
-                                    displayName = rootFolder.DisplayName;
-                                    if (rootFolder is not null)
-                                    {
-                                        IDictionary<string, object> propertiesDict = await rootFolder.Properties.RetrievePropertiesAsync((string[])["System.Capacity"]);
-
-                                        if (propertiesDict.TryGetValue("System.Capacity", out object value))
-                                        {
-                                            totalSpace = Convert.ToDouble(value);
-                                        }
-                                    }
-                                }
-                                catch (Exception e)
-                                {
-                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                                }
-                            }
-
-                            double usedPercentage = totalSpace is 0 ? 0 : (totalSpace - availableSpace) / totalSpace * 100;
-                            string availableSpaceString = VolumeSizeHelper.ConvertVolumeSizeToString(availableSpace);
-                            string totalSpaceString = VolumeSizeHelper.ConvertVolumeSizeToString(totalSpace);
-
-                            PackageVolumeModel packageVolumeItem = new()
-                            {
-                                Name = string.Format("{0}[{1}]", displayName, packageVolume.PackageStorePath),
-                                Space = string.Format(VolumeSpaceString, availableSpaceString, totalSpaceString),
-                                PackageVolumeId = packageVolume.Name,
-                                PackageVolumePath = packageVolume.PackageStorePath,
-                                PackageVolumeUsedPercentage = usedPercentage,
-                                PackageVolume = packageVolume,
-                                IsAvailableSpaceWarning = usedPercentage > 90,
-                                IsAvailableSpaceError = usedPercentage > 95,
-                            };
-
-                            global::Windows.Management.Deployment.PackageVolume winRTPackageVolume = null;
-                            foreach (global::Windows.Management.Deployment.PackageVolume winRTPackageVolumeItem in packageManager.FindPackageVolumes())
-                            {
-                                if (string.Equals(winRTPackageVolumeItem.PackageStorePath, packageVolume.PackageStorePath))
-                                {
-                                    winRTPackageVolume = winRTPackageVolumeItem;
-                                    break;
-                                }
-                            }
-                            if (currentPackageVolume is null && winRTPackageVolume.FindPackageForUser(string.Empty, Package.Package.Id.FullName).Count > 0)
-                            {
-                                currentPackageVolume = packageVolumeItem;
-                            }
-                            else
-                            {
-                                packageVolumeList.Add(packageVolumeItem);
-                            }
-                        }
-                    }
-
-                    return ValueTuple.Create(currentPackageVolume, packageVolumeList);
-                });
+                (PackageVolumeModel currentPackageVolume, List<PackageVolumeModel> packageVolumeList) = await GetCurrentPackageAndPackageVolumeListAsync();
 
                 if (currentPackageVolume is not null)
                 {
@@ -289,6 +228,89 @@ namespace GetStoreApp.Views.Dialogs
                     PackageVolumeResultKind = PackageVolumeResultKind.Successfully;
                 }
             }
+        }
+
+        /// <summary>
+        /// 获取应用包存储卷信息
+        /// </summary>
+        private async Task<(PackageVolumeModel currentPackageVolume, List<PackageVolumeModel> packageVolumeList)> GetCurrentPackageAndPackageVolumeListAsync()
+        {
+            return await Task.Run(async () =>
+            {
+                PackageVolumeModel currentPackageVolume = null;
+                List<PackageVolumeModel> packageVolumeList = [];
+                IList<PackageVolume> requestedPackageVolumeList = PackageVolume.FindPackageVolumes();
+
+                foreach (PackageVolume packageVolume in requestedPackageVolumeList)
+                {
+                    if (packageVolume.IsAppxInstallSupported && packageVolume.IsFullTrustPackageSupported && packageVolume.SupportsHardLinks && !string.Equals(packageVolume.MountPoint, packageVolume.PackageStorePath))
+                    {
+                        double availableSpace = await packageVolume.GetAvailableSpaceAsync();
+                        string displayName = string.Empty;
+                        double totalSpace = 0;
+
+                        if (!string.IsNullOrEmpty(packageVolume.MountPoint))
+                        {
+                            StorageFolder rootFolder = null;
+
+                            try
+                            {
+                                rootFolder = await StorageFolder.GetFolderFromPathAsync(packageVolume.MountPoint);
+                                displayName = rootFolder.DisplayName;
+                                if (rootFolder is not null)
+                                {
+                                    IDictionary<string, object> propertiesDict = await rootFolder.Properties.RetrievePropertiesAsync((string[])["System.Capacity"]);
+
+                                    if (propertiesDict.TryGetValue("System.Capacity", out object value))
+                                    {
+                                        totalSpace = Convert.ToDouble(value);
+                                    }
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                            }
+                        }
+
+                        double usedPercentage = totalSpace is 0 ? 0 : (totalSpace - availableSpace) / totalSpace * 100;
+                        string availableSpaceString = VolumeSizeHelper.ConvertVolumeSizeToString(availableSpace);
+                        string totalSpaceString = VolumeSizeHelper.ConvertVolumeSizeToString(totalSpace);
+
+                        PackageVolumeModel packageVolumeItem = new()
+                        {
+                            Name = string.Format("{0}[{1}]", displayName, packageVolume.PackageStorePath),
+                            Space = string.Format(VolumeSpaceString, availableSpaceString, totalSpaceString),
+                            PackageVolumeId = packageVolume.Name,
+                            PackageVolumePath = packageVolume.PackageStorePath,
+                            PackageVolumeUsedPercentage = usedPercentage,
+                            PackageVolume = packageVolume,
+                            IsAvailableSpaceWarning = usedPercentage > 90,
+                            IsAvailableSpaceError = usedPercentage > 95,
+                        };
+
+                        global::Windows.Management.Deployment.PackageVolume winRTPackageVolume = null;
+                        foreach (global::Windows.Management.Deployment.PackageVolume winRTPackageVolumeItem in packageManager.FindPackageVolumes())
+                        {
+                            if (string.Equals(winRTPackageVolumeItem.PackageStorePath, packageVolume.PackageStorePath))
+                            {
+                                winRTPackageVolume = winRTPackageVolumeItem;
+                                break;
+                            }
+                        }
+                        if (currentPackageVolume is null && winRTPackageVolume.FindPackageForUser(string.Empty, Package.Package.Id.FullName).Count > 0)
+                        {
+                            currentPackageVolume = packageVolumeItem;
+                        }
+                        else
+                        {
+                            packageVolumeList.Add(packageVolumeItem);
+                        }
+                    }
+                }
+
+                return ValueTuple.Create(currentPackageVolume, packageVolumeList);
+            });
         }
 
         /// <summary>
@@ -314,5 +336,7 @@ namespace GetStoreApp.Views.Dialogs
         {
             return isSuccessfully ? packageVolumeResultKind is PackageVolumeResultKind.Successfully || packageVolumeResultKind is PackageVolumeResultKind.Operating ? Visibility.Visible : Visibility.Collapsed : packageVolumeResultKind is PackageVolumeResultKind.Successfully || packageVolumeResultKind is PackageVolumeResultKind.Operating ? Visibility.Collapsed : Visibility.Visible;
         }
+
+        #endregion 第五部分：数据操作与业务逻辑
     }
 }

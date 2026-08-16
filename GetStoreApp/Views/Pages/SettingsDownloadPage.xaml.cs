@@ -47,7 +47,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_downloadFolder, value))
                 {
                     _downloadFolder = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadFolder)));
+                    PropertyChanged?.Invoke(this, new(nameof(DownloadFolder)));
                 }
             }
         }
@@ -63,7 +63,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_manualSetDownloadFolder, value))
                 {
                     _manualSetDownloadFolder = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ManualSetDownloadFolder)));
+                    PropertyChanged?.Invoke(this, new(nameof(ManualSetDownloadFolder)));
                 }
             }
         }
@@ -79,7 +79,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_doEngineMode, value))
                 {
                     _doEngineMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DoEngineMode)));
+                    PropertyChanged?.Invoke(this, new(nameof(DoEngineMode)));
                 }
             }
         }
@@ -91,9 +91,9 @@ namespace GetStoreApp.Views.Pages
         public SettingsDownloadPage()
         {
             InitializeComponent();
-            DoEngineModeList.Add(new ComboBoxItemModel() { SelectedValue = DownloadOptionsService.DoEngineModeList[0], DisplayMember = DoEngineDoString });
-            DoEngineModeList.Add(new ComboBoxItemModel() { SelectedValue = DownloadOptionsService.DoEngineModeList[1], DisplayMember = DoEngineBitsString });
-            DoEngineModeList.Add(new ComboBoxItemModel() { SelectedValue = DownloadOptionsService.DoEngineModeList[2], DisplayMember = DoEngineAria2String });
+            DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeList[0], DisplayMember = DoEngineDoString });
+            DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeList[1], DisplayMember = DoEngineBitsString });
+            DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeList[2], DisplayMember = DoEngineAria2String });
         }
 
         #region 第一部分：重写父类事件
@@ -185,7 +185,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:delivery-optimization"));
+                    await Launcher.LaunchUriAsync(new("ms-settings:delivery-optimization"));
                 }
                 catch (Exception e)
                 {

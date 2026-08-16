@@ -22,7 +22,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_isCleanFailed, value))
                 {
                     _isCleanFailed = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCleanFailed)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsCleanFailed)));
                 }
             }
         }

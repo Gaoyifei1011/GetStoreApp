@@ -70,7 +70,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_winGetAppsOptionsTitle, value))
                 {
                     _winGetAppsOptionsTitle = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WinGetAppsOptionsTitle)));
+                    PropertyChanged?.Invoke(this, new(nameof(WinGetAppsOptionsTitle)));
                 }
             }
         }
@@ -86,7 +86,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_packageOperationKind, value))
                 {
                     _packageOperationKind = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageOperationKind)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageOperationKind)));
                 }
             }
         }
@@ -102,7 +102,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_allowHashMismatch, value))
                 {
                     _allowHashMismatch = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AllowHashMismatch)));
+                    PropertyChanged?.Invoke(this, new(nameof(AllowHashMismatch)));
                 }
             }
         }
@@ -118,7 +118,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_packageDownloadPath, value))
                 {
                     _packageDownloadPath = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageDownloadPath)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageDownloadPath)));
                 }
             }
         }
@@ -134,7 +134,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_packageInstallScope, value))
                 {
                     _packageInstallScope = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageInstallScope)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageInstallScope)));
                 }
             }
         }
@@ -150,7 +150,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_packageArchitecture, value))
                 {
                     _packageArchitecture = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageArchitecture)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageArchitecture)));
                 }
             }
         }
@@ -166,7 +166,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_bypassIsStoreClientBlockedPolicyCheck, value))
                 {
                     _bypassIsStoreClientBlockedPolicyCheck = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BypassIsStoreClientBlockedPolicyCheck)));
+                    PropertyChanged?.Invoke(this, new(nameof(BypassIsStoreClientBlockedPolicyCheck)));
                 }
             }
         }
@@ -182,7 +182,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_AllowUpgradeToUnknownVersion, value))
                 {
                     _AllowUpgradeToUnknownVersion = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AllowUpgradeToUnknownVersion)));
+                    PropertyChanged?.Invoke(this, new(nameof(AllowUpgradeToUnknownVersion)));
                 }
             }
         }
@@ -198,7 +198,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_forceInstall, value))
                 {
                     _forceInstall = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ForceInstall)));
+                    PropertyChanged?.Invoke(this, new(nameof(ForceInstall)));
                 }
             }
         }
@@ -214,7 +214,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_packageInstallMode, value))
                 {
                     _packageInstallMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageInstallMode)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageInstallMode)));
                 }
             }
         }
@@ -230,7 +230,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_packageInstallPath, value))
                 {
                     _packageInstallPath = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageInstallPath)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageInstallPath)));
                 }
             }
         }
@@ -246,7 +246,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isX86ProcessorArchitecture, value))
                 {
                     _isX86ProcessorArchitecture = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsX86ProcessorArchitecture)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsX86ProcessorArchitecture)));
                 }
             }
         }
@@ -262,7 +262,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isX64ProcessorArchitecture, value))
                 {
                     _isX64ProcessorArchitecture = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsX64ProcessorArchitecture)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsX64ProcessorArchitecture)));
                 }
             }
         }
@@ -278,7 +278,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isArm64ProcessorArchitecture, value))
                 {
                     _isArm64ProcessorArchitecture = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsArm64ProcessorArchitecture)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsArm64ProcessorArchitecture)));
                 }
             }
         }
@@ -294,7 +294,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_additionalInstallerArguments, value))
                 {
                     _additionalInstallerArguments = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AdditionalInstallerArguments)));
+                    PropertyChanged?.Invoke(this, new(nameof(AdditionalInstallerArguments)));
                 }
             }
         }
@@ -310,7 +310,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_packageRepairScope, value))
                 {
                     _packageRepairScope = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageRepairScope)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageRepairScope)));
                 }
             }
         }
@@ -326,7 +326,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_packageRepairMode, value))
                 {
                     _packageRepairMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageRepairMode)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageRepairMode)));
                 }
             }
         }
@@ -347,22 +347,22 @@ namespace GetStoreApp.Views.Pages
         {
             InitializeComponent();
 
-            PackageArchitectureList.Add(new ComboBoxItemModel() { SelectedValue = ProcessorArchitecture.Unknown, DisplayMember = ProcessorArchitectureDefaultString });
-            PackageArchitectureList.Add(new ComboBoxItemModel() { SelectedValue = ProcessorArchitecture.X86, DisplayMember = ProcessorArchitectureX86String });
-            PackageArchitectureList.Add(new ComboBoxItemModel() { SelectedValue = ProcessorArchitecture.X64, DisplayMember = ProcessorArchitectureX64String });
-            PackageArchitectureList.Add(new ComboBoxItemModel() { SelectedValue = ProcessorArchitecture.Arm64, DisplayMember = ProcessorArchitectureArm64String });
-            PackageInstallScopeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageInstallScope.Any, DisplayMember = PackageInstallScopeAnyString });
-            PackageInstallScopeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageInstallScope.User, DisplayMember = PackageInstallScopeUserString });
-            PackageInstallScopeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageInstallScope.System, DisplayMember = PackageInstallScopeSystemString });
-            PackageInstallModeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageInstallMode.Default, DisplayMember = PackageInstallModeDefaultString });
-            PackageInstallModeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageInstallMode.Interactive, DisplayMember = PackageInstallModeInteractiveString });
-            PackageInstallModeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageInstallMode.Silent, DisplayMember = PackageInstallModeSilentString });
-            PackageRepairScopeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageRepairScope.Any, DisplayMember = PackageRepairScopeAnyString });
-            PackageRepairScopeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageRepairScope.User, DisplayMember = PackageRepairScopeUserString });
-            PackageRepairScopeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageRepairScope.System, DisplayMember = PackageRepairScopeSystemString });
-            PackageRepairModeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageRepairMode.Default, DisplayMember = PackageRepairModeDefaultString });
-            PackageRepairModeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageRepairMode.Interactive, DisplayMember = PackageRepairModeInteractiveString });
-            PackageRepairModeList.Add(new ComboBoxItemModel() { SelectedValue = Microsoft.Management.Deployment.PackageRepairMode.Silent, DisplayMember = PackageRepairModeSilentString });
+            PackageArchitectureList.Add(new() { SelectedValue = ProcessorArchitecture.Unknown, DisplayMember = ProcessorArchitectureDefaultString });
+            PackageArchitectureList.Add(new() { SelectedValue = ProcessorArchitecture.X86, DisplayMember = ProcessorArchitectureX86String });
+            PackageArchitectureList.Add(new() { SelectedValue = ProcessorArchitecture.X64, DisplayMember = ProcessorArchitectureX64String });
+            PackageArchitectureList.Add(new() { SelectedValue = ProcessorArchitecture.Arm64, DisplayMember = ProcessorArchitectureArm64String });
+            PackageInstallScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallScope.Any, DisplayMember = PackageInstallScopeAnyString });
+            PackageInstallScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallScope.User, DisplayMember = PackageInstallScopeUserString });
+            PackageInstallScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallScope.System, DisplayMember = PackageInstallScopeSystemString });
+            PackageInstallModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallMode.Default, DisplayMember = PackageInstallModeDefaultString });
+            PackageInstallModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallMode.Interactive, DisplayMember = PackageInstallModeInteractiveString });
+            PackageInstallModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallMode.Silent, DisplayMember = PackageInstallModeSilentString });
+            PackageRepairScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairScope.Any, DisplayMember = PackageRepairScopeAnyString });
+            PackageRepairScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairScope.User, DisplayMember = PackageRepairScopeUserString });
+            PackageRepairScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairScope.System, DisplayMember = PackageRepairScopeSystemString });
+            PackageRepairModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairMode.Default, DisplayMember = PackageRepairModeDefaultString });
+            PackageRepairModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairMode.Interactive, DisplayMember = PackageRepairModeInteractiveString });
+            PackageRepairModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairMode.Silent, DisplayMember = PackageRepairModeSilentString });
         }
 
         #region 第一部分：重写父类事件

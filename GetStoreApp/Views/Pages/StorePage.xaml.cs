@@ -35,7 +35,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_storeControl, value))
                 {
                     _storeControl = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StoreControl)));
+                    PropertyChanged?.Invoke(this, new(nameof(StoreControl)));
                 }
             }
         }
@@ -105,7 +105,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
+                    await Launcher.LaunchUriAsync(new("ms-settings:network"));
                 }
                 catch (Exception e)
                 {
@@ -124,7 +124,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:troubleshoot"));
+                    await Launcher.LaunchUriAsync(new("ms-settings:troubleshoot"));
                 }
                 catch (Exception e)
                 {

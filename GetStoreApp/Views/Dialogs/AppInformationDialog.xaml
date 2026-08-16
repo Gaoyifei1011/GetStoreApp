@@ -13,7 +13,7 @@
     DefaultButton="Primary"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
     IsPrimaryButtonEnabled="{x:Bind IsLoadCompleted, Mode=OneWay}"
-    Loaded="{x:Bind OnLoaded}"
+    Opened="{x:Bind OnOpened}"
     PrimaryButtonClick="{x:Bind OnCopyAppInformationClicked}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
     PrimaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/CopyAppInformation')}"

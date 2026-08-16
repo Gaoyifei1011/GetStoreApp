@@ -2,13 +2,10 @@
 using GetStoreAppInstaller.Services.Root;
 using GetStoreAppInstaller.Services.Settings;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32;
-using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
-using System.Threading;
 using Windows.Foundation.Diagnostics;
 using WinRT;
 

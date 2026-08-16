@@ -21,7 +21,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_isChecked, value))
                 {
                     _isChecked = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsChecked)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsChecked)));
                 }
             }
         }

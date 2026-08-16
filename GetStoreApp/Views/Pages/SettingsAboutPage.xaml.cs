@@ -41,7 +41,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isChecking, value))
                 {
                     _isChecking = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(IsChecking)));
+                    PropertyChanged.Invoke(this, new(nameof(IsChecking)));
                 }
             }
         }
@@ -49,32 +49,32 @@ namespace GetStoreApp.Views.Pages
         //项目引用信息
         private List<ContentLinkInfo> ReferenceList { get; } =
         [
-            new ContentLinkInfo() { DisplayText = "Microsoft.Web.WebView2",Uri = new Uri("https://aka.ms/webview") },
-            new ContentLinkInfo() { DisplayText = "Microsoft.Windows.CsWinRT",Uri = new Uri("https://github.com/microsoft/cswinrt") },
-            new ContentLinkInfo() { DisplayText = "Microsoft.Windows.SDK.BuildTools",Uri = new Uri("https://aka.ms/WinSDKProjectURL") },
-            new ContentLinkInfo() { DisplayText = "Microsoft.Windows.SDK.BuildTools.MSIX",Uri = new Uri("https://aka.ms/WinSDKProjectURL") },
-            new ContentLinkInfo() { DisplayText = "Microsoft.WindowsAppSDK",Uri = new Uri("https://github.com/microsoft/windowsappsdk") },
-            new ContentLinkInfo() { DisplayText = "Microsoft.WindowsPackageManager.ComInterop",Uri = new Uri("https://github.com/microsoft/winget-cli") },
-            new ContentLinkInfo() { DisplayText = "Microsoft.WindowsPackageManager.InProcCom",Uri = new Uri("https://github.com/microsoft/winget-cli") },
-            new ContentLinkInfo() { DisplayText = "Mile.Aria2",Uri = new Uri("https://github.com/ProjectMile/Mile.Aria2") },
+            new() { DisplayText = "Microsoft.Web.WebView2",Uri = new("https://aka.ms/webview") },
+            new() { DisplayText = "Microsoft.Windows.CsWinRT",Uri = new("https://github.com/microsoft/cswinrt") },
+            new() { DisplayText = "Microsoft.Windows.SDK.BuildTools",Uri = new("https://aka.ms/WinSDKProjectURL") },
+            new() { DisplayText = "Microsoft.Windows.SDK.BuildTools.MSIX",Uri = new("https://aka.ms/WinSDKProjectURL") },
+            new() { DisplayText = "Microsoft.WindowsAppSDK",Uri = new("https://github.com/microsoft/windowsappsdk") },
+            new() { DisplayText = "Microsoft.WindowsPackageManager.ComInterop",Uri = new("https://github.com/microsoft/winget-cli") },
+            new() { DisplayText = "Microsoft.WindowsPackageManager.InProcCom",Uri = new("https://github.com/microsoft/winget-cli") },
+            new() { DisplayText = "Mile.Aria2",Uri = new("https://github.com/ProjectMile/Mile.Aria2") },
         ];
 
         //项目感谢者信息
         private List<ContentLinkInfo> ThanksList { get; } =
         [
-            new ContentLinkInfo() { DisplayText = "AndromedaMelody",Uri = new Uri("https://github.com/AndromedaMelody") },
-            new ContentLinkInfo() { DisplayText = "cnbluefire",Uri = new Uri("https://github.com/cnbluefire") },
-            new ContentLinkInfo() { DisplayText = "driver1998",Uri = new Uri("https://github.com/driver1998") },
-            new ContentLinkInfo() { DisplayText = "Goo-aw233",Uri = new Uri("https://github.com/Goo-aw233") },
-            new ContentLinkInfo() { DisplayText = "GreenShadeZhang",Uri = new Uri("https://github.com/GreenShadeZhang") },
-            new ContentLinkInfo() { DisplayText = "hez2010",Uri = new Uri("https://github.com/hez2010") },
-            new ContentLinkInfo() { DisplayText = "飞翔",Uri = new Uri("https://fionlen.azurewebsites.net") },
-            new ContentLinkInfo() { DisplayText = "Mahantor",Uri = new Uri("https://github.com/Mahantor") },
-            new ContentLinkInfo() { DisplayText = "MouriNaruto",Uri = new Uri("https://github.com/MouriNaruto") },
-            new ContentLinkInfo() { DisplayText = "muhammadbahaa2001",Uri = new Uri("https://github.com/muhammadbahaa2001") },
-            new ContentLinkInfo() { DisplayText = "TaylorShi",Uri = new Uri("https://github.com/TaylorShi") },
-            new ContentLinkInfo() { DisplayText = "wherewhere",Uri = new Uri("https://github.com/wherewhere") },
-            new ContentLinkInfo() { DisplayText = "Y-PLONI",Uri = new Uri("https://github.com/Y-PLONI") },
+            new() { DisplayText = "AndromedaMelody",Uri = new("https://github.com/AndromedaMelody") },
+            new() { DisplayText = "cnbluefire",Uri = new("https://github.com/cnbluefire") },
+            new() { DisplayText = "driver1998",Uri = new("https://github.com/driver1998") },
+            new() { DisplayText = "Goo-aw233",Uri = new("https://github.com/Goo-aw233") },
+            new() { DisplayText = "GreenShadeZhang",Uri = new("https://github.com/GreenShadeZhang") },
+            new() { DisplayText = "hez2010",Uri = new("https://github.com/hez2010") },
+            new() { DisplayText = "飞翔",Uri = new("https://fionlen.azurewebsites.net") },
+            new() { DisplayText = "Mahantor",Uri = new("https://github.com/Mahantor") },
+            new() { DisplayText = "MouriNaruto",Uri = new("https://github.com/MouriNaruto") },
+            new() { DisplayText = "muhammadbahaa2001",Uri = new("https://github.com/muhammadbahaa2001") },
+            new() { DisplayText = "TaylorShi",Uri = new("https://github.com/TaylorShi") },
+            new() { DisplayText = "wherewhere",Uri = new("https://github.com/wherewhere") },
+            new() { DisplayText = "Y-PLONI",Uri = new("https://github.com/Y-PLONI") },
         ];
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -95,7 +95,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
+                    await Launcher.LaunchUriAsync(new("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
                 }
                 catch (Exception e)
                 {
@@ -121,7 +121,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:about"));
+                    await Launcher.LaunchUriAsync(new("ms-settings:about"));
                 }
                 catch (Exception e)
                 {
@@ -147,7 +147,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/pulls"));
+                    await Launcher.LaunchUriAsync(new("https://github.com/Gaoyifei1011/GetStoreApp/pulls"));
                 }
                 catch (Exception e)
                 {
@@ -165,7 +165,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
+                    await Launcher.LaunchUriAsync(new("https://github.com/Gaoyifei1011/GetStoreApp"));
                 }
                 catch (Exception e)
                 {
@@ -183,7 +183,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/issues"));
+                    await Launcher.LaunchUriAsync(new("https://github.com/Gaoyifei1011/GetStoreApp/issues"));
                 }
                 catch (Exception e)
                 {

@@ -39,7 +39,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_currentWinGetSource, value))
                 {
                     _currentWinGetSource = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentWinGetSource)));
+                    PropertyChanged?.Invoke(this, new(nameof(CurrentWinGetSource)));
                 }
             }
         }
@@ -55,7 +55,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_winGetSource, value))
                 {
                     _winGetSource = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WinGetSource)));
+                    PropertyChanged?.Invoke(this, new(nameof(WinGetSource)));
                 }
             }
         }
@@ -67,8 +67,8 @@ namespace GetStoreApp.Views.Pages
         public SettingsWinGetPage()
         {
             InitializeComponent();
-            WinGetSourceList.Add(new ComboBoxItemModel() { SelectedValue = WinGetConfigService.WinGetSourceList[0], DisplayMember = BuiltInAppString });
-            WinGetSourceList.Add(new ComboBoxItemModel() { SelectedValue = WinGetConfigService.WinGetSourceList[1], DisplayMember = AppInstallerString });
+            WinGetSourceList.Add(new() { SelectedValue = WinGetConfigService.WinGetSourceList[0], DisplayMember = BuiltInAppString });
+            WinGetSourceList.Add(new() { SelectedValue = WinGetConfigService.WinGetSourceList[1], DisplayMember = AppInstallerString });
         }
 
         #region 第一部分：重写父类事件

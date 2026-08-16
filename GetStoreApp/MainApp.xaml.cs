@@ -51,31 +51,31 @@ namespace GetStoreApp
                     jumpList.SystemGroupKind = JumpListSystemGroupKind.None;
 
                     JumpListItem storeItem = JumpListItem.CreateWithArguments("JumpList Store", ResourceService.GetLocalized("Application/Store"));
-                    storeItem.Logo = new Uri("ms-appx:///Assets/Icon/Control/Store.png");
+                    storeItem.Logo = new("ms-appx:///Assets/Icon/Control/Store.png");
                     jumpList.Items.Add(storeItem);
 
                     JumpListItem appUpdateItem = JumpListItem.CreateWithArguments("JumpList AppUpdate", ResourceService.GetLocalized("Application/AppUpdate"));
-                    appUpdateItem.Logo = new Uri("ms-appx:///Assets/Icon/Control/AppUpdate.png");
+                    appUpdateItem.Logo = new("ms-appx:///Assets/Icon/Control/AppUpdate.png");
                     jumpList.Items.Add(appUpdateItem);
 
                     jumpList.Items.Add(JumpListItem.CreateSeparator());
 
                     JumpListItem winGetItem = JumpListItem.CreateWithArguments("JumpList WinGet", ResourceService.GetLocalized("Application/WinGet"));
-                    winGetItem.Logo = new Uri("ms-appx:///Assets/Icon/Control/WinGet.png");
+                    winGetItem.Logo = new("ms-appx:///Assets/Icon/Control/WinGet.png");
                     jumpList.Items.Add(winGetItem);
 
                     JumpListItem appManagerItem = JumpListItem.CreateWithArguments("JumpList AppManager", ResourceService.GetLocalized("Application/AppManager"));
-                    appManagerItem.Logo = new Uri("ms-appx:///Assets/Icon/Control/AppManager.png");
+                    appManagerItem.Logo = new("ms-appx:///Assets/Icon/Control/AppManager.png");
                     jumpList.Items.Add(appManagerItem);
 
                     jumpList.Items.Add(JumpListItem.CreateSeparator());
 
                     JumpListItem downloadItem = JumpListItem.CreateWithArguments("JumpList Download", ResourceService.GetLocalized("Application/Download"));
-                    downloadItem.Logo = new Uri("ms-appx:///Assets/Icon/Control/Download.png");
+                    downloadItem.Logo = new("ms-appx:///Assets/Icon/Control/Download.png");
                     jumpList.Items.Add(downloadItem);
 
                     JumpListItem webItem = JumpListItem.CreateWithArguments("JumpList Web", ResourceService.GetLocalized("Application/Web"));
-                    webItem.Logo = new Uri("ms-appx:///Assets/Icon/Control/Web.png");
+                    webItem.Logo = new("ms-appx:///Assets/Icon/Control/Web.png");
                     jumpList.Items.Add(webItem);
 
                     await jumpList.SaveAsync();

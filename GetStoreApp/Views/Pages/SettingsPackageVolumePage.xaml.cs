@@ -70,7 +70,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_packageVolumeResultKind, value))
                 {
                     _packageVolumeResultKind = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageVolumeResultKind)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageVolumeResultKind)));
                 }
             }
         }
@@ -86,7 +86,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_packageVolumeFailedContent, value))
                 {
                     _packageVolumeFailedContent = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageVolumeFailedContent)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageVolumeFailedContent)));
                 }
             }
         }
@@ -173,7 +173,7 @@ namespace GetStoreApp.Views.Pages
                             string.Format(SetDefaultFailed4String, exception is not null ? exception.Message : NotAvailableString)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnSetDefaultVolumeExecuteRequested), 2, exception is not null ? exception : new Exception());
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnSetDefaultVolumeExecuteRequested), 2, exception is not null ? exception : new());
                     });
                 }
             }
@@ -236,7 +236,7 @@ namespace GetStoreApp.Views.Pages
                                 string.Format(MountFailed4String, errorMessage)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnMountExecuteRequested), 2, exception is not null ? exception : new Exception());
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnMountExecuteRequested), 2, exception is not null ? exception : new());
                         });
                     }
                 }
@@ -255,7 +255,7 @@ namespace GetStoreApp.Views.Pages
                             string.Format(MountFailed4String, exception is not null ? exception.Message : NotAvailableString)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnMountExecuteRequested), 2, exception is not null ? exception : new Exception());
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnMountExecuteRequested), 2, exception is not null ? exception : new());
                     });
                 }
             }
@@ -318,7 +318,7 @@ namespace GetStoreApp.Views.Pages
                                 string.Format(DismountFailed4String, errorMessage)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnDismountExecuteRequested), 2, exception is not null ? exception : new Exception());
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnDismountExecuteRequested), 2, exception is not null ? exception : new());
                         });
                     }
                 }
@@ -337,7 +337,7 @@ namespace GetStoreApp.Views.Pages
                             string.Format(DismountFailed4String, exception is not null ? exception.Message : NotAvailableString)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnDismountExecuteRequested), 2, exception is not null ? exception : new Exception());
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnDismountExecuteRequested), 2, exception is not null ? exception : new());
                     });
                 }
             }
@@ -410,7 +410,7 @@ namespace GetStoreApp.Views.Pages
                                 string.Format(RemoveFailed4String, errorMessage)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnRemoveExecuteRequested), 2, exception is not null ? exception : new Exception());
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnRemoveExecuteRequested), 2, exception is not null ? exception : new());
                         });
                     }
                 }
@@ -429,7 +429,7 @@ namespace GetStoreApp.Views.Pages
                             string.Format(RemoveFailed4String, exception is not null ? exception.Message : NotAvailableString)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnRemoveExecuteRequested), 2, exception is not null ? exception : new Exception());
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(OnRemoveExecuteRequested), 2, exception is not null ? exception : new());
                     });
                 }
             }

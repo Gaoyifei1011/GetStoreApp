@@ -9,11 +9,13 @@ namespace GetStoreApp.Views.Dialogs
     /// <summary>
     /// 删除文件对话框
     /// </summary>
-    public sealed partial class DeleteFileDialog : ContentDialog, INotifyPropertyChanged
+    internal sealed partial class DeleteFileDialog : ContentDialog, INotifyPropertyChanged
     {
+        #region 第一部分：属性、集合与事件
+
         private bool _deleteFileSameTime;
 
-        public bool DeleteFileSameTime
+        internal bool DeleteFileSameTime
         {
             get { return _deleteFileSameTime; }
 
@@ -22,16 +24,22 @@ namespace GetStoreApp.Views.Dialogs
                 if (!Equals(_deleteFileSameTime, value))
                 {
                     _deleteFileSameTime = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DeleteFileSameTime)));
+                    PropertyChanged?.Invoke(this, new(nameof(DeleteFileSameTime)));
                 }
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public DeleteFileDialog()
+        #endregion 第一部分：属性、集合与事件
+
+        #region 第二部分：构造函数
+
+        internal DeleteFileDialog()
         {
             InitializeComponent();
         }
+
+        #endregion 第二部分：构造函数
     }
 }

@@ -11,11 +11,13 @@ namespace GetStoreApp.Views.NotificationTips
     /// <summary>
     /// 操作完成后应用内通知
     /// </summary>
-    public sealed partial class OperationResultNotificationTip : TeachingTip, INotifyPropertyChanged
+    internal sealed partial class OperationResultNotificationTip : TeachingTip, INotifyPropertyChanged
     {
+        #region 第二部分：属性、集合与事件
+
         private bool _isSuccessOperation;
 
-        public bool IsSuccessOperation
+        private bool IsSuccessOperation
         {
             get { return _isSuccessOperation; }
 
@@ -24,14 +26,14 @@ namespace GetStoreApp.Views.NotificationTips
                 if (!Equals(_isSuccessOperation, value))
                 {
                     _isSuccessOperation = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSuccessOperation)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsSuccessOperation)));
                 }
             }
         }
 
         private string _operationContent;
 
-        public string OperationContent
+        private string OperationContent
         {
             get { return _operationContent; }
 
@@ -40,14 +42,18 @@ namespace GetStoreApp.Views.NotificationTips
                 if (!string.Equals(_operationContent, value))
                 {
                     _operationContent = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OperationContent)));
+                    PropertyChanged?.Invoke(this, new(nameof(OperationContent)));
                 }
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public OperationResultNotificationTip(OperationKind operationKind)
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第二部分：构造函数
+
+        internal OperationResultNotificationTip(OperationKind operationKind)
         {
             InitializeComponent();
 
@@ -103,7 +109,7 @@ namespace GetStoreApp.Views.NotificationTips
             }
         }
 
-        public OperationResultNotificationTip(OperationKind operationKind, bool operationResult)
+        internal OperationResultNotificationTip(OperationKind operationKind, bool operationResult)
         {
             InitializeComponent();
 
@@ -187,7 +193,7 @@ namespace GetStoreApp.Views.NotificationTips
             }
         }
 
-        public OperationResultNotificationTip(OperationKind operationKind, bool isMultiSelected, int count)
+        internal OperationResultNotificationTip(OperationKind operationKind, bool isMultiSelected, int count)
         {
             InitializeComponent();
 
@@ -206,7 +212,7 @@ namespace GetStoreApp.Views.NotificationTips
             }
         }
 
-        public OperationResultNotificationTip(OperationKind operationKind, int statusKind)
+        internal OperationResultNotificationTip(OperationKind operationKind, int statusKind)
         {
             InitializeComponent();
 
@@ -230,7 +236,7 @@ namespace GetStoreApp.Views.NotificationTips
             }
         }
 
-        public OperationResultNotificationTip(OperationKind operationKind, bool operationResult, string reason)
+        internal OperationResultNotificationTip(OperationKind operationKind, bool operationResult, string reason)
         {
             InitializeComponent();
 
@@ -248,5 +254,7 @@ namespace GetStoreApp.Views.NotificationTips
                 }
             }
         }
+
+        #endregion 第二部分：构造函数
     }
 }

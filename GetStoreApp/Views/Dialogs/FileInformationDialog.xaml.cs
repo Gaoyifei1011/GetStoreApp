@@ -3,7 +3,6 @@ using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -18,22 +17,23 @@ namespace GetStoreApp.Views.Dialogs
     /// <summary>
     /// 文件信息对话框
     /// </summary>
-    public sealed partial class FileInformationDialog : ContentDialog, INotifyPropertyChanged
+    internal sealed partial class FileInformationDialog : ContentDialog, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string FileNameString = ResourceService.GetLocalized("Dialog/FileName");
         private readonly string FilePathString = ResourceService.GetLocalized("Dialog/FilePath");
         private readonly string FileSHA256String = ResourceService.GetLocalized("Dialog/FileSHA256");
         private readonly string FileSizeString = ResourceService.GetLocalized("Dialog/FileSize");
+        private readonly CompletedModel completed;
 
-        private string FileName { get; set; }
+        #endregion 第一部分：常量、资源与状态字段
 
-        private string FilePath { get; set; }
+        #region 第二部分：属性、列表与事件
 
-        private string FileSize { get; set; }
+        private bool _isLoadCompleted;
 
-        private bool _isLoadCompleted = false;
-
-        public bool IsLoadCompleted
+        private bool IsLoadCompleted
         {
             get { return _isLoadCompleted; }
 
@@ -42,14 +42,62 @@ namespace GetStoreApp.Views.Dialogs
                 if (!Equals(_isLoadCompleted, value))
                 {
                     _isLoadCompleted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoadCompleted)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsLoadCompleted)));
                 }
             }
         }
 
-        private string _fileSHA256 = string.Empty;
+        private string _fileName;
 
-        public string FileSHA256
+        private string FileName
+        {
+            get { return _fileName; }
+
+            set
+            {
+                if (!string.Equals(_fileName, value))
+                {
+                    _fileName = value;
+                    PropertyChanged?.Invoke(this, new(nameof(FileName)));
+                }
+            }
+        }
+
+        private string _filePath;
+
+        private string FilePath
+        {
+            get { return _filePath; }
+
+            set
+            {
+                if (!string.Equals(_filePath, value))
+                {
+                    _filePath = value;
+                    PropertyChanged?.Invoke(this, new(nameof(FilePath)));
+                }
+            }
+        }
+
+        private string _fileSize;
+
+        private string FileSize
+        {
+            get { return _fileSize; }
+
+            set
+            {
+                if (!Equals(_fileSize, value))
+                {
+                    _fileSize = value;
+                    PropertyChanged?.Invoke(this, new(nameof(FileSize)));
+                }
+            }
+        }
+
+        private string _fileSHA256;
+
+        private string FileSHA256
         {
             get { return _fileSHA256; }
 
@@ -58,29 +106,41 @@ namespace GetStoreApp.Views.Dialogs
                 if (!string.Equals(_fileSHA256, value))
                 {
                     _fileSHA256 = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FileSHA256)));
+                    PropertyChanged?.Invoke(this, new(nameof(FileSHA256)));
                 }
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public FileInformationDialog(CompletedModel completed)
+        #endregion 第二部分：属性、列表与事件
+
+        #region 第三部分：构造函数
+
+        internal FileInformationDialog(CompletedModel completedItem)
         {
             InitializeComponent();
-            FileName = completed.FileName;
-            FilePath = completed.FilePath;
-            FileSize = VolumeSizeHelper.ConvertVolumeSizeToString(completed.TotalSize);
+            completed = completedItem;
         }
 
-        /// <summary>
-        /// 文件信息对话框初始化完成后触发的事件
-        /// </summary>
-        private async void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            string fileShA256 = await Task.Run(async () => await IOHelper.GetFileSHA256Async(FilePath));
+        #endregion 第三部分：构造函数
 
-            FileSHA256 = fileShA256;
+        #region 第四部分：挂载事件处理
+
+        /// <summary>
+        /// 打开内容对话框后发生的事件
+        /// </summary>
+        private async void OnOpened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+        {
+            IsLoadCompleted = false;
+            if (completed is not null)
+            {
+                FileName = completed.FileName;
+                FilePath = completed.FilePath;
+                FileSize = VolumeSizeHelper.ConvertVolumeSizeToString(completed.TotalSize);
+            }
+
+            FileSHA256 = await Task.Run(async () => await IOHelper.GetFileSHA256Async(FilePath));
             IsLoadCompleted = true;
         }
 
@@ -100,23 +160,45 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async void OnCopyFileInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            args.Cancel = true;
+            ContentDialogButtonClickDeferral contentDialogButtonClickDeferral = args.GetDeferral();
+            List<string> copyFileInformationCopyStringList = await GetFileInformationCopyStringListAsync(completed);
 
-            List<string> copyFileInformationCopyStringList = await Task.Run(() =>
+            if (copyFileInformationCopyStringList is not null)
             {
-                List<string> copyFileInformationCopyStringList = [];
-
-                copyFileInformationCopyStringList.Add(FileNameString + FileName);
-                copyFileInformationCopyStringList.Add(FilePathString + FilePath);
-                copyFileInformationCopyStringList.Add(FileSizeString + FileSize);
-                copyFileInformationCopyStringList.Add(FileSHA256String + FileSHA256);
-
-                return copyFileInformationCopyStringList;
-            });
-
-            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyFileInformationCopyStringList));
-            sender.Hide();
-            await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyFileInformationCopyStringList));
+                contentDialogButtonClickDeferral.Complete();
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+            }
         }
+
+        #endregion 第四部分：挂载事件处理
+
+        #region 第五部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 获取文件信息要准备复制的字符串内容
+        /// </summary>
+        private async Task<List<string>> GetFileInformationCopyStringListAsync(CompletedModel completed)
+        {
+            if (completed is not null)
+            {
+                return await Task.Run(async () =>
+                {
+                    List<string> copyFileInformationCopyStringList = [];
+
+                    copyFileInformationCopyStringList.Add(FileNameString + completed.FileName);
+                    copyFileInformationCopyStringList.Add(FilePathString + completed.FilePath);
+                    copyFileInformationCopyStringList.Add(FileSizeString + VolumeSizeHelper.ConvertVolumeSizeToString(completed.TotalSize));
+                    copyFileInformationCopyStringList.Add(FileSHA256String + await IOHelper.GetFileSHA256Async(completed.FilePath));
+                    return copyFileInformationCopyStringList;
+                });
+            }
+            else
+            {
+                return default;
+            }
+        }
+
+        #endregion 第五部分：数据操作与业务逻辑
     }
 }

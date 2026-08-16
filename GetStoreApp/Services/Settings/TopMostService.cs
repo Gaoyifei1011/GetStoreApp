@@ -25,7 +25,7 @@ namespace GetStoreApp.Services.Settings
                 if (!Equals(_topMost, value))
                 {
                     _topMost = value;
-                    PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(TopMost)));
+                    PropertyChanged?.Invoke(null, new(nameof(TopMost)));
                 }
             }
         }

@@ -24,7 +24,7 @@ namespace GetStoreApp.Services.Download
         private static ApplicationDataContainer localSettingsContainer;
         private static ApplicationDataContainer downloadStorageContainer;
 
-        public static SemaphoreSlim DownloadStorageSemaphoreSlim { get; private set; } = new SemaphoreSlim(1, 1);
+        public static SemaphoreSlim DownloadStorageSemaphoreSlim { get; private set; } = new(1, 1);
 
         public static event Action<DownloadSchedulerModel> StorageDataAdded;
 
@@ -129,7 +129,7 @@ namespace GetStoreApp.Services.Download
                     {
                         if (downloadStorageItem.Value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                         {
-                            downloadSchedulerList.Add(new DownloadSchedulerModel()
+                            downloadSchedulerList.Add(new()
                             {
                                 DownloadKey = downloadStorageItem.Key,
                                 FileName = Convert.ToString(compositeValue[FileName]),

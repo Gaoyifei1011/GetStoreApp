@@ -42,7 +42,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_isUninstalling, value))
                 {
                     _isUninstalling = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUninstalling)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsUninstalling)));
                 }
             }
         }

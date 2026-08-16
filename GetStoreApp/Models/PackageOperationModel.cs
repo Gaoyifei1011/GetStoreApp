@@ -60,7 +60,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_packageOperationProgress, value))
                 {
                     _packageOperationProgress = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageOperationProgress)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageOperationProgress)));
                 }
             }
         }
@@ -79,7 +79,7 @@ namespace GetStoreApp.Models
                 if (!string.Equals(_downloadedFileSize, value))
                 {
                     _downloadedFileSize = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadedFileSize)));
+                    PropertyChanged?.Invoke(this, new(nameof(DownloadedFileSize)));
                 }
             }
         }
@@ -98,7 +98,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_totalFileSize, value))
                 {
                     _totalFileSize = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalFileSize)));
+                    PropertyChanged?.Invoke(this, new(nameof(TotalFileSize)));
                 }
             }
         }
@@ -114,7 +114,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_packageOperationResultKind, value))
                 {
                     _packageOperationResultKind = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageOperationResultKind)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageOperationResultKind)));
                 }
             }
         }
@@ -133,7 +133,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_packageDownloadProgressState, value))
                 {
                     _packageDownloadProgressState = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageDownloadProgressState)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageDownloadProgressState)));
                 }
             }
         }
@@ -152,7 +152,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_packageInstallProgressState, value))
                 {
                     _packageInstallProgressState = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageInstallProgressState)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageInstallProgressState)));
                 }
             }
         }
@@ -168,7 +168,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_packageUninstallProgressState, value))
                 {
                     _packageUninstallProgressState = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageUninstallProgressState)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageUninstallProgressState)));
                 }
             }
         }
@@ -184,7 +184,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_packageRepairProgressState, value))
                 {
                     _packageRepairProgressState = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageRepairProgressState)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageRepairProgressState)));
                 }
             }
         }
@@ -200,7 +200,7 @@ namespace GetStoreApp.Models
                 if (!string.Equals(_packageOperationFailedContent, value))
                 {
                     _packageOperationFailedContent = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageOperationFailedContent)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageOperationFailedContent)));
                 }
             }
         }

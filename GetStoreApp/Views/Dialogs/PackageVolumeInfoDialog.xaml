@@ -14,7 +14,7 @@
     CloseButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Cancel')}"
     DefaultButton="Primary"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
-    IsPrimaryButtonEnabled="{x:Bind IsPrimaryEnabled, Mode=OneWay}"
+    IsPrimaryButtonEnabled="{x:Bind IsItemSelected, Mode=OneWay}"
     Opened="{x:Bind OnOpened}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
     PrimaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/OK')}"

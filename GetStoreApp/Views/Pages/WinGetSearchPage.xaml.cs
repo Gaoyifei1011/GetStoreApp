@@ -52,7 +52,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_searchText, value))
                 {
                     _searchText = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchText)));
+                    PropertyChanged?.Invoke(this, new(nameof(SearchText)));
                 }
             }
         }
@@ -68,7 +68,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_isIncrease, value))
                 {
                     _isIncrease = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsIncrease)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsIncrease)));
                 }
             }
         }
@@ -84,7 +84,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_searchAppsResultKind, value))
                 {
                     _searchAppsResultKind = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchAppsResultKind)));
+                    PropertyChanged?.Invoke(this, new(nameof(SearchAppsResultKind)));
                 }
             }
         }
@@ -100,7 +100,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_packageMatchField, value))
                 {
                     _packageMatchField = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageMatchField)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageMatchField)));
                 }
             }
         }
@@ -116,7 +116,7 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(_packageFieldMatchOption, value))
                 {
                     _packageFieldMatchOption = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageFieldMatchOption)));
+                    PropertyChanged?.Invoke(this, new(nameof(PackageFieldMatchOption)));
                 }
             }
         }
@@ -132,7 +132,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.Equals(_searchFailedContent, value))
                 {
                     _searchFailedContent = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchFailedContent)));
+                    PropertyChanged?.Invoke(this, new(nameof(SearchFailedContent)));
                 }
             }
         }
@@ -174,7 +174,7 @@ namespace GetStoreApp.Views.Pages
             {
                 DownloadOptions downloadOptions = await Task.Run(WinGetFactoryHelper.CreateDownloadOptions);
 
-                await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
+                await WinGetPageInstance.AddTaskAsync(new()
                 {
                     PackageOperationKind = PackageOperationKind.Download,
                     AppID = searchApps.AppID,
@@ -202,7 +202,7 @@ namespace GetStoreApp.Views.Pages
             {
                 InstallOptions installOptions = await Task.Run(WinGetFactoryHelper.CreateInstallOptions);
 
-                await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
+                await WinGetPageInstance.AddTaskAsync(new()
                 {
                     PackageOperationKind = PackageOperationKind.Install,
                     AppID = searchApps.AppID,
@@ -230,7 +230,7 @@ namespace GetStoreApp.Views.Pages
             {
                 RepairOptions repairOptions = await Task.Run(WinGetFactoryHelper.CreateRepairOptions);
 
-                await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
+                await WinGetPageInstance.AddTaskAsync(new()
                 {
                     PackageOperationKind = PackageOperationKind.Repair,
                     AppID = searchApps.AppID,
@@ -539,7 +539,7 @@ namespace GetStoreApp.Views.Pages
 
                             if (matchItem.CatalogPackage is CatalogPackage catalogPackage && catalogPackage.Id is not null)
                             {
-                                searchAppsList.Add(new SearchAppsModel()
+                                searchAppsList.Add(new()
                                 {
                                     AppID = catalogPackage.Id,
                                     AppName = string.IsNullOrEmpty(catalogPackage.Name) || string.Equals(catalogPackage.Name, "N/A", StringComparison.OrdinalIgnoreCase) ? NotAvailableString : catalogPackage.Name,

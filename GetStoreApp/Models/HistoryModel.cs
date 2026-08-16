@@ -19,7 +19,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_isQuerying, value))
                 {
                     _isQuerying = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsQuerying)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsQuerying)));
                 }
             }
         }

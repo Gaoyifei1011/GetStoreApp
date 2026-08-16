@@ -11,9 +11,10 @@
     xmlns:window="using:GetStoreApp.Views.Windows"
     Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/PackageVolumeAdd')}"
     CloseButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Cancel')}"
+    Closing="{x:Bind OnClosing}"
     DefaultButton="Primary"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
-    IsPrimaryButtonEnabled="{x:Bind IsPrimaryEnabled, Mode=OneWay}"
+    IsPrimaryButtonEnabled="{x:Bind GetIsLoadSuccessfullyAndItemSelected(PackageVolumeResultKind, IsItemSelected), Mode=OneWay}"
     Opened="{x:Bind OnOpened}"
     PrimaryButtonClick="{x:Bind OnSaveClicked}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
@@ -97,6 +98,7 @@
 
             <!--  可用存储卷列表控件  -->
             <ListView
+                x:Name="PackageVolumeAddListView"
                 Grid.Row="2"
                 Margin="-24,0,-24,0"
                 IsEnabled="{x:Bind GetIsOperating(PackageVolumeResultKind), Mode=OneWay}"
@@ -298,7 +300,7 @@
                 <Grid
                     HorizontalAlignment="Right"
                     ColumnSpacing="10"
-                    Visibility="{x:Bind IsAddingPackageVolume, Mode=OneWay}">
+                    Visibility="{x:Bind CheckPackageVolumeResultKindVisibility(PackageVolumeResultKind, enum:PackageVolumeResultKind.Operating, x:False), Mode=OneWay}">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -309,7 +311,7 @@
                         Grid.Column="0"
                         Width="20"
                         Height="20"
-                        IsActive="{x:Bind IsAddingPackageVolume, Mode=OneWay}"
+                        IsActive="{x:Bind x:Object.Equals(PackageVolumeResultKind, enum:PackageVolumeResultKind.Operating), Mode=OneWay}"
                         IsIndeterminate="True" />
 
                     <TextBlock

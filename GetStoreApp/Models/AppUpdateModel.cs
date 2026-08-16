@@ -23,7 +23,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_logoImage, value))
                 {
                     _logoImage = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LogoImage)));
+                    PropertyChanged?.Invoke(this, new(nameof(LogoImage)));
                 }
             }
         }
@@ -42,7 +42,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_isUpdating, value))
                 {
                     _isUpdating = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUpdating)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsUpdating)));
                 }
             }
         }
@@ -58,7 +58,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_isOperating, value))
                 {
                     _isOperating = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsOperating)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsOperating)));
                 }
             }
         }
@@ -92,7 +92,7 @@ namespace GetStoreApp.Models
                 if (!string.Equals(_installInformation, value))
                 {
                     _installInformation = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallInformation)));
+                    PropertyChanged?.Invoke(this, new(nameof(InstallInformation)));
                 }
             }
         }
@@ -108,7 +108,7 @@ namespace GetStoreApp.Models
                 if (!string.Equals(_installSubInformation, value))
                 {
                     _installSubInformation = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallSubInformation)));
+                    PropertyChanged?.Invoke(this, new(nameof(InstallSubInformation)));
                 }
             }
         }
@@ -132,7 +132,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_appInstallState, value))
                 {
                     _appInstallState = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppInstallState)));
+                    PropertyChanged?.Invoke(this, new(nameof(AppInstallState)));
                 }
             }
         }
@@ -151,7 +151,7 @@ namespace GetStoreApp.Models
                 if (!Equals(_percentComplete, value))
                 {
                     _percentComplete = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PercentComplete)));
+                    PropertyChanged?.Invoke(this, new(nameof(PercentComplete)));
                 }
             }
         }

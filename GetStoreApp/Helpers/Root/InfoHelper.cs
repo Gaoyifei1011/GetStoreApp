@@ -11,7 +11,7 @@ namespace GetStoreApp.Helpers.Root
     public static class InfoHelper
     {
         // 应用版本信息
-        public static Version AppVersion { get; } = new Version(
+        public static Version AppVersion { get; } = new(
             Package.Current.Id.Version.Major,
             Package.Current.Id.Version.Minor,
             Package.Current.Id.Version.Build,

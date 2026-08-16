@@ -78,8 +78,8 @@ namespace GetStoreApp.Services.Download
                         doManager = (IDOManager)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.None);
                         doManager.CreateDownload(out IDODownload doDownload);
                         ComWrappers.TryGetComInstance(doDownload, out nint doDownloadPointer);
-                        Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new nint(-1), 0, 3, nint.Zero, 32);
-                        Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new nint(-1), 0, 3, nint.Zero, 32);
+                        Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new(-1), 0, 3, nint.Zero, 32);
+                        Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new(-1), 0, 3, nint.Zero, 32);
 
                         // 添加下载信息
                         ComVariant displayNameVariant = ComVariant.Create(displayName);
@@ -116,7 +116,7 @@ namespace GetStoreApp.Services.Download
                             deliveryOptimizationLock.Exit();
                         }
 
-                        DownloadProgress?.Invoke(new DownloadProgress()
+                        DownloadProgress?.Invoke(new()
                         {
                             DownloadID = doDownloadStatusCallback.DownloadID,
                             DownloadProgressState = DownloadProgressState.Queued,
@@ -154,7 +154,7 @@ namespace GetStoreApp.Services.Download
 
                         if (continueResult is 0)
                         {
-                            DownloadProgress?.Invoke(new DownloadProgress()
+                            DownloadProgress?.Invoke(new()
                             {
                                 DownloadID = downloadID,
                                 DownloadProgressState = DownloadProgressState.Queued,
@@ -195,7 +195,7 @@ namespace GetStoreApp.Services.Download
 
                         if (pauseResult is 0)
                         {
-                            DownloadProgress?.Invoke(new DownloadProgress()
+                            DownloadProgress?.Invoke(new()
                             {
                                 DownloadID = downloadID,
                                 DownloadProgressState = DownloadProgressState.Paused,
@@ -238,7 +238,7 @@ namespace GetStoreApp.Services.Download
                         {
                             downloadValue.doDownloadStatusCallback.StatusChanged -= OnStatusChanged;
                             DeliveryOptimizationDict.Remove(downloadID);
-                            DownloadProgress?.Invoke(new DownloadProgress()
+                            DownloadProgress?.Invoke(new()
                             {
                                 DownloadID = downloadID,
                                 DownloadProgressState = DownloadProgressState.Deleted,
@@ -272,7 +272,7 @@ namespace GetStoreApp.Services.Download
             {
                 if (DeliveryOptimizationDict.TryGetValue(callback.DownloadID, out (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
                 {
-                    DownloadProgress?.Invoke(new DownloadProgress()
+                    DownloadProgress?.Invoke(new()
                     {
                         DownloadID = callback.DownloadID,
                         DownloadProgressState = DownloadProgressState.Downloading,
@@ -298,7 +298,7 @@ namespace GetStoreApp.Services.Download
                     {
                         if (DeliveryOptimizationDict.TryGetValue(callback.DownloadID, out (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
                         {
-                            DownloadProgress?.Invoke(new DownloadProgress()
+                            DownloadProgress?.Invoke(new()
                             {
                                 DownloadID = callback.DownloadID,
                                 DownloadProgressState = DownloadProgressState.Finished,
@@ -340,7 +340,7 @@ namespace GetStoreApp.Services.Download
                     {
                         if (DeliveryOptimizationDict.TryGetValue(callback.DownloadID, out (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
                         {
-                            DownloadProgress?.Invoke(new DownloadProgress()
+                            DownloadProgress?.Invoke(new()
                             {
                                 DownloadID = callback.DownloadID,
                                 DownloadProgressState = DownloadProgressState.Failed,

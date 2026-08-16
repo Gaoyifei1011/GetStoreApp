@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Services.Store;
@@ -18,8 +19,10 @@ namespace GetStoreApp.Views.Dialogs
     /// <summary>
     /// 更新应用对话框
     /// </summary>
-    public sealed partial class UpdateAppDialog : ContentDialog, INotifyPropertyChanged
+    internal sealed partial class UpdateAppDialog : ContentDialog, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string CancelString = ResourceService.GetLocalized("Dialog/Cancel");
         private readonly string CloseString = ResourceService.GetLocalized("Dialog/Close");
         private readonly string CloseAppString = ResourceService.GetLocalized("Dialog/CloseApp");
@@ -27,9 +30,13 @@ namespace GetStoreApp.Views.Dialogs
         private readonly string UpdateDownloadingString = ResourceService.GetLocalized("Dialog/UpdateDownloading");
         private IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus> storePackageUpdateProgress = null;
 
-        private UpdateAppResultKind _updateAppResultKind = UpdateAppResultKind.Initialize;
+        #endregion 第一部分：常量、资源与状态字段
 
-        public UpdateAppResultKind UpdateAppResultKind
+        #region 第二部分：属性、集合与事件
+
+        private UpdateAppResultKind _updateAppResultKind;
+
+        private UpdateAppResultKind UpdateAppResultKind
         {
             get { return _updateAppResultKind; }
 
@@ -38,14 +45,14 @@ namespace GetStoreApp.Views.Dialogs
                 if (!Equals(_updateAppResultKind, value))
                 {
                     _updateAppResultKind = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UpdateAppResultKind)));
+                    PropertyChanged?.Invoke(this, new(nameof(UpdateAppResultKind)));
                 }
             }
         }
 
         private string _primaryText;
 
-        public string PrimaryText
+        private string PrimaryText
         {
             get { return _primaryText; }
 
@@ -54,14 +61,14 @@ namespace GetStoreApp.Views.Dialogs
                 if (!string.Equals(_primaryText, value))
                 {
                     _primaryText = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PrimaryText)));
+                    PropertyChanged?.Invoke(this, new(nameof(PrimaryText)));
                 }
             }
         }
 
         private string _closeText;
 
-        public string CloseText
+        private string CloseText
         {
             get { return _closeText; }
 
@@ -70,14 +77,14 @@ namespace GetStoreApp.Views.Dialogs
                 if (!string.Equals(_closeText, value))
                 {
                     _closeText = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CloseText)));
+                    PropertyChanged?.Invoke(this, new(nameof(CloseText)));
                 }
             }
         }
 
         private string _updateDownloadString;
 
-        public string UpdateDownloadString
+        private string UpdateDownloadString
         {
             get { return _updateDownloadString; }
 
@@ -86,35 +93,28 @@ namespace GetStoreApp.Views.Dialogs
                 if (!string.Equals(_updateDownloadString, value))
                 {
                     _updateDownloadString = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UpdateDownloadString)));
-                }
-            }
-        }
-
-        private bool _isCancelingUpdate;
-
-        public bool IsCancelingUpdate
-        {
-            get { return _isCancelingUpdate; }
-
-            set
-            {
-                if (!Equals(_isCancelingUpdate, value))
-                {
-                    _isCancelingUpdate = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCancelingUpdate)));
+                    PropertyChanged?.Invoke(this, new(nameof(UpdateDownloadString)));
                 }
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public UpdateAppDialog()
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
+        internal UpdateAppDialog()
         {
             InitializeComponent();
+            UpdateAppResultKind = UpdateAppResultKind.Initialize;
             PrimaryText = UpdateString;
             CloseText = CloseString;
         }
+
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：挂载事件处理
 
         /// <summary>
         /// 对话框关闭后触发的事件
@@ -125,7 +125,7 @@ namespace GetStoreApp.Views.Dialogs
             {
                 try
                 {
-                    storePackageUpdateProgress.Cancel();
+                    CancelUpdate();
                     UpdateAppResultKind = UpdateAppResultKind.Canceling;
                 }
                 catch (Exception e)
@@ -154,123 +154,9 @@ namespace GetStoreApp.Views.Dialogs
                     CloseText = CancelString;
                     if (storePackageUpdateProgress is null)
                     {
-                        StoreContext storeContext = StoreContext.GetDefault();
-                        IReadOnlyList<StorePackageUpdate> storePackageUpdateList = await storeContext.GetAppAndOptionalStorePackageUpdatesAsync();
-                        bool updateFailed = false;
-                        storePackageUpdateProgress = storeContext.TrySilentDownloadAndInstallStorePackageUpdatesAsync(storePackageUpdateList);
-                        storePackageUpdateProgress.Progress += (sender, progress) =>
-                        {
-                            if (progress.PackageUpdateState is StorePackageUpdateState.Pending)
-                            {
-                                DispatcherQueue.TryEnqueue(() =>
-                                {
-                                    if (UpdateAppResultKind is not UpdateAppResultKind.Canceling)
-                                    {
-                                        UpdateAppResultKind = UpdateAppResultKind.Pending;
-                                        CloseText = CancelString;
-                                    }
-                                });
-                            }
-                            else if (progress.PackageUpdateState is StorePackageUpdateState.Downloading)
-                            {
-                                DispatcherQueue.TryEnqueue(() =>
-                                {
-                                    string downloadedSize = VolumeSizeHelper.ConvertVolumeSizeToString(progress.PackageDownloadSizeInBytes);
-                                    string totalSize = VolumeSizeHelper.ConvertVolumeSizeToString(progress.PackageBytesDownloaded);
-                                    if (UpdateAppResultKind is not UpdateAppResultKind.Canceling)
-                                    {
-                                        UpdateAppResultKind = UpdateAppResultKind.Downloading;
-                                        UpdateDownloadString = string.Format(UpdateDownloadingString, downloadedSize, totalSize);
-                                        CloseText = CancelString;
-                                    }
-                                });
-                            }
-                            else if (progress.PackageUpdateState is StorePackageUpdateState.Deploying)
-                            {
-                                DispatcherQueue.TryEnqueue(() =>
-                                {
-                                    if (UpdateAppResultKind is not UpdateAppResultKind.Canceling)
-                                    {
-                                        UpdateAppResultKind = UpdateAppResultKind.Deploying;
-                                        CloseText = CancelString;
-                                    }
-                                });
-                            }
-                            else if (progress.PackageUpdateState is StorePackageUpdateState.Canceled)
-                            {
-                                updateFailed = true;
-                                DispatcherQueue.TryEnqueue(() =>
-                                {
-                                    if (UpdateAppResultKind is not UpdateAppResultKind.Canceling)
-                                    {
-                                        UpdateAppResultKind = UpdateAppResultKind.Canceled;
-                                        CloseText = CloseString;
-                                    }
-                                });
-                            }
-                            else if (progress.PackageUpdateState is StorePackageUpdateState.OtherError)
-                            {
-                                updateFailed = true;
-                                DispatcherQueue.TryEnqueue(() =>
-                                {
-                                    if (UpdateAppResultKind is not UpdateAppResultKind.Canceling)
-                                    {
-                                        UpdateAppResultKind = UpdateAppResultKind.Failed;
-                                        CloseText = CloseString;
-                                    }
-                                });
-                            }
-                            else if (progress.PackageUpdateState is StorePackageUpdateState.ErrorLowBattery)
-                            {
-                                updateFailed = true;
-                                DispatcherQueue.TryEnqueue(() =>
-                                {
-                                    if (UpdateAppResultKind is not UpdateAppResultKind.Canceling)
-                                    {
-                                        UpdateAppResultKind = UpdateAppResultKind.Failed;
-                                        CloseText = CloseString;
-                                    }
-                                });
-                            }
-                            else if (progress.PackageUpdateState is StorePackageUpdateState.ErrorWiFiRecommended)
-                            {
-                                updateFailed = true;
-                                DispatcherQueue.TryEnqueue(() =>
-                                {
-                                    if (UpdateAppResultKind is not UpdateAppResultKind.Canceling)
-                                    {
-                                        UpdateAppResultKind = UpdateAppResultKind.Failed;
-                                        CloseText = CloseString;
-                                    }
-                                });
-                            }
-                            else if (progress.PackageUpdateState is StorePackageUpdateState.ErrorWiFiRequired)
-                            {
-                                updateFailed = true;
-                                DispatcherQueue.TryEnqueue(() =>
-                                {
-                                    if (UpdateAppResultKind is not UpdateAppResultKind.Canceling)
-                                    {
-                                        UpdateAppResultKind = UpdateAppResultKind.Failed;
-                                        CloseText = CloseString;
-                                    }
-                                });
-                            }
-                        };
-                        StorePackageUpdateResult storePackageUpdateResult = await storePackageUpdateProgress;
+                        UpdateAppResultKind = await UpdateStorePackageAppAsync();
                         CloseText = CloseString;
-                        if (storePackageUpdateResult.OverallState is StorePackageUpdateState.Completed)
-                        {
-                            if (updateFailed)
-                            {
-                                UpdateAppResultKind = UpdateAppResultKind.Failed;
-                            }
-                            else
-                            {
-                                UpdateAppResultKind = UpdateAppResultKind.Successfully;
-                                PrimaryText = CloseAppString;
-                            }
-                        }
+                        PrimaryText = UpdateAppResultKind is UpdateAppResultKind.Successfully ? CloseAppString : UpdateString;
                     }
                 }
             }
@@ -303,7 +189,7 @@ namespace GetStoreApp.Views.Dialogs
                 {
                     try
                     {
-                        storePackageUpdateProgress.Cancel();
+                        CancelUpdate();
                         UpdateAppResultKind = UpdateAppResultKind.Canceling;
                     }
                     catch (Exception e)
@@ -315,6 +201,165 @@ namespace GetStoreApp.Views.Dialogs
                 {
                     UpdateAppResultKind = UpdateAppResultKind.Canceled;
                 }
+            }
+        }
+
+        /// <summary>
+        /// 应用更新进度发生变化时触发的事件
+        /// </summary>
+        private void OnStorePackageUpdateProgress(IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus> sender, StorePackageUpdateStatus progress)
+        {
+            if (progress.PackageUpdateState is StorePackageUpdateState.Pending)
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    if (UpdateAppResultKind is not UpdateAppResultKind.Canceling)
+                    {
+                        UpdateAppResultKind = UpdateAppResultKind.Pending;
+                        CloseText = CancelString;
+                    }
+                });
+            }
+            else if (progress.PackageUpdateState is StorePackageUpdateState.Downloading)
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    string downloadedSize = VolumeSizeHelper.ConvertVolumeSizeToString(progress.PackageDownloadSizeInBytes);
+                    string totalSize = VolumeSizeHelper.ConvertVolumeSizeToString(progress.PackageBytesDownloaded);
+                    if (UpdateAppResultKind is not UpdateAppResultKind.Canceling)
+                    {
+                        UpdateAppResultKind = UpdateAppResultKind.Downloading;
+                        UpdateDownloadString = string.Format(UpdateDownloadingString, downloadedSize, totalSize);
+                        CloseText = CancelString;
+                    }
+                });
+            }
+            else if (progress.PackageUpdateState is StorePackageUpdateState.Deploying)
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    if (UpdateAppResultKind is not UpdateAppResultKind.Canceling)
+                    {
+                        UpdateAppResultKind = UpdateAppResultKind.Deploying;
+                        CloseText = CancelString;
+                    }
+                });
+            }
+            else if (progress.PackageUpdateState is StorePackageUpdateState.Canceled)
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    if (UpdateAppResultKind is not UpdateAppResultKind.Canceling)
+                    {
+                        UpdateAppResultKind = UpdateAppResultKind.Canceled;
+                        CloseText = CloseString;
+                    }
+                });
+            }
+            else if (progress.PackageUpdateState is StorePackageUpdateState.OtherError)
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    if (UpdateAppResultKind is not UpdateAppResultKind.Canceling)
+                    {
+                        UpdateAppResultKind = UpdateAppResultKind.Failed;
+                        CloseText = CloseString;
+                    }
+                });
+            }
+            else if (progress.PackageUpdateState is StorePackageUpdateState.ErrorLowBattery)
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    if (UpdateAppResultKind is not UpdateAppResultKind.Canceling)
+                    {
+                        UpdateAppResultKind = UpdateAppResultKind.Failed;
+                        CloseText = CloseString;
+                    }
+                });
+            }
+            else if (progress.PackageUpdateState is StorePackageUpdateState.ErrorWiFiRecommended)
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    if (UpdateAppResultKind is not UpdateAppResultKind.Canceling)
+                    {
+                        UpdateAppResultKind = UpdateAppResultKind.Failed;
+                        CloseText = CloseString;
+                    }
+                });
+            }
+            else if (progress.PackageUpdateState is StorePackageUpdateState.ErrorWiFiRequired)
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    if (UpdateAppResultKind is not UpdateAppResultKind.Canceling)
+                    {
+                        UpdateAppResultKind = UpdateAppResultKind.Failed;
+                        CloseText = CloseString;
+                    }
+                });
+            }
+        }
+
+        #endregion 第四部分：挂载事件处理
+
+        #region 第五部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 取消更新
+        /// </summary>
+        private void CancelUpdate()
+        {
+            storePackageUpdateProgress?.Cancel();
+        }
+
+        /// <summary>
+        /// 更新商店应用
+        /// </summary>
+        private async Task<UpdateAppResultKind> UpdateStorePackageAppAsync()
+        {
+            try
+            {
+                StoreContext storeContext = StoreContext.GetDefault();
+                IReadOnlyList<StorePackageUpdate> storePackageUpdateList = await storeContext.GetAppAndOptionalStorePackageUpdatesAsync();
+                storePackageUpdateProgress = storeContext.TrySilentDownloadAndInstallStorePackageUpdatesAsync(storePackageUpdateList);
+                storePackageUpdateProgress.Progress += OnStorePackageUpdateProgress;
+                StorePackageUpdateResult storePackageUpdateResult = await storePackageUpdateProgress;
+                storePackageUpdateProgress?.Progress -= OnStorePackageUpdateProgress;
+                if (storePackageUpdateResult.OverallState is StorePackageUpdateState.Completed)
+                {
+                    bool isUpdateFailed = false;
+                    foreach (StorePackageUpdateStatus storePackageUpdateStatus in storePackageUpdateResult.StorePackageUpdateStatuses)
+                    {
+                        if (storePackageUpdateStatus.PackageUpdateState is StorePackageUpdateState.Canceled ||
+                            storePackageUpdateStatus.PackageUpdateState is StorePackageUpdateState.OtherError ||
+                            storePackageUpdateStatus.PackageUpdateState is StorePackageUpdateState.ErrorLowBattery ||
+                            storePackageUpdateStatus.PackageUpdateState is StorePackageUpdateState.ErrorWiFiRecommended ||
+                            storePackageUpdateStatus.PackageUpdateState is StorePackageUpdateState.ErrorWiFiRequired)
+                        {
+                            isUpdateFailed = true;
+                        }
+                    }
+
+                    return isUpdateFailed ? UpdateAppResultKind.Failed : UpdateAppResultKind.Successfully;
+                }
+                else
+                {
+                    return UpdateAppResultKind.Failed;
+                }
+            }
+            catch (OperationCanceledException e)
+            {
+                storePackageUpdateProgress = null;
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(UpdateAppDialog), nameof(UpdateStorePackageAppAsync), 1, e);
+                return UpdateAppResultKind.Canceled;
+            }
+            catch (Exception e)
+            {
+                storePackageUpdateProgress = null;
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(UpdateAppDialog), nameof(UpdateStorePackageAppAsync), 2, e);
+                return UpdateAppResultKind.Failed;
             }
         }
 
@@ -341,5 +386,7 @@ namespace GetStoreApp.Views.Dialogs
         {
             return updateAppResultKind is not UpdateAppResultKind.Canceling;
         }
+
+        #endregion 第五部分：数据操作与业务逻辑
     }
 }

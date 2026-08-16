@@ -27,7 +27,7 @@ namespace GetStoreApp.Services.Settings
                 if (!string.Equals(_appTheme, value))
                 {
                     _appTheme = value;
-                    PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(AppTheme)));
+                    PropertyChanged?.Invoke(null, new(nameof(AppTheme)));
                 }
             }
         }

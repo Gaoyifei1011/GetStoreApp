@@ -54,7 +54,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!Equals(_appInfo, value))
                 {
                     _appInfo = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppInfo)));
+                    PropertyChanged?.Invoke(this, new(nameof(AppInfo)));
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!Equals(_isAppInfoVisible, value))
                 {
                     _isAppInfoVisible = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAppInfoVisible)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsAppInfoVisible)));
                 }
             }
         }
@@ -86,7 +86,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!Equals(_isPackagedApp, value))
                 {
                     _isPackagedApp = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPackagedApp)));
+                    PropertyChanged?.Invoke(this, new(nameof(IsPackagedApp)));
                 }
             }
         }
@@ -102,7 +102,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!Equals(_selectionMode, value))
                 {
                     _selectionMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectionMode)));
+                    PropertyChanged?.Invoke(this, new(nameof(SelectionMode)));
                 }
             }
         }
@@ -224,7 +224,7 @@ namespace GetStoreApp.Views.UserControls
                 {
                     try
                     {
-                        await Launcher.LaunchUriAsync(new Uri(fileLink));
+                        await Launcher.LaunchUriAsync(new(fileLink));
                     }
                     catch (Exception e)
                     {
@@ -306,14 +306,14 @@ namespace GetStoreApp.Views.UserControls
                 {
                     if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[0]))
                     {
-                        await Launcher.LaunchUriAsync(new Uri("getstoreappwebview:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                        await Launcher.LaunchUriAsync(new("getstoreappwebview:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
                             {
                                 {"AppLink", string.Format("https://apps.microsoft.com/store/detail/{0}", AppInfo.ProductID) },
                             });
                     }
                     else if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[1]))
                     {
-                        await Launcher.LaunchUriAsync(new Uri(string.Format("https://apps.microsoft.com/store/detail/{0}", AppInfo.ProductID)));
+                        await Launcher.LaunchUriAsync(new(string.Format("https://apps.microsoft.com/store/detail/{0}", AppInfo.ProductID)));
                     }
                 }
                 catch (Exception e)

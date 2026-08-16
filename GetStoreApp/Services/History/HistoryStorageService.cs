@@ -31,16 +31,16 @@ namespace GetStoreApp.Services.History
 
         private static List<TypeModel> TypeList { get; } =
         [
-            new TypeModel { InternalName = "url", ShortName = "url" },
-            new TypeModel { InternalName = "ProductId", ShortName = "pid" }
+            new() { InternalName = "url", ShortName = "url" },
+            new() { InternalName = "ProductId", ShortName = "pid" }
         ];
 
         private static List<ChannelModel> ChannelList { get; } =
         [
-            new ChannelModel { InternalName = "WIF", ShortName = "wif" },
-            new ChannelModel { InternalName = "WIS", ShortName = "wis" },
-            new ChannelModel { InternalName = "RP", ShortName = "rp" },
-            new ChannelModel { InternalName = "Retail", ShortName = "rt" }
+            new() { InternalName = "WIF", ShortName = "wif" },
+            new() { InternalName = "WIS", ShortName = "wis" },
+            new() { InternalName = "RP", ShortName = "rp" },
+            new() { InternalName = "Retail", ShortName = "rt" }
         ];
 
         public static event Action QueryLinksCleared;
@@ -77,7 +77,7 @@ namespace GetStoreApp.Services.History
                             TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
                             ChannelModel channel = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
 
-                            queryLinksHistoryList.Add(new HistoryModel()
+                            queryLinksHistoryList.Add(new()
                             {
                                 HistoryKey = queryLinksContainerItem.Key,
                                 CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
@@ -124,7 +124,7 @@ namespace GetStoreApp.Services.History
                             TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryType"] as string, StringComparison.OrdinalIgnoreCase));
                             ChannelModel channelItem = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryChannel"] as string, StringComparison.OrdinalIgnoreCase));
 
-                            searchAppsHistoryList.Add(new HistoryModel()
+                            searchAppsHistoryList.Add(new()
                             {
                                 HistoryKey = searchAppsContainerItem.Key,
                                 CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),

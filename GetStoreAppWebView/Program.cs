@@ -2,11 +2,8 @@
 using GetStoreAppWebView.Helpers.Root;
 using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.Services.Settings;
-using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation.Diagnostics;
@@ -36,7 +33,7 @@ namespace GetStoreAppWebView
 
             if (!RuntimeHelper.IsMSIX)
             {
-                Launcher.LaunchUriAsync(new Uri("getstoreappwebview:")).Wait();
+                Launcher.LaunchUriAsync(new("getstoreappwebview:")).Wait();
                 return;
             }
 
@@ -48,11 +45,11 @@ namespace GetStoreAppWebView
                 ProtocolActivatedEventArgs protocolActivatedEventArgs = AppActivationArguments.Data as ProtocolActivatedEventArgs;
                 if (protocolActivatedEventArgs.Data.TryGetValue("AppLink", out object appLinkObj) && appLinkObj is string appLink && !string.IsNullOrEmpty(appLink))
                 {
-                    Launcher.LaunchUriAsync(new Uri(appLink)).Wait();
+                    Launcher.LaunchUriAsync(new(appLink)).Wait();
                 }
                 else
                 {
-                    Launcher.LaunchUriAsync(new Uri("https://apps.microsoft.com")).Wait();
+                    Launcher.LaunchUriAsync(new("https://apps.microsoft.com")).Wait();
                 }
                 return;
             }

@@ -18,7 +18,7 @@ namespace GetStoreApp.Models
                 if (!string.Equals(_name, value))
                 {
                     _name = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
+                    PropertyChanged?.Invoke(this, new(nameof(Name)));
                 }
             }
         }
@@ -34,7 +34,7 @@ namespace GetStoreApp.Models
                 if (!string.Equals(_publisher, value))
                 {
                     _publisher = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Publisher)));
+                    PropertyChanged?.Invoke(this, new(nameof(Publisher)));
                 }
             }
         }
@@ -50,7 +50,7 @@ namespace GetStoreApp.Models
                 if (!string.Equals(_description, value))
                 {
                     _description = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Description)));
+                    PropertyChanged?.Invoke(this, new(nameof(Description)));
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace GetStoreApp.Models
                 if (!string.Equals(_categoryID, value))
                 {
                     _categoryID = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CategoryID)));
+                    PropertyChanged?.Invoke(this, new(nameof(CategoryID)));
                 }
             }
         }
