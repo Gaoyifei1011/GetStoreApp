@@ -185,11 +185,7 @@ namespace GetStoreApp.Views.Dialogs
             }
         }
 
-        private List<ComboBoxItemModel> CatalogTrustLevelList =>
-        [
-            new() { SelectedValue = PackageCatalogTrustLevel.None, DisplayMember = CatalogTrustLevelNoneString },
-            new() { SelectedValue = PackageCatalogTrustLevel.Trusted, DisplayMember = CatalogTrustLevelTrustedString }
-        ];
+        private List<ComboBoxItemModel> CatalogTrustLevelList { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -201,6 +197,7 @@ namespace GetStoreApp.Views.Dialogs
         {
             InitializeComponent();
             WinGetSourceEditKind = winGetSourceEditKind;
+            InitializeData();
             SelectedCatalogTrustLevel = CatalogTrustLevelList[0];
             EditTitle = winGetSourceEditKind is WinGetSourceEditKind.Add ? WinGetDataSourceAddString : WinGetDataSourceEditString;
 
@@ -367,6 +364,15 @@ namespace GetStoreApp.Views.Dialogs
         #endregion 第四部分：挂载事件处理
 
         #region 第五部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private void InitializeData()
+        {
+            CatalogTrustLevelList.Add(new() { SelectedValue = PackageCatalogTrustLevel.None, DisplayMember = CatalogTrustLevelNoneString });
+            CatalogTrustLevelList.Add(new() { SelectedValue = PackageCatalogTrustLevel.Trusted, DisplayMember = CatalogTrustLevelTrustedString });
+        }
 
         /// <summary>
         /// 添加 WinGet 数据源

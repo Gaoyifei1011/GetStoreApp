@@ -24,20 +24,32 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     internal sealed partial class SettingsPage : Page
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string SettingsString = ResourceService.GetLocalized("Settings/Settings");
         private readonly string PackageVolumeConfigurationString = ResourceService.GetLocalized("Settings/PackageVolumeConfiguration");
         private readonly string WinGetSourceConfigurationString = ResourceService.GetLocalized("Settings/WinGetSourceConfiguration");
 
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
+
         internal List<Type> PageList { get; } = [typeof(SettingsItemPage), typeof(SettingsWinGetSourcePage), typeof(SettingsPackageVolumePage)];
 
         internal ObservableCollection<ContentLinkInfo> BreadCollection { get; } = [];
+
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
 
         internal SettingsPage()
         {
             InitializeComponent();
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面触发的事件
@@ -116,9 +128,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：重写父类事件
+        #endregion 第四部分：父类虚方法重写
 
-        #region 第二部分：设置页面——挂载的事件
+        #region 第五部分：挂载事件处理
 
         /// <summary>
         /// 单击痕迹栏条目时发生的事件
@@ -198,7 +210,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 导航失败时发生
+        /// 导航失败后发生的事件
         /// </summary>
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
@@ -282,20 +294,12 @@ namespace GetStoreApp.Views.Pages
         private void OnTroubleShootClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             SettingsSplitView.IsPaneOpen = false;
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new("ms-settings:troubleshoot"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenTroubleShoot();
         }
 
-        #endregion 第二部分：设置页面——挂载的事件
+        #endregion 第五部分：挂载事件处理
+
+        #region 第五部分：数据操作与业务逻辑
 
         /// <summary>
         /// 页面向前导航
@@ -341,5 +345,25 @@ namespace GetStoreApp.Views.Pages
                 SettingsSplitView.IsPaneOpen = true;
             }
         }
+
+        /// <summary>
+        /// 打开疑难解答
+        /// </summary>
+        private void OpenTroubleShoot()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("ms-settings:troubleshoot"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        #endregion 第五部分：数据操作与业务逻辑
     }
 }

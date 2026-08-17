@@ -306,7 +306,6 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查当前应用是否为最新版本
         /// </summary>
-        /// <returns></returns>
         private async Task<bool?> CheckCurrentAppIsNewestVersionAsync(bool isStoreVersion)
         {
             if (isStoreVersion)
@@ -346,7 +345,7 @@ namespace GetStoreApp.Views.Pages
                     // 请求失败
                     else
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(OnCheckUpdateClicked), 1, httpRequestResult.ExtendedError);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(CheckCurrentAppIsNewestVersionAsync), 1, httpRequestResult.ExtendedError);
                     }
 
                     httpRequestResult.Dispose();
@@ -354,7 +353,7 @@ namespace GetStoreApp.Views.Pages
                 // 其他异常
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(OnCheckUpdateClicked), 2, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(CheckCurrentAppIsNewestVersionAsync), 2, e);
                 }
 
                 return null;

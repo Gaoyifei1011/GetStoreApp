@@ -19,8 +19,8 @@ using Windows.System;
 using Windows.UI.ViewManagement;
 using WinRT;
 
-// 抑制 IDE0060 警告
-#pragma warning disable IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
@@ -29,6 +29,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     internal sealed partial class SettingsGeneralPage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string BackdropAcrylicString = ResourceService.GetLocalized("SettingsGeneral/BackdropAcrylic");
         private readonly string BackdropAcrylicBaseString = ResourceService.GetLocalized("SettingsGeneral/BackdropAcrylicBase");
         private readonly string BackdropAcrylicThinString = ResourceService.GetLocalized("SettingsGeneral/BackdropAcrylicThin");
@@ -41,10 +43,15 @@ namespace GetStoreApp.Views.Pages
         private readonly string ThemeDefaultString = ResourceService.GetLocalized("SettingsGeneral/ThemeDefault");
         private readonly string ThemeLightAltString = ResourceService.GetLocalized("SettingsGeneral/ThemeLight");
         private readonly UISettings uiSettings = new();
+        private bool isInitialized;
+
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
 
         private ComboBoxItemModel _theme;
 
-        internal ComboBoxItemModel Theme
+        private ComboBoxItemModel Theme
         {
             get { return _theme; }
 
@@ -60,7 +67,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _backdrop;
 
-        internal ComboBoxItemModel Backdrop
+        private ComboBoxItemModel Backdrop
         {
             get { return _backdrop; }
 
@@ -76,7 +83,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _alwaysShowBackdrop;
 
-        internal bool AlwaysShowBackdrop
+        private bool AlwaysShowBackdrop
         {
             get { return _alwaysShowBackdrop; }
 
@@ -92,7 +99,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _alwaysShowBackdropEnabled;
 
-        internal bool AlwaysShowBackdropEnabled
+        private bool AlwaysShowBackdropEnabled
         {
             get { return _alwaysShowBackdropEnabled; }
 
@@ -108,7 +115,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _advancedEffectsEnabled;
 
-        internal bool AdvancedEffectsEnabled
+        private bool AdvancedEffectsEnabled
         {
             get { return _advancedEffectsEnabled; }
 
@@ -124,7 +131,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _appLanguage;
 
-        internal ComboBoxItemModel AppLanguage
+        private ComboBoxItemModel AppLanguage
         {
             get { return _appLanguage; }
 
@@ -140,7 +147,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _topMost;
 
-        internal bool TopMost
+        private bool TopMost
         {
             get { return _topMost; }
 
@@ -156,43 +163,24 @@ namespace GetStoreApp.Views.Pages
 
         private List<ComboBoxItemModel> ThemeList { get; } = [];
 
-        private List<ComboBoxItemModel> BackdropList { get; } = [];
+        private ObservableCollection<ComboBoxItemModel> BackdropCollection { get; } = [];
 
         private ObservableCollection<ComboBoxItemModel> LanguageCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
         internal SettingsGeneralPage()
         {
             InitializeComponent();
-
-            ThemeList.Add(new() { SelectedValue = ThemeService.ThemeList[0], DisplayMember = ThemeDefaultString });
-            ThemeList.Add(new() { SelectedValue = ThemeService.ThemeList[1], DisplayMember = ThemeLightAltString });
-            ThemeList.Add(new() { SelectedValue = ThemeService.ThemeList[2], DisplayMember = ThemeDarkString });
-
-            BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[0], DisplayMember = BackdropDefaultString });
-            if (MicaController.IsSupported())
-            {
-                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[1], DisplayMember = string.Format("{0} {1}", MicaString, BackdropMicaString) });
-                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[2], DisplayMember = string.Format("{0} {1}", MicaString, BackdropMicaAltString) });
-            }
-            if (DesktopAcrylicController.IsSupported())
-            {
-                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[3], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicString) });
-                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[4], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicBaseString) });
-                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[5], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicThinString) });
-            }
-
-            foreach (KeyValuePair<string, string> languageItem in LanguageService.LanguageList)
-            {
-                LanguageCollection.Add(new() { SelectedValue = languageItem.Key, DisplayMember = languageItem.Value });
-            }
-
-            uiSettings.AdvancedEffectsEnabledChanged += OnAdvancedEffectsEnabledChanged;
-            GlobalNotificationService.ApplicationExit += OnApplicationExit;
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面后触发的事件
@@ -200,11 +188,25 @@ namespace GetStoreApp.Views.Pages
         protected override void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
+            if (!isInitialized)
+            {
+                isInitialized = true;
+                InitializeData();
+                MountSettingsEvent();
+            }
+
             AdvancedEffectsEnabled = uiSettings.AdvancedEffectsEnabled;
             AlwaysShowBackdrop = AlwaysShowBackdropService.AlwaysShowBackdrop;
             TopMost = TopMostService.TopMost;
             Theme = ThemeList.Find(item => Equals(Convert.ToString(item.SelectedValue), ThemeService.AppTheme));
-            Backdrop = BackdropList.Find(item => Equals(Convert.ToString(item.SelectedValue), BackdropService.AppBackdrop));
+            foreach (ComboBoxItemModel backdropItem in BackdropCollection)
+            {
+                if (string.Equals(Convert.ToString(backdropItem.SelectedValue), BackdropService.AppBackdrop, StringComparison.OrdinalIgnoreCase))
+                {
+                    Backdrop = backdropItem;
+                    break;
+                }
+            }
             foreach (ComboBoxItemModel languageItem in LanguageCollection)
             {
                 if (string.Equals(Convert.ToString(languageItem.SelectedValue), LanguageService.AppLanguage.Key, StringComparison.OrdinalIgnoreCase))
@@ -213,29 +215,19 @@ namespace GetStoreApp.Views.Pages
                     break;
                 }
             }
-            AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Convert.ToString(Backdrop.SelectedValue), Convert.ToString(BackdropList[0].SelectedValue));
+            AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Convert.ToString(Backdrop.SelectedValue), Convert.ToString(BackdropCollection[0].SelectedValue));
         }
 
-        #endregion 第一部分：重写父类事件
+        #endregion 第四部分：父类虚方法重写
 
-        #region 第二部分：设置通用选项页面——挂载的事件
+        #region 第五部分：挂载事件处理
 
         /// <summary>
         /// 打开系统主题设置
         /// </summary>
         private void OnSystemThemeSettingsClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new("ms-settings:colors"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenSystemThemeSettings();
         }
 
         /// <summary>
@@ -272,10 +264,17 @@ namespace GetStoreApp.Views.Pages
                     BackdropService.SetBackdrop(Convert.ToString(Backdrop.SelectedValue));
                 }
 
-                Backdrop = BackdropList.Find(item => Equals(Convert.ToString(item.SelectedValue), BackdropService.AppBackdrop));
-                AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Convert.ToString(Backdrop.SelectedValue), Convert.ToString(BackdropList[0].SelectedValue));
+                foreach (ComboBoxItemModel backdropItem in BackdropCollection)
+                {
+                    if (string.Equals(Convert.ToString(backdropItem.SelectedValue), BackdropService.AppBackdrop, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Backdrop = backdropItem;
+                        break;
+                    }
+                }
+                AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Convert.ToString(Backdrop.SelectedValue), Convert.ToString(BackdropCollection[0].SelectedValue));
 
-                if (Equals(Backdrop, BackdropList[0]))
+                if (Equals(Backdrop, BackdropCollection[0]))
                 {
                     AlwaysShowBackdropService.SetAlwaysShowBackdrop(false);
                     AlwaysShowBackdrop = false;
@@ -288,17 +287,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSystemBackdropSettingsClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new("ms-settings:easeofaccess-visualeffects"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenSystemBackdropSettings();
         }
 
         /// <summary>
@@ -306,17 +295,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSystemLanguageSettingsClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new("ms-settings:regionlanguage-languageoptions"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenSystemLanguageSettings();
         }
 
         /// <summary>
@@ -374,24 +353,12 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第二部分：设置通用选项页面——挂载的事件
-
-        #region 第三部分：设置通用选项页面——自定义事件
-
         /// <summary>
         /// 应用程序退出时触发的事件
         /// </summary>
         private void OnApplicationExit()
         {
-            try
-            {
-                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-                uiSettings.ColorValuesChanged -= OnAdvancedEffectsEnabledChanged;
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsGeneralPage), nameof(OnApplicationExit), 1, e);
-            }
+            DismountSettingsEvent();
         }
 
         /// <summary>
@@ -402,10 +369,121 @@ namespace GetStoreApp.Views.Pages
             DispatcherQueue.TryEnqueue(() =>
             {
                 AdvancedEffectsEnabled = uiSettings.AdvancedEffectsEnabled;
-                AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Convert.ToString(Backdrop.SelectedValue), Convert.ToString(BackdropList[0].SelectedValue));
+                AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Convert.ToString(Backdrop.SelectedValue), Convert.ToString(BackdropCollection[0].SelectedValue));
             });
         }
 
-        #endregion 第三部分：设置通用选项页面——自定义事件
+        #endregion 第五部分：挂载事件处理
+
+        #region 第六部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private void InitializeData()
+        {
+            ThemeList.Add(new() { SelectedValue = ThemeService.ThemeList[0], DisplayMember = ThemeDefaultString });
+            ThemeList.Add(new() { SelectedValue = ThemeService.ThemeList[1], DisplayMember = ThemeLightAltString });
+            ThemeList.Add(new() { SelectedValue = ThemeService.ThemeList[2], DisplayMember = ThemeDarkString });
+
+            BackdropCollection.Add(new() { SelectedValue = BackdropService.BackdropList[0], DisplayMember = BackdropDefaultString });
+            if (MicaController.IsSupported())
+            {
+                BackdropCollection.Add(new() { SelectedValue = BackdropService.BackdropList[1], DisplayMember = string.Format("{0} {1}", MicaString, BackdropMicaString) });
+                BackdropCollection.Add(new() { SelectedValue = BackdropService.BackdropList[2], DisplayMember = string.Format("{0} {1}", MicaString, BackdropMicaAltString) });
+            }
+            if (DesktopAcrylicController.IsSupported())
+            {
+                BackdropCollection.Add(new() { SelectedValue = BackdropService.BackdropList[3], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicString) });
+                BackdropCollection.Add(new() { SelectedValue = BackdropService.BackdropList[4], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicBaseString) });
+                BackdropCollection.Add(new() { SelectedValue = BackdropService.BackdropList[5], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicThinString) });
+            }
+
+            foreach (KeyValuePair<string, string> languageItem in LanguageService.LanguageList)
+            {
+                LanguageCollection.Add(new() { SelectedValue = languageItem.Key, DisplayMember = languageItem.Value });
+            }
+        }
+
+        /// <summary>
+        /// 挂载设置事件
+        /// </summary>
+        private void MountSettingsEvent()
+        {
+            uiSettings.AdvancedEffectsEnabledChanged += OnAdvancedEffectsEnabledChanged;
+            GlobalNotificationService.ApplicationExit += OnApplicationExit;
+        }
+
+        /// <summary>
+        /// 卸载设置事件
+        /// </summary>
+        private void DismountSettingsEvent()
+        {
+            try
+            {
+                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+                uiSettings.ColorValuesChanged -= OnAdvancedEffectsEnabledChanged;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsGeneralPage), nameof(DismountSettingsEvent), 1, e);
+            }
+        }
+
+        /// <summary>
+        /// 打开系统主题设置
+        /// </summary>
+        private void OpenSystemThemeSettings()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("ms-settings:colors"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 打开系统背景色设置
+        /// </summary>
+        private void OpenSystemBackdropSettings()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("ms-settings:easeofaccess-visualeffects"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 打开系统语言设置
+        /// </summary>
+        private void OpenSystemLanguageSettings()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("ms-settings:regionlanguage-languageoptions"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        #endregion 第六部分：数据操作与业务逻辑
     }
 }

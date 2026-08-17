@@ -23,30 +23,7 @@ namespace GetStoreApp.Views.Dialogs
 
         #region 第二部分：属性、集合与事件
 
-        private List<StartupArgsModel> DesktopStartupArgsList =>
-        [
-            new()
-            {
-                ArgumentName = TypeString,
-                Argument = "-t; --type",
-                IsRequired = NoString,
-                ArgumentContent = @"""url"",""pid"""
-            },
-            new()
-            {
-                ArgumentName = ChannelString,
-                Argument = "-c; --channel",
-                IsRequired = NoString,
-                ArgumentContent = @"""wif"",""wis"",""rp"",""rt"""
-            },
-            new()
-            {
-                ArgumentName = LinkString,
-                Argument = "-l; --link",
-                IsRequired = YesString,
-                ArgumentContent = LinkContentString
-            }
-        ];
+        private List<StartupArgsModel> DesktopStartupArgsList { get; } = [];
 
         #endregion 第二部分：属性、集合与事件
 
@@ -58,5 +35,37 @@ namespace GetStoreApp.Views.Dialogs
         }
 
         #endregion 第三部分：构造函数
+
+        #region 第四部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private void InitializeData()
+        {
+            DesktopStartupArgsList.Add(new()
+            {
+                ArgumentName = TypeString,
+                Argument = "-t; --type",
+                IsRequired = NoString,
+                ArgumentContent = @"""url"",""pid"""
+            });
+            DesktopStartupArgsList.Add(new()
+            {
+                ArgumentName = ChannelString,
+                Argument = "-c; --channel",
+                IsRequired = NoString,
+                ArgumentContent = @"""wif"",""wis"",""rp"",""rt"""
+            });
+            DesktopStartupArgsList.Add(new()
+            {
+                ArgumentName = LinkString,
+                Argument = "-l; --link",
+                IsRequired = YesString,
+                ArgumentContent = LinkContentString
+            });
+        }
+
+        #endregion 第四部分：数据操作与业务逻辑
     }
 }

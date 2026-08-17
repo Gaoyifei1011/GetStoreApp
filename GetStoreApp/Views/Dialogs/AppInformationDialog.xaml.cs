@@ -53,8 +53,6 @@ namespace GetStoreApp.Views.Dialogs
             }
         }
 
-        private List<string> PropertyNameList => [fileVersionProperty];
-
         private ObservableCollection<ContentLinkInfo> AppInformationCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -78,7 +76,7 @@ namespace GetStoreApp.Views.Dialogs
         private async void OnOpened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
             IsLoadCompleted = false;
-            List<ContentLinkInfo> dependencyInformationList = await GetDependencyInformationListAsync(PropertyNameList);
+            List<ContentLinkInfo> dependencyInformationList = await GetDependencyInformationListAsync([fileVersionProperty]);
 
             foreach (ContentLinkInfo dependencyInformation in dependencyInformationList)
             {

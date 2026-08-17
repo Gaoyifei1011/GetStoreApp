@@ -20,6 +20,7 @@ using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
 using Windows.UI.Notifications;
+using Windows.UI.ViewManagement;
 using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
@@ -132,8 +133,7 @@ namespace GetStoreApp.Views.Pages
             if (!isInitialized)
             {
                 isInitialized = true;
-                NotificationService.PropertyChanged += OnServicePropertyChanged;
-                GlobalNotificationService.ApplicationExit += OnApplicationExit;
+                MountSettingsEvent();
             }
         }
 
@@ -217,15 +217,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnApplicationExit()
         {
-            try
-            {
-                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-                NotificationService.PropertyChanged -= OnServicePropertyChanged;
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAdvancedPage), nameof(OnApplicationExit), 1, e);
-            }
+            DismountSettingsEvent();
         }
 
         /// <summary>
@@ -245,6 +237,31 @@ namespace GetStoreApp.Views.Pages
         #endregion 第四部分：挂载事件处理
 
         #region 第五部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 挂载设置事件
+        /// </summary>
+        private void MountSettingsEvent()
+        {
+            NotificationService.PropertyChanged += OnServicePropertyChanged;
+            GlobalNotificationService.ApplicationExit += OnApplicationExit;
+        }
+
+        /// <summary>
+        /// 卸载设置事件
+        /// </summary>
+        private void DismountSettingsEvent()
+        {
+            try
+            {
+                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+                NotificationService.PropertyChanged -= OnServicePropertyChanged;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAdvancedPage), nameof(DismountSettingsEvent), 1, e);
+            }
+        }
 
         /// <summary>
         /// 打开系统通知设置

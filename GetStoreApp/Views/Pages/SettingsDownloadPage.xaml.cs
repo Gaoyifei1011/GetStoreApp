@@ -32,9 +32,15 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     internal sealed partial class SettingsDownloadPage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string DoEngineAria2String = ResourceService.GetLocalized("SettingsDownload/DoEngineAria2");
         private readonly string DoEngineBitsString = ResourceService.GetLocalized("SettingsDownload/DoEngineBits");
         private readonly string DoEngineDoString = ResourceService.GetLocalized("SettingsDownload/DoEngineDo");
+
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
 
         private string _downloadFolder;
 
@@ -84,19 +90,23 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        internal List<ComboBoxItemModel> DoEngineModeList { get; } = [];
+        private List<ComboBoxItemModel> DoEngineModeList { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
 
         internal SettingsDownloadPage()
         {
             InitializeComponent();
-            DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeList[0], DisplayMember = DoEngineDoString });
-            DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeList[1], DisplayMember = DoEngineBitsString });
-            DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeList[2], DisplayMember = DoEngineAria2String });
+            InitializeData();
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面后触发的事件
@@ -109,9 +119,9 @@ namespace GetStoreApp.Views.Pages
             DoEngineMode = DoEngineModeList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), DownloadOptionsService.DoEngineMode, StringComparison.OrdinalIgnoreCase));
         }
 
-        #endregion 第一部分：重写父类事件
+        #endregion 第四部分：父类虚方法重写
 
-        #region 第二部分：设置下载管理页面——挂载的事件
+        #region 第五部分：挂载事件处理
 
         /// <summary>
         /// 打开下载文件存放目录
@@ -153,12 +163,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             try
                             {
-                                FolderPicker folderPicker = new(MainWindow.Current.AppWindow.Id)
-                                {
-                                    SuggestedStartFolder = DownloadOptionsService.DownloadFolder
-                                };
-
-                                if (await folderPicker.PickSingleFolderAsync() is PickFolderResult pickFolderResult)
+                                if (await PickDownloadFolderAsync() is PickFolderResult pickFolderResult)
                                 {
                                     DownloadFolder = pickFolderResult.Path;
                                     DownloadOptionsService.SetFolder(DownloadFolder);
@@ -181,17 +186,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenDeliveryOptimizationClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new("ms-settings:delivery-optimization"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenDeliveryOptimization();
         }
 
         /// <summary>
@@ -243,6 +238,59 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnConfigurationClicked(object sender, RoutedEventArgs args)
         {
+            OpenAria2Conf();
+        }
+
+        #endregion 第五部分：挂载事件处理
+
+        #region 第六部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private void InitializeData()
+        {
+            DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeList[0], DisplayMember = DoEngineDoString });
+            DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeList[1], DisplayMember = DoEngineBitsString });
+            DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeList[2], DisplayMember = DoEngineAria2String });
+        }
+
+        /// <summary>
+        /// 选择下载文件夹
+        /// </summary>
+        private async Task<PickFolderResult> PickDownloadFolderAsync()
+        {
+            FolderPicker folderPicker = new(MainWindow.Current.AppWindow.Id)
+            {
+                SuggestedStartFolder = DownloadOptionsService.DownloadFolder
+            };
+
+            return await folderPicker.PickSingleFolderAsync();
+        }
+
+        /// <summary>
+        /// 打开传递优化设置
+        /// </summary>
+        private void OpenDeliveryOptimization()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("ms-settings:delivery-optimization"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 打开 Aria2 文件配置
+        /// </summary>
+        private void OpenAria2Conf()
+        {
             Task.Run(async () =>
             {
                 if (!File.Exists(Aria2Service.Aria2ConfPath))
@@ -261,6 +309,6 @@ namespace GetStoreApp.Views.Pages
             });
         }
 
-        #endregion 第二部分：设置下载管理页面——挂载的事件
+        #endregion 第六部分：数据操作与业务逻辑
     }
 }

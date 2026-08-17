@@ -399,11 +399,11 @@ namespace GetStoreApp.Views.UserControls
 
             try
             {
-                List<object> selectedItemList = [.. QueryLinksResultListView.SelectedItems];
+                List<object> selectedItemsList = [.. QueryLinksResultListView.SelectedItems];
 
                 foreach (object item in QueryLinksResultListView.Items)
                 {
-                    if (selectedItemList.Contains(item))
+                    if (selectedItemsList.Contains(item))
                     {
                         QueryLinksResultListView.SelectedItems.Remove(item);
                     }

@@ -25,12 +25,19 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     internal sealed partial class SettingsWinGetPage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string AppInstallerString = ResourceService.GetLocalized("SettingsWinGet/AppInstaller");
         private readonly string BuiltInAppString = ResourceService.GetLocalized("SettingsWinGet/BuiltInApp");
+        private bool isInitialized;
+
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
 
         private ComboBoxItemModel _currentWinGetSource;
 
-        internal ComboBoxItemModel CurrentWinGetSource
+        private ComboBoxItemModel CurrentWinGetSource
         {
             get { return _currentWinGetSource; }
 
@@ -46,7 +53,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _winGetSource;
 
-        internal ComboBoxItemModel WinGetSource
+        private ComboBoxItemModel WinGetSource
         {
             get { return _winGetSource; }
 
@@ -64,14 +71,18 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
         internal SettingsWinGetPage()
         {
             InitializeComponent();
-            WinGetSourceList.Add(new() { SelectedValue = WinGetConfigService.WinGetSourceList[0], DisplayMember = BuiltInAppString });
-            WinGetSourceList.Add(new() { SelectedValue = WinGetConfigService.WinGetSourceList[1], DisplayMember = AppInstallerString });
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面后触发的事件
@@ -79,13 +90,18 @@ namespace GetStoreApp.Views.Pages
         protected override async void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
+            if (!isInitialized)
+            {
+                isInitialized = true;
+                InitializeData();
+            }
             WinGetSource = WinGetSourceList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), WinGetConfigService.WinGetSource, StringComparison.OrdinalIgnoreCase));
             CurrentWinGetSource = WinGetSourceList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), WinGetConfigService.CurrentWinGetSource, StringComparison.OrdinalIgnoreCase));
         }
 
-        #endregion 第一部分：重写父类事件
+        #endregion 第四部分：父类虚方法重写
 
-        #region 第二部分：设置 WinGet 程序包选项页面——挂载的事件
+        #region 第五部分：挂载事件处理
 
         /// <summary>
         /// 设置 WinGet 来源
@@ -123,6 +139,27 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenWinGetSettingsClicked(object sender, RoutedEventArgs args)
         {
+            OpenWinGetSettings();
+        }
+
+        #endregion 第五部分：挂载事件处理
+
+        #region 第六部分：挂载事件处理
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private void InitializeData()
+        {
+            WinGetSourceList.Add(new() { SelectedValue = WinGetConfigService.WinGetSourceList[0], DisplayMember = BuiltInAppString });
+            WinGetSourceList.Add(new() { SelectedValue = WinGetConfigService.WinGetSourceList[1], DisplayMember = AppInstallerString });
+        }
+
+        /// <summary>
+        /// 打开 WinGet 程序包设置
+        /// </summary>
+        private void OpenWinGetSettings()
+        {
             Task.Run(async () =>
             {
                 if (ApplicationData.GetForPackageFamily("Microsoft.DesktopAppInstaller_8wekyb3d8bbwe") is ApplicationData applicationData)
@@ -141,6 +178,6 @@ namespace GetStoreApp.Views.Pages
             });
         }
 
-        #endregion 第二部分：设置 WinGet 程序包选项页面——挂载的事件
+        #endregion 第六部分：挂载事件处理
     }
 }

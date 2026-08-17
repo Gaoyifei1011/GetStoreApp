@@ -17,15 +17,14 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Store.Preview;
-using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
 using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
 
-// 抑制 IDE0060 警告
-#pragma warning disable IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
@@ -34,15 +33,21 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     internal sealed partial class SettingsItemPage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private bool needNavigate;
         private Type navigateType;
         private object navigateParameter;
         private bool? slideDirection;
         private bool canScrollHorizontally;
 
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
+
         private bool _isPreviousEnabled;
 
-        internal bool IsPreviousEnabled
+        private bool IsPreviousEnabled
         {
             get { return _isPreviousEnabled; }
 
@@ -58,7 +63,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isNextEnabled;
 
-        internal bool IsNextEnabled
+        private bool IsNextEnabled
         {
             get { return _isNextEnabled; }
 
@@ -74,7 +79,7 @@ namespace GetStoreApp.Views.Pages
 
         private SelectorBarItem _selectedItem;
 
-        internal SelectorBarItem SelectedItem
+        private SelectorBarItem SelectedItem
         {
             get { return _selectedItem; }
 
@@ -92,12 +97,18 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
         internal SettingsItemPage()
         {
             InitializeComponent();
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面触发的事件
@@ -131,9 +142,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：重写父类事件
+        #endregion 第四部分：父类虚方法重写
 
-        #region 第二部分：设置项页面——挂载的事件
+        #region 第五部分：挂载事件处理
 
         /// <summary>
         /// 设置项页面加载完成后触发的事件
@@ -294,7 +305,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 导航完成后发生
+        /// 导航完成后发生的事件
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
@@ -307,7 +318,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 导航失败时发生
+        /// 导航失败后发生的事件
         /// </summary>
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
@@ -346,6 +357,56 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnRunAsAdministratorClicked(object sender, RoutedEventArgs args)
         {
+            await RunAsAdministartorAsync();
+        }
+
+        /// <summary>
+        /// 创建应用的桌面快捷方式
+        /// </summary>
+        private async void OnPinToDesktopClicked(object sender, RoutedEventArgs args)
+        {
+            bool isCreatedSuccessfully = await PinToDestkopAsync();
+            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Desktop, isCreatedSuccessfully));
+        }
+
+        /// <summary>
+        /// 将应用固定到“开始”屏幕
+        /// </summary>
+        private async void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
+        {
+            bool isPinnedSuccessfully = await PinToStartScreenAsync();
+            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.StartScreen, isPinnedSuccessfully));
+        }
+
+        /// <summary>
+        /// 将应用固定到任务栏
+        /// </summary>
+        private async void OnPinToTaskbarClicked(object sender, RoutedEventArgs args)
+        {
+            (bool needUnlock, LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully) pinnedResult = await PinToTaskbarAsync();
+
+            if (!RuntimeHelper.IsElevated)
+            {
+                if (pinnedResult.needUnlock)
+                {
+                    if (pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available || pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.AvailableWithoutToken)
+                    {
+                        await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedResult.isPinnedSuccessfully));
+                    }
+                }
+                else
+                {
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedResult.isPinnedSuccessfully));
+                }
+            }
+        }
+
+        #endregion 第五部分：挂载事件处理
+
+        #region 第六部分：数据操作与业务逻辑
+
+        private async Task RunAsAdministartorAsync()
+        {
             int result = await Task.Run(() =>
             {
                 return Shell32Library.ShellExecute(nint.Zero, "runas", Path.Combine(InfoHelper.UserDataPath.LocalAppData, @"Microsoft\WindowsApps", Package.Current.Id.FamilyName, Path.GetFileName(Environment.ProcessPath)), null, null, WindowShowStyle.SW_SHOWNORMAL);
@@ -360,11 +421,11 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 创建应用的桌面快捷方式
+        /// 固定到桌面
         /// </summary>
-        private async void OnPinToDesktopClicked(object sender, RoutedEventArgs args)
+        private async Task<bool> PinToDestkopAsync()
         {
-            bool isCreatedSuccessfully = await Task.Run(() =>
+            return await Task.Run(() =>
             {
                 bool isCreatedSuccessfully = false;
 
@@ -378,21 +439,19 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsItemPage), nameof(OnPinToDesktopClicked), 1, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsItemPage), nameof(PinToDestkopAsync), 1, e);
                 }
 
                 return isCreatedSuccessfully;
             });
-
-            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Desktop, isCreatedSuccessfully));
         }
 
         /// <summary>
-        /// 将应用固定到“开始”屏幕
+        /// 固定到开始屏幕
         /// </summary>
-        private async void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
+        private async Task<bool> PinToStartScreenAsync()
         {
-            bool isPinnedSuccessfully = await Task.Run(async () =>
+            return await Task.Run(async () =>
             {
                 bool isPinnedSuccessfully = false;
 
@@ -409,21 +468,20 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsItemPage), nameof(OnPinToStartScreenClicked), 1, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsItemPage), nameof(PinToStartScreenAsync), 1, e);
                 }
 
                 return isPinnedSuccessfully;
             });
-
-            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.StartScreen, isPinnedSuccessfully));
         }
 
         /// <summary>
-        /// 将应用固定到任务栏
+        /// 固定到任务栏
         /// </summary>
-        private async void OnPinToTaskbarClicked(object sender, RoutedEventArgs args)
+        /// <returns></returns>
+        private async Task<(bool needUnlock, LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully)> PinToTaskbarAsync()
         {
-            (bool needUnlock, LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully) pinnedResult = await Task.Run(async () =>
+            return await Task.Run(async () =>
             {
                 LimitedAccessFeatureStatus limitedAccessFeatureStatus = LimitedAccessFeatureStatus.Unknown;
                 bool needUnlock = false;
@@ -466,7 +524,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsItemPage), nameof(OnPinToTaskbarClicked), 1, e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsItemPage), nameof(PinToTaskbarAsync), 1, e);
                     }
 
                     if (needUnlock && (limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unavailable || limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unknown) && !isPinnedSuccessfully)
@@ -482,24 +540,7 @@ namespace GetStoreApp.Views.Pages
 
                 return ValueTuple.Create(needUnlock, limitedAccessFeatureStatus, isPinnedSuccessfully);
             });
-
-            if (!RuntimeHelper.IsElevated)
-            {
-                if (pinnedResult.needUnlock)
-                {
-                    if (pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available || pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.AvailableWithoutToken)
-                    {
-                        await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedResult.isPinnedSuccessfully));
-                    }
-                }
-                else
-                {
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedResult.isPinnedSuccessfully));
-                }
-            }
         }
-
-        #endregion 第二部分：设置项页面——挂载的事件
 
         /// <summary>
         /// 页面向前导航
@@ -545,5 +586,7 @@ namespace GetStoreApp.Views.Pages
             this.navigateParameter = navigateParameter;
             this.slideDirection = slideDirection;
         }
+
+        #endregion 第六部分：数据操作与业务逻辑
     }
 }

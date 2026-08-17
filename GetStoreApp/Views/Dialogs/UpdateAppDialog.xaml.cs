@@ -130,7 +130,7 @@ namespace GetStoreApp.Views.Dialogs
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(UpdateAppDialog), nameof(OnCancelOrCloseClicked), 1, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(UpdateAppDialog), nameof(OnClosed), 1, e);
                 }
             }
         }

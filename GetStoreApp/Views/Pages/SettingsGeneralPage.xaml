@@ -153,7 +153,7 @@
                     VerticalAlignment="Center"
                     DisplayMemberPath="DisplayMember"
                     IsEnabled="{x:Bind AdvancedEffectsEnabled, Mode=OneWay}"
-                    ItemsSource="{x:Bind BackdropList}"
+                    ItemsSource="{x:Bind BackdropCollection}"
                     SelectedItem="{x:Bind Backdrop, Mode=OneWay}"
                     SelectionChanged="{x:Bind OnBackdropSelectionChanged}"
                     Style="{StaticResource ComboBoxStyle}" />

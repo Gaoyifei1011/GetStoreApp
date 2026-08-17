@@ -190,11 +190,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectReverseClicked(object sender, RoutedEventArgs args)
         {
-            List<object> selectedItemList = [.. DownloadingListView.SelectedItems];
+            List<object> selectedItemsList = [.. DownloadingListView.SelectedItems];
 
             foreach (object item in DownloadingListView.Items)
             {
-                if (selectedItemList.Contains(item))
+                if (selectedItemsList.Contains(item))
                 {
                     DownloadingListView.SelectedItems.Remove(item);
                 }
@@ -265,15 +265,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnApplicationExit()
         {
-            try
-            {
-                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-                DownloadSchedulerService.DownloadProgress -= OnDownloadProgress;
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadingPage), nameof(OnApplicationExit), 1, e);
-            }
+            DismountDownloadEvent();
         }
 
         /// <summary>
@@ -455,6 +447,22 @@ namespace GetStoreApp.Views.Pages
                 GlobalNotificationService.ApplicationExit += OnApplicationExit;
                 DownloadSchedulerService.DownloadProgress += OnDownloadProgress;
             });
+        }
+
+        /// <summary>
+        /// 卸载与下载相关的事件
+        /// </summary>
+        private void DismountDownloadEvent()
+        {
+            try
+            {
+                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+                DownloadSchedulerService.DownloadProgress -= OnDownloadProgress;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadingPage), nameof(DismountDownloadEvent), 1, e);
+            }
         }
 
         /// <summary>

@@ -137,9 +137,7 @@ namespace GetStoreApp.Views.Pages
                 AppUpdateResultKind = AppUpdateResultKind.NotCheckUpdate;
                 appInstallManager = new();
                 packageManager = new();
-
-                appInstallManager.ItemStatusChanged += OnAppInstallItemStatusChanged;
-                GlobalNotificationService.ApplicationExit += OnApplicationExit;
+                MountAppUpdateEvent();
             }
         }
 
@@ -345,15 +343,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnApplicationExit()
         {
-            try
-            {
-                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-                appInstallManager.ItemStatusChanged -= OnAppInstallItemStatusChanged;
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppUpdatePage), nameof(OnApplicationExit), 1, e);
-            }
+            DismountAppUpdateEvent();
         }
 
         /// <summary>
@@ -430,6 +420,31 @@ namespace GetStoreApp.Views.Pages
         #endregion 第六部分：挂载事件处理
 
         #region 第七部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 挂载应用更新事件
+        /// </summary>
+        private void MountAppUpdateEvent()
+        {
+            appInstallManager.ItemStatusChanged += OnAppInstallItemStatusChanged;
+            GlobalNotificationService.ApplicationExit += OnApplicationExit;
+        }
+
+        /// <summary>
+        /// 卸载应用更新事件
+        /// </summary>
+        private void DismountAppUpdateEvent()
+        {
+            try
+            {
+                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+                appInstallManager.ItemStatusChanged -= OnAppInstallItemStatusChanged;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppUpdatePage), nameof(DismountAppUpdateEvent), 1, e);
+            }
+        }
 
         /// <summary>
         /// 获取应用安装的描述信息
@@ -642,7 +657,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppUpdatePage), nameof(OnCheckUpdateClicked), 1, e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppUpdatePage), nameof(GetAppUpdateListAsync), 1, e);
                     }
 
                     return appUpdateList;

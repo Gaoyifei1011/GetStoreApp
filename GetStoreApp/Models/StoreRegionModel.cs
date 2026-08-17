@@ -7,12 +7,12 @@ namespace GetStoreApp.Models
     /// 区域模型
     /// </summary>
     [GeneratedBindableCustomProperty]
-    internal sealed partial class StoreRegionModel
+    public sealed partial class StoreRegionModel
     {
-        internal string DisplayMember { get; set; }
+        public string DisplayMember { get; set; }
 
-        internal string CodeTwoLetter { get; set; }
+        public string CodeTwoLetter { get; set; }
 
-        internal GeographicRegion GeographicRegion { get; set; }
+        public GeographicRegion GeographicRegion { get; set; }
     }
 }

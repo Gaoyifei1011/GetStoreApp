@@ -65,37 +65,7 @@ namespace GetStoreApp.Views.Dialogs
             }
         }
 
-        private List<TraceCleanupModel> TraceCleanupList =>
-        [
-            new()
-            {
-                IsCleanFailed = false,
-                DisplayName = HistoryRecordString,
-                InternalName = CleanKind.History,
-                CleanFailedText = HistoryCleanErrorString
-            },
-            new()
-            {
-                IsCleanFailed = false,
-                DisplayName = ActionCenterString,
-                InternalName = CleanKind.ActionCenter,
-                CleanFailedText = ActionCenterErrorString
-            },
-            new()
-            {
-                IsCleanFailed = false,
-                DisplayName = DownloadRecordString,
-                InternalName = CleanKind.Download,
-                CleanFailedText = DownloadCleanErrorString
-            },
-            new()
-            {
-                IsCleanFailed = false,
-                DisplayName = LocalFileString,
-                InternalName = CleanKind.LocalFile,
-                CleanFailedText = LocalFileCleanErrorString
-            }
-        ];
+        private List<TraceCleanupModel> TraceCleanupList { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -106,6 +76,7 @@ namespace GetStoreApp.Views.Dialogs
         internal TraceCleanupPromptDialog()
         {
             InitializeComponent();
+            InitializeData();
             IsItemSelected = TraceCleanupListView.SelectedItems.Count > 0;
         }
 
@@ -135,14 +106,7 @@ namespace GetStoreApp.Views.Dialogs
 
             IsCleaning = true;
 
-            List<TraceCleanupModel> selectedItemsList = [];
-            foreach (object traceCleanupItemObj in TraceCleanupListView.SelectedItems)
-            {
-                if (traceCleanupItemObj is TraceCleanupModel traceCleanupItem)
-                {
-                    selectedItemsList.Add(traceCleanupItem);
-                }
-            }
+            List<TraceCleanupModel> selectedItemsList = GetSelectedItemsList();
 
             List<(CleanKind cleanKind, bool cleanResult)> cleanSuccessfullyDict = await TraceCleanupAsync(selectedItemsList);
             foreach ((CleanKind cleanKind, bool cleanResult) in cleanSuccessfullyDict)
@@ -164,6 +128,59 @@ namespace GetStoreApp.Views.Dialogs
         #endregion 第四部分：挂载事件处理
 
         #region 第五部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private void InitializeData()
+        {
+            TraceCleanupList.Add(new TraceCleanupModel
+            {
+                IsCleanFailed = false,
+                DisplayName = HistoryRecordString,
+                InternalName = CleanKind.History,
+                CleanFailedText = HistoryCleanErrorString
+            });
+            TraceCleanupList.Add(new TraceCleanupModel
+            {
+                IsCleanFailed = false,
+                DisplayName = ActionCenterString,
+                InternalName = CleanKind.ActionCenter,
+                CleanFailedText = ActionCenterErrorString
+            });
+            TraceCleanupList.Add(new TraceCleanupModel
+            {
+                IsCleanFailed = false,
+                DisplayName = DownloadRecordString,
+                InternalName = CleanKind.Download,
+                CleanFailedText = DownloadCleanErrorString
+            });
+            TraceCleanupList.Add(new TraceCleanupModel
+            {
+                IsCleanFailed = false,
+                DisplayName = LocalFileString,
+                InternalName = CleanKind.LocalFile,
+                CleanFailedText = LocalFileCleanErrorString
+            });
+        }
+
+        /// <summary>
+        /// 获取选中项
+        /// </summary>
+        private List<TraceCleanupModel> GetSelectedItemsList()
+        {
+            List<TraceCleanupModel> selectedItemsList = [];
+
+            foreach (object traceCleanupItemObj in TraceCleanupListView.SelectedItems)
+            {
+                if (traceCleanupItemObj is TraceCleanupModel traceCleanupItem)
+                {
+                    selectedItemsList.Add(traceCleanupItem);
+                }
+            }
+
+            return selectedItemsList;
+        }
 
         /// <summary>
         /// 痕迹清理

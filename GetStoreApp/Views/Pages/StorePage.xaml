@@ -271,7 +271,7 @@
                                 Spacing="5">
 
                                 <TextBlock HorizontalAlignment="Left">
-                                    <Hyperlink Click="{x:Bind OnCheckNetWorkClicked}" UnderlineStyle="None">
+                                    <Hyperlink Click="{x:Bind OnCheckNetworkClicked}" UnderlineStyle="None">
                                         <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Store/CheckNetwork')}" />
                                     </Hyperlink>
                                 </TextBlock>

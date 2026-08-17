@@ -6,21 +6,21 @@ namespace GetStoreApp.Models
     /// 应用类型数据模型
     /// </summary>
     [GeneratedBindableCustomProperty]
-    internal sealed partial class TypeModel
+    public sealed partial class TypeModel
     {
         /// <summary>
         /// 获取应用类型显示名称
         /// </summary>
-        internal string DisplayName { get; set; }
+        public string DisplayName { get; set; }
 
         /// <summary>
         /// 获取应用类型内部名称
         /// </summary>
-        internal string InternalName { get; set; }
+        public string InternalName { get; set; }
 
         /// <summary>
         /// 获取应用类型简短名称（用作参数启动使用）
         /// </summary>
-        internal string ShortName { get; set; }
+        public string ShortName { get; set; }
     }
 }

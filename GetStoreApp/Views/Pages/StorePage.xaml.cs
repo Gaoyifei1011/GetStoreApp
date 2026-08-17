@@ -22,11 +22,17 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     internal sealed partial class StorePage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private bool isInitialized;
+
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
 
         private StoreControl _storeControl;
 
-        internal StoreControl StoreControl
+        private StoreControl StoreControl
         {
             get { return _storeControl; }
 
@@ -42,12 +48,18 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
         internal StorePage()
         {
             InitializeComponent();
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面触发的事件
@@ -71,9 +83,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：重写父类事件
+        #endregion 第四部分：父类虚方法重写
 
-        #region 第二部分：应用商店页面——挂载的事件
+        #region 第五部分：挂载事件处理
 
         /// <summary>
         /// 关闭使用说明浮出栏
@@ -98,9 +110,51 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查网络
         /// </summary>
-        private void OnCheckNetWorkClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        private void OnCheckNetworkClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             StoreSplitView.IsPaneOpen = false;
+            CheckNetwork();
+        }
+
+        /// <summary>
+        /// 疑难解答
+        /// </summary>
+        private void OnTroubleShootClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            StoreSplitView.IsPaneOpen = false;
+            OpenTroubleShoot();
+        }
+
+        /// <summary>
+        /// 打开下载设置
+        /// </summary>
+        private async void OnDownloadSettingsClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            StoreSplitView.IsPaneOpen = false;
+            await Task.Delay(300);
+            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.Download);
+        }
+
+        #endregion 第五部分：挂载事件处理
+
+        #region 第六部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 显示使用说明
+        /// </summary>
+        internal void ShowUseInstruction()
+        {
+            if (!StoreSplitView.IsPaneOpen)
+            {
+                StoreSplitView.IsPaneOpen = true;
+            }
+        }
+
+        /// <summary>
+        /// 检查网络
+        /// </summary>
+        private void CheckNetwork()
+        {
             Task.Run(async () =>
             {
                 try
@@ -115,11 +169,10 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 疑难解答
+        /// 打开疑难解答
         /// </summary>
-        private void OnTroubleShootClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        private void OpenTroubleShoot()
         {
-            StoreSplitView.IsPaneOpen = false;
             Task.Run(async () =>
             {
                 try
@@ -134,34 +187,13 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 打开下载设置
-        /// </summary>
-        private async void OnDownloadSettingsClicked(Hyperlink sender, HyperlinkClickEventArgs args)
-        {
-            StoreSplitView.IsPaneOpen = false;
-            await Task.Delay(300);
-            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.Download);
-        }
-
-        #endregion 第二部分：应用商店页面——挂载的事件
-
-        /// <summary>
-        /// 显示使用说明
-        /// </summary>
-        internal void ShowUseInstruction()
-        {
-            if (!StoreSplitView.IsPaneOpen)
-            {
-                StoreSplitView.IsPaneOpen = true;
-            }
-        }
-
-        /// <summary>
         /// 获取当前选择的商店控件
         /// </summary>
         private Visibility GetStoreControlVisibility(StoreControl selectedStoreControl, StoreControl comparedStoreControl)
         {
             return Equals(selectedStoreControl, comparedStoreControl) ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        #endregion 第六部分：数据操作与业务逻辑
     }
 }

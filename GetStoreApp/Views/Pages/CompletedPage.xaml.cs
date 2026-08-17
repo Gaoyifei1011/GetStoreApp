@@ -226,7 +226,7 @@ namespace GetStoreApp.Views.Pages
                                 completed.IsInstallWaiting = false;
                                 completed.InstallFailed = false;
                                 completed.InstallStateString = InstallSuccessfullyString;
-                                await ShowInstallAppsResultNotificationAsync(installResult.Value, completed.FileName);
+                                ShowInstallAppsResultNotification(completed.FileName, installResult.Value.result, installResult.Value.packageDeploymentResult, installResult.Value.exception);
                             }
                             // 安装失败
                             else if (installResult.Value.packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
@@ -235,7 +235,7 @@ namespace GetStoreApp.Views.Pages
                                 completed.IsInstallWaiting = false;
                                 completed.InstallFailed = true;
                                 completed.InstallStateString = InstallFailedString;
-                                await ShowInstallAppsResultNotificationAsync(installResult.Value, completed.FileName);
+                                ShowInstallAppsResultNotification(completed.FileName, installResult.Value.result, installResult.Value.packageDeploymentResult, installResult.Value.exception);
                             }
                         }
                         else
@@ -244,7 +244,7 @@ namespace GetStoreApp.Views.Pages
                             completed.IsInstallWaiting = false;
                             completed.InstallFailed = true;
                             completed.InstallStateString = InstallFailedString;
-                            await ShowInstallAppsResultNotificationAsync(installResult.Value, completed.FileName);
+                            ShowInstallAppsResultNotification(completed.FileName, installResult.Value.result, installResult.Value.packageDeploymentResult, installResult.Value.exception);
                         }
 
                         // 恢复原来的安装信息显示（并延缓当前安装信息显示时间0.5秒）
@@ -254,7 +254,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnInstallExecuteRequested), 3, e);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnInstallExecuteRequested), 1, e);
                         return;
                     }
                 }
@@ -359,11 +359,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectReverseClicked(object sender, RoutedEventArgs args)
         {
-            List<object> selectedItemList = [.. CompletedListView.SelectedItems];
+            List<object> selectedItemsList = [.. CompletedListView.SelectedItems];
 
             foreach (object item in CompletedListView.Items)
             {
-                if (selectedItemList.Contains(item))
+                if (selectedItemsList.Contains(item))
                 {
                     CompletedListView.SelectedItems.Remove(item);
                 }
@@ -519,17 +519,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnApplicationExit()
         {
-            try
-            {
-                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-                DownloadStorageService.StorageDataAdded -= OnStorageDataAdded;
-                DownloadStorageService.StorageDataDeleted -= OnStorageDataDeleted;
-                DownloadStorageService.StorageDataCleared -= OnStorageDataCleared;
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnApplicationExit), 1, e);
-            }
+            DismountDownloadEvent();
         }
 
         /// <summary>
@@ -678,6 +668,24 @@ namespace GetStoreApp.Views.Pages
                 DownloadStorageService.StorageDataCleared += OnStorageDataCleared;
                 DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
             });
+        }
+
+        /// <summary>
+        /// 卸载与下载相关的事件
+        /// </summary>
+        private void DismountDownloadEvent()
+        {
+            try
+            {
+                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+                DownloadStorageService.StorageDataAdded -= OnStorageDataAdded;
+                DownloadStorageService.StorageDataDeleted -= OnStorageDataDeleted;
+                DownloadStorageService.StorageDataCleared -= OnStorageDataCleared;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(DismountDownloadEvent), 1, e);
+            }
         }
 
         /// <summary>
@@ -840,15 +848,15 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 显示安装应用结果通知
         /// </summary>
-        private async Task ShowInstallAppsResultNotificationAsync((bool result, PackageDeploymentResult packageDeploymentResult, Exception exception) installResult, string fileName)
+        private void ShowInstallAppsResultNotification(string fileName, bool result, PackageDeploymentResult packageDeploymentResult, Exception exception)
         {
             if (!string.IsNullOrEmpty(fileName))
             {
-                await Task.Run(() =>
+                Task.Run(() =>
                 {
-                    if (installResult.result && installResult.packageDeploymentResult is not null)
+                    if (result && packageDeploymentResult is not null)
                     {
-                        if (installResult.packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
+                        if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
                         {
                             // 显示安装成功通知
                             AppNotificationBuilder appNotificationBuilder = new();
@@ -856,10 +864,10 @@ namespace GetStoreApp.Views.Pages
                             appNotificationBuilder.AddText(string.Format(InstallSuccessfully1String, fileName));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                         }
-                        else if (installResult.packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
+                        else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                         {
-                            string errorCode = installResult.packageDeploymentResult.ExtendedError is not null ? string.Format("0x{0:X8}", installResult.packageDeploymentResult.ExtendedError.HResult) : NotAvailableString;
-                            string errorMessage = installResult.packageDeploymentResult.ErrorText;
+                            string errorCode = packageDeploymentResult.ExtendedError is not null ? string.Format("0x{0:X8}", packageDeploymentResult.ExtendedError.HResult) : NotAvailableString;
+                            string errorMessage = packageDeploymentResult.ErrorText;
 
                             // 显示安装失败通知
                             AppNotificationBuilder appNotificationBuilder = new();
@@ -872,8 +880,8 @@ namespace GetStoreApp.Views.Pages
                     }
                     else
                     {
-                        string errorCode = installResult.exception is not null ? string.Format("0x{0:X8}", installResult.exception.HResult) : NotAvailableString;
-                        string errorMessage = installResult.exception is not null ? installResult.exception.Message : NotAvailableString;
+                        string errorCode = exception is not null ? string.Format("0x{0:X8}", exception.HResult) : NotAvailableString;
+                        string errorMessage = exception is not null ? exception.Message : NotAvailableString;
 
                         // 显示安装失败通知
                         AppNotificationBuilder appNotificationBuilder = new();

@@ -225,10 +225,14 @@ namespace GetStoreApp.Views.Dialogs
             {
                 try
                 {
-                    string saveFolder = await SelectSaveFolderAsync(SelectedPackageVolume);
-                    if (!string.IsNullOrEmpty(saveFolder))
+                    if (await SelectSaveFolderAsync(SelectedPackageVolume) is PickFolderResult pickFolderResult)
                     {
-                        SelectedFolder = saveFolder;
+                        string rootPath = Path.GetPathRoot(pickFolderResult.Path);
+                        string saveFolder = pickFolderResult.Path.Replace(rootPath, SelectedPackageVolume.WinRTPackageVolume.MountPoint);
+                        if (!string.IsNullOrEmpty(saveFolder))
+                        {
+                            SelectedFolder = saveFolder;
+                        }
                     }
                 }
                 catch (Exception e)
@@ -296,11 +300,10 @@ namespace GetStoreApp.Views.Dialogs
                 if (!string.IsNullOrEmpty(SelectedFolder) && SelectedPackageVolume is not null)
                 {
                     (bool result, PackageVolume packageVolume, Exception exception) = await AddPackageVolumeAsync(SelectedFolder);
+                    ShowAddPackageVolumeResultNotification(SelectedPackageVolume, false, SelectedFolder, exception);
 
                     if (result)
                     {
-                        await ShowNotificationAsync(true, SelectedPackageVolume, SelectedFolder, null);
-
                         if (SetDefaultVolume)
                         {
                             await SetDefaultVolumeAsync(packageVolume);
@@ -308,7 +311,6 @@ namespace GetStoreApp.Views.Dialogs
                     }
                     else
                     {
-                        await ShowNotificationAsync(false, SelectedPackageVolume, SelectedFolder, exception);
                         PackageVolumeResultKind = PackageVolumeResultKind.Successfully;
                     }
                 }
@@ -456,7 +458,7 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 选择存放的文件夹
         /// </summary>
-        private async Task<string> SelectSaveFolderAsync(PackageVolumeModel packageVolume)
+        private async Task<PickFolderResult> SelectSaveFolderAsync(PackageVolumeModel packageVolume)
         {
             if (packageVolume is not null && packageVolume.WinRTPackageVolume is not null)
             {
@@ -465,15 +467,7 @@ namespace GetStoreApp.Views.Dialogs
                     SuggestedStartLocation = PickerLocationId.Downloads
                 };
 
-                if (await folderPicker.PickSingleFolderAsync() is PickFolderResult pickFolderResult)
-                {
-                    string rootPath = Path.GetPathRoot(pickFolderResult.Path);
-                    return pickFolderResult.Path.Replace(rootPath, packageVolume.WinRTPackageVolume.MountPoint);
-                }
-                else
-                {
-                    return default;
-                }
+                return await folderPicker.PickSingleFolderAsync();
             }
             else
             {
@@ -484,28 +478,25 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 显示添加存储卷结果通知
         /// </summary>
-        private async Task ShowNotificationAsync(bool addResult, PackageVolumeModel packageVolume, string saveFolder, Exception exception)
+        private void ShowAddPackageVolumeResultNotification(PackageVolumeModel packageVolume, bool addResult, string saveFolder, Exception exception)
         {
             if (packageVolume is not null)
             {
-                if (addResult)
+                Task.Run(() =>
                 {
-                    // 显示存储卷添加成功的通知
-                    await Task.Run(() =>
+                    if (addResult)
                     {
+                        // 显示存储卷添加成功的通知
                         AppNotificationBuilder appNotificationBuilder = new();
                         appNotificationBuilder.AddArgument("action", "OpenApp");
                         appNotificationBuilder.AddText(string.Format(CreateSuccessfullyString, string.Format("{0}[{1}]", packageVolume.Name, saveFolder)));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                    });
-                }
-                else
-                {
-                    if (exception is not null)
+                    }
+                    else
                     {
-                        // 显示存储卷添加失败的通知
-                        await Task.Run(() =>
+                        if (exception is not null)
                         {
+                            // 显示存储卷添加失败的通知
                             AppNotificationBuilder appNotificationBuilder = new();
                             appNotificationBuilder.AddArgument("action", "OpenApp");
                             appNotificationBuilder.AddText(string.Format(CreateFailed1String, string.Format("{0}[{1}]", packageVolume.Name, saveFolder)));
@@ -516,10 +507,10 @@ namespace GetStoreApp.Views.Dialogs
                                 string.Format(CreateFailed4String, exception is not null ? exception.Message : NotAvailableString)
                             }));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeAddDialog), nameof(OnSaveClicked), 1, exception is not null ? exception : new());
-                        });
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeAddDialog), nameof(ShowAddPackageVolumeResultNotification), 1, exception is not null ? exception : new());
+                        }
                     }
-                }
+                });
             }
         }
 
