@@ -5,7 +5,7 @@ using System.Runtime.InteropServices.Marshalling;
 namespace GetStoreAppInstaller.WindowsAPI.ComTypes
 {
     [GeneratedComInterface, Guid("BEB94909-E451-438B-B5A7-D79E767B75D8")]
-    public partial interface IAppxFactory
+    internal partial interface IAppxFactory
     {
         /// <summary>
         /// 创建可向其添加文件的只写包对象。

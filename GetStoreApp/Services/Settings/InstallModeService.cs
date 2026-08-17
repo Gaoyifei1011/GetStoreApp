@@ -8,20 +8,20 @@ namespace GetStoreApp.Services.Settings
     /// <summary>
     /// 应用安装方式设置服务
     /// </summary>
-    public static class InstallModeService
+    internal static class InstallModeService
     {
         private static readonly string settingsKey = ConfigKey.InstallModeKey;
 
         private static string defaultInstallMode;
 
-        public static string InstallMode { get; private set; }
+        internal static string InstallMode { get; private set; }
 
-        public static List<string> InstallModeList { get; } = ["AppInstall", "CodeInstall"];
+        internal static List<string> InstallModeList { get; } = ["AppInstall", "CodeInstall"];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的应用安装方式值
         /// </summary>
-        public static void InitializeInstallMode()
+        internal static void InitializeInstallMode()
         {
             defaultInstallMode = InstallModeList.Find(item => string.Equals(item, "AppInstall", StringComparison.OrdinalIgnoreCase));
             InstallMode = GetInstallMode();
@@ -47,7 +47,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 应用安装方式发生修改时修改设置存储的应用安装方式值
         /// </summary>
-        public static void SetInstallMode(string installMode)
+        internal static void SetInstallMode(string installMode)
         {
             InstallMode = installMode;
             LocalSettingsService.SaveSetting(settingsKey, installMode);

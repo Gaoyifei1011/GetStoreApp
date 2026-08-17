@@ -8,7 +8,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 描述一个包在另一个包上的依赖项。
     /// </summary>
     [GeneratedComInterface, Guid("DDA0B713-F3FF-49D3-898A-2786780C5D98")]
-    public partial interface IAppxManifestPackageDependency2 : IAppxManifestPackageDependency
+    internal partial interface IAppxManifestPackageDependency2 : IAppxManifestPackageDependency
     {
         /// <summary>
         /// 返回测试与当前包兼容的包的最大主版本号。

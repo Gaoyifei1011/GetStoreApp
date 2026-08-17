@@ -27,7 +27,7 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 设置通用选项页面
     /// </summary>
-    public sealed partial class SettingsGeneralPage : Page, INotifyPropertyChanged
+    internal sealed partial class SettingsGeneralPage : Page, INotifyPropertyChanged
     {
         private readonly string BackdropAcrylicString = ResourceService.GetLocalized("SettingsGeneral/BackdropAcrylic");
         private readonly string BackdropAcrylicBaseString = ResourceService.GetLocalized("SettingsGeneral/BackdropAcrylicBase");
@@ -44,7 +44,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _theme;
 
-        public ComboBoxItemModel Theme
+        internal ComboBoxItemModel Theme
         {
             get { return _theme; }
 
@@ -60,7 +60,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _backdrop;
 
-        public ComboBoxItemModel Backdrop
+        internal ComboBoxItemModel Backdrop
         {
             get { return _backdrop; }
 
@@ -76,7 +76,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _alwaysShowBackdrop;
 
-        public bool AlwaysShowBackdrop
+        internal bool AlwaysShowBackdrop
         {
             get { return _alwaysShowBackdrop; }
 
@@ -92,7 +92,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _alwaysShowBackdropEnabled;
 
-        public bool AlwaysShowBackdropEnabled
+        internal bool AlwaysShowBackdropEnabled
         {
             get { return _alwaysShowBackdropEnabled; }
 
@@ -108,7 +108,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _advancedEffectsEnabled;
 
-        public bool AdvancedEffectsEnabled
+        internal bool AdvancedEffectsEnabled
         {
             get { return _advancedEffectsEnabled; }
 
@@ -124,7 +124,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _appLanguage;
 
-        public ComboBoxItemModel AppLanguage
+        internal ComboBoxItemModel AppLanguage
         {
             get { return _appLanguage; }
 
@@ -140,7 +140,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _topMost;
 
-        public bool TopMost
+        internal bool TopMost
         {
             get { return _topMost; }
 
@@ -162,7 +162,7 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SettingsGeneralPage()
+        internal SettingsGeneralPage()
         {
             InitializeComponent();
 

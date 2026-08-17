@@ -1,6 +1,6 @@
 ﻿namespace GetStoreApp.Extensions.DataType.Enums
 {
-    public enum PackageOperationKind
+    internal enum PackageOperationKind
     {
         Download = 0,
         Install = 1,

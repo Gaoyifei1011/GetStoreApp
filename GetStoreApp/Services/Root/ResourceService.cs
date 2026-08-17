@@ -8,7 +8,7 @@ namespace GetStoreApp.Services.Root
     /// <summary>
     /// 应用资源服务
     /// </summary>
-    public static class ResourceService
+    internal static class ResourceService
     {
         private static bool isInitialized;
 
@@ -25,7 +25,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         /// <param name="defaultAppLanguage">默认语言名称</param>
         /// <param name="currentAppLanguage">当前语言名称</param>
-        public static void InitializeResource(KeyValuePair<string, string> defaultAppLanguage, KeyValuePair<string, string> currentAppLanguage)
+        internal static void InitializeResource(KeyValuePair<string, string> defaultAppLanguage, KeyValuePair<string, string> currentAppLanguage)
         {
             _defaultAppLanguage = defaultAppLanguage;
             _currentAppLanguage = currentAppLanguage;
@@ -43,7 +43,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 字符串本地化
         /// </summary>
-        public static string GetLocalized(string resource)
+        internal static string GetLocalized(string resource)
         {
             if (isInitialized)
             {
@@ -78,7 +78,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 获取嵌入的数据
         /// </summary>
-        public static byte[] GetEmbeddedData(string resource)
+        internal static byte[] GetEmbeddedData(string resource)
         {
             try
             {

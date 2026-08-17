@@ -6,18 +6,18 @@ namespace GetStoreApp.Services.Settings
     /// <summary>
     /// 文件右键菜单设置服务
     /// </summary>
-    public static class ShellMenuService
+    internal static class ShellMenuService
     {
         private static readonly string settingsKey = ConfigKey.ShellMenuKey;
 
         private static readonly bool defaultShellMenu = true;
 
-        public static bool ShellMenu { get; private set; }
+        internal static bool ShellMenu { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的文件右键菜单显示值
         /// </summary>
-        public static void InitializeShellMenu()
+        internal static void InitializeShellMenu()
         {
             ShellMenu = GetShellMenu();
         }
@@ -41,7 +41,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 文件右键菜单显示值发生修改时修改设置存储的文件右键菜单显示值
         /// </summary>
-        public static void SetShellMenu(bool shellMenu)
+        internal static void SetShellMenu(bool shellMenu)
         {
             ShellMenu = shellMenu;
             LocalSettingsService.SaveSetting(settingsKey, shellMenu);

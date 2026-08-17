@@ -3,7 +3,7 @@
     /// <summary>
     /// 激活调用中使用的值，用于指示要在其中运行对象的执行上下文。 这些值还用于对 CoRegisterClassObject 的调用，以指示一组执行上下文，在该上下文中，类对象可用于构造实例的请求。
     /// </summary>
-    public enum CLSCTX : uint
+    internal enum CLSCTX : uint
     {
         /// <summary>
         /// 创建和管理此类的对象的代码是一个 DLL，它与指定类上下文的函数的调用方在同一个进程中运行。

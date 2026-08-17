@@ -19,9 +19,9 @@ namespace GetStoreAppWebView
     {
         private bool isDisposed;
 
-        public Window MainWindow { get; private set; }
+        internal Window MainWindow { get; private set; }
 
-        public WebViewApp()
+        internal WebViewApp()
         {
             InitializeComponent();
             DispatcherShutdownMode = DispatcherShutdownMode.OnExplicitShutdown;

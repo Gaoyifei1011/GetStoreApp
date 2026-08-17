@@ -9,9 +9,9 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32
     /// <summary>
     /// Shell32.dll 函数库
     /// </summary>
-    public static partial class Shell32Library
+    internal static partial class Shell32Library
     {
-        public const string Shell32 = "shell32.dll";
+        internal const string Shell32 = "shell32.dll";
 
         /// <summary>
         /// 注册窗口是否接受已删除的文件。
@@ -19,7 +19,7 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32
         /// <param name="hwnd">正在注册是否接受已删除文件的窗口的标识符。</param>
         /// <param name="fAccept">一个值，该值指示 hWnd 参数标识的窗口是否接受已删除的文件。 如果接受已删除的文件，则此值为 TRUE ;如果值为 FALSE ，则表示停止接受已删除的文件。</param>
         [LibraryImport(Shell32, EntryPoint = "DragAcceptFiles", SetLastError = false), PreserveSig]
-        public static partial void DragAcceptFiles(nint hwnd, [MarshalAs(UnmanagedType.Bool)] bool fAccept);
+        internal static partial void DragAcceptFiles(nint hwnd, [MarshalAs(UnmanagedType.Bool)] bool fAccept);
 
         /// <summary>
         /// 检索由于成功拖放操作而删除的文件的名称。
@@ -35,7 +35,7 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32
         /// 如果索引值介于零和已删除文件总数之间，并且 lpszFile 缓冲区地址为 NULL，则返回值是缓冲区所需的大小（以字符为单位）， 不包括 终止 null 字符。
         /// </returns>
         [LibraryImport(Shell32, EntryPoint = "DragQueryFileW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
-        public static partial uint DragQueryFile(nuint hDrop, uint iFile, [Out, MarshalAs(UnmanagedType.LPArray)] char[] lpszFile, uint cch);
+        internal static partial uint DragQueryFile(nuint hDrop, uint iFile, [Out, MarshalAs(UnmanagedType.LPArray)] char[] lpszFile, uint cch);
 
         /// <summary>
         /// 检索在拖放操作期间删除文件时鼠标指针的位置。
@@ -45,14 +45,14 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32
         /// <returns>如果删除发生在窗口的工作区中，则为 TRUE;否则为 FALSE。</returns>
         [LibraryImport(Shell32, EntryPoint = "DragQueryPoint", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool DragQueryPoint(nuint hDrop, out PointInt32 lppt);
+        internal static partial bool DragQueryPoint(nuint hDrop, out PointInt32 lppt);
 
         /// <summary>
         /// 描述已删除的文件的结构的标识符。 此句柄是从WM_DROPFILES消息的 wParam 参数检索的。
         /// </summary>
         /// <param name="hDrop">释放系统分配用于将文件名传输到应用程序的内存。</param>
         [LibraryImport(Shell32, EntryPoint = "DragFinish", SetLastError = false), PreserveSig]
-        public static partial void DragFinish(nuint hDrop);
+        internal static partial void DragFinish(nuint hDrop);
 
         /// <summary>
         /// 对指定文件执行操作。
@@ -65,6 +65,6 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32
         /// <param name="nShowCmd">指定应用程序在打开时如何显示应用程序的标志。 如果 lpFile 指定文档文件，则标志将直接传递给关联的应用程序。 由应用程序决定如何处理它。 它可以是在 ShowWindow 函数的 nCmdShow 参数中指定的任何值。</param>
         /// <returns>如果函数成功，则返回大于 32 的值。 如果函数失败，它将返回一个错误值，该值指示失败的原因。 返回值转换为 HINSTANCE，以便与 16 位 Windows 应用程序向后兼容。</returns>
         [LibraryImport(Shell32, EntryPoint = "ShellExecuteW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
-        public static partial int ShellExecute(nint hwnd, [MarshalAs(UnmanagedType.LPWStr)] string lpOperation, [MarshalAs(UnmanagedType.LPWStr)] string lpFile, string lpParameters, [MarshalAs(UnmanagedType.LPWStr)] string lpDirectory, WindowShowStyle nShowCmd);
+        internal static partial int ShellExecute(nint hwnd, [MarshalAs(UnmanagedType.LPWStr)] string lpOperation, [MarshalAs(UnmanagedType.LPWStr)] string lpFile, string lpParameters, [MarshalAs(UnmanagedType.LPWStr)] string lpDirectory, WindowShowStyle nShowCmd);
     }
 }

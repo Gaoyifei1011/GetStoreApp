@@ -9,12 +9,12 @@ namespace GetStoreApp.Services.Settings
     /// <summary>
     /// 痕迹清理服务
     /// </summary>
-    public static class TraceCleanupService
+    internal static class TraceCleanupService
     {
         /// <summary>
         /// 根据传入的清理选项清理应用痕迹
         /// </summary>
-        public static bool CleanAppTraceAsync(CleanKind cleanupArgs)
+        internal static bool CleanAppTraceAsync(CleanKind cleanupArgs)
         {
             return cleanupArgs switch
             {

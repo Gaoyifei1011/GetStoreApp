@@ -30,7 +30,7 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 设置下载管理页面
     /// </summary>
-    public sealed partial class SettingsDownloadPage : Page, INotifyPropertyChanged
+    internal sealed partial class SettingsDownloadPage : Page, INotifyPropertyChanged
     {
         private readonly string DoEngineAria2String = ResourceService.GetLocalized("SettingsDownload/DoEngineAria2");
         private readonly string DoEngineBitsString = ResourceService.GetLocalized("SettingsDownload/DoEngineBits");
@@ -38,7 +38,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _downloadFolder;
 
-        public string DownloadFolder
+        internal string DownloadFolder
         {
             get { return _downloadFolder; }
 
@@ -54,7 +54,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _manualSetDownloadFolder;
 
-        public bool ManualSetDownloadFolder
+        internal bool ManualSetDownloadFolder
         {
             get { return _manualSetDownloadFolder; }
 
@@ -70,7 +70,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _doEngineMode;
 
-        public ComboBoxItemModel DoEngineMode
+        internal ComboBoxItemModel DoEngineMode
         {
             get { return _doEngineMode; }
 
@@ -84,11 +84,11 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<ComboBoxItemModel> DoEngineModeList { get; } = [];
+        internal List<ComboBoxItemModel> DoEngineModeList { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SettingsDownloadPage()
+        internal SettingsDownloadPage()
         {
             InitializeComponent();
             DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeList[0], DisplayMember = DoEngineDoString });

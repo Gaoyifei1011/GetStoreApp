@@ -18,16 +18,16 @@ namespace GetStoreAppWebView
     /// <summary>
     /// 网页浏览器
     /// </summary>
-    public class Program
+    internal class Program
     {
-        public static AppActivationArguments AppActivationArguments { get; private set; }
+        internal static AppActivationArguments AppActivationArguments { get; private set; }
 
         /// <summary>
         /// 应用程序的主入口点
         /// </summary>
         [STAThread]
         [DynamicWindowsRuntimeCast(typeof(ProtocolActivatedEventArgs))]
-        public static void Main()
+        internal static void Main()
         {
             ComWrappersSupport.InitializeComWrappers();
 

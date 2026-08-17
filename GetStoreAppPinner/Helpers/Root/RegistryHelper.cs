@@ -12,12 +12,12 @@ namespace GetStoreApp.Helpers.Root
     /// <summary>
     /// 注册表读取辅助类
     /// </summary>
-    public static class RegistryHelper
+    internal static class RegistryHelper
     {
         /// <summary>
         /// 读取注册表指定项的内容
         /// </summary>
-        public static T ReadRegistryKey<T>(nuint rootRegistryKey, string rootKey, string key)
+        internal static T ReadRegistryKey<T>(nuint rootRegistryKey, string rootKey, string key)
         {
             T value = default;
             try

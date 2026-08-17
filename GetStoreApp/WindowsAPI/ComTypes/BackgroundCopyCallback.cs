@@ -7,9 +7,9 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     /// IBackgroundCopyCallback 接口的实现
     /// </summary>
     [GeneratedComClass]
-    public partial class BackgroundCopyCallback : IBackgroundCopyCallback
+    internal sealed partial class BackgroundCopyCallback : IBackgroundCopyCallback
     {
-        public string DownloadID { get; set; }
+        internal string DownloadID { get; set; }
 
         /// <summary>
         /// 下载状态发生变化时触发的事件

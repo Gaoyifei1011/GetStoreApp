@@ -9,12 +9,12 @@ namespace GetStoreAppPinner.Helpers.Root
     /// <summary>
     /// 哈希算法计算辅助类
     /// </summary>
-    public static class HashAlgorithmHelper
+    internal static class HashAlgorithmHelper
     {
         /// <summary>
         /// 获取计算所得的 SHA256 算法加密后的值
         /// </summary>
-        public static string ComputeSHA256(string content)
+        internal static string ComputeSHA256(string content)
         {
             HashAlgorithmProvider hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
             IBuffer buffer = Encoding.UTF8.GetBytes(content).AsBuffer();

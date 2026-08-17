@@ -19,9 +19,9 @@ namespace GetStoreAppInstaller
     {
         private bool isDisposed;
 
-        public Window MainWindow { get; private set; }
+        internal Window MainWindow { get; private set; }
 
-        public InstallerApp()
+        internal InstallerApp()
         {
             InitializeComponent();
             DispatcherShutdownMode = DispatcherShutdownMode.OnExplicitShutdown;

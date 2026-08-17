@@ -22,17 +22,17 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 设置页面
     /// </summary>
-    public sealed partial class SettingsPage : Page
+    internal sealed partial class SettingsPage : Page
     {
         private readonly string SettingsString = ResourceService.GetLocalized("Settings/Settings");
         private readonly string PackageVolumeConfigurationString = ResourceService.GetLocalized("Settings/PackageVolumeConfiguration");
         private readonly string WinGetSourceConfigurationString = ResourceService.GetLocalized("Settings/WinGetSourceConfiguration");
 
-        public List<Type> PageList { get; } = [typeof(SettingsItemPage), typeof(SettingsWinGetSourcePage), typeof(SettingsPackageVolumePage)];
+        internal List<Type> PageList { get; } = [typeof(SettingsItemPage), typeof(SettingsWinGetSourcePage), typeof(SettingsPackageVolumePage)];
 
-        public ObservableCollection<ContentLinkInfo> BreadCollection { get; } = [];
+        internal ObservableCollection<ContentLinkInfo> BreadCollection { get; } = [];
 
-        public SettingsPage()
+        internal SettingsPage()
         {
             InitializeComponent();
         }
@@ -300,7 +300,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 页面向前导航
         /// </summary>
-        public void NavigateTo(Type navigationPageType, object parameter = null, bool? slideDirection = null)
+        internal void NavigateTo(Type navigationPageType, object parameter = null, bool? slideDirection = null)
         {
             try
             {
@@ -318,7 +318,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取当前导航到的页
         /// </summary>
-        public Type GetCurrentPageType()
+        internal Type GetCurrentPageType()
         {
             return SettingsFrame.CurrentSourcePageType;
         }
@@ -326,7 +326,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取当前导航控件内容对应的页面
         /// </summary>
-        public object GetFrameContent()
+        internal object GetFrameContent()
         {
             return SettingsFrame.Content;
         }
@@ -334,7 +334,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 显示设置说明
         /// </summary>
-        public void ShowSettingsInstruction()
+        internal void ShowSettingsInstruction()
         {
             if (!SettingsSplitView.IsPaneOpen)
             {

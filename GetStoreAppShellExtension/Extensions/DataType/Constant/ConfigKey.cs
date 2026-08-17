@@ -3,16 +3,16 @@
     /// <summary>
     /// 设置选项对应的键值
     /// </summary>
-    public static class ConfigKey
+    internal static class ConfigKey
     {
-        public const string AllowUnsignedPackageKey = "AllowUnsignedPackage";
+        internal const string AllowUnsignedPackageKey = "AllowUnsignedPackage";
 
-        public const string ForceAppShutdownKey = "ForceAppShutdown";
+        internal const string ForceAppShutdownKey = "ForceAppShutdown";
 
-        public const string ForceTargetAppShutdownKey = "ForceTargetAppShutdown";
+        internal const string ForceTargetAppShutdownKey = "ForceTargetAppShutdown";
 
-        public const string ShellMenuKey = "ShellMenu";
+        internal const string ShellMenuKey = "ShellMenu";
 
-        public const string LanguageKey = "AppLanguage";
+        internal const string LanguageKey = "AppLanguage";
     }
 }

@@ -7,13 +7,13 @@ namespace GetStoreApp.Helpers.Root
     /// <summary>
     /// 运行时辅助类
     /// </summary>
-    public static class RuntimeHelper
+    internal static class RuntimeHelper
     {
-        public static bool IsMSIX { get; }
+        internal static bool IsMSIX { get; }
 
-        public static bool IsElevated { get; } = Environment.IsPrivilegedProcess;
+        internal static bool IsElevated { get; } = Environment.IsPrivilegedProcess;
 
-        public static bool IsStoreVersion { get; private set; }
+        internal static bool IsStoreVersion { get; private set; }
 
         static RuntimeHelper()
         {

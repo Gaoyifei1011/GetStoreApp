@@ -3,21 +3,21 @@ using Windows.System;
 
 namespace GetStoreAppInstaller.Extensions.DataType.Classes
 {
-    public class PackageManifestInformation
+    internal class PackageManifestInformation
     {
         /// <summary>
         /// 应用信息
         /// </summary>
-        public Dictionary<ProcessorArchitecture, string> ApplicationDict { get; set; }
+        internal Dictionary<ProcessorArchitecture, string> ApplicationDict { get; set; }
 
         /// <summary>
         /// 语言信息
         /// </summary>
-        public List<string> LanguageList { get; set; }
+        internal List<string> LanguageList { get; set; }
 
         /// <summary>
         /// 规模信息
         /// </summary>
-        public List<string> ScaleResourceList { get; set; }
+        internal List<string> ScaleResourceList { get; set; }
     }
 }

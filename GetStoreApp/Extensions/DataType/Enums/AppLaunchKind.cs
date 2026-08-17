@@ -3,7 +3,7 @@
     /// <summary>
     /// 应用启动类型
     /// </summary>
-    public enum AppLaunchKind
+    internal enum AppLaunchKind
     {
         None = 0,
         Launch = 1,

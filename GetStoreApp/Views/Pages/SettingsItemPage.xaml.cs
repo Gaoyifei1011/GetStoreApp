@@ -32,7 +32,7 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 设置项页面
     /// </summary>
-    public sealed partial class SettingsItemPage : Page, INotifyPropertyChanged
+    internal sealed partial class SettingsItemPage : Page, INotifyPropertyChanged
     {
         private bool needNavigate;
         private Type navigateType;
@@ -42,7 +42,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isPreviousEnabled;
 
-        public bool IsPreviousEnabled
+        internal bool IsPreviousEnabled
         {
             get { return _isPreviousEnabled; }
 
@@ -58,7 +58,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isNextEnabled;
 
-        public bool IsNextEnabled
+        internal bool IsNextEnabled
         {
             get { return _isNextEnabled; }
 
@@ -74,7 +74,7 @@ namespace GetStoreApp.Views.Pages
 
         private SelectorBarItem _selectedItem;
 
-        public SelectorBarItem SelectedItem
+        internal SelectorBarItem SelectedItem
         {
             get { return _selectedItem; }
 
@@ -88,11 +88,11 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        public List<Type> PageList { get; } = [typeof(SettingsGeneralPage), typeof(SettingsStoreAndUpdatePage), typeof(SettingsWinGetPage), typeof(SettingsDownloadPage), typeof(SettingsAppInstallPage), typeof(SettingsAdvancedPage), typeof(SettingsAboutPage)];
+        internal List<Type> PageList { get; } = [typeof(SettingsGeneralPage), typeof(SettingsStoreAndUpdatePage), typeof(SettingsWinGetPage), typeof(SettingsDownloadPage), typeof(SettingsAppInstallPage), typeof(SettingsAdvancedPage), typeof(SettingsAboutPage)];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SettingsItemPage()
+        internal SettingsItemPage()
         {
             InitializeComponent();
         }
@@ -504,7 +504,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 页面向前导航
         /// </summary>
-        public void NavigateTo(Type navigationPageType, object parameter = null, bool? slideDirection = null)
+        internal void NavigateTo(Type navigationPageType, object parameter = null, bool? slideDirection = null)
         {
             try
             {
@@ -522,7 +522,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取当前导航到的页
         /// </summary>
-        public Type GetCurrentPageType()
+        internal Type GetCurrentPageType()
         {
             return SettingsItemFrame.CurrentSourcePageType;
         }
@@ -530,7 +530,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 恢复页面默认导航设置
         /// </summary>
-        public void ResetFrameTransition()
+        internal void ResetFrameTransition()
         {
             SettingsItemFrame.ContentTransitions = SuppressNavigationTransitionCollection;
         }
@@ -538,7 +538,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 设置要导航的内容
         /// </summary>
-        public void SetNavigateContent(bool needNavigate, Type navigateType, object navigateParameter = null, bool? slideDirection = null)
+        internal void SetNavigateContent(bool needNavigate, Type navigateType, object navigateParameter = null, bool? slideDirection = null)
         {
             this.needNavigate = needNavigate;
             this.navigateType = navigateType;

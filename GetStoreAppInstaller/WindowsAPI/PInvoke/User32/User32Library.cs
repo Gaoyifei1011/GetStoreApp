@@ -8,7 +8,7 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
     /// <summary>
     /// User32.dll 函数库
     /// </summary>
-    public static partial class User32Library
+    internal static partial class User32Library
     {
         private const string User32 = "user32.dll";
 
@@ -20,7 +20,7 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         /// <returns>如果成功，则为 TRUE;否则为 FALSE。</returns>
         [LibraryImport(User32, EntryPoint = "ChangeWindowMessageFilter", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool ChangeWindowMessageFilter(WindowMessage message, ChangeFilterFlags dwFlag);
+        internal static partial bool ChangeWindowMessageFilter(WindowMessage message, ChangeFilterFlags dwFlag);
 
         /// <summary>
         /// 创建从指定文件中提取的图标的句柄数组。
@@ -39,7 +39,7 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         /// 如果 <param name="phicon"> 参数为 NULL 且此函数成功，则返回值为文件中的图标数。 如果函数失败，则返回值为 0。 如果 <param name="phicon"> 参数不是 NULL 且函数成功，则返回值是提取的图标数。 否则，如果未找到文件，则返回值0xFFFFFFFF。
         /// </returns>
         [LibraryImport(User32, EntryPoint = "PrivateExtractIconsW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
-        public static partial int PrivateExtractIcons([MarshalAs(UnmanagedType.LPWStr)] string lpszFile, int nIconIndex, int cxIcon, int cyIcon, [Out, MarshalAs(UnmanagedType.LPArray)] nint[] phicon, [Out, MarshalAs(UnmanagedType.LPArray)] int[] piconid, int nIcons, int flags);
+        internal static partial int PrivateExtractIcons([MarshalAs(UnmanagedType.LPWStr)] string lpszFile, int nIconIndex, int cxIcon, int cyIcon, [Out, MarshalAs(UnmanagedType.LPArray)] nint[] phicon, [Out, MarshalAs(UnmanagedType.LPArray)] int[] piconid, int nIcons, int flags);
 
         /// <summary>
         /// 将指定的消息发送到窗口或窗口。 SendMessage 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。
@@ -54,7 +54,7 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         /// <param name="lParam">其他的消息特定信息。</param>
         /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
         [LibraryImport(User32, EntryPoint = "SendMessageW", SetLastError = false), PreserveSig]
-        public static partial nint SendMessage(nint hWnd, WindowMessage wMsg, nuint wParam, nint lParam);
+        internal static partial nint SendMessage(nint hWnd, WindowMessage wMsg, nuint wParam, nint lParam);
 
         /// <summary>
         /// 当仅针对当前正在运行的进程创建没有父级或所有者的窗口时，更改默认布局。
@@ -63,6 +63,6 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
         [LibraryImport(User32, EntryPoint = "SetProcessDefaultLayout", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool SetProcessDefaultLayout(uint dwDefaultLayout);
+        internal static partial bool SetProcessDefaultLayout(uint dwDefaultLayout);
     }
 }

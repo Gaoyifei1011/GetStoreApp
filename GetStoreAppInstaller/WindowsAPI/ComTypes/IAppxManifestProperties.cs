@@ -8,7 +8,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 提供对包清单的属性部分的只读访问权限。
     /// </summary>
     [GeneratedComInterface, Guid("03FAF64D-F26F-4B2C-AAF7-8FE7789B8BCA")]
-    public partial interface IAppxManifestProperties
+    internal partial interface IAppxManifestProperties
     {
         /// <summary>
         /// 获取 properties 节中指定布尔元素的值。

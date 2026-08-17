@@ -8,7 +8,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 从 AppxManifest.xml 检索有关目标设备系列的信息。
     /// </summary>
     [GeneratedComInterface, Guid("9091B09B-C8D5-4F31-8687-A338259FAEFB")]
-    public partial interface IAppxManifestTargetDeviceFamily
+    internal partial interface IAppxManifestTargetDeviceFamily
     {
         /// <summary>
         /// 从 AppxManifest.xml 获取目标设备系列的名称。

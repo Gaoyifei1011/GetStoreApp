@@ -8,7 +8,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 表示包清单的对象模型，该模型提供用于访问清单元素和属性的方法。
     /// </summary>
     [GeneratedComInterface, Guid("C43825AB-69B7-400A-9709-CC37F5A72D24")]
-    public partial interface IAppxManifestReader3
+    internal partial interface IAppxManifestReader3
     {
         /// <summary>
         /// 获取清单中定义的包标识符。

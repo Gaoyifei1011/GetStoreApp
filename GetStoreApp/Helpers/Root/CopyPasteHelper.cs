@@ -10,12 +10,12 @@ namespace GetStoreApp.Helpers.Root
     /// <summary>
     /// 复制到剪贴板 / 从剪贴板中粘贴辅助类
     /// </summary>
-    public static class CopyPasteHelper
+    internal static class CopyPasteHelper
     {
         /// <summary>
         /// 复制字符串内容到剪贴板
         /// </summary>
-        public static bool CopyTextToClipBoard(string content)
+        internal static bool CopyTextToClipBoard(string content)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 复制文件到剪贴板
         /// </summary>
-        public static bool CopyFileToClipBoard(List<StorageFile> fileList)
+        internal static bool CopyFileToClipBoard(List<StorageFile> fileList)
         {
             try
             {

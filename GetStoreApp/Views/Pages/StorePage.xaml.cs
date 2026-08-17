@@ -20,13 +20,13 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 微软商店页面
     /// </summary>
-    public sealed partial class StorePage : Page, INotifyPropertyChanged
+    internal sealed partial class StorePage : Page, INotifyPropertyChanged
     {
         private bool isInitialized;
 
         private StoreControl _storeControl;
 
-        public StoreControl StoreControl
+        internal StoreControl StoreControl
         {
             get { return _storeControl; }
 
@@ -42,7 +42,7 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public StorePage()
+        internal StorePage()
         {
             InitializeComponent();
         }
@@ -148,7 +148,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 显示使用说明
         /// </summary>
-        public void ShowUseInstruction()
+        internal void ShowUseInstruction()
         {
             if (!StoreSplitView.IsPaneOpen)
             {

@@ -7,7 +7,7 @@ namespace GetStoreApp.Helpers.Store
     /// <summary>
     /// 网页解析辅助类
     /// </summary>
-    public static partial class HtmlParseHelper
+    internal static partial class HtmlParseHelper
     {
         private static string parseContent = string.Empty;
 
@@ -23,7 +23,7 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 初始化 HtmlParseService 类时添加 HtmlRequestHelper 生成的字符串数据
         /// </summary>
-        public static void InitializeParseData(RequestModel httpRequestData)
+        internal static void InitializeParseData(RequestModel httpRequestData)
         {
             parseContent = httpRequestData.RequestContent;
         }
@@ -31,7 +31,7 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 解析网页数据中包含的 CategoryID 信息
         /// </summary>
-        public static string HtmlParseCID()
+        internal static string HtmlParseCID()
         {
             if (!string.IsNullOrEmpty(parseContent))
             {
@@ -52,7 +52,7 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 解析网页数据中包含的打包应用所有信息
         /// </summary>
-        public static List<QueryLinksResultModel> HtmlParsePackagedAppLinks()
+        internal static List<QueryLinksResultModel> HtmlParsePackagedAppLinks()
         {
             List<QueryLinksResultModel> queryLinksResultList = [];
 
@@ -85,7 +85,7 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 解析网页数据中包含的非打包应用所有信息
         /// </summary>
-        public static List<QueryLinksResultModel> HtmlParseNonPackagedAppLinks()
+        internal static List<QueryLinksResultModel> HtmlParseNonPackagedAppLinks()
         {
             List<QueryLinksResultModel> queryLinksResultList = [];
 

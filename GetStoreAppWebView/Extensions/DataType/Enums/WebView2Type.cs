@@ -3,7 +3,7 @@
     /// <summary>
     /// WebView2 类型
     /// </summary>
-    public enum WebView2Type
+    internal enum WebView2Type
     {
         None = 0,
         User = 1,

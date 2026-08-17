@@ -3,7 +3,7 @@
     /// <summary>
     /// 搜索应用结果类型
     /// </summary>
-    public enum SearchAppsResultKind
+    internal enum SearchAppsResultKind
     {
         NotSearch = 0,
         Searching = 1,

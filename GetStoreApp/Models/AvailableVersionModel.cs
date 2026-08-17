@@ -5,26 +5,26 @@ namespace GetStoreApp.Models
     /// <summary>
     /// 可更新版本的数据模型
     /// </summary>
-    public partial class AvailableVersionModel
+    internal sealed partial class AvailableVersionModel
     {
         /// <summary>
         /// 是否是默认版本
         /// </summary>
-        public bool IsDefaultVersion { get; set; }
+        internal bool IsDefaultVersion { get; set; }
 
         /// <summary>
         /// 该版本对应的版本号
         /// </summary>
-        public string Version { get; set; }
+        internal string Version { get; set; }
 
         /// <summary>
         /// 版本所有信息
         /// </summary>
-        public PackageVersionId PackageVersionId { get; set; }
+        internal PackageVersionId PackageVersionId { get; set; }
 
         /// <summary>
         /// 仅当 PackageVersionId 为空时，使用默认安装版本信息
         /// </summary>
-        public PackageVersionInfo PackageVersionInfo { get; set; }
+        internal PackageVersionInfo PackageVersionInfo { get; set; }
     }
 }

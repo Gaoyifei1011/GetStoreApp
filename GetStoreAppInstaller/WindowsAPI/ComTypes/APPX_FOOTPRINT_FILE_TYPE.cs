@@ -3,7 +3,7 @@
     /// <summary>
     /// 指定包中占用空间文件的类型。
     /// </summary>
-    public enum APPX_FOOTPRINT_FILE_TYPE
+    internal enum APPX_FOOTPRINT_FILE_TYPE
     {
         /// <summary>
         /// 包清单。

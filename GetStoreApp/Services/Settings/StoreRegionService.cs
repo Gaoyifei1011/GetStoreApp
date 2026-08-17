@@ -12,27 +12,27 @@ namespace GetStoreApp.Services.Settings
     /// <summary>
     /// 商店区域设置服务
     /// </summary>
-    public static class StoreRegionService
+    internal static class StoreRegionService
     {
         private static readonly string useSystemRegionKey = ConfigKey.UseSystemRegionKey;
         private static readonly string storeRegionKey = ConfigKey.StoreRegionKey;
         private static GEO_ENUMNAMEPROC enumNameProc;
         private static readonly bool defaultUseSystemRegion = true;
 
-        public static bool UseSystemRegion { get; private set; }
+        internal static bool UseSystemRegion { get; private set; }
 
-        public static GeographicRegion DefaultStoreRegion { get; private set; }
+        internal static GeographicRegion DefaultStoreRegion { get; private set; }
 
-        public static GeographicRegion StoreRegion { get; private set; }
+        internal static GeographicRegion StoreRegion { get; private set; }
 
-        public static List<GeographicRegion> StoreRegionList { get; } = [];
+        internal static List<GeographicRegion> StoreRegionList { get; } = [];
 
-        public static event PropertyChangedEventHandler PropertyChanged;
+        internal static event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// 应用在初始化前获取设置存储的区域值，如果设置值为空，设定默认的应用区域值
         /// </summary>
-        public static void InitializeStoreRegion()
+        internal static void InitializeStoreRegion()
         {
             InitializeStoreRegionList();
             GeographicRegion systemRegion = new();
@@ -44,7 +44,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 当系统默认区域发生改变时，更新默认区域
         /// </summary>
-        public static void UpdateDefaultRegion()
+        internal static void UpdateDefaultRegion()
         {
             GeographicRegion systemRegion = new();
 
@@ -116,7 +116,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 使用系统区域值发生修改时修改设置存储的始终显示背景色值
         /// </summary>
-        public static void SetUseSystemRegion(bool useSystemRegion)
+        internal static void SetUseSystemRegion(bool useSystemRegion)
         {
             UseSystemRegion = useSystemRegion;
 
@@ -126,7 +126,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 应用安装方式发生修改时修改设置存储的应用安装方式值
         /// </summary>
-        public static void SetRegion(GeographicRegion region)
+        internal static void SetRegion(GeographicRegion region)
         {
             StoreRegion = region;
             LocalSettingsService.SaveSetting(storeRegionKey, region.CodeTwoLetter);

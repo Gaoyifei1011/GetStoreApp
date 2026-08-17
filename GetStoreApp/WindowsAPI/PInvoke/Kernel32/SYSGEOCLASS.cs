@@ -3,7 +3,7 @@
     /// <summary>
     /// 指定地理位置类。
     /// </summary>
-    public enum SYSGEOCLASS
+    internal enum SYSGEOCLASS
     {
         /// <summary>
         /// 从 Windows 8 开始： 所有地理位置标识符的类。

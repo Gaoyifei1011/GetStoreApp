@@ -6,7 +6,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
     /// 系统关闭原因代码
     /// </summary>
     [Flags]
-    public enum SHTDN_REASON : uint
+    internal enum SHTDN_REASON : uint
     {
         /// <summary>
         /// 应用程序问题。

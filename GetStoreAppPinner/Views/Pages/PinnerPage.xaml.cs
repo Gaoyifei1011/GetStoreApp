@@ -14,13 +14,13 @@ namespace GetStoreAppPinner.Views.Pages
     /// <summary>
     /// 固定应用提示页面
     /// </summary>
-    public sealed partial class PinnerPage : Page, INotifyPropertyChanged
+    internal sealed partial class PinnerPage : Page, INotifyPropertyChanged
     {
         private AppWindow AppWindow { get; }
 
         private ElementTheme _windowTheme;
 
-        public ElementTheme WindowTheme
+        internal ElementTheme WindowTheme
         {
             get { return _windowTheme; }
 
@@ -36,7 +36,7 @@ namespace GetStoreAppPinner.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public PinnerPage(AppWindow appWindow)
+        internal PinnerPage(AppWindow appWindow)
         {
             InitializeComponent();
             AppWindow = appWindow;

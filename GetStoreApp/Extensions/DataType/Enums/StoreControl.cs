@@ -1,6 +1,6 @@
 ﻿namespace GetStoreApp.Extensions.DataType.Enums
 {
-    public enum StoreControl
+    internal enum StoreControl
     {
         StoreSelector = 0,
         QueryLinksResult = 1,

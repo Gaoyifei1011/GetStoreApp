@@ -1,6 +1,6 @@
 ﻿namespace GetStoreApp.Extensions.DataType.Enums
 {
-    public enum CompletedResultKind
+    internal enum CompletedResultKind
     {
         Empty = 0,
         Loading = 1,

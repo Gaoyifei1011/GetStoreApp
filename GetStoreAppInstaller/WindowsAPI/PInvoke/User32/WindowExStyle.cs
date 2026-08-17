@@ -6,7 +6,7 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
     /// 扩展窗口样式
     /// </summary>
     [Flags]
-    public enum WindowExStyle : uint
+    internal enum WindowExStyle : uint
     {
         /// <summary>
         /// 窗口接受拖放文件。

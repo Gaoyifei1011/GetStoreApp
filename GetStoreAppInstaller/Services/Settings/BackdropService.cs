@@ -9,19 +9,19 @@ namespace GetStoreAppInstaller.Services.Settings
     /// <summary>
     /// 应用背景色设置服务
     /// </summary>
-    public static class BackdropService
+    internal static class BackdropService
     {
         private static readonly string settingsKey = ConfigKey.BackdropKey;
         private static string defaultAppBackdrop;
 
-        public static string AppBackdrop { get; set; }
+        internal static string AppBackdrop { get; set; }
 
-        public static List<string> BackdropList { get; } = [nameof(SystemBackdropTheme.Default), nameof(MicaKind) + nameof(MicaKind.Base), nameof(MicaKind) + nameof(MicaKind.BaseAlt), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin)];
+        internal static List<string> BackdropList { get; } = [nameof(SystemBackdropTheme.Default), nameof(MicaKind) + nameof(MicaKind.Base), nameof(MicaKind) + nameof(MicaKind.BaseAlt), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin)];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的背景色值
         /// </summary>
-        public static void InitializeBackdrop()
+        internal static void InitializeBackdrop()
         {
             defaultAppBackdrop = BackdropList.Find(item => string.Equals(item, nameof(SystemBackdropTheme.Default), StringComparison.OrdinalIgnoreCase));
             AppBackdrop = GetBackdrop();

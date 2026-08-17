@@ -20,7 +20,7 @@ namespace GetStoreApp.Services.Root
     /// <summary>
     /// 桌面应用启动服务
     /// </summary>
-    public static partial class DesktopLaunchService
+    internal static partial class DesktopLaunchService
     {
         private static List<TypeModel> TypeList { get; } =
         [
@@ -36,15 +36,15 @@ namespace GetStoreApp.Services.Root
             new() { InternalName = "Retail", ShortName = "rt" }
         ];
 
-        public static AppLaunchArguments AppLaunchArguments { get; private set; }
+        internal static AppLaunchArguments AppLaunchArguments { get; private set; }
 
-        public static event EventHandler<AppLaunchArguments> AppLaunchActivated;
+        internal static event EventHandler<AppLaunchArguments> AppLaunchActivated;
 
         /// <summary>
         /// 处理桌面应用启动的方式
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(LaunchActivatedEventArgs)), DynamicWindowsRuntimeCast(typeof(ShareTargetActivatedEventArgs)), DynamicWindowsRuntimeCast(typeof(ProtocolActivatedEventArgs)), DynamicWindowsRuntimeCast(typeof(ToastNotificationActivatedEventArgs))]
-        public static async Task InitializeLaunchAsync(AppActivationArguments appActivationArguments, bool isLaunched)
+        internal static async Task InitializeLaunchAsync(AppActivationArguments appActivationArguments, bool isLaunched)
         {
             // 正常参数启动
             if (appActivationArguments.Kind is ExtendedActivationKind.Launch)
@@ -221,7 +221,7 @@ namespace GetStoreApp.Services.Root
             }
         }
 
-        public static void SignalAppLaunchActivated(AppLaunchArguments appLaunchArguments)
+        internal static void SignalAppLaunchActivated(AppLaunchArguments appLaunchArguments)
         {
             AppLaunchArguments = appLaunchArguments;
             AppLaunchActivated?.Invoke(null, AppLaunchArguments);

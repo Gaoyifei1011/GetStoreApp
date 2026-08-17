@@ -21,17 +21,17 @@ namespace GetStoreApp
     /// <summary>
     /// 获取商店应用
     /// </summary>
-    public class Program
+    internal class Program
     {
-        public static Microsoft.Windows.AppLifecycle.AppInstance AppInstance { get; private set; }
+        internal static Microsoft.Windows.AppLifecycle.AppInstance AppInstance { get; private set; }
 
-        public static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
+        internal static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
 
         /// <summary>
         /// 应用程序的主入口点
         /// </summary>
         [STAThread]
-        public static void Main()
+        internal static void Main()
         {
             ComWrappersSupport.InitializeComWrappers();
             Ole32Library.CoInitializeSecurity(0, -1, 0, 0, 0, 3, 0, 32, 0);

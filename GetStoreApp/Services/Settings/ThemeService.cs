@@ -10,7 +10,7 @@ namespace GetStoreApp.Services.Settings
     /// <summary>
     /// 应用主题设置服务
     /// </summary>
-    public static class ThemeService
+    internal static class ThemeService
     {
         private static readonly string settingsKey = ConfigKey.ThemeKey;
 
@@ -18,7 +18,7 @@ namespace GetStoreApp.Services.Settings
 
         private static string _appTheme;
 
-        public static string AppTheme
+        internal static string AppTheme
         {
             get { return _appTheme; }
 
@@ -32,14 +32,14 @@ namespace GetStoreApp.Services.Settings
             }
         }
 
-        public static List<string> ThemeList { get; } = [nameof(ElementTheme.Default), nameof(ElementTheme.Light), nameof(ElementTheme.Dark)];
+        internal static List<string> ThemeList { get; } = [nameof(ElementTheme.Default), nameof(ElementTheme.Light), nameof(ElementTheme.Dark)];
 
-        public static event PropertyChangedEventHandler PropertyChanged;
+        internal static event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// 应用在初始化前获取设置存储的主题值
         /// </summary>
-        public static void InitializeTheme()
+        internal static void InitializeTheme()
         {
             defaultAppTheme = ThemeList.Find(item => string.Equals(item, nameof(ElementTheme.Default), StringComparison.OrdinalIgnoreCase));
             AppTheme = GetTheme();
@@ -65,7 +65,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 应用主题发生修改时修改设置存储的主题值
         /// </summary>
-        public static void SetTheme(string theme)
+        internal static void SetTheme(string theme)
         {
             AppTheme = theme;
             LocalSettingsService.SaveSetting(settingsKey, theme);

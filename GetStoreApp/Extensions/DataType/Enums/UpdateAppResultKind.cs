@@ -3,7 +3,7 @@
     /// <summary>
     /// 应用更新数据类型
     /// </summary>
-    public enum UpdateAppResultKind
+    internal enum UpdateAppResultKind
     {
         Initialize = 0,
         Pending = 1,

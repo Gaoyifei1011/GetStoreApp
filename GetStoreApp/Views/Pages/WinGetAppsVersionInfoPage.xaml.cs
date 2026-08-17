@@ -29,7 +29,7 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// WinGet 应用版本信息页面
     /// </summary>
-    public sealed partial class WinGetAppsVersionInfoPage : Page, INotifyPropertyChanged
+    internal sealed partial class WinGetAppsVersionInfoPage : Page, INotifyPropertyChanged
     {
         private readonly string AuthorString = ResourceService.GetLocalized("WinGetAppsVersionInfo/Author");
         private readonly string CopyRightLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/CopyRightLink");
@@ -62,7 +62,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isLoadCompleted;
 
-        public bool IsLoadCompleted
+        internal bool IsLoadCompleted
         {
             get { return _isLoadCompleted; }
 
@@ -78,7 +78,7 @@ namespace GetStoreApp.Views.Pages
 
         private AvailableVersionModel _selectedItem;
 
-        public AvailableVersionModel SelectedItem
+        internal AvailableVersionModel SelectedItem
         {
             get { return _selectedItem; }
 
@@ -94,7 +94,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _displayName;
 
-        public string DisplayName
+        internal string DisplayName
         {
             get { return _displayName; }
 
@@ -110,7 +110,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _description;
 
-        public string Description
+        internal string Description
         {
             get { return _description; }
 
@@ -126,7 +126,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _version;
 
-        public string Version
+        internal string Version
         {
             get { return _version; }
 
@@ -142,7 +142,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isPackageLinkExisted;
 
-        public bool IsPackageLinkExisted
+        internal bool IsPackageLinkExisted
         {
             get { return _isPackageLinkExisted; }
 
@@ -158,7 +158,7 @@ namespace GetStoreApp.Views.Pages
 
         private Uri _packageLink;
 
-        public Uri PackageLink
+        internal Uri PackageLink
         {
             get { return _packageLink; }
 
@@ -174,7 +174,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _author;
 
-        public string Author
+        internal string Author
         {
             get { return _author; }
 
@@ -190,7 +190,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _publisher;
 
-        public string Publisher
+        internal string Publisher
         {
             get { return _publisher; }
 
@@ -206,7 +206,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isPublisherLinkExisted;
 
-        public bool IsPublisherLinkExisted
+        internal bool IsPublisherLinkExisted
         {
             get { return _isPublisherLinkExisted; }
 
@@ -222,7 +222,7 @@ namespace GetStoreApp.Views.Pages
 
         private Uri _publisherLink;
 
-        public Uri PublisherLink
+        internal Uri PublisherLink
         {
             get { return _publisherLink; }
 
@@ -238,7 +238,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isPublisherSupportLinkExisted;
 
-        public bool IsPublisherSupportLinkExisted
+        internal bool IsPublisherSupportLinkExisted
         {
             get { return _isPublisherSupportLinkExisted; }
 
@@ -254,7 +254,7 @@ namespace GetStoreApp.Views.Pages
 
         private Uri _publisherSupportLink;
 
-        public Uri PublisherSupportLink
+        internal Uri PublisherSupportLink
         {
             get { return _publisherSupportLink; }
 
@@ -270,7 +270,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _locale;
 
-        public string Locale
+        internal string Locale
         {
             get { return _locale; }
 
@@ -286,7 +286,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _copyRight;
 
-        public string CopyRight
+        internal string CopyRight
         {
             get { return _copyRight; }
 
@@ -302,7 +302,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isCopyRightLinkExisted;
 
-        public bool IsCopyRightLinkExisted
+        internal bool IsCopyRightLinkExisted
         {
             get { return _isCopyRightLinkExisted; }
 
@@ -318,7 +318,7 @@ namespace GetStoreApp.Views.Pages
 
         private Uri _copyRightLink;
 
-        public Uri CopyRightLink
+        internal Uri CopyRightLink
         {
             get { return _copyRightLink; }
 
@@ -334,7 +334,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _license;
 
-        public string License
+        internal string License
         {
             get { return _license; }
 
@@ -350,7 +350,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isLicenseLinkExisted;
 
-        public bool IsLicenseLinkExisted
+        internal bool IsLicenseLinkExisted
         {
             get { return _isLicenseLinkExisted; }
 
@@ -366,7 +366,7 @@ namespace GetStoreApp.Views.Pages
 
         private Uri _licenseLink;
 
-        public Uri LicenseLink
+        internal Uri LicenseLink
         {
             get { return _licenseLink; }
 
@@ -382,7 +382,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isPrivacyLinkExisted;
 
-        public bool IsPrivacyLinkExisted
+        internal bool IsPrivacyLinkExisted
         {
             get { return _isPrivacyLinkExisted; }
 
@@ -398,7 +398,7 @@ namespace GetStoreApp.Views.Pages
 
         private Uri _privacyLink;
 
-        public Uri PrivacyLink
+        internal Uri PrivacyLink
         {
             get { return _privacyLink; }
 
@@ -414,7 +414,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isPurchaseLinkExisted;
 
-        public bool IsPurchaseLinkExisted
+        internal bool IsPurchaseLinkExisted
         {
             get { return _isPurchaseLinkExisted; }
 
@@ -430,7 +430,7 @@ namespace GetStoreApp.Views.Pages
 
         private Uri _purchaseLink;
 
-        public Uri PurchaseLink
+        internal Uri PurchaseLink
         {
             get { return _purchaseLink; }
 
@@ -446,7 +446,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _releaseNotes;
 
-        public string ReleaseNotes
+        internal string ReleaseNotes
         {
             get { return _releaseNotes; }
 
@@ -462,7 +462,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isReleaseNotesLinkExisted;
 
-        public bool IsReleaseNotesLinkExisted
+        internal bool IsReleaseNotesLinkExisted
         {
             get { return _isReleaseNotesLinkExisted; }
 
@@ -478,7 +478,7 @@ namespace GetStoreApp.Views.Pages
 
         private Uri _releaseNotesLink;
 
-        public Uri ReleaseNotesLink
+        internal Uri ReleaseNotesLink
         {
             get { return _releaseNotesLink; }
 
@@ -500,7 +500,7 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public WinGetAppsVersionInfoPage()
+        internal WinGetAppsVersionInfoPage()
         {
             InitializeComponent();
         }

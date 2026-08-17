@@ -13,7 +13,7 @@ namespace GetStoreApp.Services.History
     /// <summary>
     /// 历史记录存储服务
     /// </summary>
-    public static class HistoryStorageService
+    internal static class HistoryStorageService
     {
         private const string QueryLinks = "QueryLinks";
         private const string SearchApps = "SearchApps";
@@ -43,14 +43,14 @@ namespace GetStoreApp.Services.History
             new() { InternalName = "Retail", ShortName = "rt" }
         ];
 
-        public static event Action QueryLinksCleared;
+        internal static event Action QueryLinksCleared;
 
-        public static event Action SearchAppsCleared;
+        internal static event Action SearchAppsCleared;
 
         /// <summary>
         /// 初始化历史记录存储服务
         /// </summary>
-        public static void Initialize()
+        internal static void Initialize()
         {
             queryLinksContainer = localSettingsContainer.CreateContainer(QueryLinks, ApplicationDataCreateDisposition.Always);
             searchAppsContainer = localSettingsContainer.CreateContainer(SearchApps, ApplicationDataCreateDisposition.Always);
@@ -60,7 +60,7 @@ namespace GetStoreApp.Services.History
         /// 获取查询链接历史记录数据
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
-        public static List<HistoryModel> GetQueryLinksData()
+        internal static List<HistoryModel> GetQueryLinksData()
         {
             List<HistoryModel> queryLinksHistoryList = [];
 
@@ -107,7 +107,7 @@ namespace GetStoreApp.Services.History
         /// 获取搜索应用历史记录数据
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
-        public static List<HistoryModel> GetSearchAppsData()
+        internal static List<HistoryModel> GetSearchAppsData()
         {
             List<HistoryModel> searchAppsHistoryList = [];
 
@@ -150,7 +150,7 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 存储查询链接历史记录数据
         /// </summary>
-        public static void SaveQueryLinksData(List<HistoryModel> queryLinksHistoryList)
+        internal static void SaveQueryLinksData(List<HistoryModel> queryLinksHistoryList)
         {
             historyStorageLock.Enter();
 
@@ -183,7 +183,7 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 存储搜索应用历史记录数据
         /// </summary>
-        public static void SaveSearchAppsData(List<HistoryModel> searchAppsHistoryList)
+        internal static void SaveSearchAppsData(List<HistoryModel> searchAppsHistoryList)
         {
             historyStorageLock.Enter();
 
@@ -214,7 +214,7 @@ namespace GetStoreApp.Services.History
         /// 更新查询链接历史记录数据
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
-        public static void UpdateQueryLinksData(HistoryModel historyItem)
+        internal static void UpdateQueryLinksData(HistoryModel historyItem)
         {
             if (queryLinksContainer.Values.TryGetValue(historyItem.HistoryKey, out object compositeValueObj) && compositeValueObj is Windows.Storage.ApplicationDataCompositeValue compositeValue)
             {
@@ -227,7 +227,7 @@ namespace GetStoreApp.Services.History
         /// 更新搜索应用历史记录数据
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
-        public static void UpdateSearchAppsData(HistoryModel historyItem)
+        internal static void UpdateSearchAppsData(HistoryModel historyItem)
         {
             if (searchAppsContainer.Values.TryGetValue(historyItem.HistoryKey, out object compositeValueObj) && compositeValueObj is Windows.Storage.ApplicationDataCompositeValue compositeValue)
             {
@@ -238,7 +238,7 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 移除查询链接历史记录数据
         /// </summary>
-        public static void RemoveQueryLinksData(string historyKey)
+        internal static void RemoveQueryLinksData(string historyKey)
         {
             if (!string.IsNullOrEmpty(historyKey))
             {
@@ -262,7 +262,7 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 移除搜索应用记录数据
         /// </summary>
-        public static void RemoveSearchAppsData(string historyKey)
+        internal static void RemoveSearchAppsData(string historyKey)
         {
             historyStorageLock.Enter();
 
@@ -283,7 +283,7 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 清除历史记录
         /// </summary>
-        public static bool ClearData()
+        internal static bool ClearData()
         {
             historyStorageLock.Enter();
 

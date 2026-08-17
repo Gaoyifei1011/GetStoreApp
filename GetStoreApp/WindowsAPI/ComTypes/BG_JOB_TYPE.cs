@@ -3,7 +3,7 @@
     /// <summary>
     /// 定义指定传输作业类型的常量，例如下载。
     /// </summary>
-    public enum BG_JOB_TYPE
+    internal enum BG_JOB_TYPE
     {
         /// <summary>
         /// 指定作业将文件下载到客户端。

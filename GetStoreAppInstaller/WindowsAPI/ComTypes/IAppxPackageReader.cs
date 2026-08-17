@@ -8,7 +8,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 为应用包提供只读对象模型。
     /// </summary>
     [GeneratedComInterface, Guid("B5C49650-99BC-481C-9A34-3D53A4106708")]
-    public partial interface IAppxPackageReader
+    internal partial interface IAppxPackageReader
     {
         /// <summary>
         /// 检索包的块映射对象模型。

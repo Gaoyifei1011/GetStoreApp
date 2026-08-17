@@ -16,7 +16,7 @@ namespace GetStoreApp.Services.Download
     /// <summary>
     /// 下载调度服务
     /// </summary>
-    public static class DownloadSchedulerService
+    internal static class DownloadSchedulerService
     {
         private static readonly Lock downloadSchedulerLock = new();
         private static bool isInitialized;
@@ -28,15 +28,15 @@ namespace GetStoreApp.Services.Download
         private static string DownloadSuccessfullyString;
         private static string ViewDownloadPageString;
 
-        public static bool IsDownloadingPageInitialized { get; set; }
+        internal static bool IsDownloadingPageInitialized { get; set; }
 
-        public static SemaphoreSlim DownloadSchedulerSemaphoreSlim { get; private set; } = new(1, 1);
+        internal static SemaphoreSlim DownloadSchedulerSemaphoreSlim { get; private set; } = new(1, 1);
 
-        public static List<DownloadSchedulerModel> DownloadSchedulerList { get; } = [];
+        internal static List<DownloadSchedulerModel> DownloadSchedulerList { get; } = [];
 
-        public static List<DownloadSchedulerModel> DownloadFailedList { get; } = [];
+        internal static List<DownloadSchedulerModel> DownloadFailedList { get; } = [];
 
-        public static event Action<DownloadSchedulerModel> DownloadProgress;
+        internal static event Action<DownloadSchedulerModel> DownloadProgress;
 
         /// <summary>
         /// 下载状态发生改变时触发的事件
@@ -418,7 +418,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 初始化后台下载调度器
         /// </summary>
-        public static void InitializeDownloadScheduler()
+        internal static void InitializeDownloadScheduler()
         {
             if (!isInitialized)
             {
@@ -456,7 +456,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 关闭下载监控任务
         /// </summary>
-        public static void CloseDownloadScheduler()
+        internal static void CloseDownloadScheduler()
         {
             if (isInitialized)
             {
@@ -494,7 +494,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 创建下载任务
         /// </summary>
-        public static void CreateDownload(string fileLink, string filePath)
+        internal static void CreateDownload(string fileLink, string filePath)
         {
             if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
@@ -513,7 +513,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 继续下载任务
         /// </summary>
-        public static void ContinueDownload(string downloadID)
+        internal static void ContinueDownload(string downloadID)
         {
             if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
@@ -532,7 +532,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 暂停下载任务
         /// </summary>
-        public static void PauseDownload(string downloadID)
+        internal static void PauseDownload(string downloadID)
         {
             if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
@@ -551,7 +551,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 删除下载任务
         /// </summary>
-        public static void DeleteDownload(string downloadID)
+        internal static void DeleteDownload(string downloadID)
         {
             if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
@@ -570,7 +570,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 应用关闭时终止所有下载任务
         /// </summary>
-        public static void TerminateDownload()
+        internal static void TerminateDownload()
         {
             if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {

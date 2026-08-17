@@ -3,7 +3,7 @@
     /// <summary>
     /// DODownloadProperty 枚举指定传递优化下载操作的属性 ID。 此枚举由 IDODownload 接口使用，并由包含值类型的 VARIANT 值执行。
     /// </summary>
-    public enum DODownloadProperty
+    internal enum DODownloadProperty
     {
         /// <summary>
         /// 只读。 使用此属性可获取唯一标识下载的 ID。 VARIANT 类型为VT_BSTR。

@@ -14,12 +14,12 @@ namespace GetStoreApp.Helpers.Root
     /// <summary>
     /// 输入输出辅助类
     /// </summary>
-    public static class IOHelper
+    internal static class IOHelper
     {
         /// <summary>
         /// 清空缓存文件夹
         /// </summary>
-        public static bool CleanFolder(string folder)
+        internal static bool CleanFolder(string folder)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 获取文件的 SHA256 值
         /// </summary>
-        public static async Task<string> GetFileSHA256Async(string filePath)
+        internal static async Task<string> GetFileSHA256Async(string filePath)
         {
             try
             {

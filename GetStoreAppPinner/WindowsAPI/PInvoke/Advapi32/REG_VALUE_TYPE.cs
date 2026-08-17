@@ -6,7 +6,7 @@ namespace GetStoreAppPinner.WindowsAPI.PInvoke.Advapi32
     /// <summary>
     /// 注册表值类型
     /// </summary>
-    public enum REG_VALUE_TYPE : uint
+    internal enum REG_VALUE_TYPE : uint
     {
         /// <summary>
         /// 没有定义的值类型。

@@ -8,7 +8,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 获取一个枚举器，该枚举器循环访问清单中定义的应用程序。
     /// </summary>
     [GeneratedComInterface, Guid("9EB8A55A-F04B-4D0D-808D-686185D4847A")]
-    public partial interface IAppxManifestApplicationsEnumerator
+    internal partial interface IAppxManifestApplicationsEnumerator
     {
         /// <summary>
         /// 获取枚举器当前位置处的应用程序。

@@ -8,7 +8,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 枚举程序包清单中定义的功能。
     /// </summary>
     [GeneratedComInterface, Guid("11D22258-F470-42C1-B291-8361C5437E41")]
-    public partial interface IAppxManifestCapabilitiesEnumerator
+    internal partial interface IAppxManifestCapabilitiesEnumerator
     {
         /// <summary>
         /// 获取枚举器当前位置的功能。

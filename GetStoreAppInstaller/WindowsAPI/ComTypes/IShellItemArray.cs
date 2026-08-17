@@ -8,7 +8,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 公开用于创建和操作 Shell 项 数组的方法。
     /// </summary>
     [GeneratedComInterface, Guid("B63EA76D-1F85-456F-A19C-48159EFA858B")]
-    public partial interface IShellItemArray
+    internal partial interface IShellItemArray
     {
         /// <summary>
         /// 通过指定的处理程序绑定到对象。

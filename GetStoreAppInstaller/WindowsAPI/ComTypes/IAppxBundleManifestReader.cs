@@ -8,7 +8,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 为捆绑包清单提供只读对象模型。
     /// </summary>
     [GeneratedComInterface, Guid("CF0EBBC1-CC99-4106-91EB-E67462E04FB0")]
-    public partial interface IAppxBundleManifestReader
+    internal partial interface IAppxBundleManifestReader
     {
         /// <summary>
         /// 检索表示根 Bundle 元素下的 <Identity> 元素的 对象。

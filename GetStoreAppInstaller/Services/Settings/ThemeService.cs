@@ -9,20 +9,20 @@ namespace GetStoreAppInstaller.Services.Settings
     /// <summary>
     /// 应用主题设置服务
     /// </summary>
-    public static class ThemeService
+    internal static class ThemeService
     {
         private static readonly string settingsKey = ConfigKey.ThemeKey;
 
         private static string defaultAppTheme;
 
-        public static string AppTheme { get; set; }
+        internal static string AppTheme { get; set; }
 
-        public static List<string> ThemeList { get; } = [];
+        internal static List<string> ThemeList { get; } = [];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的主题值
         /// </summary>
-        public static void InitializeTheme()
+        internal static void InitializeTheme()
         {
             ThemeList.Add(nameof(ElementTheme.Default));
             ThemeList.Add(nameof(ElementTheme.Light));

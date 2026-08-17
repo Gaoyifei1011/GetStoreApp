@@ -8,7 +8,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 为捆绑包清单中的 <Resource> 元素提供只读对象模型。
     /// </summary>
     [GeneratedComInterface, Guid("3B53A497-3C5C-48D1-9EA3-BB7EAC8CD7D4")]
-    public partial interface IAppxManifestQualifiedResource
+    internal partial interface IAppxManifestQualifiedResource
     {
         /// <summary>
         /// 检索资源的语言。

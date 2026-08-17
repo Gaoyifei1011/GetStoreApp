@@ -33,7 +33,7 @@ namespace GetStoreApp.Views.UserControls
     /// <summary>
     /// 查询链接结果用户控件
     /// </summary>
-    public sealed partial class QueryLinksResultUserControl : UserControl, INotifyPropertyChanged
+    internal sealed partial class QueryLinksResultUserControl : UserControl, INotifyPropertyChanged
     {
         private readonly string QueriedAppDescriptionString = ResourceService.GetLocalized("QueryLinksResult/QueriedAppDescription");
         private readonly string QueriedAppNameString = ResourceService.GetLocalized("QueryLinksResult/QueriedAppName");
@@ -45,7 +45,7 @@ namespace GetStoreApp.Views.UserControls
 
         private AppInfoModel _appInfo = new();
 
-        public AppInfoModel AppInfo
+        internal AppInfoModel AppInfo
         {
             get { return _appInfo; }
 
@@ -61,7 +61,7 @@ namespace GetStoreApp.Views.UserControls
 
         private bool _isAppInfoVisible;
 
-        public bool IsAppInfoVisible
+        internal bool IsAppInfoVisible
         {
             get { return _isAppInfoVisible; }
 
@@ -77,7 +77,7 @@ namespace GetStoreApp.Views.UserControls
 
         private bool _isPackagedApp;
 
-        public bool IsPackagedApp
+        internal bool IsPackagedApp
         {
             get { return _isPackagedApp; }
 
@@ -93,7 +93,7 @@ namespace GetStoreApp.Views.UserControls
 
         private ListViewSelectionMode _selectionMode;
 
-        public ListViewSelectionMode SelectionMode
+        internal ListViewSelectionMode SelectionMode
         {
             get { return _selectionMode; }
 
@@ -111,7 +111,7 @@ namespace GetStoreApp.Views.UserControls
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public QueryLinksResultUserControl()
+        internal QueryLinksResultUserControl()
         {
             InitializeComponent();
         }
@@ -713,7 +713,7 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 初始化查询链接结果用户控件
         /// </summary>
-        public void InitializeQueryLinksResult(StorePage storePageData)
+        internal void InitializeQueryLinksResult(StorePage storePageData)
         {
             if (!isInitialized)
             {
@@ -725,7 +725,7 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 更新查询链接结果
         /// </summary>
-        public void UpdateQueryLinksResultData(AppInfoModel appInfo, bool isPackagedApp, List<QueryLinksResultModel> queryLinksResultList)
+        internal void UpdateQueryLinksResultData(AppInfoModel appInfo, bool isPackagedApp, List<QueryLinksResultModel> queryLinksResultList)
         {
             IsAppInfoVisible = false;
             IsPackagedApp = isPackagedApp;

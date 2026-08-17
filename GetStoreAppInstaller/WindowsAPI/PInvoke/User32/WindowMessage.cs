@@ -8,7 +8,7 @@
     /// 被应用程序使用的字符串消息 0xC000 - 0xFFFF
     /// 系统预留 大于0xFFFF
     /// </summary>
-    public enum WindowMessage : int
+    internal enum WindowMessage : int
     {
         /// <summary>
         /// 不执行任何操作。 如果应用程序想要帖子收件人窗口将忽略的邮件，则应用程序会发送WM_NULL邮件。

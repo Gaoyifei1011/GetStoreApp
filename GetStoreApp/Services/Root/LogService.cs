@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Helpers.Root;
+using GetStoreApp.Views.Pages;
 using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace GetStoreApp.Services.Root
     /// <summary>
     /// 日志记录
     /// </summary>
-    public static class LogService
+    internal static class LogService
     {
         private static readonly string notAvailable = "N/A";
         private static readonly string httpRequestFolderPath = Path.Combine([ApplicationData.GetDefault().LocalCacheFolder.Path, "Logs", "HttpRequest"]);
@@ -23,12 +24,12 @@ namespace GetStoreApp.Services.Root
         private static readonly LoggingChannelOptions channelOptions = new();
         private static SemaphoreSlim logSemaphoreSlim = new(1, 1);
 
-        public static string WinGetFolderPath { get; } = Path.Combine([ApplicationData.GetDefault().LocalCacheFolder.Path, "Logs", "WinGet"]);
+        internal static string WinGetFolderPath { get; } = Path.Combine([ApplicationData.GetDefault().LocalCacheFolder.Path, "Logs", "WinGet"]);
 
         /// <summary>
         /// 写入日志
         /// </summary>
-        public static void WriteLog(LoggingLevel logLevel, string nameSpaceName, string className, string methodName, int index, Dictionary<string, string> loggingInformationDict)
+        internal static void WriteLog(LoggingLevel logLevel, string nameSpaceName, string className, string methodName, int index, Dictionary<string, string> loggingInformationDict)
         {
             Task.Run(async () =>
             {
@@ -82,7 +83,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 写入日志
         /// </summary>
-        public static void WriteLog(LoggingLevel logLevel, string nameSpaceName, string className, string methodName, int index, Exception exception)
+        internal static void WriteLog(LoggingLevel logLevel, string nameSpaceName, string className, string methodName, int index, Exception exception)
         {
             Task.Run(async () =>
             {
@@ -136,24 +137,31 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 打开日志记录文件夹
         /// </summary>
-        public static async Task OpenLogFolderAsync()
+        internal static async Task OpenLogFolderAsync()
         {
-            string logFolderPath = Path.Combine(ApplicationData.GetDefault().LocalCacheFolder.Path, "Logs");
+            try
+            {
+                string logFolderPath = Path.Combine(ApplicationData.GetDefault().LocalCacheFolder.Path, "Logs");
 
-            if (Directory.Exists(logFolderPath))
-            {
-                await Launcher.LaunchFolderPathAsync(logFolderPath);
+                if (Directory.Exists(logFolderPath))
+                {
+                    await Launcher.LaunchFolderPathAsync(logFolderPath);
+                }
+                else
+                {
+                    await Launcher.LaunchFolderAsync(ApplicationData.GetDefault().LocalCacheFolder);
+                }
             }
-            else
+            catch (Exception e)
             {
-                await Launcher.LaunchFolderAsync(ApplicationData.GetDefault().LocalCacheFolder);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(LogService), nameof(OpenLogFolderAsync), 1, e);
             }
         }
 
         /// <summary>
         /// 清除所有的日志文件
         /// </summary>
-        public static async Task<bool> ClearLogAsync()
+        internal static async Task<bool> ClearLogAsync()
         {
             return await Task.Run(() =>
             {
@@ -184,7 +192,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 关闭日志记录服务
         /// </summary>
-        public static void CloseLog()
+        internal static void CloseLog()
         {
             logSemaphoreSlim.Dispose();
             logSemaphoreSlim = null;

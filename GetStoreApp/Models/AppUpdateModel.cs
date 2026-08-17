@@ -7,14 +7,14 @@ namespace GetStoreApp.Models
     /// <summary>
     /// 商店应用更新数据模型
     /// </summary>
-    public sealed partial class AppUpdateModel : INotifyPropertyChanged
+    internal sealed partial class AppUpdateModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 应用图标
         /// </summary>
         private Uri _logoImage;
 
-        public Uri LogoImage
+        internal Uri LogoImage
         {
             get { return _logoImage; }
 
@@ -33,7 +33,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private bool _isUpdating;
 
-        public bool IsUpdating
+        internal bool IsUpdating
         {
             get { return _isUpdating; }
 
@@ -49,7 +49,7 @@ namespace GetStoreApp.Models
 
         private bool _isOperating;
 
-        public bool IsOperating
+        internal bool IsOperating
         {
             get { return _isOperating; }
 
@@ -66,24 +66,24 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 应用显示名称
         /// </summary>
-        public string DisplayName { get; set; }
+        internal string DisplayName { get; set; }
 
         /// <summary>
         /// 发布者名称
         /// </summary>
-        public string PublisherDisplayName { get; set; }
+        internal string PublisherDisplayName { get; set; }
 
         /// <summary>
         /// 应用的包系列名称
         /// </summary>
-        public string PackageFamilyName { get; set; }
+        internal string PackageFamilyName { get; set; }
 
         /// <summary>
         /// 安装信息
         /// </summary>
         private string _installInformation = string.Empty;
 
-        public string InstallInformation
+        internal string InstallInformation
         {
             get { return _installInformation; }
 
@@ -99,7 +99,7 @@ namespace GetStoreApp.Models
 
         private string _installSubInformation = string.Empty;
 
-        public string InstallSubInformation
+        internal string InstallSubInformation
         {
             get { return _installSubInformation; }
 
@@ -116,14 +116,14 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 应用的产品 ID
         /// </summary>
-        public string ProductId { get; set; }
+        internal string ProductId { get; set; }
 
         /// <summary>
         /// 当前应用的安装状态
         /// </summary>
         private AppInstallState _appInstallState;
 
-        public AppInstallState AppInstallState
+        internal AppInstallState AppInstallState
         {
             get { return _appInstallState; }
 
@@ -142,7 +142,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private double _percentComplete;
 
-        public double PercentComplete
+        internal double PercentComplete
         {
             get { return _percentComplete; }
 

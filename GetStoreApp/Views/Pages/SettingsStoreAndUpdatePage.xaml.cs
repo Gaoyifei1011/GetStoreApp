@@ -29,7 +29,7 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 设置商店与更新页面
     /// </summary>
-    public sealed partial class SettingsStoreAndUpdatePage : Page, INotifyPropertyChanged
+    internal sealed partial class SettingsStoreAndUpdatePage : Page, INotifyPropertyChanged
     {
         private readonly string AppUpdateDisabledString = ResourceService.GetLocalized("SettingsStoreAndUpdate/AppUpdateDisabled");
         private readonly string AppUpdateEnabledString = ResourceService.GetLocalized("SettingsStoreAndUpdate/AppUpdateEnabled");
@@ -43,7 +43,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _queryLinksMode;
 
-        public ComboBoxItemModel QueryLinksMode
+        internal ComboBoxItemModel QueryLinksMode
         {
             get { return _queryLinksMode; }
 
@@ -59,7 +59,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _searchAppsMode;
 
-        public ComboBoxItemModel SearchAppsMode
+        internal ComboBoxItemModel SearchAppsMode
         {
             get { return _searchAppsMode; }
 
@@ -75,7 +75,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _appLinkOpenMode;
 
-        public ComboBoxItemModel AppLinkOpenMode
+        internal ComboBoxItemModel AppLinkOpenMode
         {
             get { return _appLinkOpenMode; }
 
@@ -91,7 +91,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _installMode;
 
-        public ComboBoxItemModel InstallMode
+        internal ComboBoxItemModel InstallMode
         {
             get { return _installMode; }
 
@@ -107,7 +107,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _cancelAutoUpdate;
 
-        public bool CancelAutoUpdate
+        internal bool CancelAutoUpdate
         {
             get { return _cancelAutoUpdate; }
 
@@ -123,7 +123,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _appUpdateStatus;
 
-        public ComboBoxItemModel AppUpdateStatus
+        internal ComboBoxItemModel AppUpdateStatus
         {
             get { return _appUpdateStatus; }
 
@@ -139,7 +139,7 @@ namespace GetStoreApp.Views.Pages
 
         private DateTimeOffset _appUpdatePauseEndTime;
 
-        public DateTimeOffset AppUpdatePauseEndTime
+        internal DateTimeOffset AppUpdatePauseEndTime
         {
             get { return _appUpdatePauseEndTime; }
 
@@ -155,7 +155,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _useSystemRegion;
 
-        public bool UseSystemRegion
+        internal bool UseSystemRegion
         {
             get { return _useSystemRegion; }
 
@@ -171,7 +171,7 @@ namespace GetStoreApp.Views.Pages
 
         private GeographicRegion _currentCountryOrRegion;
 
-        public GeographicRegion CurrentCountryOrRegion
+        internal GeographicRegion CurrentCountryOrRegion
         {
             get { return _currentCountryOrRegion; }
 
@@ -187,7 +187,7 @@ namespace GetStoreApp.Views.Pages
 
         private StoreRegionModel _storeRegion;
 
-        public StoreRegionModel StoreRegion
+        internal StoreRegionModel StoreRegion
         {
             get { return _storeRegion; }
 
@@ -203,7 +203,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _encryptedPackageFilter;
 
-        public bool EncryptedPackageFilter
+        internal bool EncryptedPackageFilter
         {
             get { return _encryptedPackageFilter; }
 
@@ -219,7 +219,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _blockMapFilter = LinkFilterService.BlockMapFilter;
 
-        public bool BlockMapFilter
+        internal bool BlockMapFilter
         {
             get { return _blockMapFilter; }
 
@@ -245,7 +245,7 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SettingsStoreAndUpdatePage()
+        internal SettingsStoreAndUpdatePage()
         {
             InitializeComponent();
             QueryLinksModeList.Add(new() { SelectedValue = QueryLinksModeService.QueryLinksModeList[0], DisplayMember = QueryLinksModeOfficialString });

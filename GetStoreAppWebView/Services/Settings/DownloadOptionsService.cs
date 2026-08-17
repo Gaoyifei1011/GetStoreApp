@@ -10,17 +10,17 @@ namespace GetStoreAppWebView.Services.Settings
     /// <summary>
     /// 应用下载设置服务
     /// </summary>
-    public static class DownloadOptionsService
+    internal static class DownloadOptionsService
     {
         private static readonly string downloadFolderKey = ConfigKey.DownloadFolderKey;
         private static string defaultDownloadFolder;
 
-        public static string DownloadFolder { get; private set; }
+        internal static string DownloadFolder { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的下载相关内容设置值，并创建默认下载目录
         /// </summary>
-        public static async Task InitializeDownloadOptionsAsync()
+        internal static async Task InitializeDownloadOptionsAsync()
         {
             defaultDownloadFolder = (await ApplicationData.GetDefault().LocalCacheFolder.CreateFolderAsync("Downloads", Windows.Storage.CreationCollisionOption.OpenIfExists)).Path;
             DownloadFolder = GetFolder();

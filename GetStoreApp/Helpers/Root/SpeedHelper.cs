@@ -6,7 +6,7 @@ namespace GetStoreApp.Helpers.Root
     /// <summary>
     /// 下载速度转换辅助类
     /// </summary>
-    public static class SpeedHelper
+    internal static class SpeedHelper
     {
         private static readonly Dictionary<string, int> speedDict = new()
         {
@@ -18,7 +18,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 下载速度文字显示格式化
         /// </summary>
-        public static string ConvertSpeedToString(double speed)
+        internal static string ConvertSpeedToString(double speed)
         {
             if (speed / speedDict["GB/s"] >= 1)
             {

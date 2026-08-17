@@ -2,12 +2,12 @@
 
 namespace GetStoreAppInstaller.Extensions.DataType.Classes
 {
-    public class ResourceManagement
+    internal class ResourceManagement
     {
-        public ResourceMap ResourceMap { get; set; }
+        internal ResourceMap ResourceMap { get; set; }
 
-        public ResourceContext DefaultResourceContext { get; set; }
+        internal ResourceContext DefaultResourceContext { get; set; }
 
-        public ResourceContext CurrentResourceContext { get; set; }
+        internal ResourceContext CurrentResourceContext { get; set; }
     }
 }

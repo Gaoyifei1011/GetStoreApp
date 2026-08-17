@@ -3,7 +3,7 @@
     /// <summary>
     /// 应用排序规则
     /// </summary>
-    public enum AppSortRuleKind
+    internal enum AppSortRuleKind
     {
         DisplayName = 0,
         PublisherName = 1,

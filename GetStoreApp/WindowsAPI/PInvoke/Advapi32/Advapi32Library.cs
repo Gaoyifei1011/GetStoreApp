@@ -8,7 +8,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
     /// <summary>
     /// advapi32.dll 函数库
     /// </summary>
-    public static partial class Advapi32Library
+    internal static partial class Advapi32Library
     {
         private const string Advapi32 = "advapi32.dll";
 
@@ -27,7 +27,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// <returns>如果该函数成功，则返回值为非零值。</returns>
         [LibraryImport(Advapi32, EntryPoint = "AdjustTokenPrivileges", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool AdjustTokenPrivileges(nint TokenHandle, [MarshalAs(UnmanagedType.Bool)] bool DisableAllPrivileges, ref TOKEN_PRIVILEGES NewState, uint BufferLength, nint PreviousState, nint ReturnLength);
+        internal static partial bool AdjustTokenPrivileges(nint TokenHandle, [MarshalAs(UnmanagedType.Bool)] bool DisableAllPrivileges, ref TOKEN_PRIVILEGES NewState, uint BufferLength, nint PreviousState, nint ReturnLength);
 
         /// <summary>
         /// 启动指定计算机的关闭和可选重启，并选择性地记录关闭的原因。
@@ -48,7 +48,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// <returns>如果函数成功，则返回值为非零。如果函数失败，则返回值为零。</returns>
         [LibraryImport(Advapi32, EntryPoint = "InitiateSystemShutdownExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool InitiateSystemShutdownEx([MarshalAs(UnmanagedType.LPWStr)] string lpMachineName, [MarshalAs(UnmanagedType.LPWStr)] string lpMessage, uint dwTimeout, [MarshalAs(UnmanagedType.Bool)] bool bForceAppsClosed, [MarshalAs(UnmanagedType.Bool)] bool bRebootAfterShutdown, SHTDN_REASON dwReason);
+        internal static partial bool InitiateSystemShutdownEx([MarshalAs(UnmanagedType.LPWStr)] string lpMachineName, [MarshalAs(UnmanagedType.LPWStr)] string lpMessage, uint dwTimeout, [MarshalAs(UnmanagedType.Bool)] bool bForceAppsClosed, [MarshalAs(UnmanagedType.Bool)] bool bRebootAfterShutdown, SHTDN_REASON dwReason);
 
         /// <summary>
         /// LookupPrivilegeValue 函数检索指定系统上用于本地表示指定特权名称的 本地唯一标识符（LUID）。
@@ -59,7 +59,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// <returns>如果函数成功，该函数将返回非零。如果函数失败，则返回零。 </returns>
         [LibraryImport(Advapi32, EntryPoint = "LookupPrivilegeValueW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool LookupPrivilegeValue([MarshalAs(UnmanagedType.LPWStr)] string lpSystemName, [MarshalAs(UnmanagedType.LPWStr)] string lpName, out LUID lpLuid);
+        internal static partial bool LookupPrivilegeValue([MarshalAs(UnmanagedType.LPWStr)] string lpSystemName, [MarshalAs(UnmanagedType.LPWStr)] string lpName, out LUID lpLuid);
 
         /// <summary>
         /// OpenProcessToken 函数打开与进程关联的访问令牌。
@@ -70,7 +70,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
         [LibraryImport(Advapi32, EntryPoint = "OpenProcessToken", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool OpenProcessToken(nint processHandle, uint desiredAccess, out nint tokenHandle);
+        internal static partial bool OpenProcessToken(nint processHandle, uint desiredAccess, out nint tokenHandle);
 
         /// <summary>
         /// 关闭指定注册表项的句柄。
@@ -78,7 +78,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// <param name="hKey">打开的注册表项的句柄。</param>
         /// <returns>如果函数成功，则返回值为 ERROR_SUCCESS。如果函数失败，则返回值为 Winerror.h 中定义的非零错误代码。</returns>
         [LibraryImport(Advapi32, EntryPoint = "RegCloseKey", SetLastError = false), PreserveSig]
-        public static partial int RegCloseKey(nint hKey);
+        internal static partial int RegCloseKey(nint hKey);
 
         /// <summary>
         /// 从指定的注册表项中删除命名值。 请注意，值名称不区分大小写。
@@ -87,7 +87,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// <param name="lpValueName">要删除的注册表值。 如果此参数 NULL 或空字符串，则删除由 RegSetValue 函数设置的值。</param>
         /// <returns>如果函数成功，则返回值为 ERROR_SUCCESS。如果函数失败，则返回值为 Winerror.h 中定义的非零错误代码。</returns>
         [LibraryImport(Advapi32, EntryPoint = "RegDeleteValueW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
-        public static partial int RegDeleteValue(nint hKey, [MarshalAs(UnmanagedType.LPWStr)] string lpValueName);
+        internal static partial int RegDeleteValue(nint hKey, [MarshalAs(UnmanagedType.LPWStr)] string lpValueName);
 
         /// <summary>
         /// 打开指定的注册表项。 请注意，键名称不区分大小写。
@@ -99,7 +99,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// <param name="phkResult">一个变量的指针，此变量指向已打开键的句柄。</param>
         /// <returns>如果函数成功，则返回值为 ERROR_SUCCESS。如果函数失败，则返回值为 Winerror.h 中定义的非零错误代码。</returns>
         [LibraryImport(Advapi32, EntryPoint = "RegOpenKeyExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
-        public static partial int RegOpenKeyEx(nuint hKey, [MarshalAs(UnmanagedType.LPWStr)] string lpSubKey, int ulOptions, RegistryAccessRights samDesired, out nint phkResult);
+        internal static partial int RegOpenKeyEx(nuint hKey, [MarshalAs(UnmanagedType.LPWStr)] string lpSubKey, int ulOptions, RegistryAccessRights samDesired, out nint phkResult);
 
         /// <summary>
         /// 检索与打开的注册表项关联的指定值名称的类型和数据。
@@ -115,7 +115,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// 如果 lpData 缓冲区太小，无法接收数据，函数将返回ERROR_MORE_DATA。如果 lpValueName 注册表值不存在，该函数将返回ERROR_FILE_NOT_FOUND。
         /// </returns>
         [LibraryImport(Advapi32, EntryPoint = "RegQueryValueExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
-        public static partial int RegQueryValueEx(nint hKey, [MarshalAs(UnmanagedType.LPWStr)] string lpValueName, nint lpReserved, out REG_VALUE_TYPE lpType, [Out] byte[] lpData, ref int lpcbData);
+        internal static partial int RegQueryValueEx(nint hKey, [MarshalAs(UnmanagedType.LPWStr)] string lpValueName, nint lpReserved, out REG_VALUE_TYPE lpType, [Out] byte[] lpData, ref int lpcbData);
 
         /// <summary>
         /// 设置注册表项下指定值的数据和类型。
@@ -128,6 +128,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// <param name="cbData">lpData 参数指向的信息的大小（以字节为单位）。 如果数据的类型为 REG_SZ、REG_EXPAND_SZ 或 REG_MULTI_SZ，cbData 必须包含终止 null 字符或字符的大小。</param>
         /// <returns>如果函数成功，则返回值ERROR_SUCCESS。如果函数失败，则返回值为 Winerror.h 中定义的非零错误代码。 </returns>
         [LibraryImport(Advapi32, EntryPoint = "RegSetValueExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
-        public static partial int RegSetValueEx(nint hKey, [MarshalAs(UnmanagedType.LPWStr)] string lpValueName, nint Reserved, REG_VALUE_TYPE dwType, [In] byte[] lpData, int cbData);
+        internal static partial int RegSetValueEx(nint hKey, [MarshalAs(UnmanagedType.LPWStr)] string lpValueName, nint Reserved, REG_VALUE_TYPE dwType, [In] byte[] lpData, int cbData);
     }
 }

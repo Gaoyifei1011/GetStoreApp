@@ -3,7 +3,7 @@
     /// <summary>
     /// 数据复制类型
     /// </summary>
-    public enum DataCopyKind
+    internal enum DataCopyKind
     {
         AppInformation = 0,
         AppUserModelId = 1,

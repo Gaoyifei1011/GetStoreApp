@@ -9,11 +9,11 @@ namespace GetStoreAppInstaller.Views.NotificationTips
     /// <summary>
     /// 复制剪贴应用内通知
     /// </summary>
-    public sealed partial class CopyPasteInstallerNotificationTip : TeachingTip, INotifyPropertyChanged
+    internal sealed partial class CopyPasteInstallerNotificationTip : TeachingTip, INotifyPropertyChanged
     {
         private bool _isSuccessfully;
 
-        public bool IsSuccessfully
+        internal bool IsSuccessfully
         {
             get { return _isSuccessfully; }
 
@@ -29,7 +29,7 @@ namespace GetStoreAppInstaller.Views.NotificationTips
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public CopyPasteInstallerNotificationTip(bool isSuccessfully = false)
+        internal CopyPasteInstallerNotificationTip(bool isSuccessfully = false)
         {
             InitializeComponent();
             IsSuccessfully = isSuccessfully;

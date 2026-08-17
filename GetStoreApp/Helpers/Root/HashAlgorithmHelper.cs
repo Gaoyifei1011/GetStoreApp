@@ -9,12 +9,12 @@ namespace GetStoreApp.Helpers.Root
     /// <summary>
     /// 哈希算法计算辅助类
     /// </summary>
-    public static class HashAlgorithmHelper
+    internal static class HashAlgorithmHelper
     {
         /// <summary>
         /// 拼接并生成唯一的历史记录MD5值
         /// </summary>
-        public static string GenerateHistoryKey(string inputContent)
+        internal static string GenerateHistoryKey(string inputContent)
         {
             return ComputeMD5(inputContent);
         }
@@ -22,7 +22,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 拼接并生成唯一的历史记录MD5值
         /// </summary>
-        public static string GenerateHistoryKey(string typeName, string channelName, string currentLink)
+        internal static string GenerateHistoryKey(string typeName, string channelName, string currentLink)
         {
             return ComputeMD5(string.Format("{0} {1} {2}", typeName, channelName, currentLink));
         }
@@ -30,7 +30,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 计算下载对应的唯一键值（使用文件名称和文件路径生成）
         /// </summary>
-        public static string GenerateDownloadKey(string fileName, string filePath)
+        internal static string GenerateDownloadKey(string fileName, string filePath)
         {
             return ComputeMD5(string.Format("{0} {1}", fileName, filePath));
         }
@@ -49,7 +49,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 获取计算所得的 SHA256 算法加密后的值
         /// </summary>
-        public static string ComputeSHA256(string content)
+        internal static string ComputeSHA256(string content)
         {
             HashAlgorithmProvider hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
             IBuffer buffer = Encoding.UTF8.GetBytes(content).AsBuffer();

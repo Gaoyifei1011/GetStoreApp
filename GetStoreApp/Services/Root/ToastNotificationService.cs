@@ -15,16 +15,16 @@ namespace GetStoreApp.Services.Root
     /// <summary>
     /// 应用通知服务
     /// </summary>
-    public static class ToastNotificationService
+    internal static class ToastNotificationService
     {
-        public static ToastNotifier AppToastNotifier { get; } = ToastNotificationManager.CreateToastNotifier();
+        internal static ToastNotifier AppToastNotifier { get; } = ToastNotificationManager.CreateToastNotifier();
 
-        public static AppNotificationManager AppNotificationManager { get; } = AppNotificationManager.Default;
+        internal static AppNotificationManager AppNotificationManager { get; } = AppNotificationManager.Default;
 
         /// <summary>
         /// 处理应用通知
         /// </summary>
-        public static async Task HandleToastNotificationAsync(string content, bool isLaunched)
+        internal static async Task HandleToastNotificationAsync(string content, bool isLaunched)
         {
             string notificationArgs = new WwwFormUrlDecoder(content).GetFirstValueByName("action");
 
@@ -91,7 +91,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 显示通知
         /// </summary>
-        public static void Show(AppNotification appNotification)
+        internal static void Show(AppNotification appNotification)
         {
             try
             {

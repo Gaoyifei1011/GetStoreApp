@@ -8,7 +8,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     /// 实现 IBackgroundCopyCallback 接口以接收作业已完成、已修改或出错的 通知 。 客户端使用此接口，而不是轮询作业的状态。
     /// </summary>
     [GeneratedComInterface, Guid("97EA99C7-0186-4AD4-8DF9-C5B4E0ED6B22")]
-    public partial interface IBackgroundCopyCallback
+    internal partial interface IBackgroundCopyCallback
     {
         /// <summary>
         /// 当作业中的所有文件都已成功传输时，BITS 会调用 JobTransferred 方法的实现。 对于BG_JOB_TYPE_UPLOAD_REPLY作业，BITS 在上传文件传输到服务器并将回复传输到客户端后调用 JobTransferred 方法。

@@ -7,7 +7,7 @@ namespace GetStoreAppShellExtension.Commands
     /// 命令栏的命令枚举接口实现类
     /// </summary>
     [GeneratedComClass]
-    public partial class EnumExplorerCommand(IExplorerCommand[] explorerCommands) : IEnumExplorerCommand
+    internal sealed partial class EnumExplorerCommand(IExplorerCommand[] explorerCommands) : IEnumExplorerCommand
     {
         private readonly IExplorerCommand[] subExplorerCommandArray = explorerCommands is null ? [] : explorerCommands;
         private int index;

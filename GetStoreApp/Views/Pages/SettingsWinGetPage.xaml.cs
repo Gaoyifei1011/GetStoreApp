@@ -23,14 +23,14 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 设置 WinGet 程序包选项页面
     /// </summary>
-    public sealed partial class SettingsWinGetPage : Page, INotifyPropertyChanged
+    internal sealed partial class SettingsWinGetPage : Page, INotifyPropertyChanged
     {
         private readonly string AppInstallerString = ResourceService.GetLocalized("SettingsWinGet/AppInstaller");
         private readonly string BuiltInAppString = ResourceService.GetLocalized("SettingsWinGet/BuiltInApp");
 
         private ComboBoxItemModel _currentWinGetSource;
 
-        public ComboBoxItemModel CurrentWinGetSource
+        internal ComboBoxItemModel CurrentWinGetSource
         {
             get { return _currentWinGetSource; }
 
@@ -46,7 +46,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _winGetSource;
 
-        public ComboBoxItemModel WinGetSource
+        internal ComboBoxItemModel WinGetSource
         {
             get { return _winGetSource; }
 
@@ -64,7 +64,7 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SettingsWinGetPage()
+        internal SettingsWinGetPage()
         {
             InitializeComponent();
             WinGetSourceList.Add(new() { SelectedValue = WinGetConfigService.WinGetSourceList[0], DisplayMember = BuiltInAppString });

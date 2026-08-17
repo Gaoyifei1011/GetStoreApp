@@ -33,7 +33,7 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// WinGet 应用版本信息操作选项页面
     /// </summary>
-    public sealed partial class WinGetAppsVersionOptionsPage : Page, INotifyPropertyChanged
+    internal sealed partial class WinGetAppsVersionOptionsPage : Page, INotifyPropertyChanged
     {
         private readonly string PackageInstallModeDefaultString = ResourceService.GetLocalized("WinGetAppsVersionOptions/PackageInstallModeDefault");
         private readonly string PackageInstallModeInteractiveString = ResourceService.GetLocalized("WinGetAppsVersionOptions/PackageInstallModeInteractive");
@@ -61,7 +61,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _winGetAppsOptionsTitle;
 
-        public string WinGetAppsOptionsTitle
+        internal string WinGetAppsOptionsTitle
         {
             get { return _winGetAppsOptionsTitle; }
 
@@ -77,7 +77,7 @@ namespace GetStoreApp.Views.Pages
 
         private PackageOperationKind _packageOperationKind;
 
-        public PackageOperationKind PackageOperationKind
+        internal PackageOperationKind PackageOperationKind
         {
             get { return _packageOperationKind; }
 
@@ -93,7 +93,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _allowHashMismatch;
 
-        public bool AllowHashMismatch
+        internal bool AllowHashMismatch
         {
             get { return _allowHashMismatch; }
 
@@ -109,7 +109,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _packageDownloadPath;
 
-        public string PackageDownloadPath
+        internal string PackageDownloadPath
         {
             get { return _packageDownloadPath; }
 
@@ -125,7 +125,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _packageInstallScope;
 
-        public ComboBoxItemModel PackageInstallScope
+        internal ComboBoxItemModel PackageInstallScope
         {
             get { return _packageInstallScope; }
 
@@ -141,7 +141,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _packageArchitecture;
 
-        public ComboBoxItemModel PackageArchitecture
+        internal ComboBoxItemModel PackageArchitecture
         {
             get { return _packageArchitecture; }
 
@@ -157,7 +157,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _bypassIsStoreClientBlockedPolicyCheck;
 
-        public bool BypassIsStoreClientBlockedPolicyCheck
+        internal bool BypassIsStoreClientBlockedPolicyCheck
         {
             get { return _bypassIsStoreClientBlockedPolicyCheck; }
 
@@ -173,7 +173,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _AllowUpgradeToUnknownVersion;
 
-        public bool AllowUpgradeToUnknownVersion
+        internal bool AllowUpgradeToUnknownVersion
         {
             get { return _AllowUpgradeToUnknownVersion; }
 
@@ -189,7 +189,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _forceInstall;
 
-        public bool ForceInstall
+        internal bool ForceInstall
         {
             get { return _forceInstall; }
 
@@ -205,7 +205,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _packageInstallMode;
 
-        public ComboBoxItemModel PackageInstallMode
+        internal ComboBoxItemModel PackageInstallMode
         {
             get { return _packageInstallMode; }
 
@@ -221,7 +221,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _packageInstallPath;
 
-        public string PackageInstallPath
+        internal string PackageInstallPath
         {
             get { return _packageInstallPath; }
 
@@ -237,7 +237,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isX86ProcessorArchitecture;
 
-        public bool IsX86ProcessorArchitecture
+        internal bool IsX86ProcessorArchitecture
         {
             get { return _isX86ProcessorArchitecture; }
 
@@ -253,7 +253,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isX64ProcessorArchitecture;
 
-        public bool IsX64ProcessorArchitecture
+        internal bool IsX64ProcessorArchitecture
         {
             get { return _isX64ProcessorArchitecture; }
 
@@ -269,7 +269,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isArm64ProcessorArchitecture;
 
-        public bool IsArm64ProcessorArchitecture
+        internal bool IsArm64ProcessorArchitecture
         {
             get { return _isArm64ProcessorArchitecture; }
 
@@ -285,7 +285,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _additionalInstallerArguments;
 
-        public string AdditionalInstallerArguments
+        internal string AdditionalInstallerArguments
         {
             get { return _additionalInstallerArguments; }
 
@@ -301,7 +301,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _packageRepairScope;
 
-        public ComboBoxItemModel PackageRepairScope
+        internal ComboBoxItemModel PackageRepairScope
         {
             get { return _packageRepairScope; }
 
@@ -317,7 +317,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _packageRepairMode;
 
-        public ComboBoxItemModel PackageRepairMode
+        internal ComboBoxItemModel PackageRepairMode
         {
             get { return _packageRepairMode; }
 
@@ -343,7 +343,7 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public WinGetAppsVersionOptionsPage()
+        internal WinGetAppsVersionOptionsPage()
         {
             InitializeComponent();
 

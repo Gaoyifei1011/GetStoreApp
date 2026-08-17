@@ -8,7 +8,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 为捆绑包提供只读对象模型。
     /// </summary>
     [GeneratedComInterface, Guid("DD75B8C0-BA76-43B0-AE0F-68656A1DC5C8")]
-    public partial interface IAppxBundleReader
+    internal partial interface IAppxBundleReader
     {
         /// <summary>
         /// 从捆绑中检索指定类型的占用文件。

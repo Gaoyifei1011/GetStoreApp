@@ -6,7 +6,7 @@ namespace GetStoreAppPinner.WindowsAPI.PInvoke.Advapi32
     /// 包含对象的标准访问权限
     /// </summary>
     [Flags]
-    public enum StandardRight : uint
+    internal enum StandardRight : uint
     {
         /// <summary>
         /// 删除对象的权限。

@@ -65,7 +65,7 @@ namespace GetStoreAppInstaller.Views.Windows
     /// <summary>
     /// 应用包安装器窗口
     /// </summary>
-    public sealed partial class InstallerWindow : Window, INotifyPropertyChanged
+    internal sealed partial class InstallerWindow : Window, INotifyPropertyChanged
     {
         private readonly string msresource = "ms-resource:";
         private readonly string AppInstallFailedString = ResourceService.GetLocalized("Installer/AppInstallFailed");
@@ -116,7 +116,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _windowTitle;
 
-        public string WindowTitle
+        internal string WindowTitle
         {
             get { return _windowTitle; }
 
@@ -132,7 +132,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private SystemBackdrop _windowSystemBackdrop;
 
-        public SystemBackdrop WindowSystemBackdrop
+        internal SystemBackdrop WindowSystemBackdrop
         {
             get { return _windowSystemBackdrop; }
 
@@ -148,7 +148,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private ElementTheme _windowTheme;
 
-        public ElementTheme WindowTheme
+        internal ElementTheme WindowTheme
         {
             get { return _windowTheme; }
 
@@ -164,7 +164,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isWindowMaximized;
 
-        public bool IsWindowMaximized
+        internal bool IsWindowMaximized
         {
             get { return _isWindowMaximized; }
 
@@ -180,7 +180,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isParseEmpty;
 
-        public bool IsParseEmpty
+        internal bool IsParseEmpty
         {
             get { return _isParseEmpty; }
 
@@ -196,7 +196,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isLoadCompleted;
 
-        public bool IsLoadCompleted
+        internal bool IsLoadCompleted
         {
             get { return _isLoadCompleted; }
 
@@ -212,7 +212,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _canDragFile;
 
-        public bool CanDragFile
+        internal bool CanDragFile
         {
             get { return _canDragFile; }
 
@@ -228,7 +228,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isParseSuccessfully;
 
-        public bool IsParseSuccessfully
+        internal bool IsParseSuccessfully
         {
             get { return _isParseSuccessfully; }
 
@@ -244,7 +244,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private PackageFileType _packageFileType;
 
-        public PackageFileType PackageFileType
+        internal PackageFileType PackageFileType
         {
             get { return _packageFileType; }
 
@@ -260,7 +260,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private ImageSource _packageIconImage;
 
-        public ImageSource PackageIconImage
+        internal ImageSource PackageIconImage
         {
             get { return _packageIconImage; }
 
@@ -276,7 +276,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _packageName;
 
-        public string PackageName
+        internal string PackageName
         {
             get { return _packageName; }
 
@@ -292,7 +292,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _publisherDisplayName;
 
-        public string PublisherDisplayName
+        internal string PublisherDisplayName
         {
             get { return _publisherDisplayName; }
 
@@ -308,7 +308,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private Version _version;
 
-        public Version Version
+        internal Version Version
         {
             get { return _version; }
 
@@ -324,7 +324,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _packageDescription;
 
-        public string PackageDescription
+        internal string PackageDescription
         {
             get { return _packageDescription; }
 
@@ -340,7 +340,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _packageFamilyName;
 
-        public string PackageFamilyName
+        internal string PackageFamilyName
         {
             get { return _packageFamilyName; }
 
@@ -356,7 +356,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _packageFullName;
 
-        public string PackageFullName
+        internal string PackageFullName
         {
             get { return _packageFullName; }
 
@@ -372,7 +372,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _supportedArchitecture;
 
-        public string SupportedArchitecture
+        internal string SupportedArchitecture
         {
             get { return _supportedArchitecture; }
 
@@ -388,7 +388,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _isFramework;
 
-        public string IsFramework
+        internal string IsFramework
         {
             get { return _isFramework; }
 
@@ -404,7 +404,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _appInstalledState;
 
-        public string AppInstalledState
+        internal string AppInstalledState
         {
             get { return _appInstalledState; }
 
@@ -420,7 +420,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _appInstallerSourceLink;
 
-        public string AppInstallerSourceLink
+        internal string AppInstallerSourceLink
         {
             get { return _appInstallerSourceLink; }
 
@@ -436,7 +436,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isAppInstallerSourceLinkExisted;
 
-        public bool IsAppInstallerSourceLinkExisted
+        internal bool IsAppInstallerSourceLinkExisted
         {
             get { return _isAppInstallerSourceLinkExisted; }
 
@@ -452,7 +452,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _packageSourceLink;
 
-        public string PackageSourceLink
+        internal string PackageSourceLink
         {
             get { return _packageSourceLink; }
 
@@ -468,7 +468,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isPackageSourceLinkExisted;
 
-        public bool IsPackageSourceLinkExisted
+        internal bool IsPackageSourceLinkExisted
         {
             get { return _isPackageSourceLinkExisted; }
 
@@ -484,7 +484,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _packageType;
 
-        public string PackageType
+        internal string PackageType
         {
             get { return _packageType; }
 
@@ -500,7 +500,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _hoursBetweenUpdateChecks;
 
-        public string HoursBetweenUpdateChecks
+        internal string HoursBetweenUpdateChecks
         {
             get { return _hoursBetweenUpdateChecks; }
 
@@ -516,7 +516,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _updateBlocksActivation;
 
-        public string UpdateBlocksActivation
+        internal string UpdateBlocksActivation
         {
             get { return _updateBlocksActivation; }
 
@@ -532,7 +532,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _showPrompt;
 
-        public string ShowPrompt
+        internal string ShowPrompt
         {
             get { return _showPrompt; }
 
@@ -548,7 +548,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _forceUpdateFromAnyVersion;
 
-        public string ForceUpdateFromAnyVersion
+        internal string ForceUpdateFromAnyVersion
         {
             get { return _forceUpdateFromAnyVersion; }
 
@@ -564,7 +564,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _automaticBackgroundTask;
 
-        public string AutomaticBackgroundTask
+        internal string AutomaticBackgroundTask
         {
             get { return _automaticBackgroundTask; }
 
@@ -580,7 +580,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isAppInstalled;
 
-        public bool IsAppInstalled
+        internal bool IsAppInstalled
         {
             get { return _isAppInstalled; }
 
@@ -596,7 +596,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isUpdateSettingsExisted;
 
-        public bool IsUpdateSettingsExisted
+        internal bool IsUpdateSettingsExisted
         {
             get { return _isUpdateSettingsExisted; }
 
@@ -612,7 +612,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isInstalling;
 
-        public bool IsInstalling
+        internal bool IsInstalling
         {
             get { return _isInstalling; }
 
@@ -628,7 +628,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private double _installProgressValue;
 
-        public double InstallProgressValue
+        internal double InstallProgressValue
         {
             get { return _installProgressValue; }
 
@@ -644,7 +644,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isInstallWaiting;
 
-        public bool IsInstallWaiting
+        internal bool IsInstallWaiting
         {
             get { return _isInstallWaiting; }
 
@@ -660,7 +660,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isInstallFailed;
 
-        public bool IsInstallFailed
+        internal bool IsInstallFailed
         {
             get { return _isInstallFailed; }
 
@@ -676,7 +676,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isCancelInstall;
 
-        public bool IsCancelInstall
+        internal bool IsCancelInstall
         {
             get { return _isCancelInstall; }
 
@@ -692,7 +692,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _installStateString;
 
-        public string InstallStateString
+        internal string InstallStateString
         {
             get { return _installStateString; }
 
@@ -708,7 +708,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _installFailedInformation;
 
-        public string InstallFailedInformation
+        internal string InstallFailedInformation
         {
             get { return _installFailedInformation; }
 
@@ -900,7 +900,7 @@ namespace GetStoreAppInstaller.Views.Windows
         public event PropertyChangedEventHandler PropertyChanged;
 
         [DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
-        public InstallerWindow()
+        internal InstallerWindow()
         {
             InitializeComponent();
 
@@ -1930,7 +1930,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 设置应用显示的主题
         /// </summary>
-        public void SetWindowTheme()
+        internal void SetWindowTheme()
         {
             WindowTheme = string.Equals(ThemeService.AppTheme, ThemeService.ThemeList[0]) ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark : Enum.TryParse(ThemeService.AppTheme, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
         }
@@ -2121,7 +2121,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// 使用教学提示显示应用内通知
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(Grid))]
-        public async Task ShowNotificationAsync(TeachingTip teachingTip, int duration = 2000)
+        internal async Task ShowNotificationAsync(TeachingTip teachingTip, int duration = 2000)
         {
             try
             {
@@ -3645,7 +3645,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 处理提权模式下的文件拖拽
         /// </summary>
-        public async Task DealElevatedDragDropAsync(string filePath)
+        internal async Task DealElevatedDragDropAsync(string filePath)
         {
             string extensionName = Path.GetExtension(filePath);
 

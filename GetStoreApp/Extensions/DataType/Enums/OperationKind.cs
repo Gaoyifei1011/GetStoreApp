@@ -1,6 +1,6 @@
 ﻿namespace GetStoreApp.Extensions.DataType.Enums
 {
-    public enum OperationKind
+    internal enum OperationKind
     {
         CheckUpdate = 0,
         Desktop = 1,

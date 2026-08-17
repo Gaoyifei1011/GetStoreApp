@@ -3,7 +3,7 @@
     /// <summary>
     /// 下载进度状态
     /// </summary>
-    public enum DownloadProgressState
+    internal enum DownloadProgressState
     {
         Queued = 0,
         Downloading = 1,

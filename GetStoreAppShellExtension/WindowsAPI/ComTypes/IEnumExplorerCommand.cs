@@ -8,7 +8,7 @@ namespace GetStoreAppShellExtension.WindowsAPI.ComTypes
     /// 由 IExplorerCommandProvider 提供。 此接口包含要放入命令栏的命令枚举。
     /// </summary>
     [GeneratedComInterface, Guid("A88826F8-186F-4987-AADE-EA0CEF8FBFE8")]
-    public partial interface IEnumExplorerCommand
+    internal partial interface IEnumExplorerCommand
     {
         /// <summary>
         /// 检索指定数量的直接跟随当前元素的元素。

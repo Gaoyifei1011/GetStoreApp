@@ -10,7 +10,7 @@ namespace GetStoreAppShellExtension
     /// 允许创建对象的类
     /// </summary>
     [GeneratedComClass]
-    public partial class ShellMenuClassFactory : IClassFactory
+    internal sealed partial class ShellMenuClassFactory : IClassFactory
     {
         private readonly IExplorerCommand rootExplorerCommand = new RootExplorerCommand();
 

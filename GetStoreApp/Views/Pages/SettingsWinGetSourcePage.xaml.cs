@@ -27,7 +27,7 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// WinGet 数据源页面
     /// </summary>
-    public sealed partial class SettingsWinGetSourcePage : Page, INotifyPropertyChanged
+    internal sealed partial class SettingsWinGetSourcePage : Page, INotifyPropertyChanged
     {
         private readonly string DistrustedString = ResourceService.GetLocalized("SettingsWinGetSource/Distrusted");
         private readonly string MicrosoftEntraIdString = ResourceService.GetLocalized("SettingsWinGetSource/MicrosoftEntraId");
@@ -51,7 +51,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isLoadedCompleted;
 
-        public bool IsLoadedCompleted
+        internal bool IsLoadedCompleted
         {
             get { return _isLoadedCompleted; }
 
@@ -71,7 +71,7 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SettingsWinGetSourcePage()
+        internal SettingsWinGetSourcePage()
         {
             InitializeComponent();
         }

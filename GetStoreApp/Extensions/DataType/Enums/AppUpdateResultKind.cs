@@ -3,7 +3,7 @@
     /// <summary>
     /// 应用更新结果类型
     /// </summary>
-    public enum AppUpdateResultKind
+    internal enum AppUpdateResultKind
     {
         NotCheckUpdate = 0,
         Failed = 1,

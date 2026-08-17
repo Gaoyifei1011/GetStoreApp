@@ -6,7 +6,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     /// 控制文件操作的标志。
     /// </summary>
     [Flags]
-    public enum FileOperationFlags : uint
+    internal enum FileOperationFlags : uint
     {
         /// <summary>
         /// pTo 成员指定多个目标文件（pFrom中的每个源文件一个），而不是要存储所有源文件的一个目录。

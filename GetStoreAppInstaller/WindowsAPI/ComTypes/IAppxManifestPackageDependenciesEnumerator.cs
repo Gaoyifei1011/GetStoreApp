@@ -8,7 +8,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 枚举包清单中定义的包依赖项。
     /// </summary>
     [GeneratedComInterface, Guid("B43BBCF9-65A6-42DD-BAC0-8C6741E7F5A4")]
-    public partial interface IAppxManifestPackageDependenciesEnumerator
+    internal partial interface IAppxManifestPackageDependenciesEnumerator
     {
         /// <summary>
         /// 获取枚举器当前位置的依赖项包。

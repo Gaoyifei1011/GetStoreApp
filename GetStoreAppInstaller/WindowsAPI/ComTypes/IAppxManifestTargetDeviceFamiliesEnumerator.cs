@@ -8,7 +8,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 枚举程序包清单中定义的目标设备系列。
     /// </summary>
     [GeneratedComInterface, Guid("36537F36-27A4-4788-88C0-733819575017")]
-    public partial interface IAppxManifestTargetDeviceFamiliesEnumerator
+    internal partial interface IAppxManifestTargetDeviceFamiliesEnumerator
     {
         /// <summary>
         /// 获取枚举器当前位置的目标设备系列。

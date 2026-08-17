@@ -231,7 +231,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 页面向前导航
         /// </summary>
-        public void NavigateTo(Type navigationPageType, object parameter = null, bool? slideDirection = null)
+        internal void NavigateTo(Type navigationPageType, object parameter = null, bool? slideDirection = null)
         {
             try
             {
@@ -249,7 +249,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取当前导航到的页
         /// </summary>
-        public Type GetCurrentPageType()
+        internal Type GetCurrentPageType()
         {
             return DownloadFrame.CurrentSourcePageType;
         }
@@ -257,7 +257,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 显示下载使用说明
         /// </summary>
-        public async void ShowUseInstruction()
+        internal async void ShowUseInstruction()
         {
             if (!DownloadSplitView.IsPaneOpen)
             {
@@ -269,7 +269,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 设置要导航的内容
         /// </summary>
-        public void SetNavigateContent(bool needNavigate, Type navigateType, object navigateParameter = null, bool? slideDirection = null)
+        internal void SetNavigateContent(bool needNavigate, Type navigateType, object navigateParameter = null, bool? slideDirection = null)
         {
             this.needNavigate = needNavigate;
             this.navigateType = navigateType;

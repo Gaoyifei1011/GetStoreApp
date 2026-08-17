@@ -29,7 +29,7 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// WinGet 搜索应用界面
     /// </summary>
-    public sealed partial class WinGetSearchPage : Page, INotifyPropertyChanged
+    internal sealed partial class WinGetSearchPage : Page, INotifyPropertyChanged
     {
         private readonly string NotAvailableString = ResourceService.GetLocalized("WinGetSearch/NotAvailable");
         private readonly string SearchAppsEmptyDescriptionString = ResourceService.GetLocalized("WinGetSearch/SearchAppsEmptyDescription");
@@ -43,7 +43,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _searchText = string.Empty;
 
-        public string SearchText
+        internal string SearchText
         {
             get { return _searchText; }
 
@@ -59,7 +59,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isIncrease = true;
 
-        public bool IsIncrease
+        internal bool IsIncrease
         {
             get { return _isIncrease; }
 
@@ -75,7 +75,7 @@ namespace GetStoreApp.Views.Pages
 
         private SearchAppsResultKind _searchAppsResultKind = SearchAppsResultKind.NotSearch;
 
-        public SearchAppsResultKind SearchAppsResultKind
+        internal SearchAppsResultKind SearchAppsResultKind
         {
             get { return _searchAppsResultKind; }
 
@@ -91,7 +91,7 @@ namespace GetStoreApp.Views.Pages
 
         private PackageMatchField _packageMatchField = PackageMatchField.Name;
 
-        public PackageMatchField PackageMatchField
+        internal PackageMatchField PackageMatchField
         {
             get { return _packageMatchField; }
 
@@ -107,7 +107,7 @@ namespace GetStoreApp.Views.Pages
 
         private PackageFieldMatchOption _packageFieldMatchOption = PackageFieldMatchOption.EqualsCaseInsensitive;
 
-        public PackageFieldMatchOption PackageFieldMatchOption
+        internal PackageFieldMatchOption PackageFieldMatchOption
         {
             get { return _packageFieldMatchOption; }
 
@@ -123,7 +123,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _searchFailedContent;
 
-        public string SearchFailedContent
+        internal string SearchFailedContent
         {
             get { return _searchFailedContent; }
 
@@ -141,7 +141,7 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public WinGetSearchPage()
+        internal WinGetSearchPage()
         {
             InitializeComponent();
         }
@@ -572,7 +572,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取搜索应用是否成功
         /// </summary>
-        public Visibility GetSearchAppsSuccessfullyVisibility(SearchAppsResultKind searchAppsResultKind, bool isSuccessfully)
+        internal Visibility GetSearchAppsSuccessfullyVisibility(SearchAppsResultKind searchAppsResultKind, bool isSuccessfully)
         {
             return isSuccessfully ? Equals(searchAppsResultKind, SearchAppsResultKind.Successfully) ? Visibility.Visible : Visibility.Collapsed : !Equals(searchAppsResultKind, SearchAppsResultKind.Successfully) ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -580,7 +580,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查搜索应用是否成功
         /// </summary>
-        public Visibility CheckSearchAppsResultKindVisibility(SearchAppsResultKind searchAppsResultKind, SearchAppsResultKind comparedSearchAppsResultKind)
+        internal Visibility CheckSearchAppsResultKindVisibility(SearchAppsResultKind searchAppsResultKind, SearchAppsResultKind comparedSearchAppsResultKind)
         {
             return Equals(searchAppsResultKind, comparedSearchAppsResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -589,7 +589,7 @@ namespace GetStoreApp.Views.Pages
         /// 获取搜索框是否可进行搜索
         /// </summary>
 
-        public bool GetSearchBoxEnabled(SearchAppsResultKind searchAppsResultKind)
+        internal bool GetSearchBoxEnabled(SearchAppsResultKind searchAppsResultKind)
         {
             return searchAppsResultKind is not SearchAppsResultKind.Searching;
         }
@@ -598,7 +598,7 @@ namespace GetStoreApp.Views.Pages
         /// 获取搜索框是否可进行搜索
         /// </summary>
 
-        public bool GetSearchRefreshEnabled(SearchAppsResultKind searchAppsResultKind)
+        internal bool GetSearchRefreshEnabled(SearchAppsResultKind searchAppsResultKind)
         {
             return !(Equals(searchAppsResultKind, SearchAppsResultKind.Searching) || Equals(searchAppsResultKind, SearchAppsResultKind.NotSearch));
         }

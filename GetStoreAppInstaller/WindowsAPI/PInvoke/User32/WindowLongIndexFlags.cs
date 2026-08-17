@@ -3,7 +3,7 @@
 namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
 {
     [Flags]
-    public enum WindowLongIndexFlags : int
+    internal enum WindowLongIndexFlags : int
     {
         /// <summary>
         /// 检索扩展窗口样式。

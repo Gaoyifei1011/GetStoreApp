@@ -3,7 +3,7 @@
     /// <summary>
     /// 菜单主题样式
     /// </summary>
-    public enum PreferredAppMode
+    internal enum PreferredAppMode
     {
         Default,
         AllowDark,

@@ -8,7 +8,7 @@ namespace GetStoreApp.Views.DataTemplates
     /// <summary>
     /// 导航项数据模板选择器
     /// </summary>
-    public partial class NavigationViewItemTemplateSelector : DataTemplateSelector
+    internal sealed partial class NavigationViewItemTemplateSelector : DataTemplateSelector
     {
         public DataTemplate NavigationViewItemTemplate { get; set; }
 

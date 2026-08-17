@@ -6,7 +6,7 @@ namespace GetStoreAppShellExtension.WindowsAPI.ComTypes
     /// EXPCMDSTATE 值表示 Shell 项的命令状态。
     /// </summary>
     [Flags]
-    public enum EXPCMDSTATE : int
+    internal enum EXPCMDSTATE : int
     {
         /// <summary>
         /// 该项已启用。

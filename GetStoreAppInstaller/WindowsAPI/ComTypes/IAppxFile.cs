@@ -7,7 +7,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 检索有关包中有效负载或占用空间文件的信息。
     /// </summary>
     [GeneratedComInterface, Guid("91DF827B-94FD-468F-827B-57F41B2F6F2E")]
-    public partial interface IAppxFile
+    internal partial interface IAppxFile
     {
         /// <summary>
         /// 检索用于在包中存储文件的压缩选项。

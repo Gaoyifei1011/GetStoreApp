@@ -3,7 +3,7 @@
     /// <summary>
     /// 指示强类型效果属性如何映射到基础 Direct2D 效果属性。 此枚举支持 Windows.UI.Composition API，不应直接在代码中使用。
     /// </summary>
-    public enum GRAPHICS_EFFECT_PROPERTY_MAPPING
+    internal enum GRAPHICS_EFFECT_PROPERTY_MAPPING
     {
         /// <summary>
         /// 指定值不能映射到 Direct2D 效果属性。

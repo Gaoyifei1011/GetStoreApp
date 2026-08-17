@@ -8,7 +8,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 创建用于读取和写入捆绑包的对象。
     /// </summary>
     [GeneratedComInterface, Guid("BBA65864-965F-4A5F-855F-F074BDBF3A7B")]
-    public partial interface IAppxBundleFactory
+    internal partial interface IAppxBundleFactory
     {
         /// <summary>
         /// 创建可向其添加应用包的仅写捆绑包对象。

@@ -9,7 +9,7 @@ namespace GetStoreApp.Services.Settings
     /// <summary>
     /// 查询链接方式选择设置服务
     /// </summary>
-    public static class QueryLinksModeService
+    internal static class QueryLinksModeService
     {
         private static readonly string queryLinksModeSettingsKey = ConfigKey.QueryLinksModeKey;
 
@@ -17,7 +17,7 @@ namespace GetStoreApp.Services.Settings
 
         private static string _queryLinksMode;
 
-        public static string QueryLinksMode
+        internal static string QueryLinksMode
         {
             get { return _queryLinksMode; }
 
@@ -31,14 +31,14 @@ namespace GetStoreApp.Services.Settings
             }
         }
 
-        public static List<string> QueryLinksModeList { get; } = ["Official", "ThirdParty"];
+        internal static List<string> QueryLinksModeList { get; } = ["Official", "ThirdParty"];
 
-        public static event PropertyChangedEventHandler PropertyChanged;
+        internal static event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// 应用在初始化前获取设置存储的查询链接方式选择值
         /// </summary>
-        public static void InitializeQueryLinksMode()
+        internal static void InitializeQueryLinksMode()
         {
             defaultQueryLinksMode = QueryLinksModeList.Find(item => item is "Official");
             QueryLinksMode = GetQueryLinksMode();
@@ -64,7 +64,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 查询链接方式发生修改时修改设置存储的查询链接方式值
         /// </summary>
-        public static void SetQueryLinksMode(string queryLinksMode)
+        internal static void SetQueryLinksMode(string queryLinksMode)
         {
             QueryLinksMode = queryLinksMode;
             LocalSettingsService.SaveSetting(queryLinksModeSettingsKey, queryLinksMode);

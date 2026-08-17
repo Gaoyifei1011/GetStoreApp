@@ -26,13 +26,15 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 设置关于页面
     /// </summary>
-    public sealed partial class SettingsAboutPage : Page, INotifyPropertyChanged
+    internal sealed partial class SettingsAboutPage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private static readonly string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36 Edg/149.0.0.0";
 
         private bool _isChecking;
 
-        public bool IsChecking
+        private bool IsChecking
         {
             get { return _isChecking; }
 
@@ -45,6 +47,10 @@ namespace GetStoreApp.Views.Pages
                 }
             }
         }
+
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
 
         //项目引用信息
         private List<ContentLinkInfo> ReferenceList { get; } =
@@ -79,29 +85,25 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SettingsAboutPage()
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
+        internal SettingsAboutPage()
         {
             InitializeComponent();
         }
 
-        #region 第二部分：设置关于页面——挂载的事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：挂载事件处理
 
         /// <summary>
         /// 查看更新日志
         /// </summary>
         private void OnShowReleaseNotesClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            ShowReleaseNotes();
         }
 
         /// <summary>
@@ -117,17 +119,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSystemInformationClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new("ms-settings:about"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            ShowSystemInformation();
         }
 
         /// <summary>
@@ -143,17 +135,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnHelpTranslateClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new("https://github.com/Gaoyifei1011/GetStoreApp/pulls"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            HelpTranslate();
         }
 
         /// <summary>
@@ -161,17 +143,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnProjectDescriptionClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new("https://github.com/Gaoyifei1011/GetStoreApp"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenProjectDescription();
         }
 
         /// <summary>
@@ -179,17 +151,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSendFeedbackClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new("https://github.com/Gaoyifei1011/GetStoreApp/issues"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            SendFeedback();
         }
 
         /// <summary>
@@ -209,9 +171,8 @@ namespace GetStoreApp.Views.Pages
                         try
                         {
                             IsChecking = true;
-                            StoreContext storeContext = StoreContext.GetDefault();
-                            IReadOnlyList<StorePackageUpdate> packageUpdateList = await storeContext.GetAppAndOptionalStorePackageUpdatesAsync();
-                            isNewest = packageUpdateList.Count is 0;
+                            bool? checkResult = await CheckCurrentAppIsNewestVersionAsync(RuntimeHelper.IsStoreVersion);
+                            isNewest = checkResult.HasValue && checkResult.Value;
                             IsChecking = false;
                             DispatcherQueue.TryEnqueue(async () =>
                             {
@@ -235,51 +196,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     else
                     {
-                        bool? isNewest = await Task.Run<bool?>(async () =>
-                        {
-                            try
-                            {
-                                Uri checkUpdateLinkUri = new("https://api.github.com/repos/Gaoyifei1011/GetStoreApp/releases/latest");
-
-                                // 默认超时时间是 20 秒
-                                HttpClient httpClient = new();
-                                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
-                                httpClient.DefaultRequestHeaders.Referer = checkUpdateLinkUri;
-                                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", checkUpdateLinkUri.AbsolutePath);
-
-                                HttpRequestResult httpRequestResult = await httpClient.TryGetAsync(checkUpdateLinkUri);
-                                httpClient.Dispose();
-
-                                // 请求成功
-                                if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
-                                {
-                                    string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
-
-                                    if (!string.IsNullOrEmpty(responseString))
-                                    {
-                                        if (JsonObject.TryParse(responseString, out JsonObject responseStringObject) && new Version(responseStringObject.GetNamedString("tag_name")[1..]) is Version tagVersion)
-                                        {
-                                            return InfoHelper.AppVersion >= tagVersion;
-                                        }
-                                    }
-                                }
-                                // 请求失败
-                                else
-                                {
-                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(OnCheckUpdateClicked), 1, httpRequestResult.ExtendedError);
-                                }
-
-                                httpRequestResult.Dispose();
-                            }
-                            // 其他异常
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(OnCheckUpdateClicked), 2, e);
-                            }
-
-                            return null;
-                        });
-
+                        bool? isNewest = await CheckCurrentAppIsNewestVersionAsync(RuntimeHelper.IsStoreVersion);
                         IsChecking = false;
                         await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, isNewest.HasValue ? Convert.ToInt32(isNewest.Value) : 2));
                     }
@@ -292,6 +209,158 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第二部分：设置关于页面——挂载的事件
+        #endregion 第四部分：挂载事件处理
+
+        #region 第五部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 查看更新日志
+        /// </summary>
+        private void ShowReleaseNotes()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 查看系统信息
+        /// </summary>
+        private void ShowSystemInformation()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("ms-settings:about"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 帮助翻译
+        /// </summary>
+        private void HelpTranslate()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("https://github.com/Gaoyifei1011/GetStoreApp/pulls"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 打开项目主页
+        /// </summary>
+        private void OpenProjectDescription()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("https://github.com/Gaoyifei1011/GetStoreApp"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 发送反馈
+        /// </summary>
+        private void SendFeedback()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("https://github.com/Gaoyifei1011/GetStoreApp/issues"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 检查当前应用是否为最新版本
+        /// </summary>
+        /// <returns></returns>
+        private async Task<bool?> CheckCurrentAppIsNewestVersionAsync(bool isStoreVersion)
+        {
+            if (isStoreVersion)
+            {
+                StoreContext storeContext = StoreContext.GetDefault();
+                IReadOnlyList<StorePackageUpdate> packageUpdateList = await storeContext.GetAppAndOptionalStorePackageUpdatesAsync();
+                return packageUpdateList.Count is 0;
+            }
+            else
+            {
+                try
+                {
+                    Uri checkUpdateLinkUri = new("https://api.github.com/repos/Gaoyifei1011/GetStoreApp/releases/latest");
+
+                    // 默认超时时间是 20 秒
+                    HttpClient httpClient = new();
+                    httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                    httpClient.DefaultRequestHeaders.Referer = checkUpdateLinkUri;
+                    httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", checkUpdateLinkUri.AbsolutePath);
+
+                    HttpRequestResult httpRequestResult = await httpClient.TryGetAsync(checkUpdateLinkUri);
+                    httpClient.Dispose();
+
+                    // 请求成功
+                    if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
+                    {
+                        string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
+
+                        if (!string.IsNullOrEmpty(responseString))
+                        {
+                            if (JsonObject.TryParse(responseString, out JsonObject responseStringObject) && new Version(responseStringObject.GetNamedString("tag_name")[1..]) is Version tagVersion)
+                            {
+                                return InfoHelper.AppVersion >= tagVersion;
+                            }
+                        }
+                    }
+                    // 请求失败
+                    else
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(OnCheckUpdateClicked), 1, httpRequestResult.ExtendedError);
+                    }
+
+                    httpRequestResult.Dispose();
+                }
+                // 其他异常
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(OnCheckUpdateClicked), 2, e);
+                }
+
+                return null;
+            }
+        }
+
+        #endregion 第五部分：数据操作与业务逻辑
     }
 }

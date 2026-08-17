@@ -6,14 +6,14 @@ namespace GetStoreAppInstaller.Models
     /// <summary>
     /// 包文件索引字符串数据模型
     /// </summary>
-    public sealed partial class StringModel : INotifyPropertyChanged, IComparable<StringModel>
+    internal sealed partial class StringModel : INotifyPropertyChanged, IComparable<StringModel>
     {
         /// <summary>
         /// 是否已选择
         /// </summary>
         private bool _isSelected;
 
-        public bool IsSelected
+        internal bool IsSelected
         {
             get { return _isSelected; }
 
@@ -30,17 +30,17 @@ namespace GetStoreAppInstaller.Models
         /// <summary>
         /// 字符串对应的键
         /// </summary>
-        public string Key { get; set; }
+        internal string Key { get; set; }
 
         /// <summary>
         /// 字符串对应的内容
         /// </summary>
-        public string Content { get; set; }
+        internal string Content { get; set; }
 
         /// <summary>
         /// 字符串对应的语言
         /// </summary>
-        public string Language { get; set; }
+        internal string Language { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

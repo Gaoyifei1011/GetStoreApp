@@ -31,7 +31,7 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// WinGet 程序包页面
     /// </summary>
-    public sealed partial class WinGetPage : Page, INotifyPropertyChanged
+    internal sealed partial class WinGetPage : Page, INotifyPropertyChanged
     {
         private readonly string NotAvailableString = ResourceService.GetLocalized("WinGet/NotAvailable");
         private readonly string PackageDownloadFailedContent1String = ResourceService.GetLocalized("WinGet/PackageDownloadFailedContent1");
@@ -102,11 +102,11 @@ namespace GetStoreApp.Views.Pages
         private readonly string WinGetPackageUpgradeNoApplicableInstallersString = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeNoApplicableInstallers");
         private readonly string WinGetPackageUpgradeNoApplicableUpgradeString = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeNoApplicableUpgrade");
         private readonly string WinGetPackageUpgradeOtherErrorString = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeOtherError");
-        public readonly Lock PackageOperationLock = new();
+        internal readonly Lock PackageOperationLock = new();
 
         private SelectorBarItem _selectedItem;
 
-        public SelectorBarItem SelectedItem
+        internal SelectorBarItem SelectedItem
         {
             get { return _selectedItem; }
 
@@ -122,7 +122,7 @@ namespace GetStoreApp.Views.Pages
 
         private WinGetPaneKind _winGetPaneKind;
 
-        public WinGetPaneKind WinGetPaneKind
+        internal WinGetPaneKind WinGetPaneKind
         {
             get { return _winGetPaneKind; }
 
@@ -138,15 +138,15 @@ namespace GetStoreApp.Views.Pages
 
         private List<Type> PageList { get; } = [typeof(WinGetSearchPage), typeof(WinGetInstalledPage), typeof(WinGetUpgradePage)];
 
-        public ObservableCollection<PackageOperationModel> PackageOperationCollection { get; } = [];
+        internal ObservableCollection<PackageOperationModel> PackageOperationCollection { get; } = [];
 
-        public event Action<bool, bool, InstalledAppsModel, UninstallResult> InstalledAppsPackageOperationEvent;
+        internal event Action<bool, bool, InstalledAppsModel, UninstallResult> InstalledAppsPackageOperationEvent;
 
-        public event Action<bool, bool, UpgradableAppsModel, InstallResult> UpgradeAppsPackageOperationEvent;
+        internal event Action<bool, bool, UpgradableAppsModel, InstallResult> UpgradeAppsPackageOperationEvent;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public WinGetPage()
+        internal WinGetPage()
         {
             InitializeComponent();
         }
@@ -749,7 +749,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 显示任务管理
         /// </summary>
-        public void ShowTaskManager()
+        internal void ShowTaskManager()
         {
             WinGetPaneKind = WinGetPaneKind.TaskManager;
 
@@ -763,7 +763,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 添加任务
         /// </summary>
-        public async Task AddTaskAsync(PackageOperationModel packageOperation)
+        internal async Task AddTaskAsync(PackageOperationModel packageOperation)
         {
             switch (packageOperation.PackageOperationKind)
             {
@@ -2675,7 +2675,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 显示使用说明
         /// </summary>
-        public async void ShowUseInstruction()
+        internal async void ShowUseInstruction()
         {
             WinGetPaneKind = WinGetPaneKind.UseInstruction;
             if (!WinGetSplitView.IsPaneOpen)

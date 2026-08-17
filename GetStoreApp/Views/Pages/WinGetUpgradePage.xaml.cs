@@ -31,7 +31,7 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// WinGet 更新应用界面
     /// </summary>
-    public sealed partial class WinGetUpgradePage : Page, INotifyPropertyChanged
+    internal sealed partial class WinGetUpgradePage : Page, INotifyPropertyChanged
     {
         private readonly string NotAvailableString = ResourceService.GetLocalized("WinGetUpgrade/NotAvailable");
         private readonly string UpgradableAppsCountInfoString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableAppsCountInfo");
@@ -45,7 +45,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isIncrease = true;
 
-        public bool IsIncrease
+        internal bool IsIncrease
         {
             get { return _isIncrease; }
 
@@ -61,7 +61,7 @@ namespace GetStoreApp.Views.Pages
 
         private AppSortRuleKind _selectedAppSortRuleKind = AppSortRuleKind.DisplayName;
 
-        public AppSortRuleKind SelectedAppSortRuleKind
+        internal AppSortRuleKind SelectedAppSortRuleKind
         {
             get { return _selectedAppSortRuleKind; }
 
@@ -77,7 +77,7 @@ namespace GetStoreApp.Views.Pages
 
         private UpgradableAppsResultKind _upgradableAppsResultKind = UpgradableAppsResultKind.NotCheckUpdate;
 
-        public UpgradableAppsResultKind UpgradableAppsResultKind
+        internal UpgradableAppsResultKind UpgradableAppsResultKind
         {
             get { return _upgradableAppsResultKind; }
 
@@ -93,7 +93,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _upgradableFailedContent;
 
-        public string UpgradableFailedContent
+        internal string UpgradableFailedContent
         {
             get { return _upgradableFailedContent; }
 
@@ -111,7 +111,7 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public WinGetUpgradePage()
+        internal WinGetUpgradePage()
         {
             InitializeComponent();
         }

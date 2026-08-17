@@ -3,16 +3,16 @@
     /// <summary>
     /// 设置选项对应的键值
     /// </summary>
-    public static class ConfigKey
+    internal static class ConfigKey
     {
-        public const string AlwaysShowBackdropKey = "AlwaysShowBackdrop";
+        internal const string AlwaysShowBackdropKey = "AlwaysShowBackdrop";
 
-        public const string BackdropKey = "AppBackdrop";
+        internal const string BackdropKey = "AppBackdrop";
 
-        public const string DownloadFolderKey = "DownloadFolder";
+        internal const string DownloadFolderKey = "DownloadFolder";
 
-        public const string LanguageKey = "AppLanguage";
+        internal const string LanguageKey = "AppLanguage";
 
-        public const string ThemeKey = "AppTheme";
+        internal const string ThemeKey = "AppTheme";
     }
 }

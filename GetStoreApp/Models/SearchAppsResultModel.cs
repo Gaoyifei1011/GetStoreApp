@@ -3,21 +3,21 @@
     /// <summary>
     /// 查询链接结果数据模型
     /// </summary>
-    public sealed class SearchAppsResultModel
+    internal sealed class SearchAppsResultModel
     {
         /// <summary>
         /// 应用包名称
         /// </summary>
-        public string StoreAppName { get; set; }
+        internal string StoreAppName { get; set; }
 
         /// <summary>
         /// 应用发布者
         /// </summary>
-        public string StoreAppPublisher { get; set; }
+        internal string StoreAppPublisher { get; set; }
 
         /// <summary>
         /// 应用链接
         /// </summary>
-        public string StoreAppLink { get; set; }
+        internal string StoreAppLink { get; set; }
     }
 }

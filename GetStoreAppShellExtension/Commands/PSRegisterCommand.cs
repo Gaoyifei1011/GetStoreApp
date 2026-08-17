@@ -13,7 +13,7 @@ namespace GetStoreAppShellExtension.Commands
     /// 使用 PowerShell 注册应用
     /// </summary>
     [GeneratedComClass]
-    public partial class PSRegisterCommand : IExplorerCommand
+    internal sealed partial class PSRegisterCommand : IExplorerCommand
     {
         private readonly string PSRegisterString = ResourceService.GetLocalized("ShellMenu/PSRegister");
 

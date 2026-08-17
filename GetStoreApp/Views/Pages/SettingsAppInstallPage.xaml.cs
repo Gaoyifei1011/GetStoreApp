@@ -18,11 +18,13 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 设置应用安装页面
     /// </summary>
-    public sealed partial class SettingsAppInstallPage : Page, INotifyPropertyChanged
+    internal sealed partial class SettingsAppInstallPage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：属性、集合与事件
+
         private bool _allowUnsignedPackage;
 
-        public bool AllowUnsignedPackage
+        private bool AllowUnsignedPackage
         {
             get { return _allowUnsignedPackage; }
 
@@ -38,7 +40,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _forceAppShutdown;
 
-        public bool ForceAppShutdown
+        private bool ForceAppShutdown
         {
             get { return _forceAppShutdown; }
 
@@ -54,7 +56,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _forceTargetAppShutdown;
 
-        public bool ForceTargetAppShutdown
+        private bool ForceTargetAppShutdown
         {
             get { return _forceTargetAppShutdown; }
 
@@ -70,12 +72,18 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SettingsAppInstallPage()
+        #endregion 第一部分：属性、集合与事件
+
+        #region 第二部分：构造函数
+
+        internal SettingsAppInstallPage()
         {
             InitializeComponent();
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第二部分：构造函数
+
+        #region 第三部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面后触发的事件
@@ -88,26 +96,16 @@ namespace GetStoreApp.Views.Pages
             ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdown;
         }
 
-        #endregion 第一部分：重写父类事件
+        #endregion 第三部分：父类虚方法重写
 
-        #region 第二部分：设置应用安装页面——挂载的事件
+        #region 第四部分：挂载事件处理
 
         /// <summary>
         /// 打开开发者选项
         /// </summary>
         private void OnOpenDevelopersClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new("ms-settings:developers"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenDevelpers();
         }
 
         /// <summary>
@@ -164,6 +162,28 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第二部分：设置应用安装页面——挂载的事件
+        #endregion 第四部分：挂载事件处理
+
+        #region 第五部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 打开开发者选项
+        /// </summary>
+        private void OpenDevelpers()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("ms-settings:developers"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        #endregion 第五部分：数据操作与业务逻辑
     }
 }

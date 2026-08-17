@@ -9,7 +9,7 @@ namespace GetStoreApp.Services.Settings
     /// <summary>
     /// 应用链接打开方式设置服务
     /// </summary>
-    public static class AppLinkOpenModeService
+    internal static class AppLinkOpenModeService
     {
         private static readonly string appLinkOpenModeSettingsKey = ConfigKey.AppLinkOpenModeKey;
 
@@ -17,7 +17,7 @@ namespace GetStoreApp.Services.Settings
 
         private static string _appLinkOpenMode;
 
-        public static string AppLinkOpenMode
+        internal static string AppLinkOpenMode
         {
             get { return _appLinkOpenMode; }
 
@@ -31,14 +31,14 @@ namespace GetStoreApp.Services.Settings
             }
         }
 
-        public static List<string> AppLinkOpenModeList { get; } = ["BuiltInApp", "SystemBrowser"];
+        internal static List<string> AppLinkOpenModeList { get; } = ["BuiltInApp", "SystemBrowser"];
 
-        public static event PropertyChangedEventHandler PropertyChanged;
+        internal static event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// 应用在初始化前获取设置存储的应用链接打开方式选择值
         /// </summary>
-        public static void InitializeAppLinkOpenMode()
+        internal static void InitializeAppLinkOpenMode()
         {
             defaultAppLinkOpenMode = AppLinkOpenModeList.Find(item => item is "BuiltInApp");
             AppLinkOpenMode = GetAppLinkOpenMode();
@@ -64,7 +64,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 应用链接打开方式发生修改时修改设置存储的应用链接打开方式值
         /// </summary>
-        public static void SetAppLinkOpenMode(string appLinkOpenMode)
+        internal static void SetAppLinkOpenMode(string appLinkOpenMode)
         {
             AppLinkOpenMode = appLinkOpenMode;
             LocalSettingsService.SaveSetting(appLinkOpenModeSettingsKey, appLinkOpenMode);

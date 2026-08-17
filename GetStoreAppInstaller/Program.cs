@@ -17,14 +17,14 @@ namespace GetStoreAppInstaller
     /// <summary>
     /// 应用包安装器
     /// </summary>
-    public class Program
+    internal class Program
     {
-        public static AppActivationArguments AppActivationArguments { get; private set; }
+        internal static AppActivationArguments AppActivationArguments { get; private set; }
 
-        public static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
+        internal static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
 
         [STAThread]
-        public static void Main()
+        internal static void Main()
         {
             ComWrappersSupport.InitializeComWrappers();
 

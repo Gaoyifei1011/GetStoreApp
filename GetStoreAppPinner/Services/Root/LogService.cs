@@ -12,7 +12,7 @@ namespace GetStoreAppPinner.Services.Root
     /// <summary>
     /// 日志记录
     /// </summary>
-    public static class LogService
+    internal static class LogService
     {
         private static readonly string notAvailable = "N/A";
         private static readonly string exceptionFolderPath = Path.Combine([ApplicationData.GetDefault().LocalCacheFolder.Path, "Logs", "Exception"]);
@@ -22,7 +22,7 @@ namespace GetStoreAppPinner.Services.Root
         /// <summary>
         /// 写入日志
         /// </summary>
-        public static void WriteLog(LoggingLevel logLevel, string nameSpaceName, string className, string methodName, int index, Exception exception)
+        internal static void WriteLog(LoggingLevel logLevel, string nameSpaceName, string className, string methodName, int index, Exception exception)
         {
             Task.Run(async () =>
             {
@@ -73,7 +73,7 @@ namespace GetStoreAppPinner.Services.Root
         /// <summary>
         /// 关闭日志记录服务
         /// </summary>
-        public static void CloseLog()
+        internal static void CloseLog()
         {
             logSemaphoreSlim.Dispose();
             logSemaphoreSlim = null;

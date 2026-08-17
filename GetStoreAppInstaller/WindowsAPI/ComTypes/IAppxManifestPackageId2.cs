@@ -9,7 +9,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 提供对应用包标识的访问权限。
     /// </summary>
     [GeneratedComInterface, Guid("2256999D-D617-42F1-880E-0BA4542319D5")]
-    public partial interface IAppxManifestPackageId2
+    internal partial interface IAppxManifestPackageId2
     {
         /// <summary>
         /// 获取清单中定义的包的名称。

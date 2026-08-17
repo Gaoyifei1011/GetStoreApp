@@ -3,7 +3,7 @@
     /// <summary>
     /// 定义指定作业优先级的常量。
     /// </summary>
-    public enum BG_JOB_PRIORITY
+    internal enum BG_JOB_PRIORITY
     {
         /// <summary>
         /// 在前台传输作业。 前台传输与其他应用程序争用网络带宽，这可能会妨碍用户的网络体验。 这是最高优先级。

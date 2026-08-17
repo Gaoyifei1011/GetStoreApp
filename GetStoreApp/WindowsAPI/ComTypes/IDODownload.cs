@@ -8,7 +8,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     /// IDODownload 接口用于启动和管理下载。
     /// </summary>
     [GeneratedComInterface, Guid("FBBD7FC0-C147-4727-A38D-827EF071EE77")]
-    public partial interface IDODownload
+    internal partial interface IDODownload
     {
         /// <summary>
         /// 启动或恢复下载，将可选范围作为指向 DO_DOWNLOAD_RANGES_INFO 结构的指针传递。

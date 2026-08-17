@@ -3,7 +3,7 @@
     /// <summary>
     /// WinGet 数据源编辑类型
     /// </summary>
-    public enum WinGetSourceEditKind
+    internal enum WinGetSourceEditKind
     {
         Add = 0,
         Edit = 1

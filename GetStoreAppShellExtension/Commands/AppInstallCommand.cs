@@ -12,7 +12,7 @@ namespace GetStoreAppShellExtension.Commands
     /// 使用应用包安装器安装
     /// </summary>
     [GeneratedComClass]
-    public partial class AppInstallCommand : IExplorerCommand
+    internal sealed partial class AppInstallCommand : IExplorerCommand
     {
         private readonly string AppInstallString = ResourceService.GetLocalized("ShellMenu/AppInstall");
 

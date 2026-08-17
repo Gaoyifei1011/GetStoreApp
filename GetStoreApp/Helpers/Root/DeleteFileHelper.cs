@@ -14,7 +14,7 @@ namespace GetStoreApp.Helpers.Root
     /// <summary>
     /// 删除文件辅助类
     /// </summary>
-    public static class DeleteFileHelper
+    internal static class DeleteFileHelper
     {
         private static readonly Guid CLSID_FileOperation = new("3AD05575-8857-4850-9277-11B85BDB8E09");
         private static readonly IFileOperation fileOperation = null;
@@ -32,7 +32,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 删除文件到回收站
         /// </summary>
-        public static bool DeleteFileToRecycleBin(string filePath)
+        internal static bool DeleteFileToRecycleBin(string filePath)
         {
             bool deleteResult = false;
 
@@ -62,7 +62,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 删除多个文件到回收站
         /// </summary>
-        public static bool DeleteFilesToRecycleBin(List<string> filePathList)
+        internal static bool DeleteFilesToRecycleBin(List<string> filePathList)
         {
             bool deleteResult = false;
 

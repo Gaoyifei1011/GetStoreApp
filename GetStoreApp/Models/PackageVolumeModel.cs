@@ -6,14 +6,14 @@ namespace GetStoreApp.Models
     /// <summary>
     /// 磁盘卷数据模型
     /// </summary>
-    public partial class PackageVolumeModel : INotifyPropertyChanged
+    internal sealed partial class PackageVolumeModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 是否正在操作中
         /// </summary>
         private bool _isOperating;
 
-        public bool IsOperating
+        internal bool IsOperating
         {
             get { return _isOperating; }
 
@@ -30,59 +30,59 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 存储卷名称
         /// </summary>
-        public string Name { get; set; }
+        internal string Name { get; set; }
 
         /// <summary>
         /// 存储卷空间
         /// </summary>
-        public string Space { get; set; }
+        internal string Space { get; set; }
 
         /// <summary>
         /// 存储卷 ID
         /// </summary>
-        public string PackageVolumeId { get; set; }
+        internal string PackageVolumeId { get; set; }
 
         /// <summary>
         /// 存储卷路径
         /// </summary>
-        public string PackageVolumePath { get; set; }
+        internal string PackageVolumePath { get; set; }
 
         /// <summary>
         /// 挂载点路径
         /// </summary>
-        public string MountPoint { get; set; }
+        internal string MountPoint { get; set; }
 
         /// <summary>
         /// 存储卷已使用空间百分比
         /// </summary>
-        public double PackageVolumeUsedPercentage { get; set; }
+        internal double PackageVolumeUsedPercentage { get; set; }
 
         /// <summary>
         /// 存储卷
         /// </summary>
-        public PackageVolume PackageVolume { get; set; }
+        internal PackageVolume PackageVolume { get; set; }
 
         /// <summary>
         /// 存储卷
         /// </summary>
-        public Windows.Management.Deployment.PackageVolume WinRTPackageVolume { get; set; }
+        internal Windows.Management.Deployment.PackageVolume WinRTPackageVolume { get; set; }
 
         /// <summary>
         /// 存储卷可用空间警告（可用空间在 5% - 10%）
         /// </summary>
-        public bool IsAvailableSpaceWarning { get; set; }
+        internal bool IsAvailableSpaceWarning { get; set; }
 
         /// <summary>
         /// 存储空间是否不可用（可用空间在 0% - 5%）
         /// </summary>
-        public bool IsAvailableSpaceError { get; set; }
+        internal bool IsAvailableSpaceError { get; set; }
 
         /// <summary>
         /// 是否为默认卷（字符串）
         /// </summary>
         private string _defaultVolume;
 
-        public string DefaultVolume
+        internal string DefaultVolume
         {
             get { return _defaultVolume; }
 
@@ -101,7 +101,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private bool _isDefaultVolume;
 
-        public bool IsDefaultVolume
+        internal bool IsDefaultVolume
         {
             get { return _isDefaultVolume; }
 
@@ -120,7 +120,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private string _isAppxInstallSupported;
 
-        public string IsAppxInstallSupported
+        internal string IsAppxInstallSupported
         {
             get { return _isAppxInstallSupported; }
 
@@ -139,7 +139,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private string _isFullTrustPackageSupported;
 
-        public string IsFullTrustPackageSupported
+        internal string IsFullTrustPackageSupported
         {
             get { return _isFullTrustPackageSupported; }
 
@@ -158,7 +158,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private string _offline;
 
-        public string Offline
+        internal string Offline
         {
             get { return _offline; }
 
@@ -177,7 +177,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private bool _isOffline;
 
-        public bool IsOffline
+        internal bool IsOffline
         {
             get { return _isOffline; }
 
@@ -196,7 +196,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private string _isSystemVolume;
 
-        public string IsSystemVolume
+        internal string IsSystemVolume
         {
             get { return _isSystemVolume; }
 
@@ -215,7 +215,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private string _supportedHardLinks;
 
-        public string SupportedHardLinks
+        internal string SupportedHardLinks
         {
             get { return _supportedHardLinks; }
 

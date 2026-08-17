@@ -43,7 +43,7 @@ namespace GetStoreAppWebView.Views.Windows
     /// <summary>
     /// 网页浏览器窗口
     /// </summary>
-    public sealed partial class WebViewWindow : Window, INotifyPropertyChanged
+    internal sealed partial class WebViewWindow : Window, INotifyPropertyChanged
     {
         private readonly string TitleString = ResourceService.GetLocalized("WebView/Title");
         private readonly string WebTitleString = ResourceService.GetLocalized("WebView/WebTitle");
@@ -57,7 +57,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private string _windowTitle;
 
-        public string WindowTitle
+        internal string WindowTitle
         {
             get { return _windowTitle; }
 
@@ -73,7 +73,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private SystemBackdrop _windowSystemBackdrop;
 
-        public SystemBackdrop WindowSystemBackdrop
+        internal SystemBackdrop WindowSystemBackdrop
         {
             get { return _windowSystemBackdrop; }
 
@@ -89,7 +89,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private ElementTheme _windowTheme;
 
-        public ElementTheme WindowTheme
+        internal ElementTheme WindowTheme
         {
             get { return _windowTheme; }
 
@@ -105,7 +105,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private bool _isWindowMaximized;
 
-        public bool IsWindowMaximized
+        internal bool IsWindowMaximized
         {
             get { return _isWindowMaximized; }
 
@@ -121,7 +121,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private bool _canGoBack;
 
-        public bool CanGoBack
+        internal bool CanGoBack
         {
             get { return _canGoBack; }
 
@@ -137,7 +137,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private bool _canGoForward;
 
-        public bool CanGoForward
+        internal bool CanGoForward
         {
             get { return _canGoForward; }
 
@@ -153,7 +153,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private bool _isLoading = true;
 
-        public bool IsLoading
+        internal bool IsLoading
         {
             get { return _isLoading; }
 
@@ -169,7 +169,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private string _webTitle;
 
-        public string WebTitle
+        internal string WebTitle
         {
             get { return _webTitle; }
 
@@ -185,7 +185,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private bool _isDownloadClickEnabled;
 
-        public bool IsDownloadClickEnabled
+        internal bool IsDownloadClickEnabled
         {
             get { return _isDownloadClickEnabled; }
 
@@ -201,7 +201,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private bool _isEnabled;
 
-        public bool IsEnabled
+        internal bool IsEnabled
         {
             get { return _isEnabled; }
 
@@ -218,7 +218,7 @@ namespace GetStoreAppWebView.Views.Windows
         public event PropertyChangedEventHandler PropertyChanged;
 
         [DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(OverlappedPresenter)), DynamicWindowsRuntimeCast(typeof(ProtocolActivatedEventArgs))]
-        public WebViewWindow()
+        internal WebViewWindow()
         {
             InitializeComponent();
 
@@ -745,7 +745,7 @@ namespace GetStoreAppWebView.Views.Windows
         /// <summary>
         /// 设置应用显示的主题
         /// </summary>
-        public void SetWindowTheme()
+        internal void SetWindowTheme()
         {
             WindowTheme = string.Equals(ThemeService.AppTheme, ThemeService.ThemeList[0]) ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark : Enum.TryParse(ThemeService.AppTheme, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
         }
@@ -904,7 +904,7 @@ namespace GetStoreAppWebView.Views.Windows
         /// 显示内容对话框
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(ContentDialog))]
-        public async Task<ContentDialogResult> ShowDialogAsync(ContentDialog contentDialog)
+        internal async Task<ContentDialogResult> ShowDialogAsync(ContentDialog contentDialog)
         {
             ContentDialogResult dialogResult = ContentDialogResult.None;
             bool isDialogOpening = false;

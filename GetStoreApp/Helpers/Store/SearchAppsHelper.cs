@@ -15,7 +15,7 @@ namespace GetStoreApp.Helpers.Store
     /// <summary>
     /// 搜索应用辅助类
     /// </summary>
-    public static class SearchAppsHelper
+    internal static class SearchAppsHelper
     {
         private static readonly string storeLink = "https://apps.microsoft.com/store/detail/{0}";
         private static readonly Uri manifestSearchUri = new("https://storeedgefd.dsx.mp.microsoft.com/v9.0/manifestSearch");
@@ -24,7 +24,7 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 生成清单搜索应用的所需的字符串
         /// </summary>
-        public static string GenerateManifestSearchString(string content)
+        internal static string GenerateManifestSearchString(string content)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 使用商店精准搜索应用接口搜索应用
         /// </summary>
-        public static async Task<(bool requestResult, List<SearchAppsResultModel> searchAppsResultList)> StoreExactSearchAsync(string content)
+        internal static async Task<(bool requestResult, List<SearchAppsResultModel> searchAppsResultList)> StoreExactSearchAsync(string content)
         {
             bool requestResult = false;
             List<SearchAppsResultModel> searchAppsResultList = [];
@@ -145,7 +145,7 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 按照清单方式搜索应用
         /// </summary>
-        public static async Task<(bool requestResult, List<SearchAppsResultModel> searchAppsResultList)> ManifestSearchAsync(string generatedContent)
+        internal static async Task<(bool requestResult, List<SearchAppsResultModel> searchAppsResultList)> ManifestSearchAsync(string generatedContent)
         {
             bool requestResult = false;
             List<SearchAppsResultModel> searchAppsResultList = [];

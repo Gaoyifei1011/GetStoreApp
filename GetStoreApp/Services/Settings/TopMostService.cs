@@ -8,7 +8,7 @@ namespace GetStoreApp.Services.Settings
     /// <summary>
     /// 应用窗口置顶设置服务
     /// </summary>
-    public static class TopMostService
+    internal static class TopMostService
     {
         private static readonly string settingsKey = ConfigKey.TopMostKey;
 
@@ -16,7 +16,7 @@ namespace GetStoreApp.Services.Settings
 
         private static bool _topMost;
 
-        public static bool TopMost
+        internal static bool TopMost
         {
             get { return _topMost; }
 
@@ -30,12 +30,12 @@ namespace GetStoreApp.Services.Settings
             }
         }
 
-        public static event PropertyChangedEventHandler PropertyChanged;
+        internal static event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// 应用在初始化前获取设置存储的窗口置顶值
         /// </summary>
-        public static void InitializeTopMost()
+        internal static void InitializeTopMost()
         {
             TopMost = GetTopMost();
         }
@@ -59,7 +59,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 使用说明按钮显示发生修改时修改设置存储的窗口置顶值
         /// </summary>
-        public static void SetTopMost(bool topMost)
+        internal static void SetTopMost(bool topMost)
         {
             TopMost = topMost;
 

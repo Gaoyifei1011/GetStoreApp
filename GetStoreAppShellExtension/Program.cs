@@ -11,9 +11,9 @@ namespace GetStoreAppShellExtension
     /// <summary>
     /// 获取商店应用 右键菜单扩展
     /// </summary>
-    public class Program
+    internal class Program
     {
-        public static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
+        internal static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
 
         /// <summary>
         /// 从 DLL 对象处理程序或对象应用程序中检索类对象。
@@ -23,7 +23,7 @@ namespace GetStoreAppShellExtension
         /// <param name="ppv">接收 riid 中请求的接口指针的指针变量的地址。 成功返回后，*ppv 包含请求的接口指针。 如果发生错误，接口指针为 NULL。</param>
         /// <returns>此函数可以返回标准返回值E_INVALIDARG、E_OUTOFMEMORY和E_UNEXPECTED，以及以下值。</returns>
         [UnmanagedCallersOnly(EntryPoint = "DllGetClassObject")]
-        public static unsafe int DllGetClassObject(Guid clsid, Guid riid, nint* ppv)
+        internal static unsafe int DllGetClassObject(Guid clsid, Guid riid, nint* ppv)
         {
             ComWrappersSupport.InitializeComWrappers();
             AppInstallService.InitializeAppInstall();

@@ -9,16 +9,16 @@ namespace GetStoreAppInstaller.Services.Root
     /// <summary>
     /// 应用通知服务
     /// </summary>
-    public class ToastNotificationService
+    internal class ToastNotificationService
     {
-        public static ToastNotifier AppToastNotifier { get; } = ToastNotificationManager.CreateToastNotifier();
+        internal static ToastNotifier AppToastNotifier { get; } = ToastNotificationManager.CreateToastNotifier();
 
-        public static AppNotificationManager AppNotificationManager { get; } = AppNotificationManager.Default;
+        internal static AppNotificationManager AppNotificationManager { get; } = AppNotificationManager.Default;
 
         /// <summary>
         /// 显示通知
         /// </summary>
-        public static void Show(AppNotification appNotification)
+        internal static void Show(AppNotification appNotification)
         {
             try
             {

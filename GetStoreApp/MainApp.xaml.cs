@@ -22,9 +22,9 @@ namespace GetStoreApp
     {
         private bool isDisposed;
 
-        public Window MainWindow { get; private set; }
+        internal Window MainWindow { get; private set; }
 
-        public MainApp()
+        internal MainApp()
         {
             InitializeComponent();
             DispatcherShutdownMode = DispatcherShutdownMode.OnExplicitShutdown;

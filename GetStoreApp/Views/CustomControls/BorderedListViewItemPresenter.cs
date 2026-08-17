@@ -9,10 +9,10 @@ namespace GetStoreApp.Views.CustomControls
     /// <summary>
     /// 带边框的表示列表项的视觉元素
     /// </summary>
-    public partial class BorderedListViewItemPresenter : ListViewItemPresenter
+    internal sealed partial class BorderedListViewItemPresenter : ListViewItemPresenter
     {
         [DynamicWindowsRuntimeCast(typeof(Border))]
-        public BorderedListViewItemPresenter()
+        internal BorderedListViewItemPresenter()
         {
             Loaded += (sender, args) =>
             {

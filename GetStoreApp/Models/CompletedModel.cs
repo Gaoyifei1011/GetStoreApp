@@ -7,11 +7,11 @@ namespace GetStoreApp.Models
     /// <summary>
     /// 已下载完成文件信息数据模型
     /// </summary>
-    public sealed partial class CompletedModel : INotifyPropertyChanged
+    internal sealed partial class CompletedModel : INotifyPropertyChanged
     {
         private ImageSource _iconImage;
 
-        public ImageSource IconImage
+        internal ImageSource IconImage
         {
             get { return _iconImage; }
 
@@ -30,7 +30,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private ListViewSelectionMode _selectionMode;
 
-        public ListViewSelectionMode SelectionMode
+        internal ListViewSelectionMode SelectionMode
         {
             get { return _selectionMode; }
 
@@ -47,34 +47,34 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 下载任务的唯一标识码，该值唯一
         /// </summary>
-        public string DownloadKey { get; set; }
+        internal string DownloadKey { get; set; }
 
         /// <summary>
         /// 下载文件名称
         /// </summary>
-        public string FileName { get; set; }
+        internal string FileName { get; set; }
 
         /// <summary>
         /// 文件下载链接
         /// </summary>
-        public string FileLink { get; set; }
+        internal string FileLink { get; set; }
 
         /// <summary>
         /// 文件下载保存的路径
         /// </summary>
-        public string FilePath { get; set; }
+        internal string FilePath { get; set; }
 
         /// <summary>
         /// 下载文件的总大小
         /// </summary>
-        public double TotalSize { get; set; }
+        internal double TotalSize { get; set; }
 
         /// <summary>
         /// 标志是否处于正在安装状态
         /// </summary>
         private bool _isInstalling;
 
-        public bool IsInstalling
+        internal bool IsInstalling
         {
             get { return _isInstalling; }
 
@@ -93,7 +93,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private double _installProgressValue;
 
-        public double InstallProgressValue
+        internal double InstallProgressValue
         {
             get { return _installProgressValue; }
 
@@ -112,7 +112,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private bool _isInstallWaiting;
 
-        public bool IsInstallWaiting
+        internal bool IsInstallWaiting
         {
             get { return _isInstallWaiting; }
 
@@ -128,7 +128,7 @@ namespace GetStoreApp.Models
 
         private string _installStateString;
 
-        public string InstallStateString
+        internal string InstallStateString
         {
             get { return _installStateString; }
 
@@ -147,7 +147,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private bool _installFailed;
 
-        public bool InstallFailed
+        internal bool InstallFailed
         {
             get { return _installFailed; }
 

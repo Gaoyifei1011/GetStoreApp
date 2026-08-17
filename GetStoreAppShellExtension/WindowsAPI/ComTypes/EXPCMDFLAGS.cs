@@ -6,7 +6,7 @@ namespace GetStoreAppShellExtension.WindowsAPI.ComTypes
     /// 指向当前命令标志
     /// </summary>
     [Flags]
-    public enum EXPCMDFLAGS : int
+    internal enum EXPCMDFLAGS : int
     {
         /// <summary>
         /// Windows 7 及更高版本。 未设置命令标志。

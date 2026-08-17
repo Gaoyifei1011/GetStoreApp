@@ -13,7 +13,7 @@ namespace GetStoreApp.Services.Download
     /// <summary>
     /// 已下载完成任务数据存储服务
     /// </summary>
-    public static class DownloadStorageService
+    internal static class DownloadStorageService
     {
         private const string DownloadStorage = "DownloadStorage";
         private const string DownloadKey = "DownloadKey";
@@ -24,18 +24,18 @@ namespace GetStoreApp.Services.Download
         private static ApplicationDataContainer localSettingsContainer;
         private static ApplicationDataContainer downloadStorageContainer;
 
-        public static SemaphoreSlim DownloadStorageSemaphoreSlim { get; private set; } = new(1, 1);
+        internal static SemaphoreSlim DownloadStorageSemaphoreSlim { get; private set; } = new(1, 1);
 
-        public static event Action<DownloadSchedulerModel> StorageDataAdded;
+        internal static event Action<DownloadSchedulerModel> StorageDataAdded;
 
-        public static event Action<string> StorageDataDeleted;
+        internal static event Action<string> StorageDataDeleted;
 
-        public static event Action StorageDataCleared;
+        internal static event Action StorageDataCleared;
 
         /// <summary>
         /// 初始化下载记录服务
         /// </summary>
-        public static void Initialize()
+        internal static void Initialize()
         {
             localSettingsContainer = ApplicationData.GetDefault().LocalSettings;
             DownloadStorageSemaphoreSlim?.Wait();
@@ -55,7 +55,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 直接添加已下载完成任务数据
         /// </summary>
-        public static void AddDownloadData(DownloadSchedulerModel downloadScheduler)
+        internal static void AddDownloadData(DownloadSchedulerModel downloadScheduler)
         {
             if (downloadStorageContainer is not null)
             {
@@ -91,7 +91,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 删除已下载完成任务数据
         /// </summary>
-        public static void DeleteDownloadData(string downloadKey)
+        internal static void DeleteDownloadData(string downloadKey)
         {
             if (downloadStorageContainer is not null)
             {
@@ -117,7 +117,7 @@ namespace GetStoreApp.Services.Download
         /// 获取已下载完成任务数据，为保证安全访问，需要手动对访问的锁进行加锁和释放
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
-        public static List<DownloadSchedulerModel> GetDownloadData()
+        internal static List<DownloadSchedulerModel> GetDownloadData()
         {
             List<DownloadSchedulerModel> downloadSchedulerList = [];
 
@@ -151,7 +151,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 清除下载记录
         /// </summary>
-        public static bool ClearDownloadData()
+        internal static bool ClearDownloadData()
         {
             bool result = false;
 

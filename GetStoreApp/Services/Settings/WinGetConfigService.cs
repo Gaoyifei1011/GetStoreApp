@@ -15,7 +15,7 @@ namespace GetStoreApp.Services.Settings
     /// <summary>
     /// WinGet 程序包配置服务
     /// </summary>
-    public static class WinGetConfigService
+    internal static class WinGetConfigService
     {
         private static readonly string settingsKey = ConfigKey.WinGetSourceKey;
         private const string WinGetDataSource = "WinGetDataSource";
@@ -24,21 +24,21 @@ namespace GetStoreApp.Services.Settings
         private static ApplicationDataContainer winGetDataSourceContainer;
         private static string defaultWinGetSource;
 
-        public static string DefaultDownloadFolder { get; private set; }
+        internal static string DefaultDownloadFolder { get; private set; }
 
-        public static string WinGetSource { get; private set; }
+        internal static string WinGetSource { get; private set; }
 
-        public static string CurrentWinGetSource { get; private set; }
+        internal static string CurrentWinGetSource { get; private set; }
 
-        public static List<string> WinGetSourceList { get; } = ["BuiltinApp", "AppInstaller"];
+        internal static List<string> WinGetSourceList { get; } = ["BuiltinApp", "AppInstaller"];
 
-        public static List<KeyValuePair<string, PredefinedPackageCatalog>> PredefinedPackageCatalogList { get; } = [];
+        internal static List<KeyValuePair<string, PredefinedPackageCatalog>> PredefinedPackageCatalogList { get; } = [];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的是否使用开发版本布尔值和 WinGet 程序包安装方式值
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
-        public static async Task InitializeWinGetConfigAsync()
+        internal static async Task InitializeWinGetConfigAsync()
         {
             defaultWinGetSource = WinGetSourceList[0];
             WinGetSource = GetWinGetSource();
@@ -132,7 +132,7 @@ namespace GetStoreApp.Services.Settings
         /// 获取 WinGet 数据源搜索时选择的所有名称
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
-        public static KeyValuePair<string, bool> GetWinGetDataSourceName()
+        internal static KeyValuePair<string, bool> GetWinGetDataSourceName()
         {
             KeyValuePair<string, bool> winGetDataSourceName = default;
             winGetDataSourceLock.Enter();
@@ -159,7 +159,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         ///  WinGet 来源发生修改时修改设置存储的 WinGet 来源值
         /// </summary>
-        public static void SetWinGetSource(string winGetSource)
+        internal static void SetWinGetSource(string winGetSource)
         {
             WinGetSource = winGetSource;
             LocalSettingsService.SaveSetting(settingsKey, winGetSource);
@@ -168,7 +168,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 设置 WinGet 数据源搜索时选择的所有名称
         /// </summary>
-        public static void SetWinGetDataSourceName(KeyValuePair<string, bool> winGetDataSourceName)
+        internal static void SetWinGetDataSourceName(KeyValuePair<string, bool> winGetDataSourceName)
         {
             winGetDataSourceLock.Enter();
 
@@ -196,7 +196,7 @@ namespace GetStoreApp.Services.Settings
         /// 移除 WinGet 自定义源设置
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
-        public static void RemoveWinGetDataSourceName(KeyValuePair<string, bool> winGetDataSourceName)
+        internal static void RemoveWinGetDataSourceName(KeyValuePair<string, bool> winGetDataSourceName)
         {
             winGetDataSourceLock.Enter();
 

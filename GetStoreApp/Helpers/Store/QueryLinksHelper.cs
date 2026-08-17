@@ -19,7 +19,7 @@ namespace GetStoreApp.Helpers.Store
     /// <summary>
     /// 查询链接辅助类
     /// </summary>
-    public static class QueryLinksHelper
+    internal static class QueryLinksHelper
     {
         private static readonly string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36 Edg/149.0.0.0";
         private static readonly Uri cookieUri = new("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx");
@@ -29,7 +29,7 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 解析输入框输入的字符串
         /// </summary>
-        public static string ParseRequestContent(string requestContent)
+        internal static string ParseRequestContent(string requestContent)
         {
             if (requestContent.Contains('/'))
             {
@@ -45,7 +45,7 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 获取微软商店服务器储存在用户本地终端上的数据
         /// </summary>
-        public static async Task<string> GetCookieAsync()
+        internal static async Task<string> GetCookieAsync()
         {
             string cookieResult = string.Empty;
 
@@ -116,7 +116,7 @@ namespace GetStoreApp.Helpers.Store
         /// </summary>
         /// <param name="productId">应用的产品 ID</param>
         /// <returns>打包应用：有，非打包应用：无</returns>
-        public static async Task<(bool requestResult, AppInfoModel appInfo)> GetAppInformationAsync(string productId)
+        internal static async Task<(bool requestResult, AppInfoModel appInfo)> GetAppInformationAsync(string productId)
         {
             bool requestResult = false;
             AppInfoModel appInfo = new();
@@ -200,7 +200,7 @@ namespace GetStoreApp.Helpers.Store
         /// <param name="categoryId">category ID</param>
         /// <param name="ring">通道</param>
         /// <returns>文件信息的字符串</returns>
-        public static async Task<string> GetFileListXmlAsync(string cookie, string categoryId, string ring)
+        internal static async Task<string> GetFileListXmlAsync(string cookie, string categoryId, string ring)
         {
             string fileListXmlResult = string.Empty;
 
@@ -262,7 +262,7 @@ namespace GetStoreApp.Helpers.Store
         /// <param name="fileListXml">文件信息的字符串</param>
         /// <param name="ring">通道</param>
         /// <returns>带解析后文件信息的列表</returns>
-        public static async Task<List<QueryLinksResultModel>> GetAppxPackagesAsync(string fileListXml, string ring)
+        internal static async Task<List<QueryLinksResultModel>> GetAppxPackagesAsync(string fileListXml, string ring)
         {
             List<QueryLinksResultModel> appxPackagesList = [];
 
@@ -430,7 +430,7 @@ namespace GetStoreApp.Helpers.Store
         /// </summary>
         /// <param name="productId">产品 ID</param>
         /// <returns>带解析后文件信息的列表</returns>
-        public static async Task<List<QueryLinksResultModel>> GetNonAppxPackagesAsync(string productId)
+        internal static async Task<List<QueryLinksResultModel>> GetNonAppxPackagesAsync(string productId)
         {
             List<QueryLinksResultModel> nonAppxPackagesList = [];
 

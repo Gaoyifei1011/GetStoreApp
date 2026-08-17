@@ -3,7 +3,7 @@
     /// <summary>
     /// 定义指定作业的不同状态的常量。
     /// </summary>
-    public enum BG_JOB_STATE
+    internal enum BG_JOB_STATE
     {
         /// <summary>
         /// 指定作业在队列中并等待运行。 如果用户在传输作业时注销，作业将转换为排队状态。

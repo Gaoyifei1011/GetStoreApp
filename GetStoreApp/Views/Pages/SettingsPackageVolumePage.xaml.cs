@@ -27,7 +27,7 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 应用包存储卷设置页面
     /// </summary>
-    public sealed partial class SettingsPackageVolumePage : Page, INotifyPropertyChanged
+    internal sealed partial class SettingsPackageVolumePage : Page, INotifyPropertyChanged
     {
         private readonly string NoString = ResourceService.GetLocalized("SettingsPackageVolume/No");
         private readonly string PackageVolumeCountInfoString = ResourceService.GetLocalized("SettingsPackageVolume/PackageVolumeCountInfo");
@@ -61,7 +61,7 @@ namespace GetStoreApp.Views.Pages
 
         private PackageVolumeResultKind _packageVolumeResultKind;
 
-        public PackageVolumeResultKind PackageVolumeResultKind
+        internal PackageVolumeResultKind PackageVolumeResultKind
         {
             get { return _packageVolumeResultKind; }
 
@@ -77,7 +77,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _packageVolumeFailedContent;
 
-        public string PackageVolumeFailedContent
+        internal string PackageVolumeFailedContent
         {
             get { return _packageVolumeFailedContent; }
 
@@ -95,7 +95,7 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SettingsPackageVolumePage()
+        internal SettingsPackageVolumePage()
         {
             InitializeComponent();
         }

@@ -3,7 +3,7 @@
     /// <summary>
     /// DODownloadState 枚举指定当前下载状态的 ID，这是DO_DOWNLOAD_STATUS结构的一部分。
     /// </summary>
-    public enum DODownloadState
+    internal enum DODownloadState
     {
         /// <summary>
         /// 已创建下载对象，但尚未启动。

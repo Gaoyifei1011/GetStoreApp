@@ -13,7 +13,7 @@ namespace GetStoreAppShellExtension.Commands
     /// 使用 PowerShell 安装
     /// </summary>
     [GeneratedComClass]
-    public partial class PSInstallCommand : IExplorerCommand
+    internal sealed partial class PSInstallCommand : IExplorerCommand
     {
         private readonly string PSInstallString = ResourceService.GetLocalized("ShellMenu/PSInstall");
 

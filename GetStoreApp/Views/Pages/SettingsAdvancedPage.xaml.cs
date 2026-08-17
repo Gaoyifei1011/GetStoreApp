@@ -22,19 +22,27 @@ using Windows.System;
 using Windows.UI.Notifications;
 using WinRT;
 
-// 抑制 IDE0060 警告
-#pragma warning disable IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
     /// 设置高级选项页面
     /// </summary>
-    public sealed partial class SettingsAdvancedPage : Page, INotifyPropertyChanged
+    internal sealed partial class SettingsAdvancedPage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
+        private bool isInitialized;
+
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
+
         private bool _notification;
 
-        public bool Notification
+        private bool Notification
         {
             get { return _notification; }
 
@@ -50,11 +58,11 @@ namespace GetStoreApp.Views.Pages
 
         private bool _notificationEnabled;
 
-        public bool NotificationEnabled
+        private bool NotificationEnabled
         {
             get { return _notificationEnabled; }
 
-            private set
+            set
             {
                 if (!Equals(_notificationEnabled, value))
                 {
@@ -66,7 +74,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isRestarting = false;
 
-        public bool IsRestarting
+        private bool IsRestarting
         {
             get { return _isRestarting; }
 
@@ -82,7 +90,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _shellMenu;
 
-        public bool ShellMenu
+        private bool ShellMenu
         {
             get { return _shellMenu; }
 
@@ -98,14 +106,18 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SettingsAdvancedPage()
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第二部分：构造函数
+
+        internal SettingsAdvancedPage()
         {
             InitializeComponent();
-            NotificationService.PropertyChanged += OnServicePropertyChanged;
-            GlobalNotificationService.ApplicationExit += OnApplicationExit;
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第二部分：构造函数
+
+        #region 第三部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面后触发的事件
@@ -116,28 +128,25 @@ namespace GetStoreApp.Views.Pages
             Notification = NotificationService.AppNotification;
             NotificationEnabled = NotificationService.NotificationSetting is NotificationSetting.Enabled;
             ShellMenu = ShellMenuService.ShellMenu;
+
+            if (!isInitialized)
+            {
+                isInitialized = true;
+                NotificationService.PropertyChanged += OnServicePropertyChanged;
+                GlobalNotificationService.ApplicationExit += OnApplicationExit;
+            }
         }
 
-        #endregion 第一部分：重写父类事件
+        #endregion 第三部分：父类虚方法重写
 
-        #region 第二部分：设置高级页面——挂载的事件
+        #region 第四部分：挂载事件处理
 
         /// <summary>
         /// 打开系统通知设置
         /// </summary>
         private void OnSystemNotificationSettingsClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new("ms-settings:notifications"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenSystemNotificationSettings();
         }
 
         /// <summary>
@@ -146,49 +155,7 @@ namespace GetStoreApp.Views.Pages
         private async void OnRestartExplorerClicked(object sender, RoutedEventArgs args)
         {
             IsRestarting = true;
-
-            await Task.Run(() =>
-            {
-                try
-                {
-                    int dwRmStatus = RstrtmgrLibrary.RmStartSession(out uint dwSessionHandle, 0, Convert.ToString(GuidHelper.Empty));
-
-                    if (dwRmStatus is 0)
-                    {
-                        List<uint> processPIDList = ProcessHelper.GetProcessPIDByName("explorer.exe");
-                        RM_UNIQUE_PROCESS[] lpRmProcList = new RM_UNIQUE_PROCESS[processPIDList.Count];
-
-                        for (int index = 0; index < processPIDList.Count; index++)
-                        {
-                            lpRmProcList[index].dwProcessId = (int)processPIDList[index];
-                            nint hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_QUERY_LIMITED_INFORMATION, false, (int)processPIDList[index]);
-                            lpRmProcList[index].ProcessStartTime = hProcess != nint.Zero && Kernel32Library.GetProcessTimes(hProcess, out FILETIME creationTime, out FILETIME exitTime, out FILETIME kernelTime, out FILETIME userTime) ? creationTime : new();
-                        }
-
-                        dwRmStatus = RstrtmgrLibrary.RmRegisterResources(dwSessionHandle, 0, null, (uint)processPIDList.Count, lpRmProcList, 0, null);
-
-                        if (dwRmStatus is 0)
-                        {
-                            dwRmStatus = RstrtmgrLibrary.RmShutdown(dwSessionHandle, RM_SHUTDOWN_TYPE.RmForceShutdown, null);
-
-                            if (dwRmStatus is 0)
-                            {
-                                dwRmStatus = RstrtmgrLibrary.RmRestart(dwSessionHandle, 0, null);
-
-                                if (dwRmStatus is 0)
-                                {
-                                    dwRmStatus = RstrtmgrLibrary.RmEndSession(dwSessionHandle);
-                                }
-                            }
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAdvancedPage), nameof(OnRestartExplorerClicked), 1, e);
-                }
-            });
-
+            await RestartExplorerAsync();
             IsRestarting = false;
         }
 
@@ -233,14 +200,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnOpenLogFolderClicked(object sender, RoutedEventArgs args)
         {
-            try
-            {
-                await LogService.OpenLogFolderAsync();
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAdvancedPage), nameof(OnOpenLogFolderClicked), 1, e);
-            }
+            await LogService.OpenLogFolderAsync();
         }
 
         /// <summary>
@@ -251,10 +211,6 @@ namespace GetStoreApp.Views.Pages
             bool result = await LogService.ClearLogAsync();
             await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.LogClean, result));
         }
-
-        #endregion 第二部分：设置高级页面——挂载的事件
-
-        #region 第三部分：设置高级页面——自定义事件
 
         /// <summary>
         /// 应用程序退出时触发的事件
@@ -286,6 +242,76 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第三部分：设置高级页面——自定义事件
+        #endregion 第四部分：挂载事件处理
+
+        #region 第五部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 打开系统通知设置
+        /// </summary>
+        private void OpenSystemNotificationSettings()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("ms-settings:notifications"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 重启资源管理器
+        /// </summary>
+        private async Task RestartExplorerAsync()
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    int dwRmStatus = RstrtmgrLibrary.RmStartSession(out uint dwSessionHandle, 0, Convert.ToString(GuidHelper.Empty));
+
+                    if (dwRmStatus is 0)
+                    {
+                        List<uint> processPIDList = ProcessHelper.GetProcessPIDByName("explorer.exe");
+                        RM_UNIQUE_PROCESS[] lpRmProcList = new RM_UNIQUE_PROCESS[processPIDList.Count];
+
+                        for (int index = 0; index < processPIDList.Count; index++)
+                        {
+                            lpRmProcList[index].dwProcessId = (int)processPIDList[index];
+                            nint hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_QUERY_LIMITED_INFORMATION, false, (int)processPIDList[index]);
+                            lpRmProcList[index].ProcessStartTime = hProcess != nint.Zero && Kernel32Library.GetProcessTimes(hProcess, out FILETIME creationTime, out FILETIME exitTime, out FILETIME kernelTime, out FILETIME userTime) ? creationTime : new();
+                        }
+
+                        dwRmStatus = RstrtmgrLibrary.RmRegisterResources(dwSessionHandle, 0, null, (uint)processPIDList.Count, lpRmProcList, 0, null);
+
+                        if (dwRmStatus is 0)
+                        {
+                            dwRmStatus = RstrtmgrLibrary.RmShutdown(dwSessionHandle, RM_SHUTDOWN_TYPE.RmForceShutdown, null);
+
+                            if (dwRmStatus is 0)
+                            {
+                                dwRmStatus = RstrtmgrLibrary.RmRestart(dwSessionHandle, 0, null);
+
+                                if (dwRmStatus is 0)
+                                {
+                                    dwRmStatus = RstrtmgrLibrary.RmEndSession(dwSessionHandle);
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAdvancedPage), nameof(RestartExplorerAsync), 1, e);
+                }
+            });
+        }
+
+        #endregion 第五部分：数据操作与业务逻辑
     }
 }

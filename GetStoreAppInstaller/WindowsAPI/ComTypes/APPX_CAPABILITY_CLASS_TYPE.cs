@@ -1,6 +1,6 @@
 ﻿namespace GetStoreAppInstaller.WindowsAPI.ComTypes
 {
-    public enum APPX_CAPABILITY_CLASS_TYPE
+    internal enum APPX_CAPABILITY_CLASS_TYPE
     {
         APPX_CAPABILITY_CLASS_DEFAULT = 0x00000000,
         APPX_CAPABILITY_CLASS_GENERAL = 0x00000001,

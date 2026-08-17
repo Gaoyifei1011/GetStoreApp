@@ -11,7 +11,7 @@ namespace GetStoreApp.Helpers.WinGet
     /// <summary>
     /// WinGet 工厂帮助类
     /// </summary>
-    public static class WinGetFactoryHelper
+    internal static class WinGetFactoryHelper
     {
         private static readonly Guid WINGET_OUTOFPROC_COM_CLSID_PackageManager = new("C53A4F16-787E-42A4-B304-29EFFB4BF597");
         private static readonly Guid WINGET_OUTOFPROC_COM_CLSID_FindPackagesOptions = new("572DED96-9C60-4526-8F92-EE7D91D38C1A");
@@ -27,7 +27,7 @@ namespace GetStoreApp.Helpers.WinGet
         /// <summary>
         /// 检查 WinGet 是否存在
         /// </summary>
-        public static bool IsExisted()
+        internal static bool IsExisted()
         {
             try
             {
@@ -43,7 +43,7 @@ namespace GetStoreApp.Helpers.WinGet
         /// <summary>
         /// 创建 PackageManager
         /// </summary>
-        public static PackageManager CreatePackageManager()
+        internal static PackageManager CreatePackageManager()
         {
             try
             {
@@ -70,7 +70,7 @@ namespace GetStoreApp.Helpers.WinGet
         /// <summary>
         /// 创建 FindPackagesOptions
         /// </summary>
-        public static FindPackagesOptions CreateFindPackagesOptions()
+        internal static FindPackagesOptions CreateFindPackagesOptions()
         {
             try
             {
@@ -97,7 +97,7 @@ namespace GetStoreApp.Helpers.WinGet
         /// <summary>
         /// 创建 CreateCompositePackageCatalogOptions
         /// </summary>
-        public static CreateCompositePackageCatalogOptions CreateCreateCompositePackageCatalogOptions()
+        internal static CreateCompositePackageCatalogOptions CreateCreateCompositePackageCatalogOptions()
         {
             try
             {
@@ -124,7 +124,7 @@ namespace GetStoreApp.Helpers.WinGet
         /// <summary>
         /// 创建 InstallOptions
         /// </summary>
-        public static InstallOptions CreateInstallOptions()
+        internal static InstallOptions CreateInstallOptions()
         {
             try
             {
@@ -151,7 +151,7 @@ namespace GetStoreApp.Helpers.WinGet
         /// <summary>
         /// 创建 UninstallOptions
         /// </summary>
-        public static UninstallOptions CreateUninstallOptions()
+        internal static UninstallOptions CreateUninstallOptions()
         {
             try
             {
@@ -178,7 +178,7 @@ namespace GetStoreApp.Helpers.WinGet
         /// <summary>
         /// 创建 PackageMatchFilter
         /// </summary>
-        public static PackageMatchFilter CreatePackageMatchFilter()
+        internal static PackageMatchFilter CreatePackageMatchFilter()
         {
             try
             {
@@ -205,7 +205,7 @@ namespace GetStoreApp.Helpers.WinGet
         /// <summary>
         /// 创建 DownloadOptions
         /// </summary>
-        public static DownloadOptions CreateDownloadOptions()
+        internal static DownloadOptions CreateDownloadOptions()
         {
             try
             {
@@ -232,7 +232,7 @@ namespace GetStoreApp.Helpers.WinGet
         /// <summary>
         /// 创建 RepairOptions
         /// </summary>
-        public static RepairOptions CreateRepairOptions()
+        internal static RepairOptions CreateRepairOptions()
         {
             try
             {
@@ -259,7 +259,7 @@ namespace GetStoreApp.Helpers.WinGet
         /// <summary>
         /// 创建 AddPackageCatalogOptions
         /// </summary>
-        public static AddPackageCatalogOptions CreateAddPackageCatalogOptions()
+        internal static AddPackageCatalogOptions CreateAddPackageCatalogOptions()
         {
             try
             {
@@ -286,7 +286,7 @@ namespace GetStoreApp.Helpers.WinGet
         /// <summary>
         /// 创建 RemovePackageCatalogOptions
         /// </summary>
-        public static RemovePackageCatalogOptions CreateRemovePackageCatalogOptions()
+        internal static RemovePackageCatalogOptions CreateRemovePackageCatalogOptions()
         {
             try
             {

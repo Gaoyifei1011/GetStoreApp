@@ -32,7 +32,7 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// WinGet 已安装应用界面
     /// </summary>
-    public sealed partial class WinGetInstalledPage : Page, INotifyPropertyChanged
+    internal sealed partial class WinGetInstalledPage : Page, INotifyPropertyChanged
     {
         private readonly string InstalledAppsCountInfoString = ResourceService.GetLocalized("WinGetInstalled/InstalledAppsCountInfo");
         private readonly string InstalledAppsEmptyDescriptionString = ResourceService.GetLocalized("WinGetInstalled/InstalledAppsEmptyDescription");
@@ -48,7 +48,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _searchText = string.Empty;
 
-        public string SearchText
+        internal string SearchText
         {
             get { return _searchText; }
 
@@ -64,7 +64,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isIncrease = true;
 
-        public bool IsIncrease
+        internal bool IsIncrease
         {
             get { return _isIncrease; }
 
@@ -80,7 +80,7 @@ namespace GetStoreApp.Views.Pages
 
         private AppSortRuleKind _selectedAppSortRuleKind = AppSortRuleKind.DisplayName;
 
-        public AppSortRuleKind SelectedAppSortRuleKind
+        internal AppSortRuleKind SelectedAppSortRuleKind
         {
             get { return _selectedAppSortRuleKind; }
 
@@ -96,7 +96,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _forceUninstall;
 
-        public bool ForceUninstall
+        internal bool ForceUninstall
         {
             get { return _forceUninstall; }
 
@@ -112,7 +112,7 @@ namespace GetStoreApp.Views.Pages
 
         private int _selectedPackageUninstallScopeIndex = 0;
 
-        public int SelectedPackageUninstallScopeIndex
+        internal int SelectedPackageUninstallScopeIndex
         {
             get { return _selectedPackageUninstallScopeIndex; }
 
@@ -128,7 +128,7 @@ namespace GetStoreApp.Views.Pages
 
         private int _selectedPackageUninstallModeIndex = 0;
 
-        public int SelectedPackageUninstallModeIndex
+        internal int SelectedPackageUninstallModeIndex
         {
             get { return _selectedPackageUninstallModeIndex; }
 
@@ -144,7 +144,7 @@ namespace GetStoreApp.Views.Pages
 
         private InstalledAppsResultKind _installedAppsResultKind;
 
-        public InstalledAppsResultKind InstalledAppsResultKind
+        internal InstalledAppsResultKind InstalledAppsResultKind
         {
             get { return _installedAppsResultKind; }
 
@@ -160,7 +160,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _installedFailedContent;
 
-        public string InstalledFailedContent
+        internal string InstalledFailedContent
         {
             get { return _installedFailedContent; }
 
@@ -180,7 +180,7 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public WinGetInstalledPage()
+        internal WinGetInstalledPage()
         {
             InitializeComponent();
 

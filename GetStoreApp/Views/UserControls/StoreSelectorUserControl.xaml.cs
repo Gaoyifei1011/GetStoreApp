@@ -29,7 +29,7 @@ namespace GetStoreApp.Views.UserControls
     /// <summary>
     /// 商店选择器用户控件
     /// </summary>
-    public partial class StoreSelectorUserControl : UserControl, INotifyPropertyChanged
+    internal partial class StoreSelectorUserControl : UserControl, INotifyPropertyChanged
     {
         private readonly string ExactSearchString = ResourceService.GetLocalized("StoreSelector/ExactSearch");
         private readonly string FastString = ResourceService.GetLocalized("StoreSelector/Fast");
@@ -47,7 +47,7 @@ namespace GetStoreApp.Views.UserControls
 
         private SelectorBarItem _selectedItem;
 
-        public SelectorBarItem SelectedItem
+        internal SelectorBarItem SelectedItem
         {
             get { return _selectedItem; }
 
@@ -63,7 +63,7 @@ namespace GetStoreApp.Views.UserControls
 
         private TypeModel _selectedType;
 
-        public TypeModel SelectedType
+        internal TypeModel SelectedType
         {
             get { return _selectedType; }
 
@@ -79,7 +79,7 @@ namespace GetStoreApp.Views.UserControls
 
         private ChannelModel _selectedChannel;
 
-        public ChannelModel SelectedChannel
+        internal ChannelModel SelectedChannel
         {
             get { return _selectedChannel; }
 
@@ -95,7 +95,7 @@ namespace GetStoreApp.Views.UserControls
 
         private string _linkPlaceHolderText = string.Empty;
 
-        public string LinkPlaceHolderText
+        internal string LinkPlaceHolderText
         {
             get { return _linkPlaceHolderText; }
 
@@ -111,7 +111,7 @@ namespace GetStoreApp.Views.UserControls
 
         private string _queryLinksText = string.Empty;
 
-        public string QueryLinksText
+        internal string QueryLinksText
         {
             get { return _queryLinksText; }
 
@@ -127,7 +127,7 @@ namespace GetStoreApp.Views.UserControls
 
         private bool _isQueryingLinks;
 
-        public bool IsQueryingLinks
+        internal bool IsQueryingLinks
         {
             get { return _isQueryingLinks; }
 
@@ -143,7 +143,7 @@ namespace GetStoreApp.Views.UserControls
 
         private bool _isQueryLinksResultVisible;
 
-        public bool IsQueryLinksResultVisible
+        internal bool IsQueryLinksResultVisible
         {
             get { return _isQueryLinksResultVisible; }
 
@@ -159,7 +159,7 @@ namespace GetStoreApp.Views.UserControls
 
         private ComboBoxItemModel _selectedSearchType;
 
-        public ComboBoxItemModel SelectedSearchType
+        internal ComboBoxItemModel SelectedSearchType
         {
             get { return _selectedSearchType; }
 
@@ -175,7 +175,7 @@ namespace GetStoreApp.Views.UserControls
 
         private string _searchAppsText;
 
-        public string SearchAppsText
+        internal string SearchAppsText
         {
             get { return _searchAppsText; }
 
@@ -191,7 +191,7 @@ namespace GetStoreApp.Views.UserControls
 
         private bool _isSearchingApps;
 
-        public bool IsSearchingApps
+        internal bool IsSearchingApps
         {
             get { return _isSearchingApps; }
 
@@ -207,7 +207,7 @@ namespace GetStoreApp.Views.UserControls
 
         private bool _isSearchAppsResultVisible;
 
-        public bool IsSearchAppsResultVisible
+        internal bool IsSearchAppsResultVisible
         {
             get { return _isSearchAppsResultVisible; }
 
@@ -223,7 +223,7 @@ namespace GetStoreApp.Views.UserControls
 
         private StoreInfoResultKind _storeInfoResultKind;
 
-        public StoreInfoResultKind StoreInfoResultKind
+        internal StoreInfoResultKind StoreInfoResultKind
         {
             get { return _storeInfoResultKind; }
 
@@ -239,9 +239,9 @@ namespace GetStoreApp.Views.UserControls
 
         private List<string> SampleLinkList { get; } = ["https://apps.microsoft.com/store/detail/9WZDNCRFJBMP", "9WZDNCRFJBMP",];
 
-        public List<TypeModel> TypeList { get; } = [];
+        internal List<TypeModel> TypeList { get; } = [];
 
-        public List<ChannelModel> ChannelList { get; } = [];
+        internal List<ChannelModel> ChannelList { get; } = [];
 
         private List<ComboBoxItemModel> SearchTypeList { get; } = [];
 
@@ -251,7 +251,7 @@ namespace GetStoreApp.Views.UserControls
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public StoreSelectorUserControl()
+        internal StoreSelectorUserControl()
         {
             InitializeComponent();
 
@@ -663,7 +663,7 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 初始化商店选择用户控件
         /// </summary>
-        public async Task InitializeStoreSelectorAsync(StorePage storePageData)
+        internal async Task InitializeStoreSelectorAsync(StorePage storePageData)
         {
             if (!isInitialized)
             {
@@ -696,7 +696,7 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 更新数据
         /// </summary>
-        public void UpdateData(List<string> dataList)
+        internal void UpdateData(List<string> dataList)
         {
             if (dataList.Count is 3)
             {
@@ -718,7 +718,7 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 获取链接
         /// </summary>
-        public async Task QueryLinksAsync()
+        internal async Task QueryLinksAsync()
         {
             if (!IsQueryingLinks || !IsSearchingApps)
             {
@@ -949,7 +949,7 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 搜索应用
         /// </summary>
-        public async Task SearchAppsAsync()
+        internal async Task SearchAppsAsync()
         {
             if (!IsQueryingLinks || !IsSearchingApps)
             {

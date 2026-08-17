@@ -3,7 +3,7 @@
     /// <summary>
     /// 可更新应用结果类型
     /// </summary>
-    public enum UpgradableAppsResultKind
+    internal enum UpgradableAppsResultKind
     {
         NotCheckUpdate = 0,
         Querying = 1,

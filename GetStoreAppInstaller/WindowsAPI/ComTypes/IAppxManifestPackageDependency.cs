@@ -7,7 +7,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 描述一个包在另一个包上的依赖关系。
     /// </summary>
     [GeneratedComInterface, Guid("E4946B59-733E-43F0-A724-3BDE4C1285A0")]
-    public partial interface IAppxManifestPackageDependency
+    internal partial interface IAppxManifestPackageDependency
     {
         /// <summary>
         /// 获取当前包具有依赖项的包的名称。

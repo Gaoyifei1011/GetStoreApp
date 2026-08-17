@@ -3,7 +3,7 @@
     /// <summary>
     /// 注册表访问权限枚举值
     /// </summary>
-    public enum RegistryAccessRights : uint
+    internal enum RegistryAccessRights : uint
     {
         /// <summary>查询注册表项的值所必需的。</summary>
         KEY_QUERY_VALUE = 0x0001,

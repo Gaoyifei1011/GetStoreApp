@@ -3,52 +3,52 @@
     /// <summary>
     /// 设置选项对应的键值
     /// </summary>
-    public static class ConfigKey
+    internal static class ConfigKey
     {
-        public const string AllowUnsignedPackageKey = "AllowUnsignedPackage";
+        internal const string AllowUnsignedPackageKey = "AllowUnsignedPackage";
 
-        public const string AlwaysShowBackdropKey = "AlwaysShowBackdrop";
+        internal const string AlwaysShowBackdropKey = "AlwaysShowBackdrop";
 
-        public const string AppLinkOpenModeKey = "AppLinkOpenMode";
+        internal const string AppLinkOpenModeKey = "AppLinkOpenMode";
 
-        public const string BackdropKey = "AppBackdrop";
+        internal const string BackdropKey = "AppBackdrop";
 
-        public const string BlockMapFilterKey = "BlockMapFilter";
+        internal const string BlockMapFilterKey = "BlockMapFilter";
 
-        public const string CancelAutoUpdateKey = "CancelAutoUpdate";
+        internal const string CancelAutoUpdateKey = "CancelAutoUpdate";
 
-        public const string DownloadFolderKey = "DownloadFolder";
+        internal const string DownloadFolderKey = "DownloadFolder";
 
-        public const string DoEngineModeKey = "DoEngineMode";
+        internal const string DoEngineModeKey = "DoEngineMode";
 
-        public const string ForceAppShutdownKey = "ForceAppShutdown";
+        internal const string ForceAppShutdownKey = "ForceAppShutdown";
 
-        public const string ForceTargetAppShutdownKey = "ForceTargetAppShutdown";
+        internal const string ForceTargetAppShutdownKey = "ForceTargetAppShutdown";
 
-        public const string InstallModeKey = "InstallMode";
+        internal const string InstallModeKey = "InstallMode";
 
-        public const string LanguageKey = "AppLanguage";
+        internal const string LanguageKey = "AppLanguage";
 
-        public const string ManualSetDownloadFolderKey = "ManualSetDownloadFolder";
+        internal const string ManualSetDownloadFolderKey = "ManualSetDownloadFolder";
 
-        public const string NotificationKey = "AppNotification";
+        internal const string NotificationKey = "AppNotification";
 
-        public const string EncryptedPackageFilterKey = "EncryptedPackageFilter";
+        internal const string EncryptedPackageFilterKey = "EncryptedPackageFilter";
 
-        public const string QueryLinksModeKey = "QueryLinksMode";
+        internal const string QueryLinksModeKey = "QueryLinksMode";
 
-        public const string SearchAppsModeKey = "SearchAppsMode";
+        internal const string SearchAppsModeKey = "SearchAppsMode";
 
-        public const string StoreRegionKey = "StoreRegion";
+        internal const string StoreRegionKey = "StoreRegion";
 
-        public const string ShellMenuKey = "ShellMenu";
+        internal const string ShellMenuKey = "ShellMenu";
 
-        public const string ThemeKey = "AppTheme";
+        internal const string ThemeKey = "AppTheme";
 
-        public const string TopMostKey = "TopMost";
+        internal const string TopMostKey = "TopMost";
 
-        public const string UseSystemRegionKey = "UseSystemRegion";
+        internal const string UseSystemRegionKey = "UseSystemRegion";
 
-        public const string WinGetSourceKey = "WinGetSource";
+        internal const string WinGetSourceKey = "WinGetSource";
     }
 }

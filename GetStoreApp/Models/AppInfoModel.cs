@@ -5,11 +5,11 @@ namespace GetStoreApp.Models
     /// <summary>
     /// 应用信息数据模型
     /// </summary>
-    public sealed partial class AppInfoModel : INotifyPropertyChanged
+    internal sealed partial class AppInfoModel : INotifyPropertyChanged
     {
         private string _name = string.Empty;
 
-        public string Name
+        internal string Name
         {
             get { return _name; }
 
@@ -25,7 +25,7 @@ namespace GetStoreApp.Models
 
         private string _publisher = string.Empty;
 
-        public string Publisher
+        internal string Publisher
         {
             get { return _publisher; }
 
@@ -41,7 +41,7 @@ namespace GetStoreApp.Models
 
         private string _description = string.Empty;
 
-        public string Description
+        internal string Description
         {
             get { return _description; }
 
@@ -57,7 +57,7 @@ namespace GetStoreApp.Models
 
         private string _categoryID = string.Empty;
 
-        public string CategoryID
+        internal string CategoryID
         {
             get { return _categoryID; }
 
@@ -71,7 +71,7 @@ namespace GetStoreApp.Models
             }
         }
 
-        public string ProductID { get; set; }
+        internal string ProductID { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

@@ -8,7 +8,7 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.Uxtheme
     /// <summary>
     /// Uxtheme.dll 函数库
     /// </summary>
-    public static partial class UxthemeLibrary
+    internal static partial class UxthemeLibrary
     {
         private const string Uxtheme = "uxtheme.dll";
 
@@ -17,12 +17,12 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.Uxtheme
         /// </summary>
         /// <param name="preferredAppMode">菜单样式</param>
         [LibraryImport(Uxtheme, EntryPoint = "#135", SetLastError = false), PreserveSig]
-        public static partial void SetPreferredAppMode(PreferredAppMode preferredAppMode);
+        internal static partial void SetPreferredAppMode(PreferredAppMode preferredAppMode);
 
         /// <summary>
         /// 刷新右键菜单样式
         /// </summary>
         [LibraryImport(Uxtheme, EntryPoint = "#136", SetLastError = false), PreserveSig]
-        public static partial void FlushMenuThemes();
+        internal static partial void FlushMenuThemes();
     }
 }

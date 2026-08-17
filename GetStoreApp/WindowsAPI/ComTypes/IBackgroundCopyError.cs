@@ -10,7 +10,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     /// 若要获取 IBackgroundCopyError 对象，请调用 IBackgroundCopyJob：：GetError 方法。
     /// </summary>
     [GeneratedComInterface, Guid("19C613A0-FCB8-4F28-81AE-897C3D078F81")]
-    public partial interface IBackgroundCopyError
+    internal partial interface IBackgroundCopyError
     {
         /// <summary>
         /// 检索错误代码并确定发生错误的上下文。

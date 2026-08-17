@@ -3,7 +3,7 @@
     /// <summary>
     /// 使用 ShowWindow 显示窗口的不同方式的枚举。
     /// </summary>
-    public enum WindowShowStyle : uint
+    internal enum WindowShowStyle : uint
     {
         /// <summary>
         /// 隐藏窗口并激活另一个窗口。

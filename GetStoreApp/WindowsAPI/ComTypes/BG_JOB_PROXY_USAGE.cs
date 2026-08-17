@@ -3,7 +3,7 @@
     /// <summary>
     /// 定义指定用于文件传输的代理的常量。 可以为每个作业定义不同的代理设置。
     /// </summary>
-    public enum BG_JOB_PROXY_USAGE
+    internal enum BG_JOB_PROXY_USAGE
     {
         /// <summary>
         /// 使用每个用户定义的代理和代理绕过列表设置来传输文件。 控制面板、Internet 选项、Connections、局域网 (LAN) 设置 (或拨号设置由用户定义，具体取决于网络连接) 。

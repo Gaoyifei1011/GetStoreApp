@@ -8,13 +8,13 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
     /// <summary>
     /// Kernel32.dll 函数库
     /// </summary>
-    public static partial class Kernel32Library
+    internal static partial class Kernel32Library
     {
         private const string Kernel32 = "kernel32.dll";
 
-        public const int MAX_PATH = 260;
+        internal const int MAX_PATH = 260;
 
-        public static nint INVALID_HANDLE_VALUE { get; } = -1;
+        internal static nint INVALID_HANDLE_VALUE { get; } = -1;
 
         /// <summary>
         /// 获取指定进程的快照，以及这些进程使用的堆、模块和线程。
@@ -29,7 +29,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 如果函数成功，它将返回指定快照的打开句柄。如果函数失败，它将返回 INVALID_HANDLE_VALUE。 要获得更多的错误信息，请调用 GetLastError。 可能的错误代码包括 ERROR_BAD_LENGTH。
         /// </returns>
         [LibraryImport(Kernel32, EntryPoint = "CreateToolhelp32Snapshot", SetLastError = false), PreserveSig]
-        public static partial nint CreateToolhelp32Snapshot(CreateToolhelp32SnapshotFlags dwFlags, uint th32ProcessID);
+        internal static partial nint CreateToolhelp32Snapshot(CreateToolhelp32SnapshotFlags dwFlags, uint th32ProcessID);
 
         /// <summary>
         /// 枚举由两个字母组成的国际标准化组织 (ISO) 3166-1 代码或数字联合国 (联合国) 系列 M，编号 49 (M.49) 操作系统上可用的地理位置代码。
@@ -40,14 +40,14 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果成功，则返回非零值，否则返回 0。</returns>
         [LibraryImport(Kernel32, EntryPoint = "EnumSystemGeoNames", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool EnumSystemGeoNames(SYSGEOCLASS geoClass, GEO_ENUMNAMEPROC geoEnumProc, nint data);
+        internal static partial bool EnumSystemGeoNames(SYSGEOCLASS geoClass, GEO_ENUMNAMEPROC geoEnumProc, nint data);
 
         /// <summary>
         /// 检索当前进程的伪句柄。
         /// </summary>
         /// <returns>返回值是当前进程的伪句柄。</returns>
         [LibraryImport(Kernel32, EntryPoint = "GetCurrentProcess", SetLastError = false), PreserveSig]
-        public static partial nint GetCurrentProcess();
+        internal static partial nint GetCurrentProcess();
 
         /// <summary>
         /// 检索指定进程的计时信息。
@@ -60,7 +60,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
         [LibraryImport(Kernel32, EntryPoint = "GetProcessTimes", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool GetProcessTimes(nint hProcess, out System.Runtime.InteropServices.ComTypes.FILETIME lpCreationTime, out System.Runtime.InteropServices.ComTypes.FILETIME lpExitTime, out System.Runtime.InteropServices.ComTypes.FILETIME lpKernelTime, out System.Runtime.InteropServices.ComTypes.FILETIME lpUserTime);
+        internal static partial bool GetProcessTimes(nint hProcess, out System.Runtime.InteropServices.ComTypes.FILETIME lpCreationTime, out System.Runtime.InteropServices.ComTypes.FILETIME lpExitTime, out System.Runtime.InteropServices.ComTypes.FILETIME lpKernelTime, out System.Runtime.InteropServices.ComTypes.FILETIME lpUserTime);
 
         /// <summary>
         /// 打开现有的本地进程对象。
@@ -77,7 +77,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// </param>
         /// <returns>如果函数成功，则返回值是指定进程的打开句柄。如果函数失败，则返回值为 NULL。</returns>
         [LibraryImport(Kernel32, EntryPoint = "OpenProcess", SetLastError = false), PreserveSig]
-        public static partial nint OpenProcess(EDesiredAccess dwDesiredAccess, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandle, int dwProcessId);
+        internal static partial nint OpenProcess(EDesiredAccess dwDesiredAccess, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandle, int dwProcessId);
 
         /// <summary>
         /// 检索有关系统快照中遇到的第一个进程的信息。
@@ -89,7 +89,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// </returns>
         [LibraryImport(Kernel32, EntryPoint = "Process32FirstW", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool Process32First(nint snapshot, ref PROCESSENTRY32 lppe);
+        internal static partial bool Process32First(nint snapshot, ref PROCESSENTRY32 lppe);
 
         /// <summary>
         /// 检索有关系统快照中记录的下一个进程的信息。
@@ -101,7 +101,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// </returns>
         [LibraryImport(Kernel32, EntryPoint = "Process32NextW", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool Process32Next(nint snapshot, ref PROCESSENTRY32 lppe);
+        internal static partial bool Process32Next(nint snapshot, ref PROCESSENTRY32 lppe);
 
         /// <summary>
         /// 从指定的文件或输入/输出 (I/O) 设备读取数据。 如果设备支持，则读取发生在文件指针指定的位置。
@@ -131,6 +131,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果函数成功，则返回值为非零 (TRUE) 。如果函数失败或异步完成，则返回值为零，(FALSE) </returns>
         [LibraryImport(Kernel32, EntryPoint = "ReadFile", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool ReadFile(nint hFile, [Out] byte[] lpBuffer, uint nNumberOfBytesToRead, out uint lpNumberOfBytesRead, nint lpOverlapped);
+        internal static partial bool ReadFile(nint hFile, [Out] byte[] lpBuffer, uint nNumberOfBytesToRead, out uint lpNumberOfBytesRead, nint lpOverlapped);
     }
 }

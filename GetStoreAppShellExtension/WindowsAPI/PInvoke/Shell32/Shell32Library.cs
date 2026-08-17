@@ -5,9 +5,9 @@ namespace GetStoreAppShellExtension.WindowsAPI.PInvoke.Shell32
     /// <summary>
     /// Shell32.dll 函数库
     /// </summary>
-    public static partial class Shell32Library
+    internal static partial class Shell32Library
     {
-        public const string Shell32 = "shell32.dll";
+        internal const string Shell32 = "shell32.dll";
 
         /// <summary>
         /// 对指定文件执行操作。
@@ -20,6 +20,6 @@ namespace GetStoreAppShellExtension.WindowsAPI.PInvoke.Shell32
         /// <param name="nShowCmd">指定应用程序在打开时如何显示应用程序的标志。 如果 lpFile 指定文档文件，则标志将直接传递给关联的应用程序。 由应用程序决定如何处理它。 它可以是在 ShowWindow 函数的 nCmdShow 参数中指定的任何值。</param>
         /// <returns>如果函数成功，则返回大于 32 的值。 如果函数失败，它将返回一个错误值，该值指示失败的原因。 返回值转换为 HINSTANCE，以便与 16 位 Windows 应用程序向后兼容。</returns>
         [LibraryImport(Shell32, EntryPoint = "ShellExecuteW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
-        public static partial int ShellExecute(nint hwnd, [MarshalAs(UnmanagedType.LPWStr)] string lpOperation, [MarshalAs(UnmanagedType.LPWStr)] string lpFile, string lpParameters, [MarshalAs(UnmanagedType.LPWStr)] string lpDirectory, WindowShowStyle nShowCmd);
+        internal static partial int ShellExecute(nint hwnd, [MarshalAs(UnmanagedType.LPWStr)] string lpOperation, [MarshalAs(UnmanagedType.LPWStr)] string lpFile, string lpParameters, [MarshalAs(UnmanagedType.LPWStr)] string lpDirectory, WindowShowStyle nShowCmd);
     }
 }

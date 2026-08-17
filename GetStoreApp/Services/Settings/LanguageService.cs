@@ -12,24 +12,24 @@ namespace GetStoreApp.Services.Settings
     /// <summary>
     /// 应用语言设置服务
     /// </summary>
-    public static class LanguageService
+    internal static class LanguageService
     {
         private static readonly string settingsKey = ConfigKey.LanguageKey;
 
-        public static KeyValuePair<string, string> DefaultAppLanguage { get; private set; }
+        internal static KeyValuePair<string, string> DefaultAppLanguage { get; private set; }
 
-        public static KeyValuePair<string, string> AppLanguage { get; private set; }
+        internal static KeyValuePair<string, string> AppLanguage { get; private set; }
 
-        public static FlowDirection FlowDirection { get; private set; }
+        internal static FlowDirection FlowDirection { get; private set; }
 
         private static IReadOnlyList<string> AppLanguageList { get; } = ApplicationLanguages.ManifestLanguages;
 
-        public static List<KeyValuePair<string, string>> LanguageList { get; } = [];
+        internal static List<KeyValuePair<string, string>> LanguageList { get; } = [];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的语言值，如果设置值为空，设定默认的应用语言值
         /// </summary>
-        public static void InitializeLanguage()
+        internal static void InitializeLanguage()
         {
             InitializeLanguageList();
             DefaultAppLanguage = LanguageList.Find(item => string.Equals(item.Key, "en-US", StringComparison.OrdinalIgnoreCase));
@@ -132,7 +132,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 语言发生修改时修改设置存储的语言值
         /// </summary>
-        public static void SetLanguage(KeyValuePair<string, string> language)
+        internal static void SetLanguage(KeyValuePair<string, string> language)
         {
             AppLanguage = language;
             LocalSettingsService.SaveSetting(settingsKey, language.Key);

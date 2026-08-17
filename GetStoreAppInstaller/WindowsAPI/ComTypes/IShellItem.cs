@@ -9,7 +9,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// IShellItem 接口继承自 IUnknown 接口。
     /// </summary>
     [GeneratedComInterface, Guid("43826D1E-E718-42EE-BC55-A1E261C37BFE")]
-    public partial interface IShellItem
+    internal partial interface IShellItem
     {
         /// <summary>
         /// 绑定到由处理程序 ID 值 (BHID) 指定的项的处理程序。

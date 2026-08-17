@@ -10,7 +10,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 此接口中的方法将对象的数据显示为可以读取或写入的连续字节序列。 还有一些方法可用于提交和还原在事务处理模式下打开的流上的更改，以及限制对流中某个字节范围的访问的方法。流可以在不消耗文件系统资源的情况下长时间保持打开状态。 IUnknown：：Release 方法类似于文件上的 close 函数。 释放后，流对象不再有效，并且无法使用。
     /// </summary>
     [GeneratedComInterface, Guid("0000000C-0000-0000-C000-000000000046")]
-    public partial interface IStream : ISequentialStream
+    internal partial interface IStream : ISequentialStream
     {
         /// <summary>
         /// Seek 方法将查找指针更改为新位置。 新位置相对于流的开头、流的末尾或当前查找指针。

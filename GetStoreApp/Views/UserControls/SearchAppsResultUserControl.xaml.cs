@@ -26,7 +26,7 @@ namespace GetStoreApp.Views.UserControls
     /// <summary>
     /// 搜索应用结果用户控件
     /// </summary>
-    public sealed partial class SearchAppsResultUserControl : UserControl
+    internal sealed partial class SearchAppsResultUserControl : UserControl
     {
         private readonly string SearchAppsResultCountInfoString = ResourceService.GetLocalized("SearchAppsResult/SearchAppsResultCountInfo");
         private bool isInitialized;
@@ -34,7 +34,7 @@ namespace GetStoreApp.Views.UserControls
 
         private ObservableCollection<SearchAppsResultModel> SearchAppsResultCollection { get; } = [];
 
-        public SearchAppsResultUserControl()
+        internal SearchAppsResultUserControl()
         {
             InitializeComponent();
         }
@@ -113,7 +113,7 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 初始化搜索应用结果用户控件
         /// </summary>
-        public void InitializeSearchAppsResult(StorePage storePageData)
+        internal void InitializeSearchAppsResult(StorePage storePageData)
         {
             if (!isInitialized)
             {
@@ -125,7 +125,7 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 更新搜索应用结果
         /// </summary>
-        public void UpdateSearchAppsResultData(List<SearchAppsResultModel> searchAppsResultList)
+        internal void UpdateSearchAppsResultData(List<SearchAppsResultModel> searchAppsResultList)
         {
             SearchAppsResultCollection.Clear();
             foreach (SearchAppsResultModel searchAppsResultItem in searchAppsResultList)

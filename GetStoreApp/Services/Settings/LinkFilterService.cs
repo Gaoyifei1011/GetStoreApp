@@ -7,20 +7,20 @@ namespace GetStoreApp.Services.Settings
     /// <summary>
     /// 链接过滤设置服务
     /// </summary>
-    public static class LinkFilterService
+    internal static class LinkFilterService
     {
         private static readonly string encryptedPackageSettingsKey = ConfigKey.EncryptedPackageFilterKey;
         private static readonly string blockMapSettingsKey = ConfigKey.BlockMapFilterKey;
         private static readonly bool defaultLinkFilter = true;
 
-        public static bool EncryptedPackageFilter { get; private set; }
+        internal static bool EncryptedPackageFilter { get; private set; }
 
-        public static bool BlockMapFilter { get; private set; }
+        internal static bool BlockMapFilter { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的链接过滤值
         /// </summary>
-        public static void InitializeLinkFilter()
+        internal static void InitializeLinkFilter()
         {
             EncryptedPackageFilter = GetEncryptedPackageFilter();
             BlockMapFilter = GetBlockMapFilter();
@@ -61,7 +61,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 加密包显示设置的过滤值发生修改时修改设置存储的加密包显示设置的过滤值
         /// </summary>
-        public static void SetEncryptedPackageFilter(bool encryptedPackageFilter)
+        internal static void SetEncryptedPackageFilter(bool encryptedPackageFilter)
         {
             EncryptedPackageFilter = encryptedPackageFilter;
             LocalSettingsService.SaveSetting(encryptedPackageSettingsKey, encryptedPackageFilter);
@@ -70,7 +70,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 以".blockmap"的文件扩展名的过滤值发生修改时修改设置存储的以".blockmap"的文件扩展名的过滤值
         /// </summary>
-        public static void SetBlockMapFilter(bool blockMapFilter)
+        internal static void SetBlockMapFilter(bool blockMapFilter)
         {
             BlockMapFilter = blockMapFilter;
             LocalSettingsService.SaveSetting(blockMapSettingsKey, blockMapFilter);

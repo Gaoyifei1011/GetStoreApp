@@ -3,7 +3,7 @@
     /// <summary>
     /// 商店信息结果类型
     /// </summary>
-    public enum StoreInfoResultKind
+    internal enum StoreInfoResultKind
     {
         None = 0,
         QueryLinksWarning = 1,

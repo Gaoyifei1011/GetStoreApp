@@ -7,14 +7,14 @@ namespace GetStoreApp.Models
     /// <summary>
     /// 应用管理数据模型
     /// </summary>
-    public sealed partial class PackageModel : INotifyPropertyChanged
+    internal sealed partial class PackageModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 应用图标
         /// </summary>
         private Uri _logoImage;
 
-        public Uri LogoImage
+        internal Uri LogoImage
         {
             get { return _logoImage; }
 
@@ -31,49 +31,49 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 是否为框架包
         /// </summary>
-        public bool IsFramework { get; set; }
+        internal bool IsFramework { get; set; }
 
         /// <summary>
         /// 应用入口个数
         /// </summary>
-        public int AppListEntryCount { get; set; }
+        internal int AppListEntryCount { get; set; }
 
         /// <summary>
         /// 应用名称
         /// </summary>
-        public string DisplayName { get; set; }
+        internal string DisplayName { get; set; }
 
         /// <summary>
         /// 应用安装日期
         /// </summary>
-        public string InstallDate { get; set; }
+        internal string InstallDate { get; set; }
 
         /// <summary>
         /// 发布者名称
         /// </summary>
-        public string PublisherDisplayName { get; set; }
+        internal string PublisherDisplayName { get; set; }
 
         /// <summary>
         /// 应用版本
         /// </summary>
-        public string Version { get; set; }
+        internal string Version { get; set; }
 
         /// <summary>
         /// 包签名类型
         /// </summary>
-        public PackageSignatureKind SignatureKind { get; set; }
+        internal PackageSignatureKind SignatureKind { get; set; }
 
         /// <summary>
         /// 应用安装日期
         /// </summary>
-        public DateTimeOffset InstalledDate { get; set; }
+        internal DateTimeOffset InstalledDate { get; set; }
 
         /// <summary>
         /// 应用是否正在操作中
         /// </summary>
         private bool _isOperating;
 
-        public bool IsOperating
+        internal bool IsOperating
         {
             get { return _isOperating; }
 
@@ -92,7 +92,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private double _packageOperationProgress;
 
-        public double PackageOperationProgress
+        internal double PackageOperationProgress
         {
             get { return _packageOperationProgress; }
 
@@ -106,7 +106,7 @@ namespace GetStoreApp.Models
             }
         }
 
-        public Package Package { get; set; }
+        internal Package Package { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

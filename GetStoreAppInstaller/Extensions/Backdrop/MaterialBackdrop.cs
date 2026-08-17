@@ -11,22 +11,22 @@ namespace GetStoreAppInstaller.Extensions.Backdrop
     /// <summary>
     /// 自定义扩展的背景色
     /// </summary>
-    public sealed partial class MaterialBackdrop : SystemBackdrop
+    internal sealed partial class MaterialBackdrop : SystemBackdrop
     {
         private readonly bool isMicaBackdrop;
         private readonly MicaKind micaBackdropKind;
         private readonly DesktopAcrylicKind desktopAcrylicBackdropKind;
         private ISystemBackdropControllerWithTargets systemBackdropController;
 
-        public SystemBackdropConfiguration BackdropConfiguration { get; private set; }
+        internal SystemBackdropConfiguration BackdropConfiguration { get; private set; }
 
-        public MaterialBackdrop(MicaKind micaKind)
+        internal MaterialBackdrop(MicaKind micaKind)
         {
             isMicaBackdrop = true;
             micaBackdropKind = micaKind;
         }
 
-        public MaterialBackdrop(DesktopAcrylicKind desktopAcrylicKind)
+        internal MaterialBackdrop(DesktopAcrylicKind desktopAcrylicKind)
         {
             isMicaBackdrop = false;
             desktopAcrylicBackdropKind = desktopAcrylicKind;

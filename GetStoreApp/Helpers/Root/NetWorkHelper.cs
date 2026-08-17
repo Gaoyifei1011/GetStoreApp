@@ -8,12 +8,12 @@ namespace GetStoreApp.Helpers.Root
     /// <summary>
     /// 网络状态检测辅助类
     /// </summary>
-    public static class NetWorkHelper
+    internal static class NetWorkHelper
     {
         /// <summary>
         /// 检测网络是否已经连接
         /// </summary>
-        public static bool IsNetWorkConnected()
+        internal static bool IsNetWorkConnected()
         {
             try
             {

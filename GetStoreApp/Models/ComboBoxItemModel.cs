@@ -6,16 +6,16 @@ namespace GetStoreApp.Models
     /// 下拉框数据模型
     /// </summary>
     [GeneratedBindableCustomProperty]
-    public partial class ComboBoxItemModel
+    internal sealed partial class ComboBoxItemModel
     {
         /// <summary>
         /// 选中值
         /// </summary>
-        public object SelectedValue { get; set; }
+        internal object SelectedValue { get; set; }
 
         /// <summary>
         /// 显示值
         /// </summary>
-        public string DisplayMember { get; set; }
+        internal string DisplayMember { get; set; }
     }
 }

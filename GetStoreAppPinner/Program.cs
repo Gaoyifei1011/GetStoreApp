@@ -15,13 +15,13 @@ namespace GetStoreAppPinner
     /// <summary>
     /// 网页浏览器
     /// </summary>
-    public class Program
+    internal class Program
     {
         /// <summary>
         /// 应用程序的主入口点
         /// </summary>
         [MTAThread]
-        public static void Main()
+        internal static void Main()
         {
             ComWrappersSupport.InitializeComWrappers();
 

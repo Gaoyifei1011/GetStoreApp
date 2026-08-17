@@ -39,7 +39,7 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 下载已完成页面
     /// </summary>
-    public sealed partial class CompletedPage : Page, INotifyPropertyChanged
+    internal sealed partial class CompletedPage : Page, INotifyPropertyChanged
     {
         #region 第一部分：常量、资源与状态字段
 
@@ -102,7 +102,7 @@ namespace GetStoreApp.Views.Pages
 
         #region 第三部分：构造函数
 
-        public CompletedPage()
+        internal CompletedPage()
         {
             InitializeComponent();
         }
@@ -121,24 +121,7 @@ namespace GetStoreApp.Views.Pages
             if (!isInitialized)
             {
                 isInitialized = true;
-                List<DownloadSchedulerModel> downloadStorageList = await GetDownloadStorageListAsync();
-
-                if (downloadStorageList is not null)
-                {
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in downloadStorageList)
-                    {
-                        CompletedCollection.Add(new()
-                        {
-                            SelectionMode = SelectionMode,
-                            IconImage = await GetFileIconImageAsync(downloadSchedulerItem.FilePath),
-                            DownloadKey = downloadSchedulerItem.DownloadKey,
-                            FileName = downloadSchedulerItem.FileName,
-                            FilePath = downloadSchedulerItem.FilePath,
-                            TotalSize = downloadSchedulerItem.TotalSize
-                        });
-                    }
-                }
-
+                await InitializeDataAsync();
                 await MountDownloadEventAsync();
                 CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
             }
@@ -146,7 +129,7 @@ namespace GetStoreApp.Views.Pages
 
         #endregion 第四部分：父类虚方法重写
 
-        #region 第二部分：XamlUICommand 命令调用时挂载的事件
+        #region 第五部分：命令调用处理
 
         /// <summary>
         /// 复制到剪贴板
@@ -157,7 +140,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    List<StorageFile> fileList = await GetFileListAsync(completed.FilePath);
+                    List<StorageFile> fileList = await GetStorageFileListAsync([completed.FilePath]);
                     bool copyResult = CopyPasteHelper.CopyFileToClipBoard(fileList);
                     await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
                 }
@@ -188,23 +171,7 @@ namespace GetStoreApp.Views.Pages
                     if (contentDialogResult is ContentDialogResult.Primary)
                     {
                         // 同时删除文件
-                        if (deleteFileDialog.DeleteFileSameTime)
-                        {
-                            await Task.Run(() =>
-                            {
-                                if (!File.Exists(completed.FilePath) || DeleteFileHelper.DeleteFileToRecycleBin(completed.FilePath))
-                                {
-                                    DownloadStorageService.DeleteDownloadData(completed.DownloadKey);
-                                }
-                            });
-                        }
-                        else
-                        {
-                            await Task.Run(() =>
-                            {
-                                DownloadStorageService.DeleteDownloadData(completed.DownloadKey);
-                            });
-                        }
+                        await DeleteDownloaodFileAsync([completed], deleteFileDialog.DeleteFileSameTime);
                     }
                 }
             }
@@ -232,155 +199,63 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is CompletedModel completed && File.Exists(completed.FilePath))
             {
-                // 普通应用：直接安装
-                if (completed.FilePath.EndsWith(".exe") || completed.FileName.EndsWith(".msi"))
+                InstallAppsKind installAppsKind = GetInstallAppsKind(completed.FileName);
+
+                // 普通应用：直接安装 或 商店打包应用：使用应用安装程序安装
+                if (installAppsKind is InstallAppsKind.NonPackagedApp || installAppsKind is InstallAppsKind.PackagedAppViaAppInstaller)
                 {
-                    await Task.Run(() =>
-                    {
-                        Shell32Library.ShellExecute(nint.Zero, "open", completed.FilePath, string.Empty, null, WindowShowStyle.SW_SHOWNORMAL);
-                    });
+                    await InstallAppAsync(installAppsKind, completed);
                 }
-                // 商店打包应用：使用应用安装程序安装或直接安装
-                else
+                // 直接安装
+                else if (installAppsKind is InstallAppsKind.PackagedAppDirectlyInstall)
                 {
-                    StorageFile completedFile = await Task.Run(async () =>
+                    try
                     {
-                        try
-                        {
-                            return await StorageFile.GetFileFromPathAsync(completed.FilePath);
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnInstallExecuteRequested), 1, e);
-                            return null;
-                        }
-                    });
+                        // 标记安装状态
+                        completed.IsInstalling = true;
+                        completed.InstallProgressValue = 0;
+                        completed.InstallStateString = PrepareInstallString;
+                        (bool result, PackageDeploymentResult packageDeploymentResult, Exception exception)? installResult = await InstallAppAsync(installAppsKind, completed);
 
-                    if (completedFile is not null)
-                    {
-                        try
+                        if (installResult.HasValue && installResult.Value.result && installResult.Value.packageDeploymentResult is not null)
                         {
-                            // 使用应用安装程序安装
-                            if (string.Equals(InstallModeService.InstallMode, InstallModeService.InstallModeList[0]))
+                            // 安装成功
+                            if (installResult.Value.packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
                             {
-                                await Task.Run(async () =>
-                                {
-                                    await Launcher.LaunchFileAsync(completedFile);
-                                });
-                            }
-                            // 直接安装
-                            else if (string.Equals(InstallModeService.InstallMode, InstallModeService.InstallModeList[1]))
-                            {
-                                // 标记安装状态
-                                completed.IsInstalling = true;
-                                completed.InstallProgressValue = 0;
-                                completed.InstallStateString = PrepareInstallString;
-
-                                (bool result, PackageDeploymentResult packageDeploymentResult, Exception exception) = await Task.Run(async () =>
-                                {
-                                    try
-                                    {
-                                        AddPackageOptions addPackageOptions = new()
-                                        {
-                                            AllowUnsigned = AppInstallService.AllowUnsignedPackage,
-                                            ForceAppShutdown = AppInstallService.ForceAppShutdown,
-                                            ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdown,
-                                            TargetVolume = PackageVolume.GetDefault()
-                                        };
-
-                                        // 安装目标应用，并获取安装进度
-                                        IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> installPackageWithProgress = packageDeploymentManager.AddPackageByUriAsync(new(completed.FilePath), addPackageOptions);
-
-                                        // 更新安装进度
-                                        installPackageWithProgress.Progress = (result, progress) => OnPackageInstallProgress(result, progress, completed);
-                                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, await installPackageWithProgress, null);
-                                    }
-                                    // 安装失败显示失败信息
-                                    catch (Exception e)
-                                    {
-                                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnInstallExecuteRequested), 2, e);
-                                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
-                                    }
-                                });
-
-                                if (result && packageDeploymentResult is not null)
-                                {
-                                    // 安装成功
-                                    if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
-                                    {
-                                        completed.InstallProgressValue = 100;
-                                        completed.IsInstallWaiting = false;
-                                        completed.InstallFailed = false;
-                                        completed.InstallStateString = InstallSuccessfullyString;
-
-                                        await Task.Run(() =>
-                                        {
-                                            // 显示安装成功通知
-                                            AppNotificationBuilder appNotificationBuilder = new();
-                                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                                            appNotificationBuilder.AddText(string.Format(InstallSuccessfully1String, completedFile.Name));
-                                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                        });
-                                    }
-                                    // 安装失败
-                                    else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
-                                    {
-                                        string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
-                                        string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
-
-                                        completed.InstallProgressValue = 100;
-                                        completed.IsInstallWaiting = false;
-                                        completed.InstallFailed = true;
-                                        completed.InstallStateString = InstallFailedString;
-
-                                        await Task.Run(() =>
-                                        {
-                                            string errorCode = packageDeploymentResult.ExtendedError is not null ? string.Format("0x{0:X8}", packageDeploymentResult.ExtendedError.HResult) : NotAvailableString;
-                                            string errorMessage = packageDeploymentResult.ErrorText;
-
-                                            // 显示安装失败通知
-                                            AppNotificationBuilder appNotificationBuilder = new();
-                                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                                            appNotificationBuilder.AddText(string.Format(InstallFailed1String, completedFile.Name));
-                                            appNotificationBuilder.AddText(string.Format(InstallFailed2String, errorCode));
-                                            appNotificationBuilder.AddText(string.Format(InstallFailed3String, errorMessage));
-                                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                        });
-                                    }
-                                }
-                                else
-                                {
-                                    completed.InstallProgressValue = 100;
-                                    completed.IsInstallWaiting = false;
-                                    completed.InstallFailed = true;
-                                    completed.InstallStateString = InstallFailedString;
-
-                                    await Task.Run(() =>
-                                    {
-                                        string errorCode = exception is not null ? string.Format("0x{0:X8}", exception.HResult) : NotAvailableString;
-                                        string errorMessage = exception is not null ? exception.Message : NotAvailableString;
-
-                                        // 显示安装失败通知
-                                        AppNotificationBuilder appNotificationBuilder = new();
-                                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                                        appNotificationBuilder.AddText(string.Format(InstallFailed1String, completedFile.Name));
-                                        appNotificationBuilder.AddText(string.Format(InstallFailed2String, errorCode));
-                                        appNotificationBuilder.AddText(string.Format(InstallFailed3String, errorMessage));
-                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                    });
-                                }
-
-                                // 恢复原来的安装信息显示（并延缓当前安装信息显示时间0.5秒）
-                                await Task.Delay(500);
-                                completed.IsInstalling = false;
+                                completed.InstallProgressValue = 100;
+                                completed.IsInstallWaiting = false;
                                 completed.InstallFailed = false;
+                                completed.InstallStateString = InstallSuccessfullyString;
+                                await ShowInstallAppsResultNotificationAsync(installResult.Value, completed.FileName);
+                            }
+                            // 安装失败
+                            else if (installResult.Value.packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
+                            {
+                                completed.InstallProgressValue = 100;
+                                completed.IsInstallWaiting = false;
+                                completed.InstallFailed = true;
+                                completed.InstallStateString = InstallFailedString;
+                                await ShowInstallAppsResultNotificationAsync(installResult.Value, completed.FileName);
                             }
                         }
-                        catch (Exception e)
+                        else
                         {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnInstallExecuteRequested), 3, e);
-                            return;
+                            completed.InstallProgressValue = 100;
+                            completed.IsInstallWaiting = false;
+                            completed.InstallFailed = true;
+                            completed.InstallStateString = InstallFailedString;
+                            await ShowInstallAppsResultNotificationAsync(installResult.Value, completed.FileName);
                         }
+
+                        // 恢复原来的安装信息显示（并延缓当前安装信息显示时间0.5秒）
+                        await Task.Delay(500);
+                        completed.IsInstalling = false;
+                        completed.InstallFailed = false;
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnInstallExecuteRequested), 3, e);
+                        return;
                     }
                 }
             }
@@ -397,44 +272,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is string filePath)
             {
-                Task.Run(async () =>
-                {
-                    try
-                    {
-                        if (File.Exists(filePath))
-                        {
-                            // 定位文件，若定位失败，则仅启动资源管理器并打开桌面目录
-                            if (!string.IsNullOrEmpty(filePath))
-                            {
-                                try
-                                {
-                                    StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
-                                    StorageFolder folder = await file.GetParentAsync();
-                                    FolderLauncherOptions options = new();
-                                    options.ItemsToSelect.Add(file);
-                                    await Launcher.LaunchFolderAsync(folder, options);
-                                }
-                                catch (Exception e)
-                                {
-                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnOpenFolderExecuteRequested), 1, e);
-                                    await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
-                                }
-                            }
-                            else
-                            {
-                                await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
-                            }
-                        }
-                        else
-                        {
-                            await Launcher.LaunchFolderPathAsync(DownloadOptionsService.DownloadFolder);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnOpenFolderExecuteRequested), 1, e);
-                    }
-                });
+                OpenFolder(filePath);
             }
         }
 
@@ -450,9 +288,7 @@ namespace GetStoreApp.Views.Pages
                     try
                     {
                         List<StorageFile> fileList = [await StorageFile.GetFileFromPathAsync(completed.FilePath)];
-                        DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
-                        dataTransferManager.DataRequested += (sender, args) => OnDataRequested(sender, args, fileList);
-                        DataTransferManagerInterop.ShowShareUIForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
+                        ShowShareUI(fileList);
                     }
                     catch (Exception e)
                     {
@@ -467,9 +303,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第二部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第五部分：命令调用处理
 
-        #region 第三部分：已下载完成页面——挂载的事件
+        #region 第六部分：挂载事件处理
 
         /// <summary>
         /// 打开默认保存的文件夹
@@ -543,15 +379,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
         {
-            List<CompletedModel> selectedCompletedDataList = [];
-
-            foreach (object completedItemObj in CompletedListView.SelectedItems)
-            {
-                if (completedItemObj is CompletedModel completedItem)
-                {
-                    selectedCompletedDataList.Add(completedItem);
-                }
-            }
+            List<CompletedModel> selectedCompletedDataList = GetSelectedItemsList(CompletedListView.SelectedItems);
 
             // 没有选中任何内容时显示空提示对话框
             if (selectedCompletedDataList.Count is 0)
@@ -579,30 +407,14 @@ namespace GetStoreApp.Views.Pages
                     completedItem.SelectionMode = ListViewSelectionMode.None;
                 }
 
-                // 同时删除文件
-                if (deleteFileDialog.DeleteFileSameTime)
+                List<string> selectedFileList = [];
+
+                foreach (CompletedModel completedItem in selectedCompletedDataList)
                 {
-                    foreach (CompletedModel completedItem in selectedCompletedDataList)
-                    {
-                        await Task.Run(() =>
-                        {
-                            if (!File.Exists(completedItem.FilePath) || DeleteFileHelper.DeleteFileToRecycleBin(completedItem.FilePath))
-                            {
-                                DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
-                            }
-                        });
-                    }
+                    selectedFileList.Add(completedItem.FilePath);
                 }
-                else
-                {
-                    foreach (CompletedModel completedItem in selectedCompletedDataList)
-                    {
-                        await Task.Run(() =>
-                        {
-                            DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
-                        });
-                    }
-                }
+
+                await DeleteDownloaodFileAsync(selectedCompletedDataList, deleteFileDialog.DeleteFileSameTime);
                 CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
             }
         }
@@ -612,15 +424,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnShowShareUIClicked(object sender, RoutedEventArgs args)
         {
-            List<CompletedModel> selectedCompletedDataList = [];
-
-            foreach (object completedItemObj in CompletedListView.SelectedItems)
-            {
-                if (completedItemObj is CompletedModel completedItem)
-                {
-                    selectedCompletedDataList.Add(completedItem);
-                }
-            }
+            List<CompletedModel> selectedCompletedDataList = GetSelectedItemsList(CompletedListView.SelectedItems);
 
             // 没有选中任何内容时显示空提示对话框
             if (selectedCompletedDataList.Count is 0)
@@ -632,29 +436,14 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    if (DataTransferManager.IsSupported())
+                    List<string> selectedFileList = [];
+                    foreach (CompletedModel completedItem in selectedCompletedDataList)
                     {
-                        List<StorageFile> selectedFileList = [];
-                        foreach (CompletedModel completedItem in selectedCompletedDataList)
-                        {
-                            try
-                            {
-                                if (File.Exists(completedItem.FilePath))
-                                {
-                                    selectedFileList.Add(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShowShareUIClicked), 1, e);
-                                continue;
-                            }
-                        }
-
-                        DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
-                        dataTransferManager.DataRequested += (sender, args) => OnDataRequested(sender, args, selectedFileList);
-                        DataTransferManagerInterop.ShowShareUIForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
+                        selectedFileList.Add(completedItem.FilePath);
                     }
+
+                    List<StorageFile> selectedStorageFileList = await GetStorageFileListAsync(selectedFileList);
+                    ShowShareUI(selectedStorageFileList);
                 }
                 catch (Exception e)
                 {
@@ -669,15 +458,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnCopyClicked(object sender, RoutedEventArgs args)
         {
-            List<CompletedModel> selectedCompletedDataList = [];
-
-            foreach (object completedItemObj in CompletedListView.SelectedItems)
-            {
-                if (completedItemObj is CompletedModel completedItem)
-                {
-                    selectedCompletedDataList.Add(completedItem);
-                }
-            }
+            List<CompletedModel> selectedCompletedDataList = GetSelectedItemsList(CompletedListView.SelectedItems);
 
             // 没有选中任何内容时显示空提示对话框
             if (selectedCompletedDataList.Count is 0)
@@ -687,24 +468,14 @@ namespace GetStoreApp.Views.Pages
             }
             else
             {
-                List<StorageFile> selectedFileList = [];
+                List<string> selectedFileList = [];
                 foreach (CompletedModel completedItem in selectedCompletedDataList)
                 {
-                    try
-                    {
-                        if (File.Exists(completedItem.FilePath))
-                        {
-                            selectedFileList.Add(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnCopyClicked), 1, e);
-                        continue;
-                    }
+                    selectedFileList.Add(completedItem.FilePath);
                 }
 
-                bool copyResult = CopyPasteHelper.CopyFileToClipBoard(selectedFileList);
+                List<StorageFile> selectedStorageFileList = await GetStorageFileListAsync(selectedFileList);
+                bool copyResult = CopyPasteHelper.CopyFileToClipBoard(selectedStorageFileList);
                 await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
             }
         }
@@ -720,10 +491,6 @@ namespace GetStoreApp.Views.Pages
                 completedItem.SelectionMode = ListViewSelectionMode.None;
             }
         }
-
-        #endregion 第三部分：已下载完成页面——挂载的事件
-
-        #region 第四部分：已下载完成页面——自定义事件
 
         /// <summary>
         /// 在共享操作启动时发生的事件
@@ -839,7 +606,33 @@ namespace GetStoreApp.Views.Pages
             });
         }
 
-        #endregion 第四部分：已下载完成页面——自定义事件
+        #endregion 第六部分：挂载事件处理
+
+        #region 第七部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private async Task InitializeDataAsync()
+        {
+            List<DownloadSchedulerModel> downloadStorageList = await GetDownloadStorageListAsync();
+
+            if (downloadStorageList is not null)
+            {
+                foreach (DownloadSchedulerModel downloadSchedulerItem in downloadStorageList)
+                {
+                    CompletedCollection.Add(new()
+                    {
+                        SelectionMode = SelectionMode,
+                        IconImage = await GetFileIconImageAsync(downloadSchedulerItem.FilePath),
+                        DownloadKey = downloadSchedulerItem.DownloadKey,
+                        FileName = downloadSchedulerItem.FileName,
+                        FilePath = downloadSchedulerItem.FilePath,
+                        TotalSize = downloadSchedulerItem.TotalSize
+                    });
+                }
+            }
+        }
 
         /// <summary>
         /// 获取下载存储数据
@@ -855,7 +648,25 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 挂载与下载相关事件
+        /// 获取选中项
+        /// </summary>
+        private List<CompletedModel> GetSelectedItemsList(IList<object> selectedItemsList)
+        {
+            List<CompletedModel> selectedCompletedDataList = [];
+
+            foreach (object completedItemObj in selectedItemsList)
+            {
+                if (completedItemObj is CompletedModel completedItem)
+                {
+                    selectedCompletedDataList.Add(completedItem);
+                }
+            }
+
+            return selectedCompletedDataList;
+        }
+
+        /// <summary>
+        /// 挂载与下载相关的事件
         /// </summary>
         private async Task MountDownloadEventAsync()
         {
@@ -870,11 +681,302 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 删除下载记录和文件
+        /// </summary>
+        private async Task DeleteDownloaodFileAsync(List<CompletedModel> selectedCompletedDataList, bool deleteFile)
+        {
+            if (selectedCompletedDataList is not null)
+            {
+                await Task.Run(() =>
+                {
+                    if (deleteFile)
+                    {
+                        foreach (CompletedModel completedItem in selectedCompletedDataList)
+                        {
+                            if (!File.Exists(completedItem.FilePath) || DeleteFileHelper.DeleteFileToRecycleBin(completedItem.FilePath))
+                            {
+                                DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (CompletedModel completedItem in selectedCompletedDataList)
+                        {
+                            DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
+                        }
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 获取应用安装类型
+        /// </summary>
+        private InstallAppsKind GetInstallAppsKind(string fileName)
+        {
+            InstallAppsKind installAppsKind = InstallAppsKind.None;
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                try
+                {
+                    string extension = Path.GetExtension(fileName);
+
+                    // 普通应用：直接安装
+                    if (extension.EndsWith(".exe", StringComparison.OrdinalIgnoreCase) || extension.EndsWith(".msi", StringComparison.OrdinalIgnoreCase))
+                    {
+                        installAppsKind = InstallAppsKind.NonPackagedApp;
+                    }
+                    // 商店打包应用：使用应用安装程序安装或直接安装
+                    else if (extension.EndsWith("appx", StringComparison.OrdinalIgnoreCase) || extension.EndsWith("appxbundle", StringComparison.OrdinalIgnoreCase) || extension.EndsWith("msix", StringComparison.OrdinalIgnoreCase) || extension.EndsWith("msixbundle", StringComparison.OrdinalIgnoreCase) || extension.EndsWith("appinstaller", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // 使用应用安装程序安装
+                        if (string.Equals(InstallModeService.InstallMode, InstallModeService.InstallModeList[0]))
+                        {
+                            installAppsKind = InstallAppsKind.PackagedAppViaAppInstaller;
+                        }
+                        // 直接安装
+                        else if (string.Equals(InstallModeService.InstallMode, InstallModeService.InstallModeList[1]))
+                        {
+                            installAppsKind = InstallAppsKind.PackagedAppDirectlyInstall;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(GetInstallAppsKind), 1, e);
+                }
+            }
+            return installAppsKind;
+        }
+
+        /// <summary>
+        /// 安装应用
+        /// </summary>
+        private async Task<(bool, PackageDeploymentResult, Exception)?> InstallAppAsync(InstallAppsKind installAppsKind, CompletedModel completed)
+        {
+            if (completed is not null)
+            {
+                // 普通应用：直接安装
+                if (installAppsKind is InstallAppsKind.NonPackagedApp)
+                {
+                    await Task.Run(() =>
+                    {
+                        Shell32Library.ShellExecute(nint.Zero, "open", completed.FilePath, string.Empty, null, WindowShowStyle.SW_SHOWNORMAL);
+                    });
+                    return null;
+                }
+                // 商店打包应用：使用应用安装程序安装或直接安装
+                else if (installAppsKind is InstallAppsKind.PackagedAppViaAppInstaller || installAppsKind is InstallAppsKind.PackagedAppDirectlyInstall)
+                {
+                    StorageFile completedFile = await Task.Run(async () =>
+                    {
+                        try
+                        {
+                            return await StorageFile.GetFileFromPathAsync(completed.FilePath);
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(InstallAppAsync), 1, e);
+                            return null;
+                        }
+                    });
+
+                    // 使用应用安装程序安装
+                    if (installAppsKind is InstallAppsKind.PackagedAppViaAppInstaller)
+                    {
+                        await Task.Run(async () =>
+                        {
+                            await Launcher.LaunchFileAsync(completedFile);
+                        });
+                        return null;
+                    }
+                    else if (installAppsKind is InstallAppsKind.PackagedAppDirectlyInstall)
+                    {
+                        (bool, PackageDeploymentResult, Exception) installResult = await Task.Run(async () =>
+                        {
+                            try
+                            {
+                                AddPackageOptions addPackageOptions = new()
+                                {
+                                    AllowUnsigned = AppInstallService.AllowUnsignedPackage,
+                                    ForceAppShutdown = AppInstallService.ForceAppShutdown,
+                                    ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdown,
+                                    TargetVolume = PackageVolume.GetDefault()
+                                };
+
+                                // 安装目标应用，并获取安装进度
+                                IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> installPackageWithProgress = packageDeploymentManager.AddPackageByUriAsync(new(completed.FilePath), addPackageOptions);
+
+                                // 更新安装进度
+                                installPackageWithProgress.Progress = (result, progress) => OnPackageInstallProgress(result, progress, completed);
+                                return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, await installPackageWithProgress, null);
+                            }
+                            // 安装失败显示失败信息
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(InstallAppAsync), 2, e);
+                                return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
+                            }
+                        });
+                        return installResult;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return default;
+            }
+        }
+
+        /// <summary>
+        /// 显示安装应用结果通知
+        /// </summary>
+        private async Task ShowInstallAppsResultNotificationAsync((bool result, PackageDeploymentResult packageDeploymentResult, Exception exception) installResult, string fileName)
+        {
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                await Task.Run(() =>
+                {
+                    if (installResult.result && installResult.packageDeploymentResult is not null)
+                    {
+                        if (installResult.packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
+                        {
+                            // 显示安装成功通知
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(InstallSuccessfully1String, fileName));
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                        }
+                        else if (installResult.packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
+                        {
+                            string errorCode = installResult.packageDeploymentResult.ExtendedError is not null ? string.Format("0x{0:X8}", installResult.packageDeploymentResult.ExtendedError.HResult) : NotAvailableString;
+                            string errorMessage = installResult.packageDeploymentResult.ErrorText;
+
+                            // 显示安装失败通知
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(InstallFailed1String, fileName));
+                            appNotificationBuilder.AddText(string.Format(InstallFailed2String, errorCode));
+                            appNotificationBuilder.AddText(string.Format(InstallFailed3String, errorMessage));
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                        }
+                    }
+                    else
+                    {
+                        string errorCode = installResult.exception is not null ? string.Format("0x{0:X8}", installResult.exception.HResult) : NotAvailableString;
+                        string errorMessage = installResult.exception is not null ? installResult.exception.Message : NotAvailableString;
+
+                        // 显示安装失败通知
+                        AppNotificationBuilder appNotificationBuilder = new();
+                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                        appNotificationBuilder.AddText(string.Format(InstallFailed1String, fileName));
+                        appNotificationBuilder.AddText(string.Format(InstallFailed2String, errorCode));
+                        appNotificationBuilder.AddText(string.Format(InstallFailed3String, errorMessage));
+                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 打开当前项目存储的文件夹
+        /// </summary>
+        private void OpenFolder(string filePath)
+        {
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                Task.Run(async () =>
+                {
+                    try
+                    {
+                        if (File.Exists(filePath))
+                        {
+                            // 定位文件，若定位失败，则仅启动资源管理器并打开桌面目录
+                            if (!string.IsNullOrEmpty(filePath))
+                            {
+                                try
+                                {
+                                    StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
+                                    StorageFolder folder = await file.GetParentAsync();
+                                    FolderLauncherOptions options = new();
+                                    options.ItemsToSelect.Add(file);
+                                    await Launcher.LaunchFolderAsync(folder, options);
+                                }
+                                catch (Exception e)
+                                {
+                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OpenFolder), 1, e);
+                                    await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
+                                }
+                            }
+                            else
+                            {
+                                await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
+                            }
+                        }
+                        else
+                        {
+                            await Launcher.LaunchFolderPathAsync(DownloadOptionsService.DownloadFolder);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OpenFolder), 2, e);
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 显示分享面板
+        /// </summary>
+        private void ShowShareUI(List<StorageFile> fileList)
+        {
+            if (fileList is not null)
+            {
+                DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
+                dataTransferManager.DataRequested += (sender, args) => OnDataRequested(sender, args, fileList);
+                DataTransferManagerInterop.ShowShareUIForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
+            }
+        }
+
+        /// <summary>
         /// 获取文件列表
         /// </summary>
-        private async Task<List<StorageFile>> GetFileListAsync(string filePath)
+        private async Task<List<StorageFile>> GetStorageFileListAsync(List<string> fileList)
         {
-            return [await StorageFile.GetFileFromPathAsync(filePath)];
+            if (fileList is not null)
+            {
+                List<StorageFile> storageFileList = [];
+                foreach (string file in fileList)
+                {
+                    try
+                    {
+                        if (File.Exists(file))
+                        {
+                            storageFileList.Add(await StorageFile.GetFileFromPathAsync(file));
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(GetStorageFileListAsync), 1, e);
+                        continue;
+                    }
+                }
+                return storageFileList;
+            }
+            else
+            {
+                return default;
+            }
         }
 
         /// <summary>
@@ -940,4 +1042,6 @@ namespace GetStoreApp.Views.Pages
             return completedResultKind is not CompletedResultKind.Loading;
         }
     }
+
+        #endregion 第七部分：数据操作与业务逻辑
 }

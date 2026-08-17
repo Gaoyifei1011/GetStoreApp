@@ -1,6 +1,6 @@
 ﻿namespace GetStoreApp.Extensions.DataType.Enums
 {
-    public enum PackageVolumeResultKind
+    internal enum PackageVolumeResultKind
     {
         None = 0,
         Loading = 1,

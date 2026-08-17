@@ -3,7 +3,7 @@
     /// <summary>
     /// 请求通过 IShellItem.GetDisplayName 和 SHGetNameFromIDList 检索项的显示名称的形式。
     /// </summary>
-    public enum SIGDN : uint
+    internal enum SIGDN : uint
     {
         /// <summary>
         /// 返回相对于父文件夹的显示名称。在 UI 中，此名称通常非常适合向用户显示。

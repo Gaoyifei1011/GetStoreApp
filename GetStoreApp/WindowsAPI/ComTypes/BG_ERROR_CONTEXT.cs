@@ -3,7 +3,7 @@
     /// <summary>
     /// 定义指定发生错误的上下文的常量。
     /// </summary>
-    public enum BG_ERROR_CONTEXT
+    internal enum BG_ERROR_CONTEXT
     {
         /// <summary>
         /// 未发生错误。

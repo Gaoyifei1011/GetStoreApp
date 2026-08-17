@@ -9,17 +9,17 @@ namespace GetStoreApp.Services.Settings
     /// <summary>
     /// 应用通知服务
     /// </summary>
-    public static class NotificationService
+    internal static class NotificationService
     {
         private static readonly string settingsKey = ConfigKey.NotificationKey;
 
         private static readonly bool defaultAppNotification = true;
 
-        public static bool AppNotification { get; private set; }
+        internal static bool AppNotification { get; private set; }
 
         private static NotificationSetting _notificationSetting;
 
-        public static NotificationSetting NotificationSetting
+        internal static NotificationSetting NotificationSetting
         {
             get { return _notificationSetting; }
 
@@ -33,12 +33,12 @@ namespace GetStoreApp.Services.Settings
             }
         }
 
-        public static event PropertyChangedEventHandler PropertyChanged;
+        internal static event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// 应用在初始化前获取设置存储的应用通知显示值
         /// </summary>
-        public static void InitializeNotification()
+        internal static void InitializeNotification()
         {
             AppNotification = GetNotification();
             NotificationSetting = ToastNotificationService.AppToastNotifier.Setting;
@@ -63,7 +63,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 应用通知显示发生修改时修改设置存储的使用说明按钮显示值
         /// </summary>
-        public static void SetNotification(bool appNotification)
+        internal static void SetNotification(bool appNotification)
         {
             AppNotification = appNotification;
             LocalSettingsService.SaveSetting(settingsKey, appNotification);
@@ -72,7 +72,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 更新应用的通知状态
         /// </summary>
-        public static void UpdateNotificationSetting()
+        internal static void UpdateNotificationSetting()
         {
             NotificationSetting = ToastNotificationService.AppToastNotifier.Setting;
         }

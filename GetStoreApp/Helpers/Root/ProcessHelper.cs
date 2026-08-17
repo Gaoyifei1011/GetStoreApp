@@ -11,12 +11,12 @@ namespace GetStoreApp.Helpers.Root
     /// <summary>
     /// 进程辅助类
     /// </summary>
-    public static class ProcessHelper
+    internal static class ProcessHelper
     {
         /// <summary>
         /// 根据进程名称获取所有的进程列表信息
         /// </summary>
-        public static unsafe List<uint> GetProcessPIDByName(string processName)
+        internal static unsafe List<uint> GetProcessPIDByName(string processName)
         {
             if (!processName.EndsWith(".exe"))
             {

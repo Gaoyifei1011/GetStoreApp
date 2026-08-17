@@ -6,7 +6,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Rstrtmgr
     /// 重启选项
     /// </summary>
     [Flags]
-    public enum RM_SHUTDOWN_TYPE : uint
+    internal enum RM_SHUTDOWN_TYPE : uint
     {
         /// <summary>
         /// 强制在超时期限后关闭无响应的应用程序和服务。 未响应关闭请求的应用程序在 30 秒内被迫关闭。 不响应关闭请求的服务在 20 秒后被迫关闭。

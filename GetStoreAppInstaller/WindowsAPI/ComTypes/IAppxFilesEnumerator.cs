@@ -7,7 +7,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 枚举包中的有效负载文件。
     /// </summary>
     [GeneratedComInterface, Guid("F007EEAF-9831-411C-9847-917CDC62D1FE")]
-    public partial interface IAppxFilesEnumerator
+    internal partial interface IAppxFilesEnumerator
     {
         /// <summary>
         /// 获取枚举器当前位置的有效负载文件。

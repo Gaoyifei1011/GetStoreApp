@@ -9,7 +9,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     /// 若要创建作业，请调用 IBackgroundCopyManager：：CreateJob 方法。 若要获取指向现有作业 的 IBackgroundCopyJob 接口指针，请调用 IBackgroundCopyManager：：GetJob 方法。
     /// </summary>
     [GeneratedComInterface, Guid("37668D37-507E-4160-9316-26306D150B12")]
-    public partial interface IBackgroundCopyJob
+    internal partial interface IBackgroundCopyJob
     {
         /// <summary>
         /// 将多个文件添加到作业。

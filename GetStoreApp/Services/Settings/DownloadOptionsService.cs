@@ -15,7 +15,7 @@ namespace GetStoreApp.Services.Settings
     /// <summary>
     /// 应用下载设置服务
     /// </summary>
-    public static class DownloadOptionsService
+    internal static class DownloadOptionsService
     {
         private static readonly string downloadFolderKey = ConfigKey.DownloadFolderKey;
         private static readonly string doEngineModeKey = ConfigKey.DoEngineModeKey;
@@ -23,20 +23,20 @@ namespace GetStoreApp.Services.Settings
         private static readonly bool defaultManualSetDownloadFolder = false;
         private static string defaultDoEngineMode;
 
-        public static string DefaultDownloadFolder { get; private set; }
+        internal static string DefaultDownloadFolder { get; private set; }
 
-        public static string DownloadFolder { get; private set; }
+        internal static string DownloadFolder { get; private set; }
 
-        public static bool ManualSetDownloadFolder { get; private set; }
+        internal static bool ManualSetDownloadFolder { get; private set; }
 
-        public static string DoEngineMode { get; private set; }
+        internal static string DoEngineMode { get; private set; }
 
-        public static List<string> DoEngineModeList { get; } = ["DeliveryOptimization", "Bits", "Aria2"];
+        internal static List<string> DoEngineModeList { get; } = ["DeliveryOptimization", "Bits", "Aria2"];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的下载相关内容设置值，并创建默认下载目录
         /// </summary>
-        public static async Task InitializeDownloadOptionsAsync()
+        internal static async Task InitializeDownloadOptionsAsync()
         {
             defaultDoEngineMode = InfoHelper.IsDeliveryOptimizationEnabled ? DoEngineModeList[0] : DoEngineModeList[1];
             DefaultDownloadFolder = (await ApplicationData.GetDefault().LocalCacheFolder.CreateFolderAsync("Downloads", Windows.Storage.CreationCollisionOption.OpenIfExists)).Path;
@@ -108,7 +108,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 下载位置发生修改时修改设置存储的下载位置值
         /// </summary>
-        public static void SetFolder(string downloadFolder)
+        internal static void SetFolder(string downloadFolder)
         {
             DownloadFolder = downloadFolder;
             LocalSettingsService.SaveSetting(downloadFolderKey, downloadFolder);
@@ -117,7 +117,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 应用下载引擎发生修改时修改设置存储的下载引擎方式值
         /// </summary>
-        public static void SetDoEngineMode(string doEngineMode)
+        internal static void SetDoEngineMode(string doEngineMode)
         {
             DoEngineMode = doEngineMode;
             LocalSettingsService.SaveSetting(doEngineModeKey, doEngineMode);
@@ -126,7 +126,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 应用下载引擎发生修改时修改设置存储的下载引擎方式值
         /// </summary>
-        public static void SetManualSetDownloadFolder(bool manualSetDownloadFolder)
+        internal static void SetManualSetDownloadFolder(bool manualSetDownloadFolder)
         {
             ManualSetDownloadFolder = manualSetDownloadFolder;
             LocalSettingsService.SaveSetting(manualSetDownloadFolderKey, manualSetDownloadFolder);
@@ -135,7 +135,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 安全访问目录（当目录不存在的时候直接创建目录）
         /// </summary>
-        public static async Task OpenFolderAsync()
+        internal static async Task OpenFolderAsync()
         {
             try
             {

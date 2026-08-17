@@ -6,7 +6,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     /// 标识要接收的事件。
     /// </summary>
     [Flags]
-    public enum BG_JOB_NOTIFICATION_TYPE : uint
+    internal enum BG_JOB_NOTIFICATION_TYPE : uint
     {
         /// <summary>
         /// 作业中的所有文件都已传输。

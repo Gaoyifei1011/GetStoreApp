@@ -52,7 +52,7 @@ namespace GetStoreApp.Views.Windows
     /// <summary>
     /// 应用主窗口
     /// </summary>
-    public sealed partial class MainWindow : Window, INotifyPropertyChanged
+    internal sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
         private readonly string AppManagerString = ResourceService.GetLocalized("Window/AppManager");
         private readonly string AppUpdateString = ResourceService.GetLocalized("Window/AppUpdate");
@@ -73,11 +73,11 @@ namespace GetStoreApp.Views.Windows
         private readonly OverlappedPresenter overlappedPresenter;
         private readonly SUBCLASSPROC mainWindowSubClassProc;
 
-        public new static MainWindow Current { get; private set; }
+        internal new static MainWindow Current { get; private set; }
 
         private string _windowTitle;
 
-        public string WindowTitle
+        internal string WindowTitle
         {
             get { return _windowTitle; }
 
@@ -93,7 +93,7 @@ namespace GetStoreApp.Views.Windows
 
         private SystemBackdrop _windowSystemBackdrop;
 
-        public SystemBackdrop WindowSystemBackdrop
+        internal SystemBackdrop WindowSystemBackdrop
         {
             get { return _windowSystemBackdrop; }
 
@@ -109,7 +109,7 @@ namespace GetStoreApp.Views.Windows
 
         private ElementTheme _windowTheme;
 
-        public ElementTheme WindowTheme
+        internal ElementTheme WindowTheme
         {
             get { return _windowTheme; }
 
@@ -125,7 +125,7 @@ namespace GetStoreApp.Views.Windows
 
         private bool _isWindowMaximized;
 
-        public bool IsWindowMaximized
+        internal bool IsWindowMaximized
         {
             get { return _isWindowMaximized; }
 
@@ -141,7 +141,7 @@ namespace GetStoreApp.Views.Windows
 
         private bool _isBackEnabled;
 
-        public bool IsBackEnabled
+        internal bool IsBackEnabled
         {
             get { return _isBackEnabled; }
 
@@ -157,7 +157,7 @@ namespace GetStoreApp.Views.Windows
 
         private NavigationViewItemModel _selectedItem;
 
-        public NavigationViewItemModel SelectedItem
+        internal NavigationViewItemModel SelectedItem
         {
             get { return _selectedItem; }
 
@@ -171,14 +171,14 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        public ObservableCollection<NavigationViewItemModel> NavigationViewItemMenuItemsCollection { get; } = [];
+        internal ObservableCollection<NavigationViewItemModel> NavigationViewItemMenuItemsCollection { get; } = [];
 
-        public ObservableCollection<NavigationViewItemModel> NavigationViewItemFooterMenuItemsCollection { get; } = [];
+        internal ObservableCollection<NavigationViewItemModel> NavigationViewItemFooterMenuItemsCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         [DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
-        public MainWindow()
+        internal MainWindow()
         {
             Current = this;
             InitializeComponent();
@@ -937,7 +937,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 设置应用显示的主题
         /// </summary>
-        public void SetWindowTheme()
+        internal void SetWindowTheme()
         {
             WindowTheme = string.Equals(ThemeService.AppTheme, ThemeService.ThemeList[0]) ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark : Enum.TryParse(ThemeService.AppTheme, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
         }
@@ -1102,7 +1102,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 页面向前导航
         /// </summary>
-        public void NavigateTo(Type navigationPageType, object parameter = null)
+        internal void NavigateTo(Type navigationPageType, object parameter = null)
         {
             try
             {
@@ -1148,7 +1148,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 获取当前导航控件内容对应的页面
         /// </summary>
-        public object GetFrameContent()
+        internal object GetFrameContent()
         {
             return WindowFrame.Content;
         }
@@ -1156,7 +1156,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 获取选中项
         /// </summary>
-        public NavigationViewItemModel GetSelectedItem(Type currentPageType, ObservableCollection<NavigationViewItemModel> navigationViewItemMenuItemCollection)
+        internal NavigationViewItemModel GetSelectedItem(Type currentPageType, ObservableCollection<NavigationViewItemModel> navigationViewItemMenuItemCollection)
         {
             foreach (NavigationViewItemModel navigationViewItem in navigationViewItemMenuItemCollection)
             {
@@ -1177,7 +1177,7 @@ namespace GetStoreApp.Views.Windows
         /// 显示内容对话框
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(ContentDialog))]
-        public async Task<ContentDialogResult> ShowDialogAsync(ContentDialog contentDialog)
+        internal async Task<ContentDialogResult> ShowDialogAsync(ContentDialog contentDialog)
         {
             ContentDialogResult dialogResult = ContentDialogResult.None;
             bool isDialogOpening = false;
@@ -1213,7 +1213,7 @@ namespace GetStoreApp.Views.Windows
         /// 使用教学提示显示应用内通知
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(Grid))]
-        public async Task ShowNotificationAsync(TeachingTip teachingTip, int duration = 2000)
+        internal async Task ShowNotificationAsync(TeachingTip teachingTip, int duration = 2000)
         {
             try
             {

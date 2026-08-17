@@ -222,5 +222,6 @@
     <Capability Name="internetClient" />
     <rescap:Capability Name="packageQuery" />
     <rescap:Capability Name="runFullTrust" />
+    <rescap:Capability Name="storeAppInstallation" />
   </Capabilities>
 </Package>

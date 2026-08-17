@@ -6,18 +6,18 @@ namespace GetStoreApp.Services.Settings
     /// <summary>
     /// 始终显示背景色设置服务
     /// </summary>
-    public static class AlwaysShowBackdropService
+    internal static class AlwaysShowBackdropService
     {
         private static readonly string settingsKey = ConfigKey.AlwaysShowBackdropKey;
 
         private static readonly bool defaultAlwaysShowBackdrop = false;
 
-        public static bool AlwaysShowBackdrop { get; private set; }
+        internal static bool AlwaysShowBackdrop { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的始终显示背景色值
         /// </summary>
-        public static void InitializeAlwaysShowBackdrop()
+        internal static void InitializeAlwaysShowBackdrop()
         {
             AlwaysShowBackdrop = GetAlwaysShowBackdrop();
         }
@@ -41,7 +41,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 始终显示背景色发生修改时修改设置存储的始终显示背景色值
         /// </summary>
-        public static void SetAlwaysShowBackdrop(bool alwaysShowBackdrop)
+        internal static void SetAlwaysShowBackdrop(bool alwaysShowBackdrop)
         {
             AlwaysShowBackdrop = alwaysShowBackdrop;
             LocalSettingsService.SaveSetting(settingsKey, alwaysShowBackdrop);

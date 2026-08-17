@@ -8,7 +8,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// ISequentialStream 接口支持对流对象进行简化的顺序访问。 IStream 接口从 ISequentialStream 继承其 Read 和 Write 方法。
     /// </summary>
     [GeneratedComInterface, Guid("0C733A30-2A1C-11CE-ADE5-00AA0044773D")]
-    public partial interface ISequentialStream
+    internal partial interface ISequentialStream
     {
         /// <summary>
         /// Read 方法从当前搜寻指针开始，将指定数量的字节从流对象读取到内存中。

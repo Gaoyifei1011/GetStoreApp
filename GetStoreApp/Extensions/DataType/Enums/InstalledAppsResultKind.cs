@@ -3,7 +3,7 @@
     /// <summary>
     /// 安装应用结果类型
     /// </summary>
-    public enum InstalledAppsResultKind
+    internal enum InstalledAppsResultKind
     {
         Querying = 0,
         Failed = 1,

@@ -7,7 +7,7 @@ namespace GetStoreApp.Models
     /// <summary>
     /// 正在下载文件信息数据模型
     /// </summary>
-    public sealed partial class DownloadingModel : INotifyPropertyChanged
+    internal sealed partial class DownloadingModel : INotifyPropertyChanged
     {
         /*
         1.下载的通用信息
@@ -18,7 +18,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private ListViewSelectionMode _selectionMode;
 
-        public ListViewSelectionMode SelectionMode
+        internal ListViewSelectionMode SelectionMode
         {
             get { return _selectionMode; }
 
@@ -37,7 +37,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private bool _isOperating;
 
-        public bool IsOperating
+        internal bool IsOperating
         {
             get { return _isOperating; }
 
@@ -54,7 +54,7 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 任务下载时创建下载 ID
         /// </summary>
-        public string DownloadID { get; set; }
+        internal string DownloadID { get; set; }
 
         /*
         2.下载文件的基础信息
@@ -63,12 +63,12 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 下载文件名称
         /// </summary>
-        public string FileName { get; set; }
+        internal string FileName { get; set; }
 
         /// <summary>
         /// 文件下载保存的路径
         /// </summary>
-        public string FilePath { get; set; }
+        internal string FilePath { get; set; }
 
         /*
         3.下载文件的状态信息
@@ -79,7 +79,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private DownloadProgressState _downloadProgressState;
 
-        public DownloadProgressState DownloadProgressState
+        internal DownloadProgressState DownloadProgressState
         {
             get { return _downloadProgressState; }
 
@@ -98,7 +98,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private double _completedSize;
 
-        public double CompletedSize
+        internal double CompletedSize
         {
             get { return _completedSize; }
 
@@ -117,7 +117,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private double _totalSize;
 
-        public double TotalSize
+        internal double TotalSize
         {
             get { return _totalSize; }
 
@@ -136,7 +136,7 @@ namespace GetStoreApp.Models
         /// </summary>
         private double _downloadSpeed;
 
-        public double DownloadSpeed
+        internal double DownloadSpeed
         {
             get { return _downloadSpeed; }
 

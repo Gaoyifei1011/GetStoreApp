@@ -7,7 +7,7 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
     /// 创建控件后，不能修改这些样式，除非有说明。
     /// </summary>
     [Flags]
-    public enum WindowStyle : uint
+    internal enum WindowStyle : uint
     {
         /// <summary>
         /// 窗口具有细线边框

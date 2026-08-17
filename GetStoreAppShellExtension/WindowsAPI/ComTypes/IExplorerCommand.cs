@@ -8,7 +8,7 @@ namespace GetStoreAppShellExtension.WindowsAPI.ComTypes
     /// 公开获取命令外观、枚举子命令或调用命令的方法。
     /// </summary>
     [GeneratedComInterface, Guid("A08CE4D0-FA25-44AB-B57C-C7B1C323E0B9")]
-    public partial interface IExplorerCommand
+    internal partial interface IExplorerCommand
     {
         /// <summary>
         /// 获取启动指定 Windows 资源管理器命令项的按钮或菜单项的标题文本。

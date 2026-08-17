@@ -8,7 +8,7 @@ namespace GetStoreAppShellExtension.WindowsAPI.ComTypes
     /// 允许创建对象的类。
     /// </summary>
     [GeneratedComInterface, Guid("00000001-0000-0000-C000-000000000046")]
-    public partial interface IClassFactory
+    internal partial interface IClassFactory
     {
         /// <summary>
         /// 创建未初始化的对象。

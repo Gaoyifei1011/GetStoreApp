@@ -7,5 +7,5 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Rstrtmgr
     /// </summary>
     /// <param name="nPercentComplete">一个介于 0 和 100 之间的整数值，指示已关闭或重启的应用程序总数的百分比。</param>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate void RM_WRITE_STATUS_CALLBACK(uint nPercentComplete);
+    internal delegate void RM_WRITE_STATUS_CALLBACK(uint nPercentComplete);
 }

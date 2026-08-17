@@ -8,7 +8,7 @@ namespace GetStoreApp.Services.Settings
     /// <summary>
     /// 检测到新更新时是否自动取消
     /// </summary>
-    public static class CancelAutoUpdateService
+    internal static class CancelAutoUpdateService
     {
         private static readonly string settingsKey = ConfigKey.CancelAutoUpdateKey;
 
@@ -16,7 +16,7 @@ namespace GetStoreApp.Services.Settings
 
         private static bool _cancelAutoUpdate;
 
-        public static bool CancelAutoUpdate
+        internal static bool CancelAutoUpdate
         {
             get { return _cancelAutoUpdate; }
 
@@ -30,12 +30,12 @@ namespace GetStoreApp.Services.Settings
             }
         }
 
-        public static event PropertyChangedEventHandler PropertyChanged;
+        internal static event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// 应用在初始化前获取设置存储的检测到新更新时是否自动取消值
         /// </summary>
-        public static void InitializeCancelAutoUpdate()
+        internal static void InitializeCancelAutoUpdate()
         {
             CancelAutoUpdate = GetCancelAutoUpdate();
         }
@@ -59,7 +59,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 使用说明按钮显示发生修改时修改设置存储的检测到新更新时是否自动取消值
         /// </summary>
-        public static void SetCancelAutoUpdate(bool cancelAutoUpdate)
+        internal static void SetCancelAutoUpdate(bool cancelAutoUpdate)
         {
             CancelAutoUpdate = cancelAutoUpdate;
             LocalSettingsService.SaveSetting(settingsKey, cancelAutoUpdate);

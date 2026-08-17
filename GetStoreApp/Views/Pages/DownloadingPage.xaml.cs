@@ -25,14 +25,20 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 下载中页面
     /// </summary>
-    public sealed partial class DownloadingPage : Page, INotifyPropertyChanged
+    internal sealed partial class DownloadingPage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string DownloadingCountInfoString = ResourceService.GetLocalized("Downloading/DownloadingCountInfo");
         private bool isInitialized;
 
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
+
         private ListViewSelectionMode _selectionMode;
 
-        public ListViewSelectionMode SelectionMode
+        private ListViewSelectionMode SelectionMode
         {
             get { return _selectionMode; }
 
@@ -50,12 +56,18 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public DownloadingPage()
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
+        internal DownloadingPage()
         {
             InitializeComponent();
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面触发的事件
@@ -67,70 +79,14 @@ namespace GetStoreApp.Views.Pages
             if (!isInitialized)
             {
                 isInitialized = true;
-
-                DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
-
-                try
-                {
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadSchedulerList)
-                    {
-                        DownloadingCollection.Add(new()
-                        {
-                            SelectionMode = SelectionMode,
-                            IsOperating = false,
-                            DownloadID = downloadSchedulerItem.DownloadID,
-                            FileName = downloadSchedulerItem.FileName,
-                            FilePath = downloadSchedulerItem.FilePath,
-                            DownloadProgressState = downloadSchedulerItem.DownloadProgressState,
-                            CompletedSize = downloadSchedulerItem.CompletedSize,
-                            TotalSize = downloadSchedulerItem.TotalSize,
-                            DownloadSpeed = downloadSchedulerItem.DownloadSpeed
-                        });
-                    }
-
-                    if (!DownloadSchedulerService.IsDownloadingPageInitialized)
-                    {
-                        DownloadSchedulerService.IsDownloadingPageInitialized = true;
-
-                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadFailedList)
-                        {
-                            DownloadingCollection.Add(new()
-                            {
-                                SelectionMode = SelectionMode,
-                                IsOperating = false,
-                                DownloadID = downloadSchedulerItem.DownloadID,
-                                FileName = downloadSchedulerItem.FileName,
-                                FilePath = downloadSchedulerItem.FilePath,
-                                DownloadProgressState = downloadSchedulerItem.DownloadProgressState,
-                                CompletedSize = downloadSchedulerItem.CompletedSize,
-                                TotalSize = downloadSchedulerItem.TotalSize,
-                                DownloadSpeed = downloadSchedulerItem.DownloadSpeed
-                            });
-                        }
-
-                        DownloadSchedulerService.DownloadFailedList.Clear();
-                    }
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-                finally
-                {
-                    DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
-                }
-
-                await Task.Run(() =>
-                {
-                    GlobalNotificationService.ApplicationExit += OnApplicationExit;
-                    DownloadSchedulerService.DownloadProgress += OnDownloadProgress;
-                });
+                await InitializeDataAsync();
+                await MountDownloadEventAsync();
             }
         }
 
-        #endregion 第一部分：重写父类事件
+        #endregion 第四部分：父类虚方法重写
 
-        #region 第二部分：XamlUICommand 命令调用时挂载的事件
+        #region 第五部分：命令调用处理
 
         /// <summary>
         /// 继续下载当前任务
@@ -140,7 +96,7 @@ namespace GetStoreApp.Views.Pages
             if (args.Parameter is DownloadingModel downloading && !string.IsNullOrEmpty(downloading.DownloadID))
             {
                 downloading.IsOperating = true;
-                DownloadSchedulerService.ContinueDownload(downloading.DownloadID);
+                ContinueDownload(downloading);
             }
         }
 
@@ -151,14 +107,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is DownloadingModel downloading && !string.IsNullOrEmpty(downloading.DownloadID))
             {
-                if (downloading.DownloadProgressState is DownloadProgressState.Queued || downloading.DownloadProgressState is DownloadProgressState.Downloading || downloading.DownloadProgressState is DownloadProgressState.Paused)
-                {
-                    DownloadSchedulerService.DeleteDownload(downloading.DownloadID);
-                }
-                else
-                {
-                    DownloadingCollection.Remove(downloading);
-                }
+                DeleteDownload(downloading);
             }
         }
 
@@ -170,13 +119,13 @@ namespace GetStoreApp.Views.Pages
             if (args.Parameter is DownloadingModel downloading && !string.IsNullOrEmpty(downloading.DownloadID))
             {
                 downloading.IsOperating = true;
-                DownloadSchedulerService.PauseDownload(downloading.DownloadID);
+                PauseDownload(downloading);
             }
         }
 
-        #endregion 第二部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第五部分：命令调用处理
 
-        #region 第三部分：下载中页面——挂载的事件
+        #region 第六部分：挂载事件处理
 
         /// <summary>
         /// 继续下载全部任务
@@ -188,7 +137,7 @@ namespace GetStoreApp.Views.Pages
                 if (downloadingItem.DownloadProgressState is DownloadProgressState.Paused)
                 {
                     downloadingItem.IsOperating = true;
-                    DownloadSchedulerService.ContinueDownload(downloadingItem.DownloadID);
+                    ContinueDownload(downloadingItem);
                 }
             }
         }
@@ -203,7 +152,7 @@ namespace GetStoreApp.Views.Pages
                 if (downloadingItem.DownloadProgressState is DownloadProgressState.Queued || downloadingItem.DownloadProgressState is DownloadProgressState.Downloading)
                 {
                     downloadingItem.IsOperating = true;
-                    DownloadSchedulerService.PauseDownload(downloadingItem.DownloadID);
+                    PauseDownload(downloadingItem);
                 }
             }
         }
@@ -280,15 +229,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
         {
-            List<DownloadingModel> selectedDownloadingList = [];
-
-            foreach (object downloadingItemObj in DownloadingCollection)
-            {
-                if (downloadingItemObj is DownloadingModel downloadingItem)
-                {
-                    selectedDownloadingList.Add(downloadingItem);
-                }
-            }
+            List<DownloadingModel> selectedDownloadingList = GetSelectedDownloadingList([.. DownloadingCollection]);
 
             // 没有选中任何内容时显示空提示对话框
             if (selectedDownloadingList.Count is 0)
@@ -302,15 +243,7 @@ namespace GetStoreApp.Views.Pages
             foreach (DownloadingModel downloadingItem in selectedDownloadingList)
             {
                 downloadingItem.IsOperating = true;
-
-                if (downloadingItem.DownloadProgressState is DownloadProgressState.Queued || downloadingItem.DownloadProgressState is DownloadProgressState.Downloading || downloadingItem.DownloadProgressState is DownloadProgressState.Paused)
-                {
-                    DownloadSchedulerService.DeleteDownload(downloadingItem.DownloadID);
-                }
-                else
-                {
-                    DownloadingCollection.Remove(downloadingItem);
-                }
+                DeleteDownload(downloadingItem);
             }
         }
 
@@ -326,10 +259,6 @@ namespace GetStoreApp.Views.Pages
                 downloadingItem.SelectionMode = ListViewSelectionMode.None;
             }
         }
-
-        #endregion 第三部分：下载中页面——挂载的事件
-
-        #region 第四部分：下载中页面——自定义事件
 
         /// <summary>
         /// 应用程序退出时触发的事件
@@ -454,6 +383,138 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第四部分：下载中页面——自定义事件
+        #endregion 第六部分：挂载事件处理
+
+        #region 第七部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private async Task InitializeDataAsync()
+        {
+            DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
+
+            try
+            {
+                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadSchedulerList)
+                {
+                    DownloadingCollection.Add(new()
+                    {
+                        SelectionMode = SelectionMode,
+                        IsOperating = false,
+                        DownloadID = downloadSchedulerItem.DownloadID,
+                        FileName = downloadSchedulerItem.FileName,
+                        FilePath = downloadSchedulerItem.FilePath,
+                        DownloadProgressState = downloadSchedulerItem.DownloadProgressState,
+                        CompletedSize = downloadSchedulerItem.CompletedSize,
+                        TotalSize = downloadSchedulerItem.TotalSize,
+                        DownloadSpeed = downloadSchedulerItem.DownloadSpeed
+                    });
+                }
+
+                if (!DownloadSchedulerService.IsDownloadingPageInitialized)
+                {
+                    DownloadSchedulerService.IsDownloadingPageInitialized = true;
+
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadFailedList)
+                    {
+                        DownloadingCollection.Add(new()
+                        {
+                            SelectionMode = SelectionMode,
+                            IsOperating = false,
+                            DownloadID = downloadSchedulerItem.DownloadID,
+                            FileName = downloadSchedulerItem.FileName,
+                            FilePath = downloadSchedulerItem.FilePath,
+                            DownloadProgressState = downloadSchedulerItem.DownloadProgressState,
+                            CompletedSize = downloadSchedulerItem.CompletedSize,
+                            TotalSize = downloadSchedulerItem.TotalSize,
+                            DownloadSpeed = downloadSchedulerItem.DownloadSpeed
+                        });
+                    }
+
+                    DownloadSchedulerService.DownloadFailedList.Clear();
+                }
+            }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
+            finally
+            {
+                DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+            }
+        }
+
+        /// <summary>
+        /// 挂载与下载相关的事件
+        /// </summary>
+        private async Task MountDownloadEventAsync()
+        {
+            await Task.Run(() =>
+            {
+                GlobalNotificationService.ApplicationExit += OnApplicationExit;
+                DownloadSchedulerService.DownloadProgress += OnDownloadProgress;
+            });
+        }
+
+        /// <summary>
+        /// 获取选中项
+        /// </summary>
+        private List<DownloadingModel> GetSelectedDownloadingList(List<DownloadingModel> downloadingList)
+        {
+            List<DownloadingModel> selectedDownloadingList = [];
+
+            foreach (object downloadingItemObj in downloadingList)
+            {
+                if (downloadingItemObj is DownloadingModel downloadingItem)
+                {
+                    selectedDownloadingList.Add(downloadingItem);
+                }
+            }
+
+            return selectedDownloadingList;
+        }
+
+        /// <summary>
+        /// 继续下载
+        /// </summary>
+        private void ContinueDownload(DownloadingModel downloading)
+        {
+            if (downloading is not null)
+            {
+                DownloadSchedulerService.ContinueDownload(downloading.DownloadID);
+            }
+        }
+
+        /// <summary>
+        /// 删除下载
+        /// </summary>
+        private void DeleteDownload(DownloadingModel downloading)
+        {
+            if (downloading is not null)
+            {
+                if (downloading.DownloadProgressState is DownloadProgressState.Queued || downloading.DownloadProgressState is DownloadProgressState.Downloading || downloading.DownloadProgressState is DownloadProgressState.Paused)
+                {
+                    DownloadSchedulerService.DeleteDownload(downloading.DownloadID);
+                }
+                else
+                {
+                    DownloadingCollection.Remove(downloading);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 暂停下载
+        /// </summary>
+        private void PauseDownload(DownloadingModel downloading)
+        {
+            if (downloading is not null)
+            {
+                DownloadSchedulerService.PauseDownload(downloading.DownloadID);
+            }
+        }
+
+        #endregion 第七部分：数据操作与业务逻辑
     }
 }

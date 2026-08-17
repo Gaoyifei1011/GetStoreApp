@@ -8,7 +8,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 提供对应用程序的属性值的访问。
     /// </summary>
     [GeneratedComInterface, Guid("5DA89BF4-3773-46BE-B650-7E744863B7E8")]
-    public partial interface IAppxManifestApplication
+    internal partial interface IAppxManifestApplication
     {
         /// <summary>
         /// 获取清单的应用程序元数据部分中元素或属性的字符串值。

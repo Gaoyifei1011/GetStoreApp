@@ -3,7 +3,7 @@
     /// <summary>
     /// 解析的文件类型
     /// </summary>
-    public enum PackageFileType
+    internal enum PackageFileType
     {
         /// <summary>
         /// 未知的文件类型

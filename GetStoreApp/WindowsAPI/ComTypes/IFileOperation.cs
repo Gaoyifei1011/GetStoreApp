@@ -9,7 +9,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     /// 公开用于复制、移动、重命名、创建和删除 Shell 项的方法，以及提供进度和错误对话框的方法。
     /// </summary>
     [GeneratedComInterface, Guid("947AAB5F-0A5C-4C13-B4D6-4BF7836FC9F8")]
-    public partial interface IFileOperation
+    internal partial interface IFileOperation
     {
         /// <summary>
         /// 使处理程序能够为所有操作提供状态和错误信息。
