@@ -32,6 +32,7 @@ namespace GetStoreApp.Views.Dialogs
         internal DesktopStartupArgsDialog()
         {
             InitializeComponent();
+            InitializeData();
         }
 
         #endregion 第三部分：构造函数

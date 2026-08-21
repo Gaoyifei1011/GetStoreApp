@@ -7,9 +7,13 @@ namespace GetStoreAppWebView.Views.Dialogs
     /// </summary>
     internal sealed partial class ProcessFailedDialog : ContentDialog
     {
+        #region 第一部分：构造函数
+
         internal ProcessFailedDialog()
         {
             InitializeComponent();
         }
+
+        #endregion 第一部分：构造函数
     }
 }

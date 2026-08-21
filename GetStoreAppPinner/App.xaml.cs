@@ -24,16 +24,26 @@ namespace GetStoreAppPinner
     /// </summary>
     public partial class App : Application, IDisposable
     {
+        #region 第一部分：常量、资源与状态字段
+
         private bool isDisposed;
         private readonly string PinningAppString = ResourceService.GetLocalized("Pinner/PinningApp");
         private ApplicationView applicationView;
         private readonly Dictionary<UIContext, AppWindow> appWindowList = [];
 
-        public App()
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：构造函数
+
+        internal App()
         {
             InitializeComponent();
             UnhandledException += OnUnhandledException;
         }
+
+        #endregion 第二部分：构造函数
+
+        #region 第三部分：父类虚方法重写
 
         /// <summary>
         /// 在通过常规启动以外的某种方式激活应用程序时调用。
@@ -146,6 +156,10 @@ namespace GetStoreAppPinner
             }
         }
 
+        #endregion 第三部分：父类虚方法重写
+
+        #region 第四部分：挂载事件处理
+
         /// <summary>
         /// 处理应用程序未知异常处理
         /// </summary>
@@ -154,6 +168,10 @@ namespace GetStoreAppPinner
             args.Handled = true;
             LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppPinner), nameof(App), nameof(OnUnhandledException), 1, args.Exception);
         }
+
+        #endregion 第四部分：挂载事件处理
+
+        #region 第五部分：数据操作与业务逻辑
 
         /// <summary>
         /// 释放资源
@@ -182,5 +200,7 @@ namespace GetStoreAppPinner
 
             Exit();
         }
+
+        #endregion 第五部分：数据操作与业务逻辑
     }
 }

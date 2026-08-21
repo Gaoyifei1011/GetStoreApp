@@ -16,13 +16,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
-using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
+using Windows.Storage;
 using Windows.System;
 
 // 抑制 CA1822，IDE0060 警告
@@ -35,6 +34,8 @@ namespace GetStoreApp.Views.UserControls
     /// </summary>
     internal sealed partial class QueryLinksResultUserControl : UserControl, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string QueriedAppDescriptionString = ResourceService.GetLocalized("QueryLinksResult/QueriedAppDescription");
         private readonly string QueriedAppNameString = ResourceService.GetLocalized("QueryLinksResult/QueriedAppName");
         private readonly string QueriedAppPublisherString = ResourceService.GetLocalized("QueryLinksResult/QueriedAppPublisher");
@@ -43,9 +44,13 @@ namespace GetStoreApp.Views.UserControls
         private bool isInitialized;
         private StorePage storePage;
 
-        private AppInfoModel _appInfo = new();
+        #endregion 第一部分：常量、资源与状态字段
 
-        internal AppInfoModel AppInfo
+        #region 第二部分：属性、集合与事件
+
+        private AppInfoModel _appInfo;
+
+        private AppInfoModel AppInfo
         {
             get { return _appInfo; }
 
@@ -61,7 +66,7 @@ namespace GetStoreApp.Views.UserControls
 
         private bool _isAppInfoVisible;
 
-        internal bool IsAppInfoVisible
+        private bool IsAppInfoVisible
         {
             get { return _isAppInfoVisible; }
 
@@ -77,7 +82,7 @@ namespace GetStoreApp.Views.UserControls
 
         private bool _isPackagedApp;
 
-        internal bool IsPackagedApp
+        private bool IsPackagedApp
         {
             get { return _isPackagedApp; }
 
@@ -93,7 +98,7 @@ namespace GetStoreApp.Views.UserControls
 
         private ListViewSelectionMode _selectionMode;
 
-        internal ListViewSelectionMode SelectionMode
+        private ListViewSelectionMode SelectionMode
         {
             get { return _selectionMode; }
 
@@ -111,12 +116,18 @@ namespace GetStoreApp.Views.UserControls
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
         internal QueryLinksResultUserControl()
         {
             InitializeComponent();
         }
 
-        #region 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 根据设置存储的文件链接操作方式操作获取到的文件链接
@@ -155,59 +166,9 @@ namespace GetStoreApp.Views.UserControls
 
                 if (!string.IsNullOrEmpty(downloadFolder))
                 {
-                    bool isDownloadSuccessfully = await Task.Run(() =>
-                    {
-                        bool isDownloadSuccessfully = false;
-                        List<DownloadSchedulerModel> downloadSchedulerList = [];
-                        DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
+                    bool isDownloadSuccessfully = await CreateDownloadTaskAsync(queryLinksResult.FileName, queryLinksResult.FileLink, downloadFolder);
 
-                        try
-                        {
-                            downloadSchedulerList.AddRange(DownloadSchedulerService.DownloadSchedulerList);
-
-                            if (!DownloadSchedulerService.IsDownloadingPageInitialized)
-                            {
-                                downloadSchedulerList.AddRange(DownloadSchedulerService.DownloadFailedList);
-                            }
-
-                            downloadSchedulerList.AddRange(DownloadStorageService.GetDownloadData());
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksResultUserControl), nameof(OnDownloadExecuteRequested), 1, e);
-                        }
-                        finally
-                        {
-                            DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
-                        }
-
-                        string downloadFilePath = Path.Combine(downloadFolder, queryLinksResult.FileName);
-
-                        try
-                        {
-                            // 检查下载目录是否存在
-                            if (!Directory.Exists(downloadFolder))
-                            {
-                                Directory.CreateDirectory(downloadFolder);
-                            }
-
-                            // 检查是否已有重复文件，如果有，保存文件名重复，追加(1)(2)......
-                            if (File.Exists(downloadFilePath))
-                            {
-                                downloadFilePath = RenameDuplicatedFile(downloadFilePath);
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksResultUserControl), nameof(OnDownloadExecuteRequested), 2, e);
-                        }
-
-                        DownloadSchedulerService.CreateDownload(queryLinksResult.FileLink, downloadFilePath);
-                        isDownloadSuccessfully = true;
-                        return isDownloadSuccessfully;
-                    });
-
-                    // 显示下载任务创建成功消息
+                    // 显示下载任务创建状态消息
                     await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
                 }
             }
@@ -220,17 +181,7 @@ namespace GetStoreApp.Views.UserControls
         {
             if (args.Parameter is string fileLink && !string.IsNullOrEmpty(fileLink))
             {
-                Task.Run(async () =>
-                {
-                    try
-                    {
-                        await Launcher.LaunchUriAsync(new(fileLink));
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    }
-                });
+                OpenLink(fileLink);
             }
         }
 
@@ -253,17 +204,16 @@ namespace GetStoreApp.Views.UserControls
         {
             if (args.Parameter is QueryLinksResultModel queryLinksResult)
             {
-                string copyInformation = await Task.Run(() =>
+                string copyInformation = await GetCopyInformationStringAsync(queryLinksResult.FileName, queryLinksResult.FileLink, queryLinksResult.FileSize);
+                if (!string.IsNullOrEmpty(copyInformation))
                 {
-                    return string.Format("[\n{0}\n{1}\n{2}\n]\n", queryLinksResult.FileName, queryLinksResult.FileLink, queryLinksResult.FileSize);
-                });
-
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyInformation);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyInformation);
+                    await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                }
             }
         }
 
-        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第四部分：父类虚方法重写
 
         #region 第二部分：查询链接结果用户控件——挂载的事件
 
@@ -280,19 +230,12 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private async void OnCopyQueriedAppInfoClicked(object sender, RoutedEventArgs args)
         {
-            string appInformationCopyString = await Task.Run(() =>
+            string appInformation = await GetAppInformationStringAsync(AppInfo.Name, AppInfo.Publisher, AppInfo.Description);
+            if (!string.IsNullOrEmpty(appInformation))
             {
-                List<string> appInformationCopyStringList = [];
-                appInformationCopyStringList.Add(QueriedAppNameString + AppInfo.Name);
-                appInformationCopyStringList.Add(QueriedAppPublisherString + AppInfo.Publisher);
-                appInformationCopyStringList.Add(QueriedAppDescriptionString);
-                appInformationCopyStringList.Add(AppInfo.Description);
-
-                return string.Join(Environment.NewLine, appInformationCopyStringList);
-            });
-
-            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(appInformationCopyString);
-            await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(appInformation);
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+            }
         }
 
         /// <summary>
@@ -300,27 +243,7 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[0]))
-                    {
-                        await Launcher.LaunchUriAsync(new("getstoreappwebview:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
-                            {
-                                {"AppLink", string.Format("https://apps.microsoft.com/store/detail/{0}", AppInfo.ProductID) },
-                            });
-                    }
-                    else if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[1]))
-                    {
-                        await Launcher.LaunchUriAsync(new(string.Format("https://apps.microsoft.com/store/detail/{0}", AppInfo.ProductID)));
-                    }
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            LearnMore();
         }
 
         /// <summary>
@@ -723,6 +646,64 @@ namespace GetStoreApp.Views.UserControls
         }
 
         /// <summary>
+        /// 创建下载任务
+        /// </summary>
+        private async Task<bool> CreateDownloadTaskAsync(string fileName, string fileLink, string downloadFolder)
+        {
+            return await Task.Run(() =>
+            {
+                bool isDownloadSuccessfully = false;
+                List<DownloadSchedulerModel> downloadSchedulerList = [];
+                DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
+
+                try
+                {
+                    downloadSchedulerList.AddRange(DownloadSchedulerService.DownloadSchedulerList);
+
+                    if (!DownloadSchedulerService.IsDownloadingPageInitialized)
+                    {
+                        downloadSchedulerList.AddRange(DownloadSchedulerService.DownloadFailedList);
+                    }
+
+                    downloadSchedulerList.AddRange(DownloadStorageService.GetDownloadData());
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksResultUserControl), nameof(OnDownloadExecuteRequested), 1, e);
+                }
+                finally
+                {
+                    DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+                }
+
+                string downloadFilePath = Path.Combine(downloadFolder, fileName);
+
+                try
+                {
+                    // 检查下载目录是否存在
+                    if (!Directory.Exists(downloadFolder))
+                    {
+                        Directory.CreateDirectory(downloadFolder);
+                    }
+
+                    // 检查是否已有重复文件，如果有，保存文件名重复，追加(1)(2)......
+                    if (File.Exists(downloadFilePath))
+                    {
+                        downloadFilePath = RenameDuplicatedFile(downloadFilePath);
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksResultUserControl), nameof(OnDownloadExecuteRequested), 2, e);
+                }
+
+                DownloadSchedulerService.CreateDownload(fileLink, downloadFilePath);
+                isDownloadSuccessfully = true;
+                return isDownloadSuccessfully;
+            });
+        }
+
+        /// <summary>
         /// 更新查询链接结果
         /// </summary>
         internal void UpdateQueryLinksResultData(AppInfoModel appInfo, bool isPackagedApp, List<QueryLinksResultModel> queryLinksResultList)
@@ -760,6 +741,94 @@ namespace GetStoreApp.Views.UserControls
             {
                 queryLinksResultLock.Exit();
             }
+        }
+
+        /// <summary>
+        /// 打开文件链接
+        /// </summary>
+        private void OpenLink(string fileLink)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new(fileLink));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 获取指定项目的信息内容
+        /// </summary>
+        private async Task<string> GetCopyInformationStringAsync(string fileName, string fileLink, string fileSize)
+        {
+            if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(fileLink) && !string.IsNullOrEmpty(fileSize))
+            {
+                return await Task.Run(() =>
+                {
+                    return string.Format("[\n{0}\n{1}\n{2}\n]\n", fileName, fileLink, fileSize);
+                });
+            }
+            else
+            {
+                return default;
+            }
+        }
+
+        /// <summary>
+        /// 获取应用信息内容
+        /// </summary>
+        private async Task<string> GetAppInformationStringAsync(string name, string publisher, string description)
+        {
+            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(publisher) && !string.IsNullOrEmpty(description))
+            {
+                return await Task.Run(() =>
+                {
+                    List<string> appInformationCopyStringList = [];
+                    appInformationCopyStringList.Add(QueriedAppNameString + AppInfo.Name);
+                    appInformationCopyStringList.Add(QueriedAppPublisherString + AppInfo.Publisher);
+                    appInformationCopyStringList.Add(QueriedAppDescriptionString);
+                    appInformationCopyStringList.Add(AppInfo.Description);
+
+                    return string.Join(Environment.NewLine, appInformationCopyStringList);
+                });
+            }
+            else
+            {
+                return default;
+            }
+        }
+
+        /// <summary>
+        /// 打开链接
+        /// </summary>
+        private void LearnMore()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[0]))
+                    {
+                        await Launcher.LaunchUriAsync(new("getstoreappwebview:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
+                            {
+                                {"AppLink", string.Format("https://apps.microsoft.com/store/detail/{0}", AppInfo.ProductID) },
+                            });
+                    }
+                    else if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[1]))
+                    {
+                        await Launcher.LaunchUriAsync(new(string.Format("https://apps.microsoft.com/store/detail/{0}", AppInfo.ProductID)));
+                    }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>

@@ -221,11 +221,17 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async void OnSelectFolderClicked(object sender, RoutedEventArgs args)
         {
-            if (SelectedPackageVolume is not null)
+            if (SelectedPackageVolume is not null && SelectedPackageVolume.WinRTPackageVolume is not null)
             {
                 try
                 {
-                    if (await SelectSaveFolderAsync(SelectedPackageVolume) is PickFolderResult pickFolderResult)
+                    FolderPicker folderPicker = new(MainWindow.Current.AppWindow.Id);
+                    if (SelectedFolder is not null)
+                    {
+                        folderPicker.SuggestedFolder = SelectedFolder;
+                    }
+
+                    if (await folderPicker.PickSingleFolderAsync() is PickFolderResult pickFolderResult)
                     {
                         string rootPath = Path.GetPathRoot(pickFolderResult.Path);
                         string saveFolder = pickFolderResult.Path.Replace(rootPath, SelectedPackageVolume.WinRTPackageVolume.MountPoint);
@@ -448,26 +454,6 @@ namespace GetStoreApp.Views.Dialogs
                         return ValueTuple.Create<bool, PackageVolume, Exception>(false, null, e);
                     }
                 });
-            }
-            else
-            {
-                return default;
-            }
-        }
-
-        /// <summary>
-        /// 选择存放的文件夹
-        /// </summary>
-        private async Task<PickFolderResult> SelectSaveFolderAsync(PackageVolumeModel packageVolume)
-        {
-            if (packageVolume is not null && packageVolume.WinRTPackageVolume is not null)
-            {
-                FolderPicker folderPicker = new(MainWindow.Current.AppWindow.Id)
-                {
-                    SuggestedStartLocation = PickerLocationId.Downloads
-                };
-
-                return await folderPicker.PickSingleFolderAsync();
             }
             else
             {

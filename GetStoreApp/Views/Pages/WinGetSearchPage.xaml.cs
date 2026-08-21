@@ -31,6 +31,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     internal sealed partial class WinGetSearchPage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string NotAvailableString = ResourceService.GetLocalized("WinGetSearch/NotAvailable");
         private readonly string SearchAppsEmptyDescriptionString = ResourceService.GetLocalized("WinGetSearch/SearchAppsEmptyDescription");
         private readonly string SearchAppsFailedString = ResourceService.GetLocalized("WinGetSearch/SearchAppsFailed");
@@ -38,12 +40,17 @@ namespace GetStoreApp.Views.Pages
         private readonly string SearchedAppsCountInfoString = ResourceService.GetLocalized("WinGetSearch/SearchedAppsCountInfo");
         private readonly string SearchFindAppsFailedString = ResourceService.GetLocalized("WinGetSearch/SearchFindAppsFailed");
         private readonly string SearchNotSelectSourceString = ResourceService.GetLocalized("WinGetSearch/SearchNotSelectSource");
+        private bool isInitialized;
         private string cachedSearchText;
         private WinGetPage WinGetPageInstance;
 
-        private string _searchText = string.Empty;
+        #endregion 第一部分：常量、资源与状态字段
 
-        internal string SearchText
+        #region 第二部分：属性、集合与事件
+
+        private string _searchText;
+
+        private string SearchText
         {
             get { return _searchText; }
 
@@ -57,9 +64,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _isIncrease = true;
+        private bool _isIncrease;
 
-        internal bool IsIncrease
+        private bool IsIncrease
         {
             get { return _isIncrease; }
 
@@ -73,9 +80,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private SearchAppsResultKind _searchAppsResultKind = SearchAppsResultKind.NotSearch;
+        private SearchAppsResultKind _searchAppsResultKind;
 
-        internal SearchAppsResultKind SearchAppsResultKind
+        private SearchAppsResultKind SearchAppsResultKind
         {
             get { return _searchAppsResultKind; }
 
@@ -89,9 +96,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private PackageMatchField _packageMatchField = PackageMatchField.Name;
+        private PackageMatchField _packageMatchField;
 
-        internal PackageMatchField PackageMatchField
+        private PackageMatchField PackageMatchField
         {
             get { return _packageMatchField; }
 
@@ -105,9 +112,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private PackageFieldMatchOption _packageFieldMatchOption = PackageFieldMatchOption.EqualsCaseInsensitive;
+        private PackageFieldMatchOption _packageFieldMatchOption;
 
-        internal PackageFieldMatchOption PackageFieldMatchOption
+        private PackageFieldMatchOption PackageFieldMatchOption
         {
             get { return _packageFieldMatchOption; }
 
@@ -123,7 +130,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _searchFailedContent;
 
-        internal string SearchFailedContent
+        private string SearchFailedContent
         {
             get { return _searchFailedContent; }
 
@@ -141,12 +148,18 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
         internal WinGetSearchPage()
         {
             InitializeComponent();
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面触发的事件
@@ -155,15 +168,24 @@ namespace GetStoreApp.Views.Pages
         {
             base.OnNavigatedTo(args);
 
+            if (!isInitialized)
+            {
+                isInitialized = true;
+                IsIncrease = true;
+                SearchAppsResultKind = SearchAppsResultKind.NotSearch;
+                PackageMatchField = PackageMatchField.Name;
+                PackageFieldMatchOption = PackageFieldMatchOption.EqualsCaseInsensitive;
+            }
+
             if (args.Parameter is WinGetPage winGetPage && WinGetPageInstance is null)
             {
                 WinGetPageInstance = winGetPage;
             }
         }
 
-        #endregion 第一部分：重写父类事件
+        #endregion 第四部分：父类虚方法重写
 
-        #region 第二部分：XamlUICommand 命令调用时挂载的事件
+        #region 第五部分：命令调用处理
 
         /// <summary>
         /// 下载应用
@@ -252,7 +274,6 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 查看版本信息
         /// </summary>
-
         private async void OnViewVersionInfoExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
@@ -261,9 +282,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第二部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第五部分：命令调用处理
 
-        #region 第三部分：WinGet 搜索应用界面——挂载的事件
+        #region 第六部分：挂载事件处理
 
         /// <summary>
         /// 根据排序方式对列表进行排序
@@ -403,49 +424,9 @@ namespace GetStoreApp.Views.Pages
             SearchText = sender.Text;
         }
 
-        #endregion 第三部分：WinGet 搜索应用界面——挂载的事件
+        #endregion 第六部分：挂载事件处理
 
-        /// <summary>
-        /// 获取设置中选择的 WinGet 数据源
-        /// </summary>
-
-        private PackageCatalogReference GetPackageCatalogReference(PackageManager packageManager)
-        {
-            PackageCatalogReference packageCatalogReference = null;
-
-            try
-            {
-                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-
-                if (!Equals(winGetDataSourceName, default))
-                {
-                    // 使用内置源
-                    if (winGetDataSourceName.Value)
-                    {
-                        foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalog in WinGetConfigService.PredefinedPackageCatalogList)
-                        {
-                            if (string.Equals(winGetDataSourceName.Key, predefinedPackageCatalog.Key))
-                            {
-                                packageCatalogReference = packageManager.GetPredefinedPackageCatalog(predefinedPackageCatalog.Value);
-                                break;
-                            }
-                        }
-                    }
-                    // 使用自定义源
-                    else
-                    {
-                        packageCatalogReference = packageManager.GetPackageCatalogByName(winGetDataSourceName.Key);
-                    }
-                }
-
-                return packageCatalogReference;
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetSearchPage), nameof(GetPackageCatalogReference), 1, e);
-                return packageCatalogReference;
-            }
-        }
+        #region 第七部分：数据操作与业务逻辑
 
         /// <summary>
         /// 初始化搜索应用数据
@@ -466,35 +447,43 @@ namespace GetStoreApp.Views.Pages
                     return SearchAppsAsync(packageCatalogReference);
                 });
 
-                if (connectResult.Status is ConnectResultStatus.Ok)
+                if (connectResult is not null && findPackagesResult is not null)
                 {
-                    if (findPackagesResult.Status is FindPackagesResultStatus.Ok)
+                    if (connectResult.Status is ConnectResultStatus.Ok)
                     {
-                        if (searchAppsList.Count is 0)
+                        if (findPackagesResult.Status is FindPackagesResultStatus.Ok)
                         {
-                            SearchAppsResultKind = SearchAppsResultKind.Failed;
-                            SearchFailedContent = SearchAppsEmptyDescriptionString;
+                            if (searchAppsList is not null || searchAppsList.Count is 0)
+                            {
+                                SearchAppsResultKind = SearchAppsResultKind.Failed;
+                                SearchFailedContent = SearchAppsEmptyDescriptionString;
+                            }
+                            else
+                            {
+                                foreach (SearchAppsModel searchAppsItem in searchAppsList)
+                                {
+                                    SearchAppsCollection.Add(searchAppsItem);
+                                }
+
+                                SearchAppsResultKind = SearchAppsResultKind.Successfully;
+                            }
                         }
                         else
                         {
-                            foreach (SearchAppsModel searchAppsItem in searchAppsList)
-                            {
-                                SearchAppsCollection.Add(searchAppsItem);
-                            }
-
-                            SearchAppsResultKind = SearchAppsResultKind.Successfully;
+                            SearchAppsResultKind = SearchAppsResultKind.Failed;
+                            SearchFailedContent = string.Format(SearchAppsFailedString, SearchFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", findPackagesResult.ExtendedErrorCode.HResult) : NotAvailableString);
                         }
                     }
                     else
                     {
                         SearchAppsResultKind = SearchAppsResultKind.Failed;
-                        SearchFailedContent = string.Format(SearchAppsFailedString, SearchFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", findPackagesResult.ExtendedErrorCode.HResult) : NotAvailableString);
+                        SearchFailedContent = string.Format(SearchAppsFailedString, SearchCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", findPackagesResult.ExtendedErrorCode.HResult) : NotAvailableString);
                     }
                 }
                 else
                 {
                     SearchAppsResultKind = SearchAppsResultKind.Failed;
-                    SearchFailedContent = string.Format(SearchAppsFailedString, SearchCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", findPackagesResult.ExtendedErrorCode.HResult) : NotAvailableString);
+                    SearchFailedContent = NotAvailableString;
                 }
             }
             else
@@ -505,65 +494,116 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 获取设置中选择的 WinGet 数据源
+        /// </summary>
+        private PackageCatalogReference GetPackageCatalogReference(PackageManager packageManager)
+        {
+            if (packageManager is not null)
+            {
+                PackageCatalogReference packageCatalogReference = null;
+
+                try
+                {
+                    KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+
+                    if (!Equals(winGetDataSourceName, default))
+                    {
+                        // 使用内置源
+                        if (winGetDataSourceName.Value)
+                        {
+                            foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalog in WinGetConfigService.PredefinedPackageCatalogList)
+                            {
+                                if (string.Equals(winGetDataSourceName.Key, predefinedPackageCatalog.Key))
+                                {
+                                    packageCatalogReference = packageManager.GetPredefinedPackageCatalog(predefinedPackageCatalog.Value);
+                                    break;
+                                }
+                            }
+                        }
+                        // 使用自定义源
+                        else
+                        {
+                            packageCatalogReference = packageManager.GetPackageCatalogByName(winGetDataSourceName.Key);
+                        }
+                    }
+
+                    return packageCatalogReference;
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetSearchPage), nameof(GetPackageCatalogReference), 1, e);
+                    return packageCatalogReference;
+                }
+            }
+            else
+            {
+                return default;
+            }
+        }
+
+        /// <summary>
         /// 搜索应用
         /// </summary>
         private async Task<(ConnectResult, FindPackagesResult, List<SearchAppsModel>)> SearchAppsAsync(PackageCatalogReference packageCatalogReference)
         {
             (ConnectResult connectResult, FindPackagesResult findPackagesResult, List<SearchAppsModel> searchAppsList) searchAppsResult = ValueTuple.Create<ConnectResult, FindPackagesResult, List<SearchAppsModel>>(null, null, null);
 
-            try
+            if (packageCatalogReference is not null)
             {
-                ConnectResult connectResult = await packageCatalogReference.ConnectAsync();
-                searchAppsResult.connectResult = connectResult;
-
-                if (connectResult is not null && connectResult.Status is ConnectResultStatus.Ok)
+                try
                 {
-                    FindPackagesOptions findPackagesOptions = WinGetFactoryHelper.CreateFindPackagesOptions();
-                    PackageMatchFilter packageMatchFilter = WinGetFactoryHelper.CreatePackageMatchFilter();
-                    packageMatchFilter.Field = PackageMatchField;
-                    packageMatchFilter.Option = PackageFieldMatchOption;
-                    packageMatchFilter.Value = cachedSearchText;
+                    ConnectResult connectResult = await packageCatalogReference.ConnectAsync();
+                    searchAppsResult.connectResult = connectResult;
 
-                    findPackagesOptions.Filters.Add(packageMatchFilter);
-                    FindPackagesResult findPackagesResult = await connectResult.PackageCatalog.FindPackagesAsync(findPackagesOptions);
-                    searchAppsResult.findPackagesResult = findPackagesResult;
-
-                    if (findPackagesResult is not null && findPackagesResult.Status is FindPackagesResultStatus.Ok)
+                    if (connectResult is not null && connectResult.Status is ConnectResultStatus.Ok)
                     {
-                        List<SearchAppsModel> searchAppsList = [];
+                        FindPackagesOptions findPackagesOptions = WinGetFactoryHelper.CreateFindPackagesOptions();
+                        PackageMatchFilter packageMatchFilter = WinGetFactoryHelper.CreatePackageMatchFilter();
+                        packageMatchFilter.Field = PackageMatchField;
+                        packageMatchFilter.Option = PackageFieldMatchOption;
+                        packageMatchFilter.Value = cachedSearchText;
 
-                        int count = findPackagesResult.Matches.Count;
-                        for (int index = 0; index < findPackagesResult.Matches.Count; index++)
+                        findPackagesOptions.Filters.Add(packageMatchFilter);
+                        FindPackagesResult findPackagesResult = await connectResult.PackageCatalog.FindPackagesAsync(findPackagesOptions);
+                        searchAppsResult.findPackagesResult = findPackagesResult;
+
+                        if (findPackagesResult is not null && findPackagesResult.Status is FindPackagesResultStatus.Ok)
                         {
-                            MatchResult matchItem = findPackagesResult.Matches[index];
+                            List<SearchAppsModel> searchAppsList = [];
 
-                            if (matchItem.CatalogPackage is CatalogPackage catalogPackage && catalogPackage.Id is not null)
+                            int count = findPackagesResult.Matches.Count;
+                            for (int index = 0; index < findPackagesResult.Matches.Count; index++)
                             {
-                                searchAppsList.Add(new()
+                                MatchResult matchItem = findPackagesResult.Matches[index];
+
+                                if (matchItem.CatalogPackage is CatalogPackage catalogPackage && catalogPackage.Id is not null)
                                 {
-                                    AppID = catalogPackage.Id,
-                                    AppName = string.IsNullOrEmpty(catalogPackage.Name) || string.Equals(catalogPackage.Name, "N/A", StringComparison.OrdinalIgnoreCase) ? NotAvailableString : catalogPackage.Name,
-                                    CatalogPackage = matchItem.CatalogPackage,
-                                });
+                                    searchAppsList.Add(new()
+                                    {
+                                        AppID = catalogPackage.Id,
+                                        AppName = string.IsNullOrEmpty(catalogPackage.Name) || string.Equals(catalogPackage.Name, "N/A", StringComparison.OrdinalIgnoreCase) ? NotAvailableString : catalogPackage.Name,
+                                        CatalogPackage = matchItem.CatalogPackage,
+                                    });
+                                }
                             }
-                        }
 
-                        if (IsIncrease)
-                        {
-                            searchAppsList.Sort((item1, item2) => item1.AppName.CompareTo(item2.AppName));
-                        }
-                        else
-                        {
-                            searchAppsList.Sort((item1, item2) => item2.AppName.CompareTo(item1.AppName));
-                        }
+                            if (IsIncrease)
+                            {
+                                searchAppsList.Sort((item1, item2) => item1.AppName.CompareTo(item2.AppName));
+                            }
+                            else
+                            {
+                                searchAppsList.Sort((item1, item2) => item2.AppName.CompareTo(item1.AppName));
+                            }
 
-                        searchAppsResult.searchAppsList = searchAppsList;
+                            searchAppsResult.searchAppsList = searchAppsList;
+                        }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetSearchPage), nameof(SearchAppsAsync), 1, e);
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetSearchPage), nameof(SearchAppsAsync), 1, e);
+                }
             }
 
             return searchAppsResult;
@@ -572,7 +612,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取搜索应用是否成功
         /// </summary>
-        internal Visibility GetSearchAppsSuccessfullyVisibility(SearchAppsResultKind searchAppsResultKind, bool isSuccessfully)
+        private Visibility GetSearchAppsSuccessfullyVisibility(SearchAppsResultKind searchAppsResultKind, bool isSuccessfully)
         {
             return isSuccessfully ? Equals(searchAppsResultKind, SearchAppsResultKind.Successfully) ? Visibility.Visible : Visibility.Collapsed : !Equals(searchAppsResultKind, SearchAppsResultKind.Successfully) ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -580,7 +620,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查搜索应用是否成功
         /// </summary>
-        internal Visibility CheckSearchAppsResultKindVisibility(SearchAppsResultKind searchAppsResultKind, SearchAppsResultKind comparedSearchAppsResultKind)
+        private Visibility CheckSearchAppsResultKindVisibility(SearchAppsResultKind searchAppsResultKind, SearchAppsResultKind comparedSearchAppsResultKind)
         {
             return Equals(searchAppsResultKind, comparedSearchAppsResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -589,7 +629,7 @@ namespace GetStoreApp.Views.Pages
         /// 获取搜索框是否可进行搜索
         /// </summary>
 
-        internal bool GetSearchBoxEnabled(SearchAppsResultKind searchAppsResultKind)
+        private bool GetSearchBoxEnabled(SearchAppsResultKind searchAppsResultKind)
         {
             return searchAppsResultKind is not SearchAppsResultKind.Searching;
         }
@@ -598,9 +638,11 @@ namespace GetStoreApp.Views.Pages
         /// 获取搜索框是否可进行搜索
         /// </summary>
 
-        internal bool GetSearchRefreshEnabled(SearchAppsResultKind searchAppsResultKind)
+        private bool GetSearchRefreshEnabled(SearchAppsResultKind searchAppsResultKind)
         {
             return !(Equals(searchAppsResultKind, SearchAppsResultKind.Searching) || Equals(searchAppsResultKind, SearchAppsResultKind.NotSearch));
         }
+
+        #endregion 第七部分：数据操作与业务逻辑
     }
 }

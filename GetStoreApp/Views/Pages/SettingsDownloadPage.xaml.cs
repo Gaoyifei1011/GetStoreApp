@@ -163,7 +163,12 @@ namespace GetStoreApp.Views.Pages
                         {
                             try
                             {
-                                if (await PickDownloadFolderAsync() is PickFolderResult pickFolderResult)
+                                FolderPicker folderPicker = new(MainWindow.Current.AppWindow.Id)
+                                {
+                                    SuggestedStartFolder = DownloadOptionsService.DownloadFolder
+                                };
+
+                                if (await folderPicker.PickSingleFolderAsync() is PickFolderResult pickFolderResult)
                                 {
                                     DownloadFolder = pickFolderResult.Path;
                                     DownloadOptionsService.SetFolder(DownloadFolder);
@@ -253,19 +258,6 @@ namespace GetStoreApp.Views.Pages
             DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeList[0], DisplayMember = DoEngineDoString });
             DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeList[1], DisplayMember = DoEngineBitsString });
             DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeList[2], DisplayMember = DoEngineAria2String });
-        }
-
-        /// <summary>
-        /// 选择下载文件夹
-        /// </summary>
-        private async Task<PickFolderResult> PickDownloadFolderAsync()
-        {
-            FolderPicker folderPicker = new(MainWindow.Current.AppWindow.Id)
-            {
-                SuggestedStartFolder = DownloadOptionsService.DownloadFolder
-            };
-
-            return await folderPicker.PickSingleFolderAsync();
         }
 
         /// <summary>

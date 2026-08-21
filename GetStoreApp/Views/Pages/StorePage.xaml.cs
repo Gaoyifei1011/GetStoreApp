@@ -32,7 +32,7 @@ namespace GetStoreApp.Views.Pages
 
         private StoreControl _storeControl;
 
-        private StoreControl StoreControl
+        internal StoreControl StoreControl
         {
             get { return _storeControl; }
 

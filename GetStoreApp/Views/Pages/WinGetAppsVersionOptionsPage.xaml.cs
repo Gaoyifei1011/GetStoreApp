@@ -35,6 +35,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     internal sealed partial class WinGetAppsVersionOptionsPage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string PackageInstallModeDefaultString = ResourceService.GetLocalized("WinGetAppsVersionOptions/PackageInstallModeDefault");
         private readonly string PackageInstallModeInteractiveString = ResourceService.GetLocalized("WinGetAppsVersionOptions/PackageInstallModeInteractive");
         private readonly string PackageInstallModeSilentString = ResourceService.GetLocalized("WinGetAppsVersionOptions/PackageInstallModeSilent");
@@ -53,6 +55,10 @@ namespace GetStoreApp.Views.Pages
         private readonly string ProcessorArchitectureX86String = ResourceService.GetLocalized("WinGetAppsVersionOptions/ProcessorArchitectureX86");
         private readonly ProcessorArchitecture currentProcessorArchitecture = Package.Current.Id.Architecture;
 
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
+
         private WinGetPage WinGetPage { get; set; }
 
         private WinGetAppsVersionDialog WinGetAppsVersionDialog { get; set; }
@@ -61,7 +67,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _winGetAppsOptionsTitle;
 
-        internal string WinGetAppsOptionsTitle
+        private string WinGetAppsOptionsTitle
         {
             get { return _winGetAppsOptionsTitle; }
 
@@ -77,7 +83,7 @@ namespace GetStoreApp.Views.Pages
 
         private PackageOperationKind _packageOperationKind;
 
-        internal PackageOperationKind PackageOperationKind
+        private PackageOperationKind PackageOperationKind
         {
             get { return _packageOperationKind; }
 
@@ -93,7 +99,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _allowHashMismatch;
 
-        internal bool AllowHashMismatch
+        private bool AllowHashMismatch
         {
             get { return _allowHashMismatch; }
 
@@ -109,7 +115,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _packageDownloadPath;
 
-        internal string PackageDownloadPath
+        private string PackageDownloadPath
         {
             get { return _packageDownloadPath; }
 
@@ -125,7 +131,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _packageInstallScope;
 
-        internal ComboBoxItemModel PackageInstallScope
+        private ComboBoxItemModel PackageInstallScope
         {
             get { return _packageInstallScope; }
 
@@ -141,7 +147,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _packageArchitecture;
 
-        internal ComboBoxItemModel PackageArchitecture
+        private ComboBoxItemModel PackageArchitecture
         {
             get { return _packageArchitecture; }
 
@@ -157,7 +163,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _bypassIsStoreClientBlockedPolicyCheck;
 
-        internal bool BypassIsStoreClientBlockedPolicyCheck
+        private bool BypassIsStoreClientBlockedPolicyCheck
         {
             get { return _bypassIsStoreClientBlockedPolicyCheck; }
 
@@ -173,7 +179,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _AllowUpgradeToUnknownVersion;
 
-        internal bool AllowUpgradeToUnknownVersion
+        private bool AllowUpgradeToUnknownVersion
         {
             get { return _AllowUpgradeToUnknownVersion; }
 
@@ -189,7 +195,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _forceInstall;
 
-        internal bool ForceInstall
+        private bool ForceInstall
         {
             get { return _forceInstall; }
 
@@ -205,7 +211,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _packageInstallMode;
 
-        internal ComboBoxItemModel PackageInstallMode
+        private ComboBoxItemModel PackageInstallMode
         {
             get { return _packageInstallMode; }
 
@@ -221,7 +227,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _packageInstallPath;
 
-        internal string PackageInstallPath
+        private string PackageInstallPath
         {
             get { return _packageInstallPath; }
 
@@ -237,7 +243,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isX86ProcessorArchitecture;
 
-        internal bool IsX86ProcessorArchitecture
+        private bool IsX86ProcessorArchitecture
         {
             get { return _isX86ProcessorArchitecture; }
 
@@ -253,7 +259,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isX64ProcessorArchitecture;
 
-        internal bool IsX64ProcessorArchitecture
+        private bool IsX64ProcessorArchitecture
         {
             get { return _isX64ProcessorArchitecture; }
 
@@ -269,7 +275,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isArm64ProcessorArchitecture;
 
-        internal bool IsArm64ProcessorArchitecture
+        private bool IsArm64ProcessorArchitecture
         {
             get { return _isArm64ProcessorArchitecture; }
 
@@ -285,7 +291,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _additionalInstallerArguments;
 
-        internal string AdditionalInstallerArguments
+        private string AdditionalInstallerArguments
         {
             get { return _additionalInstallerArguments; }
 
@@ -301,7 +307,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _packageRepairScope;
 
-        internal ComboBoxItemModel PackageRepairScope
+        private ComboBoxItemModel PackageRepairScope
         {
             get { return _packageRepairScope; }
 
@@ -317,7 +323,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _packageRepairMode;
 
-        internal ComboBoxItemModel PackageRepairMode
+        private ComboBoxItemModel PackageRepairMode
         {
             get { return _packageRepairMode; }
 
@@ -343,29 +349,19 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
         internal WinGetAppsVersionOptionsPage()
         {
             InitializeComponent();
-
-            PackageArchitectureList.Add(new() { SelectedValue = ProcessorArchitecture.Unknown, DisplayMember = ProcessorArchitectureDefaultString });
-            PackageArchitectureList.Add(new() { SelectedValue = ProcessorArchitecture.X86, DisplayMember = ProcessorArchitectureX86String });
-            PackageArchitectureList.Add(new() { SelectedValue = ProcessorArchitecture.X64, DisplayMember = ProcessorArchitectureX64String });
-            PackageArchitectureList.Add(new() { SelectedValue = ProcessorArchitecture.Arm64, DisplayMember = ProcessorArchitectureArm64String });
-            PackageInstallScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallScope.Any, DisplayMember = PackageInstallScopeAnyString });
-            PackageInstallScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallScope.User, DisplayMember = PackageInstallScopeUserString });
-            PackageInstallScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallScope.System, DisplayMember = PackageInstallScopeSystemString });
-            PackageInstallModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallMode.Default, DisplayMember = PackageInstallModeDefaultString });
-            PackageInstallModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallMode.Interactive, DisplayMember = PackageInstallModeInteractiveString });
-            PackageInstallModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallMode.Silent, DisplayMember = PackageInstallModeSilentString });
-            PackageRepairScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairScope.Any, DisplayMember = PackageRepairScopeAnyString });
-            PackageRepairScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairScope.User, DisplayMember = PackageRepairScopeUserString });
-            PackageRepairScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairScope.System, DisplayMember = PackageRepairScopeSystemString });
-            PackageRepairModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairMode.Default, DisplayMember = PackageRepairModeDefaultString });
-            PackageRepairModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairMode.Interactive, DisplayMember = PackageRepairModeInteractiveString });
-            PackageRepairModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairMode.Silent, DisplayMember = PackageRepairModeSilentString });
+            InitializeData();
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面触发的事件
@@ -438,9 +434,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：重写父类事件
+        #endregion 第四部分：父类虚方法重写
 
-        #region 第二部分：WinGet 应用版本信息操作选项页面——挂载的事件
+        #region 第五部分：挂载事件处理
 
         /// <summary>
         /// 下载应用
@@ -448,19 +444,7 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(PackageInstallScope)), DynamicWindowsRuntimeCast(typeof(ProcessorArchitecture))]
         private async void OnDownloadClicked(object sender, RoutedEventArgs args)
         {
-            PackageOperation.DownloadOptions = await Task.Run(() =>
-            {
-                DownloadOptions downloadOptions = WinGetFactoryHelper.CreateDownloadOptions();
-                downloadOptions.AcceptPackageAgreements = true;
-                downloadOptions.AllowHashMismatch = AllowHashMismatch;
-                downloadOptions.Architecture = (ProcessorArchitecture)PackageArchitecture.SelectedValue;
-                downloadOptions.DownloadDirectory = PackageDownloadPath;
-                downloadOptions.PackageVersionId = PackageOperation.PackageVersionId;
-                downloadOptions.Scope = (PackageInstallScope)PackageInstallScope.SelectedValue;
-                downloadOptions.SkipDependencies = false;
-                return downloadOptions;
-            });
-
+            PackageOperation.DownloadOptions = await CreateDownloadOptionsAsync(AllowHashMismatch, (ProcessorArchitecture)PackageArchitecture.SelectedValue, PackageDownloadPath, PackageOperation.PackageVersionId, (PackageInstallScope)PackageInstallScope.SelectedValue);
             WinGetAppsVersionDialog.Hide();
             await WinGetPage.AddTaskAsync(PackageOperation);
         }
@@ -468,121 +452,28 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 复制下载命令信息
         /// </summary>
-        [DynamicWindowsRuntimeCast(typeof(ProcessorArchitecture))]
+        [DynamicWindowsRuntimeCast(typeof(ProcessorArchitecture)), DynamicWindowsRuntimeCast(typeof(PackageInstallScope))]
         private async void OnCopyDownloadTextClicked(object sender, RoutedEventArgs args)
         {
-            string downloadCommand = await Task.Run(() =>
+            string downloadArguments = await GenerateDownloadArgumentsAsync(true, PackageOperation.AppID, (ProcessorArchitecture)PackageArchitecture.SelectedValue, PackageDownloadPath, AllowHashMismatch, (PackageInstallScope)PackageInstallScope.SelectedValue, PackageOperation.AppVersion);
+            if (!string.IsNullOrEmpty(downloadArguments))
             {
-                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-                List<string> argsList = ["winget.exe", "download", "--id", string.Format(@"""{0}""", PackageOperation.AppID)];
-
-                argsList.Add("--accept-package-agreements");
-
-                if (!Equals(PackageArchitecture, PackageArchitectureList[0]))
-                {
-                    argsList.Add("--architecture");
-                    argsList.Add(string.Format(@"""{0}""", Convert.ToString((ProcessorArchitecture)PackageArchitecture.SelectedValue)));
-                }
-
-                if (!string.IsNullOrEmpty(PackageDownloadPath))
-                {
-                    argsList.Add("--download-directory");
-                    argsList.Add(string.Format(@"""{0}""", PackageDownloadPath));
-                }
-
-                if (AllowHashMismatch)
-                {
-                    argsList.Add("--ignore-security-hash");
-                }
-
-                if (Equals(PackageInstallScope, PackageInstallScopeList[1]))
-                {
-                    argsList.Add("--scope");
-                    argsList.Add("user");
-                }
-                else if (Equals(PackageInstallScope, PackageInstallScopeList[2]))
-                {
-                    argsList.Add("--scope");
-                    argsList.Add("machine");
-                }
-
-                argsList.Add("--skip-dependencies");
-
-                if (!Equals(winGetDataSourceName, default))
-                {
-                    argsList.Add("--source");
-                    argsList.Add(string.Format(@"""{0}""", winGetDataSourceName.Key));
-                }
-
-                argsList.Add("--version");
-                argsList.Add(string.Format(@"""{0}""", PackageOperation.AppVersion));
-
-                return string.Join(' ', argsList);
-            });
-
-            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(downloadCommand);
-            await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(downloadArguments);
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+            }
         }
 
         /// <summary>
         /// 使用命令下载当前版本应用
         /// </summary>
-        [DynamicWindowsRuntimeCast(typeof(ProcessorArchitecture))]
+        [DynamicWindowsRuntimeCast(typeof(ProcessorArchitecture)), DynamicWindowsRuntimeCast(typeof(PackageInstallScope))]
         private async void OnDownloadWithCmdClicked(object sender, RoutedEventArgs args)
         {
-            string downloadParameter = await Task.Run(() =>
+            string downloadArguments = await GenerateDownloadArgumentsAsync(false, PackageOperation.AppID, (ProcessorArchitecture)PackageArchitecture.SelectedValue, PackageDownloadPath, AllowHashMismatch, (PackageInstallScope)PackageInstallScope.SelectedValue, PackageOperation.AppVersion);
+            if (!string.IsNullOrEmpty(downloadArguments))
             {
-                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-                List<string> argsList = ["download", "--id", string.Format(@"""{0}""", PackageOperation.AppID)];
-
-                argsList.Add("--accept-package-agreements");
-
-                if (!Equals(PackageArchitecture, PackageArchitectureList[0]))
-                {
-                    argsList.Add("--architecture");
-                    argsList.Add(string.Format(@"""{0}""", Convert.ToString((ProcessorArchitecture)PackageArchitecture.SelectedValue)));
-                }
-
-                if (!string.IsNullOrEmpty(PackageDownloadPath))
-                {
-                    argsList.Add("--download-directory");
-                    argsList.Add(string.Format(@"""{0}""", PackageDownloadPath));
-                }
-
-                if (AllowHashMismatch)
-                {
-                    argsList.Add("--ignore-security-hash");
-                }
-
-                if (Equals(PackageInstallScope, PackageInstallScopeList[1]))
-                {
-                    argsList.Add("--scope");
-                    argsList.Add("user");
-                }
-                else if (Equals(PackageInstallScope, PackageInstallScopeList[2]))
-                {
-                    argsList.Add("--scope");
-                    argsList.Add("machine");
-                }
-
-                argsList.Add("--skip-dependencies");
-
-                if (!Equals(winGetDataSourceName, default))
-                {
-                    argsList.Add("--source");
-                    argsList.Add(string.Format(@"""{0}""", winGetDataSourceName.Key));
-                }
-
-                argsList.Add("--version");
-                argsList.Add(string.Format(@"""{0}""", PackageOperation.AppVersion));
-
-                return string.Join(' ', argsList);
-            });
-
-            await Task.Run(() =>
-            {
-                Shell32Library.ShellExecute(nint.Zero, "open", "winget.exe", downloadParameter, null, WindowShowStyle.SW_SHOWNORMAL);
-            });
+                RunWinGetCommand(downloadArguments);
+            }
         }
 
         /// <summary>
@@ -626,17 +517,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageDownloadPathClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchFolderPathAsync(PackageDownloadPath);
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenPackageDownloadPath(PackageDownloadPath);
         }
 
         /// <summary>
@@ -670,7 +551,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 FolderPicker folderPicker = new(MainWindow.Current.AppWindow.Id)
                                 {
-                                    SuggestedStartFolder = PackageDownloadPath
+                                    SuggestedFolder = PackageDownloadPath
                                 };
 
                                 if (await folderPicker.PickSingleFolderAsync() is PickFolderResult pickFolderResult)
@@ -696,39 +577,7 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(PackageInstallMode)), DynamicWindowsRuntimeCast(typeof(PackageInstallScope))]
         private async void OnInstallClicked(object sender, RoutedEventArgs args)
         {
-            PackageOperation.InstallOptions = await Task.Run(() =>
-            {
-                InstallOptions installOptions = WinGetFactoryHelper.CreateInstallOptions();
-                installOptions.AcceptPackageAgreements = true;
-                installOptions.AdditionalInstallerArguments = AdditionalInstallerArguments;
-                installOptions.AllowHashMismatch = AllowHashMismatch;
-                installOptions.AllowUpgradeToUnknownVersion = AllowUpgradeToUnknownVersion;
-                installOptions.BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck;
-                installOptions.Force = ForceInstall;
-                installOptions.LogOutputPath = LogService.WinGetFolderPath;
-                installOptions.PackageInstallMode = (PackageInstallMode)PackageInstallMode.SelectedValue;
-                installOptions.PackageInstallScope = (PackageInstallScope)PackageInstallScope.SelectedValue;
-                installOptions.PackageVersionId = PackageOperation.PackageVersionId;
-                installOptions.PreferredInstallLocation = PackageInstallPath;
-                installOptions.SkipDependencies = false;
-
-                installOptions.AllowedArchitectures.Clear();
-                if (IsX86ProcessorArchitecture)
-                {
-                    installOptions.AllowedArchitectures.Add(ProcessorArchitecture.X86);
-                }
-                if (IsX64ProcessorArchitecture)
-                {
-                    installOptions.AllowedArchitectures.Add(ProcessorArchitecture.X64);
-                }
-                if (IsArm64ProcessorArchitecture)
-                {
-                    installOptions.AllowedArchitectures.Add(ProcessorArchitecture.Arm64);
-                }
-
-                return installOptions;
-            });
-
+            PackageOperation.InstallOptions = await CreateInstallOptionsAsync(AdditionalInstallerArguments, AllowHashMismatch, AllowUpgradeToUnknownVersion, BypassIsStoreClientBlockedPolicyCheck, ForceInstall, (PackageInstallMode)PackageInstallMode.SelectedValue, (PackageInstallScope)PackageInstallScope.SelectedValue, PackageOperation.PackageVersionId, PackageInstallPath, IsX86ProcessorArchitecture, IsX64ProcessorArchitecture, IsArm64ProcessorArchitecture);
             WinGetAppsVersionDialog.Hide();
             await WinGetPage.AddTaskAsync(PackageOperation);
         }
@@ -736,149 +585,28 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 复制安装命令信息
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(PackageInstallMode)), DynamicWindowsRuntimeCast(typeof(PackageInstallScope))]
         private async void OnCopyInstallTextClicked(object sender, RoutedEventArgs args)
         {
-            string installCommand = await Task.Run(() =>
+            string installArguments = await GenerateInstallArgumentsAsync(true, PackageOperation.AppID, AdditionalInstallerArguments, ForceInstall, AllowHashMismatch, (PackageInstallMode)PackageInstallMode.SelectedValue, PackageInstallPath, (PackageInstallScope)PackageInstallScope.SelectedValue, PackageOperation.AppVersion);
+            if (!string.IsNullOrEmpty(installArguments))
             {
-                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-                List<string> argsList = ["winget.exe", "install", "--id", string.Format(@"""{0}""", PackageOperation.AppID)];
-
-                argsList.Add("--accept-package-agreements");
-
-                if (!string.IsNullOrEmpty(AdditionalInstallerArguments))
-                {
-                    argsList.Add("--custom");
-                    argsList.Add(string.Format(@"""{0}""", AdditionalInstallerArguments));
-                }
-
-                if (ForceInstall)
-                {
-                    argsList.Add("--force");
-                }
-
-                if (AllowHashMismatch)
-                {
-                    argsList.Add("--ignore-security-hash");
-                }
-
-                if (Equals(PackageInstallMode, PackageInstallModeList[1]))
-                {
-                    argsList.Add("--interactive");
-                }
-
-                if (!string.IsNullOrEmpty(PackageInstallPath))
-                {
-                    argsList.Add("--location");
-                    argsList.Add(string.Format(@"""{0}""", PackageInstallPath));
-                }
-
-                if (Equals(PackageInstallScope, PackageInstallScopeList[1]))
-                {
-                    argsList.Add("--scope");
-                    argsList.Add("user");
-                }
-                else if (Equals(PackageInstallScope, PackageInstallScopeList[2]))
-                {
-                    argsList.Add("--scope");
-                    argsList.Add("machine");
-                }
-
-                if (Equals(PackageInstallMode, PackageInstallModeList[2]))
-                {
-                    argsList.Add("--silent");
-                }
-
-                argsList.Add("--skip-dependencies");
-
-                if (!Equals(winGetDataSourceName, default))
-                {
-                    argsList.Add("--source");
-                    argsList.Add(string.Format(@"""{0}""", winGetDataSourceName.Key));
-                }
-
-                argsList.Add("--version");
-                argsList.Add(string.Format(@"""{0}""", PackageOperation.AppVersion));
-
-                return string.Join(' ', argsList);
-            });
-
-            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(installCommand);
-            await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(installArguments);
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+            }
         }
 
         /// <summary>
         /// 使用命令安装当前版本应用
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(PackageInstallMode)), DynamicWindowsRuntimeCast(typeof(PackageInstallScope))]
         private async void OnInstallWithCmdClicked(object sender, RoutedEventArgs args)
         {
-            string installParameter = await Task.Run(() =>
+            string installArguments = await GenerateInstallArgumentsAsync(false, PackageOperation.AppID, AdditionalInstallerArguments, ForceInstall, AllowHashMismatch, (PackageInstallMode)PackageInstallMode.SelectedValue, PackageInstallPath, (PackageInstallScope)PackageInstallScope.SelectedValue, PackageOperation.AppVersion);
+            if (!string.IsNullOrEmpty(installArguments))
             {
-                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-                List<string> argsList = ["install", "--id", string.Format(@"""{0}""", PackageOperation.AppID)];
-
-                argsList.Add("--accept-package-agreements");
-
-                if (!string.IsNullOrEmpty(AdditionalInstallerArguments))
-                {
-                    argsList.Add("--custom");
-                    argsList.Add(string.Format(@"""{0}""", AdditionalInstallerArguments));
-                }
-
-                if (ForceInstall)
-                {
-                    argsList.Add("--force");
-                }
-
-                if (AllowHashMismatch)
-                {
-                    argsList.Add("--ignore-security-hash");
-                }
-
-                if (Equals(PackageInstallMode, PackageInstallModeList[1]))
-                {
-                    argsList.Add("--interactive");
-                }
-
-                if (!string.IsNullOrEmpty(PackageInstallPath))
-                {
-                    argsList.Add("--location");
-                    argsList.Add(string.Format(@"""{0}""", PackageInstallPath));
-                }
-
-                if (Equals(PackageInstallScope, PackageInstallScopeList[1]))
-                {
-                    argsList.Add("--scope");
-                    argsList.Add("user");
-                }
-                else if (Equals(PackageInstallScope, PackageInstallScopeList[2]))
-                {
-                    argsList.Add("--scope");
-                    argsList.Add("machine");
-                }
-
-                if (Equals(PackageInstallMode, PackageInstallModeList[2]))
-                {
-                    argsList.Add("--silent");
-                }
-
-                argsList.Add("--skip-dependencies");
-
-                if (!Equals(winGetDataSourceName, default))
-                {
-                    argsList.Add("--source");
-                    argsList.Add(string.Format(@"""{0}""", winGetDataSourceName.Key));
-                }
-
-                argsList.Add("--version");
-                argsList.Add(string.Format(@"""{0}""", PackageOperation.AppVersion));
-
-                return string.Join(' ', argsList);
-            });
-
-            await Task.Run(() =>
-            {
-                Shell32Library.ShellExecute(nint.Zero, "open", "winget.exe", installParameter, null, WindowShowStyle.SW_SHOWNORMAL);
-            });
+                RunWinGetCommand(installArguments);
+            }
         }
 
         /// <summary>
@@ -946,17 +674,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageInstallPathClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchFolderPathAsync(PackageInstallPath);
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenPackageInstallPath(PackageInstallPath);
         }
 
         /// <summary>
@@ -968,7 +686,7 @@ namespace GetStoreApp.Views.Pages
             {
                 FolderPicker folderPicker = new(MainWindow.Current.AppWindow.Id)
                 {
-                    SuggestedStartLocation = PickerLocationId.ComputerFolder
+                    SuggestedFolder = PackageDownloadPath
                 };
 
                 if (await folderPicker.PickSingleFolderAsync() is PickFolderResult pickFolderResult)
@@ -1018,20 +736,7 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(PackageRepairMode)), DynamicWindowsRuntimeCast(typeof(PackageRepairScope))]
         private async void OnRepairClicked(object sender, RoutedEventArgs args)
         {
-            PackageOperation.RepairOptions = await Task.Run(() =>
-            {
-                RepairOptions repairOptions = WinGetFactoryHelper.CreateRepairOptions();
-                repairOptions.AcceptPackageAgreements = true;
-                repairOptions.AllowHashMismatch = AllowHashMismatch;
-                repairOptions.BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck;
-                repairOptions.Force = ForceInstall;
-                repairOptions.LogOutputPath = LogService.WinGetFolderPath;
-                repairOptions.PackageRepairMode = (PackageRepairMode)PackageRepairMode.SelectedValue;
-                repairOptions.PackageRepairScope = (PackageRepairScope)PackageRepairScope.SelectedValue;
-                repairOptions.PackageVersionId = PackageOperation.PackageVersionId;
-                return repairOptions;
-            });
-
+            PackageOperation.RepairOptions = await CreateRepairOptionsAsync(AllowHashMismatch, BypassIsStoreClientBlockedPolicyCheck, ForceInstall, (PackageRepairMode)PackageRepairMode.SelectedValue, (PackageRepairScope)PackageRepairScope.SelectedValue, PackageOperation.PackageVersionId);
             WinGetAppsVersionDialog.Hide();
             await WinGetPage.AddTaskAsync(PackageOperation);
         }
@@ -1039,121 +744,28 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 复制修复命令信息
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(PackageRepairMode)), DynamicWindowsRuntimeCast(typeof(PackageRepairScope))]
         private async void OnCopyRepairTextClicked(object sender, RoutedEventArgs args)
         {
-            string repairCommand = await Task.Run(() =>
+            string repairArguments = await GenerateRepairArgumentsAsync(true, PackageOperation.AppID, ForceInstall, AllowHashMismatch, (PackageRepairMode)PackageRepairMode.SelectedValue, PackageInstallPath, (PackageRepairScope)PackageRepairMode.SelectedValue, PackageOperation.AppVersion);
+            if (!string.IsNullOrEmpty(repairArguments))
             {
-                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-                List<string> argsList = ["winget.exe", "repair", "--id", string.Format(@"""{0}""", PackageOperation.AppID)];
-
-                argsList.Add("--accept-package-agreements");
-
-                if (ForceInstall)
-                {
-                    argsList.Add("--force");
-                }
-
-                if (AllowHashMismatch)
-                {
-                    argsList.Add("--ignore-security-hash");
-                }
-
-                if (Equals(PackageRepairMode, PackageRepairModeList[1]))
-                {
-                    argsList.Add("--interactive");
-                }
-
-                if (Equals(PackageRepairScope, PackageRepairScopeList[1]))
-                {
-                    argsList.Add("--scope");
-                    argsList.Add("user");
-                }
-                else if (Equals(PackageRepairScope, PackageRepairScopeList[2]))
-                {
-                    argsList.Add("--scope");
-                    argsList.Add("machine");
-                }
-
-                if (Equals(PackageRepairMode, PackageRepairModeList[2]))
-                {
-                    argsList.Add("--silent");
-                }
-
-                if (!Equals(winGetDataSourceName, default))
-                {
-                    argsList.Add("--source");
-                    argsList.Add(string.Format(@"""{0}""", winGetDataSourceName.Key));
-                }
-
-                argsList.Add("--version");
-                argsList.Add(string.Format(@"""{0}""", PackageOperation.AppVersion));
-
-                return string.Join(' ', argsList);
-            });
-
-            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(repairCommand);
-            await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(repairArguments);
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+            }
         }
 
         /// <summary>
         /// 使用命令修复当前版本应用
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(PackageRepairMode)), DynamicWindowsRuntimeCast(typeof(PackageRepairScope))]
         private async void OnRepairWithCmdClicked(object sender, RoutedEventArgs args)
         {
-            string repairParameter = await Task.Run(() =>
+            string repairArguments = await GenerateRepairArgumentsAsync(false, PackageOperation.AppID, ForceInstall, AllowHashMismatch, (PackageRepairMode)PackageRepairMode.SelectedValue, PackageInstallPath, (PackageRepairScope)PackageRepairMode.SelectedValue, PackageOperation.AppVersion);
+            if (!string.IsNullOrEmpty(repairArguments))
             {
-                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-                List<string> argsList = ["repair", "--id", string.Format(@"""{0}""", PackageOperation.AppID)];
-
-                argsList.Add("--accept-package-agreements");
-
-                if (ForceInstall)
-                {
-                    argsList.Add("--force");
-                }
-
-                if (AllowHashMismatch)
-                {
-                    argsList.Add("--ignore-security-hash");
-                }
-
-                if (Equals(PackageRepairMode, PackageRepairModeList[1]))
-                {
-                    argsList.Add("--interactive");
-                }
-
-                if (Equals(PackageRepairScope, PackageRepairScopeList[1]))
-                {
-                    argsList.Add("--scope");
-                    argsList.Add("user");
-                }
-                else if (Equals(PackageRepairScope, PackageRepairScopeList[2]))
-                {
-                    argsList.Add("--scope");
-                    argsList.Add("machine");
-                }
-
-                if (Equals(PackageRepairMode, PackageRepairModeList[2]))
-                {
-                    argsList.Add("--silent");
-                }
-
-                if (!Equals(winGetDataSourceName, default))
-                {
-                    argsList.Add("--source");
-                    argsList.Add(string.Format(@"""{0}""", winGetDataSourceName.Key));
-                }
-
-                argsList.Add("--version");
-                argsList.Add(string.Format(@"""{0}""", PackageOperation.AppVersion));
-
-                return string.Join(' ', argsList);
-            });
-
-            await Task.Run(() =>
-            {
-                Shell32Library.ShellExecute(nint.Zero, "open", "winget.exe", repairParameter, null, WindowShowStyle.SW_SHOWNORMAL);
-            });
+                RunWinGetCommand(repairArguments);
+            }
         }
 
         /// <summary>
@@ -1186,41 +798,7 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(PackageInstallMode)), DynamicWindowsRuntimeCast(typeof(PackageInstallScope))]
         private async void OnUpgradeClicked(object sender, RoutedEventArgs args)
         {
-            PackageOperation.InstallOptions = await Task.Run(() =>
-            {
-                InstallOptions installOptions = new()
-                {
-                    AcceptPackageAgreements = true,
-                    AdditionalInstallerArguments = AdditionalInstallerArguments,
-                    AllowHashMismatch = AllowHashMismatch,
-                    AllowUpgradeToUnknownVersion = AllowUpgradeToUnknownVersion,
-                    BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck,
-                    Force = ForceInstall,
-                    LogOutputPath = LogService.WinGetFolderPath,
-                    PackageInstallMode = (PackageInstallMode)PackageInstallMode.SelectedValue,
-                    PackageInstallScope = (PackageInstallScope)PackageInstallScope.SelectedValue,
-                    PackageVersionId = PackageOperation.PackageVersionId,
-                    PreferredInstallLocation = PackageInstallPath,
-                    SkipDependencies = false,
-                };
-
-                installOptions.AllowedArchitectures.Clear();
-                if (IsX86ProcessorArchitecture)
-                {
-                    installOptions.AllowedArchitectures.Add(ProcessorArchitecture.X86);
-                }
-                if (IsX64ProcessorArchitecture)
-                {
-                    installOptions.AllowedArchitectures.Add(ProcessorArchitecture.X64);
-                }
-                if (IsArm64ProcessorArchitecture)
-                {
-                    installOptions.AllowedArchitectures.Add(ProcessorArchitecture.Arm64);
-                }
-
-                return installOptions;
-            });
-
+            PackageOperation.InstallOptions = await CreateInstallOptionsAsync(AdditionalInstallerArguments, AllowHashMismatch, AllowUpgradeToUnknownVersion, BypassIsStoreClientBlockedPolicyCheck, ForceInstall, (PackageInstallMode)PackageInstallMode.SelectedValue, (PackageInstallScope)PackageInstallScope.SelectedValue, PackageOperation.PackageVersionId, PackageInstallPath, IsX86ProcessorArchitecture, IsX64ProcessorArchitecture, IsArm64ProcessorArchitecture);
             WinGetAppsVersionDialog.Hide();
             await WinGetPage.AddTaskAsync(PackageOperation);
         }
@@ -1228,127 +806,253 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 复制更新命令信息
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(PackageInstallMode)), DynamicWindowsRuntimeCast(typeof(PackageInstallScope))]
         private async void OnCopyUpgradeTextClicked(object sender, RoutedEventArgs args)
         {
-            string upgradeCommand = await Task.Run(() =>
+            string upgradeArguments = await GenerateUpgradeArgumentsAsync(true, PackageOperation.AppID, AdditionalInstallerArguments, ForceInstall, AllowHashMismatch, (PackageInstallMode)PackageInstallMode.SelectedValue, PackageInstallPath, (PackageInstallScope)PackageInstallScope.SelectedValue, PackageOperation.AppVersion);
+            if (!string.IsNullOrEmpty(upgradeArguments))
             {
-                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-                List<string> argsList = ["winget.exe", "upgrade", "--id", string.Format(@"""{0}""", PackageOperation.AppID)];
-
-                argsList.Add("--accept-package-agreements");
-
-                if (!string.IsNullOrEmpty(AdditionalInstallerArguments))
-                {
-                    argsList.Add("--custom");
-                    argsList.Add(string.Format(@"""{0}""", AdditionalInstallerArguments));
-                }
-
-                if (ForceInstall)
-                {
-                    argsList.Add("--force");
-                }
-
-                if (AllowHashMismatch)
-                {
-                    argsList.Add("--ignore-security-hash");
-                }
-
-                if (Equals(PackageInstallMode, PackageInstallModeList[1]))
-                {
-                    argsList.Add("--interactive");
-                }
-
-                if (!string.IsNullOrEmpty(PackageInstallPath))
-                {
-                    argsList.Add("--location");
-                    argsList.Add(string.Format(@"""{0}""", PackageInstallPath));
-                }
-
-                if (Equals(PackageInstallScope, PackageInstallScopeList[1]))
-                {
-                    argsList.Add("--scope");
-                    argsList.Add("user");
-                }
-                else if (Equals(PackageInstallScope, PackageInstallScopeList[2]))
-                {
-                    argsList.Add("--scope");
-                    argsList.Add("machine");
-                }
-
-                if (Equals(PackageInstallMode, PackageInstallModeList[2]))
-                {
-                    argsList.Add("--silent");
-                }
-
-                argsList.Add("--skip-dependencies");
-
-                if (!Equals(winGetDataSourceName, default))
-                {
-                    argsList.Add("--source");
-                    argsList.Add(string.Format(@"""{0}""", winGetDataSourceName.Key));
-                }
-
-                argsList.Add("--version");
-                argsList.Add(string.Format(@"""{0}""", PackageOperation.AppVersion));
-
-                return string.Join(' ', argsList);
-            });
-
-            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(upgradeCommand);
-            await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(upgradeArguments);
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+            }
         }
 
         /// <summary>
         /// 使用更新修复当前版本应用
         /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(PackageInstallMode)), DynamicWindowsRuntimeCast(typeof(PackageInstallScope))]
         private async void OnUpgradeWithCmdClicked(object sender, RoutedEventArgs args)
         {
-            string upgradeParameter = await Task.Run(() =>
+            string upgradeArguments = await GenerateUpgradeArgumentsAsync(false, PackageOperation.AppID, AdditionalInstallerArguments, ForceInstall, AllowHashMismatch, (PackageInstallMode)PackageInstallMode.SelectedValue, PackageInstallPath, (PackageInstallScope)PackageInstallScope.SelectedValue, PackageOperation.AppVersion);
+            RunWinGetCommand(upgradeArguments);
+        }
+
+        #endregion 第五部分：挂载事件处理
+
+        #region 第六部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private void InitializeData()
+        {
+            PackageArchitectureList.Add(new() { SelectedValue = ProcessorArchitecture.Unknown, DisplayMember = ProcessorArchitectureDefaultString });
+            PackageArchitectureList.Add(new() { SelectedValue = ProcessorArchitecture.X86, DisplayMember = ProcessorArchitectureX86String });
+            PackageArchitectureList.Add(new() { SelectedValue = ProcessorArchitecture.X64, DisplayMember = ProcessorArchitectureX64String });
+            PackageArchitectureList.Add(new() { SelectedValue = ProcessorArchitecture.Arm64, DisplayMember = ProcessorArchitectureArm64String });
+
+            PackageInstallScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallScope.Any, DisplayMember = PackageInstallScopeAnyString });
+            PackageInstallScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallScope.User, DisplayMember = PackageInstallScopeUserString });
+            PackageInstallScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallScope.System, DisplayMember = PackageInstallScopeSystemString });
+
+            PackageInstallModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallMode.Default, DisplayMember = PackageInstallModeDefaultString });
+            PackageInstallModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallMode.Interactive, DisplayMember = PackageInstallModeInteractiveString });
+            PackageInstallModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageInstallMode.Silent, DisplayMember = PackageInstallModeSilentString });
+
+            PackageRepairScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairScope.Any, DisplayMember = PackageRepairScopeAnyString });
+            PackageRepairScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairScope.User, DisplayMember = PackageRepairScopeUserString });
+            PackageRepairScopeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairScope.System, DisplayMember = PackageRepairScopeSystemString });
+
+            PackageRepairModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairMode.Default, DisplayMember = PackageRepairModeDefaultString });
+            PackageRepairModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairMode.Interactive, DisplayMember = PackageRepairModeInteractiveString });
+            PackageRepairModeList.Add(new() { SelectedValue = Microsoft.Management.Deployment.PackageRepairMode.Silent, DisplayMember = PackageRepairModeSilentString });
+        }
+
+        /// <summary>
+        /// 创建下载选项
+        /// </summary>
+        private async Task<DownloadOptions> CreateDownloadOptionsAsync(bool allowHashMismatch, ProcessorArchitecture packageArchitecture, string packageDownloadPath, PackageVersionId packageVersionId, PackageInstallScope packageInstallScope)
+        {
+            return await Task.Run(() =>
+            {
+                DownloadOptions downloadOptions = WinGetFactoryHelper.CreateDownloadOptions();
+                downloadOptions.AcceptPackageAgreements = true;
+                downloadOptions.AllowHashMismatch = allowHashMismatch;
+                downloadOptions.Architecture = packageArchitecture;
+                downloadOptions.DownloadDirectory = packageDownloadPath;
+                downloadOptions.PackageVersionId = packageVersionId;
+                downloadOptions.Scope = packageInstallScope;
+                downloadOptions.SkipDependencies = false;
+                return downloadOptions;
+            });
+        }
+
+        /// <summary>
+        /// 创建安装选项
+        /// </summary>
+        private async Task<InstallOptions> CreateInstallOptionsAsync(string additionalInstallerArguments, bool allowHashMismatch, bool allowUpgradeToUnknownVersion, bool bypassIsStoreClientBlockedPolicyCheck, bool forceInstall, PackageInstallMode packageInstallMode, PackageInstallScope packageInstallScope, PackageVersionId packageVersionId, string packageInstallPath, bool isX86ProcessorArchitecture, bool isX64ProcessorArchitecture, bool isArm64ProcessorArchitecture)
+        {
+            return await Task.Run(() =>
+            {
+                InstallOptions installOptions = WinGetFactoryHelper.CreateInstallOptions();
+                installOptions.AcceptPackageAgreements = true;
+                installOptions.AdditionalInstallerArguments = additionalInstallerArguments;
+                installOptions.AllowHashMismatch = allowHashMismatch;
+                installOptions.AllowUpgradeToUnknownVersion = allowUpgradeToUnknownVersion;
+                installOptions.BypassIsStoreClientBlockedPolicyCheck = bypassIsStoreClientBlockedPolicyCheck;
+                installOptions.Force = forceInstall;
+                installOptions.LogOutputPath = LogService.WinGetFolderPath;
+                installOptions.PackageInstallMode = packageInstallMode;
+                installOptions.PackageInstallScope = packageInstallScope;
+                installOptions.PackageVersionId = packageVersionId;
+                installOptions.PreferredInstallLocation = packageInstallPath;
+                installOptions.SkipDependencies = false;
+                installOptions.AllowedArchitectures.Clear();
+
+                if (isX86ProcessorArchitecture)
+                {
+                    installOptions.AllowedArchitectures.Add(ProcessorArchitecture.X86);
+                }
+                if (isX64ProcessorArchitecture)
+                {
+                    installOptions.AllowedArchitectures.Add(ProcessorArchitecture.X64);
+                }
+                if (isArm64ProcessorArchitecture)
+                {
+                    installOptions.AllowedArchitectures.Add(ProcessorArchitecture.Arm64);
+                }
+
+                return installOptions;
+            });
+        }
+
+        /// <summary>
+        /// 创建修复选项
+        /// </summary>
+        private async Task<RepairOptions> CreateRepairOptionsAsync(bool allowHashMismatch, bool bypassIsStoreClientBlockedPolicyCheck, bool forceInstall, PackageRepairMode packageRepairMode, PackageRepairScope packageRepairScope, PackageVersionId packageVersionId)
+        {
+            return await Task.Run(() =>
+            {
+                RepairOptions repairOptions = WinGetFactoryHelper.CreateRepairOptions();
+                repairOptions.AcceptPackageAgreements = true;
+                repairOptions.AllowHashMismatch = allowHashMismatch;
+                repairOptions.BypassIsStoreClientBlockedPolicyCheck = bypassIsStoreClientBlockedPolicyCheck;
+                repairOptions.Force = forceInstall;
+                repairOptions.LogOutputPath = LogService.WinGetFolderPath;
+                repairOptions.PackageRepairMode = packageRepairMode;
+                repairOptions.PackageRepairScope = packageRepairScope;
+                repairOptions.PackageVersionId = packageVersionId;
+                return repairOptions;
+            });
+        }
+
+        /// <summary>
+        /// 生成下载参数
+        /// </summary>
+        private async Task<string> GenerateDownloadArgumentsAsync(bool hasProcessName, string appId, ProcessorArchitecture packageArchitecture, string packageDownloadPath, bool allowHashMismatch, PackageInstallScope packageInstallScope, string version)
+        {
+            return await Task.Run(() =>
             {
                 KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-                List<string> argsList = ["upgrade", "--id", string.Format(@"""{0}""", PackageOperation.AppID)];
-
+                List<string> argsList = [];
+                if (hasProcessName)
+                {
+                    argsList.Add("winget.exe");
+                }
+                argsList.AddRange((string[])["download", "--id", string.Format(@"""{0}""", appId)]);
                 argsList.Add("--accept-package-agreements");
 
-                if (!string.IsNullOrEmpty(AdditionalInstallerArguments))
+                if (packageArchitecture is not ProcessorArchitecture.Unknown)
                 {
-                    argsList.Add("--custom");
-                    argsList.Add(string.Format(@"""{0}""", AdditionalInstallerArguments));
+                    argsList.Add("--architecture");
+                    argsList.Add(string.Format(@"""{0}""", Convert.ToString(packageArchitecture)));
                 }
 
-                if (ForceInstall)
+                if (!string.IsNullOrEmpty(packageDownloadPath))
                 {
-                    argsList.Add("--force");
+                    argsList.Add("--download-directory");
+                    argsList.Add(string.Format(@"""{0}""", packageDownloadPath));
                 }
 
-                if (AllowHashMismatch)
+                if (allowHashMismatch)
                 {
                     argsList.Add("--ignore-security-hash");
                 }
 
-                if (Equals(PackageInstallMode, PackageInstallModeList[1]))
-                {
-                    argsList.Add("--interactive");
-                }
-
-                if (!string.IsNullOrEmpty(PackageInstallPath))
-                {
-                    argsList.Add("--location");
-                    argsList.Add(string.Format(@"""{0}""", PackageInstallPath));
-                }
-
-                if (Equals(PackageInstallScope, PackageInstallScopeList[1]))
+                if (packageInstallScope is Microsoft.Management.Deployment.PackageInstallScope.User)
                 {
                     argsList.Add("--scope");
                     argsList.Add("user");
                 }
-                else if (Equals(PackageInstallScope, PackageInstallScopeList[2]))
+                else if (packageInstallScope is Microsoft.Management.Deployment.PackageInstallScope.System)
                 {
                     argsList.Add("--scope");
                     argsList.Add("machine");
                 }
 
-                if (Equals(PackageInstallMode, PackageInstallModeList[2]))
+                argsList.Add("--skip-dependencies");
+
+                if (!Equals(winGetDataSourceName, default))
+                {
+                    argsList.Add("--source");
+                    argsList.Add(string.Format(@"""{0}""", winGetDataSourceName.Key));
+                }
+
+                if (!string.IsNullOrEmpty(version))
+                {
+                    argsList.Add("--version");
+                    argsList.Add(string.Format(@"""{0}""", version));
+                }
+
+                return string.Join(' ', argsList);
+            });
+        }
+
+        /// <summary>
+        /// 生成下载参数
+        /// </summary>
+        private async Task<string> GenerateInstallArgumentsAsync(bool hasProcessName, string appId, string additionalInstallerArguments, bool forceInstall, bool allowHashMismatch, PackageInstallMode packageInstallMode, string packageInstallPath, PackageInstallScope packageInstallScope, string version)
+        {
+            return await Task.Run(() =>
+            {
+                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+                List<string> argsList = [];
+                if (hasProcessName)
+                {
+                    argsList.Add("winget.exe");
+                }
+                argsList.AddRange((string[])["install", "--id", string.Format(@"""{0}""", appId)]);
+                argsList.Add("--accept-package-agreements");
+
+                if (!string.IsNullOrEmpty(additionalInstallerArguments))
+                {
+                    argsList.Add("--custom");
+                    argsList.Add(string.Format(@"""{0}""", additionalInstallerArguments));
+                }
+
+                if (forceInstall)
+                {
+                    argsList.Add("--force");
+                }
+
+                if (allowHashMismatch)
+                {
+                    argsList.Add("--ignore-security-hash");
+                }
+
+                if (packageInstallMode is Microsoft.Management.Deployment.PackageInstallMode.Interactive)
+                {
+                    argsList.Add("--interactive");
+                }
+
+                if (!string.IsNullOrEmpty(packageInstallPath))
+                {
+                    argsList.Add("--location");
+                    argsList.Add(string.Format(@"""{0}""", packageInstallPath));
+                }
+
+                if (packageInstallScope is Microsoft.Management.Deployment.PackageInstallScope.User)
+                {
+                    argsList.Add("--scope");
+                    argsList.Add("user");
+                }
+                else if (packageInstallScope is Microsoft.Management.Deployment.PackageInstallScope.System)
+                {
+                    argsList.Add("--scope");
+                    argsList.Add("machine");
+                }
+
+                if (packageInstallMode is Microsoft.Management.Deployment.PackageInstallMode.Silent)
                 {
                     argsList.Add("--silent");
                 }
@@ -1361,23 +1065,212 @@ namespace GetStoreApp.Views.Pages
                     argsList.Add(string.Format(@"""{0}""", winGetDataSourceName.Key));
                 }
 
-                argsList.Add("--version");
-                argsList.Add(string.Format(@"""{0}""", PackageOperation.AppVersion));
+                if (!string.IsNullOrEmpty(version))
+                {
+                    argsList.Add("--version");
+                    argsList.Add(string.Format(@"""{0}""", version));
+                }
 
                 return string.Join(' ', argsList);
             });
+        }
 
-            await Task.Run(() =>
+        /// <summary>
+        /// 生成修复参数
+        /// </summary>
+        private async Task<string> GenerateRepairArgumentsAsync(bool hasProcessName, string appId, bool forceInstall, bool allowHashMismatch, PackageRepairMode packageRepairMode, string packageInstallPath, PackageRepairScope packageRepairScope, string version)
+        {
+            return await Task.Run(() =>
             {
-                Shell32Library.ShellExecute(nint.Zero, "open", "winget.exe", upgradeParameter, null, WindowShowStyle.SW_SHOWNORMAL);
+                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+                List<string> argsList = [];
+                if (hasProcessName)
+                {
+                    argsList.Add("winget.exe");
+                }
+                argsList.AddRange((string[])["repair", "--id", string.Format(@"""{0}""", appId)]);
+                argsList.Add("--accept-package-agreements");
+
+                if (forceInstall)
+                {
+                    argsList.Add("--force");
+                }
+
+                if (allowHashMismatch)
+                {
+                    argsList.Add("--ignore-security-hash");
+                }
+
+                if (packageRepairMode is Microsoft.Management.Deployment.PackageRepairMode.Interactive)
+                {
+                    argsList.Add("--interactive");
+                }
+
+                if (packageRepairScope is Microsoft.Management.Deployment.PackageRepairScope.User)
+                {
+                    argsList.Add("--scope");
+                    argsList.Add("user");
+                }
+                else if (packageRepairScope is Microsoft.Management.Deployment.PackageRepairScope.System)
+                {
+                    argsList.Add("--scope");
+                    argsList.Add("machine");
+                }
+
+                if (packageRepairMode is Microsoft.Management.Deployment.PackageRepairMode.Silent)
+                {
+                    argsList.Add("--silent");
+                }
+
+                if (!Equals(winGetDataSourceName, default))
+                {
+                    argsList.Add("--source");
+                    argsList.Add(string.Format(@"""{0}""", winGetDataSourceName.Key));
+                }
+
+                if (!string.IsNullOrEmpty(version))
+                {
+                    argsList.Add("--version");
+                    argsList.Add(string.Format(@"""{0}""", version));
+                }
+
+                return string.Join(' ', argsList);
             });
         }
 
-        #endregion 第二部分：WinGet 应用版本信息操作选项页面——挂载的事件
+        /// <summary>
+        /// 生成更新参数
+        /// </summary>
+        private async Task<string> GenerateUpgradeArgumentsAsync(bool hasProcessName, string appId, string additionalInstallerArguments, bool forceInstall, bool allowHashMismatch, PackageInstallMode packageInstallMode, string packageInstallPath, PackageInstallScope packageInstallScope, string version)
+        {
+            return await Task.Run(() =>
+            {
+                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+                List<string> argsList = [];
+                if (hasProcessName)
+                {
+                    argsList.Add("winget.exe");
+                }
+                argsList.AddRange((string[])["upgrade", "--id", string.Format(@"""{0}""", appId)]);
+
+                argsList.Add("--accept-package-agreements");
+
+                if (!string.IsNullOrEmpty(additionalInstallerArguments))
+                {
+                    argsList.Add("--custom");
+                    argsList.Add(string.Format(@"""{0}""", additionalInstallerArguments));
+                }
+
+                if (forceInstall)
+                {
+                    argsList.Add("--force");
+                }
+
+                if (allowHashMismatch)
+                {
+                    argsList.Add("--ignore-security-hash");
+                }
+
+                if (packageInstallMode is Microsoft.Management.Deployment.PackageInstallMode.Interactive)
+                {
+                    argsList.Add("--interactive");
+                }
+
+                if (!string.IsNullOrEmpty(packageInstallPath))
+                {
+                    argsList.Add("--location");
+                    argsList.Add(string.Format(@"""{0}""", packageInstallPath));
+                }
+
+                if (packageInstallScope is Microsoft.Management.Deployment.PackageInstallScope.User)
+                {
+                    argsList.Add("--scope");
+                    argsList.Add("user");
+                }
+                else if (packageInstallScope is Microsoft.Management.Deployment.PackageInstallScope.System)
+                {
+                    argsList.Add("--scope");
+                    argsList.Add("machine");
+                }
+
+                if (packageInstallMode is Microsoft.Management.Deployment.PackageInstallMode.Silent)
+                {
+                    argsList.Add("--silent");
+                }
+
+                argsList.Add("--skip-dependencies");
+
+                if (!Equals(winGetDataSourceName, default))
+                {
+                    argsList.Add("--source");
+                    argsList.Add(string.Format(@"""{0}""", winGetDataSourceName.Key));
+                }
+
+                if (!string.IsNullOrEmpty(version))
+                {
+                    argsList.Add("--version");
+                    argsList.Add(string.Format(@"""{0}""", version));
+                }
+
+                return string.Join(' ', argsList);
+            });
+        }
+
+        /// <summary>
+        /// 运行 WinGet 命令
+        /// </summary>
+        private void RunWinGetCommand(string arguments)
+        {
+            if (!string.IsNullOrEmpty(arguments))
+            {
+                Task.Run(() =>
+                {
+                    Shell32Library.ShellExecute(nint.Zero, "open", "winget.exe", arguments, null, WindowShowStyle.SW_SHOWNORMAL);
+                });
+            }
+        }
+
+        /// <summary>
+        /// 打开应用下载路径
+        /// </summary>
+        private void OpenPackageDownloadPath(string packageDownloadPath)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchFolderPathAsync(packageDownloadPath);
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 打开应用安装路径
+        /// </summary>
+        private void OpenPackageInstallPath(string packageInstallPath)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchFolderPathAsync(packageInstallPath);
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
 
         private Visibility CheckPackagePathVisibility(string packagePath)
         {
             return string.IsNullOrEmpty(packagePath) ? Visibility.Collapsed : Visibility.Visible;
         }
+
+        #endregion 第六部分：数据操作与业务逻辑
     }
 }

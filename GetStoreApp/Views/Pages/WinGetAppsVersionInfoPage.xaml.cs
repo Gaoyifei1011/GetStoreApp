@@ -18,6 +18,7 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 using Windows.UI.Text;
 using WinRT;
 
@@ -31,6 +32,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     internal sealed partial class WinGetAppsVersionInfoPage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string AuthorString = ResourceService.GetLocalized("WinGetAppsVersionInfo/Author");
         private readonly string CopyRightLinkString = ResourceService.GetLocalized("WinGetAppsVersionInfo/CopyRightLink");
         private readonly string CopyRightString = ResourceService.GetLocalized("WinGetAppsVersionInfo/CopyRight");
@@ -52,6 +55,10 @@ namespace GetStoreApp.Views.Pages
         private readonly string VersionString = ResourceService.GetLocalized("WinGetAppsVersionInfo/Version");
         private readonly string WinGetAppsVersionCountInfoString = ResourceService.GetLocalized("WinGetAppsVersionInfo/WinGetAppsVersionCountInfo");
 
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
+
         private WinGetPage WinGetPage { get; set; }
 
         private WinGetAppsVersionDialog WinGetAppsVersionDialog { get; set; }
@@ -62,7 +69,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isLoadCompleted;
 
-        internal bool IsLoadCompleted
+        private bool IsLoadCompleted
         {
             get { return _isLoadCompleted; }
 
@@ -78,7 +85,7 @@ namespace GetStoreApp.Views.Pages
 
         private AvailableVersionModel _selectedItem;
 
-        internal AvailableVersionModel SelectedItem
+        private AvailableVersionModel SelectedItem
         {
             get { return _selectedItem; }
 
@@ -94,7 +101,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _displayName;
 
-        internal string DisplayName
+        private string DisplayName
         {
             get { return _displayName; }
 
@@ -110,7 +117,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _description;
 
-        internal string Description
+        private string Description
         {
             get { return _description; }
 
@@ -126,7 +133,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _version;
 
-        internal string Version
+        private string Version
         {
             get { return _version; }
 
@@ -142,7 +149,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isPackageLinkExisted;
 
-        internal bool IsPackageLinkExisted
+        private bool IsPackageLinkExisted
         {
             get { return _isPackageLinkExisted; }
 
@@ -158,7 +165,7 @@ namespace GetStoreApp.Views.Pages
 
         private Uri _packageLink;
 
-        internal Uri PackageLink
+        private Uri PackageLink
         {
             get { return _packageLink; }
 
@@ -174,7 +181,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _author;
 
-        internal string Author
+        private string Author
         {
             get { return _author; }
 
@@ -190,7 +197,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _publisher;
 
-        internal string Publisher
+        private string Publisher
         {
             get { return _publisher; }
 
@@ -206,7 +213,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isPublisherLinkExisted;
 
-        internal bool IsPublisherLinkExisted
+        private bool IsPublisherLinkExisted
         {
             get { return _isPublisherLinkExisted; }
 
@@ -222,7 +229,7 @@ namespace GetStoreApp.Views.Pages
 
         private Uri _publisherLink;
 
-        internal Uri PublisherLink
+        private Uri PublisherLink
         {
             get { return _publisherLink; }
 
@@ -238,7 +245,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isPublisherSupportLinkExisted;
 
-        internal bool IsPublisherSupportLinkExisted
+        private bool IsPublisherSupportLinkExisted
         {
             get { return _isPublisherSupportLinkExisted; }
 
@@ -254,7 +261,7 @@ namespace GetStoreApp.Views.Pages
 
         private Uri _publisherSupportLink;
 
-        internal Uri PublisherSupportLink
+        private Uri PublisherSupportLink
         {
             get { return _publisherSupportLink; }
 
@@ -270,7 +277,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _locale;
 
-        internal string Locale
+        private string Locale
         {
             get { return _locale; }
 
@@ -286,7 +293,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _copyRight;
 
-        internal string CopyRight
+        private string CopyRight
         {
             get { return _copyRight; }
 
@@ -302,7 +309,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isCopyRightLinkExisted;
 
-        internal bool IsCopyRightLinkExisted
+        private bool IsCopyRightLinkExisted
         {
             get { return _isCopyRightLinkExisted; }
 
@@ -318,7 +325,7 @@ namespace GetStoreApp.Views.Pages
 
         private Uri _copyRightLink;
 
-        internal Uri CopyRightLink
+        private Uri CopyRightLink
         {
             get { return _copyRightLink; }
 
@@ -334,7 +341,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _license;
 
-        internal string License
+        private string License
         {
             get { return _license; }
 
@@ -350,7 +357,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isLicenseLinkExisted;
 
-        internal bool IsLicenseLinkExisted
+        private bool IsLicenseLinkExisted
         {
             get { return _isLicenseLinkExisted; }
 
@@ -366,7 +373,7 @@ namespace GetStoreApp.Views.Pages
 
         private Uri _licenseLink;
 
-        internal Uri LicenseLink
+        private Uri LicenseLink
         {
             get { return _licenseLink; }
 
@@ -382,7 +389,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isPrivacyLinkExisted;
 
-        internal bool IsPrivacyLinkExisted
+        private bool IsPrivacyLinkExisted
         {
             get { return _isPrivacyLinkExisted; }
 
@@ -398,7 +405,7 @@ namespace GetStoreApp.Views.Pages
 
         private Uri _privacyLink;
 
-        internal Uri PrivacyLink
+        private Uri PrivacyLink
         {
             get { return _privacyLink; }
 
@@ -414,7 +421,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isPurchaseLinkExisted;
 
-        internal bool IsPurchaseLinkExisted
+        private bool IsPurchaseLinkExisted
         {
             get { return _isPurchaseLinkExisted; }
 
@@ -430,7 +437,7 @@ namespace GetStoreApp.Views.Pages
 
         private Uri _purchaseLink;
 
-        internal Uri PurchaseLink
+        private Uri PurchaseLink
         {
             get { return _purchaseLink; }
 
@@ -446,7 +453,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _releaseNotes;
 
-        internal string ReleaseNotes
+        private string ReleaseNotes
         {
             get { return _releaseNotes; }
 
@@ -462,7 +469,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isReleaseNotesLinkExisted;
 
-        internal bool IsReleaseNotesLinkExisted
+        private bool IsReleaseNotesLinkExisted
         {
             get { return _isReleaseNotesLinkExisted; }
 
@@ -478,7 +485,7 @@ namespace GetStoreApp.Views.Pages
 
         private Uri _releaseNotesLink;
 
-        internal Uri ReleaseNotesLink
+        private Uri ReleaseNotesLink
         {
             get { return _releaseNotesLink; }
 
@@ -500,12 +507,18 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
         internal WinGetAppsVersionInfoPage()
         {
             InitializeComponent();
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面触发的事件
@@ -518,185 +531,13 @@ namespace GetStoreApp.Views.Pages
             {
                 WinGetPage = winGetPage;
                 WinGetAppsVersionDialog = winGetAppsVersionDialog;
-
-                // 搜索应用
-                if (argsList[2] is SearchAppsModel searchApps)
-                {
-                    SearchApps = searchApps;
-                }
-                // 可更新应用
-                else if (argsList[2] is UpgradableAppsModel upgradableApps)
-                {
-                    UpgradableApps = upgradableApps;
-                }
-
-                DisplayName = NotAvailableString;
-                Description = NotAvailableString;
-                Version = NotAvailableString;
-                PackageLink = null;
-                IsPackageLinkExisted = false;
-                Author = NotAvailableString;
-                Publisher = NotAvailableString;
-                PublisherLink = null;
-                IsPublisherLinkExisted = false;
-                PublisherSupportLink = null;
-                IsPublisherLinkExisted = false;
-                Locale = NotAvailableString;
-                CopyRight = NotAvailableString;
-                CopyRightLink = null;
-                IsCopyRightLinkExisted = false;
-                License = NotAvailableString;
-                LicenseLink = null;
-                IsLicenseLinkExisted = false;
-                PrivacyLink = null;
-                IsPrivacyLinkExisted = false;
-                PurchaseLink = null;
-                IsPrivacyLinkExisted = false;
-                ReleaseNotes = NotAvailableString;
-                ReleaseNotesLink = null;
-                IsReleaseNotesLinkExisted = false;
-
-                if (!IsLoadCompleted)
-                {
-                    if (SearchApps is not null)
-                    {
-                        bool hasDefaultVersion = false;
-
-                        // 获取当前应用可用版本
-                        List<AvailableVersionModel> availableVersionList = await Task.Run(() =>
-                        {
-                            List<AvailableVersionModel> availableVersionList = [];
-
-                            for (int subIndex = 0; subIndex < SearchApps.CatalogPackage.AvailableVersions.Count; subIndex++)
-                            {
-                                PackageVersionId packageVersionId = SearchApps.CatalogPackage.AvailableVersions[subIndex];
-
-                                if (!string.IsNullOrEmpty(packageVersionId.Version))
-                                {
-                                    bool isDefaultVersion = false;
-
-                                    // 判断是否等同于默认版本
-                                    if (SearchApps.CatalogPackage.DefaultInstallVersion.CompareToVersion(packageVersionId.Version) is CompareResult.Equal)
-                                    {
-                                        isDefaultVersion = true;
-                                        if (!hasDefaultVersion)
-                                        {
-                                            hasDefaultVersion = true;
-                                        }
-                                    }
-
-                                    // 添加所有已经获取到的所有版本
-                                    availableVersionList.Add(new()
-                                    {
-                                        IsDefaultVersion = isDefaultVersion,
-                                        Version = packageVersionId.Version,
-                                        PackageVersionId = packageVersionId
-                                    });
-                                }
-                            }
-
-                            // 没有默认版本，把默认版本添加在第一项
-                            if (!hasDefaultVersion)
-                            {
-                                availableVersionList.Insert(0, new()
-                                {
-                                    IsDefaultVersion = true,
-                                    Version = SearchApps.CatalogPackage.DefaultInstallVersion.Version,
-                                    PackageVersionId = null,
-                                    PackageVersionInfo = SearchApps.CatalogPackage.DefaultInstallVersion
-                                });
-                            }
-
-                            return availableVersionList;
-                        });
-
-                        foreach (AvailableVersionModel availableVersionItem in availableVersionList)
-                        {
-                            WinGetAppsVersionCollection.Add(availableVersionItem);
-
-                            if (availableVersionItem.IsDefaultVersion)
-                            {
-                                SelectedItem = availableVersionItem;
-                                await InitializeVersionInformationAsync(availableVersionItem);
-                            }
-                        }
-                    }
-                    else if (UpgradableApps is not null)
-                    {
-                        bool hasDefaultVersion = false;
-
-                        // 获取当前应用可用版本
-                        List<AvailableVersionModel> availableVersionList = await Task.Run(() =>
-                        {
-                            List<AvailableVersionModel> availableVersionList = [];
-
-                            for (int subIndex = 0; subIndex < UpgradableApps.CatalogPackage.AvailableVersions.Count; subIndex++)
-                            {
-                                PackageVersionId packageVersionId = UpgradableApps.CatalogPackage.AvailableVersions[subIndex];
-
-                                if (!string.IsNullOrEmpty(packageVersionId.Version))
-                                {
-                                    // 获取大于已安装应用版本的所有版本
-                                    if (UpgradableApps.CatalogPackage.InstalledVersion.CompareToVersion(packageVersionId.Version) is CompareResult.Lesser)
-                                    {
-                                        bool isDefaultVersion = false;
-
-                                        // 判断是否等同于默认版本
-                                        if (UpgradableApps.CatalogPackage.DefaultInstallVersion.CompareToVersion(packageVersionId.Version) is CompareResult.Equal)
-                                        {
-                                            isDefaultVersion = true;
-                                            if (!hasDefaultVersion)
-                                            {
-                                                hasDefaultVersion = true;
-                                            }
-                                        }
-
-                                        // 添加所有已经获取到的所有版本
-                                        availableVersionList.Add(new()
-                                        {
-                                            IsDefaultVersion = isDefaultVersion,
-                                            Version = packageVersionId.Version,
-                                            PackageVersionId = packageVersionId
-                                        });
-                                    }
-                                }
-                            }
-
-                            // 没有默认版本，把默认版本添加在第一项
-                            if (!hasDefaultVersion)
-                            {
-                                availableVersionList.Insert(0, new()
-                                {
-                                    IsDefaultVersion = true,
-                                    Version = UpgradableApps.CatalogPackage.DefaultInstallVersion.Version,
-                                    PackageVersionId = null,
-                                    PackageVersionInfo = UpgradableApps.CatalogPackage.DefaultInstallVersion
-                                });
-                            }
-
-                            return availableVersionList;
-                        });
-
-                        foreach (AvailableVersionModel availableVersionItem in availableVersionList)
-                        {
-                            WinGetAppsVersionCollection.Add(availableVersionItem);
-
-                            if (availableVersionItem.IsDefaultVersion)
-                            {
-                                SelectedItem = availableVersionItem;
-                                await InitializeVersionInformationAsync(availableVersionItem);
-                            }
-                        }
-                    }
-                }
-
-                IsLoadCompleted = true;
+                await InitializeDataAsync(argsList[2]);
             }
         }
 
-        #endregion 第一部分：重写父类事件
+        #endregion 第四部分：父类虚方法重写
 
-        #region 第二部分：WinGet 应用版本信息页面——挂载的事件
+        #region 第五部分：挂载事件处理
 
         /// <summary>
         /// 选中项发生变化时触发的事件
@@ -721,33 +562,12 @@ namespace GetStoreApp.Views.Pages
 
         private async void OnCopyInformationClicked(object sender, RoutedEventArgs args)
         {
-            List<string> copyInformationList = await Task.Run(() =>
+            string copyInformation = await GetCopyInformationStringAsync(DisplayName, Description, Version, PackageLink, Author, Publisher, PublisherLink, PublisherSupportLink, Locale, CopyRight, CopyRightLink, License, LicenseLink, PrivacyLink, PurchaseLink, ReleaseNotes, ReleaseNotesLink);
+            if (!string.IsNullOrEmpty(copyInformation))
             {
-                List<string> copyInformationList = [];
-
-                copyInformationList.Add(string.Format("{0}\t{1}", DisplayNameString, DisplayName));
-                copyInformationList.Add(string.Format("{0}\t{1}", DescriptionString, Description));
-                copyInformationList.Add(string.Format("{0}\t{1}", VersionString, Version));
-                copyInformationList.Add(string.Format("{0}\t{1}", PackageLinkString, PackageLink));
-                copyInformationList.Add(string.Format("{0}\t{1}", AuthorString, Author));
-                copyInformationList.Add(string.Format("{0}\t{1}", PublisherString, Publisher));
-                copyInformationList.Add(string.Format("{0}\t{1}", PublisherLinkString, PublisherLink));
-                copyInformationList.Add(string.Format("{0}\t{1}", PublisherSupportLinkString, PublisherSupportLink));
-                copyInformationList.Add(string.Format("{0}\t{1}", LocaleString, Locale));
-                copyInformationList.Add(string.Format("{0}\t{1}", CopyRightString, CopyRight));
-                copyInformationList.Add(string.Format("{0}\t{1}", CopyRightLinkString, CopyRightLink));
-                copyInformationList.Add(string.Format("{0}\t{1}", LicenseString, License));
-                copyInformationList.Add(string.Format("{0}\t{1}", LicenseLinkString, LicenseLink));
-                copyInformationList.Add(string.Format("{0}\t{1}", PrivacyLinkString, PrivacyLink));
-                copyInformationList.Add(string.Format("{0}\t{1}", PurchaseLinkString, PurchaseLink));
-                copyInformationList.Add(string.Format("{0}\t{1}", ReleaseNotesString, ReleaseNotes));
-                copyInformationList.Add(string.Format("{0}\t{1}", ReleaseNotesLinkString, ReleaseNotesLink));
-
-                return copyInformationList;
-            });
-
-            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyInformationList));
-            await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyInformation);
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+            }
         }
 
         /// <summary>
@@ -757,21 +577,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (SearchApps is not null && SelectedItem is not null && WinGetAppsVersionDialog is not null)
             {
-                WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
-                {
-                    PackageOperationKind = PackageOperationKind.Download,
-                    AppID = SearchApps.AppID,
-                    AppName = SearchApps.AppName,
-                    AppVersion = SelectedItem.Version,
-                    PackagePath = WinGetConfigService.DefaultDownloadFolder,
-                    PackageOperationProgress = 0,
-                    PackageDownloadProgressState = PackageDownloadProgressState.Queued,
-                    PackageVersionId = SelectedItem.PackageVersionId,
-                    DownloadedFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
-                    TotalFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
-                    PackageDownloadProgress = null,
-                    SearchApps = SearchApps,
-                 }}, true);
+                NavigateOptionsPage(PackageOperationKind.Download, SearchApps, null, SelectedItem.Version, SelectedItem.PackageVersionId);
             }
         }
 
@@ -782,21 +588,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (SearchApps is not null && SelectedItem is not null && WinGetAppsVersionDialog is not null)
             {
-                WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
-                {
-                    PackageOperationKind = PackageOperationKind.Install,
-                    AppID = SearchApps.AppID,
-                    AppName = SearchApps.AppName,
-                    AppVersion = SelectedItem.Version,
-                    PackagePath = Path.Combine(Path.GetTempPath(), "WinGet"),
-                    PackageOperationProgress = 0,
-                    PackageInstallProgressState = PackageInstallProgressState.Queued,
-                    PackageVersionId = SelectedItem.PackageVersionId,
-                    DownloadedFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
-                    TotalFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
-                    PackageInstallProgress = null,
-                    SearchApps = SearchApps,
-                }}, true);
+                NavigateOptionsPage(PackageOperationKind.Install, SearchApps, null, SelectedItem.Version, SelectedItem.PackageVersionId);
             }
         }
 
@@ -807,21 +599,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (SearchApps is not null && SelectedItem is not null && WinGetAppsVersionDialog is not null)
             {
-                WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
-                {
-                    PackageOperationKind = PackageOperationKind.Repair,
-                    AppID = SearchApps.AppID,
-                    AppName = SearchApps.AppName,
-                    AppVersion = SelectedItem.Version,
-                    PackagePath = Path.Combine(Path.GetTempPath(), "WinGet"),
-                    PackageOperationProgress = 0,
-                    PackageRepairProgressState = PackageRepairProgressState.Queued,
-                    PackageVersionId = SelectedItem.PackageVersionId,
-                    DownloadedFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
-                    TotalFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
-                    PackageRepairProgress = null,
-                    SearchApps = SearchApps,
-                }}, true);
+                NavigateOptionsPage(PackageOperationKind.Repair, SearchApps, null, SelectedItem.Version, SelectedItem.PackageVersionId);
             }
         }
 
@@ -832,25 +610,137 @@ namespace GetStoreApp.Views.Pages
         {
             if (UpgradableApps is not null && SelectedItem is not null && WinGetAppsVersionDialog is not null)
             {
-                WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
-                {
-                    PackageOperationKind = PackageOperationKind.Upgrade,
-                    AppID = UpgradableApps.AppID,
-                    AppName = UpgradableApps.AppName,
-                    AppVersion = SelectedItem.Version,
-                    PackagePath = Path.Combine(Path.GetTempPath(), "WinGet"),
-                    PackageOperationProgress = 0,
-                    PackageInstallProgressState = PackageInstallProgressState.Queued,
-                    PackageVersionId = SelectedItem.PackageVersionId,
-                    DownloadedFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
-                    TotalFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
-                    PackageInstallProgress = null,
-                    UpgradableApps = UpgradableApps,
-                }}, true);
+                NavigateOptionsPage(PackageOperationKind.Download, null, UpgradableApps, SelectedItem.Version, SelectedItem.PackageVersionId);
             }
         }
 
-        #endregion 第二部分：WinGet 应用版本信息页面——挂载的事件
+        #endregion 第五部分：挂载事件处理
+
+        #region 第六部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private async Task InitializeDataAsync(object args)
+        {
+            // 搜索应用
+            if (args is SearchAppsModel searchApps)
+            {
+                SearchApps = searchApps;
+            }
+            // 可更新应用
+            else if (args is UpgradableAppsModel upgradableApps)
+            {
+                UpgradableApps = upgradableApps;
+            }
+
+            DisplayName = NotAvailableString;
+            Description = NotAvailableString;
+            Version = NotAvailableString;
+            PackageLink = null;
+            IsPackageLinkExisted = false;
+            Author = NotAvailableString;
+            Publisher = NotAvailableString;
+            PublisherLink = null;
+            IsPublisherLinkExisted = false;
+            PublisherSupportLink = null;
+            IsPublisherLinkExisted = false;
+            Locale = NotAvailableString;
+            CopyRight = NotAvailableString;
+            CopyRightLink = null;
+            IsCopyRightLinkExisted = false;
+            License = NotAvailableString;
+            LicenseLink = null;
+            IsLicenseLinkExisted = false;
+            PrivacyLink = null;
+            IsPrivacyLinkExisted = false;
+            PurchaseLink = null;
+            IsPrivacyLinkExisted = false;
+            ReleaseNotes = NotAvailableString;
+            ReleaseNotesLink = null;
+            IsReleaseNotesLinkExisted = false;
+
+            if (!IsLoadCompleted)
+            {
+                if (SearchApps is not null)
+                {
+                    // 获取当前应用可用版本
+                    List<AvailableVersionModel> availableVersionList = await GetAvailableVersionAysnc(SearchApps.CatalogPackage, false);
+                    await UpdateAvailableVersionListAsync(availableVersionList);
+                }
+                else if (UpgradableApps is not null)
+                {
+                    // 获取当前应用可用版本
+                    List<AvailableVersionModel> availableVersionList = await GetAvailableVersionAysnc(UpgradableApps.CatalogPackage, true);
+                    await UpdateAvailableVersionListAsync(availableVersionList);
+                }
+            }
+
+            IsLoadCompleted = true;
+        }
+
+        /// <summary>
+        /// 获取应用可用版本
+        /// </summary>
+        private async Task<List<AvailableVersionModel>> GetAvailableVersionAysnc(CatalogPackage catalogPackage, bool isUpgrade)
+        {
+            return await Task.Run(() =>
+            {
+                bool hasDefaultVersion = false;
+                List<AvailableVersionModel> availableVersionList = [];
+
+                for (int subIndex = 0; subIndex < catalogPackage.AvailableVersions.Count; subIndex++)
+                {
+                    PackageVersionId packageVersionId = catalogPackage.AvailableVersions[subIndex];
+
+                    if (!string.IsNullOrEmpty(packageVersionId.Version))
+                    {
+                        // 获取大于已安装应用版本的所有版本
+                        if (isUpgrade)
+                        {
+                            if (catalogPackage.InstalledVersion.CompareToVersion(packageVersionId.Version) is CompareResult.Lesser)
+                            {
+                                (bool isDefaultVersion, hasDefaultVersion) = CheckDefaultVersion(catalogPackage.DefaultInstallVersion, packageVersionId);
+
+                                // 添加所有已经获取到的所有版本
+                                availableVersionList.Add(new()
+                                {
+                                    IsDefaultVersion = isDefaultVersion,
+                                    Version = packageVersionId.Version,
+                                    PackageVersionId = packageVersionId
+                                });
+                            }
+                        }
+                        else
+                        {
+                            (bool isDefaultVersion, hasDefaultVersion) = CheckDefaultVersion(catalogPackage.DefaultInstallVersion, packageVersionId);
+
+                            // 添加所有已经获取到的所有版本
+                            availableVersionList.Add(new()
+                            {
+                                IsDefaultVersion = isDefaultVersion,
+                                Version = packageVersionId.Version,
+                                PackageVersionId = packageVersionId
+                            });
+                        }
+                    }
+                }
+
+                // 没有默认版本，把默认版本添加在第一项
+                if (!hasDefaultVersion)
+                {
+                    availableVersionList.Insert(0, new()
+                    {
+                        IsDefaultVersion = true,
+                        Version = catalogPackage.DefaultInstallVersion.Version,
+                        PackageVersionId = null,
+                        PackageVersionInfo = catalogPackage.DefaultInstallVersion
+                    });
+                }
+
+                return availableVersionList;
+            });
+        }
 
         /// <summary>
         /// 初始化对应版本信息
@@ -1048,11 +938,178 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 检查默认版本信息
+        /// </summary>
+        private (bool, bool) CheckDefaultVersion(PackageVersionInfo packageVersionInfo, PackageVersionId packageVersionId)
+        {
+            bool isDefaultVersion = false;
+            bool hasDefaultVersion = false;
+
+            // 判断是否等同于默认版本
+            if (packageVersionInfo.CompareToVersion(packageVersionId.Version) is CompareResult.Equal)
+            {
+                isDefaultVersion = true;
+                if (!hasDefaultVersion)
+                {
+                    hasDefaultVersion = true;
+                }
+            }
+
+            return ValueTuple.Create(isDefaultVersion, hasDefaultVersion);
+        }
+
+        /// <summary>
+        /// 更新可用版本列表信息
+        /// </summary>
+        private async Task UpdateAvailableVersionListAsync(List<AvailableVersionModel> availableVersionList)
+        {
+            if (availableVersionList is not null)
+            {
+                foreach (AvailableVersionModel availableVersionItem in availableVersionList)
+                {
+                    WinGetAppsVersionCollection.Add(availableVersionItem);
+
+                    if (availableVersionItem.IsDefaultVersion)
+                    {
+                        SelectedItem = availableVersionItem;
+                        await InitializeVersionInformationAsync(availableVersionItem);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取复制信息
+        /// </summary>
+        private async Task<string> GetCopyInformationStringAsync(string displayName, string description, string version, Uri packageLink, string author, string publisher, Uri publisherLink, Uri publisherSupportLink, string locale, string copyRight, Uri copyRightLink, string license, Uri licenseLink, Uri privacyLink, Uri purchaseLink, string releaseNotes, Uri releaseNotesLink)
+        {
+            return await Task.Run(() =>
+            {
+                try
+                {
+                    List<string> copyInformationList = [];
+                    copyInformationList.Add(string.Format("{0}\t{1}", DisplayNameString, string.IsNullOrEmpty(displayName) ? NotAvailableString : displayName));
+                    copyInformationList.Add(string.Format("{0}\t{1}", DescriptionString, string.IsNullOrEmpty(description) ? NotAvailableString : description));
+                    copyInformationList.Add(string.Format("{0}\t{1}", VersionString, string.IsNullOrEmpty(version) ? NotAvailableString : version));
+                    copyInformationList.Add(string.Format("{0}\t{1}", PackageLinkString, packageLink is not null ? packageLink.AbsoluteUri : NotAvailableString));
+                    copyInformationList.Add(string.Format("{0}\t{1}", AuthorString, string.IsNullOrEmpty(author) ? NotAvailableString : author));
+                    copyInformationList.Add(string.Format("{0}\t{1}", PublisherString, string.IsNullOrEmpty(publisher) ? NotAvailableString : publisher));
+                    copyInformationList.Add(string.Format("{0}\t{1}", PublisherLinkString, publisherLink is not null ? publisherLink.AbsoluteUri : NotAvailableString));
+                    copyInformationList.Add(string.Format("{0}\t{1}", PublisherSupportLinkString, publisherSupportLink is not null ? publisherSupportLink.AbsoluteUri : NotAvailableString));
+                    copyInformationList.Add(string.Format("{0}\t{1}", LocaleString, string.IsNullOrEmpty(locale) ? NotAvailableString : locale));
+                    copyInformationList.Add(string.Format("{0}\t{1}", CopyRightString, string.IsNullOrEmpty(copyRight) ? NotAvailableString : copyRight));
+                    copyInformationList.Add(string.Format("{0}\t{1}", CopyRightLinkString, copyRightLink is not null ? copyRightLink.AbsoluteUri : NotAvailableString));
+                    copyInformationList.Add(string.Format("{0}\t{1}", LicenseString, string.IsNullOrEmpty(license) ? NotAvailableString : license));
+                    copyInformationList.Add(string.Format("{0}\t{1}", LicenseLinkString, licenseLink is not null ? licenseLink.AbsoluteUri : NotAvailableString));
+                    copyInformationList.Add(string.Format("{0}\t{1}", PrivacyLinkString, privacyLink is not null ? privacyLink.AbsoluteUri : NotAvailableString));
+                    copyInformationList.Add(string.Format("{0}\t{1}", PurchaseLinkString, purchaseLink is not null ? purchaseLink.AbsoluteUri : NotAvailableString));
+                    copyInformationList.Add(string.Format("{0}\t{1}", ReleaseNotesString, string.IsNullOrEmpty(releaseNotes) ? NotAvailableString : releaseNotes));
+                    copyInformationList.Add(string.Format("{0}\t{1}", ReleaseNotesLinkString, releaseNotesLink is not null ? releaseNotesLink.AbsoluteUri : NotAvailableString));
+                    return string.Join(Environment.NewLine, copyInformationList);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetAppsVersionInfoPage), nameof(GetCopyInformationStringAsync), 1, e);
+                    return null;
+                }
+            });
+        }
+
+        /// <summary>
+        /// 导航到选项页面
+        /// </summary>
+        private void NavigateOptionsPage(PackageOperationKind packageOperationKind, SearchAppsModel searchApps, UpgradableAppsModel upgradableApps, string version, PackageVersionId packageVersionId)
+        {
+            switch (packageOperationKind)
+            {
+                case PackageOperationKind.Download:
+                    {
+                        WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
+                        {
+                            PackageOperationKind = packageOperationKind,
+                            AppID = searchApps.AppID,
+                            AppName = searchApps.AppName,
+                            AppVersion = version,
+                            PackagePath = WinGetConfigService.DefaultDownloadFolder,
+                            PackageOperationProgress = 0,
+                            PackageDownloadProgressState = PackageDownloadProgressState.Queued,
+                            PackageVersionId = packageVersionId,
+                            DownloadedFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
+                            TotalFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
+                            PackageDownloadProgress = null,
+                            SearchApps = searchApps,
+                         }}, true);
+                        break;
+                    }
+                case PackageOperationKind.Install:
+                    {
+                        WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
+                        {
+                            PackageOperationKind = packageOperationKind,
+                            AppID = searchApps.AppID,
+                            AppName = searchApps.AppName,
+                            AppVersion = version,
+                            PackagePath = Path.Combine(Path.GetTempPath(), "WinGet"),
+                            PackageOperationProgress = 0,
+                            PackageInstallProgressState = PackageInstallProgressState.Queued,
+                            PackageVersionId = packageVersionId,
+                            DownloadedFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
+                            TotalFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
+                            PackageInstallProgress = null,
+                            SearchApps = searchApps,
+                        }}, true);
+                        break;
+                    }
+
+                case PackageOperationKind.Repair:
+                    {
+                        WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
+                        {
+                            PackageOperationKind = packageOperationKind,
+                            AppID = searchApps.AppID,
+                            AppName = searchApps.AppName,
+                            AppVersion = version,
+                            PackagePath = Path.Combine(Path.GetTempPath(), "WinGet"),
+                            PackageOperationProgress = 0,
+                            PackageRepairProgressState = PackageRepairProgressState.Queued,
+                            PackageVersionId = packageVersionId,
+                            DownloadedFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
+                            TotalFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
+                            PackageRepairProgress = null,
+                            SearchApps = searchApps,
+                        }}, true);
+                        break;
+                    }
+                case PackageOperationKind.Upgrade:
+                    {
+                        WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
+                        {
+                            PackageOperationKind = packageOperationKind,
+                            AppID = upgradableApps.AppID,
+                            AppName = upgradableApps.AppName,
+                            AppVersion = version,
+                            PackagePath = Path.Combine(Path.GetTempPath(), "WinGet"),
+                            PackageOperationProgress = 0,
+                            PackageInstallProgressState = PackageInstallProgressState.Queued,
+                            PackageVersionId = packageVersionId,
+                            DownloadedFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
+                            TotalFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
+                            PackageInstallProgress = null,
+                            UpgradableApps = upgradableApps,
+                        }}, true);
+                        break;
+                    }
+            }
+        }
+
+        /// <summary>
         /// 获取显示的应用类型
         /// </summary>
         private Visibility GetWinGetAppsVisibility(object winGetApps)
         {
             return winGetApps is null ? Visibility.Collapsed : Visibility.Visible;
         }
+
+        #endregion 第六部分：数据操作与业务逻辑
     }
 }

@@ -7,12 +7,20 @@ namespace GetStoreAppWebView.Views.Dialogs
     /// </summary>
     internal sealed partial class BrowserInformationDialog : ContentDialog
     {
-        internal string BrowserRuntimeVersion { get; set; }
+        #region 第一部分：属性、集合与事件
+
+        private string BrowserRuntimeVersion { get; set; }
+
+        #endregion 第一部分：属性、集合与事件
+
+        #region 第二部分：构造函数
 
         internal BrowserInformationDialog(string browserRuntimeVersion)
         {
             InitializeComponent();
             BrowserRuntimeVersion = browserRuntimeVersion;
         }
+
+        #endregion 第二部分：构造函数
     }
 }

@@ -45,19 +45,24 @@ namespace GetStoreAppWebView.Views.Windows
     /// </summary>
     internal sealed partial class WebViewWindow : Window, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string TitleString = ResourceService.GetLocalized("WebView/Title");
         private readonly string WebTitleString = ResourceService.GetLocalized("WebView/WebTitle");
         private readonly string RunningAdministratorString = ResourceService.GetLocalized("WebView/RunningAdministrator");
+        private ContentIsland contentIsland;
+        private InputKeyboardSource inputKeyboardSource;
+        private ContentCoordinateConverter contentCoordinateConverter;
+        private OverlappedPresenter overlappedPresenter;
+        private SUBCLASSPROC webViewWindowSubClassProc;
 
-        private readonly ContentIsland contentIsland;
-        private readonly InputKeyboardSource inputKeyboardSource;
-        private readonly ContentCoordinateConverter contentCoordinateConverter;
-        private readonly OverlappedPresenter overlappedPresenter;
-        private readonly SUBCLASSPROC webViewWindowSubClassProc;
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
 
         private string _windowTitle;
 
-        internal string WindowTitle
+        private string WindowTitle
         {
             get { return _windowTitle; }
 
@@ -73,7 +78,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private SystemBackdrop _windowSystemBackdrop;
 
-        internal SystemBackdrop WindowSystemBackdrop
+        private SystemBackdrop WindowSystemBackdrop
         {
             get { return _windowSystemBackdrop; }
 
@@ -89,7 +94,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private ElementTheme _windowTheme;
 
-        internal ElementTheme WindowTheme
+        private ElementTheme WindowTheme
         {
             get { return _windowTheme; }
 
@@ -105,7 +110,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private bool _isWindowMaximized;
 
-        internal bool IsWindowMaximized
+        private bool IsWindowMaximized
         {
             get { return _isWindowMaximized; }
 
@@ -121,7 +126,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private bool _canGoBack;
 
-        internal bool CanGoBack
+        private bool CanGoBack
         {
             get { return _canGoBack; }
 
@@ -137,7 +142,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private bool _canGoForward;
 
-        internal bool CanGoForward
+        private bool CanGoForward
         {
             get { return _canGoForward; }
 
@@ -151,9 +156,9 @@ namespace GetStoreAppWebView.Views.Windows
             }
         }
 
-        private bool _isLoading = true;
+        private bool _isLoading;
 
-        internal bool IsLoading
+        private bool IsLoading
         {
             get { return _isLoading; }
 
@@ -169,7 +174,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private string _webTitle;
 
-        internal string WebTitle
+        private string WebTitle
         {
             get { return _webTitle; }
 
@@ -185,7 +190,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private bool _isDownloadClickEnabled;
 
-        internal bool IsDownloadClickEnabled
+        private bool IsDownloadClickEnabled
         {
             get { return _isDownloadClickEnabled; }
 
@@ -201,7 +206,7 @@ namespace GetStoreAppWebView.Views.Windows
 
         private bool _isEnabled;
 
-        internal bool IsEnabled
+        private bool IsEnabled
         {
             get { return _isEnabled; }
 
@@ -217,97 +222,28 @@ namespace GetStoreAppWebView.Views.Windows
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(OverlappedPresenter)), DynamicWindowsRuntimeCast(typeof(ProtocolActivatedEventArgs))]
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
+        [DynamicWindowsRuntimeCast(typeof(FrameworkElement))]
         internal WebViewWindow()
         {
             InitializeComponent();
-
-            // 窗口部分初始化
-            WebTitle = WebTitleString;
-            WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
-            overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
-            ExtendsContentIntoTitleBar = true;
-            AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
-            AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
-            AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
-            IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
-            contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
-            contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
-            inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
-
-            AppWindow.Changed += OnAppWindowChanged;
-            AppWindow.Closing += OnAppWindowClosing;
-            contentIsland.StateChanged += OnStateChanged;
-            contentIsland.Environment.SettingChanged += OnSettingChanged;
-            inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
-
-            // 标题栏和右键菜单设置
-            SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
-
-            // 为应用主窗口添加窗口过程
-            webViewWindowSubClassProc = new(WebViewWindowSubClassProc);
-            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), webViewWindowSubClassProc, 0, nint.Zero);
-
+            InitializeWindowData();
+            MountWindowEvent();
+            MountWindowWndProc();
             SetWindowTheme();
             SetSystemBackdrop();
-
-            AppWindow.Resize(new(Convert.ToInt32(1000 * contentIsland.RasterizationScale), Convert.ToInt32(700 * contentIsland.RasterizationScale)));
-
-            // 默认直接显示到窗口中间
-            if (DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
-            {
-                RectInt32 workArea = displayArea.WorkArea;
-                AppWindow.Move(new((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
-            }
-
-            // 初始化 WebView2
-            DispatcherQueue.TryEnqueue(async () =>
-            {
-                CoreWebView2Environment coreWebView2Environment = null;
-                if (RuntimeHelper.WebView2Type is WebView2Type.User)
-                {
-                    coreWebView2Environment = await CoreWebView2Environment.CreateWithOptionsAsync(null, null, new()
-                    {
-                        Language = LanguageService.AppLanguage,
-                        ScrollBarStyle = CoreWebView2ScrollbarStyle.FluentOverlay
-                    });
-                }
-                else if (RuntimeHelper.WebView2Type is WebView2Type.System)
-                {
-                    coreWebView2Environment = await CoreWebView2Environment.CreateWithOptionsAsync(Path.Combine(global::Windows.Storage.SystemDataPaths.GetDefault().System, "Microsoft-Edge-WebView"), null, new()
-                    {
-                        Language = LanguageService.AppLanguage,
-                        ScrollBarStyle = CoreWebView2ScrollbarStyle.FluentOverlay
-                    });
-                }
-
-                if (coreWebView2Environment is not null)
-                {
-                    await WebViewBrowser.EnsureCoreWebView2Async(coreWebView2Environment);
-                    if (Program.AppActivationArguments.Kind is ExtendedActivationKind.Protocol)
-                    {
-                        ProtocolActivatedEventArgs protocolActivatedEventArgs = Program.AppActivationArguments.Data as ProtocolActivatedEventArgs;
-                        if (protocolActivatedEventArgs.Data is ValueSet protocolData && protocolData.TryGetValue("AppLink", out object appLinkObj) && appLinkObj is string appLink && !string.IsNullOrEmpty(appLink))
-                        {
-                            WebViewBrowser.CoreWebView2.Navigate(appLink);
-                        }
-                        else
-                        {
-                            WebViewBrowser.CoreWebView2.Navigate("https://apps.microsoft.com");
-                        }
-                    }
-                    else
-                    {
-                        WebViewBrowser.CoreWebView2.Navigate("https://apps.microsoft.com");
-                    }
-
-                    CoreWebView2Profile coreWebView2Profile = WebViewBrowser.CoreWebView2.Profile;
-                    coreWebView2Profile.DefaultDownloadFolderPath = DownloadOptionsService.DownloadFolder;
-                }
-            });
+            SetWindowSize();
+            SetWindowPosition();
+            SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
+            InitializeWebView();
         }
 
-        #region 第一部分：窗口类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 窗口激活状态发生变化的事件
@@ -349,10 +285,6 @@ namespace GetStoreAppWebView.Views.Windows
             }
         }
 
-        #endregion 第一部分：窗口类事件
-
-        #region 第二部分：窗口辅助类挂载的事件
-
         /// <summary>
         /// 窗口位置变化发生的事件
         /// </summary>
@@ -379,11 +311,8 @@ namespace GetStoreAppWebView.Views.Windows
         private void OnAppWindowClosing(AppWindow sender, AppWindowClosingEventArgs args)
         {
             WebViewBrowser?.Close();
-            AppWindow.Changed -= OnAppWindowChanged;
-            contentIsland.Environment.SettingChanged -= OnSettingChanged;
-            inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
-            Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), webViewWindowSubClassProc, 0);
-            (Application.Current as WebViewApp).Dispose();
+            DismountWindowEvent();
+            DismountWindowWndProc();
         }
 
         /// <summary>
@@ -405,10 +334,7 @@ namespace GetStoreAppWebView.Views.Windows
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                if (string.Equals(ThemeService.AppTheme, ThemeService.ThemeList[0]))
-                {
-                    WindowTheme = Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
-                }
+                SetWindowTheme();
             });
         }
 
@@ -428,10 +354,6 @@ namespace GetStoreAppWebView.Views.Windows
                 TitlebarMenuFlyout.ShowAt(null, options);
             }
         }
-
-        #endregion 第二部分：窗口辅助类挂载的事件
-
-        #region 第三部分：窗口右键菜单事件
 
         /// <summary>
         /// 窗口还原
@@ -490,10 +412,6 @@ namespace GetStoreAppWebView.Views.Windows
         {
             User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_CLOSE, 0);
         }
-
-        #endregion 第三部分：窗口右键菜单事件
-
-        #region 第四部分：窗口内容挂载的事件
 
         /// <summary>
         /// 应用主题变化时设置标题栏按钮的颜色
@@ -568,17 +486,7 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void OnOpenWithBrowserClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new("https://apps.microsoft.com"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenWithBrowser();
         }
 
         /// <summary>
@@ -586,24 +494,7 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void OnOpenCacheFolderClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    if (Directory.Exists(Path.Combine(ApplicationData.GetDefault().LocalFolder.Path, "EbWebView")))
-                    {
-                        await Launcher.LaunchFolderPathAsync(Path.Combine(ApplicationData.GetDefault().LocalFolder.Path, "EbWebView"));
-                    }
-                    else
-                    {
-                        await Launcher.LaunchFolderAsync(ApplicationData.GetDefault().LocalFolder);
-                    }
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenCacheFolder();
         }
 
         /// <summary>
@@ -613,9 +504,7 @@ namespace GetStoreAppWebView.Views.Windows
         {
             if (WebViewBrowser is not null && WebViewBrowser.CoreWebView2 is not null)
             {
-                WebViewBrowser.CoreWebView2.CookieManager.DeleteAllCookies();
-                await WebViewBrowser.CoreWebView2.Profile.ClearBrowsingDataAsync();
-                await WebViewBrowser.CoreWebView2.ClearServerCertificateErrorActionsAsync();
+                await ClearWebViewCacheAsync(WebViewBrowser.CoreWebView2);
             }
         }
 
@@ -624,20 +513,7 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new("getstoreapp:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
-                    {
-                        { "Parameter", "DownloadSettings" }
-                    });
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenSettings();
         }
 
         /// <summary>
@@ -656,17 +532,13 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private async void OnCoreProcessFailed(WebView2 sender, CoreWebView2ProcessFailedEventArgs args)
         {
-            Dictionary<string, string> logInformationDict = new()
+            Dictionary<string, string> logInformationDict = GetLogInformationDict(args.ProcessDescription, args.Reason, args.ExitCode, args.ProcessDescription);
+            if (logInformationDict is not null)
             {
-                { "Process failed kind", Convert.ToString(args.ProcessFailedKind) },
-                { "Reason", Convert.ToString(args.Reason) },
-                { "Exit code", Convert.ToString(args.ExitCode) },
-                { "Process description", args.ProcessDescription },
-            };
-
-            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppWebView), nameof(WebViewWindow), nameof(OnCoreProcessFailed), 3, logInformationDict);
-            await ShowDialogAsync(new ProcessFailedDialog());
-            (Application.Current as WebViewApp).Dispose();
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppWebView), nameof(WebViewWindow), nameof(OnCoreProcessFailed), 3, logInformationDict);
+                await ShowDialogAsync(new ProcessFailedDialog());
+                (Application.Current as WebViewApp).Dispose();
+            }
         }
 
         /// <summary>
@@ -738,9 +610,69 @@ namespace GetStoreAppWebView.Views.Windows
             sender.Navigate(args.Uri);
         }
 
-        #endregion 第四部分：窗口内容挂载的事件
+        #endregion 第四部分：父类虚方法重写
 
-        #region 第五部分：窗口及内容属性设置
+        #region 第五部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化窗口数据
+        /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
+        private void InitializeWindowData()
+        {
+            WebTitle = WebTitleString;
+            WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
+            overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
+            ExtendsContentIntoTitleBar = true;
+            AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
+            AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
+            AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
+            IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
+            contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
+            contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
+            inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
+        }
+
+        /// <summary>
+        /// 挂载窗口事件
+        /// </summary>
+        private void MountWindowEvent()
+        {
+            AppWindow.Changed += OnAppWindowChanged;
+            AppWindow.Closing += OnAppWindowClosing;
+            contentIsland.StateChanged += OnStateChanged;
+            contentIsland.Environment.SettingChanged += OnSettingChanged;
+            inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
+        }
+
+        /// <summary>
+        /// 卸载窗口事件
+        /// </summary>
+        private void DismountWindowEvent()
+        {
+            AppWindow.Changed -= OnAppWindowChanged;
+            contentIsland.Environment.SettingChanged -= OnSettingChanged;
+            inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
+        }
+
+        /// <summary>
+        /// 挂载窗口进程
+        /// </summary>
+        private void MountWindowWndProc()
+        {
+            // 为应用主窗口添加窗口过程
+            webViewWindowSubClassProc = new(WebViewWindowSubClassProc);
+            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), webViewWindowSubClassProc, 0, nint.Zero);
+        }
+
+        /// <summary>
+        /// 卸载窗口进程
+        /// </summary>
+        private void DismountWindowWndProc()
+        {
+            Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), webViewWindowSubClassProc, 0);
+            (Application.Current as WebViewApp).Dispose();
+        }
 
         /// <summary>
         /// 设置应用显示的主题
@@ -788,6 +720,27 @@ namespace GetStoreAppWebView.Views.Windows
         }
 
         /// <summary>
+        /// 设置窗口大小
+        /// </summary>
+        private void SetWindowSize()
+        {
+            AppWindow.Resize(new(Convert.ToInt32(1000 * contentIsland.RasterizationScale), Convert.ToInt32(700 * contentIsland.RasterizationScale)));
+        }
+
+        /// <summary>
+        /// 设置窗口大小和位置
+        /// </summary>
+        private void SetWindowPosition()
+        {
+            // 默认直接显示到窗口中间
+            if (DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
+            {
+                RectInt32 workArea = displayArea.WorkArea;
+                AppWindow.Move(new((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
+            }
+        }
+
+        /// <summary>
         /// 设置标题栏按钮的主题色
         /// </summary>
         private void SetTitleBarTheme(ElementTheme theme)
@@ -822,6 +775,59 @@ namespace GetStoreAppWebView.Views.Windows
         }
 
         /// <summary>
+        /// 初始化窗口浏览器
+        /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(ProtocolActivatedEventArgs))]
+        private void InitializeWebView()
+        {
+            DispatcherQueue.TryEnqueue(async () =>
+            {
+                IsLoading = true;
+                CoreWebView2Environment coreWebView2Environment = null;
+                if (RuntimeHelper.WebView2Type is WebView2Type.User)
+                {
+                    coreWebView2Environment = await CoreWebView2Environment.CreateWithOptionsAsync(null, null, new()
+                    {
+                        Language = LanguageService.AppLanguage,
+                        ScrollBarStyle = CoreWebView2ScrollbarStyle.FluentOverlay
+                    });
+                }
+                else if (RuntimeHelper.WebView2Type is WebView2Type.System)
+                {
+                    coreWebView2Environment = await CoreWebView2Environment.CreateWithOptionsAsync(Path.Combine(global::Windows.Storage.SystemDataPaths.GetDefault().System, "Microsoft-Edge-WebView"), null, new()
+                    {
+                        Language = LanguageService.AppLanguage,
+                        ScrollBarStyle = CoreWebView2ScrollbarStyle.FluentOverlay
+                    });
+                }
+
+                if (coreWebView2Environment is not null)
+                {
+                    await WebViewBrowser.EnsureCoreWebView2Async(coreWebView2Environment);
+                    if (Program.AppActivationArguments.Kind is ExtendedActivationKind.Protocol)
+                    {
+                        ProtocolActivatedEventArgs protocolActivatedEventArgs = Program.AppActivationArguments.Data as ProtocolActivatedEventArgs;
+                        if (protocolActivatedEventArgs.Data is ValueSet protocolData && protocolData.TryGetValue("AppLink", out object appLinkObj) && appLinkObj is string appLink && !string.IsNullOrEmpty(appLink))
+                        {
+                            WebViewBrowser.CoreWebView2.Navigate(appLink);
+                        }
+                        else
+                        {
+                            WebViewBrowser.CoreWebView2.Navigate("https://apps.microsoft.com");
+                        }
+                    }
+                    else
+                    {
+                        WebViewBrowser.CoreWebView2.Navigate("https://apps.microsoft.com");
+                    }
+
+                    CoreWebView2Profile coreWebView2Profile = WebViewBrowser.CoreWebView2.Profile;
+                    coreWebView2Profile.DefaultDownloadFolderPath = DownloadOptionsService.DownloadFolder;
+                }
+            });
+        }
+
+        /// <summary>
         /// 设置传统菜单标题栏按钮的主题色
         /// </summary>
         private void SetClassicMenuTheme(ElementTheme theme)
@@ -841,10 +847,6 @@ namespace GetStoreAppWebView.Views.Windows
 
             UxthemeLibrary.FlushMenuThemes();
         }
-
-        #endregion 第五部分：窗口及内容属性设置
-
-        #region 第六部分：窗口过程
 
         /// <summary>
         /// 应用主窗口消息处理
@@ -896,7 +898,7 @@ namespace GetStoreAppWebView.Views.Windows
             return Comctl32Library.DefSubclassProc(hWnd, Msg, wParam, lParam);
         }
 
-        #endregion 第六部分：窗口过程
+        #endregion 第五部分：数据操作与业务逻辑
 
         #region 第七部分：显示对话框和应用通知
 
@@ -934,6 +936,97 @@ namespace GetStoreAppWebView.Views.Windows
             }
 
             return dialogResult;
+        }
+
+        /// <summary>
+        /// 使用浏览器打开
+        /// </summary>
+        private void OpenWithBrowser()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("https://apps.microsoft.com"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 打开缓存目录
+        /// </summary>
+        private void OpenCacheFolder()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    if (Directory.Exists(Path.Combine(ApplicationData.GetDefault().LocalFolder.Path, "EbWebView")))
+                    {
+                        await Launcher.LaunchFolderPathAsync(Path.Combine(ApplicationData.GetDefault().LocalFolder.Path, "EbWebView"));
+                    }
+                    else
+                    {
+                        await Launcher.LaunchFolderAsync(ApplicationData.GetDefault().LocalFolder);
+                    }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 清空浏览器缓存
+        /// </summary>
+        private async Task ClearWebViewCacheAsync(CoreWebView2 coreWebView2)
+        {
+            if (coreWebView2 is not null)
+            {
+                coreWebView2.CookieManager.DeleteAllCookies();
+                await coreWebView2.Profile.ClearBrowsingDataAsync(CoreWebView2BrowsingDataKinds.AllProfile | CoreWebView2BrowsingDataKinds.AllSite | CoreWebView2BrowsingDataKinds.AllDomStorage);
+                await coreWebView2.ClearServerCertificateErrorActionsAsync();
+            }
+        }
+
+        /// <summary>
+        /// 打开设置
+        /// </summary>
+        private void OpenSettings()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("getstoreapp:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
+                    {
+                        { "Parameter", "DownloadSettings" }
+                    });
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 获取异常信息
+        /// </summary>
+        private Dictionary<string, string> GetLogInformationDict(string processFailedKind, CoreWebView2ProcessFailedReason reason, int exitCode, string processDescription)
+        {
+            return new()
+            {
+                { "Process failed kind", processFailedKind },
+                { "Reason", Convert.ToString(reason) },
+                { "Exit code", Convert.ToString(exitCode) },
+                { "Process description", processDescription },
+            };
         }
 
         #endregion 第七部分：显示对话框和应用通知

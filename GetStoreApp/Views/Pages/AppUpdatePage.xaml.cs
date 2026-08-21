@@ -3,6 +3,8 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
+using GetStoreApp.Views.NotificationTips;
+using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -253,46 +255,54 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
         {
-            if (!IsCheckingUpdate)
+            if(RuntimeHelper.IsElevated)
             {
-                IsCheckingUpdate = true;
-                List<AppUpdateModel> appUpdateList = await GetAppUpdateListAsync(AppUpdateList);
-
-                if (appUpdateList is not null)
+                if (!IsCheckingUpdate)
                 {
-                    // 只添加未有的项
-                    AppUpdateLock.Enter();
+                    IsCheckingUpdate = true;
+                    List<AppUpdateModel> appUpdateList = await GetAppUpdateListAsync(AppUpdateList);
 
-                    try
+                    if (appUpdateList is not null)
                     {
-                        AppUpdateList.AddRange(appUpdateList);
-                        AppUpdateList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
-                        AppUpdateCollection.Clear();
-                        foreach (AppUpdateModel appUpdateItem in AppUpdateList)
+                        // 只添加未有的项
+                        AppUpdateLock.Enter();
+
+                        try
                         {
-                            AppUpdateCollection.Add(appUpdateItem);
+                            AppUpdateList.AddRange(appUpdateList);
+                            AppUpdateList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
+                            AppUpdateCollection.Clear();
+                            foreach (AppUpdateModel appUpdateItem in AppUpdateList)
+                            {
+                                AppUpdateCollection.Add(appUpdateItem);
+                            }
+
+                            if (AppUpdateList.Count > 0)
+                            {
+                                AppUpdateResultKind = AppUpdateResultKind.Successfully;
+                                AppUpdateFailedContent = string.Empty;
+                            }
+                            else
+                            {
+                                AppUpdateResultKind = AppUpdateResultKind.Failed;
+                                AppUpdateFailedContent = AppUpdateEmptyString;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         }
 
-                        if (AppUpdateList.Count > 0)
-                        {
-                            AppUpdateResultKind = AppUpdateResultKind.Successfully;
-                            AppUpdateFailedContent = string.Empty;
-                        }
-                        else
-                        {
-                            AppUpdateResultKind = AppUpdateResultKind.Failed;
-                            AppUpdateFailedContent = AppUpdateEmptyString;
-                        }
+                        AppUpdateLock.Exit();
+
+                        IsCheckingUpdate = false;
                     }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    }
-
-                    AppUpdateLock.Exit();
-
-                    IsCheckingUpdate = false;
                 }
+
+            }
+            else
+            {
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.NotElevated));
             }
         }
 

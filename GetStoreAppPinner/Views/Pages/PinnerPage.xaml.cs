@@ -16,11 +16,13 @@ namespace GetStoreAppPinner.Views.Pages
     /// </summary>
     internal sealed partial class PinnerPage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：属性、集合与事件
+
         private AppWindow AppWindow { get; }
 
         private ElementTheme _windowTheme;
 
-        internal ElementTheme WindowTheme
+        private ElementTheme WindowTheme
         {
             get { return _windowTheme; }
 
@@ -36,6 +38,10 @@ namespace GetStoreAppPinner.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion 第一部分：属性、集合与事件
+
+        #region 第二部分：构造函数
+
         internal PinnerPage(AppWindow appWindow)
         {
             InitializeComponent();
@@ -44,6 +50,10 @@ namespace GetStoreAppPinner.Views.Pages
             SetTitleBarTheme(ActualTheme);
         }
 
+        #endregion 第二部分：构造函数
+
+        #region 第三部分：父类虚方法重写
+
         /// <summary>
         /// 应用主题发生变化时修改应用的背景色
         /// </summary>
@@ -51,6 +61,10 @@ namespace GetStoreAppPinner.Views.Pages
         {
             SetTitleBarTheme(sender.ActualTheme);
         }
+
+        #endregion 第三部分：父类虚方法重写
+
+        #region 第四部分：数据操作与业务逻辑
 
         /// <summary>
         /// 设置标题栏按钮的主题色
@@ -85,5 +99,7 @@ namespace GetStoreAppPinner.Views.Pages
                 titleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 102, 102, 102);
             }
         }
+
+        #endregion 第四部分：数据操作与业务逻辑
     }
 }

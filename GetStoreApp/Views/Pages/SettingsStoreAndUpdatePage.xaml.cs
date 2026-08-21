@@ -259,6 +259,7 @@ namespace GetStoreApp.Views.Pages
         internal SettingsStoreAndUpdatePage()
         {
             InitializeComponent();
+            InitializeData();
         }
 
         #endregion 第三部分：构造函数
@@ -274,7 +275,6 @@ namespace GetStoreApp.Views.Pages
             if (!isInitialized)
             {
                 isInitialized = true;
-                InitializeData();
                 MountSettingsEvent();
             }
 

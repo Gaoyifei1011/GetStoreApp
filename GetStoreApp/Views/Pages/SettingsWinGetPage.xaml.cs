@@ -15,8 +15,8 @@ using System.Threading.Tasks;
 using Windows.System;
 using WinRT;
 
-// 抑制 IDE0060 警告
-#pragma warning disable IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
@@ -29,7 +29,6 @@ namespace GetStoreApp.Views.Pages
 
         private readonly string AppInstallerString = ResourceService.GetLocalized("SettingsWinGet/AppInstaller");
         private readonly string BuiltInAppString = ResourceService.GetLocalized("SettingsWinGet/BuiltInApp");
-        private bool isInitialized;
 
         #endregion 第一部分：常量、资源与状态字段
 
@@ -78,6 +77,7 @@ namespace GetStoreApp.Views.Pages
         internal SettingsWinGetPage()
         {
             InitializeComponent();
+            InitializeData();
         }
 
         #endregion 第三部分：构造函数
@@ -90,11 +90,6 @@ namespace GetStoreApp.Views.Pages
         protected override async void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
-            if (!isInitialized)
-            {
-                isInitialized = true;
-                InitializeData();
-            }
             WinGetSource = WinGetSourceList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), WinGetConfigService.WinGetSource, StringComparison.OrdinalIgnoreCase));
             CurrentWinGetSource = WinGetSourceList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), WinGetConfigService.CurrentWinGetSource, StringComparison.OrdinalIgnoreCase));
         }

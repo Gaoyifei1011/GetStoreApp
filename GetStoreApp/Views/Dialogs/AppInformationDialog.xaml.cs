@@ -102,24 +102,14 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async void OnCopyAppInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            bool copyResult = false;
             ContentDialogButtonClickDeferral contentDialogButtonClickDeferral = args.GetDeferral();
-
-            try
+            string appInformation = await GetAppInformationCopyStringListAsync([.. AppInformationCollection]);
+            contentDialogButtonClickDeferral.Complete();
+            if (!string.IsNullOrEmpty(appInformation))
             {
-                List<string> appInformationCopyStringList = await GetAppInformationCopyStringListAsync([.. AppInformationCollection]);
-                copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, appInformationCopyStringList));
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(appInformation);
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
             }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(OnCopyAppInformationClicked), 1, e);
-            }
-            finally
-            {
-                contentDialogButtonClickDeferral.Complete();
-            }
-
-            await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
         }
 
         #endregion 第四部分：挂载事件处理
@@ -213,18 +203,26 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 获取应用信息要准备复制的字符串内容
         /// </summary>
-        private async Task<List<string>> GetAppInformationCopyStringListAsync(List<ContentLinkInfo> appInformationList)
+        private async Task<string> GetAppInformationCopyStringListAsync(List<ContentLinkInfo> appInformationList)
         {
             return await Task.Run(() =>
             {
-                List<string> appInformationCopyStringList = [];
-
-                foreach (ContentLinkInfo appInformation in AppInformationCollection)
+                try
                 {
-                    appInformationCopyStringList.Add(appInformation.DisplayText + appInformation.SecondaryText);
-                }
+                    List<string> appInformationCopyStringList = [];
 
-                return appInformationCopyStringList;
+                    foreach (ContentLinkInfo appInformation in AppInformationCollection)
+                    {
+                        appInformationCopyStringList.Add(appInformation.DisplayText + appInformation.SecondaryText);
+                    }
+
+                    return string.Join(Environment.NewLine, appInformationCopyStringList);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(GetAppInformationCopyStringListAsync), 1, e);
+                    return null;
+                }
             });
         }
 

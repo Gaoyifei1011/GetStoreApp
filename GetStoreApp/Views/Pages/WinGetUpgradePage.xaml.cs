@@ -33,6 +33,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     internal sealed partial class WinGetUpgradePage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string NotAvailableString = ResourceService.GetLocalized("WinGetUpgrade/NotAvailable");
         private readonly string UpgradableAppsCountInfoString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableAppsCountInfo");
         private readonly string UpgradableAppsEmptyDescriptionString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableAppsEmptyDescription");
@@ -41,9 +43,14 @@ namespace GetStoreApp.Views.Pages
         private readonly string UpgradableFindAppsFailedString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableFindAppsFailed");
         private readonly string UpgradableNotSelectSourceString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableNotSelectSource");
         private readonly Lock UpgradableAppsLock = new();
+        private bool isInitialized;
         private WinGetPage WinGetPageInstance;
 
-        private bool _isIncrease = true;
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
+
+        private bool _isIncrease;
 
         internal bool IsIncrease
         {
@@ -59,7 +66,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private AppSortRuleKind _selectedAppSortRuleKind = AppSortRuleKind.DisplayName;
+        private AppSortRuleKind _selectedAppSortRuleKind;
 
         internal AppSortRuleKind SelectedAppSortRuleKind
         {
@@ -75,7 +82,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private UpgradableAppsResultKind _upgradableAppsResultKind = UpgradableAppsResultKind.NotCheckUpdate;
+        private UpgradableAppsResultKind _upgradableAppsResultKind;
 
         internal UpgradableAppsResultKind UpgradableAppsResultKind
         {
@@ -111,12 +118,18 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
         internal WinGetUpgradePage()
         {
             InitializeComponent();
         }
 
-        #region 第一部分：重写父类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面触发的事件
@@ -125,17 +138,24 @@ namespace GetStoreApp.Views.Pages
         {
             base.OnNavigatedTo(args);
 
+            if (!isInitialized)
+            {
+                isInitialized = true;
+                IsIncrease = true;
+                SelectedAppSortRuleKind = AppSortRuleKind.DisplayName;
+                UpgradableAppsResultKind = UpgradableAppsResultKind.NotCheckUpdate;
+            }
+
             if (args.Parameter is WinGetPage winGetPage && WinGetPageInstance is null)
             {
                 WinGetPageInstance = winGetPage;
-                GlobalNotificationService.ApplicationExit += OnApplicationExit;
-                WinGetPageInstance.UpgradeAppsPackageOperationEvent += OnUpgradeAppsPackageOperationEvent;
+                MountWinGetEvent();
             }
         }
 
-        #endregion 第一部分：重写父类事件
+        #endregion 第四部分：父类虚方法重写
 
-        #region 第二部分：XamlUICommand 命令调用时挂载的事件
+        #region 第五部分：命令调用处理
 
         /// <summary>
         /// 应用更新
@@ -192,9 +212,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第二部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第五部分：命令调用处理
 
-        #region 第三部分：WinGet 更新应用界面——挂载的事件
+        #region 第六部分：挂载事件处理
 
         /// <summary>
         /// 根据排序方式对列表进行排序
@@ -205,7 +225,7 @@ namespace GetStoreApp.Views.Pages
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is bool increase && UpgradableAppsResultKind is UpgradableAppsResultKind.Successfully)
             {
                 IsIncrease = Convert.ToBoolean(increase);
-                InitializeMatchedUpgradableApps();
+                InitializeMatchedUpgradableApps(SelectedAppSortRuleKind, IsIncrease);
             }
         }
 
@@ -218,7 +238,7 @@ namespace GetStoreApp.Views.Pages
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind && UpgradableAppsResultKind is UpgradableAppsResultKind.Successfully)
             {
                 SelectedAppSortRuleKind = appSortRuleKind;
-                InitializeMatchedUpgradableApps();
+                InitializeMatchedUpgradableApps(SelectedAppSortRuleKind, IsIncrease);
             }
         }
 
@@ -244,18 +264,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenTempFolderClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                string winGetTempPath = Path.Combine(Path.GetTempPath(), "WinGet");
-                if (Directory.Exists(winGetTempPath))
-                {
-                    await Launcher.LaunchFolderPathAsync(winGetTempPath);
-                }
-                else
-                {
-                    await Launcher.LaunchFolderPathAsync(Path.GetTempPath());
-                }
-            });
+            OpenTempFolder();
         }
 
         /// <summary>
@@ -274,10 +283,6 @@ namespace GetStoreApp.Views.Pages
             MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.WinGetDataSource);
         }
 
-        #endregion 第三部分：WinGet 更新应用界面——挂载的事件
-
-        #region 第四部分：WinGet 更新应用界面——自定义事件
-
         /// <summary>
         /// 应用程序退出时触发的事件
         /// </summary>
@@ -285,8 +290,7 @@ namespace GetStoreApp.Views.Pages
         {
             try
             {
-                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-                WinGetPageInstance.UpgradeAppsPackageOperationEvent -= OnUpgradeAppsPackageOperationEvent;
+                DismountWinGetEvent();
             }
             catch (Exception e)
             {
@@ -349,60 +353,45 @@ namespace GetStoreApp.Views.Pages
             });
         }
 
-        #endregion 第四部分：WinGet 更新应用界面——自定义事件
+        #endregion 第六部分：挂载事件处理
+
+        #region 第七部分：数据操作与业务逻辑
 
         /// <summary>
-        /// 获取设置中选择的 WinGet 数据源
+        /// 挂载 WinGet 相关事件
         /// </summary>
-
-        private PackageCatalogReference GetPackageCatalogReference(PackageManager packageManager)
+        private void MountWinGetEvent()
         {
-            PackageCatalogReference packageCatalogReference = null;
+            GlobalNotificationService.ApplicationExit += OnApplicationExit;
+            WinGetPageInstance.UpgradeAppsPackageOperationEvent += OnUpgradeAppsPackageOperationEvent;
+        }
 
-            try
+        /// <summary>
+        /// 卸载 WinGet 相关事件
+        /// </summary>
+        private void DismountWinGetEvent()
+        {
+            GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+            WinGetPageInstance.UpgradeAppsPackageOperationEvent -= OnUpgradeAppsPackageOperationEvent;
+        }
+
+        /// <summary>
+        /// 打开临时目录
+        /// </summary>
+        private void OpenTempFolder()
+        {
+            Task.Run(async () =>
             {
-                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-
-                if (!Equals(winGetDataSourceName, default))
+                string winGetTempPath = Path.Combine(Path.GetTempPath(), "WinGet");
+                if (Directory.Exists(winGetTempPath))
                 {
-                    // 使用内置源
-                    if (winGetDataSourceName.Value)
-                    {
-                        foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalog in WinGetConfigService.PredefinedPackageCatalogList)
-                        {
-                            if (string.Equals(winGetDataSourceName.Key, predefinedPackageCatalog.Key))
-                            {
-                                packageCatalogReference = packageManager.GetPredefinedPackageCatalog(predefinedPackageCatalog.Value);
-                                CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = WinGetFactoryHelper.CreateCreateCompositePackageCatalogOptions();
-                                createCompositePackageCatalogOptions.CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs;
-                                createCompositePackageCatalogOptions.Catalogs.Add(packageCatalogReference);
-                                packageCatalogReference = packageManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
-                                break;
-                            }
-                        }
-                    }
-                    // 使用自定义源
-                    else
-                    {
-                        packageCatalogReference = packageManager.GetPackageCatalogByName(winGetDataSourceName.Key);
-
-                        if (packageCatalogReference is not null)
-                        {
-                            CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = WinGetFactoryHelper.CreateCreateCompositePackageCatalogOptions();
-                            createCompositePackageCatalogOptions.CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs;
-                            createCompositePackageCatalogOptions.Catalogs.Add(packageCatalogReference);
-                            packageCatalogReference = packageManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
-                        }
-                    }
+                    await Launcher.LaunchFolderPathAsync(winGetTempPath);
                 }
-
-                return packageCatalogReference;
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetUpgradePage), nameof(GetPackageCatalogReference), 1, e);
-                return packageCatalogReference;
-            }
+                else
+                {
+                    await Launcher.LaunchFolderPathAsync(Path.GetTempPath());
+                }
+            });
         }
 
         /// <summary>
@@ -424,38 +413,46 @@ namespace GetStoreApp.Views.Pages
             {
                 (ConnectResult connectResult, FindPackagesResult findPackagesResult, List<UpgradableAppsModel> upgradableAppsList) = await Task.Run(() =>
                 {
-                    return UpgradableAppsAsync(packageCatalogReference);
+                    return UpgradableAppsAsync(packageCatalogReference, SelectedAppSortRuleKind, IsIncrease);
                 });
 
-                if (connectResult.Status is ConnectResultStatus.Ok)
+                if (connectResult is not null && findPackagesResult is not null)
                 {
-                    if (findPackagesResult.Status is FindPackagesResultStatus.Ok)
+                    if (connectResult.Status is ConnectResultStatus.Ok)
                     {
-                        if (upgradableAppsList.Count is 0)
+                        if (findPackagesResult.Status is FindPackagesResultStatus.Ok)
                         {
-                            UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
-                            UpgradableFailedContent = UpgradableAppsEmptyDescriptionString;
+                            if (upgradableAppsList is not null || upgradableAppsList.Count is 0)
+                            {
+                                UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
+                                UpgradableFailedContent = UpgradableAppsEmptyDescriptionString;
+                            }
+                            else
+                            {
+                                foreach (UpgradableAppsModel upgradableAppsItem in upgradableAppsList)
+                                {
+                                    UpgradableAppsCollection.Add(upgradableAppsItem);
+                                }
+
+                                UpgradableAppsResultKind = UpgradableAppsResultKind.Successfully;
+                            }
                         }
                         else
                         {
-                            foreach (UpgradableAppsModel upgradableAppsItem in upgradableAppsList)
-                            {
-                                UpgradableAppsCollection.Add(upgradableAppsItem);
-                            }
-
-                            UpgradableAppsResultKind = UpgradableAppsResultKind.Successfully;
+                            UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
+                            UpgradableFailedContent = string.Format(UpgradableAppsFailedString, UpgradableFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", findPackagesResult.ExtendedErrorCode.HResult) : NotAvailableString);
                         }
                     }
                     else
                     {
                         UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
-                        UpgradableFailedContent = string.Format(UpgradableAppsFailedString, UpgradableFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", findPackagesResult.ExtendedErrorCode.HResult) : NotAvailableString);
+                        UpgradableFailedContent = string.Format(UpgradableAppsFailedString, UpgradableCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", findPackagesResult.ExtendedErrorCode.HResult) : NotAvailableString);
                     }
                 }
                 else
                 {
                     UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
-                    UpgradableFailedContent = string.Format(UpgradableAppsFailedString, UpgradableCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", findPackagesResult.ExtendedErrorCode.HResult) : NotAvailableString);
+                    UpgradableFailedContent = NotAvailableString;
                 }
             }
             else
@@ -466,16 +463,77 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 获取设置中选择的 WinGet 数据源
+        /// </summary>
+
+        private PackageCatalogReference GetPackageCatalogReference(PackageManager packageManager)
+        {
+            if (packageManager is not null)
+            {
+                PackageCatalogReference packageCatalogReference = null;
+
+                try
+                {
+                    KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+
+                    if (!Equals(winGetDataSourceName, default))
+                    {
+                        // 使用内置源
+                        if (winGetDataSourceName.Value)
+                        {
+                            foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalog in WinGetConfigService.PredefinedPackageCatalogList)
+                            {
+                                if (string.Equals(winGetDataSourceName.Key, predefinedPackageCatalog.Key))
+                                {
+                                    packageCatalogReference = packageManager.GetPredefinedPackageCatalog(predefinedPackageCatalog.Value);
+                                    CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = WinGetFactoryHelper.CreateCreateCompositePackageCatalogOptions();
+                                    createCompositePackageCatalogOptions.CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs;
+                                    createCompositePackageCatalogOptions.Catalogs.Add(packageCatalogReference);
+                                    packageCatalogReference = packageManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
+                                    break;
+                                }
+                            }
+                        }
+                        // 使用自定义源
+                        else
+                        {
+                            packageCatalogReference = packageManager.GetPackageCatalogByName(winGetDataSourceName.Key);
+
+                            if (packageCatalogReference is not null)
+                            {
+                                CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = WinGetFactoryHelper.CreateCreateCompositePackageCatalogOptions();
+                                createCompositePackageCatalogOptions.CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs;
+                                createCompositePackageCatalogOptions.Catalogs.Add(packageCatalogReference);
+                                packageCatalogReference = packageManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
+                            }
+                        }
+                    }
+
+                    return packageCatalogReference;
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetUpgradePage), nameof(GetPackageCatalogReference), 1, e);
+                    return packageCatalogReference;
+                }
+            }
+            else
+            {
+                return default;
+            }
+        }
+
+        /// <summary>
         /// 初始化符合的可更新应用结果
         /// </summary>
-        private void InitializeMatchedUpgradableApps()
+        private void InitializeMatchedUpgradableApps(AppSortRuleKind appSortRuleKind, bool isIncrease)
         {
             UpgradableAppsResultKind = UpgradableAppsResultKind.Querying;
             List<UpgradableAppsModel> upgradableAppsList = [.. UpgradableAppsCollection];
             UpgradableAppsCollection.Clear();
-            if (SelectedAppSortRuleKind is AppSortRuleKind.DisplayName)
+            if (appSortRuleKind is AppSortRuleKind.DisplayName)
             {
-                if (IsIncrease)
+                if (isIncrease)
                 {
                     upgradableAppsList.Sort((item1, item2) => item1.AppName.CompareTo(item2.AppName));
                 }
@@ -486,7 +544,7 @@ namespace GetStoreApp.Views.Pages
             }
             else
             {
-                if (IsIncrease)
+                if (isIncrease)
                 {
                     upgradableAppsList.Sort((item1, item2) => item1.AppPublisher.CompareTo(item2.AppPublisher));
                 }
@@ -506,96 +564,99 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取可更新应用
         /// </summary>
-        private async Task<(ConnectResult, FindPackagesResult, List<UpgradableAppsModel>)> UpgradableAppsAsync(PackageCatalogReference packageCatalogReference)
+        private async Task<(ConnectResult, FindPackagesResult, List<UpgradableAppsModel>)> UpgradableAppsAsync(PackageCatalogReference packageCatalogReference, AppSortRuleKind appSortRuleKind, bool isIncrease)
         {
             (ConnectResult connectResult, FindPackagesResult findPackagesResult, List<UpgradableAppsModel> upgradableAppsList) upgradableAppsResult = ValueTuple.Create<ConnectResult, FindPackagesResult, List<UpgradableAppsModel>>(null, null, null);
 
-            try
+            if (packageCatalogReference is not null)
             {
-                ConnectResult connectResult = await packageCatalogReference.ConnectAsync();
-                upgradableAppsResult.connectResult = connectResult;
-
-                if (connectResult is not null && connectResult.Status is ConnectResultStatus.Ok)
+                try
                 {
-                    FindPackagesOptions findPackagesOptions = WinGetFactoryHelper.CreateFindPackagesOptions();
-                    FindPackagesResult findPackagesResult = await connectResult.PackageCatalog.FindPackagesAsync(findPackagesOptions);
-                    upgradableAppsResult.findPackagesResult = findPackagesResult;
+                    ConnectResult connectResult = await packageCatalogReference.ConnectAsync();
+                    upgradableAppsResult.connectResult = connectResult;
 
-                    if (findPackagesResult is not null && findPackagesResult.Status is FindPackagesResultStatus.Ok)
+                    if (connectResult is not null && connectResult.Status is ConnectResultStatus.Ok)
                     {
-                        List<UpgradableAppsModel> upgradableAppsList = [];
+                        FindPackagesOptions findPackagesOptions = WinGetFactoryHelper.CreateFindPackagesOptions();
+                        FindPackagesResult findPackagesResult = await connectResult.PackageCatalog.FindPackagesAsync(findPackagesOptions);
+                        upgradableAppsResult.findPackagesResult = findPackagesResult;
 
-                        for (int index = 0; index < findPackagesResult.Matches.Count; index++)
+                        if (findPackagesResult is not null && findPackagesResult.Status is FindPackagesResultStatus.Ok)
                         {
-                            MatchResult matchItem = findPackagesResult.Matches[index];
+                            List<UpgradableAppsModel> upgradableAppsList = [];
 
-                            if (matchItem.CatalogPackage is not null && matchItem.CatalogPackage.IsUpdateAvailable)
+                            for (int index = 0; index < findPackagesResult.Matches.Count; index++)
                             {
-                                bool isUpgrading = false;
-                                WinGetPageInstance.PackageOperationLock.Enter();
-                                try
+                                MatchResult matchItem = findPackagesResult.Matches[index];
+
+                                if (matchItem.CatalogPackage is not null && matchItem.CatalogPackage.IsUpdateAvailable)
                                 {
-                                    foreach (PackageOperationModel packageOperationItem in WinGetPageInstance.PackageOperationCollection)
+                                    bool isUpgrading = false;
+                                    WinGetPageInstance.PackageOperationLock.Enter();
+                                    try
                                     {
-                                        if (string.Equals(matchItem.CatalogPackage.DefaultInstallVersion.Id, packageOperationItem.AppID) && string.Equals(matchItem.CatalogPackage.DefaultInstallVersion.Version, packageOperationItem.AppVersion) && packageOperationItem.PackageOperationKind is PackageOperationKind.Upgrade)
+                                        foreach (PackageOperationModel packageOperationItem in WinGetPageInstance.PackageOperationCollection)
                                         {
-                                            isUpgrading = true;
-                                            break;
+                                            if (string.Equals(matchItem.CatalogPackage.DefaultInstallVersion.Id, packageOperationItem.AppID) && string.Equals(matchItem.CatalogPackage.DefaultInstallVersion.Version, packageOperationItem.AppVersion) && packageOperationItem.PackageOperationKind is PackageOperationKind.Upgrade)
+                                            {
+                                                isUpgrading = true;
+                                                break;
+                                            }
                                         }
                                     }
-                                }
-                                catch (Exception e)
-                                {
-                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                                }
-                                finally
-                                {
-                                    WinGetPageInstance.PackageOperationLock.Exit();
-                                }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        WinGetPageInstance.PackageOperationLock.Exit();
+                                    }
 
-                                upgradableAppsList.Add(new()
-                                {
-                                    AppID = matchItem.CatalogPackage.DefaultInstallVersion.Id,
-                                    AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) ? NotAvailableString : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
-                                    AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Publisher) ? NotAvailableString : matchItem.CatalogPackage.DefaultInstallVersion.Publisher,
-                                    AppCurrentVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? NotAvailableString : matchItem.CatalogPackage.InstalledVersion.Version,
-                                    AppNewestVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) ? NotAvailableString : matchItem.CatalogPackage.DefaultInstallVersion.Version,
-                                    IsUpgrading = isUpgrading,
-                                    CatalogPackage = matchItem.CatalogPackage,
-                                });
+                                    upgradableAppsList.Add(new()
+                                    {
+                                        AppID = matchItem.CatalogPackage.DefaultInstallVersion.Id,
+                                        AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) ? NotAvailableString : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
+                                        AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Publisher) ? NotAvailableString : matchItem.CatalogPackage.DefaultInstallVersion.Publisher,
+                                        AppCurrentVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? NotAvailableString : matchItem.CatalogPackage.InstalledVersion.Version,
+                                        AppNewestVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) ? NotAvailableString : matchItem.CatalogPackage.DefaultInstallVersion.Version,
+                                        IsUpgrading = isUpgrading,
+                                        CatalogPackage = matchItem.CatalogPackage,
+                                    });
+                                }
                             }
-                        }
 
-                        if (SelectedAppSortRuleKind is AppSortRuleKind.DisplayName)
-                        {
-                            if (IsIncrease)
+                            if (appSortRuleKind is AppSortRuleKind.DisplayName)
                             {
-                                upgradableAppsList.Sort((item1, item2) => item1.AppName.CompareTo(item2.AppName));
+                                if (isIncrease)
+                                {
+                                    upgradableAppsList.Sort((item1, item2) => item1.AppName.CompareTo(item2.AppName));
+                                }
+                                else
+                                {
+                                    upgradableAppsList.Sort((item1, item2) => item2.AppName.CompareTo(item1.AppName));
+                                }
                             }
                             else
                             {
-                                upgradableAppsList.Sort((item1, item2) => item2.AppName.CompareTo(item1.AppName));
+                                if (isIncrease)
+                                {
+                                    upgradableAppsList.Sort((item1, item2) => item1.AppPublisher.CompareTo(item2.AppPublisher));
+                                }
+                                else
+                                {
+                                    upgradableAppsList.Sort((item1, item2) => item2.AppPublisher.CompareTo(item1.AppPublisher));
+                                }
                             }
-                        }
-                        else
-                        {
-                            if (IsIncrease)
-                            {
-                                upgradableAppsList.Sort((item1, item2) => item1.AppPublisher.CompareTo(item2.AppPublisher));
-                            }
-                            else
-                            {
-                                upgradableAppsList.Sort((item1, item2) => item2.AppPublisher.CompareTo(item1.AppPublisher));
-                            }
-                        }
 
-                        upgradableAppsResult.upgradableAppsList = upgradableAppsList;
+                            upgradableAppsResult.upgradableAppsList = upgradableAppsList;
+                        }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetUpgradePage), nameof(UpgradableAppsAsync), 1, e);
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetUpgradePage), nameof(UpgradableAppsAsync), 1, e);
+                }
             }
 
             return upgradableAppsResult;
@@ -625,5 +686,7 @@ namespace GetStoreApp.Views.Pages
         {
             return upgradableAppsResultKind is not UpgradableAppsResultKind.Querying;
         }
+
+        #endregion 第七部分：数据操作与业务逻辑
     }
 }

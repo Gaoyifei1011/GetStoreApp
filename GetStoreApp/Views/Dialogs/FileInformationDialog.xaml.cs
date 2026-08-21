@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -161,12 +162,11 @@ namespace GetStoreApp.Views.Dialogs
         private async void OnCopyFileInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             ContentDialogButtonClickDeferral contentDialogButtonClickDeferral = args.GetDeferral();
-            List<string> copyFileInformationCopyStringList = await GetFileInformationCopyStringListAsync(completed);
-
-            if (copyFileInformationCopyStringList is not null)
+            string fileInformation = await GetFileInformationCopyStringAsync(completed);
+            contentDialogButtonClickDeferral.Complete();
+            if (!string.IsNullOrEmpty(fileInformation))
             {
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyFileInformationCopyStringList));
-                contentDialogButtonClickDeferral.Complete();
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(fileInformation);
                 await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
             }
         }
@@ -178,19 +178,26 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 获取文件信息要准备复制的字符串内容
         /// </summary>
-        private async Task<List<string>> GetFileInformationCopyStringListAsync(CompletedModel completed)
+        private async Task<string> GetFileInformationCopyStringAsync(CompletedModel completed)
         {
             if (completed is not null)
             {
                 return await Task.Run(async () =>
                 {
-                    List<string> copyFileInformationCopyStringList = [];
-
-                    copyFileInformationCopyStringList.Add(FileNameString + completed.FileName);
-                    copyFileInformationCopyStringList.Add(FilePathString + completed.FilePath);
-                    copyFileInformationCopyStringList.Add(FileSizeString + VolumeSizeHelper.ConvertVolumeSizeToString(completed.TotalSize));
-                    copyFileInformationCopyStringList.Add(FileSHA256String + await IOHelper.GetFileSHA256Async(completed.FilePath));
-                    return copyFileInformationCopyStringList;
+                    try
+                    {
+                        List<string> copyFileInformationCopyStringList = [];
+                        copyFileInformationCopyStringList.Add(FileNameString + completed.FileName);
+                        copyFileInformationCopyStringList.Add(FilePathString + completed.FilePath);
+                        copyFileInformationCopyStringList.Add(FileSizeString + VolumeSizeHelper.ConvertVolumeSizeToString(completed.TotalSize));
+                        copyFileInformationCopyStringList.Add(FileSHA256String + await IOHelper.GetFileSHA256Async(completed.FilePath));
+                        return string.Join(Environment.NewLine, copyFileInformationCopyStringList);
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(FileInformationDialog), nameof(GetFileInformationCopyStringAsync), 1, e);
+                        return null;
+                    }
                 });
             }
             else

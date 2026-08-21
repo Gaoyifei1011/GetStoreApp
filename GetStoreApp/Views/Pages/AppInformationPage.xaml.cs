@@ -459,11 +459,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnCopyClicked(object sender, RoutedEventArgs args)
         {
-            List<string> appInformationCopyStringList = await GetAppInformationCopyListAsync(appInformation);
-
-            if (appInformationCopyStringList is not null)
+            string appInformation = await GetAppInformationCopyStringAsync(this.appInformation);
+            if (!string.IsNullOrEmpty(appInformation))
             {
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, appInformationCopyStringList));
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(appInformation);
                 await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
             }
         }
@@ -664,33 +663,40 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取应用信息要准备复制的字符串内容
         /// </summary>
-        private async Task<List<string>> GetAppInformationCopyListAsync(AppInformation appInformation)
+        private async Task<string> GetAppInformationCopyStringAsync(AppInformation appInformation)
         {
             if (appInformation is not null)
             {
                 return await Task.Run(() =>
                 {
-                    List<string> copyStringList = [];
-
-                    copyStringList.Add(string.Format("{0}:\t{1}", AppDisplayNameString, appInformation.DisplayName));
-                    copyStringList.Add(string.Format("{0}:\t{1}", PackageFamilyNameString, appInformation.PackageFamilyName));
-                    copyStringList.Add(string.Format("{0}:\t{1}", PackageFullNameString, appInformation.PackageFullName));
-                    copyStringList.Add(string.Format("{0}:\t{1}", AppDescriptionString, appInformation.Description));
-                    copyStringList.Add(string.Format("{0}:\t{1}", PublisherDisplayNameString, appInformation.PublisherDisplayName));
-                    copyStringList.Add(string.Format("{0}:\t{1}", PublisherIdString, appInformation.PublisherId));
-                    copyStringList.Add(string.Format("{0}:\t{1}", VersionString, appInformation.Version));
-                    copyStringList.Add(string.Format("{0}:\t{1}", InstalledDateString, appInformation.InstallDate));
-                    copyStringList.Add(string.Format("{0}:\t{1}", ArchitectureString, appInformation.Architecture));
-                    copyStringList.Add(string.Format("{0}:\t{1}", SignatureKindString, appInformation.SignatureKind));
-                    copyStringList.Add(string.Format("{0}:\t{1}", ResourceIdString, appInformation.ResourceId));
-                    copyStringList.Add(string.Format("{0}:\t{1}", IsBundleString, appInformation.IsBundle));
-                    copyStringList.Add(string.Format("{0}:\t{1}", IsDevelopmentModeString, appInformation.IsDevelopmentMode));
-                    copyStringList.Add(string.Format("{0}:\t{1}", IsFrameworkString, appInformation.IsFramework));
-                    copyStringList.Add(string.Format("{0}:\t{1}", IsOptionalString, appInformation.IsOptional));
-                    copyStringList.Add(string.Format("{0}:\t{1}", IsResourcePackageString, appInformation.IsResourcePackage));
-                    copyStringList.Add(string.Format("{0}:\t{1}", IsStubString, appInformation.IsStub));
-                    copyStringList.Add(string.Format("{0}:\t{1}", VerifyIsOKString, appInformation.VerifyIsOK));
-                    return copyStringList;
+                    try
+                    {
+                        List<string> copyStringList = [];
+                        copyStringList.Add(string.Format("{0}:\t{1}", AppDisplayNameString, appInformation.DisplayName));
+                        copyStringList.Add(string.Format("{0}:\t{1}", PackageFamilyNameString, appInformation.PackageFamilyName));
+                        copyStringList.Add(string.Format("{0}:\t{1}", PackageFullNameString, appInformation.PackageFullName));
+                        copyStringList.Add(string.Format("{0}:\t{1}", AppDescriptionString, appInformation.Description));
+                        copyStringList.Add(string.Format("{0}:\t{1}", PublisherDisplayNameString, appInformation.PublisherDisplayName));
+                        copyStringList.Add(string.Format("{0}:\t{1}", PublisherIdString, appInformation.PublisherId));
+                        copyStringList.Add(string.Format("{0}:\t{1}", VersionString, appInformation.Version));
+                        copyStringList.Add(string.Format("{0}:\t{1}", InstalledDateString, appInformation.InstallDate));
+                        copyStringList.Add(string.Format("{0}:\t{1}", ArchitectureString, appInformation.Architecture));
+                        copyStringList.Add(string.Format("{0}:\t{1}", SignatureKindString, appInformation.SignatureKind));
+                        copyStringList.Add(string.Format("{0}:\t{1}", ResourceIdString, appInformation.ResourceId));
+                        copyStringList.Add(string.Format("{0}:\t{1}", IsBundleString, appInformation.IsBundle));
+                        copyStringList.Add(string.Format("{0}:\t{1}", IsDevelopmentModeString, appInformation.IsDevelopmentMode));
+                        copyStringList.Add(string.Format("{0}:\t{1}", IsFrameworkString, appInformation.IsFramework));
+                        copyStringList.Add(string.Format("{0}:\t{1}", IsOptionalString, appInformation.IsOptional));
+                        copyStringList.Add(string.Format("{0}:\t{1}", IsResourcePackageString, appInformation.IsResourcePackage));
+                        copyStringList.Add(string.Format("{0}:\t{1}", IsStubString, appInformation.IsStub));
+                        copyStringList.Add(string.Format("{0}:\t{1}", VerifyIsOKString, appInformation.VerifyIsOK));
+                        return string.Join(Environment.NewLine, copyStringList);
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(GetAppInformationCopyStringAsync), 1, e);
+                        return null;
+                    }
                 });
             }
             else

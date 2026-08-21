@@ -48,7 +48,6 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
 using Windows.Graphics;
 using Windows.Storage;
@@ -67,6 +66,8 @@ namespace GetStoreAppInstaller.Views.Windows
     /// </summary>
     internal sealed partial class InstallerWindow : Window, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string msresource = "ms-resource:";
         private readonly string AppInstallFailedString = ResourceService.GetLocalized("Installer/AppInstallFailed");
         private readonly string AppInstallFailed1String = ResourceService.GetLocalized("Installer/AppInstallFailed1");
@@ -99,24 +100,27 @@ namespace GetStoreAppInstaller.Views.Windows
         private readonly Guid CLSID_AppxBundleFactory = new("378E0446-5384-43B7-8877-E7DBDD883446");
         private readonly global::Windows.Management.Deployment.PackageManager packageManager = new();
         private readonly PackageDeploymentManager packageDeploymentManager = PackageDeploymentManager.GetDefault();
-        private readonly ContentIsland contentIsland;
-        private readonly InputKeyboardSource inputKeyboardSource;
-        private readonly ContentCoordinateConverter contentCoordinateConverter;
-        private readonly OverlappedPresenter overlappedPresenter;
-        private readonly SUBCLASSPROC installerWindowSubClassProc;
         private readonly IAppxFactory appxFactory;
         private readonly IAppxBundleFactory appxBundleFactory;
+        private ContentIsland contentIsland;
+        private InputKeyboardSource inputKeyboardSource;
+        private ContentCoordinateConverter contentCoordinateConverter;
+        private OverlappedPresenter overlappedPresenter;
+        private SUBCLASSPROC installerWindowSubClassProc;
+        private double rasterizationScale;
+        private string fileName;
+        private IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> installPackageWithProgress;
+
+        #endregion 第一部分：常量、资源与状态字段
 
         [GeneratedRegex("""scale-(\d{3})""", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
         private static partial Regex ScaleRegex { get; }
 
-        private double rasterizationScale;
-        private string fileName = string.Empty;
-        private IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> installPackageWithProgress;
+        #region 第二部分：属性、集合与事件
 
         private string _windowTitle;
 
-        internal string WindowTitle
+        private string WindowTitle
         {
             get { return _windowTitle; }
 
@@ -132,7 +136,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private SystemBackdrop _windowSystemBackdrop;
 
-        internal SystemBackdrop WindowSystemBackdrop
+        private SystemBackdrop WindowSystemBackdrop
         {
             get { return _windowSystemBackdrop; }
 
@@ -148,7 +152,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private ElementTheme _windowTheme;
 
-        internal ElementTheme WindowTheme
+        private ElementTheme WindowTheme
         {
             get { return _windowTheme; }
 
@@ -164,7 +168,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isWindowMaximized;
 
-        internal bool IsWindowMaximized
+        private bool IsWindowMaximized
         {
             get { return _isWindowMaximized; }
 
@@ -180,7 +184,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isParseEmpty;
 
-        internal bool IsParseEmpty
+        private bool IsParseEmpty
         {
             get { return _isParseEmpty; }
 
@@ -196,7 +200,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isLoadCompleted;
 
-        internal bool IsLoadCompleted
+        private bool IsLoadCompleted
         {
             get { return _isLoadCompleted; }
 
@@ -212,7 +216,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _canDragFile;
 
-        internal bool CanDragFile
+        private bool CanDragFile
         {
             get { return _canDragFile; }
 
@@ -228,7 +232,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isParseSuccessfully;
 
-        internal bool IsParseSuccessfully
+        private bool IsParseSuccessfully
         {
             get { return _isParseSuccessfully; }
 
@@ -244,7 +248,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private PackageFileType _packageFileType;
 
-        internal PackageFileType PackageFileType
+        private PackageFileType PackageFileType
         {
             get { return _packageFileType; }
 
@@ -260,7 +264,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private ImageSource _packageIconImage;
 
-        internal ImageSource PackageIconImage
+        private ImageSource PackageIconImage
         {
             get { return _packageIconImage; }
 
@@ -276,7 +280,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _packageName;
 
-        internal string PackageName
+        private string PackageName
         {
             get { return _packageName; }
 
@@ -292,7 +296,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _publisherDisplayName;
 
-        internal string PublisherDisplayName
+        private string PublisherDisplayName
         {
             get { return _publisherDisplayName; }
 
@@ -308,7 +312,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private Version _version;
 
-        internal Version Version
+        private Version Version
         {
             get { return _version; }
 
@@ -324,7 +328,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _packageDescription;
 
-        internal string PackageDescription
+        private string PackageDescription
         {
             get { return _packageDescription; }
 
@@ -340,7 +344,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _packageFamilyName;
 
-        internal string PackageFamilyName
+        private string PackageFamilyName
         {
             get { return _packageFamilyName; }
 
@@ -356,7 +360,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _packageFullName;
 
-        internal string PackageFullName
+        private string PackageFullName
         {
             get { return _packageFullName; }
 
@@ -372,7 +376,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _supportedArchitecture;
 
-        internal string SupportedArchitecture
+        private string SupportedArchitecture
         {
             get { return _supportedArchitecture; }
 
@@ -388,7 +392,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _isFramework;
 
-        internal string IsFramework
+        private string IsFramework
         {
             get { return _isFramework; }
 
@@ -404,7 +408,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _appInstalledState;
 
-        internal string AppInstalledState
+        private string AppInstalledState
         {
             get { return _appInstalledState; }
 
@@ -420,7 +424,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _appInstallerSourceLink;
 
-        internal string AppInstallerSourceLink
+        private string AppInstallerSourceLink
         {
             get { return _appInstallerSourceLink; }
 
@@ -436,7 +440,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isAppInstallerSourceLinkExisted;
 
-        internal bool IsAppInstallerSourceLinkExisted
+        private bool IsAppInstallerSourceLinkExisted
         {
             get { return _isAppInstallerSourceLinkExisted; }
 
@@ -452,7 +456,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _packageSourceLink;
 
-        internal string PackageSourceLink
+        private string PackageSourceLink
         {
             get { return _packageSourceLink; }
 
@@ -468,7 +472,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isPackageSourceLinkExisted;
 
-        internal bool IsPackageSourceLinkExisted
+        private bool IsPackageSourceLinkExisted
         {
             get { return _isPackageSourceLinkExisted; }
 
@@ -484,7 +488,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _packageType;
 
-        internal string PackageType
+        private string PackageType
         {
             get { return _packageType; }
 
@@ -500,7 +504,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _hoursBetweenUpdateChecks;
 
-        internal string HoursBetweenUpdateChecks
+        private string HoursBetweenUpdateChecks
         {
             get { return _hoursBetweenUpdateChecks; }
 
@@ -516,7 +520,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _updateBlocksActivation;
 
-        internal string UpdateBlocksActivation
+        private string UpdateBlocksActivation
         {
             get { return _updateBlocksActivation; }
 
@@ -532,7 +536,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _showPrompt;
 
-        internal string ShowPrompt
+        private string ShowPrompt
         {
             get { return _showPrompt; }
 
@@ -548,7 +552,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _forceUpdateFromAnyVersion;
 
-        internal string ForceUpdateFromAnyVersion
+        private string ForceUpdateFromAnyVersion
         {
             get { return _forceUpdateFromAnyVersion; }
 
@@ -564,7 +568,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _automaticBackgroundTask;
 
-        internal string AutomaticBackgroundTask
+        private string AutomaticBackgroundTask
         {
             get { return _automaticBackgroundTask; }
 
@@ -580,7 +584,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isAppInstalled;
 
-        internal bool IsAppInstalled
+        private bool IsAppInstalled
         {
             get { return _isAppInstalled; }
 
@@ -596,7 +600,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isUpdateSettingsExisted;
 
-        internal bool IsUpdateSettingsExisted
+        private bool IsUpdateSettingsExisted
         {
             get { return _isUpdateSettingsExisted; }
 
@@ -612,7 +616,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isInstalling;
 
-        internal bool IsInstalling
+        private bool IsInstalling
         {
             get { return _isInstalling; }
 
@@ -628,7 +632,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private double _installProgressValue;
 
-        internal double InstallProgressValue
+        private double InstallProgressValue
         {
             get { return _installProgressValue; }
 
@@ -644,7 +648,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isInstallWaiting;
 
-        internal bool IsInstallWaiting
+        private bool IsInstallWaiting
         {
             get { return _isInstallWaiting; }
 
@@ -660,7 +664,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isInstallFailed;
 
-        internal bool IsInstallFailed
+        private bool IsInstallFailed
         {
             get { return _isInstallFailed; }
 
@@ -676,7 +680,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private bool _isCancelInstall;
 
-        internal bool IsCancelInstall
+        private bool IsCancelInstall
         {
             get { return _isCancelInstall; }
 
@@ -692,7 +696,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _installStateString;
 
-        internal string InstallStateString
+        private string InstallStateString
         {
             get { return _installStateString; }
 
@@ -708,7 +712,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private string _installFailedInformation;
 
-        internal string InstallFailedInformation
+        private string InstallFailedInformation
         {
             get { return _installFailedInformation; }
 
@@ -899,38 +903,25 @@ namespace GetStoreAppInstaller.Views.Windows
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion 第二部分：属性、集合与事件
+
         [DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
         internal InstallerWindow()
         {
             InitializeComponent();
-
-            // 窗口部分初始化
-            WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
-            overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
-            ExtendsContentIntoTitleBar = true;
-            AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
-            AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
-            AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
-            IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
-            contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
-            contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
-            inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
-
-            AppWindow.Changed += OnAppWindowChanged;
-            AppWindow.Closing += OnAppWindowClosing;
-            contentIsland.StateChanged += OnStateChanged;
-            contentIsland.Environment.SettingChanged += OnSettingChanged;
-            inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
+            InitializeWindowData();
+            MountWindowEvent();
+            MountWindowWndProc();
+            SetWindowTheme();
+            SetSystemBackdrop();
+            SetWindowSize();
+            SetWindowPosition();
+            SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
+            AddElevatedDragSupport();
+            CreateAppxInstance();
 
             // 标题栏和右键菜单设置
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
-
-            // 为应用主窗口添加窗口过程
-            installerWindowSubClassProc = new(InstallerWindowSubClassProc);
-            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), installerWindowSubClassProc, 0, nint.Zero);
-
-            SetWindowTheme();
-            SetSystemBackdrop();
 
             if (RuntimeHelper.IsElevated)
             {
@@ -948,9 +939,6 @@ namespace GetStoreAppInstaller.Views.Windows
             {
                 appxBundleFactory = (IAppxBundleFactory)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxBundleFactoryPtr, CreateObjectFlags.None);
             }
-
-            rasterizationScale = contentIsland.RasterizationScale;
-            AppWindow.Resize(new(Convert.ToInt32(800 * contentIsland.RasterizationScale), Convert.ToInt32(560 * contentIsland.RasterizationScale)));
 
             // 默认直接显示到窗口中间
             if (DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
@@ -1928,6 +1916,64 @@ namespace GetStoreAppInstaller.Views.Windows
         #region 第七部分：窗口及内容属性设置
 
         /// <summary>
+        /// 初始化窗口数据
+        /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
+        private void InitializeWindowData()
+        {
+            WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
+            overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
+            ExtendsContentIntoTitleBar = true;
+            AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
+            AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
+            AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
+            IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
+            contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
+            contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
+            inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
+        }
+
+        /// <summary>
+        /// 挂载窗口事件
+        /// </summary>
+        private void MountWindowEvent()
+        {
+            AppWindow.Changed += OnAppWindowChanged;
+            AppWindow.Closing += OnAppWindowClosing;
+            contentIsland.StateChanged += OnStateChanged;
+            contentIsland.Environment.SettingChanged += OnSettingChanged;
+            inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
+        }
+
+        /// <summary>
+        /// 卸载窗口事件
+        /// </summary>
+        private void DismountWindowEvent()
+        {
+            AppWindow.Changed -= OnAppWindowChanged;
+            contentIsland.Environment.SettingChanged -= OnSettingChanged;
+            inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
+        }
+
+        /// <summary>
+        /// 挂载窗口进程
+        /// </summary>
+        private void MountWindowWndProc()
+        {
+            installerWindowSubClassProc = new(InstallerWindowSubClassProc);
+            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), installerWindowSubClassProc, 0, nint.Zero);
+        }
+
+        /// <summary>
+        /// 卸载窗口进程
+        /// </summary>
+        private void DismountWindowWndProc()
+        {
+            Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), installerWindowSubClassProc, 0);
+            (Application.Current as InstallerApp).Dispose();
+        }
+
+        /// <summary>
         /// 设置应用显示的主题
         /// </summary>
         internal void SetWindowTheme()
@@ -1969,6 +2015,28 @@ namespace GetStoreAppInstaller.Views.Windows
             {
                 WindowSystemBackdrop = null;
                 VisualStateManager.GoToState(InstallerPage, "BackgroundDefault", false);
+            }
+        }
+
+        /// <summary>
+        /// 设置窗口大小
+        /// </summary>
+        private void SetWindowSize()
+        {
+            rasterizationScale = contentIsland.RasterizationScale;
+            AppWindow.Resize(new(Convert.ToInt32(1000 * contentIsland.RasterizationScale), Convert.ToInt32(700 * contentIsland.RasterizationScale)));
+        }
+
+        /// <summary>
+        /// 设置窗口大小和位置
+        /// </summary>
+        private void SetWindowPosition()
+        {
+            // 默认直接显示到窗口中间
+            if (DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
+            {
+                RectInt32 workArea = displayArea.WorkArea;
+                AppWindow.Move(new((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
             }
         }
 

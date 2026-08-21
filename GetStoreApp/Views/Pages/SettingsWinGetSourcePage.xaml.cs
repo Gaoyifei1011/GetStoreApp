@@ -29,6 +29,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     internal sealed partial class SettingsWinGetSourcePage : Page, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string DistrustedString = ResourceService.GetLocalized("SettingsWinGetSource/Distrusted");
         private readonly string MicrosoftEntraIdString = ResourceService.GetLocalized("SettingsWinGetSource/MicrosoftEntraId");
         private readonly string MicrosoftEntraIdForAzureBlobStorageString = ResourceService.GetLocalized("SettingsWinGetSource/MicrosoftEntraIdForAzureBlobStorage");
@@ -49,13 +51,17 @@ namespace GetStoreApp.Views.Pages
         private readonly string YesString = ResourceService.GetLocalized("SettingsWinGetSource/Yes");
         private bool isInitialized;
 
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
+
         private bool _isLoadedCompleted;
 
-        internal bool IsLoadedCompleted
+        private bool IsLoadedCompleted
         {
             get { return _isLoadedCompleted; }
 
-            private set
+            set
             {
                 if (!Equals(_isLoadedCompleted, value))
                 {
@@ -71,10 +77,18 @@ namespace GetStoreApp.Views.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
         internal SettingsWinGetSourcePage()
         {
             InitializeComponent();
         }
+
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
 
         /// <summary>
         /// 导航到该页面触发的事件
@@ -91,7 +105,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #region 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第四部分：父类虚方法重写
+
+        #region 第五部分：命令调用处理
 
         /// <summary>
         /// 搜索时是否使用本数据源
@@ -116,19 +132,7 @@ namespace GetStoreApp.Views.Pages
                     }
                 }
 
-                Task.Run(() =>
-                {
-                    KeyValuePair<string, bool> winGetDataSourceName = KeyValuePair.Create(winGetSource.Name, winGetSource.IsInternal);
-
-                    if (winGetSource.IsSelected)
-                    {
-                        WinGetConfigService.SetWinGetDataSourceName(winGetDataSourceName);
-                    }
-                    else
-                    {
-                        WinGetConfigService.RemoveWinGetDataSourceName(winGetDataSourceName);
-                    }
-                });
+                UpdateWinGetSourceData(winGetSource.Name, winGetSource.IsInternal, winGetSource.IsSelected);
             }
         }
 
@@ -171,108 +175,21 @@ namespace GetStoreApp.Views.Pages
                     }
                 }
 
-                RemovePackageCatalogResult removePackageCatalogResult = await Task.Run(async () =>
+                RemovePackageCatalogResult removePackageCatalogResult = await RemovePackageCatalogAsync(winGetSource.Name, false);
+                if (removePackageCatalogResult is not null && removePackageCatalogResult.Status is RemovePackageCatalogStatus.Ok)
                 {
-                    PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
-                    RemovePackageCatalogOptions removePackageCatalogOptions = WinGetFactoryHelper.CreateRemovePackageCatalogOptions();
-                    removePackageCatalogOptions.Name = winGetSource.Name;
-                    removePackageCatalogOptions.PreserveData = false;
+                    await RemoveWinGetDataSourceNameAsync(winGetSource.Name, winGetSource.IsInternal);
 
-                    return await packageManager.RemovePackageCatalogAsync(removePackageCatalogOptions);
-                });
-
-                switch (removePackageCatalogResult.Status)
-                {
-                    case RemovePackageCatalogStatus.Ok:
+                    foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
+                    {
+                        if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
                         {
-                            await Task.Run(() =>
-                            {
-                                WinGetConfigService.RemoveWinGetDataSourceName(KeyValuePair.Create(winGetSource.Name, winGetSource.IsInternal));
-                            });
-
-                            foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
-                            {
-                                if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
-                                {
-                                    WinGetSourceCustomCollection.Remove(winGetSourceCustomItem);
-                                    break;
-                                }
-                            }
-
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, true, WinGetDataSourceRemoveSuccessString));
+                            WinGetSourceCustomCollection.Remove(winGetSourceCustomItem);
                             break;
                         }
-                    case RemovePackageCatalogStatus.GroupPolicyError:
-                        {
-                            foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
-                            {
-                                if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
-                                {
-                                    winGetSourceCustomItem.IsOperating = false;
-                                    break;
-                                }
-                            }
-
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
-                            break;
-                        }
-                    case RemovePackageCatalogStatus.CatalogError:
-                        {
-                            foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
-                            {
-                                if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
-                                {
-                                    winGetSourceCustomItem.IsOperating = false;
-                                    break;
-                                }
-                            }
-
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveCatalogErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
-                            break;
-                        }
-                    case RemovePackageCatalogStatus.InternalError:
-                        {
-                            foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
-                            {
-                                if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
-                                {
-                                    winGetSourceCustomItem.IsOperating = false;
-                                    break;
-                                }
-                            }
-
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveInternalErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
-                            break;
-                        }
-                    case RemovePackageCatalogStatus.InvalidOptions:
-                        {
-                            foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
-                            {
-                                if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
-                                {
-                                    winGetSourceCustomItem.IsOperating = false;
-                                    break;
-                                }
-                            }
-
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveInvalidOptionsString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
-                            break;
-                        }
-                    case RemovePackageCatalogStatus.AccessDenied:
-                        {
-                            foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
-                            {
-                                if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
-                                {
-                                    winGetSourceCustomItem.IsOperating = false;
-                                    break;
-                                }
-                            }
-
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveAccessDeniedString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
-                            break;
-                        }
+                    }
                 }
+                await ShowRemoveDataSourceResultNotificationAsync(removePackageCatalogResult);
             }
             else
             {
@@ -296,108 +213,21 @@ namespace GetStoreApp.Views.Pages
                     }
                 }
 
-                RemovePackageCatalogResult removePackageCatalogResult = await Task.Run(async () =>
+                RemovePackageCatalogResult removePackageCatalogResult = await RemovePackageCatalogAsync(winGetSource.Name, false);
+                if (removePackageCatalogResult is not null && removePackageCatalogResult.Status is RemovePackageCatalogStatus.Ok)
                 {
-                    PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
-                    RemovePackageCatalogOptions removePackageCatalogOptions = WinGetFactoryHelper.CreateRemovePackageCatalogOptions();
-                    removePackageCatalogOptions.Name = winGetSource.Name;
-                    removePackageCatalogOptions.PreserveData = true;
+                    await RemoveWinGetDataSourceNameAsync(winGetSource.Name, winGetSource.IsInternal);
 
-                    return await packageManager.RemovePackageCatalogAsync(removePackageCatalogOptions);
-                });
-
-                switch (removePackageCatalogResult.Status)
-                {
-                    case RemovePackageCatalogStatus.Ok:
+                    foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
+                    {
+                        if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
                         {
-                            await Task.Run(() =>
-                            {
-                                WinGetConfigService.RemoveWinGetDataSourceName(KeyValuePair.Create(winGetSource.Name, winGetSource.IsInternal));
-                            });
-
-                            foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
-                            {
-                                if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
-                                {
-                                    WinGetSourceCustomCollection.Remove(winGetSourceCustomItem);
-                                    break;
-                                }
-                            }
-
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, true, WinGetDataSourceRemoveSuccessString));
+                            WinGetSourceCustomCollection.Remove(winGetSourceCustomItem);
                             break;
                         }
-                    case RemovePackageCatalogStatus.GroupPolicyError:
-                        {
-                            foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
-                            {
-                                if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
-                                {
-                                    winGetSourceCustomItem.IsOperating = false;
-                                    break;
-                                }
-                            }
-
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
-                            break;
-                        }
-                    case RemovePackageCatalogStatus.CatalogError:
-                        {
-                            foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
-                            {
-                                if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
-                                {
-                                    winGetSourceCustomItem.IsOperating = false;
-                                    break;
-                                }
-                            }
-
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
-                            break;
-                        }
-                    case RemovePackageCatalogStatus.InternalError:
-                        {
-                            foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
-                            {
-                                if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
-                                {
-                                    winGetSourceCustomItem.IsOperating = false;
-                                    break;
-                                }
-                            }
-
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
-                            break;
-                        }
-                    case RemovePackageCatalogStatus.InvalidOptions:
-                        {
-                            foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
-                            {
-                                if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
-                                {
-                                    winGetSourceCustomItem.IsOperating = false;
-                                    break;
-                                }
-                            }
-
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
-                            break;
-                        }
-                    case RemovePackageCatalogStatus.AccessDenied:
-                        {
-                            foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
-                            {
-                                if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
-                                {
-                                    winGetSourceCustomItem.IsOperating = false;
-                                    break;
-                                }
-                            }
-
-                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
-                            break;
-                        }
+                    }
                 }
+                await ShowRemoveDataSourceResultNotificationAsync(removePackageCatalogResult);
             }
             else
             {
@@ -405,9 +235,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第五部分：命令调用处理
 
-        #region 第二部分：设置页面——挂载的事件
+        #region 第六部分：挂载事件处理
 
         /// <summary>
         /// 添加数据源
@@ -453,7 +283,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第二部分：设置页面——挂载的事件
+        #endregion 第六部分：挂载事件处理
+
+        #region 第七部分：数据操作与业务逻辑
 
         /// <summary>
         /// 初始化 WinGet 数据源信息
@@ -463,7 +295,26 @@ namespace GetStoreApp.Views.Pages
             WinGetSourceInternalCollection.Clear();
             WinGetSourceCustomCollection.Clear();
 
-            List<WinGetSourceModel> winGetSourceInternalList = await Task.Run(() =>
+            List<WinGetSourceModel> winGetSourceInternalList = await GetWinGetSourceInternalListAsync();
+            List<WinGetSourceModel> winGetSourceCustomList = await GetWinGetSourceCustomListAsync();
+
+            foreach (WinGetSourceModel winGetSourceItem in winGetSourceInternalList)
+            {
+                WinGetSourceInternalCollection.Add(winGetSourceItem);
+            }
+
+            foreach (WinGetSourceModel winGetSourceItem in winGetSourceCustomList)
+            {
+                WinGetSourceCustomCollection.Add(winGetSourceItem);
+            }
+        }
+
+        /// <summary>
+        /// 获取 WinGet 内部数据源
+        /// </summary>
+        private async Task<List<WinGetSourceModel>> GetWinGetSourceInternalListAsync()
+        {
+            return await Task.Run(() =>
             {
                 PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
                 List<WinGetSourceModel> winGetSourceInternalList = [];
@@ -525,8 +376,14 @@ namespace GetStoreApp.Views.Pages
 
                 return winGetSourceInternalList;
             });
+        }
 
-            List<WinGetSourceModel> winGetSourceCustomList = await Task.Run(() =>
+        /// <summary>
+        /// 获取 WinGet 自定义数据源
+        /// </summary>
+        private async Task<List<WinGetSourceModel>> GetWinGetSourceCustomListAsync()
+        {
+            return await Task.Run(() =>
             {
                 PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
                 List<WinGetSourceModel> winGetSourceCustomList = [];
@@ -588,15 +445,101 @@ namespace GetStoreApp.Views.Pages
 
                 return winGetSourceCustomList;
             });
+        }
 
-            foreach (WinGetSourceModel winGetSourceItem in winGetSourceInternalList)
+        /// <summary>
+        /// 更新 WinGet 数据源数据
+        /// </summary>
+        private void UpdateWinGetSourceData(string name, bool isInternal, bool isSelected)
+        {
+            Task.Run(() =>
             {
-                WinGetSourceInternalCollection.Add(winGetSourceItem);
+                KeyValuePair<string, bool> winGetDataSourceName = KeyValuePair.Create(name, isInternal);
+
+                if (isSelected)
+                {
+                    WinGetConfigService.SetWinGetDataSourceName(winGetDataSourceName);
+                }
+                else
+                {
+                    WinGetConfigService.RemoveWinGetDataSourceName(winGetDataSourceName);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 移除 WinGet 数据源
+        /// </summary>
+        private async Task<RemovePackageCatalogResult> RemovePackageCatalogAsync(string name, bool preserveData)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                return await Task.Run(async () =>
+                {
+                    PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
+                    RemovePackageCatalogOptions removePackageCatalogOptions = WinGetFactoryHelper.CreateRemovePackageCatalogOptions();
+                    removePackageCatalogOptions.Name = name;
+                    removePackageCatalogOptions.PreserveData = preserveData;
+                    return await packageManager.RemovePackageCatalogAsync(removePackageCatalogOptions);
+                });
             }
-
-            foreach (WinGetSourceModel winGetSourceItem in winGetSourceCustomList)
+            else
             {
-                WinGetSourceCustomCollection.Add(winGetSourceItem);
+                return default;
+            }
+        }
+
+        /// <summary>
+        /// 移除 WinGet 数据源
+        /// </summary>
+        private async Task RemoveWinGetDataSourceNameAsync(string name, bool isInternal)
+        {
+            await Task.Run(() =>
+            {
+                WinGetConfigService.RemoveWinGetDataSourceName(KeyValuePair.Create(name, isInternal));
+            });
+        }
+
+        /// <summary>
+        /// 显示移除 WinGet 数据源结果通知
+        /// </summary>
+        private async Task ShowRemoveDataSourceResultNotificationAsync(RemovePackageCatalogResult removePackageCatalogResult)
+        {
+            if (removePackageCatalogResult is not null)
+            {
+                switch (removePackageCatalogResult.Status)
+                {
+                    case RemovePackageCatalogStatus.Ok:
+                        {
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, true, WinGetDataSourceRemoveSuccessString));
+                            break;
+                        }
+                    case RemovePackageCatalogStatus.GroupPolicyError:
+                        {
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveGroupPolicyErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
+                            break;
+                        }
+                    case RemovePackageCatalogStatus.CatalogError:
+                        {
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveCatalogErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
+                            break;
+                        }
+                    case RemovePackageCatalogStatus.InternalError:
+                        {
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveInternalErrorString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
+                            break;
+                        }
+                    case RemovePackageCatalogStatus.InvalidOptions:
+                        {
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveInvalidOptionsString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
+                            break;
+                        }
+                    case RemovePackageCatalogStatus.AccessDenied:
+                        {
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailedString, WinGetDataSourceRemoveAccessDeniedString, removePackageCatalogResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", removePackageCatalogResult.ExtendedErrorCode.HResult) : NotAvailableString)));
+                            break;
+                        }
+                }
             }
         }
 
@@ -609,5 +552,7 @@ namespace GetStoreApp.Views.Pages
         {
             return string.Format(WinGetDataSourceCountInfoString, winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount);
         }
+
+        #endregion 第七部分：数据操作与业务逻辑
     }
 }
