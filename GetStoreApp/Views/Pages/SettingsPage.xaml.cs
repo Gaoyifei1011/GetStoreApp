@@ -235,17 +235,7 @@ namespace GetStoreApp.Views.Pages
         private void OnAppSettingsClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             SettingsSplitView.IsPaneOpen = false;
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new("ms-settings:appsfeatures-app"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenAppSettings();
         }
 
         /// <summary>
@@ -344,6 +334,24 @@ namespace GetStoreApp.Views.Pages
             {
                 SettingsSplitView.IsPaneOpen = true;
             }
+        }
+
+        /// <summary>
+        /// 打开应用设置
+        /// </summary>
+        private void OpenAppSettings()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("ms-settings:appsfeatures-app"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>

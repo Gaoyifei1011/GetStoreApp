@@ -611,28 +611,26 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<ComboBoxItemModel> GetAppUpdateStatusAsync(List<ComboBoxItemModel> appUpdateStatusList)
         {
-            if (appUpdateStatusList is not null)
-            {
-                return await Task.Run(() =>
-                {
-                    string appUpdateStatus = "AppUpdateDisabled";
-                    int? autoDownload = RegistryHelper.ReadRegistryKey<int?>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
-                    if (autoDownload.HasValue)
-                    {
-                        appUpdateStatus = autoDownload.Value is 4 ? "AppUpdateEnabled" : "AppUpdateDisabled";
-                    }
-                    else
-                    {
-                        autoDownload = RegistryHelper.ReadRegistryKey<int?>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload");
-                        appUpdateStatus = autoDownload.HasValue ? autoDownload.Value is 4 ? "AppUpdateEnabled" : "AppUpdatePaused" : "AppUpdateEnabled";
-                    }
-                    return appUpdateStatusList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), appUpdateStatus, StringComparison.OrdinalIgnoreCase));
-                });
-            }
-            else
+            if (appUpdateStatusList is null)
             {
                 return default;
             }
+
+            return await Task.Run(() =>
+            {
+                string appUpdateStatus = "AppUpdateDisabled";
+                int? autoDownload = RegistryHelper.ReadRegistryKey<int?>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
+                if (autoDownload.HasValue)
+                {
+                    appUpdateStatus = autoDownload.Value is 4 ? "AppUpdateEnabled" : "AppUpdateDisabled";
+                }
+                else
+                {
+                    autoDownload = RegistryHelper.ReadRegistryKey<int?>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload");
+                    appUpdateStatus = autoDownload.HasValue ? autoDownload.Value is 4 ? "AppUpdateEnabled" : "AppUpdatePaused" : "AppUpdateEnabled";
+                }
+                return appUpdateStatusList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), appUpdateStatus, StringComparison.OrdinalIgnoreCase));
+            });
         }
 
         /// <summary>

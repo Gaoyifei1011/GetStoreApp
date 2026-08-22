@@ -1204,51 +1204,49 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<(bool, bool, DownloadResult, Exception)> DownloadPackageAsync(PackageOperationModel packageOperation)
         {
-            if (packageOperation is not null)
-            {
-                return await Task.Run(async () =>
-                {
-                    try
-                    {
-                        PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
-                        IAsyncOperationWithProgress<DownloadResult, PackageDownloadProgress> downloadPackageWithProgress = packageManager.DownloadPackageAsync(packageOperation.SearchApps.CatalogPackage, packageOperation.DownloadOptions);
-
-                        PackageOperationLock.Enter();
-
-                        try
-                        {
-                            packageOperation.PackageDownloadProgress = downloadPackageWithProgress;
-                        }
-                        catch (Exception e)
-                        {
-                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        }
-                        finally
-                        {
-                            PackageOperationLock.Exit();
-                        }
-
-                        // 第二部分：更新应用下载进度
-                        downloadPackageWithProgress.Progress = (result, progress) => OnPackageDownloadProgress(result, progress, packageOperation);
-                        return ValueTuple.Create<bool, bool, DownloadResult, Exception>(true, false, await downloadPackageWithProgress, null);
-                    }
-                    // 任务已取消
-                    catch (TaskCanceledException e)
-                    {
-                        return ValueTuple.Create<bool, bool, DownloadResult, Exception>(false, true, null, e);
-                    }
-                    // 其他异常
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(DownloadPackageAsync), 1, e);
-                        return ValueTuple.Create<bool, bool, DownloadResult, Exception>(false, false, null, e);
-                    }
-                });
-            }
-            else
+            if (packageOperation is null)
             {
                 return default;
             }
+
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
+                    IAsyncOperationWithProgress<DownloadResult, PackageDownloadProgress> downloadPackageWithProgress = packageManager.DownloadPackageAsync(packageOperation.SearchApps.CatalogPackage, packageOperation.DownloadOptions);
+
+                    PackageOperationLock.Enter();
+
+                    try
+                    {
+                        packageOperation.PackageDownloadProgress = downloadPackageWithProgress;
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
+                    finally
+                    {
+                        PackageOperationLock.Exit();
+                    }
+
+                    // 第二部分：更新应用下载进度
+                    downloadPackageWithProgress.Progress = (result, progress) => OnPackageDownloadProgress(result, progress, packageOperation);
+                    return ValueTuple.Create<bool, bool, DownloadResult, Exception>(true, false, await downloadPackageWithProgress, null);
+                }
+                // 任务已取消
+                catch (TaskCanceledException e)
+                {
+                    return ValueTuple.Create<bool, bool, DownloadResult, Exception>(false, true, null, e);
+                }
+                // 其他异常
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(DownloadPackageAsync), 1, e);
+                    return ValueTuple.Create<bool, bool, DownloadResult, Exception>(false, false, null, e);
+                }
+            });
         }
 
         /// <summary>
@@ -1256,51 +1254,49 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<(bool, bool, InstallResult, Exception)> InstallPackageAsync(PackageOperationModel packageOperation)
         {
-            if (packageOperation is not null)
-            {
-                return await Task.Run(async () =>
-                {
-                    try
-                    {
-                        PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
-                        IAsyncOperationWithProgress<InstallResult, InstallProgress> installPackageWithProgress = packageManager.InstallPackageAsync(packageOperation.SearchApps.CatalogPackage, packageOperation.InstallOptions);
-
-                        PackageOperationLock.Enter();
-
-                        try
-                        {
-                            packageOperation.PackageInstallProgress = installPackageWithProgress;
-                        }
-                        catch (Exception e)
-                        {
-                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        }
-                        finally
-                        {
-                            PackageOperationLock.Exit();
-                        }
-
-                        // 第二部分：更新应用安装进度
-                        installPackageWithProgress.Progress = (result, progress) => OnPackageInstallProgress(result, progress, packageOperation);
-                        return ValueTuple.Create<bool, bool, InstallResult, Exception>(true, false, await installPackageWithProgress, null);
-                    }
-                    // 任务已取消
-                    catch (TaskCanceledException e)
-                    {
-                        return ValueTuple.Create<bool, bool, InstallResult, Exception>(false, true, null, e);
-                    }
-                    // 其他异常
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(InstallPackageAsync), 1, e);
-                        return ValueTuple.Create<bool, bool, InstallResult, Exception>(false, false, null, e);
-                    }
-                });
-            }
-            else
+            if (packageOperation is null)
             {
                 return default;
             }
+
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
+                    IAsyncOperationWithProgress<InstallResult, InstallProgress> installPackageWithProgress = packageManager.InstallPackageAsync(packageOperation.SearchApps.CatalogPackage, packageOperation.InstallOptions);
+
+                    PackageOperationLock.Enter();
+
+                    try
+                    {
+                        packageOperation.PackageInstallProgress = installPackageWithProgress;
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
+                    finally
+                    {
+                        PackageOperationLock.Exit();
+                    }
+
+                    // 第二部分：更新应用安装进度
+                    installPackageWithProgress.Progress = (result, progress) => OnPackageInstallProgress(result, progress, packageOperation);
+                    return ValueTuple.Create<bool, bool, InstallResult, Exception>(true, false, await installPackageWithProgress, null);
+                }
+                // 任务已取消
+                catch (TaskCanceledException e)
+                {
+                    return ValueTuple.Create<bool, bool, InstallResult, Exception>(false, true, null, e);
+                }
+                // 其他异常
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(InstallPackageAsync), 1, e);
+                    return ValueTuple.Create<bool, bool, InstallResult, Exception>(false, false, null, e);
+                }
+            });
         }
 
         /// <summary>
@@ -1308,51 +1304,49 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<(bool, bool, UninstallResult, Exception)> UninstallPackageAsync(PackageOperationModel packageOperation)
         {
-            if (packageOperation is not null)
-            {
-                return await Task.Run(async () =>
-                {
-                    try
-                    {
-                        PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
-                        IAsyncOperationWithProgress<UninstallResult, UninstallProgress> uninstallPackageWithProgress = packageManager.UninstallPackageAsync(packageOperation.InstalledApps.CatalogPackage, packageOperation.UninstallOptions);
-
-                        PackageOperationLock.Enter();
-
-                        try
-                        {
-                            packageOperation.PackageUninstallProgress = uninstallPackageWithProgress;
-                        }
-                        catch (Exception e)
-                        {
-                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        }
-                        finally
-                        {
-                            PackageOperationLock.Exit();
-                        }
-
-                        // 第二部分：更新应用卸载进度
-                        uninstallPackageWithProgress.Progress = (result, progress) => OnPackageUninstallProgress(result, progress, packageOperation);
-                        return ValueTuple.Create<bool, bool, UninstallResult, Exception>(true, false, await uninstallPackageWithProgress, null);
-                    }
-                    // 任务已取消
-                    catch (TaskCanceledException e)
-                    {
-                        return ValueTuple.Create<bool, bool, UninstallResult, Exception>(false, true, null, e);
-                    }
-                    // 其他异常
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(UninstallPackageAsync), 1, e);
-                        return ValueTuple.Create<bool, bool, UninstallResult, Exception>(false, false, null, e);
-                    }
-                });
-            }
-            else
+            if (packageOperation is null)
             {
                 return default;
             }
+
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
+                    IAsyncOperationWithProgress<UninstallResult, UninstallProgress> uninstallPackageWithProgress = packageManager.UninstallPackageAsync(packageOperation.InstalledApps.CatalogPackage, packageOperation.UninstallOptions);
+
+                    PackageOperationLock.Enter();
+
+                    try
+                    {
+                        packageOperation.PackageUninstallProgress = uninstallPackageWithProgress;
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
+                    finally
+                    {
+                        PackageOperationLock.Exit();
+                    }
+
+                    // 第二部分：更新应用卸载进度
+                    uninstallPackageWithProgress.Progress = (result, progress) => OnPackageUninstallProgress(result, progress, packageOperation);
+                    return ValueTuple.Create<bool, bool, UninstallResult, Exception>(true, false, await uninstallPackageWithProgress, null);
+                }
+                // 任务已取消
+                catch (TaskCanceledException e)
+                {
+                    return ValueTuple.Create<bool, bool, UninstallResult, Exception>(false, true, null, e);
+                }
+                // 其他异常
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(UninstallPackageAsync), 1, e);
+                    return ValueTuple.Create<bool, bool, UninstallResult, Exception>(false, false, null, e);
+                }
+            });
         }
 
         /// <summary>
@@ -1360,51 +1354,49 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<(bool, bool, RepairResult, Exception)> RepairPackageAsync(PackageOperationModel packageOperation)
         {
-            if (packageOperation is not null)
-            {
-                return await Task.Run(async () =>
-                {
-                    try
-                    {
-                        PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
-                        IAsyncOperationWithProgress<RepairResult, RepairProgress> repairPackageWithProgress = packageManager.RepairPackageAsync(packageOperation.SearchApps.CatalogPackage, packageOperation.RepairOptions);
-
-                        PackageOperationLock.Enter();
-
-                        try
-                        {
-                            packageOperation.PackageRepairProgress = repairPackageWithProgress;
-                        }
-                        catch (Exception e)
-                        {
-                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        }
-                        finally
-                        {
-                            PackageOperationLock.Exit();
-                        }
-
-                        // 第二部分：更新应用安装进度
-                        repairPackageWithProgress.Progress = (result, progress) => OnPackageRepairProgress(result, progress, packageOperation);
-                        return ValueTuple.Create<bool, bool, RepairResult, Exception>(true, false, await repairPackageWithProgress, null);
-                    }
-                    // 任务已取消
-                    catch (TaskCanceledException e)
-                    {
-                        return ValueTuple.Create<bool, bool, RepairResult, Exception>(false, true, null, e);
-                    }
-                    // 其他异常
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(RepairPackageAsync), 1, e);
-                        return ValueTuple.Create<bool, bool, RepairResult, Exception>(false, false, null, e);
-                    }
-                });
-            }
-            else
+            if (packageOperation is null)
             {
                 return default;
             }
+
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
+                    IAsyncOperationWithProgress<RepairResult, RepairProgress> repairPackageWithProgress = packageManager.RepairPackageAsync(packageOperation.SearchApps.CatalogPackage, packageOperation.RepairOptions);
+
+                    PackageOperationLock.Enter();
+
+                    try
+                    {
+                        packageOperation.PackageRepairProgress = repairPackageWithProgress;
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
+                    finally
+                    {
+                        PackageOperationLock.Exit();
+                    }
+
+                    // 第二部分：更新应用安装进度
+                    repairPackageWithProgress.Progress = (result, progress) => OnPackageRepairProgress(result, progress, packageOperation);
+                    return ValueTuple.Create<bool, bool, RepairResult, Exception>(true, false, await repairPackageWithProgress, null);
+                }
+                // 任务已取消
+                catch (TaskCanceledException e)
+                {
+                    return ValueTuple.Create<bool, bool, RepairResult, Exception>(false, true, null, e);
+                }
+                // 其他异常
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(RepairPackageAsync), 1, e);
+                    return ValueTuple.Create<bool, bool, RepairResult, Exception>(false, false, null, e);
+                }
+            });
         }
 
         /// <summary>
@@ -1412,51 +1404,49 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<(bool, bool, InstallResult, Exception)> UpgradePackageAsync(PackageOperationModel packageOperation)
         {
-            if (packageOperation is not null)
-            {
-                return await Task.Run(async () =>
-                {
-                    try
-                    {
-                        PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
-                        IAsyncOperationWithProgress<InstallResult, InstallProgress> upgradePackageWithProgress = packageManager.UpgradePackageAsync(packageOperation.UpgradableApps.CatalogPackage, packageOperation.InstallOptions);
-
-                        PackageOperationLock.Enter();
-
-                        try
-                        {
-                            packageOperation.PackageInstallProgress = upgradePackageWithProgress;
-                        }
-                        catch (Exception e)
-                        {
-                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        }
-                        finally
-                        {
-                            PackageOperationLock.Exit();
-                        }
-
-                        // 第二部分：更新应用安装进度
-                        upgradePackageWithProgress.Progress = (result, progress) => OnPackageInstallProgress(result, progress, packageOperation);
-                        return ValueTuple.Create<bool, bool, InstallResult, Exception>(true, false, await upgradePackageWithProgress, null);
-                    }
-                    // 任务已取消
-                    catch (TaskCanceledException e)
-                    {
-                        return ValueTuple.Create<bool, bool, InstallResult, Exception>(false, true, null, e);
-                    }
-                    // 其他异常
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(UpgradePackageAsync), 1, e);
-                        return ValueTuple.Create<bool, bool, InstallResult, Exception>(false, false, null, e);
-                    }
-                });
-            }
-            else
+            if (packageOperation is null)
             {
                 return default;
             }
+
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
+                    IAsyncOperationWithProgress<InstallResult, InstallProgress> upgradePackageWithProgress = packageManager.UpgradePackageAsync(packageOperation.UpgradableApps.CatalogPackage, packageOperation.InstallOptions);
+
+                    PackageOperationLock.Enter();
+
+                    try
+                    {
+                        packageOperation.PackageInstallProgress = upgradePackageWithProgress;
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
+                    finally
+                    {
+                        PackageOperationLock.Exit();
+                    }
+
+                    // 第二部分：更新应用安装进度
+                    upgradePackageWithProgress.Progress = (result, progress) => OnPackageInstallProgress(result, progress, packageOperation);
+                    return ValueTuple.Create<bool, bool, InstallResult, Exception>(true, false, await upgradePackageWithProgress, null);
+                }
+                // 任务已取消
+                catch (TaskCanceledException e)
+                {
+                    return ValueTuple.Create<bool, bool, InstallResult, Exception>(false, true, null, e);
+                }
+                // 其他异常
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(UpgradePackageAsync), 1, e);
+                    return ValueTuple.Create<bool, bool, InstallResult, Exception>(false, false, null, e);
+                }
+            });
         }
 
         /// <summary>

@@ -459,8 +459,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnCopyClicked(object sender, RoutedEventArgs args)
         {
-            string appInformation = await GetAppInformationCopyStringAsync(this.appInformation);
-            if (!string.IsNullOrEmpty(appInformation))
+            if (await GetAppInformationCopyStringAsync(this.appInformation) is string appInformation && !string.IsNullOrEmpty(appInformation))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(appInformation);
                 await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
@@ -580,31 +579,29 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<bool> PinToDesktopAsync(string packageFamilyName)
         {
-            if (!string.IsNullOrEmpty(packageFamilyName))
-            {
-                return await Task.Run(() =>
-                {
-                    bool isPinnedSuccessfully = false;
-
-                    try
-                    {
-                        if (StoreConfiguration.IsPinToDesktopSupported())
-                        {
-                            StoreConfiguration.PinToDesktop(packageFamilyName);
-                            isPinnedSuccessfully = true;
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(PinToDesktopAsync), 1, e);
-                    }
-                    return isPinnedSuccessfully;
-                });
-            }
-            else
+            if (string.IsNullOrEmpty(packageFamilyName))
             {
                 return default;
             }
+
+            return await Task.Run(() =>
+            {
+                bool isPinnedSuccessfully = false;
+
+                try
+                {
+                    if (StoreConfiguration.IsPinToDesktopSupported())
+                    {
+                        StoreConfiguration.PinToDesktop(packageFamilyName);
+                        isPinnedSuccessfully = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(PinToDesktopAsync), 1, e);
+                }
+                return isPinnedSuccessfully;
+            });
         }
 
         /// <summary>
@@ -612,29 +609,27 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<bool> PinToStartScreenAsync(AppListEntryModel appListEntry)
         {
-            if (appListEntry is not null)
-            {
-                return await Task.Run(async () =>
-                {
-                    bool isPinnedSuccessfully = false;
-
-                    try
-                    {
-                        StartScreenManager startScreenManager = StartScreenManager.GetDefault();
-
-                        isPinnedSuccessfully = await startScreenManager.RequestAddAppListEntryAsync(appListEntry.AppListEntry);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(PinToStartScreenAsync), 1, e);
-                    }
-                    return isPinnedSuccessfully;
-                });
-            }
-            else
+            if (appListEntry is null)
             {
                 return default;
             }
+
+            return await Task.Run(async () =>
+            {
+                bool isPinnedSuccessfully = false;
+
+                try
+                {
+                    StartScreenManager startScreenManager = StartScreenManager.GetDefault();
+
+                    isPinnedSuccessfully = await startScreenManager.RequestAddAppListEntryAsync(appListEntry.AppListEntry);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(PinToStartScreenAsync), 1, e);
+                }
+                return isPinnedSuccessfully;
+            });
         }
 
         /// <summary>
@@ -642,22 +637,25 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void PinToTaskbar(AppListEntryModel appListEntry)
         {
-            Task.Run(async () =>
+            if (appListEntry is not null)
             {
-                try
+                Task.Run(async () =>
                 {
-                    await Launcher.LaunchUriAsync(new("getstoreapppinner:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
+                    try
+                    {
+                        await Launcher.LaunchUriAsync(new("getstoreapppinner:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
                         {
                             {"Type", nameof(TaskbarManager) },
                             { "AppUserModelId", appListEntry.AppUserModelId },
                             { "PackageFullName", appListEntry.PackageFullName },
                         });
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(PinToTaskbar), 1, e);
-                }
-            });
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(PinToTaskbar), 1, e);
+                    }
+                });
+            }
         }
 
         /// <summary>
@@ -665,44 +663,42 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<string> GetAppInformationCopyStringAsync(AppInformation appInformation)
         {
-            if (appInformation is not null)
-            {
-                return await Task.Run(() =>
-                {
-                    try
-                    {
-                        List<string> copyStringList = [];
-                        copyStringList.Add(string.Format("{0}:\t{1}", AppDisplayNameString, appInformation.DisplayName));
-                        copyStringList.Add(string.Format("{0}:\t{1}", PackageFamilyNameString, appInformation.PackageFamilyName));
-                        copyStringList.Add(string.Format("{0}:\t{1}", PackageFullNameString, appInformation.PackageFullName));
-                        copyStringList.Add(string.Format("{0}:\t{1}", AppDescriptionString, appInformation.Description));
-                        copyStringList.Add(string.Format("{0}:\t{1}", PublisherDisplayNameString, appInformation.PublisherDisplayName));
-                        copyStringList.Add(string.Format("{0}:\t{1}", PublisherIdString, appInformation.PublisherId));
-                        copyStringList.Add(string.Format("{0}:\t{1}", VersionString, appInformation.Version));
-                        copyStringList.Add(string.Format("{0}:\t{1}", InstalledDateString, appInformation.InstallDate));
-                        copyStringList.Add(string.Format("{0}:\t{1}", ArchitectureString, appInformation.Architecture));
-                        copyStringList.Add(string.Format("{0}:\t{1}", SignatureKindString, appInformation.SignatureKind));
-                        copyStringList.Add(string.Format("{0}:\t{1}", ResourceIdString, appInformation.ResourceId));
-                        copyStringList.Add(string.Format("{0}:\t{1}", IsBundleString, appInformation.IsBundle));
-                        copyStringList.Add(string.Format("{0}:\t{1}", IsDevelopmentModeString, appInformation.IsDevelopmentMode));
-                        copyStringList.Add(string.Format("{0}:\t{1}", IsFrameworkString, appInformation.IsFramework));
-                        copyStringList.Add(string.Format("{0}:\t{1}", IsOptionalString, appInformation.IsOptional));
-                        copyStringList.Add(string.Format("{0}:\t{1}", IsResourcePackageString, appInformation.IsResourcePackage));
-                        copyStringList.Add(string.Format("{0}:\t{1}", IsStubString, appInformation.IsStub));
-                        copyStringList.Add(string.Format("{0}:\t{1}", VerifyIsOKString, appInformation.VerifyIsOK));
-                        return string.Join(Environment.NewLine, copyStringList);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(GetAppInformationCopyStringAsync), 1, e);
-                        return null;
-                    }
-                });
-            }
-            else
+            if (appInformation is null)
             {
                 return default;
             }
+
+            return await Task.Run(() =>
+            {
+                try
+                {
+                    List<string> copyStringList = [];
+                    copyStringList.Add(string.Format("{0}:\t{1}", AppDisplayNameString, appInformation.DisplayName));
+                    copyStringList.Add(string.Format("{0}:\t{1}", PackageFamilyNameString, appInformation.PackageFamilyName));
+                    copyStringList.Add(string.Format("{0}:\t{1}", PackageFullNameString, appInformation.PackageFullName));
+                    copyStringList.Add(string.Format("{0}:\t{1}", AppDescriptionString, appInformation.Description));
+                    copyStringList.Add(string.Format("{0}:\t{1}", PublisherDisplayNameString, appInformation.PublisherDisplayName));
+                    copyStringList.Add(string.Format("{0}:\t{1}", PublisherIdString, appInformation.PublisherId));
+                    copyStringList.Add(string.Format("{0}:\t{1}", VersionString, appInformation.Version));
+                    copyStringList.Add(string.Format("{0}:\t{1}", InstalledDateString, appInformation.InstallDate));
+                    copyStringList.Add(string.Format("{0}:\t{1}", ArchitectureString, appInformation.Architecture));
+                    copyStringList.Add(string.Format("{0}:\t{1}", SignatureKindString, appInformation.SignatureKind));
+                    copyStringList.Add(string.Format("{0}:\t{1}", ResourceIdString, appInformation.ResourceId));
+                    copyStringList.Add(string.Format("{0}:\t{1}", IsBundleString, appInformation.IsBundle));
+                    copyStringList.Add(string.Format("{0}:\t{1}", IsDevelopmentModeString, appInformation.IsDevelopmentMode));
+                    copyStringList.Add(string.Format("{0}:\t{1}", IsFrameworkString, appInformation.IsFramework));
+                    copyStringList.Add(string.Format("{0}:\t{1}", IsOptionalString, appInformation.IsOptional));
+                    copyStringList.Add(string.Format("{0}:\t{1}", IsResourcePackageString, appInformation.IsResourcePackage));
+                    copyStringList.Add(string.Format("{0}:\t{1}", IsStubString, appInformation.IsStub));
+                    copyStringList.Add(string.Format("{0}:\t{1}", VerifyIsOKString, appInformation.VerifyIsOK));
+                    return string.Join(Environment.NewLine, copyStringList);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(GetAppInformationCopyStringAsync), 1, e);
+                    return default;
+                }
+            });
         }
 
         #endregion 第七部分：数据操作与业务逻辑

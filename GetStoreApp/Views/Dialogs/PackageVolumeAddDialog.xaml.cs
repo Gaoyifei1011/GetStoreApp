@@ -354,7 +354,7 @@ namespace GetStoreApp.Views.Dialogs
                 PackageVolumeResultKind = PackageVolumeResultKind.Loading;
                 List<PackageVolumeModel> packageVolumeList = await GetPackageVolumeListAsync();
 
-                if (packageVolumeList.Count is 0)
+                if (packageVolumeList is null || packageVolumeList.Count is 0)
                 {
                     PackageVolumeResultKind = PackageVolumeResultKind.Failed;
                 }
@@ -440,25 +440,23 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async Task<(bool, PackageVolume, Exception)> AddPackageVolumeAsync(string selectedFolder)
         {
-            if (!string.IsNullOrEmpty(selectedFolder))
-            {
-                return await Task.Run(async () =>
-                {
-                    try
-                    {
-                        IAsyncOperation<PackageVolume> packageVolumeProgress = PackageVolume.AddAsync(selectedFolder);
-                        return ValueTuple.Create<bool, PackageVolume, Exception>(true, await packageVolumeProgress, null);
-                    }
-                    catch (Exception e)
-                    {
-                        return ValueTuple.Create<bool, PackageVolume, Exception>(false, null, e);
-                    }
-                });
-            }
-            else
+            if (string.IsNullOrEmpty(selectedFolder))
             {
                 return default;
             }
+
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    IAsyncOperation<PackageVolume> packageVolumeProgress = PackageVolume.AddAsync(selectedFolder);
+                    return ValueTuple.Create<bool, PackageVolume, Exception>(true, await packageVolumeProgress, null);
+                }
+                catch (Exception e)
+                {
+                    return ValueTuple.Create<bool, PackageVolume, Exception>(false, null, e);
+                }
+            });
         }
 
         /// <summary>
@@ -482,18 +480,25 @@ namespace GetStoreApp.Views.Dialogs
                     {
                         if (exception is not null)
                         {
-                            // 显示存储卷添加失败的通知
-                            AppNotificationBuilder appNotificationBuilder = new();
-                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(CreateFailed1String, string.Format("{0}[{1}]", packageVolume.Name, saveFolder)));
-                            appNotificationBuilder.AddText(CreateFailed2String);
-                            appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                            try
                             {
-                                string.Format(CreateFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
-                                string.Format(CreateFailed4String, exception is not null ? exception.Message : NotAvailableString)
-                            }));
-                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeAddDialog), nameof(ShowAddPackageVolumeResultNotification), 1, exception is not null ? exception : new());
+                                // 显示存储卷添加失败的通知
+                                AppNotificationBuilder appNotificationBuilder = new();
+                                appNotificationBuilder.AddArgument("action", "OpenApp");
+                                appNotificationBuilder.AddText(string.Format(CreateFailed1String, string.Format("{0}[{1}]", packageVolume.Name, saveFolder)));
+                                appNotificationBuilder.AddText(CreateFailed2String);
+                                appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                                {
+                                    string.Format(CreateFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
+                                    string.Format(CreateFailed4String, exception is not null ? exception.Message : NotAvailableString)
+                                }));
+                                ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeAddDialog), nameof(ShowAddPackageVolumeResultNotification), 1, exception is not null ? exception : new());
+                            }
+                            catch (Exception e)
+                            {
+                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                            }
                         }
                     }
                 });

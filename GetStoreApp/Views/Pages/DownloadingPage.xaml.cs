@@ -232,7 +232,7 @@ namespace GetStoreApp.Views.Pages
             List<DownloadingModel> selectedDownloadingList = GetSelectedDownloadingList([.. DownloadingCollection]);
 
             // 没有选中任何内容时显示空提示对话框
-            if (selectedDownloadingList.Count is 0)
+            if (selectedDownloadingList is null || selectedDownloadingList.Count is 0)
             {
                 await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                 return;
@@ -470,6 +470,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private List<DownloadingModel> GetSelectedDownloadingList(List<DownloadingModel> downloadingList)
         {
+            if (downloadingList is null)
+            {
+                return default;
+            }
+
             List<DownloadingModel> selectedDownloadingList = [];
 
             foreach (object downloadingItemObj in downloadingList)

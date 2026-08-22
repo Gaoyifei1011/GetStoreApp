@@ -15,7 +15,6 @@ using System.Collections.ObjectModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
-using Windows.Foundation.Collections;
 using Windows.System;
 
 // 抑制 CA1822，IDE0060 警告
@@ -28,18 +27,30 @@ namespace GetStoreApp.Views.UserControls
     /// </summary>
     internal sealed partial class SearchAppsResultUserControl : UserControl
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string SearchAppsResultCountInfoString = ResourceService.GetLocalized("SearchAppsResult/SearchAppsResultCountInfo");
         private bool isInitialized;
         private StorePage storePage;
 
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
+
         private ObservableCollection<SearchAppsResultModel> SearchAppsResultCollection { get; } = [];
+
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
 
         internal SearchAppsResultUserControl()
         {
             InitializeComponent();
         }
 
-        #region 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：命令调用处理
 
         /// <summary>
         /// 复制指定应用的链接
@@ -60,27 +71,7 @@ namespace GetStoreApp.Views.UserControls
         {
             if (args.Parameter is string appLink && !string.IsNullOrEmpty(appLink))
             {
-                Task.Run(async () =>
-                {
-                    try
-                    {
-                        if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[0]))
-                        {
-                            await Launcher.LaunchUriAsync(new("getstoreappwebview:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
-                            {
-                                {"AppLink", appLink },
-                            });
-                        }
-                        else if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[1]))
-                        {
-                            await Launcher.LaunchUriAsync(new(appLink));
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    }
-                });
+                OpenLink(appLink);
             }
         }
 
@@ -96,9 +87,9 @@ namespace GetStoreApp.Views.UserControls
             }
         }
 
-        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第四部分：命令调用处理
 
-        #region 第二部分：搜索应用结果用户控件——挂载的事件
+        #region 第五部分：挂载事件处理
 
         /// <summary>
         /// 返回主页
@@ -108,7 +99,9 @@ namespace GetStoreApp.Views.UserControls
             storePage.StoreControl = StoreControl.StoreSelector;
         }
 
-        #endregion 第二部分：搜索应用结果用户控件——挂载的事件
+        #endregion 第五部分：挂载事件处理
+
+        #region 第六部分：数据操作与业务逻辑
 
         /// <summary>
         /// 初始化搜索应用结果用户控件
@@ -133,5 +126,35 @@ namespace GetStoreApp.Views.UserControls
                 SearchAppsResultCollection.Add(searchAppsResultItem);
             }
         }
+
+        /// <summary>
+        /// 打开链接
+        /// </summary>
+        private void OpenLink(string appLink)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[0]))
+                    {
+                        await Launcher.LaunchUriAsync(new("getstoreappwebview:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
+                            {
+                                {"AppLink", appLink },
+                            });
+                    }
+                    else if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[1]))
+                    {
+                        await Launcher.LaunchUriAsync(new(appLink));
+                    }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        #endregion 第六部分：数据操作与业务逻辑
     }
 }

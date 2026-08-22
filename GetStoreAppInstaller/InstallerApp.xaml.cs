@@ -17,9 +17,19 @@ namespace GetStoreAppInstaller
     /// </summary>
     public partial class InstallerApp : Application, IDisposable
     {
+        #region 第一部分：常量、资源与状态字段
+
         private bool isDisposed;
 
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
+
         internal Window MainWindow { get; private set; }
+
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
 
         internal InstallerApp()
         {
@@ -28,17 +38,24 @@ namespace GetStoreAppInstaller
             UnhandledException += OnUnhandledException;
         }
 
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：父类虚方法重写
+
         /// <summary>
         /// 启动应用程序时调用，初始化应用主窗口
         /// </summary>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
-
             MainWindow = new InstallerWindow();
             MainWindow.Activate();
             SetAppIcon(MainWindow.AppWindow);
         }
+
+        #endregion 第四部分：父类虚方法重写
+
+        #region 第五部分：挂载事件处理
 
         /// <summary>
         /// 处理应用程序未知异常处理
@@ -48,6 +65,10 @@ namespace GetStoreAppInstaller
             args.Handled = true;
             LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerApp), nameof(OnUnhandledException), 1, args.Exception);
         }
+
+        #endregion 第五部分：挂载事件处理
+
+        #region 第六部分：数据操作与业务逻辑
 
         /// <summary>
         /// 设置应用窗口图标
@@ -100,5 +121,7 @@ namespace GetStoreAppInstaller
 
             Exit();
         }
+
+        #endregion 第六部分：数据操作与业务逻辑
     }
 }

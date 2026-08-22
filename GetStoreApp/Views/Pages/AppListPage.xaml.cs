@@ -695,40 +695,14 @@ namespace GetStoreApp.Views.Pages
                 AppManagerList.Clear();
                 AppManagerCollection.Clear();
 
-                List<PackageModel> packageList = await Task.Run(() =>
+                if (await GetPackageListAsync() is List<PackageModel> packageList)
                 {
-                    List<PackageModel> packageList = [];
-
-                    try
+                    AppManagerList.AddRange(packageList);
+                    if (await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is List<PackageModel> filterSortPackageList)
                     {
-                        foreach (Package package in packageManager.FindPackagesForUser(string.Empty))
-                        {
-                            packageList.Add(new()
-                            {
-                                LogoImage = package.Logo,
-                                IsFramework = GetIsFramework(package),
-                                AppListEntryCount = GetAppListEntriesCount(package),
-                                DisplayName = GetDisplayName(package),
-                                InstallDate = GetInstallDate(package),
-                                PublisherDisplayName = GetPublisherDisplayName(package),
-                                Version = GetVersion(package),
-                                SignatureKind = GetSignatureKind(package),
-                                InstalledDate = GetInstalledDate(package),
-                                Package = package,
-                                IsOperating = false
-                            });
-                        }
+                        UpdateFilterPackageData(filterSortPackageList);
                     }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(GetAppListAsync), 1, e);
-                    }
-
-                    return packageList;
-                });
-                AppManagerList.AddRange(packageList);
-                List<PackageModel> filterSortPackageList = await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease);
-                UpdateFilterPackageData(filterSortPackageList);
+                }
             }
         }
 
@@ -848,43 +822,79 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 获取系统应用列表
+        /// </summary>
+        private async Task<List<PackageModel>> GetPackageListAsync()
+        {
+            return await Task.Run(() =>
+            {
+                List<PackageModel> packageList = [];
+
+                try
+                {
+                    foreach (Package package in packageManager.FindPackagesForUser(string.Empty))
+                    {
+                        packageList.Add(new()
+                        {
+                            LogoImage = package.Logo,
+                            IsFramework = GetIsFramework(package),
+                            AppListEntryCount = GetAppListEntriesCount(package),
+                            DisplayName = GetDisplayName(package),
+                            InstallDate = GetInstallDate(package),
+                            PublisherDisplayName = GetPublisherDisplayName(package),
+                            Version = GetVersion(package),
+                            SignatureKind = GetSignatureKind(package),
+                            InstalledDate = GetInstalledDate(package),
+                            Package = package,
+                            IsOperating = false
+                        });
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(GetPackageListAsync), 1, e);
+                }
+
+                return packageList;
+            });
+        }
+
+        /// <summary>
         /// 移动应用
         /// </summary>
         private async Task<(bool, DeploymentResult, Exception)> MoveAppAsync(PackageModel package, PackageVolumeModel packageVolume)
         {
-            if (package is not null && packageVolume is not null)
-            {
-                return await Task.Run(async () =>
-                {
-                    try
-                    {
-                        // 移动目标应用，并获取移动进度
-                        global::Windows.Management.Deployment.PackageVolume winRTPackageVolume = null;
-                        foreach (global::Windows.Management.Deployment.PackageVolume winRTPackageVolumeItem in packageManager.FindPackageVolumes())
-                        {
-                            if (string.Equals(winRTPackageVolumeItem.PackageStorePath, packageVolume.PackageVolume.PackageStorePath))
-                            {
-                                winRTPackageVolume = winRTPackageVolumeItem;
-                                break;
-                            }
-                        }
-                        IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> movePackageWithProgress = packageManager.MovePackageToVolumeAsync(package.Package.Id.FullName, DeploymentOptions.None, winRTPackageVolume);
-
-                        // 更新移动进度
-                        movePackageWithProgress.Progress = (result, progress) => OnPackageMoveProgress(result, progress, package);
-                        return ValueTuple.Create<bool, DeploymentResult, Exception>(true, await movePackageWithProgress, null);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(MoveAppAsync), 1, e);
-                        return ValueTuple.Create<bool, DeploymentResult, Exception>(false, null, e);
-                    }
-                });
-            }
-            else
+            if (package is null || packageVolume is null)
             {
                 return default;
             }
+
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    // 移动目标应用，并获取移动进度
+                    global::Windows.Management.Deployment.PackageVolume winRTPackageVolume = null;
+                    foreach (global::Windows.Management.Deployment.PackageVolume winRTPackageVolumeItem in packageManager.FindPackageVolumes())
+                    {
+                        if (string.Equals(winRTPackageVolumeItem.PackageStorePath, packageVolume.PackageVolume.PackageStorePath))
+                        {
+                            winRTPackageVolume = winRTPackageVolumeItem;
+                            break;
+                        }
+                    }
+                    IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> movePackageWithProgress = packageManager.MovePackageToVolumeAsync(package.Package.Id.FullName, DeploymentOptions.None, winRTPackageVolume);
+
+                    // 更新移动进度
+                    movePackageWithProgress.Progress = (result, progress) => OnPackageMoveProgress(result, progress, package);
+                    return ValueTuple.Create<bool, DeploymentResult, Exception>(true, await movePackageWithProgress, null);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(MoveAppAsync), 1, e);
+                    return ValueTuple.Create<bool, DeploymentResult, Exception>(false, null, e);
+                }
+            });
         }
 
         /// <summary>
@@ -892,30 +902,28 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<(bool, PackageDeploymentResult, Exception)> RepairAppAsync(PackageModel package)
         {
-            if (package is not null)
-            {
-                return await Task.Run(async () =>
-                {
-                    try
-                    {
-                        // 修复目标应用，并获取修复进度
-                        IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> repairPackageWithProgress = packageDeploymentManager.RepairPackageAsync(package.Package.Id.FullName);
-
-                        // 更新修复进度
-                        repairPackageWithProgress.Progress = (result, progress) => OnPackageRepairProgress(result, progress, package);
-                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, await repairPackageWithProgress, null);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(RepairAppAsync), 1, e);
-                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
-                    }
-                });
-            }
-            else
+            if (package is null)
             {
                 return default;
             }
+
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    // 修复目标应用，并获取修复进度
+                    IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> repairPackageWithProgress = packageDeploymentManager.RepairPackageAsync(package.Package.Id.FullName);
+
+                    // 更新修复进度
+                    repairPackageWithProgress.Progress = (result, progress) => OnPackageRepairProgress(result, progress, package);
+                    return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, await repairPackageWithProgress, null);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(RepairAppAsync), 1, e);
+                    return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
+                }
+            });
         }
 
         /// <summary>
@@ -923,30 +931,28 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<(bool, PackageDeploymentResult, Exception)> ResetAppAsync(PackageModel package)
         {
-            if (package is not null)
-            {
-                return await Task.Run(async () =>
-                {
-                    try
-                    {
-                        // 重置目标应用，并获取重置进度
-                        IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> resetPackageWithProgress = packageDeploymentManager.ResetPackageAsync(package.Package.Id.FullName);
-
-                        // 更新重置进度
-                        resetPackageWithProgress.Progress = (result, progress) => OnPackageResetProgress(result, progress, package);
-                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, await resetPackageWithProgress, null);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ResetAppAsync), 1, e);
-                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
-                    }
-                });
-            }
-            else
+            if (package is null)
             {
                 return default;
             }
+
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    // 重置目标应用，并获取重置进度
+                    IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> resetPackageWithProgress = packageDeploymentManager.ResetPackageAsync(package.Package.Id.FullName);
+
+                    // 更新重置进度
+                    resetPackageWithProgress.Progress = (result, progress) => OnPackageResetProgress(result, progress, package);
+                    return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, await resetPackageWithProgress, null);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ResetAppAsync), 1, e);
+                    return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
+                }
+            });
         }
 
         /// <summary>
@@ -954,30 +960,28 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<(bool, PackageDeploymentResult, Exception)> UninstallAppAsync(PackageModel package)
         {
-            if (package is not null)
-            {
-                return await Task.Run(async () =>
-                {
-                    try
-                    {
-                        // 卸载目标应用，并获取卸载进度
-                        IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> uninstallPackageWithProgress = packageDeploymentManager.RemovePackageByFullNameAsync(package.Package.Id.FullName, new());
-
-                        // 更新卸载进度
-                        uninstallPackageWithProgress.Progress = (result, progress) => OnPackageUninstallProgress(result, progress, package);
-                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, await uninstallPackageWithProgress, null);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(UninstallAppAsync), 1, e);
-                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
-                    }
-                });
-            }
-            else
+            if (package is null)
             {
                 return default;
             }
+
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    // 卸载目标应用，并获取卸载进度
+                    IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> uninstallPackageWithProgress = packageDeploymentManager.RemovePackageByFullNameAsync(package.Package.Id.FullName, new());
+
+                    // 更新卸载进度
+                    uninstallPackageWithProgress.Progress = (result, progress) => OnPackageUninstallProgress(result, progress, package);
+                    return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, await uninstallPackageWithProgress, null);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(UninstallAppAsync), 1, e);
+                    return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
+                }
+            });
         }
 
         /// <summary>
@@ -1247,203 +1251,201 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<AppInformation> GetAppInformationAsync(PackageModel package)
         {
-            if (package is not null)
-            {
-                return await Task.Run(() =>
-                {
-                    AppInformation appInformation = new()
-                    {
-                        DisplayName = package.DisplayName
-                    };
-
-                    try
-                    {
-                        appInformation.PackageFamilyName = string.IsNullOrEmpty(package.Package.Id.FamilyName) ? NotAvailableString : package.Package.Id.FamilyName;
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.PackageFamilyName = NotAvailableString;
-                    }
-
-                    try
-                    {
-                        appInformation.PackageFullName = string.IsNullOrEmpty(package.Package.Id.FullName) ? NotAvailableString : package.Package.Id.FullName;
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.PackageFullName = NotAvailableString;
-                    }
-
-                    try
-                    {
-                        appInformation.Description = string.IsNullOrEmpty(package.Package.Description) ? NotAvailableString : package.Package.Description;
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.Description = NotAvailableString;
-                    }
-
-                    appInformation.PublisherDisplayName = package.PublisherDisplayName;
-
-                    try
-                    {
-                        appInformation.PublisherId = string.IsNullOrEmpty(package.Package.Id.PublisherId) ? NotAvailableString : package.Package.Id.PublisherId;
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.PublisherId = NotAvailableString;
-                    }
-
-                    appInformation.Version = package.Version;
-                    appInformation.InstallDate = package.InstallDate;
-
-                    try
-                    {
-                        appInformation.Architecture = string.IsNullOrEmpty(Convert.ToString(package.Package.Id.Architecture)) ? NotAvailableString : Convert.ToString(package.Package.Id.Architecture);
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.Architecture = NotAvailableString;
-                    }
-
-                    appInformation.SignatureKind = ResourceService.GetLocalized(string.Format(SignatureString, Convert.ToString(package.SignatureKind)));
-
-                    try
-                    {
-                        appInformation.ResourceId = string.IsNullOrEmpty(package.Package.Id.ResourceId) ? NotAvailableString : package.Package.Id.ResourceId;
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.ResourceId = NotAvailableString;
-                    }
-
-                    try
-                    {
-                        appInformation.IsBundle = package.Package.IsBundle ? YesString : NoString;
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.IsBundle = NotAvailableString;
-                    }
-
-                    try
-                    {
-                        appInformation.IsDevelopmentMode = package.Package.IsDevelopmentMode ? YesString : NoString;
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.IsDevelopmentMode = NotAvailableString;
-                    }
-
-                    appInformation.IsFramework = package.IsFramework ? YesString : NoString;
-
-                    try
-                    {
-                        appInformation.IsOptional = package.Package.IsOptional ? YesString : NoString;
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.IsOptional = NotAvailableString;
-                    }
-
-                    try
-                    {
-                        appInformation.IsResourcePackage = package.Package.IsResourcePackage ? YesString : NoString;
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.IsResourcePackage = NotAvailableString;
-                    }
-
-                    try
-                    {
-                        appInformation.IsStub = package.Package.IsStub ? YesString : NoString;
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.IsStub = NotAvailableString;
-                    }
-
-                    try
-                    {
-                        appInformation.VerifyIsOK = package.Package.Status.VerifyIsOK() ? YesString : NoString;
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        appInformation.VerifyIsOK = NotAvailableString;
-                    }
-
-                    try
-                    {
-                        IReadOnlyList<AppListEntry> appListEntriesList = package.Package.GetAppListEntries();
-                        for (int index = 0; index < appListEntriesList.Count; index++)
-                        {
-                            appInformation.AppListEntryList.Add(new()
-                            {
-                                DisplayName = appListEntriesList[index].DisplayInfo.DisplayName,
-                                Description = appListEntriesList[index].DisplayInfo.Description,
-                                AppUserModelId = appListEntriesList[index].AppUserModelId,
-                                AppListEntry = appListEntriesList[index],
-                                PackageFullName = package.Package.Id.FullName
-                            });
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    }
-
-                    try
-                    {
-                        IReadOnlyList<Package> dependencyList = package.Package.Dependencies;
-
-                        if (dependencyList.Count > 0)
-                        {
-                            for (int index = 0; index < dependencyList.Count; index++)
-                            {
-                                try
-                                {
-                                    appInformation.DependenciesList.Add(new()
-                                    {
-                                        DisplayName = dependencyList[index].DisplayName,
-                                        PublisherDisplayName = dependencyList[index].PublisherDisplayName,
-                                        Version = Convert.ToString(new Version(dependencyList[index].Id.Version.Major, dependencyList[index].Id.Version.Minor, dependencyList[index].Id.Version.Build, dependencyList[index].Id.Version.Revision)),
-                                        Package = dependencyList[index]
-                                    });
-                                }
-                                catch
-                                {
-                                    continue;
-                                }
-                            }
-                        }
-
-                        appInformation.DependenciesList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    }
-
-                    return appInformation;
-                });
-            }
-            else
+            if (package is null)
             {
                 return default;
             }
+
+            return await Task.Run(() =>
+            {
+                AppInformation appInformation = new()
+                {
+                    DisplayName = package.DisplayName
+                };
+
+                try
+                {
+                    appInformation.PackageFamilyName = string.IsNullOrEmpty(package.Package.Id.FamilyName) ? NotAvailableString : package.Package.Id.FamilyName;
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    appInformation.PackageFamilyName = NotAvailableString;
+                }
+
+                try
+                {
+                    appInformation.PackageFullName = string.IsNullOrEmpty(package.Package.Id.FullName) ? NotAvailableString : package.Package.Id.FullName;
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    appInformation.PackageFullName = NotAvailableString;
+                }
+
+                try
+                {
+                    appInformation.Description = string.IsNullOrEmpty(package.Package.Description) ? NotAvailableString : package.Package.Description;
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    appInformation.Description = NotAvailableString;
+                }
+
+                appInformation.PublisherDisplayName = package.PublisherDisplayName;
+
+                try
+                {
+                    appInformation.PublisherId = string.IsNullOrEmpty(package.Package.Id.PublisherId) ? NotAvailableString : package.Package.Id.PublisherId;
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    appInformation.PublisherId = NotAvailableString;
+                }
+
+                appInformation.Version = package.Version;
+                appInformation.InstallDate = package.InstallDate;
+
+                try
+                {
+                    appInformation.Architecture = string.IsNullOrEmpty(Convert.ToString(package.Package.Id.Architecture)) ? NotAvailableString : Convert.ToString(package.Package.Id.Architecture);
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    appInformation.Architecture = NotAvailableString;
+                }
+
+                appInformation.SignatureKind = ResourceService.GetLocalized(string.Format(SignatureString, Convert.ToString(package.SignatureKind)));
+
+                try
+                {
+                    appInformation.ResourceId = string.IsNullOrEmpty(package.Package.Id.ResourceId) ? NotAvailableString : package.Package.Id.ResourceId;
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    appInformation.ResourceId = NotAvailableString;
+                }
+
+                try
+                {
+                    appInformation.IsBundle = package.Package.IsBundle ? YesString : NoString;
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    appInformation.IsBundle = NotAvailableString;
+                }
+
+                try
+                {
+                    appInformation.IsDevelopmentMode = package.Package.IsDevelopmentMode ? YesString : NoString;
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    appInformation.IsDevelopmentMode = NotAvailableString;
+                }
+
+                appInformation.IsFramework = package.IsFramework ? YesString : NoString;
+
+                try
+                {
+                    appInformation.IsOptional = package.Package.IsOptional ? YesString : NoString;
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    appInformation.IsOptional = NotAvailableString;
+                }
+
+                try
+                {
+                    appInformation.IsResourcePackage = package.Package.IsResourcePackage ? YesString : NoString;
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    appInformation.IsResourcePackage = NotAvailableString;
+                }
+
+                try
+                {
+                    appInformation.IsStub = package.Package.IsStub ? YesString : NoString;
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    appInformation.IsStub = NotAvailableString;
+                }
+
+                try
+                {
+                    appInformation.VerifyIsOK = package.Package.Status.VerifyIsOK() ? YesString : NoString;
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    appInformation.VerifyIsOK = NotAvailableString;
+                }
+
+                try
+                {
+                    IReadOnlyList<AppListEntry> appListEntriesList = package.Package.GetAppListEntries();
+                    for (int index = 0; index < appListEntriesList.Count; index++)
+                    {
+                        appInformation.AppListEntryList.Add(new()
+                        {
+                            DisplayName = appListEntriesList[index].DisplayInfo.DisplayName,
+                            Description = appListEntriesList[index].DisplayInfo.Description,
+                            AppUserModelId = appListEntriesList[index].AppUserModelId,
+                            AppListEntry = appListEntriesList[index],
+                            PackageFullName = package.Package.Id.FullName
+                        });
+                    }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+
+                try
+                {
+                    IReadOnlyList<Package> dependencyList = package.Package.Dependencies;
+
+                    if (dependencyList.Count > 0)
+                    {
+                        for (int index = 0; index < dependencyList.Count; index++)
+                        {
+                            try
+                            {
+                                appInformation.DependenciesList.Add(new()
+                                {
+                                    DisplayName = dependencyList[index].DisplayName,
+                                    PublisherDisplayName = dependencyList[index].PublisherDisplayName,
+                                    Version = Convert.ToString(new Version(dependencyList[index].Id.Version.Major, dependencyList[index].Id.Version.Minor, dependencyList[index].Id.Version.Build, dependencyList[index].Id.Version.Revision)),
+                                    Package = dependencyList[index]
+                                });
+                            }
+                            catch
+                            {
+                                continue;
+                            }
+                        }
+                    }
+
+                    appInformation.DependenciesList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+
+                return appInformation;
+            });
         }
 
         /// <summary>
@@ -1487,131 +1489,129 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<List<PackageModel>> GetFilterSortPackageListAsync(List<PackageModel> appManagerList, bool isAppFramework, bool isStoreSignatureSelected, bool isSystemSignatureSelected, bool isEnterpriseSignatureSelected, bool isDeveloperSignatureSelected, bool isNoneSignatureSelected, string searchText, AppSortRuleKind appSortRuleKind, bool isIncrease)
         {
-            if (appManagerList is not null)
-            {
-                return await Task.Run(() =>
-                {
-                    List<PackageModel> filterSortPackageList = [];
-
-                    try
-                    {
-                        List<PackageModel> conditionWithFrameworkList = [];
-
-                        // 根据选项是否筛选包含框架包的数据
-                        if (isAppFramework)
-                        {
-                            foreach (PackageModel packageItem in appManagerList)
-                            {
-                                if (Equals(packageItem.IsFramework, isAppFramework))
-                                {
-                                    conditionWithFrameworkList.Add(packageItem);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            conditionWithFrameworkList.AddRange(appManagerList);
-                        }
-
-                        // 根据选项是否筛选包含特定签名类型的数据
-                        List<PackageModel> conditionWithSignatureKindList = [];
-                        foreach (PackageModel packageItem in conditionWithFrameworkList)
-                        {
-                            if (isStoreSignatureSelected && Equals(packageItem.SignatureKind, PackageSignatureKind.Store))
-                            {
-                                conditionWithSignatureKindList.Add(packageItem);
-                            }
-                            else if (isSystemSignatureSelected && Equals(packageItem.SignatureKind, PackageSignatureKind.System))
-                            {
-                                conditionWithSignatureKindList.Add(packageItem);
-                            }
-                            else if (isEnterpriseSignatureSelected && Equals(packageItem.SignatureKind, PackageSignatureKind.Enterprise))
-                            {
-                                conditionWithSignatureKindList.Add(packageItem);
-                            }
-                            else if (isDeveloperSignatureSelected && Equals(packageItem.SignatureKind, PackageSignatureKind.Developer))
-                            {
-                                conditionWithSignatureKindList.Add(packageItem);
-                            }
-                            else if (isNoneSignatureSelected && Equals(packageItem.SignatureKind, PackageSignatureKind.None))
-                            {
-                                conditionWithSignatureKindList.Add(packageItem);
-                            }
-                        }
-
-                        List<PackageModel> searchedList = [];
-
-                        // 根据搜索内容筛选包含特定签名类型的数据
-                        if (string.IsNullOrEmpty(searchText))
-                        {
-                            searchedList.AddRange(conditionWithSignatureKindList);
-                        }
-                        else
-                        {
-                            foreach (PackageModel packageItem in conditionWithSignatureKindList)
-                            {
-                                if (packageItem.DisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase) || packageItem.PublisherDisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase))
-                                {
-                                    searchedList.Add(packageItem);
-                                }
-                            }
-                        }
-
-                        // 对过滤后的列表数据进行排序
-                        switch (appSortRuleKind)
-                        {
-                            case AppSortRuleKind.DisplayName:
-                                {
-                                    if (isIncrease)
-                                    {
-                                        searchedList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
-                                    }
-                                    else
-                                    {
-                                        searchedList.Sort((item1, item2) => item2.DisplayName.CompareTo(item1.DisplayName));
-                                    }
-                                    break;
-                                }
-                            case AppSortRuleKind.PublisherName:
-                                {
-                                    if (isIncrease)
-                                    {
-                                        searchedList.Sort((item1, item2) => item1.PublisherDisplayName.CompareTo(item2.PublisherDisplayName));
-                                    }
-                                    else
-                                    {
-                                        searchedList.Sort((item1, item2) => item2.PublisherDisplayName.CompareTo(item1.PublisherDisplayName));
-                                    }
-                                    break;
-                                }
-                            case AppSortRuleKind.InstallDate:
-                                {
-                                    if (isIncrease)
-                                    {
-                                        searchedList.Sort((item1, item2) => item1.InstalledDate.CompareTo(item2.InstalledDate));
-                                    }
-                                    else
-                                    {
-                                        searchedList.Sort((item1, item2) => item2.InstalledDate.CompareTo(item1.InstalledDate));
-                                    }
-                                    break;
-                                }
-                        }
-
-                        filterSortPackageList.AddRange(searchedList);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(GetFilterSortPackageListAsync), 1, e);
-                    }
-
-                    return filterSortPackageList;
-                });
-            }
-            else
+            if (appManagerList is null)
             {
                 return default;
             }
+
+            return await Task.Run(() =>
+            {
+                List<PackageModel> filterSortPackageList = [];
+
+                try
+                {
+                    List<PackageModel> conditionWithFrameworkList = [];
+
+                    // 根据选项是否筛选包含框架包的数据
+                    if (isAppFramework)
+                    {
+                        foreach (PackageModel packageItem in appManagerList)
+                        {
+                            if (Equals(packageItem.IsFramework, isAppFramework))
+                            {
+                                conditionWithFrameworkList.Add(packageItem);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        conditionWithFrameworkList.AddRange(appManagerList);
+                    }
+
+                    // 根据选项是否筛选包含特定签名类型的数据
+                    List<PackageModel> conditionWithSignatureKindList = [];
+                    foreach (PackageModel packageItem in conditionWithFrameworkList)
+                    {
+                        if (isStoreSignatureSelected && Equals(packageItem.SignatureKind, PackageSignatureKind.Store))
+                        {
+                            conditionWithSignatureKindList.Add(packageItem);
+                        }
+                        else if (isSystemSignatureSelected && Equals(packageItem.SignatureKind, PackageSignatureKind.System))
+                        {
+                            conditionWithSignatureKindList.Add(packageItem);
+                        }
+                        else if (isEnterpriseSignatureSelected && Equals(packageItem.SignatureKind, PackageSignatureKind.Enterprise))
+                        {
+                            conditionWithSignatureKindList.Add(packageItem);
+                        }
+                        else if (isDeveloperSignatureSelected && Equals(packageItem.SignatureKind, PackageSignatureKind.Developer))
+                        {
+                            conditionWithSignatureKindList.Add(packageItem);
+                        }
+                        else if (isNoneSignatureSelected && Equals(packageItem.SignatureKind, PackageSignatureKind.None))
+                        {
+                            conditionWithSignatureKindList.Add(packageItem);
+                        }
+                    }
+
+                    List<PackageModel> searchedList = [];
+
+                    // 根据搜索内容筛选包含特定签名类型的数据
+                    if (string.IsNullOrEmpty(searchText))
+                    {
+                        searchedList.AddRange(conditionWithSignatureKindList);
+                    }
+                    else
+                    {
+                        foreach (PackageModel packageItem in conditionWithSignatureKindList)
+                        {
+                            if (packageItem.DisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase) || packageItem.PublisherDisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+                            {
+                                searchedList.Add(packageItem);
+                            }
+                        }
+                    }
+
+                    // 对过滤后的列表数据进行排序
+                    switch (appSortRuleKind)
+                    {
+                        case AppSortRuleKind.DisplayName:
+                            {
+                                if (isIncrease)
+                                {
+                                    searchedList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
+                                }
+                                else
+                                {
+                                    searchedList.Sort((item1, item2) => item2.DisplayName.CompareTo(item1.DisplayName));
+                                }
+                                break;
+                            }
+                        case AppSortRuleKind.PublisherName:
+                            {
+                                if (isIncrease)
+                                {
+                                    searchedList.Sort((item1, item2) => item1.PublisherDisplayName.CompareTo(item2.PublisherDisplayName));
+                                }
+                                else
+                                {
+                                    searchedList.Sort((item1, item2) => item2.PublisherDisplayName.CompareTo(item1.PublisherDisplayName));
+                                }
+                                break;
+                            }
+                        case AppSortRuleKind.InstallDate:
+                            {
+                                if (isIncrease)
+                                {
+                                    searchedList.Sort((item1, item2) => item1.InstalledDate.CompareTo(item2.InstalledDate));
+                                }
+                                else
+                                {
+                                    searchedList.Sort((item1, item2) => item2.InstalledDate.CompareTo(item1.InstalledDate));
+                                }
+                                break;
+                            }
+                    }
+
+                    filterSortPackageList.AddRange(searchedList);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(GetFilterSortPackageListAsync), 1, e);
+                }
+
+                return filterSortPackageList;
+            });
         }
 
         /// <summary>
@@ -1684,7 +1684,7 @@ namespace GetStoreApp.Views.Pages
             catch (Exception e)
             {
                 ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                return false;
+                return default;
             }
         }
 
@@ -1700,7 +1700,7 @@ namespace GetStoreApp.Views.Pages
             catch (Exception e)
             {
                 ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                return 0;
+                return default;
             }
         }
 

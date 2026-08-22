@@ -330,24 +330,26 @@ namespace GetStoreApp.Views.Dialogs
                 else if (WinGetSourceEditKind is WinGetSourceEditKind.Edit)
                 {
                     RemovePackageCatalogResult removePackageCatalogResult = await RemovePackageCatalogAsync(SourceName, true);
+                    IsSaving = false;
 
-                    if (removePackageCatalogResult.Status is RemovePackageCatalogStatus.Ok)
+                    if (removePackageCatalogResult is not null)
                     {
-                        AddPackageCatalogResult addPackageCatalogResult = await AddPackageCatalogAsync(SourceName, SourceUri, Explicit, (PackageCatalogTrustLevel)SelectedCatalogTrustLevel.SelectedValue, CustomHeader, SourceType);
-                        IsSaving = false;
-
-                        if (addPackageCatalogResult is not null)
+                        if (removePackageCatalogResult.Status is RemovePackageCatalogStatus.Ok)
                         {
-                            AddPackageCatalogStatusResult = addPackageCatalogResult.Status;
-                            args.Cancel = addPackageCatalogResult.Status is not AddPackageCatalogStatus.Ok;
-                            await ShowAddPackageCatalogResultNotificationAsync(addPackageCatalogResult);
+                            AddPackageCatalogResult addPackageCatalogResult = await AddPackageCatalogAsync(SourceName, SourceUri, Explicit, (PackageCatalogTrustLevel)SelectedCatalogTrustLevel.SelectedValue, CustomHeader, SourceType);
+
+                            if (addPackageCatalogResult is not null)
+                            {
+                                AddPackageCatalogStatusResult = addPackageCatalogResult.Status;
+                                args.Cancel = addPackageCatalogResult.Status is not AddPackageCatalogStatus.Ok;
+                                await ShowAddPackageCatalogResultNotificationAsync(addPackageCatalogResult);
+                            }
                         }
-                    }
-                    else
-                    {
-                        IsSaving = false;
-                        args.Cancel = removePackageCatalogResult.Status is not RemovePackageCatalogStatus.Ok;
-                        await ShowRemovePackageCatalogNotificationAsync(removePackageCatalogResult);
+                        else
+                        {
+                            args.Cancel = removePackageCatalogResult.Status is not RemovePackageCatalogStatus.Ok;
+                            await ShowRemovePackageCatalogNotificationAsync(removePackageCatalogResult);
+                        }
                     }
                 }
             }

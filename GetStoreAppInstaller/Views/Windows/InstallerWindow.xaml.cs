@@ -100,23 +100,23 @@ namespace GetStoreAppInstaller.Views.Windows
         private readonly Guid CLSID_AppxBundleFactory = new("378E0446-5384-43B7-8877-E7DBDD883446");
         private readonly global::Windows.Management.Deployment.PackageManager packageManager = new();
         private readonly PackageDeploymentManager packageDeploymentManager = PackageDeploymentManager.GetDefault();
-        private readonly IAppxFactory appxFactory;
-        private readonly IAppxBundleFactory appxBundleFactory;
         private ContentIsland contentIsland;
         private InputKeyboardSource inputKeyboardSource;
         private ContentCoordinateConverter contentCoordinateConverter;
         private OverlappedPresenter overlappedPresenter;
         private SUBCLASSPROC installerWindowSubClassProc;
+        private IAppxFactory appxFactory;
+        private IAppxBundleFactory appxBundleFactory;
         private double rasterizationScale;
         private string fileName;
         private IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> installPackageWithProgress;
 
         #endregion 第一部分：常量、资源与状态字段
 
+        #region 第二部分：属性、集合与事件
+
         [GeneratedRegex("""scale-(\d{3})""", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
         private static partial Regex ScaleRegex { get; }
-
-        #region 第二部分：属性、集合与事件
 
         private string _windowTitle;
 
@@ -905,50 +905,49 @@ namespace GetStoreAppInstaller.Views.Windows
 
         #endregion 第二部分：属性、集合与事件
 
-        [DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
+        #region 第三部分：构造函数
+
+        [DynamicWindowsRuntimeCast(typeof(FrameworkElement))]
         internal InstallerWindow()
         {
             InitializeComponent();
-            InitializeWindowData();
+            InitializeWindowData(AppWindow);
             MountWindowEvent();
-            MountWindowWndProc();
+            MountWindowWndProc(AppWindow.Id);
             SetWindowTheme();
             SetSystemBackdrop();
             SetWindowSize();
-            SetWindowPosition();
-            SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
-            AddElevatedDragSupport();
+            SetWindowPosition(AppWindow);
+            SetClassicMenuTheme(AppWindow.TitleBar, (Content as FrameworkElement).ActualTheme);
+            EnableElevatedDragDrop();
             CreateAppxInstance();
+        }
 
-            // 标题栏和右键菜单设置
-            SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
+        #endregion 第三部分：构造函数
 
-            if (RuntimeHelper.IsElevated)
+        #region 第四部分：命令调用处理
+
+        /// <summary>
+        /// 删除依赖包
+        /// </summary>
+        private void OnDeleteDependencyPackageExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is string dependencyFullName && !string.IsNullOrEmpty(dependencyFullName))
             {
-                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_DROPFILES, ChangeFilterFlags.MSGFLT_ADD);
-                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_COPYGLOBALDATA, ChangeFilterFlags.MSGFLT_ADD);
-                Shell32Library.DragAcceptFiles(Win32Interop.GetWindowFromWindowId(AppWindow.Id), true);
-            }
-
-            if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory).GUID, out nint appxFactoryPtr) is 0)
-            {
-                appxFactory = (IAppxFactory)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxFactoryPtr, CreateObjectFlags.None);
-            }
-
-            if (Ole32Library.CoCreateInstance(CLSID_AppxBundleFactory, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxBundleFactory).GUID, out nint appxBundleFactoryPtr) is 0)
-            {
-                appxBundleFactory = (IAppxBundleFactory)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxBundleFactoryPtr, CreateObjectFlags.None);
-            }
-
-            // 默认直接显示到窗口中间
-            if (DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
-            {
-                RectInt32 workArea = displayArea.WorkArea;
-                AppWindow.Move(new((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
+                foreach (InstallDependencyModel installDependencyItem in InstallDependencyCollection)
+                {
+                    if (string.Equals(installDependencyItem.DependencyFullName, dependencyFullName))
+                    {
+                        InstallDependencyCollection.Remove(installDependencyItem);
+                        break;
+                    }
+                }
             }
         }
 
-        #region 第一部分：窗口类事件
+        #endregion 第四部分：命令调用处理
+
+        #region 第五部分：挂载事件处理
 
         /// <summary>
         /// 窗口激活状态发生变化的事件
@@ -991,10 +990,6 @@ namespace GetStoreAppInstaller.Views.Windows
             }
         }
 
-        #endregion 第一部分：窗口类事件
-
-        #region 第二部分：窗口辅助类挂载的事件
-
         /// <summary>
         /// 窗口位置变化发生的事件
         /// </summary>
@@ -1020,17 +1015,10 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnAppWindowClosing(AppWindow sender, AppWindowClosingEventArgs args)
         {
-            AppWindow.Changed -= OnAppWindowChanged;
-            contentIsland.Environment.SettingChanged -= OnSettingChanged;
-            inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
-            Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), installerWindowSubClassProc, 0);
+            DismountWindowEvent();
+            DismountWindowWndProc(sender.Id);
+            DisableElevatedDragDrop();
             (Application.Current as InstallerApp).Dispose();
-
-            if (RuntimeHelper.IsElevated)
-            {
-                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_DROPFILES, ChangeFilterFlags.MSGFLT_REMOVE);
-                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_COPYGLOBALDATA, ChangeFilterFlags.MSGFLT_REMOVE);
-            }
         }
 
         /// <summary>
@@ -1051,13 +1039,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnSettingChanged(ContentIslandEnvironment sender, ContentEnvironmentSettingChangedEventArgs args)
         {
-            DispatcherQueue.TryEnqueue(() =>
-            {
-                if (string.Equals(ThemeService.AppTheme, ThemeService.ThemeList[0]))
-                {
-                    WindowTheme = Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
-                }
-            });
+            DispatcherQueue.TryEnqueue(SetWindowTheme);
         }
 
         /// <summary>
@@ -1077,16 +1059,12 @@ namespace GetStoreAppInstaller.Views.Windows
             }
         }
 
-        #endregion 第二部分：窗口辅助类挂载的事件
-
-        #region 第三部分：窗口右键菜单事件
-
         /// <summary>
         /// 窗口还原
         /// </summary>
         private void OnRestoreClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_RESTORE, 0);
+            SendWindowMessage(AppWindow.Id, WindowMessageKind.Restore);
         }
 
         /// <summary>
@@ -1098,7 +1076,7 @@ namespace GetStoreAppInstaller.Views.Windows
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
-                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MOVE, 0);
+                SendWindowMessage(AppWindow.Id, WindowMessageKind.Move);
             }
         }
 
@@ -1111,7 +1089,7 @@ namespace GetStoreAppInstaller.Views.Windows
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
-                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_SIZE, 0);
+                SendWindowMessage(AppWindow.Id, WindowMessageKind.Size);
             }
         }
 
@@ -1120,7 +1098,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnMinimizeClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MINIMIZE, 0);
+            SendWindowMessage(AppWindow.Id, WindowMessageKind.Minimize);
         }
 
         /// <summary>
@@ -1128,7 +1106,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnMaximizeClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MAXIMIZE, 0);
+            SendWindowMessage(AppWindow.Id, WindowMessageKind.Maximize);
         }
 
         /// <summary>
@@ -1136,42 +1114,16 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_CLOSE, 0);
+            SendWindowMessage(AppWindow.Id, WindowMessageKind.Close);
         }
-
-        #endregion 第三部分：窗口右键菜单事件
-
-        #region 第四部分：XamlUICommand 命令调用时挂载的事件
-
-        /// <summary>
-        /// 删除依赖包
-        /// </summary>
-        private void OnDeleteDependencyPackageExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is string dependencyFullName && !string.IsNullOrEmpty(dependencyFullName))
-            {
-                foreach (InstallDependencyModel installDependencyItem in InstallDependencyCollection)
-                {
-                    if (string.Equals(installDependencyItem.DependencyFullName, dependencyFullName))
-                    {
-                        InstallDependencyCollection.Remove(installDependencyItem);
-                        break;
-                    }
-                }
-            }
-        }
-
-        #endregion 第四部分：XamlUICommand 命令调用时挂载的事件
-
-        #region 第五部分：窗口内容挂载的事件
 
         /// <summary>
         /// 应用主题变化时设置标题栏按钮的颜色
         /// </summary>
         private void OnActualThemeChanged(FrameworkElement sender, object args)
         {
-            SetTitleBarTheme(sender.ActualTheme);
-            SetClassicMenuTheme(sender.ActualTheme);
+            SetTitleBarTheme(AppWindow.TitleBar, sender.ActualTheme);
+            SetClassicMenuTheme(AppWindow.TitleBar, sender.ActualTheme);
         }
 
         /// <summary>
@@ -1266,7 +1218,7 @@ namespace GetStoreAppInstaller.Views.Windows
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(OnDrop), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(OnDrop), 2, e);
             }
             finally
             {
@@ -1275,15 +1227,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
             if (!string.IsNullOrEmpty(fileName))
             {
-                IsParseEmpty = false;
-                ResetResult();
-
-                (bool parseResult, PackageInformation packageInformation) parseResult = await Task.Run(async () =>
-                {
-                    return await ParsePackagedAppAsync(fileName);
-                });
-
-                UpdateResult(parseResult);
+                await ParsePackageAsync(fileName);
             }
         }
 
@@ -1293,6 +1237,8 @@ namespace GetStoreAppInstaller.Views.Windows
         [DynamicWindowsRuntimeCast(typeof(FileActivatedEventArgs)), DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(ShareTargetActivatedEventArgs))]
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
+            // 设置标题栏主题
+            SetTitleBarTheme(AppWindow.TitleBar, (Content as FrameworkElement).ActualTheme);
             AppWindow.Resize(new(Convert.ToInt32(800 * contentIsland.RasterizationScale), Convert.ToInt32(560 * contentIsland.RasterizationScale)));
             IsParseEmpty = true;
             CanDragFile = true;
@@ -1313,19 +1259,6 @@ namespace GetStoreAppInstaller.Views.Windows
                 {
                     fileName = argumentsArray[1];
                 }
-
-                if (!string.IsNullOrEmpty(fileName))
-                {
-                    IsParseEmpty = false;
-                    ResetResult();
-
-                    (bool parseResult, PackageInformation packageInformation) parseResult = await Task.Run(async () =>
-                    {
-                        return await ParsePackagedAppAsync(fileName);
-                    });
-
-                    UpdateResult(parseResult);
-                }
             }
             // 从文件处启动
             else if (Program.AppActivationArguments.Kind is ExtendedActivationKind.File)
@@ -1336,19 +1269,6 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (fileActivatedEventArgs.Files.Count > 0)
                 {
                     fileName = fileActivatedEventArgs.Files[0].Path;
-
-                    if (!string.IsNullOrEmpty(fileName))
-                    {
-                        IsParseEmpty = false;
-                        ResetResult();
-
-                        (bool parseResult, PackageInformation packageInformation) parseResult = await Task.Run(async () =>
-                        {
-                            return await ParsePackagedAppAsync(fileName);
-                        });
-
-                        UpdateResult(parseResult);
-                    }
                 }
             }
             // 从共享目标处启动
@@ -1365,25 +1285,14 @@ namespace GetStoreAppInstaller.Views.Windows
                     if (sharedFilesList.Count > 0)
                     {
                         fileName = sharedFilesList[0].Path;
-
-                        if (!string.IsNullOrEmpty(fileName))
-                        {
-                            IsParseEmpty = false;
-                            ResetResult();
-
-                            (bool parseResult, PackageInformation packageInformation) parseResult = await Task.Run(async () =>
-                            {
-                                return await ParsePackagedAppAsync(fileName);
-                            });
-
-                            UpdateResult(parseResult);
-                        }
                     }
                 }
             }
 
-            // 设置标题栏主题
-            SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                await ParsePackageAsync(fileName);
+            }
         }
 
         /// <summary>
@@ -1391,24 +1300,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new("getstoreapp:"), new()
-                    {
-                        TargetApplicationPackageFamilyName = global::Windows.ApplicationModel.Package.Current.Id.FamilyName
-                    },
-                    new()
-                    {
-                        { "Parameter", "AppInstallSettings" }
-                    });
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenSettings();
         }
 
         /// <summary>
@@ -1443,62 +1335,9 @@ namespace GetStoreAppInstaller.Views.Windows
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(OnOpenPackageClicked), 1, e);
             }
 
-            if (hasSelectFile)
+            if (hasSelectFile && !string.IsNullOrEmpty(fileName))
             {
-                IsParseEmpty = false;
-                ResetResult();
-
-                (bool parseResult, PackageInformation packageInformation) parseResult = await Task.Run(async () =>
-                {
-                    return await ParsePackagedAppAsync(fileName);
-                });
-
-                UpdateResult(parseResult);
-            }
-        }
-
-        /// <summary>
-        /// 选择其他的安装包
-        /// </summary>
-        private async void OnOpenOtherPackageClicked(object sender, RoutedEventArgs args)
-        {
-            bool hasSelectFile = false;
-
-            try
-            {
-                FileOpenPicker fileOpenPicker = new(AppWindow.Id)
-                {
-                    SuggestedStartLocation = PickerLocationId.Desktop
-                };
-
-                fileOpenPicker.FileTypeFilter.Clear();
-                fileOpenPicker.FileTypeFilter.Add(".appx");
-                fileOpenPicker.FileTypeFilter.Add(".msix");
-                fileOpenPicker.FileTypeFilter.Add(".appxbundle");
-                fileOpenPicker.FileTypeFilter.Add(".msixbundle");
-                fileOpenPicker.FileTypeFilter.Add(".appinstaller");
-
-                if (await fileOpenPicker.PickSingleFileAsync() is PickFileResult pickFileResult)
-                {
-                    fileName = pickFileResult.Path;
-                    hasSelectFile = true;
-                }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(OnOpenOtherPackageClicked), 1, e);
-            }
-
-            if (hasSelectFile)
-            {
-                ResetResult();
-
-                (bool parseResult, PackageInformation packageInformation) parseResult = await Task.Run(async () =>
-                {
-                    return await ParsePackagedAppAsync(fileName);
-                });
-
-                UpdateResult(parseResult);
+                await ParsePackageAsync(fileName);
             }
         }
 
@@ -1603,63 +1442,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 InstallProgressValue = 0;
                 InstallStateString = PrepareInstallString;
 
-                (bool result, bool isCanceled, PackageDeploymentResult packageDeploymentResult, Exception exception) = await Task.Run(async () =>
-                {
-                    string extensionName = Path.GetExtension(fileName);
-
-                    if (string.Equals(extensionName, ".appx", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msix", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".appxbundle", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msixbundle", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".appinstaller", StringComparison.OrdinalIgnoreCase))
-                    {
-                        try
-                        {
-                            if (string.Equals(PackageFamilyName, global::Windows.ApplicationModel.Package.Current.Id.FamilyName, StringComparison.OrdinalIgnoreCase))
-                            {
-                                await Task.Run(() =>
-                                {
-                                    AppNotificationBuilder appNotificationBuilder = new();
-                                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                                    appNotificationBuilder.AddText(string.Format(AppInstallSelfString, PackageName));
-                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                });
-                            }
-
-                            AddPackageOptions addPackageOptions = new()
-                            {
-                                AllowUnsigned = AppInstallService.AllowUnsignedPackage,
-                                ForceAppShutdown = AppInstallService.ForceAppShutdown,
-                                ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdown,
-                                TargetVolume = PackageVolume.GetDefault()
-                            };
-
-                            foreach (InstallDependencyModel installDependencyItem in InstallDependencyCollection)
-                            {
-                                addPackageOptions.DependencyPackageUris.Add(new(installDependencyItem.DependencyPath));
-                            }
-
-                            // 安装目标应用，并获取安装进度
-                            installPackageWithProgress = packageDeploymentManager.AddPackageByUriAsync(new(fileName), addPackageOptions);
-
-                            // 更新安装进度
-                            installPackageWithProgress.Progress = (result, progress) => OnPackageInstallProgress(result, progress);
-                            return ValueTuple.Create<bool, bool, PackageDeploymentResult, Exception>(true, false, await installPackageWithProgress, null);
-                        }
-                        // 任务已取消
-                        catch (OperationCanceledException e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(OnInstallAppClicked), 1, e);
-                            return ValueTuple.Create<bool, bool, PackageDeploymentResult, Exception>(true, true, null, e);
-                        }
-                        // 安装失败显示失败信息
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(OnInstallAppClicked), 2, e);
-                            return ValueTuple.Create<bool, bool, PackageDeploymentResult, Exception>(true, false, null, e);
-                        }
-                    }
-                    else
-                    {
-                        return ValueTuple.Create<bool, bool, PackageDeploymentResult, Exception>(false, false, null, null);
-                    }
-                });
+                (bool result, bool isCanceled, PackageDeploymentResult packageDeploymentResult, Exception exception) = await InstallPackageAsync(PackageFamilyName, [.. InstallDependencyCollection]);
 
                 IsCancelInstall = true;
                 if (result)
@@ -1677,15 +1460,7 @@ namespace GetStoreAppInstaller.Views.Windows
                             IsAppInstalled = true;
                             InstallStateString = AppInstallSuccessfullyString;
                             AppInstalledState = AppInstalledNotNewVersionString;
-
-                            await Task.Run(() =>
-                            {
-                                // 显示安装成功通知
-                                AppNotificationBuilder appNotificationBuilder = new();
-                                appNotificationBuilder.AddArgument("action", "OpenApp");
-                                appNotificationBuilder.AddText(string.Format(AppInstallSuccessfully1String, PackageName));
-                                ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            });
+                            ShowInstallNotification(false, result, PackageName, packageDeploymentResult, exception);
                         }
                         else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                         {
@@ -1701,44 +1476,21 @@ namespace GetStoreAppInstaller.Views.Windows
                             IsAppInstalled = false;
                             InstallStateString = AppInstallFailedString;
                             AppInstalledState = AppNotInstallString;
-
-                            await Task.Run(() =>
-                            {
-                                // 显示安装失败通知
-                                AppNotificationBuilder appNotificationBuilder = new();
-                                appNotificationBuilder.AddArgument("action", "OpenApp");
-                                appNotificationBuilder.AddText(string.Format(AppInstallFailed1String, PackageName));
-                                appNotificationBuilder.AddText(string.Format(AppInstallFailed2String, errorCode));
-                                appNotificationBuilder.AddText(string.Format(AppInstallFailed3String, errorMessage));
-                                ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            });
+                            ShowInstallNotification(false, result, PackageName, packageDeploymentResult, exception);
                         }
                     }
                 }
                 else
                 {
-                    string errorCode = exception is not null ? string.Format("0x{0:X8}", exception.HResult) : NotAvailableString;
-                    string errorMessage = exception is not null ? exception.Message : NotAvailableString;
-
                     // 更新应用安装状态
                     CanDragFile = true;
                     InstallProgressValue = 100;
                     IsInstallWaiting = false;
                     IsInstallFailed = true;
-                    InstallFailedInformation = errorMessage;
+                    InstallFailedInformation = exception is not null ? exception.Message : NotAvailableString;
                     IsAppInstalled = false;
                     AppInstalledState = AppNotInstallString;
-
-                    await Task.Run(() =>
-                    {
-                        // 显示安装失败通知
-                        AppNotificationBuilder appNotificationBuilder = new();
-                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                        appNotificationBuilder.AddText(string.Format(AppInstallFailed1String, PackageName));
-                        appNotificationBuilder.AddText(string.Format(AppInstallFailed2String, errorCode));
-                        appNotificationBuilder.AddText(string.Format(AppInstallFailed3String, errorMessage));
-                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                    });
+                    ShowInstallNotification(false, result, PackageName, packageDeploymentResult, exception);
                 }
 
                 // 恢复原来的安装信息显示（并延缓当前安装信息显示时间0.5秒）
@@ -1774,22 +1526,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnStartAppClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                foreach (global::Windows.ApplicationModel.Package package in packageManager.FindPackagesForUser(string.Empty))
-                {
-                    if (string.Equals(package.Id.FamilyName, PackageFamilyName))
-                    {
-                        IReadOnlyList<AppListEntry> appListEntryList = package.GetAppListEntries();
-
-                        if (appListEntryList.Count > 0)
-                        {
-                            await appListEntryList[0].LaunchAsync();
-                            break;
-                        }
-                    }
-                }
-            });
+            StartApp(PackageFamilyName);
         }
 
         /// <summary>
@@ -1797,23 +1534,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnOpenAppInstalledFolderClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                foreach (global::Windows.ApplicationModel.Package package in packageManager.FindPackagesForUser(string.Empty))
-                {
-                    if (string.Equals(package.Id.FamilyName, PackageFamilyName))
-                    {
-                        try
-                        {
-                            await Launcher.LaunchFolderPathAsync(package.InstalledPath);
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(OnOpenAppInstalledFolderClicked), 1, e);
-                        }
-                    }
-                }
-            });
+            OpenAppInstalledFolder(PackageFamilyName);
         }
 
         /// <summary>
@@ -1821,23 +1542,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnOpenAppCachedFolderClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                if (!string.IsNullOrEmpty(PackageFamilyName))
-                {
-                    try
-                    {
-                        if (Microsoft.Windows.Storage.ApplicationData.GetForPackageFamily(PackageFamilyName) is Microsoft.Windows.Storage.ApplicationData applicationData)
-                        {
-                            await Launcher.LaunchFolderAsync(applicationData.LocalFolder);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(OnOpenAppCachedFolderClicked), 1, e);
-                    }
-                }
-            });
+            OpenAppCacheFolder(PackageFamilyName);
         }
 
         /// <summary>
@@ -1845,20 +1550,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnOpenAppInstallerSourceLinkClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                if (!string.IsNullOrEmpty(AppInstallerSourceLink))
-                {
-                    try
-                    {
-                        await Launcher.LaunchUriAsync(new(AppInstallerSourceLink));
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    }
-                }
-            });
+            OpenAppInstallerSourceLink(PackageFamilyName);
         }
 
         /// <summary>
@@ -1866,25 +1558,8 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnOpenPackageSourceLinkClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                if (!string.IsNullOrEmpty(PackageSourceLink))
-                {
-                    try
-                    {
-                        await Launcher.LaunchUriAsync(new(PackageSourceLink));
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    }
-                }
-            });
+            OnOpenPackageSourceLink(PackageFamilyName);
         }
-
-        #endregion 第五部分：窗口内容挂载的事件
-
-        #region 第六部分：自定义事件
 
         /// <summary>
         /// 应用安装状态发生改变时触发的事件
@@ -1911,26 +1586,68 @@ namespace GetStoreAppInstaller.Views.Windows
             });
         }
 
-        #endregion 第六部分：自定义事件
+        #endregion 第五部分：挂载事件处理
 
-        #region 第七部分：窗口及内容属性设置
+        #region 第六部分：数据操作与业务逻辑
 
         /// <summary>
         /// 初始化窗口数据
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
-        private void InitializeWindowData()
+        private void InitializeWindowData(AppWindow appWindow)
         {
             WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
             overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
             ExtendsContentIntoTitleBar = true;
-            AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
-            AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
-            AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
+            appWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
+            appWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
+            appWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
             IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
             contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
             inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
+        }
+
+        /// <summary>
+        /// 发送窗口消息类型
+        /// </summary>
+        private void SendWindowMessage(Microsoft.UI.WindowId windowId, WindowMessageKind windowMessageKind)
+        {
+            switch (windowMessageKind)
+            {
+                case WindowMessageKind.Move:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MOVE, 0);
+                        break;
+                    }
+                case WindowMessageKind.Size:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_SIZE, 0);
+                        break;
+                    }
+                case WindowMessageKind.Minimize:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MINIMIZE, 0);
+                        break;
+                    }
+                case WindowMessageKind.Maximize:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MAXIMIZE, 0);
+                        break;
+                    }
+                case WindowMessageKind.Restore:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_RESTORE, 0);
+                        break;
+                    }
+                case WindowMessageKind.Close:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_CLOSE, 0);
+                        break;
+                    }
+                default:
+                    break;
+            }
         }
 
         /// <summary>
@@ -1958,25 +1675,24 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 挂载窗口进程
         /// </summary>
-        private void MountWindowWndProc()
+        private void MountWindowWndProc(Microsoft.UI.WindowId windowId)
         {
             installerWindowSubClassProc = new(InstallerWindowSubClassProc);
-            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), installerWindowSubClassProc, 0, nint.Zero);
+            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(windowId), installerWindowSubClassProc, 0, nint.Zero);
         }
 
         /// <summary>
         /// 卸载窗口进程
         /// </summary>
-        private void DismountWindowWndProc()
+        private void DismountWindowWndProc(Microsoft.UI.WindowId windowId)
         {
-            Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), installerWindowSubClassProc, 0);
-            (Application.Current as InstallerApp).Dispose();
+            Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(windowId), installerWindowSubClassProc, 0);
         }
 
         /// <summary>
         /// 设置应用显示的主题
         /// </summary>
-        internal void SetWindowTheme()
+        private void SetWindowTheme()
         {
             WindowTheme = string.Equals(ThemeService.AppTheme, ThemeService.ThemeList[0]) ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark : Enum.TryParse(ThemeService.AppTheme, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
         }
@@ -2030,74 +1746,72 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 设置窗口大小和位置
         /// </summary>
-        private void SetWindowPosition()
+        private void SetWindowPosition(AppWindow appWindow)
         {
             // 默认直接显示到窗口中间
-            if (DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
+            if (DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
             {
                 RectInt32 workArea = displayArea.WorkArea;
-                AppWindow.Move(new((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
+                appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
             }
         }
 
         /// <summary>
         /// 设置标题栏按钮的主题色
         /// </summary>
-        private void SetTitleBarTheme(ElementTheme theme)
+        private void SetTitleBarTheme(AppWindowTitleBar appWindowTitleBar, ElementTheme theme)
         {
-            AppWindowTitleBar titleBar = AppWindow.TitleBar;
-
-            titleBar.BackgroundColor = Colors.Transparent;
-            titleBar.ForegroundColor = Colors.Transparent;
-            titleBar.InactiveBackgroundColor = Colors.Transparent;
-            titleBar.InactiveForegroundColor = Colors.Transparent;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-
-            if (theme is ElementTheme.Light)
+            if (appWindowTitleBar is not null)
             {
-                titleBar.ButtonForegroundColor = Color.FromArgb(255, 23, 23, 23);
-                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 0, 0, 0);
-                titleBar.ButtonHoverForegroundColor = Colors.Black;
-                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 0, 0, 0);
-                titleBar.ButtonPressedForegroundColor = Colors.Black;
-                titleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 153, 153, 153);
-            }
-            else
-            {
-                titleBar.ButtonForegroundColor = Color.FromArgb(255, 242, 242, 242);
-                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 255, 255, 255);
-                titleBar.ButtonHoverForegroundColor = Colors.White;
-                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 255, 255, 255);
-                titleBar.ButtonPressedForegroundColor = Colors.White;
-                titleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 102, 102, 102);
+                appWindowTitleBar.BackgroundColor = Colors.Transparent;
+                appWindowTitleBar.ForegroundColor = Colors.Transparent;
+                appWindowTitleBar.InactiveBackgroundColor = Colors.Transparent;
+                appWindowTitleBar.InactiveForegroundColor = Colors.Transparent;
+                appWindowTitleBar.ButtonBackgroundColor = Colors.Transparent;
+                appWindowTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+
+                if (theme is ElementTheme.Light)
+                {
+                    appWindowTitleBar.ButtonForegroundColor = Color.FromArgb(255, 23, 23, 23);
+                    appWindowTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 0, 0, 0);
+                    appWindowTitleBar.ButtonHoverForegroundColor = Colors.Black;
+                    appWindowTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 0, 0, 0);
+                    appWindowTitleBar.ButtonPressedForegroundColor = Colors.Black;
+                    appWindowTitleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 153, 153, 153);
+                }
+                else
+                {
+                    appWindowTitleBar.ButtonForegroundColor = Color.FromArgb(255, 242, 242, 242);
+                    appWindowTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 255, 255, 255);
+                    appWindowTitleBar.ButtonHoverForegroundColor = Colors.White;
+                    appWindowTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 255, 255, 255);
+                    appWindowTitleBar.ButtonPressedForegroundColor = Colors.White;
+                    appWindowTitleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 102, 102, 102);
+                }
             }
         }
 
         /// <summary>
         /// 设置传统菜单标题栏按钮的主题色
         /// </summary>
-        private void SetClassicMenuTheme(ElementTheme theme)
+        private void SetClassicMenuTheme(AppWindowTitleBar appWindowTitleBar, ElementTheme theme)
         {
-            AppWindowTitleBar titleBar = AppWindow.TitleBar;
-
-            if (theme is ElementTheme.Light)
+            if (appWindowTitleBar is not null)
             {
-                titleBar.PreferredTheme = TitleBarTheme.Light;
-                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
-            }
-            else
-            {
-                titleBar.PreferredTheme = TitleBarTheme.Dark;
-                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
-            }
+                if (theme is ElementTheme.Light)
+                {
+                    appWindowTitleBar.PreferredTheme = TitleBarTheme.Light;
+                    UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
+                }
+                else
+                {
+                    appWindowTitleBar.PreferredTheme = TitleBarTheme.Dark;
+                    UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
+                }
 
-            UxthemeLibrary.FlushMenuThemes();
+                UxthemeLibrary.FlushMenuThemes();
+            }
         }
-
-        #endregion 第七部分：窗口及内容属性设置
-
-        #region 第八部分：窗口过程
 
         /// <summary>
         /// 应用主窗口消息处理
@@ -2169,7 +1883,7 @@ namespace GetStoreAppInstaller.Views.Windows
                             {
                                 DispatcherQueue.TryEnqueue(async () =>
                                 {
-                                    await DealElevatedDragDropAsync(filesList[0]);
+                                    await DealElevatedDragDropAsync(filesList[0], CanDragFile);
                                 });
                             }
                         });
@@ -2181,15 +1895,11 @@ namespace GetStoreAppInstaller.Views.Windows
             return Comctl32Library.DefSubclassProc(hWnd, Msg, wParam, lParam);
         }
 
-        #endregion 第八部分：窗口过程
-
-        #region 第九部分：显示应用通知
-
         /// <summary>
         /// 使用教学提示显示应用内通知
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(Grid))]
-        internal async Task ShowNotificationAsync(TeachingTip teachingTip, int duration = 2000)
+        private async Task ShowNotificationAsync(TeachingTip teachingTip, int duration = 2000)
         {
             try
             {
@@ -2212,10 +1922,6 @@ namespace GetStoreAppInstaller.Views.Windows
             }
         }
 
-        #endregion 第九部分：显示应用通知
-
-        #region 第十部分：解析应用包信息
-
         /// <summary>
         /// 解析应用包
         /// </summary>
@@ -2226,7 +1932,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
             try
             {
-                if (File.Exists(filePath))
+                if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
                 {
                     // 获取文件的扩展文件名称
                     string extensionName = Path.GetExtension(filePath);
@@ -2574,7 +2280,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
             try
             {
-                if (File.Exists(filePath))
+                if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
                 {
                     // 获取文件的扩展文件名称
                     string extensionName = Path.GetExtension(filePath);
@@ -2640,7 +2346,7 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             List<ApplicationModel> applicationList = [];
 
-            if (appxManifestReader.GetApplications(out IAppxManifestApplicationsEnumerator appxManifestApplicationsEnumerator) is 0)
+            if (appxManifestReader is not null && resourceManagement is not null && appxManifestReader.GetApplications(out IAppxManifestApplicationsEnumerator appxManifestApplicationsEnumerator) is 0)
             {
                 while (appxManifestApplicationsEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
@@ -2678,7 +2384,7 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             List<string> capabilityList = [];
 
-            if (appxManifestReader.GetCapabilitiesByCapabilityClass(APPX_CAPABILITY_CLASS_TYPE.APPX_CAPABILITY_CLASS_ALL, out IAppxManifestCapabilitiesEnumerator appxManifestCapabilitiesEnumerator) is 0)
+            if (appxManifestReader is not null && appxManifestReader.GetCapabilitiesByCapabilityClass(APPX_CAPABILITY_CLASS_TYPE.APPX_CAPABILITY_CLASS_ALL, out IAppxManifestCapabilitiesEnumerator appxManifestCapabilitiesEnumerator) is 0)
             {
                 while (appxManifestCapabilitiesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
@@ -2700,7 +2406,7 @@ namespace GetStoreAppInstaller.Views.Windows
             List<DependencyInformation> dependencyList = [];
 
             // 获取应用包定义的静态依赖项列表
-            if (appxManifestReader.GetPackageDependencies(out IAppxManifestPackageDependenciesEnumerator dependenciesEnumerator) is 0)
+            if (appxManifestReader is not null && appxManifestReader.GetPackageDependencies(out IAppxManifestPackageDependenciesEnumerator dependenciesEnumerator) is 0)
             {
                 while (dependenciesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
@@ -2740,7 +2446,7 @@ namespace GetStoreAppInstaller.Views.Windows
             try
             {
                 // 分段 4：读取应用包清单
-                if (appxPackageReader.GetManifest(out IAppxManifestReader3 appxManifestReader) is 0)
+                if (appxPackageReader is not null && appxPackageReader.GetManifest(out IAppxManifestReader3 appxManifestReader) is 0)
                 {
                     // 获取应用包定义的功能列表
                     manifestInformation.CapabilitiesList = ParsePackageCapability(appxManifestReader);
@@ -2780,7 +2486,7 @@ namespace GetStoreAppInstaller.Views.Windows
                     }
                     else
                     {
-                        manifestInformation.LanguageList = bundleLanguageList;
+                        manifestInformation.LanguageList = bundleLanguageList is not null ? bundleLanguageList : [];
                     }
 
                     string currentLanguage = GetSpecifiedLanguage(manifestInformation.LanguageList);
@@ -2868,7 +2574,7 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             Dictionary<string, IAppxFile> fileDict = [];
 
-            if (appxPackageReader.GetPayloadFiles(out IAppxFilesEnumerator appxFilesEnumerator) is 0)
+            if (appxPackageReader is not null && appxPackageReader.GetPayloadFiles(out IAppxFilesEnumerator appxFilesEnumerator) is 0)
             {
                 while (appxFilesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
@@ -2890,7 +2596,7 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             List<string> languageList = [];
 
-            if (appxManifestReader.GetQualifiedResources(out IAppxManifestQualifiedResourcesEnumerator appxManifestQualifiedResourcesEnumerator) is 0)
+            if (appxManifestReader is not null && appxManifestReader.GetQualifiedResources(out IAppxManifestQualifiedResourcesEnumerator appxManifestQualifiedResourcesEnumerator) is 0)
             {
                 while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
@@ -2914,7 +2620,7 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             List<TargetDeviceFamilyModel> targetDeviceFamilyList = [];
 
-            if (appxManifestReader.GetTargetDeviceFamilies(out IAppxManifestTargetDeviceFamiliesEnumerator appxManifestTargetDeviceFamiliesEnumerator) is 0)
+            if (appxManifestReader is not null && appxManifestReader.GetTargetDeviceFamilies(out IAppxManifestTargetDeviceFamiliesEnumerator appxManifestTargetDeviceFamiliesEnumerator) is 0)
             {
                 while (appxManifestTargetDeviceFamiliesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
@@ -2949,7 +2655,7 @@ namespace GetStoreAppInstaller.Views.Windows
             try
             {
                 // 分段 4：读取应用包清单
-                if (appxPackageReader.GetManifest(out IAppxManifestReader3 appxManifestReader) is 0 && appxManifestReader.GetPackageId(out IAppxManifestPackageId2 appxManifestPackageId) is 0)
+                if (appxPackageReader is not null && appxPackageReader.GetManifest(out IAppxManifestReader3 appxManifestReader) is 0 && appxManifestReader.GetPackageId(out IAppxManifestPackageId2 appxManifestPackageId) is 0)
                 {
                     appxManifestPackageId.GetPackageFullName(out string packageFullName);
                     appxManifestPackageId.GetVersion(out ulong version);
@@ -2980,7 +2686,7 @@ namespace GetStoreAppInstaller.Views.Windows
             try
             {
                 // 分段 4：读取应用包清单
-                if (appxBundleReader.GetManifest(out IAppxBundleManifestReader appxBundleManifestReader) is 0 && appxBundleManifestReader.GetPackageId(out IAppxManifestPackageId2 appxManifestPackageId) is 0)
+                if (appxBundleReader is not null && appxBundleReader.GetManifest(out IAppxBundleManifestReader appxBundleManifestReader) is 0 && appxBundleManifestReader.GetPackageId(out IAppxManifestPackageId2 appxManifestPackageId) is 0)
                 {
                     appxManifestPackageId.GetPackageFullName(out string packageFullName);
                     appxManifestPackageId.GetVersion(out ulong version);
@@ -3008,54 +2714,57 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             string architecture = string.Empty;
 
-            if (applicationDict.ContainsKey(ProcessorArchitecture.X86))
+            if (applicationDict is not null)
             {
-                architecture = Convert.ToString(ProcessorArchitecture.X86);
-            }
-
-            if (applicationDict.ContainsKey(ProcessorArchitecture.X64))
-            {
-                if (!string.IsNullOrEmpty(architecture))
+                if (applicationDict.ContainsKey(ProcessorArchitecture.X86))
                 {
-                    architecture += " | ";
+                    architecture = Convert.ToString(ProcessorArchitecture.X86);
                 }
 
-                architecture += Convert.ToString(ProcessorArchitecture.X64);
-            }
-
-            if (applicationDict.ContainsKey(ProcessorArchitecture.Arm))
-            {
-                if (!string.IsNullOrEmpty(architecture))
+                if (applicationDict.ContainsKey(ProcessorArchitecture.X64))
                 {
-                    architecture += " | ";
+                    if (!string.IsNullOrEmpty(architecture))
+                    {
+                        architecture += " | ";
+                    }
+
+                    architecture += Convert.ToString(ProcessorArchitecture.X64);
                 }
 
-                architecture += Convert.ToString(ProcessorArchitecture.Arm);
-            }
-
-            if (applicationDict.ContainsKey(ProcessorArchitecture.Arm64))
-            {
-                if (!string.IsNullOrEmpty(architecture))
+                if (applicationDict.ContainsKey(ProcessorArchitecture.Arm))
                 {
-                    architecture += " | ";
+                    if (!string.IsNullOrEmpty(architecture))
+                    {
+                        architecture += " | ";
+                    }
+
+                    architecture += Convert.ToString(ProcessorArchitecture.Arm);
                 }
 
-                architecture += Convert.ToString(ProcessorArchitecture.Arm64);
-            }
-
-            if (applicationDict.ContainsKey(ProcessorArchitecture.Neutral))
-            {
-                if (!string.IsNullOrEmpty(architecture))
+                if (applicationDict.ContainsKey(ProcessorArchitecture.Arm64))
                 {
-                    architecture += " | ";
+                    if (!string.IsNullOrEmpty(architecture))
+                    {
+                        architecture += " | ";
+                    }
+
+                    architecture += Convert.ToString(ProcessorArchitecture.Arm64);
                 }
 
-                architecture += Convert.ToString(ProcessorArchitecture.Neutral);
-            }
+                if (applicationDict.ContainsKey(ProcessorArchitecture.Neutral))
+                {
+                    if (!string.IsNullOrEmpty(architecture))
+                    {
+                        architecture += " | ";
+                    }
 
-            if (string.IsNullOrEmpty(architecture))
-            {
-                architecture = NotAvailableString;
+                    architecture += Convert.ToString(ProcessorArchitecture.Neutral);
+                }
+
+                if (string.IsNullOrEmpty(architecture))
+                {
+                    architecture = NotAvailableString;
+                }
             }
 
             return string.Format(BundleHeaderString, architecture);
@@ -3068,9 +2777,9 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             Architecture osArchitecture = RuntimeInformation.ProcessArchitecture;
             string appxFile = null;
-            if (applicationDict.Count is 0)
+            if (applicationDict is null && applicationDict.Count is 0)
             {
-                return null;
+                return default;
             }
 
             if (osArchitecture is Architecture.X86)
@@ -3119,7 +2828,7 @@ namespace GetStoreAppInstaller.Views.Windows
             List<string> languageList = [];
             List<string> scaleResourceList = [];
 
-            if (appxBundleManifestReader.GetPackageInfoItems(out IAppxBundleManifestPackageInfoEnumerator appxBundleManifestPackageInfoEnumerator) is 0)
+            if (appxBundleManifestReader is not null && appxBundleManifestReader.GetPackageInfoItems(out IAppxBundleManifestPackageInfoEnumerator appxBundleManifestPackageInfoEnumerator) is 0)
             {
                 while (appxBundleManifestPackageInfoEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
@@ -3174,7 +2883,7 @@ namespace GetStoreAppInstaller.Views.Windows
             Dictionary<string, IAppxFile> bundleFileDict = [];
 
             // 读取捆绑包的二进制文件
-            if (appxBundleReader.GetPayloadPackages(out IAppxFilesEnumerator appxFilesEnumerator) is 0)
+            if (appxBundleReader is not null && scaleResourceList is not null && appxBundleReader.GetPayloadPackages(out IAppxFilesEnumerator appxFilesEnumerator) is 0)
             {
                 while (appxFilesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
@@ -3202,46 +2911,43 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private string GetLocalizedString(string resource, ResourceManagement resourceManagement)
         {
-            if (!string.IsNullOrEmpty(resource) && resourceManagement is not null)
+            if (!string.IsNullOrEmpty(resource) && resourceManagement is not null && resource.StartsWith(msresource))
             {
-                if (resource.StartsWith(msresource))
-                {
-                    string splitResource = resource[msresource.Length..];
+                string splitResource = resource[msresource.Length..];
 
-                    string resourceKey;
-                    if (splitResource.Contains('\\'))
+                string resourceKey;
+                if (splitResource.Contains('\\'))
+                {
+                    resourceKey = splitResource;
+                }
+                else if (resource.Contains('/'))
+                {
+                    resourceKey = splitResource.Replace('/', '\\');
+                }
+                else
+                {
+                    resourceKey = string.Format(@"Resources\{0}", splitResource);
+                }
+
+                try
+                {
+                    if (resourceManagement.ResourceMap.TryGetValue(resourceKey, resourceManagement.CurrentResourceContext) is ResourceCandidate currentCandidate && currentCandidate.Kind is ResourceCandidateKind.String)
                     {
-                        resourceKey = splitResource;
+                        return currentCandidate.ValueAsString;
                     }
-                    else if (resource.Contains('/'))
+                    else if (resourceManagement.ResourceMap.TryGetValue(resourceKey, resourceManagement.DefaultResourceContext) is ResourceCandidate defaultCandidate && defaultCandidate.Kind is ResourceCandidateKind.String)
                     {
-                        resourceKey = splitResource.Replace('/', '\\');
+                        return defaultCandidate.ValueAsString;
                     }
                     else
                     {
-                        resourceKey = string.Format(@"Resources\{0}", splitResource);
-                    }
-
-                    try
-                    {
-                        if (resourceManagement.ResourceMap.TryGetValue(resourceKey, resourceManagement.CurrentResourceContext) is ResourceCandidate currentCandidate && currentCandidate.Kind is ResourceCandidateKind.String)
-                        {
-                            return currentCandidate.ValueAsString;
-                        }
-                        else if (resourceManagement.ResourceMap.TryGetValue(resourceKey, resourceManagement.DefaultResourceContext) is ResourceCandidate defaultCandidate && defaultCandidate.Kind is ResourceCandidateKind.String)
-                        {
-                            return defaultCandidate.ValueAsString;
-                        }
-                        else
-                        {
-                            return resourceKey;
-                        }
-                    }
-                    catch (Exception exception)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(GetLocalizedString), 1, exception);
                         return resourceKey;
                     }
+                }
+                catch (Exception exception)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(GetLocalizedString), 1, exception);
+                    return resourceKey;
                 }
             }
 
@@ -3253,6 +2959,11 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private IStream GetPackageLogo(string logo, Dictionary<string, IAppxFile> appxFileDict)
         {
+            if (appxFileDict is null)
+            {
+                return default;
+            }
+
             List<KeyValuePair<string, IAppxFile>> logoList = [];
             string logoExtensionName = Path.GetExtension(logo);
             string logoFileName = logo[..^logoExtensionName.Length];
@@ -3276,6 +2987,11 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private async Task<IStream> GetPackageBundleLogoAsync(string logo, Dictionary<string, IAppxFile> scaleBundleFileDict)
         {
+            if (string.IsNullOrEmpty(logo) || scaleBundleFileDict is null)
+            {
+                return default;
+            }
+
             List<KeyValuePair<string, IAppxFile>> logoList = [];
             Dictionary<string, IAppxFile> logoDict = [];
             string logoExtensionName = Path.GetExtension(logo);
@@ -3338,12 +3054,15 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             IStream resourceFileStream = null;
 
-            foreach (KeyValuePair<string, IAppxFile> fileItem in fileDict)
+            if (fileDict is not null)
             {
-                if (string.Equals(fileItem.Key, "resources.pri", StringComparison.OrdinalIgnoreCase))
+                foreach (KeyValuePair<string, IAppxFile> fileItem in fileDict)
                 {
-                    fileItem.Value.GetStream(out resourceFileStream);
-                    break;
+                    if (string.Equals(fileItem.Key, "resources.pri", StringComparison.OrdinalIgnoreCase))
+                    {
+                        fileItem.Value.GetStream(out resourceFileStream);
+                        break;
+                    }
                 }
             }
 
@@ -3357,7 +3076,7 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             if (languageList is null || languageList.Count is 0)
             {
-                return null;
+                return default;
             }
 
             CultureInfo appCultureInfo = CultureInfo.GetCultureInfo(LanguageService.AppLanguage);
@@ -3416,28 +3135,57 @@ namespace GetStoreAppInstaller.Views.Windows
         private IStream GetSpecifiedLogoStream(string logo, List<KeyValuePair<string, IAppxFile>> logoList)
         {
             IStream imageFileStream = null;
-            logoList.Sort((item1, item2) => item1.Key.CompareTo(item2.Key));
-
-            if (logoList.Count > 0)
+            if (logoList is not null)
             {
-                int deviceDpi = (int)(rasterizationScale * 100);
+                logoList.Sort((item1, item2) => item1.Key.CompareTo(item2.Key));
 
-                for (int logoIndex = 0; logoIndex < logoList.Count; logoIndex++)
+                if (logoList.Count > 0)
                 {
-                    KeyValuePair<string, IAppxFile> logoItem = logoList[logoIndex];
-                    MatchCollection scaleMatchCollection = ScaleRegex.Matches(logoItem.Key);
+                    int deviceDpi = (int)(rasterizationScale * 100);
 
-                    for (int index = 0; index < scaleMatchCollection.Count; index++)
+                    for (int logoIndex = 0; logoIndex < logoList.Count; logoIndex++)
                     {
-                        Match matchItem = scaleMatchCollection[index];
-                        GroupCollection scaleDataListGroups = matchItem.Groups;
+                        KeyValuePair<string, IAppxFile> logoItem = logoList[logoIndex];
+                        MatchCollection scaleMatchCollection = ScaleRegex.Matches(logoItem.Key);
 
-                        // 选择符合设备缩放大小的图标文件
-                        if (scaleDataListGroups.Count is 2)
+                        for (int index = 0; index < scaleMatchCollection.Count; index++)
                         {
-                            int scale = Convert.ToInt32(scaleDataListGroups[1].Value);
+                            Match matchItem = scaleMatchCollection[index];
+                            GroupCollection scaleDataListGroups = matchItem.Groups;
 
-                            if (scale >= deviceDpi)
+                            // 选择符合设备缩放大小的图标文件
+                            if (scaleDataListGroups.Count is 2)
+                            {
+                                int scale = Convert.ToInt32(scaleDataListGroups[1].Value);
+
+                                if (scale >= deviceDpi)
+                                {
+                                    logoItem.Value.GetStream(out imageFileStream);
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (imageFileStream is not null)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            // 若设备的缩放大小超过应用包提供的缩放大小，则使用最后一个
+                            if (Equals(logoIndex, logoList.Count - 1))
+                            {
+                                logoItem.Value.GetStream(out imageFileStream);
+                            }
+                        }
+                    }
+
+                    // 没有合适的，则使用文件名对应的图标
+                    if (imageFileStream is null)
+                    {
+                        foreach (KeyValuePair<string, IAppxFile> logoItem in logoList)
+                        {
+                            if (string.Equals(logoItem.Key, logo, StringComparison.OrdinalIgnoreCase))
                             {
                                 logoItem.Value.GetStream(out imageFileStream);
                                 break;
@@ -3445,39 +3193,13 @@ namespace GetStoreAppInstaller.Views.Windows
                         }
                     }
 
-                    if (imageFileStream is not null)
+                    // 没有选中，则选择第一个
+                    if (imageFileStream is null)
                     {
-                        break;
-                    }
-                    else
-                    {
-                        // 若设备的缩放大小超过应用包提供的缩放大小，则使用最后一个
-                        if (Equals(logoIndex, logoList.Count - 1))
+                        if (logoList.Count > 0)
                         {
-                            logoItem.Value.GetStream(out imageFileStream);
+                            logoList[0].Value.GetStream(out imageFileStream);
                         }
-                    }
-                }
-
-                // 没有合适的，则使用文件名对应的图标
-                if (imageFileStream is null)
-                {
-                    foreach (KeyValuePair<string, IAppxFile> logoItem in logoList)
-                    {
-                        if (string.Equals(logoItem.Key, logo, StringComparison.OrdinalIgnoreCase))
-                        {
-                            logoItem.Value.GetStream(out imageFileStream);
-                            break;
-                        }
-                    }
-                }
-
-                // 没有选中，则选择第一个
-                if (imageFileStream is null)
-                {
-                    if (logoList.Count > 0)
-                    {
-                        logoList[0].Value.GetStream(out imageFileStream);
                     }
                 }
             }
@@ -3492,7 +3214,7 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             List<string> languageResourceList = [];
 
-            if (appxBundleManifestPackageInfo.GetResources(out IAppxManifestQualifiedResourcesEnumerator appxManifestQualifiedResourcesEnumerator) is 0)
+            if (appxBundleManifestPackageInfo is not null && appxBundleManifestPackageInfo.GetResources(out IAppxManifestQualifiedResourcesEnumerator appxManifestQualifiedResourcesEnumerator) is 0)
             {
                 while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
@@ -3516,7 +3238,7 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             bool isPackageBundleScale = false;
 
-            if (appxBundleManifestPackageInfo.GetResources(out IAppxManifestQualifiedResourcesEnumerator appxManifestQualifiedResourcesEnumerator) is 0)
+            if (appxBundleManifestPackageInfo is not null && appxBundleManifestPackageInfo.GetResources(out IAppxManifestQualifiedResourcesEnumerator appxManifestQualifiedResourcesEnumerator) is 0)
             {
                 while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
@@ -3532,10 +3254,6 @@ namespace GetStoreAppInstaller.Views.Windows
 
             return isPackageBundleScale;
         }
-
-        #endregion 第十部分：解析应用包信息
-
-        #region 第十一部分：更新应用包信息
 
         /// <summary>
         /// 恢复默认内容
@@ -3708,32 +3426,371 @@ namespace GetStoreAppInstaller.Views.Windows
             IsLoadCompleted = true;
         }
 
-        #endregion 第十一部分：更新应用包信息
+        /// <summary>
+        /// 启用提升权限下的拖放支持
+        /// </summary>
+        private void EnableElevatedDragDrop()
+        {
+            if (RuntimeHelper.IsElevated)
+            {
+                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_DROPFILES, ChangeFilterFlags.MSGFLT_ADD);
+                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_COPYGLOBALDATA, ChangeFilterFlags.MSGFLT_ADD);
+                Shell32Library.DragAcceptFiles(Win32Interop.GetWindowFromWindowId(AppWindow.Id), true);
+            }
+        }
+
+        /// <summary>
+        /// 禁用提升权限下的拖放支持
+        /// </summary>
+        private void DisableElevatedDragDrop()
+        {
+            if (RuntimeHelper.IsElevated)
+            {
+                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_DROPFILES, ChangeFilterFlags.MSGFLT_REMOVE);
+                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_COPYGLOBALDATA, ChangeFilterFlags.MSGFLT_REMOVE);
+            }
+        }
+
+        /// <summary>
+        /// 创建应用包管理对象
+        /// </summary>
+        private void CreateAppxInstance()
+        {
+            if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory).GUID, out nint appxFactoryPtr) is 0)
+            {
+                appxFactory = (IAppxFactory)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxFactoryPtr, CreateObjectFlags.None);
+            }
+
+            if (Ole32Library.CoCreateInstance(CLSID_AppxBundleFactory, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxBundleFactory).GUID, out nint appxBundleFactoryPtr) is 0)
+            {
+                appxBundleFactory = (IAppxBundleFactory)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxBundleFactoryPtr, CreateObjectFlags.None);
+            }
+        }
+
+        /// <summary>
+        /// 打开设置
+        /// </summary>
+        private void OpenSettings()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("getstoreapp:"), new()
+                    {
+                        TargetApplicationPackageFamilyName = global::Windows.ApplicationModel.Package.Current.Id.FamilyName
+                    },
+                    new()
+                    {
+                        { "Parameter", "AppInstallSettings" }
+                    });
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 解析应用包
+        /// </summary>
+        private async Task ParsePackageAsync(string fileName)
+        {
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                IsParseEmpty = false;
+                ResetResult();
+
+                (bool parseResult, PackageInformation packageInformation) parseResult = await Task.Run(async () =>
+                {
+                    return await ParsePackagedAppAsync(fileName);
+                });
+
+                UpdateResult(parseResult);
+            }
+        }
+
+        /// <summary>
+        /// 安装应用包
+        /// </summary>
+        private async Task<(bool, bool, PackageDeploymentResult, Exception)> InstallPackageAsync(string packageFamilyName, List<InstallDependencyModel> installDependencyList)
+        {
+            if (packageFamilyName is null || installDependencyList is null)
+            {
+                return default;
+            }
+
+            return await Task.Run(async () =>
+            {
+                string extensionName = Path.GetExtension(fileName);
+
+                if (string.Equals(extensionName, ".appx", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msix", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".appxbundle", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msixbundle", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".appinstaller", StringComparison.OrdinalIgnoreCase))
+                {
+                    try
+                    {
+                        if (string.Equals(packageFamilyName, global::Windows.ApplicationModel.Package.Current.Id.FamilyName, StringComparison.OrdinalIgnoreCase))
+                        {
+                            ShowInstallNotification(true, false, PackageName, null, null);
+                        }
+
+                        AddPackageOptions addPackageOptions = new()
+                        {
+                            AllowUnsigned = AppInstallService.AllowUnsignedPackage,
+                            ForceAppShutdown = AppInstallService.ForceAppShutdown,
+                            ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdown,
+                            TargetVolume = PackageVolume.GetDefault()
+                        };
+
+                        foreach (InstallDependencyModel installDependencyItem in installDependencyList)
+                        {
+                            addPackageOptions.DependencyPackageUris.Add(new(installDependencyItem.DependencyPath));
+                        }
+
+                        // 安装目标应用，并获取安装进度
+                        installPackageWithProgress = packageDeploymentManager.AddPackageByUriAsync(new(fileName), addPackageOptions);
+
+                        // 更新安装进度
+                        installPackageWithProgress.Progress = (result, progress) => OnPackageInstallProgress(result, progress);
+                        return ValueTuple.Create<bool, bool, PackageDeploymentResult, Exception>(true, false, await installPackageWithProgress, null);
+                    }
+                    // 任务已取消
+                    catch (OperationCanceledException e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(InstallPackageAsync), 1, e);
+                        return ValueTuple.Create<bool, bool, PackageDeploymentResult, Exception>(true, true, null, e);
+                    }
+                    // 安装失败显示失败信息
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(InstallPackageAsync), 2, e);
+                        return ValueTuple.Create<bool, bool, PackageDeploymentResult, Exception>(true, false, null, e);
+                    }
+                }
+                else
+                {
+                    return ValueTuple.Create<bool, bool, PackageDeploymentResult, Exception>(false, false, null, null);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 显示安装应用通知
+        /// </summary>
+        private void ShowInstallNotification(bool isInstallSelf, bool result, string packageName, PackageDeploymentResult packageDeploymentResult, Exception exception)
+        {
+            if (!string.IsNullOrEmpty(packageName))
+            {
+                if (isInstallSelf)
+                {
+                    Task.Run(() =>
+                    {
+                        AppNotificationBuilder appNotificationBuilder = new();
+                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                        appNotificationBuilder.AddText(string.Format(AppInstallSelfString, packageName));
+                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                    });
+                }
+                else
+                {
+                    if (result && packageDeploymentResult is not null)
+                    {
+                        // 显示安装成功通知
+                        if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
+                        {
+                            Task.Run(() =>
+                            {
+                                AppNotificationBuilder appNotificationBuilder = new();
+                                appNotificationBuilder.AddArgument("action", "OpenApp");
+                                appNotificationBuilder.AddText(string.Format(AppInstallSuccessfully1String, packageName));
+                                ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                            });
+                        }
+                        else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
+                        {
+                            Task.Run(() =>
+                            {
+                                string errorCode = exception is not null ? string.Format("0x{0:X8}", exception.HResult) : NotAvailableString;
+                                string errorMessage = exception is not null ? exception.Message : NotAvailableString;
+
+                                // 显示安装失败通知
+                                AppNotificationBuilder appNotificationBuilder = new();
+                                appNotificationBuilder.AddArgument("action", "OpenApp");
+                                appNotificationBuilder.AddText(string.Format(AppInstallFailed1String, packageName));
+                                appNotificationBuilder.AddText(string.Format(AppInstallFailed2String, errorCode));
+                                appNotificationBuilder.AddText(string.Format(AppInstallFailed3String, errorMessage));
+                                ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                            });
+                        }
+                    }
+                    else
+                    {
+                        string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
+                        string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+                        Task.Run(() =>
+                        {
+                            // 显示安装失败通知
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(AppInstallFailed1String, packageName));
+                            appNotificationBuilder.AddText(string.Format(AppInstallFailed2String, errorCode));
+                            appNotificationBuilder.AddText(string.Format(AppInstallFailed3String, errorMessage));
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                        });
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 启动应用
+        /// </summary>
+        private void StartApp(string packageFamilyName)
+        {
+            if (!string.IsNullOrEmpty(packageFamilyName))
+            {
+                Task.Run(async () =>
+                {
+                    foreach (global::Windows.ApplicationModel.Package package in packageManager.FindPackagesForUser(string.Empty))
+                    {
+                        if (string.Equals(package.Id.FamilyName, packageFamilyName))
+                        {
+                            IReadOnlyList<AppListEntry> appListEntryList = package.GetAppListEntries();
+
+                            if (appListEntryList.Count > 0)
+                            {
+                                await appListEntryList[0].LaunchAsync();
+                                break;
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 打开应用安装目录
+        /// </summary>
+        private void OpenAppInstalledFolder(string packageFamilyName)
+        {
+            if (!string.IsNullOrEmpty(packageFamilyName))
+            {
+                Task.Run(async () =>
+                {
+                    foreach (global::Windows.ApplicationModel.Package package in packageManager.FindPackagesForUser(string.Empty))
+                    {
+                        if (string.Equals(package.Id.FamilyName, packageFamilyName))
+                        {
+                            try
+                            {
+                                await Launcher.LaunchFolderPathAsync(package.InstalledPath);
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(OpenAppInstalledFolder), 1, e);
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 打开应用缓存目录
+        /// </summary>
+        private void OpenAppCacheFolder(string packageFamilyName)
+        {
+            if (!string.IsNullOrEmpty(packageFamilyName))
+            {
+                Task.Run(async () =>
+                {
+                    if (!string.IsNullOrEmpty(packageFamilyName))
+                    {
+                        try
+                        {
+                            if (Microsoft.Windows.Storage.ApplicationData.GetForPackageFamily(packageFamilyName) is Microsoft.Windows.Storage.ApplicationData applicationData)
+                            {
+                                await Launcher.LaunchFolderAsync(applicationData.LocalFolder);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppInstaller), nameof(InstallerWindow), nameof(OpenAppCacheFolder), 1, e);
+                        }
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 打开应用安装程序文件链接
+        /// </summary>
+        private void OpenAppInstallerSourceLink(string appInstallerSourceLink)
+        {
+            if (!string.IsNullOrEmpty(appInstallerSourceLink))
+            {
+                Task.Run(async () =>
+                {
+                    if (!string.IsNullOrEmpty(appInstallerSourceLink))
+                    {
+                        try
+                        {
+                            await Launcher.LaunchUriAsync(new(appInstallerSourceLink));
+                        }
+                        catch (Exception e)
+                        {
+                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                        }
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 打开应用包链接
+        /// </summary>
+        private void OnOpenPackageSourceLink(string packageSourceLink)
+        {
+            if (!string.IsNullOrEmpty(packageSourceLink))
+            {
+                Task.Run(async () =>
+                {
+                    if (!string.IsNullOrEmpty(packageSourceLink))
+                    {
+                        try
+                        {
+                            await Launcher.LaunchUriAsync(new(packageSourceLink));
+                        }
+                        catch (Exception e)
+                        {
+                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                        }
+                    }
+                });
+            }
+        }
 
         /// <summary>
         /// 处理提权模式下的文件拖拽
         /// </summary>
-        internal async Task DealElevatedDragDropAsync(string filePath)
+        private async Task DealElevatedDragDropAsync(string filePath, bool canDragFile)
         {
-            string extensionName = Path.GetExtension(filePath);
-
-            if (CanDragFile && string.Equals(extensionName, ".appx", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msix", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".appxbundle", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msixbundle", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".appinstaller", StringComparison.OrdinalIgnoreCase))
+            if (!string.IsNullOrEmpty(filePath))
             {
-                fileName = filePath;
+                string extensionName = Path.GetExtension(filePath);
 
-                if (!string.IsNullOrEmpty(fileName))
+                if (canDragFile && string.Equals(extensionName, ".appx", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msix", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".appxbundle", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msixbundle", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".appinstaller", StringComparison.OrdinalIgnoreCase))
                 {
-                    IsParseEmpty = false;
-                    ResetResult();
+                    fileName = filePath;
 
-                    ValueTuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
+                    if (!string.IsNullOrEmpty(fileName))
                     {
-                        return await ParsePackagedAppAsync(fileName);
-                    });
-
-                    UpdateResult(parseResult);
+                        await ParsePackageAsync(fileName);
+                    }
                 }
             }
         }
+
+        #endregion 第六部分：数据操作与业务逻辑
     }
 }

@@ -298,14 +298,20 @@ namespace GetStoreApp.Views.Pages
             List<WinGetSourceModel> winGetSourceInternalList = await GetWinGetSourceInternalListAsync();
             List<WinGetSourceModel> winGetSourceCustomList = await GetWinGetSourceCustomListAsync();
 
-            foreach (WinGetSourceModel winGetSourceItem in winGetSourceInternalList)
+            if (winGetSourceInternalList is not null)
             {
-                WinGetSourceInternalCollection.Add(winGetSourceItem);
+                foreach (WinGetSourceModel winGetSourceItem in winGetSourceInternalList)
+                {
+                    WinGetSourceInternalCollection.Add(winGetSourceItem);
+                }
             }
 
-            foreach (WinGetSourceModel winGetSourceItem in winGetSourceCustomList)
+            if (winGetSourceCustomList is not null)
             {
-                WinGetSourceCustomCollection.Add(winGetSourceItem);
+                foreach (WinGetSourceModel winGetSourceItem in winGetSourceCustomList)
+                {
+                    WinGetSourceCustomCollection.Add(winGetSourceItem);
+                }
             }
         }
 
@@ -472,21 +478,19 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<RemovePackageCatalogResult> RemovePackageCatalogAsync(string name, bool preserveData)
         {
-            if (!string.IsNullOrEmpty(name))
-            {
-                return await Task.Run(async () =>
-                {
-                    PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
-                    RemovePackageCatalogOptions removePackageCatalogOptions = WinGetFactoryHelper.CreateRemovePackageCatalogOptions();
-                    removePackageCatalogOptions.Name = name;
-                    removePackageCatalogOptions.PreserveData = preserveData;
-                    return await packageManager.RemovePackageCatalogAsync(removePackageCatalogOptions);
-                });
-            }
-            else
+            if (string.IsNullOrEmpty(name))
             {
                 return default;
             }
+
+            return await Task.Run(async () =>
+            {
+                PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
+                RemovePackageCatalogOptions removePackageCatalogOptions = WinGetFactoryHelper.CreateRemovePackageCatalogOptions();
+                removePackageCatalogOptions.Name = name;
+                removePackageCatalogOptions.PreserveData = preserveData;
+                return await packageManager.RemovePackageCatalogAsync(removePackageCatalogOptions);
+            });
         }
 
         /// <summary>

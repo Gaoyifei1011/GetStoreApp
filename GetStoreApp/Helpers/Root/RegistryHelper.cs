@@ -209,7 +209,7 @@ namespace GetStoreApp.Helpers.Root
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(RegistryHelper), nameof(SaveRegistryKey), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(RegistryHelper), nameof(RemoveRegistryKey), 1, e);
                 return false;
             }
         }

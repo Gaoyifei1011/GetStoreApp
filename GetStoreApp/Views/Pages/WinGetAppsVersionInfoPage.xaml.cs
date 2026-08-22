@@ -666,13 +666,19 @@ namespace GetStoreApp.Views.Pages
                 {
                     // 获取当前应用可用版本
                     List<AvailableVersionModel> availableVersionList = await GetAvailableVersionAysnc(SearchApps.CatalogPackage, false);
-                    await UpdateAvailableVersionListAsync(availableVersionList);
+                    if (availableVersionList is not null)
+                    {
+                        await UpdateAvailableVersionListAsync(availableVersionList);
+                    }
                 }
                 else if (UpgradableApps is not null)
                 {
                     // 获取当前应用可用版本
                     List<AvailableVersionModel> availableVersionList = await GetAvailableVersionAysnc(UpgradableApps.CatalogPackage, true);
-                    await UpdateAvailableVersionListAsync(availableVersionList);
+                    if (availableVersionList is not null)
+                    {
+                        await UpdateAvailableVersionListAsync(availableVersionList);
+                    }
                 }
             }
 
@@ -684,6 +690,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<List<AvailableVersionModel>> GetAvailableVersionAysnc(CatalogPackage catalogPackage, bool isUpgrade)
         {
+            if (catalogPackage is null)
+            {
+                return default;
+            }
+
             return await Task.Run(() =>
             {
                 bool hasDefaultVersion = false;
@@ -754,7 +765,7 @@ namespace GetStoreApp.Views.Pages
 
                 if (SearchApps is not null)
                 {
-                    packageVersionInfo = availableVersion.PackageVersionId is not null ? SearchApps.CatalogPackage.GetPackageVersionInfo(availableVersion.PackageVersionId) : availableVersion.PackageVersionInfo;
+                    packageVersionInfo = availableVersion is not null && availableVersion.PackageVersionId is not null ? SearchApps.CatalogPackage.GetPackageVersionInfo(availableVersion.PackageVersionId) : availableVersion.PackageVersionInfo;
 
                     if (packageVersionInfo is not null)
                     {
@@ -763,7 +774,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 else if (UpgradableApps is not null)
                 {
-                    packageVersionInfo = availableVersion.PackageVersionId is not null ? UpgradableApps.CatalogPackage.GetPackageVersionInfo(availableVersion.PackageVersionId) : availableVersion.PackageVersionInfo;
+                    packageVersionInfo = availableVersion is not null && availableVersion.PackageVersionId is not null ? UpgradableApps.CatalogPackage.GetPackageVersionInfo(availableVersion.PackageVersionId) : availableVersion.PackageVersionInfo;
 
                     if (packageVersionInfo is not null)
                     {
@@ -1010,7 +1021,7 @@ namespace GetStoreApp.Views.Pages
                 catch (Exception e)
                 {
                     LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetAppsVersionInfoPage), nameof(GetCopyInformationStringAsync), 1, e);
-                    return null;
+                    return default;
                 }
             });
         }

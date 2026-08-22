@@ -824,7 +824,11 @@ namespace GetStoreApp.Views.Pages
         private async void OnUpgradeWithCmdClicked(object sender, RoutedEventArgs args)
         {
             string upgradeArguments = await GenerateUpgradeArgumentsAsync(false, PackageOperation.AppID, AdditionalInstallerArguments, ForceInstall, AllowHashMismatch, (PackageInstallMode)PackageInstallMode.SelectedValue, PackageInstallPath, (PackageInstallScope)PackageInstallScope.SelectedValue, PackageOperation.AppVersion);
-            RunWinGetCommand(upgradeArguments);
+
+            if (!string.IsNullOrEmpty(upgradeArguments))
+            {
+                RunWinGetCommand(upgradeArguments);
+            }
         }
 
         #endregion 第五部分：挂载事件处理
@@ -869,7 +873,7 @@ namespace GetStoreApp.Views.Pages
                 downloadOptions.AcceptPackageAgreements = true;
                 downloadOptions.AllowHashMismatch = allowHashMismatch;
                 downloadOptions.Architecture = packageArchitecture;
-                downloadOptions.DownloadDirectory = packageDownloadPath;
+                downloadOptions.DownloadDirectory = string.IsNullOrEmpty(packageDownloadPath) ? string.Empty : packageDownloadPath;
                 downloadOptions.PackageVersionId = packageVersionId;
                 downloadOptions.Scope = packageInstallScope;
                 downloadOptions.SkipDependencies = false;
@@ -886,7 +890,7 @@ namespace GetStoreApp.Views.Pages
             {
                 InstallOptions installOptions = WinGetFactoryHelper.CreateInstallOptions();
                 installOptions.AcceptPackageAgreements = true;
-                installOptions.AdditionalInstallerArguments = additionalInstallerArguments;
+                installOptions.AdditionalInstallerArguments = string.IsNullOrEmpty(additionalInstallerArguments) ? string.Empty : additionalInstallerArguments;
                 installOptions.AllowHashMismatch = allowHashMismatch;
                 installOptions.AllowUpgradeToUnknownVersion = allowUpgradeToUnknownVersion;
                 installOptions.BypassIsStoreClientBlockedPolicyCheck = bypassIsStoreClientBlockedPolicyCheck;
@@ -895,7 +899,7 @@ namespace GetStoreApp.Views.Pages
                 installOptions.PackageInstallMode = packageInstallMode;
                 installOptions.PackageInstallScope = packageInstallScope;
                 installOptions.PackageVersionId = packageVersionId;
-                installOptions.PreferredInstallLocation = packageInstallPath;
+                installOptions.PreferredInstallLocation = string.IsNullOrEmpty(packageInstallPath) ? string.Empty : packageInstallPath;
                 installOptions.SkipDependencies = false;
                 installOptions.AllowedArchitectures.Clear();
 

@@ -109,14 +109,17 @@ namespace GetStoreApp.Views.Dialogs
             List<TraceCleanupModel> selectedItemsList = GetSelectedItemsList();
 
             List<(CleanKind cleanKind, bool cleanResult)> cleanSuccessfullyDict = await TraceCleanupAsync(selectedItemsList);
-            foreach ((CleanKind cleanKind, bool cleanResult) in cleanSuccessfullyDict)
+            if (cleanSuccessfullyDict is not null)
             {
-                foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
+                foreach ((CleanKind cleanKind, bool cleanResult) in cleanSuccessfullyDict)
                 {
-                    if (Equals(traceCleanupItem.InternalName, cleanKind))
+                    foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
                     {
-                        traceCleanupItem.IsCleanFailed = !cleanResult;
-                        break;
+                        if (Equals(traceCleanupItem.InternalName, cleanKind))
+                        {
+                            traceCleanupItem.IsCleanFailed = !cleanResult;
+                            break;
+                        }
                     }
                 }
             }
@@ -187,6 +190,11 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async Task<List<(CleanKind cleanKind, bool cleanResult)>> TraceCleanupAsync(List<TraceCleanupModel> selectedItemsList)
         {
+            if (selectedItemsList is null)
+            {
+                return default;
+            }
+
             return await Task.Run(async () =>
             {
                 List<(CleanKind cleanKind, bool cleanResult)> cleanSuccessfullyDict = [];

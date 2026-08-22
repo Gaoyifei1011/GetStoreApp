@@ -478,7 +478,6 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 固定到任务栏
         /// </summary>
-        /// <returns></returns>
         private async Task<(bool needUnlock, LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully)> PinToTaskbarAsync()
         {
             return await Task.Run(async () =>

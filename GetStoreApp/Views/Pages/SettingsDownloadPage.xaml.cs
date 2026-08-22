@@ -44,7 +44,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _downloadFolder;
 
-        internal string DownloadFolder
+        private string DownloadFolder
         {
             get { return _downloadFolder; }
 
@@ -60,7 +60,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _manualSetDownloadFolder;
 
-        internal bool ManualSetDownloadFolder
+        private bool ManualSetDownloadFolder
         {
             get { return _manualSetDownloadFolder; }
 
@@ -76,7 +76,7 @@ namespace GetStoreApp.Views.Pages
 
         private ComboBoxItemModel _doEngineMode;
 
-        internal ComboBoxItemModel DoEngineMode
+        private ComboBoxItemModel DoEngineMode
         {
             get { return _doEngineMode; }
 

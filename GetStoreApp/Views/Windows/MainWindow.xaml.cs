@@ -34,7 +34,6 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
 using Windows.Graphics;
 using Windows.Networking.Connectivity;
@@ -54,6 +53,8 @@ namespace GetStoreApp.Views.Windows
     /// </summary>
     internal sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string AppManagerString = ResourceService.GetLocalized("Window/AppManager");
         private readonly string AppUpdateString = ResourceService.GetLocalized("Window/AppUpdate");
         private readonly string CheckNetWorkConnectionString = ResourceService.GetLocalized("Window/CheckNetWorkConnection");
@@ -67,17 +68,21 @@ namespace GetStoreApp.Views.Windows
         private readonly string TitleString = ResourceService.GetLocalized("Window/Title");
         private readonly string WebString = ResourceService.GetLocalized("Window/Web");
         private readonly string WinGetString = ResourceService.GetLocalized("Window/WinGet");
-        private readonly ContentIsland contentIsland;
-        private readonly InputKeyboardSource inputKeyboardSource;
-        private readonly ContentCoordinateConverter contentCoordinateConverter;
-        private readonly OverlappedPresenter overlappedPresenter;
-        private readonly SUBCLASSPROC mainWindowSubClassProc;
+        private ContentIsland contentIsland;
+        private InputKeyboardSource inputKeyboardSource;
+        private ContentCoordinateConverter contentCoordinateConverter;
+        private OverlappedPresenter overlappedPresenter;
+        private SUBCLASSPROC mainWindowSubClassProc;
+
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
 
         internal new static MainWindow Current { get; private set; }
 
         private string _windowTitle;
 
-        internal string WindowTitle
+        private string WindowTitle
         {
             get { return _windowTitle; }
 
@@ -93,7 +98,7 @@ namespace GetStoreApp.Views.Windows
 
         private SystemBackdrop _windowSystemBackdrop;
 
-        internal SystemBackdrop WindowSystemBackdrop
+        private SystemBackdrop WindowSystemBackdrop
         {
             get { return _windowSystemBackdrop; }
 
@@ -109,7 +114,7 @@ namespace GetStoreApp.Views.Windows
 
         private ElementTheme _windowTheme;
 
-        internal ElementTheme WindowTheme
+        private ElementTheme WindowTheme
         {
             get { return _windowTheme; }
 
@@ -125,7 +130,7 @@ namespace GetStoreApp.Views.Windows
 
         private bool _isWindowMaximized;
 
-        internal bool IsWindowMaximized
+        private bool IsWindowMaximized
         {
             get { return _isWindowMaximized; }
 
@@ -141,7 +146,7 @@ namespace GetStoreApp.Views.Windows
 
         private bool _isBackEnabled;
 
-        internal bool IsBackEnabled
+        private bool IsBackEnabled
         {
             get { return _isBackEnabled; }
 
@@ -157,7 +162,7 @@ namespace GetStoreApp.Views.Windows
 
         private NavigationViewItemModel _selectedItem;
 
-        internal NavigationViewItemModel SelectedItem
+        private NavigationViewItemModel SelectedItem
         {
             get { return _selectedItem; }
 
@@ -173,150 +178,60 @@ namespace GetStoreApp.Views.Windows
 
         internal ObservableCollection<NavigationViewItemModel> NavigationViewItemMenuItemsCollection { get; } = [];
 
-        internal ObservableCollection<NavigationViewItemModel> NavigationViewItemFooterMenuItemsCollection { get; } = [];
+        private ObservableCollection<NavigationViewItemModel> NavigationViewItemFooterMenuItemsCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
+        [DynamicWindowsRuntimeCast(typeof(FrameworkElement))]
         internal MainWindow()
         {
             Current = this;
             InitializeComponent();
-
-            // 窗口部分初始化
-            WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
-            overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
-            ExtendsContentIntoTitleBar = true;
-            AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
-            AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
-            AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
-            IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
-            contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
-            contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
-            inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
-
-            // 挂载相应的事件
-            AppWindow.Changed += OnAppWindowChanged;
-            AppWindow.Closing += OnAppWindowClosing;
-            contentIsland.StateChanged += OnStateChanged;
-            contentIsland.Environment.SettingChanged += OnSettingChanged;
-            inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
-            NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
-            ThemeService.PropertyChanged += OnServicePropertyChanged;
-            BackdropService.PropertyChanged += OnServicePropertyChanged;
-            TopMostService.PropertyChanged += OnServicePropertyChanged;
-            DesktopLaunchService.AppLaunchActivated += OnAppLaunchActivated;
-
-            // 标题栏和右键菜单设置
-            SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
-
-            // 为应用主窗口添加窗口过程
-            mainWindowSubClassProc = new(MainWindowSubClassProc);
-            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0, nint.Zero);
-
+            InitializeWindowData(AppWindow);
+            MountWindowEvent();
+            MountWindowWndProc(AppWindow.Id);
             SetWindowTheme();
             SetSystemBackdrop();
+            SetWindowPosition(AppWindow);
+            SetClassicMenuTheme(AppWindow.TitleBar, (Content as FrameworkElement).ActualTheme);
             SetTopMost();
             CheckNetwork();
-
-            // 默认直接显示到窗口中间
-            if (DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
-            {
-                RectInt32 workArea = displayArea.WorkArea;
-                AppWindow.Move(new((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
-            }
-
-            NavigationViewItemMenuItemsCollection.Add(new()
-            {
-                NavigationViewItemKind = NavigationViewItemKind.Item,
-                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Home.png") } },
-                NavigationTitle = HomeString,
-                NavigationTag = "Home",
-                NavigationPage = typeof(HomePage)
-            });
-            NavigationViewItemMenuItemsCollection.Add(new()
-            {
-                NavigationViewItemKind = NavigationViewItemKind.Seperator,
-                NavigationIcon = null,
-                NavigationTitle = null,
-                NavigationTag = null,
-                NavigationPage = null
-            });
-            NavigationViewItemMenuItemsCollection.Add(new()
-            {
-                NavigationViewItemKind = NavigationViewItemKind.Item,
-                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Store.png") } },
-                NavigationTitle = StoreString,
-                NavigationTag = "Store",
-                NavigationPage = typeof(StorePage)
-            });
-            NavigationViewItemMenuItemsCollection.Add(new()
-            {
-                NavigationViewItemKind = NavigationViewItemKind.Item,
-                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/AppUpdate.png") } },
-                NavigationTitle = AppUpdateString,
-                NavigationTag = "AppUpdate",
-                NavigationPage = typeof(AppUpdatePage)
-            });
-            NavigationViewItemMenuItemsCollection.Add(new()
-            {
-                NavigationViewItemKind = NavigationViewItemKind.Seperator,
-                NavigationIcon = null,
-                NavigationTitle = null,
-                NavigationTag = null,
-                NavigationPage = null
-            });
-            NavigationViewItemMenuItemsCollection.Add(new()
-            {
-                NavigationViewItemKind = NavigationViewItemKind.Item,
-                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/WinGet.png") } },
-                NavigationTitle = WinGetString,
-                NavigationTag = "WinGet",
-                NavigationPage = typeof(WinGetPage)
-            });
-            NavigationViewItemMenuItemsCollection.Add(new()
-            {
-                NavigationViewItemKind = NavigationViewItemKind.Item,
-                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/AppManager.png") } },
-                NavigationTitle = AppManagerString,
-                NavigationTag = "AppManager",
-                NavigationPage = typeof(AppManagerPage)
-            });
-            NavigationViewItemMenuItemsCollection.Add(new()
-            {
-                NavigationViewItemKind = NavigationViewItemKind.Seperator,
-                NavigationIcon = null,
-                NavigationTitle = null,
-                NavigationTag = null,
-                NavigationPage = null
-            });
-            NavigationViewItemMenuItemsCollection.Add(new()
-            {
-                NavigationViewItemKind = NavigationViewItemKind.Item,
-                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Download.png") } },
-                NavigationTitle = DownloadString,
-                NavigationTag = "Download",
-                NavigationPage = typeof(DownloadPage)
-            });
-            NavigationViewItemMenuItemsCollection.Add(new()
-            {
-                NavigationViewItemKind = NavigationViewItemKind.Item,
-                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Web.png") } },
-                NavigationTitle = WebString,
-                NavigationTag = "Web",
-                NavigationPage = null
-            });
-            NavigationViewItemFooterMenuItemsCollection.Add(new()
-            {
-                NavigationViewItemKind = NavigationViewItemKind.Item,
-                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Settings.png") } },
-                NavigationTitle = SettingsString,
-                NavigationTag = "Settings",
-                NavigationPage = typeof(SettingsPage)
-            });
+            InitializeNavigationViewItemCollection();
         }
 
-        #region 第一部分：窗口类事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：命令调用处理
+
+        /// <summary>
+        /// 固定到开始屏幕
+        /// </summary>
+        private async void OnPinToStartScreenExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is NavigationViewItemModel navigationViewItem)
+            {
+                string displayName = navigationViewItem.NavigationTitle;
+                string tag = navigationViewItem.NavigationTag;
+                await PinToStartScreenAsync(displayName, tag);
+            }
+        }
+
+        /// <summary>
+        /// 固定到任务栏
+        /// </summary>
+        private async void OnPinToTaskbarExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is NavigationViewItemModel navigationViewItem)
+            {
+                string displayName = navigationViewItem.NavigationTitle;
+                string tag = navigationViewItem.NavigationTag;
+                await PinToTaskbarAsync(displayName, tag);
+            }
+        }
 
         /// <summary>
         /// 窗口激活状态发生变化的事件
@@ -359,9 +274,9 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        #endregion 第一部分：窗口类事件
+        #endregion 第四部分：命令调用处理
 
-        #region 第二部分：窗口辅助类挂载的事件
+        #region 第五部分：挂载事件处理
 
         /// <summary>
         /// 窗口位置变化发生的事件
@@ -415,15 +330,9 @@ namespace GetStoreApp.Views.Windows
 
                 if (contentDialogResult is ContentDialogResult.Primary)
                 {
-                    AppWindow.Changed -= OnAppWindowChanged;
-                    contentIsland.Environment.SettingChanged -= OnSettingChanged;
-                    inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
-                    ThemeService.PropertyChanged -= OnServicePropertyChanged;
-                    BackdropService.PropertyChanged -= OnServicePropertyChanged;
-                    TopMostService.PropertyChanged -= OnServicePropertyChanged;
-                    DesktopLaunchService.AppLaunchActivated -= OnAppLaunchActivated;
+                    DismountWindowEvent();
+                    DismountWindowWndProc(sender.Id);
                     DownloadSchedulerService.TerminateDownload();
-                    Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0);
                     (Application.Current as MainApp).Dispose();
                 }
                 else if (contentDialogResult is ContentDialogResult.Secondary)
@@ -436,14 +345,8 @@ namespace GetStoreApp.Views.Windows
             }
             else
             {
-                AppWindow.Changed -= OnAppWindowChanged;
-                contentIsland.Environment.SettingChanged -= OnSettingChanged;
-                inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
-                ThemeService.PropertyChanged -= OnServicePropertyChanged;
-                BackdropService.PropertyChanged -= OnServicePropertyChanged;
-                TopMostService.PropertyChanged -= OnServicePropertyChanged;
-                DesktopLaunchService.AppLaunchActivated -= OnAppLaunchActivated;
-                Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0);
+                DismountWindowEvent();
+                DismountWindowWndProc(sender.Id);
                 (Application.Current as MainApp).Dispose();
             }
         }
@@ -467,11 +370,7 @@ namespace GetStoreApp.Views.Windows
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                if (string.Equals(ThemeService.AppTheme, ThemeService.ThemeList[0]))
-                {
-                    WindowTheme = Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
-                }
-
+                SetWindowTheme();
                 StoreRegionService.UpdateDefaultRegion();
             });
         }
@@ -493,16 +392,12 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        #endregion 第二部分：窗口辅助类挂载的事件
-
-        #region 第三部分：窗口右键菜单事件
-
         /// <summary>
         /// 窗口还原
         /// </summary>
         private void OnRestoreClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_RESTORE, 0);
+            SendWindowMessage(AppWindow.Id, WindowMessageKind.Restore);
         }
 
         /// <summary>
@@ -514,7 +409,7 @@ namespace GetStoreApp.Views.Windows
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
-                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MOVE, 0);
+                SendWindowMessage(AppWindow.Id, WindowMessageKind.Move);
             }
         }
 
@@ -527,7 +422,7 @@ namespace GetStoreApp.Views.Windows
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
-                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_SIZE, 0);
+                SendWindowMessage(AppWindow.Id, WindowMessageKind.Size);
             }
         }
 
@@ -536,7 +431,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnMinimizeClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MINIMIZE, 0);
+            SendWindowMessage(AppWindow.Id, WindowMessageKind.Minimize);
         }
 
         /// <summary>
@@ -544,7 +439,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnMaximizeClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MAXIMIZE, 0);
+            SendWindowMessage(AppWindow.Id, WindowMessageKind.Maximize);
         }
 
         /// <summary>
@@ -552,20 +447,16 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_CLOSE, 0);
+            SendWindowMessage(AppWindow.Id, WindowMessageKind.Close);
         }
-
-        #endregion 第三部分：窗口右键菜单事件
-
-        #region 第四部分：窗口内容挂载的事件
 
         /// <summary>
         /// 应用主题变化时设置标题栏按钮的颜色
         /// </summary>
         private void OnActualThemeChanged(FrameworkElement sender, object args)
         {
-            SetTitleBarTheme(sender.ActualTheme);
-            SetClassicMenuTheme(sender.ActualTheme);
+            SetTitleBarTheme(AppWindow.TitleBar, sender.ActualTheme);
+            SetClassicMenuTheme(AppWindow.TitleBar, sender.ActualTheme);
         }
 
         /// <summary>
@@ -589,174 +480,6 @@ namespace GetStoreApp.Views.Windows
                 }
             }
         }
-
-        #endregion 第四部分：窗口内容挂载的事件
-
-        #region 第五部分：XamlUICommand 命令调用时挂载的事件
-
-        /// <summary>
-        /// 固定到开始屏幕
-        /// </summary>
-        private async void OnPinToStartScreenExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is NavigationViewItemModel navigationViewItem)
-            {
-                string displayName = navigationViewItem.NavigationTitle;
-                string tag = navigationViewItem.NavigationTag;
-
-                if (RuntimeHelper.IsElevated)
-                {
-                    await Task.Run(async () =>
-                    {
-                        try
-                        {
-                            await global::Windows.System.Launcher.LaunchUriAsync(new("getstoreapppinner:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
-                            {
-                                {"Type", nameof(SecondaryTile) },
-                                { "DisplayName", displayName },
-                                { "Tag", tag },
-                                { "Position", "StartScreen" }
-                            });
-                        }
-                        catch (Exception e)
-                        {
-                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        }
-                    });
-                }
-                else
-                {
-                    bool isPinnedSuccessfully = false;
-
-                    try
-                    {
-                        SecondaryTile secondaryTile = new(nameof(GetStoreApp) + tag)
-                        {
-                            DisplayName = displayName,
-                            Arguments = "SecondaryTile " + tag
-                        };
-
-                        secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
-                        secondaryTile.VisualElements.Square150x150Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                        secondaryTile.VisualElements.Square71x71Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                        secondaryTile.VisualElements.Square44x44Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                        secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
-                        InitializeWithWindow.Initialize(secondaryTile, Win32Interop.GetWindowFromWindowId(AppWindow.Id));
-                        isPinnedSuccessfully = await secondaryTile.RequestCreateAsync();
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(OnPinToStartScreenExecuteRequested), 1, e);
-                    }
-                    finally
-                    {
-                        await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.StartScreen, isPinnedSuccessfully));
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 固定到任务栏
-        /// </summary>
-        private async void OnPinToTaskbarExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is NavigationViewItemModel navigationViewItem)
-            {
-                string displayName = navigationViewItem.NavigationTitle;
-                string tag = navigationViewItem.NavigationTag;
-
-                (bool needUnlock, LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully) pinnedResult = await Task.Run(async () =>
-                {
-                    LimitedAccessFeatureStatus limitedAccessFeatureStatus = LimitedAccessFeatureStatus.Unknown;
-                    bool needUnlock = false;
-                    bool isPinnedSuccessfully = false;
-
-                    if (RuntimeHelper.IsElevated)
-                    {
-                        await global::Windows.System.Launcher.LaunchUriAsync(new("getstoreapppinner:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
-                        {
-                            {"Type", nameof(SecondaryTile) },
-                            { "DisplayName", displayName },
-                            { "Tag", tag },
-                            { "Position", "Taskbar" }
-                        });
-                    }
-                    else
-                    {
-                        try
-                        {
-                            SecondaryTile secondaryTile = new(nameof(GetStoreApp) + tag)
-                            {
-                                DisplayName = displayName,
-                                Arguments = "SecondaryTile " + tag
-                            };
-
-                            secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
-                            secondaryTile.VisualElements.Square150x150Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                            secondaryTile.VisualElements.Square71x71Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                            secondaryTile.VisualElements.Square44x44Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                            secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
-
-                            string feature = "com.microsoft.windows.taskbar.requestPinSecondaryTile";
-                            string featureId = FeatureAccessHelper.GetFeatureId(feature);
-                            if (!string.IsNullOrEmpty(featureId))
-                            {
-                                needUnlock = true;
-                                string token = FeatureAccessHelper.GenerateTokenFromFeatureId(feature, featureId);
-                                string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
-                                LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
-
-                                if (accessResult.Status is LimitedAccessFeatureStatus.Available || accessResult.Status is LimitedAccessFeatureStatus.AvailableWithoutToken)
-                                {
-                                    isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinCurrentAppAsync();
-                                }
-                            }
-                            else
-                            {
-                                isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinCurrentAppAsync();
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(OnPinToTaskbarExecuteRequested), 1, e);
-                        }
-
-                        if (needUnlock && (limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unavailable || limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unknown) && !isPinnedSuccessfully)
-                        {
-                            await global::Windows.System.Launcher.LaunchUriAsync(new("getstoreapppinner:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
-                            {
-                                {"Type", nameof(SecondaryTile) },
-                                { "DisplayName", displayName },
-                                { "Tag", tag },
-                                { "Position", "Taskbar" }
-                            });
-                        }
-                    }
-
-                    return ValueTuple.Create(needUnlock, limitedAccessFeatureStatus, isPinnedSuccessfully);
-                });
-
-                if (!RuntimeHelper.IsElevated)
-                {
-                    if (pinnedResult.needUnlock)
-                    {
-                        if (pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available || pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.AvailableWithoutToken)
-                        {
-                            await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedResult.isPinnedSuccessfully));
-                        }
-                    }
-                    else
-                    {
-                        await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedResult.isPinnedSuccessfully));
-                    }
-                }
-            }
-        }
-
-        #endregion 第五部分：XamlUICommand 命令调用时挂载的事件
-
-        #region 第六部分：导航控件及其内容挂载的事件
 
         /// <summary>
         /// 当后退按钮收到交互（如单击或点击）时发生
@@ -784,8 +507,7 @@ namespace GetStoreApp.Views.Windows
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
             // 设置标题栏主题
-            SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
-
+            SetTitleBarTheme(AppWindow.TitleBar, (Content as FrameworkElement).ActualTheme);
             SelectedItem = NavigationViewItemMenuItemsCollection[0];
             NavigateTo(typeof(HomePage));
 
@@ -810,17 +532,7 @@ namespace GetStoreApp.Views.Windows
                     {
                         if (Equals(SelectedItem.NavigationTag, "Web"))
                         {
-                            Task.Run(async () =>
-                            {
-                                try
-                                {
-                                    await global::Windows.System.Launcher.LaunchUriAsync(new("getstoreappwebview:"));
-                                }
-                                catch (Exception e)
-                                {
-                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                                }
-                            });
+                            OpenWebView();
                         }
 
                         Type currentPageType = GetCurrentPageType();
@@ -884,10 +596,6 @@ namespace GetStoreApp.Views.Windows
             (Application.Current as MainApp).Dispose();
         }
 
-        #endregion 第六部分：导航控件及其内容挂载的事件
-
-        #region 第七部分：自定义事件
-
         /// <summary>
         /// 网络状态发生变化时触发的事件
         /// </summary>
@@ -930,14 +638,129 @@ namespace GetStoreApp.Views.Windows
             });
         }
 
-        #endregion 第七部分：自定义事件
+        #endregion 第五部分：挂载事件处理
 
-        #region 第八部分：窗口及内容属性设置
+        #region 第六部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化窗口数据
+        /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
+        private void InitializeWindowData(AppWindow appWindow)
+        {
+            WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
+            overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
+            ExtendsContentIntoTitleBar = true;
+            appWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
+            appWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
+            appWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
+            IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
+            contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(appWindow.Id);
+            contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
+            inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
+        }
+
+        /// <summary>
+        /// 发送窗口消息类型
+        /// </summary>
+        private void SendWindowMessage(Microsoft.UI.WindowId windowId, WindowMessageKind windowMessageKind)
+        {
+            switch (windowMessageKind)
+            {
+                case WindowMessageKind.Move:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MOVE, 0);
+                        break;
+                    }
+                case WindowMessageKind.Size:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_SIZE, 0);
+                        break;
+                    }
+                case WindowMessageKind.Minimize:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MINIMIZE, 0);
+                        break;
+                    }
+                case WindowMessageKind.Maximize:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MAXIMIZE, 0);
+                        break;
+                    }
+                case WindowMessageKind.Restore:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_RESTORE, 0);
+                        break;
+                    }
+                case WindowMessageKind.Close:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_CLOSE, 0);
+                        break;
+                    }
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 挂载窗口事件
+        /// </summary>
+        private void MountWindowEvent()
+        {
+            AppWindow.Changed += OnAppWindowChanged;
+            AppWindow.Closing += OnAppWindowClosing;
+            contentIsland.StateChanged += OnStateChanged;
+            contentIsland.Environment.SettingChanged += OnSettingChanged;
+            inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
+            NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
+            ThemeService.PropertyChanged += OnServicePropertyChanged;
+            BackdropService.PropertyChanged += OnServicePropertyChanged;
+            TopMostService.PropertyChanged += OnServicePropertyChanged;
+            DesktopLaunchService.AppLaunchActivated += OnAppLaunchActivated;
+        }
+
+        /// <summary>
+        /// 卸载窗口事件
+        /// </summary>
+        private void DismountWindowEvent()
+        {
+            try
+            {
+                AppWindow.Changed -= OnAppWindowChanged;
+                contentIsland.Environment.SettingChanged -= OnSettingChanged;
+                inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
+                ThemeService.PropertyChanged -= OnServicePropertyChanged;
+                BackdropService.PropertyChanged -= OnServicePropertyChanged;
+                TopMostService.PropertyChanged -= OnServicePropertyChanged;
+                DesktopLaunchService.AppLaunchActivated -= OnAppLaunchActivated;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetUpgradePage), nameof(DismountWindowEvent), 1, e);
+            }
+        }
+
+        /// <summary>
+        /// 挂载窗口进程
+        /// </summary>
+        private void MountWindowWndProc(Microsoft.UI.WindowId windowId)
+        {
+            mainWindowSubClassProc = new(MainWindowSubClassProc);
+            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0, nint.Zero);
+        }
+
+        /// <summary>
+        /// 卸载窗口进程
+        /// </summary>
+        private void DismountWindowWndProc(Microsoft.UI.WindowId windowId)
+        {
+            Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0);
+        }
 
         /// <summary>
         /// 设置应用显示的主题
         /// </summary>
-        internal void SetWindowTheme()
+        private void SetWindowTheme()
         {
             WindowTheme = string.Equals(ThemeService.AppTheme, ThemeService.ThemeList[0]) ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark : Enum.TryParse(ThemeService.AppTheme, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
         }
@@ -980,58 +803,73 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
+        /// 设置窗口大小和位置
+        /// </summary>
+        private void SetWindowPosition(AppWindow appWindow)
+        {
+            // 默认直接显示到窗口中间
+            if (DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
+            {
+                RectInt32 workArea = displayArea.WorkArea;
+                appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
+            }
+        }
+
+        /// <summary>
         /// 设置标题栏按钮的主题色
         /// </summary>
-        private void SetTitleBarTheme(ElementTheme theme)
+        private void SetTitleBarTheme(AppWindowTitleBar appWindowTitleBar, ElementTheme theme)
         {
-            AppWindowTitleBar titleBar = AppWindow.TitleBar;
-
-            titleBar.BackgroundColor = Colors.Transparent;
-            titleBar.ForegroundColor = Colors.Transparent;
-            titleBar.InactiveBackgroundColor = Colors.Transparent;
-            titleBar.InactiveForegroundColor = Colors.Transparent;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-
-            if (theme is ElementTheme.Light)
+            if (appWindowTitleBar is not null)
             {
-                titleBar.ButtonForegroundColor = Color.FromArgb(255, 23, 23, 23);
-                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 0, 0, 0);
-                titleBar.ButtonHoverForegroundColor = Colors.Black;
-                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 0, 0, 0);
-                titleBar.ButtonPressedForegroundColor = Colors.Black;
-                titleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 153, 153, 153);
-            }
-            else
-            {
-                titleBar.ButtonForegroundColor = Color.FromArgb(255, 242, 242, 242);
-                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 255, 255, 255);
-                titleBar.ButtonHoverForegroundColor = Colors.White;
-                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 255, 255, 255);
-                titleBar.ButtonPressedForegroundColor = Colors.White;
-                titleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 102, 102, 102);
+                appWindowTitleBar.BackgroundColor = Colors.Transparent;
+                appWindowTitleBar.ForegroundColor = Colors.Transparent;
+                appWindowTitleBar.InactiveBackgroundColor = Colors.Transparent;
+                appWindowTitleBar.InactiveForegroundColor = Colors.Transparent;
+                appWindowTitleBar.ButtonBackgroundColor = Colors.Transparent;
+                appWindowTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+
+                if (theme is ElementTheme.Light)
+                {
+                    appWindowTitleBar.ButtonForegroundColor = Color.FromArgb(255, 23, 23, 23);
+                    appWindowTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 0, 0, 0);
+                    appWindowTitleBar.ButtonHoverForegroundColor = Colors.Black;
+                    appWindowTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 0, 0, 0);
+                    appWindowTitleBar.ButtonPressedForegroundColor = Colors.Black;
+                    appWindowTitleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 153, 153, 153);
+                }
+                else
+                {
+                    appWindowTitleBar.ButtonForegroundColor = Color.FromArgb(255, 242, 242, 242);
+                    appWindowTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 255, 255, 255);
+                    appWindowTitleBar.ButtonHoverForegroundColor = Colors.White;
+                    appWindowTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 255, 255, 255);
+                    appWindowTitleBar.ButtonPressedForegroundColor = Colors.White;
+                    appWindowTitleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 102, 102, 102);
+                }
             }
         }
 
         /// <summary>
         /// 设置传统菜单标题栏按钮的主题色
         /// </summary>
-        private void SetClassicMenuTheme(ElementTheme theme)
+        private void SetClassicMenuTheme(AppWindowTitleBar appWindowTitleBar, ElementTheme theme)
         {
-            AppWindowTitleBar titleBar = AppWindow.TitleBar;
-
-            if (theme is ElementTheme.Light)
+            if (appWindowTitleBar is not null)
             {
-                titleBar.PreferredTheme = TitleBarTheme.Light;
-                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
-            }
-            else
-            {
-                titleBar.PreferredTheme = TitleBarTheme.Dark;
-                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
-            }
+                if (theme is ElementTheme.Light)
+                {
+                    appWindowTitleBar.PreferredTheme = TitleBarTheme.Light;
+                    UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
+                }
+                else
+                {
+                    appWindowTitleBar.PreferredTheme = TitleBarTheme.Dark;
+                    UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
+                }
 
-            UxthemeLibrary.FlushMenuThemes();
+                UxthemeLibrary.FlushMenuThemes();
+            }
         }
 
         /// <summary>
@@ -1041,10 +879,6 @@ namespace GetStoreApp.Views.Windows
         {
             overlappedPresenter.IsAlwaysOnTop = TopMostService.TopMost;
         }
-
-        #endregion 第八部分：窗口及内容属性设置
-
-        #region 第九部分：窗口过程
 
         /// <summary>
         /// 应用主窗口消息处理
@@ -1094,10 +928,6 @@ namespace GetStoreApp.Views.Windows
             }
             return Comctl32Library.DefSubclassProc(hWnd, Msg, wParam, lParam);
         }
-
-        #endregion 第九部分：窗口过程
-
-        #region 第十部分：窗口导航方法
 
         /// <summary>
         /// 页面向前导航
@@ -1166,12 +996,8 @@ namespace GetStoreApp.Views.Windows
                 }
             }
 
-            return null;
+            return default;
         }
-
-        #endregion 第十部分：窗口导航方法
-
-        #region 第十一部分：显示对话框和应用通知
 
         /// <summary>
         /// 显示内容对话框
@@ -1235,8 +1061,6 @@ namespace GetStoreApp.Views.Windows
                 ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
             }
         }
-
-        #endregion 第十一部分：显示对话框和应用通知
 
         /// <summary>
         /// 解析应用启动参数
@@ -1488,5 +1312,274 @@ namespace GetStoreApp.Views.Windows
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(CheckNetwork), 1, e);
             }
         }
+
+        /// <summary>
+        /// 初始化导航信息列表
+        /// </summary>
+        private void InitializeNavigationViewItemCollection()
+        {
+            NavigationViewItemMenuItemsCollection.Add(new()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Item,
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Home.png") } },
+                NavigationTitle = HomeString,
+                NavigationTag = "Home",
+                NavigationPage = typeof(HomePage)
+            });
+            NavigationViewItemMenuItemsCollection.Add(new()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Seperator,
+                NavigationIcon = null,
+                NavigationTitle = null,
+                NavigationTag = null,
+                NavigationPage = null
+            });
+            NavigationViewItemMenuItemsCollection.Add(new()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Item,
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Store.png") } },
+                NavigationTitle = StoreString,
+                NavigationTag = "Store",
+                NavigationPage = typeof(StorePage)
+            });
+            NavigationViewItemMenuItemsCollection.Add(new()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Item,
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/AppUpdate.png") } },
+                NavigationTitle = AppUpdateString,
+                NavigationTag = "AppUpdate",
+                NavigationPage = typeof(AppUpdatePage)
+            });
+            NavigationViewItemMenuItemsCollection.Add(new()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Seperator,
+                NavigationIcon = null,
+                NavigationTitle = null,
+                NavigationTag = null,
+                NavigationPage = null
+            });
+            NavigationViewItemMenuItemsCollection.Add(new()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Item,
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/WinGet.png") } },
+                NavigationTitle = WinGetString,
+                NavigationTag = "WinGet",
+                NavigationPage = typeof(WinGetPage)
+            });
+            NavigationViewItemMenuItemsCollection.Add(new()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Item,
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/AppManager.png") } },
+                NavigationTitle = AppManagerString,
+                NavigationTag = "AppManager",
+                NavigationPage = typeof(AppManagerPage)
+            });
+            NavigationViewItemMenuItemsCollection.Add(new()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Seperator,
+                NavigationIcon = null,
+                NavigationTitle = null,
+                NavigationTag = null,
+                NavigationPage = null
+            });
+            NavigationViewItemMenuItemsCollection.Add(new()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Item,
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Download.png") } },
+                NavigationTitle = DownloadString,
+                NavigationTag = "Download",
+                NavigationPage = typeof(DownloadPage)
+            });
+            NavigationViewItemMenuItemsCollection.Add(new()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Item,
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Web.png") } },
+                NavigationTitle = WebString,
+                NavigationTag = "Web",
+                NavigationPage = null
+            });
+            NavigationViewItemFooterMenuItemsCollection.Add(new()
+            {
+                NavigationViewItemKind = NavigationViewItemKind.Item,
+                NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Settings.png") } },
+                NavigationTitle = SettingsString,
+                NavigationTag = "Settings",
+                NavigationPage = typeof(SettingsPage)
+            });
+        }
+
+        /// <summary>
+        /// 固定到开始屏幕
+        /// </summary>
+        private async Task PinToStartScreenAsync(string displayName, string tag)
+        {
+            if (!string.IsNullOrEmpty(displayName) && !string.IsNullOrEmpty(tag))
+            {
+                if (RuntimeHelper.IsElevated)
+                {
+                    await Task.Run(async () =>
+                    {
+                        try
+                        {
+                            await global::Windows.System.Launcher.LaunchUriAsync(new("getstoreapppinner:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
+                            {
+                                {"Type", nameof(SecondaryTile) },
+                                { "DisplayName", displayName },
+                                { "Tag", tag },
+                                { "Position", "StartScreen" }
+                            });
+                        }
+                        catch (Exception e)
+                        {
+                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                        }
+                    });
+                }
+                else
+                {
+                    bool isPinnedSuccessfully = false;
+
+                    try
+                    {
+                        SecondaryTile secondaryTile = new(nameof(GetStoreApp) + tag)
+                        {
+                            DisplayName = displayName,
+                            Arguments = "SecondaryTile " + tag
+                        };
+
+                        secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
+                        secondaryTile.VisualElements.Square150x150Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                        secondaryTile.VisualElements.Square71x71Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                        secondaryTile.VisualElements.Square44x44Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                        secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
+                        InitializeWithWindow.Initialize(secondaryTile, Win32Interop.GetWindowFromWindowId(AppWindow.Id));
+                        isPinnedSuccessfully = await secondaryTile.RequestCreateAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(OnPinToStartScreenExecuteRequested), 1, e);
+                    }
+                    finally
+                    {
+                        await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.StartScreen, isPinnedSuccessfully));
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 固定到任务栏
+        /// </summary>
+        private async Task PinToTaskbarAsync(string displayName, string tag)
+        {
+            if (!string.IsNullOrEmpty(displayName) && !string.IsNullOrEmpty(tag))
+            {
+                (bool needUnlock, LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully) pinnedResult = await Task.Run(async () =>
+                {
+                    LimitedAccessFeatureStatus limitedAccessFeatureStatus = LimitedAccessFeatureStatus.Unknown;
+                    bool needUnlock = false;
+                    bool isPinnedSuccessfully = false;
+
+                    if (RuntimeHelper.IsElevated)
+                    {
+                        await global::Windows.System.Launcher.LaunchUriAsync(new("getstoreapppinner:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
+                            {
+                                {"Type", nameof(SecondaryTile) },
+                                { "DisplayName", displayName },
+                                { "Tag", tag },
+                                { "Position", "Taskbar" }
+                            });
+                    }
+                    else
+                    {
+                        try
+                        {
+                            SecondaryTile secondaryTile = new(nameof(GetStoreApp) + tag)
+                            {
+                                DisplayName = displayName,
+                                Arguments = "SecondaryTile " + tag
+                            };
+
+                            secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
+                            secondaryTile.VisualElements.Square150x150Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                            secondaryTile.VisualElements.Square71x71Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                            secondaryTile.VisualElements.Square44x44Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                            secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
+
+                            string feature = "com.microsoft.windows.taskbar.requestPinSecondaryTile";
+                            string featureId = FeatureAccessHelper.GetFeatureId(feature);
+                            if (!string.IsNullOrEmpty(featureId))
+                            {
+                                needUnlock = true;
+                                string token = FeatureAccessHelper.GenerateTokenFromFeatureId(feature, featureId);
+                                string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
+                                LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
+
+                                if (accessResult.Status is LimitedAccessFeatureStatus.Available || accessResult.Status is LimitedAccessFeatureStatus.AvailableWithoutToken)
+                                {
+                                    isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinCurrentAppAsync();
+                                }
+                            }
+                            else
+                            {
+                                isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinCurrentAppAsync();
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(MainWindow), nameof(OnPinToTaskbarExecuteRequested), 1, e);
+                        }
+
+                        if (needUnlock && (limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unavailable || limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unknown) && !isPinnedSuccessfully)
+                        {
+                            await global::Windows.System.Launcher.LaunchUriAsync(new("getstoreapppinner:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
+                                {
+                                    {"Type", nameof(SecondaryTile) },
+                                    { "DisplayName", displayName },
+                                    { "Tag", tag },
+                                    { "Position", "Taskbar" }
+                                });
+                        }
+                    }
+
+                    return ValueTuple.Create(needUnlock, limitedAccessFeatureStatus, isPinnedSuccessfully);
+                });
+
+                if (!RuntimeHelper.IsElevated)
+                {
+                    if (pinnedResult.needUnlock)
+                    {
+                        if (pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available || pinnedResult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.AvailableWithoutToken)
+                        {
+                            await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedResult.isPinnedSuccessfully));
+                        }
+                    }
+                    else
+                    {
+                        await ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Taskbar, pinnedResult.isPinnedSuccessfully));
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 打开网页浏览器
+        /// </summary>
+        private void OpenWebView()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await global::Windows.System.Launcher.LaunchUriAsync(new("getstoreappwebview:"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        #endregion 第六部分：数据操作与业务逻辑
     }
 }

@@ -52,7 +52,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool _isIncrease;
 
-        internal bool IsIncrease
+        private bool IsIncrease
         {
             get { return _isIncrease; }
 
@@ -68,7 +68,7 @@ namespace GetStoreApp.Views.Pages
 
         private AppSortRuleKind _selectedAppSortRuleKind;
 
-        internal AppSortRuleKind SelectedAppSortRuleKind
+        private AppSortRuleKind SelectedAppSortRuleKind
         {
             get { return _selectedAppSortRuleKind; }
 
@@ -84,7 +84,7 @@ namespace GetStoreApp.Views.Pages
 
         private UpgradableAppsResultKind _upgradableAppsResultKind;
 
-        internal UpgradableAppsResultKind UpgradableAppsResultKind
+        private UpgradableAppsResultKind UpgradableAppsResultKind
         {
             get { return _upgradableAppsResultKind; }
 
@@ -100,7 +100,7 @@ namespace GetStoreApp.Views.Pages
 
         private string _upgradableFailedContent;
 
-        internal string UpgradableFailedContent
+        private string UpgradableFailedContent
         {
             get { return _upgradableFailedContent; }
 
@@ -288,14 +288,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnApplicationExit()
         {
-            try
-            {
-                DismountWinGetEvent();
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetUpgradePage), nameof(OnApplicationExit), 1, e);
-            }
+            DismountWinGetEvent();
         }
 
         /// <summary>
@@ -371,8 +364,15 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void DismountWinGetEvent()
         {
-            GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-            WinGetPageInstance.UpgradeAppsPackageOperationEvent -= OnUpgradeAppsPackageOperationEvent;
+            try
+            {
+                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+                WinGetPageInstance.UpgradeAppsPackageOperationEvent -= OnUpgradeAppsPackageOperationEvent;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetUpgradePage), nameof(OnApplicationExit), 1, e);
+            }
         }
 
         /// <summary>
@@ -422,7 +422,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         if (findPackagesResult.Status is FindPackagesResultStatus.Ok)
                         {
-                            if (upgradableAppsList is not null || upgradableAppsList.Count is 0)
+                            if (upgradableAppsList is null || upgradableAppsList.Count is 0)
                             {
                                 UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
                                 UpgradableFailedContent = UpgradableAppsEmptyDescriptionString;
@@ -468,58 +468,56 @@ namespace GetStoreApp.Views.Pages
 
         private PackageCatalogReference GetPackageCatalogReference(PackageManager packageManager)
         {
-            if (packageManager is not null)
+            if (packageManager is null)
             {
-                PackageCatalogReference packageCatalogReference = null;
+                return default;
+            }
 
-                try
+            PackageCatalogReference packageCatalogReference = null;
+
+            try
+            {
+                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+
+                if (!Equals(winGetDataSourceName, default))
                 {
-                    KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-
-                    if (!Equals(winGetDataSourceName, default))
+                    // 使用内置源
+                    if (winGetDataSourceName.Value)
                     {
-                        // 使用内置源
-                        if (winGetDataSourceName.Value)
+                        foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalog in WinGetConfigService.PredefinedPackageCatalogList)
                         {
-                            foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalog in WinGetConfigService.PredefinedPackageCatalogList)
+                            if (string.Equals(winGetDataSourceName.Key, predefinedPackageCatalog.Key))
                             {
-                                if (string.Equals(winGetDataSourceName.Key, predefinedPackageCatalog.Key))
-                                {
-                                    packageCatalogReference = packageManager.GetPredefinedPackageCatalog(predefinedPackageCatalog.Value);
-                                    CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = WinGetFactoryHelper.CreateCreateCompositePackageCatalogOptions();
-                                    createCompositePackageCatalogOptions.CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs;
-                                    createCompositePackageCatalogOptions.Catalogs.Add(packageCatalogReference);
-                                    packageCatalogReference = packageManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
-                                    break;
-                                }
-                            }
-                        }
-                        // 使用自定义源
-                        else
-                        {
-                            packageCatalogReference = packageManager.GetPackageCatalogByName(winGetDataSourceName.Key);
-
-                            if (packageCatalogReference is not null)
-                            {
+                                packageCatalogReference = packageManager.GetPredefinedPackageCatalog(predefinedPackageCatalog.Value);
                                 CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = WinGetFactoryHelper.CreateCreateCompositePackageCatalogOptions();
                                 createCompositePackageCatalogOptions.CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs;
                                 createCompositePackageCatalogOptions.Catalogs.Add(packageCatalogReference);
                                 packageCatalogReference = packageManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
+                                break;
                             }
                         }
                     }
+                    // 使用自定义源
+                    else
+                    {
+                        packageCatalogReference = packageManager.GetPackageCatalogByName(winGetDataSourceName.Key);
 
-                    return packageCatalogReference;
+                        if (packageCatalogReference is not null)
+                        {
+                            CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = WinGetFactoryHelper.CreateCreateCompositePackageCatalogOptions();
+                            createCompositePackageCatalogOptions.CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs;
+                            createCompositePackageCatalogOptions.Catalogs.Add(packageCatalogReference);
+                            packageCatalogReference = packageManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
+                        }
+                    }
                 }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetUpgradePage), nameof(GetPackageCatalogReference), 1, e);
-                    return packageCatalogReference;
-                }
+
+                return packageCatalogReference;
             }
-            else
+            catch (Exception e)
             {
-                return default;
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetUpgradePage), nameof(GetPackageCatalogReference), 1, e);
+                return packageCatalogReference;
             }
         }
 

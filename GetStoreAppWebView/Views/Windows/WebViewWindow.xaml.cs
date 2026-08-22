@@ -230,14 +230,14 @@ namespace GetStoreAppWebView.Views.Windows
         internal WebViewWindow()
         {
             InitializeComponent();
-            InitializeWindowData();
+            InitializeWindowData(AppWindow);
             MountWindowEvent();
-            MountWindowWndProc();
+            MountWindowWndProc(AppWindow.Id);
             SetWindowTheme();
             SetSystemBackdrop();
             SetWindowSize();
-            SetWindowPosition();
-            SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
+            SetWindowPosition(AppWindow);
+            SetClassicMenuTheme(AppWindow.TitleBar, (Content as FrameworkElement).ActualTheme);
             InitializeWebView();
         }
 
@@ -312,7 +312,8 @@ namespace GetStoreAppWebView.Views.Windows
         {
             WebViewBrowser?.Close();
             DismountWindowEvent();
-            DismountWindowWndProc();
+            DismountWindowWndProc(sender.Id);
+            (Application.Current as WebViewApp).Dispose();
         }
 
         /// <summary>
@@ -332,10 +333,7 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void OnSettingChanged(ContentIslandEnvironment sender, ContentEnvironmentSettingChangedEventArgs args)
         {
-            DispatcherQueue.TryEnqueue(() =>
-            {
-                SetWindowTheme();
-            });
+            DispatcherQueue.TryEnqueue(SetWindowTheme);
         }
 
         /// <summary>
@@ -360,7 +358,7 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void OnRestoreClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_RESTORE, 0);
+            SendWindowMessage(AppWindow.Id, WindowMessageKind.Restore);
         }
 
         /// <summary>
@@ -372,7 +370,7 @@ namespace GetStoreAppWebView.Views.Windows
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
-                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MOVE, 0);
+                SendWindowMessage(AppWindow.Id, WindowMessageKind.Move);
             }
         }
 
@@ -385,7 +383,7 @@ namespace GetStoreAppWebView.Views.Windows
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is MenuFlyout menuFlyout)
             {
                 menuFlyout.Hide();
-                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_SIZE, 0);
+                SendWindowMessage(AppWindow.Id, WindowMessageKind.Size);
             }
         }
 
@@ -394,7 +392,7 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void OnMinimizeClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MINIMIZE, 0);
+            SendWindowMessage(AppWindow.Id, WindowMessageKind.Minimize);
         }
 
         /// <summary>
@@ -402,7 +400,7 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void OnMaximizeClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MAXIMIZE, 0);
+            SendWindowMessage(AppWindow.Id, WindowMessageKind.Maximize);
         }
 
         /// <summary>
@@ -410,7 +408,7 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_CLOSE, 0);
+            SendWindowMessage(AppWindow.Id, WindowMessageKind.Close);
         }
 
         /// <summary>
@@ -418,8 +416,8 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void OnActualThemeChanged(FrameworkElement sender, object args)
         {
-            SetTitleBarTheme(sender.ActualTheme);
-            SetClassicMenuTheme(sender.ActualTheme);
+            SetTitleBarTheme(AppWindow.TitleBar, sender.ActualTheme);
+            SetClassicMenuTheme(AppWindow.TitleBar, sender.ActualTheme);
         }
 
         /// <summary>
@@ -429,7 +427,7 @@ namespace GetStoreAppWebView.Views.Windows
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
             // 设置标题栏主题
-            SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
+            SetTitleBarTheme(AppWindow.TitleBar, (Content as FrameworkElement).ActualTheme);
         }
 
         /// <summary>
@@ -618,19 +616,61 @@ namespace GetStoreAppWebView.Views.Windows
         /// 初始化窗口数据
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
-        private void InitializeWindowData()
+        private void InitializeWindowData(AppWindow appWindow)
         {
             WebTitle = WebTitleString;
             WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
             overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
             ExtendsContentIntoTitleBar = true;
-            AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
-            AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
-            AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
+            appWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
+            appWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
+            appWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
             IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
-            contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
+            contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(appWindow.Id);
             contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
             inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
+        }
+
+        /// <summary>
+        /// 发送窗口消息类型
+        /// </summary>
+        private void SendWindowMessage(Microsoft.UI.WindowId windowId, WindowMessageKind windowMessageKind)
+        {
+            switch (windowMessageKind)
+            {
+                case WindowMessageKind.Move:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MOVE, 0);
+                        break;
+                    }
+                case WindowMessageKind.Size:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_SIZE, 0);
+                        break;
+                    }
+                case WindowMessageKind.Minimize:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MINIMIZE, 0);
+                        break;
+                    }
+                case WindowMessageKind.Maximize:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_MAXIMIZE, 0);
+                        break;
+                    }
+                case WindowMessageKind.Restore:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_RESTORE, 0);
+                        break;
+                    }
+                case WindowMessageKind.Close:
+                    {
+                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(windowId), WindowMessage.WM_SYSCOMMAND, (nuint)SYSTEMCOMMAND.SC_CLOSE, 0);
+                        break;
+                    }
+                default:
+                    break;
+            }
         }
 
         /// <summary>
@@ -658,26 +698,24 @@ namespace GetStoreAppWebView.Views.Windows
         /// <summary>
         /// 挂载窗口进程
         /// </summary>
-        private void MountWindowWndProc()
+        private void MountWindowWndProc(Microsoft.UI.WindowId windowId)
         {
-            // 为应用主窗口添加窗口过程
             webViewWindowSubClassProc = new(WebViewWindowSubClassProc);
-            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), webViewWindowSubClassProc, 0, nint.Zero);
+            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(windowId), webViewWindowSubClassProc, 0, nint.Zero);
         }
 
         /// <summary>
         /// 卸载窗口进程
         /// </summary>
-        private void DismountWindowWndProc()
+        private void DismountWindowWndProc(Microsoft.UI.WindowId windowId)
         {
-            Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), webViewWindowSubClassProc, 0);
-            (Application.Current as WebViewApp).Dispose();
+            Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(windowId), webViewWindowSubClassProc, 0);
         }
 
         /// <summary>
         /// 设置应用显示的主题
         /// </summary>
-        internal void SetWindowTheme()
+        private void SetWindowTheme()
         {
             WindowTheme = string.Equals(ThemeService.AppTheme, ThemeService.ThemeList[0]) ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark : Enum.TryParse(ThemeService.AppTheme, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
         }
@@ -730,47 +768,48 @@ namespace GetStoreAppWebView.Views.Windows
         /// <summary>
         /// 设置窗口大小和位置
         /// </summary>
-        private void SetWindowPosition()
+        private void SetWindowPosition(AppWindow appWindow)
         {
             // 默认直接显示到窗口中间
-            if (DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
+            if (DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
             {
                 RectInt32 workArea = displayArea.WorkArea;
-                AppWindow.Move(new((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
+                appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
             }
         }
 
         /// <summary>
         /// 设置标题栏按钮的主题色
         /// </summary>
-        private void SetTitleBarTheme(ElementTheme theme)
+        private void SetTitleBarTheme(AppWindowTitleBar appWindowTitleBar, ElementTheme theme)
         {
-            AppWindowTitleBar titleBar = AppWindow.TitleBar;
-
-            titleBar.BackgroundColor = Colors.Transparent;
-            titleBar.ForegroundColor = Colors.Transparent;
-            titleBar.InactiveBackgroundColor = Colors.Transparent;
-            titleBar.InactiveForegroundColor = Colors.Transparent;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-
-            if (theme is ElementTheme.Light)
+            if (appWindowTitleBar is not null)
             {
-                titleBar.ButtonForegroundColor = Color.FromArgb(255, 23, 23, 23);
-                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 0, 0, 0);
-                titleBar.ButtonHoverForegroundColor = Colors.Black;
-                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 0, 0, 0);
-                titleBar.ButtonPressedForegroundColor = Colors.Black;
-                titleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 153, 153, 153);
-            }
-            else
-            {
-                titleBar.ButtonForegroundColor = Color.FromArgb(255, 242, 242, 242);
-                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 255, 255, 255);
-                titleBar.ButtonHoverForegroundColor = Colors.White;
-                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 255, 255, 255);
-                titleBar.ButtonPressedForegroundColor = Colors.White;
-                titleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 102, 102, 102);
+                appWindowTitleBar.BackgroundColor = Colors.Transparent;
+                appWindowTitleBar.ForegroundColor = Colors.Transparent;
+                appWindowTitleBar.InactiveBackgroundColor = Colors.Transparent;
+                appWindowTitleBar.InactiveForegroundColor = Colors.Transparent;
+                appWindowTitleBar.ButtonBackgroundColor = Colors.Transparent;
+                appWindowTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+
+                if (theme is ElementTheme.Light)
+                {
+                    appWindowTitleBar.ButtonForegroundColor = Color.FromArgb(255, 23, 23, 23);
+                    appWindowTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 0, 0, 0);
+                    appWindowTitleBar.ButtonHoverForegroundColor = Colors.Black;
+                    appWindowTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 0, 0, 0);
+                    appWindowTitleBar.ButtonPressedForegroundColor = Colors.Black;
+                    appWindowTitleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 153, 153, 153);
+                }
+                else
+                {
+                    appWindowTitleBar.ButtonForegroundColor = Color.FromArgb(255, 242, 242, 242);
+                    appWindowTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 255, 255, 255);
+                    appWindowTitleBar.ButtonHoverForegroundColor = Colors.White;
+                    appWindowTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 255, 255, 255);
+                    appWindowTitleBar.ButtonPressedForegroundColor = Colors.White;
+                    appWindowTitleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 102, 102, 102);
+                }
             }
         }
 
@@ -830,22 +869,23 @@ namespace GetStoreAppWebView.Views.Windows
         /// <summary>
         /// 设置传统菜单标题栏按钮的主题色
         /// </summary>
-        private void SetClassicMenuTheme(ElementTheme theme)
+        private void SetClassicMenuTheme(AppWindowTitleBar appWindowTitleBar, ElementTheme theme)
         {
-            AppWindowTitleBar titleBar = AppWindow.TitleBar;
-
-            if (theme is ElementTheme.Light)
+            if (appWindowTitleBar is not null)
             {
-                titleBar.PreferredTheme = TitleBarTheme.Light;
-                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
-            }
-            else
-            {
-                titleBar.PreferredTheme = TitleBarTheme.Dark;
-                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
-            }
+                if (theme is ElementTheme.Light)
+                {
+                    appWindowTitleBar.PreferredTheme = TitleBarTheme.Light;
+                    UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
+                }
+                else
+                {
+                    appWindowTitleBar.PreferredTheme = TitleBarTheme.Dark;
+                    UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
+                }
 
-            UxthemeLibrary.FlushMenuThemes();
+                UxthemeLibrary.FlushMenuThemes();
+            }
         }
 
         /// <summary>

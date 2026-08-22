@@ -453,7 +453,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         if (findPackagesResult.Status is FindPackagesResultStatus.Ok)
                         {
-                            if (searchAppsList is not null || searchAppsList.Count is 0)
+                            if (searchAppsList is null || searchAppsList.Count is 0)
                             {
                                 SearchAppsResultKind = SearchAppsResultKind.Failed;
                                 SearchFailedContent = SearchAppsEmptyDescriptionString;
@@ -498,46 +498,44 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private PackageCatalogReference GetPackageCatalogReference(PackageManager packageManager)
         {
-            if (packageManager is not null)
-            {
-                PackageCatalogReference packageCatalogReference = null;
-
-                try
-                {
-                    KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-
-                    if (!Equals(winGetDataSourceName, default))
-                    {
-                        // 使用内置源
-                        if (winGetDataSourceName.Value)
-                        {
-                            foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalog in WinGetConfigService.PredefinedPackageCatalogList)
-                            {
-                                if (string.Equals(winGetDataSourceName.Key, predefinedPackageCatalog.Key))
-                                {
-                                    packageCatalogReference = packageManager.GetPredefinedPackageCatalog(predefinedPackageCatalog.Value);
-                                    break;
-                                }
-                            }
-                        }
-                        // 使用自定义源
-                        else
-                        {
-                            packageCatalogReference = packageManager.GetPackageCatalogByName(winGetDataSourceName.Key);
-                        }
-                    }
-
-                    return packageCatalogReference;
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetSearchPage), nameof(GetPackageCatalogReference), 1, e);
-                    return packageCatalogReference;
-                }
-            }
-            else
+            if (packageManager is null)
             {
                 return default;
+            }
+
+            PackageCatalogReference packageCatalogReference = null;
+
+            try
+            {
+                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+
+                if (!Equals(winGetDataSourceName, default))
+                {
+                    // 使用内置源
+                    if (winGetDataSourceName.Value)
+                    {
+                        foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalog in WinGetConfigService.PredefinedPackageCatalogList)
+                        {
+                            if (string.Equals(winGetDataSourceName.Key, predefinedPackageCatalog.Key))
+                            {
+                                packageCatalogReference = packageManager.GetPredefinedPackageCatalog(predefinedPackageCatalog.Value);
+                                break;
+                            }
+                        }
+                    }
+                    // 使用自定义源
+                    else
+                    {
+                        packageCatalogReference = packageManager.GetPackageCatalogByName(winGetDataSourceName.Key);
+                    }
+                }
+
+                return packageCatalogReference;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetSearchPage), nameof(GetPackageCatalogReference), 1, e);
+                return packageCatalogReference;
             }
         }
 

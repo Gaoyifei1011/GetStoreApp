@@ -19,59 +19,22 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     internal sealed partial class HomePage : Page
     {
+        private readonly string AppManagerDescriptionString = ResourceService.GetLocalized("Home/AppManagerDescription");
+        private readonly string AppManagerString = ResourceService.GetLocalized("Home/AppManager");
+        private readonly string AppUpdateDescriptionString = ResourceService.GetLocalized("Home/AppUpdateDescription");
+        private readonly string AppUpdateString = ResourceService.GetLocalized("Home/AppUpdate");
+        private readonly string DownloadDescriptionString = ResourceService.GetLocalized("Home/DownloadDescription");
+        private readonly string DownloadString = ResourceService.GetLocalized("Home/Download");
+        private readonly string StoreDescriptionString = ResourceService.GetLocalized("Home/StoreDescription");
+        private readonly string StoreString = ResourceService.GetLocalized("Home/Store");
+        private readonly string WinGetDescriptionString = ResourceService.GetLocalized("Home/WinGetDescription");
+        private readonly string WinGetString = ResourceService.GetLocalized("Home/WinGet");
+        private readonly string WebDescriptionString = ResourceService.GetLocalized("Home/WebDescription");
+        private readonly string WebString = ResourceService.GetLocalized("Home/Web");
+
         #region 第一部分：属性、集合与事件
 
-        private List<ControlItemModel> HomeList { get; } =
-        [
-            new()
-            {
-                Title = ResourceService.GetLocalized("Home/Store"),
-                Description = ResourceService.GetLocalized("Home/StoreDescription"),
-                ImagePath = "ms-appx:///Assets/Icon/Control/Store.png",
-                Tag = "Store",
-                NavigationPage = typeof(StorePage)
-            },
-            new()
-            {
-                Title = ResourceService.GetLocalized("Home/AppUpdate"),
-                Description = ResourceService.GetLocalized("Home/AppUpdateDescription"),
-                ImagePath = "ms-appx:///Assets/Icon/Control/AppUpdate.png",
-                Tag = "AppUpdate",
-                NavigationPage = typeof(AppUpdatePage)
-            },
-            new()
-            {
-                Title = ResourceService.GetLocalized("Home/WinGet"),
-                Description = ResourceService.GetLocalized("Home/WinGetDescription"),
-                ImagePath = "ms-appx:///Assets/Icon/Control/WinGet.png",
-                Tag = "WinGet",
-                NavigationPage = typeof(WinGetPage)
-            },
-            new()
-            {
-                Title = ResourceService.GetLocalized("Home/AppManager"),
-                Description = ResourceService.GetLocalized("Home/AppManagerDescription"),
-                ImagePath = "ms-appx:///Assets/Icon/Control/AppManager.png",
-                Tag = "AppManager",
-                NavigationPage = typeof(AppManagerPage)
-            },
-            new()
-            {
-                Title = ResourceService.GetLocalized("Home/Download"),
-                Description = ResourceService.GetLocalized("Home/DownloadDescription"),
-                ImagePath = "ms-appx:///Assets/Icon/Control/Download.png",
-                Tag = "Download",
-                NavigationPage = typeof(DownloadPage)
-            },
-            new()
-            {
-                Title = ResourceService.GetLocalized("Home/Web"),
-                Description = ResourceService.GetLocalized("Home/WebDescription"),
-                ImagePath = "ms-appx:///Assets/Icon/Control/Web.png",
-                Tag = "Web",
-                NavigationPage = null
-            },
-        ];
+        private List<ControlItemModel> HomeList { get; } = [];
 
         #endregion 第一部分：属性、集合与事件
 
@@ -80,6 +43,7 @@ namespace GetStoreApp.Views.Pages
         internal HomePage()
         {
             InitializeComponent();
+            InitializeData();
         }
 
         #endregion 第二部分：构造函数
@@ -107,6 +71,61 @@ namespace GetStoreApp.Views.Pages
         #endregion 第三部分：命令调用处理
 
         #region 第四部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private void InitializeData()
+        {
+            HomeList.Add(new()
+            {
+                Title = StoreString,
+                Description = StoreDescriptionString,
+                ImagePath = "ms-appx:///Assets/Icon/Control/Store.png",
+                Tag = "Store",
+                NavigationPage = typeof(StorePage)
+            });
+            HomeList.Add(new()
+            {
+                Title = AppUpdateString,
+                Description = AppUpdateDescriptionString,
+                ImagePath = "ms-appx:///Assets/Icon/Control/AppUpdate.png",
+                Tag = "AppUpdate",
+                NavigationPage = typeof(AppUpdatePage)
+            });
+            HomeList.Add(new()
+            {
+                Title = WinGetString,
+                Description = WinGetDescriptionString,
+                ImagePath = "ms-appx:///Assets/Icon/Control/WinGet.png",
+                Tag = "WinGet",
+                NavigationPage = typeof(WinGetPage)
+            });
+            HomeList.Add(new()
+            {
+                Title = AppManagerString,
+                Description = AppManagerDescriptionString,
+                ImagePath = "ms-appx:///Assets/Icon/Control/AppManager.png",
+                Tag = "AppManager",
+                NavigationPage = typeof(AppManagerPage)
+            });
+            HomeList.Add(new()
+            {
+                Title = DownloadString,
+                Description = DownloadDescriptionString,
+                ImagePath = "ms-appx:///Assets/Icon/Control/Download.png",
+                Tag = "Download",
+                NavigationPage = typeof(DownloadPage)
+            });
+            HomeList.Add(new()
+            {
+                Title = WebString,
+                Description = WebDescriptionString,
+                ImagePath = "ms-appx:///Assets/Icon/Control/Web.png",
+                Tag = "Web",
+                NavigationPage = null
+            });
+        }
 
         /// <summary>
         /// 启动网页

@@ -612,7 +612,7 @@ namespace GetStoreApp.Helpers.Store
                 }
             }
 
-            return null;
+            return default;
         }
     }
 }

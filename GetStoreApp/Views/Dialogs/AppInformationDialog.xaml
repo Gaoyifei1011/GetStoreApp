@@ -10,6 +10,7 @@
     xmlns:window="using:GetStoreApp.Views.Windows"
     Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/AppInformation')}"
     CloseButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Close')}"
+    Closing="{x:Bind OnClosing}"
     DefaultButton="Primary"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
     IsPrimaryButtonEnabled="{x:Bind IsLoadCompleted, Mode=OneWay}"

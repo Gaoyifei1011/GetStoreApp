@@ -180,30 +180,28 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async Task<string> GetFileInformationCopyStringAsync(CompletedModel completed)
         {
-            if (completed is not null)
-            {
-                return await Task.Run(async () =>
-                {
-                    try
-                    {
-                        List<string> copyFileInformationCopyStringList = [];
-                        copyFileInformationCopyStringList.Add(FileNameString + completed.FileName);
-                        copyFileInformationCopyStringList.Add(FilePathString + completed.FilePath);
-                        copyFileInformationCopyStringList.Add(FileSizeString + VolumeSizeHelper.ConvertVolumeSizeToString(completed.TotalSize));
-                        copyFileInformationCopyStringList.Add(FileSHA256String + await IOHelper.GetFileSHA256Async(completed.FilePath));
-                        return string.Join(Environment.NewLine, copyFileInformationCopyStringList);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(FileInformationDialog), nameof(GetFileInformationCopyStringAsync), 1, e);
-                        return null;
-                    }
-                });
-            }
-            else
+            if (completed is null)
             {
                 return default;
             }
+
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    List<string> copyFileInformationCopyStringList = [];
+                    copyFileInformationCopyStringList.Add(FileNameString + completed.FileName);
+                    copyFileInformationCopyStringList.Add(FilePathString + completed.FilePath);
+                    copyFileInformationCopyStringList.Add(FileSizeString + VolumeSizeHelper.ConvertVolumeSizeToString(completed.TotalSize));
+                    copyFileInformationCopyStringList.Add(FileSHA256String + await IOHelper.GetFileSHA256Async(completed.FilePath));
+                    return string.Join(Environment.NewLine, copyFileInformationCopyStringList);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(FileInformationDialog), nameof(GetFileInformationCopyStringAsync), 1, e);
+                    return default;
+                }
+            });
         }
 
         #endregion 第五部分：数据操作与业务逻辑

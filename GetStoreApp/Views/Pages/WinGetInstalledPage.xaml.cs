@@ -426,14 +426,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnApplicationExit()
         {
-            try
-            {
-                DismountWinGetEvent();
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetInstalledPage), nameof(OnApplicationExit), 1, e);
-            }
+            DismountWinGetEvent();
         }
 
         /// <summary>
@@ -610,8 +603,15 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void DismountWinGetEvent()
         {
-            GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-            WinGetPageInstance.InstalledAppsPackageOperationEvent -= OnInstalledAppsPackageOperationEvent;
+            try
+            {
+                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+                WinGetPageInstance.InstalledAppsPackageOperationEvent -= OnInstalledAppsPackageOperationEvent;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetInstalledPage), nameof(DismountWinGetEvent), 1, e);
+            }
         }
 
         /// <summary>

@@ -35,7 +35,7 @@ namespace GetStoreApp.Helpers.WinGet
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetFactoryHelper), nameof(CreatePackageManager), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetFactoryHelper), nameof(IsExisted), 1, e);
                 return false;
             }
         }
@@ -57,13 +57,13 @@ namespace GetStoreApp.Helpers.WinGet
                 }
                 else
                 {
-                    return null;
+                    return default;
                 }
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetFactoryHelper), nameof(CreatePackageManager), 1, e);
-                return null;
+                return default;
             }
         }
 
@@ -84,13 +84,13 @@ namespace GetStoreApp.Helpers.WinGet
                 }
                 else
                 {
-                    return null;
+                    return default;
                 }
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetFactoryHelper), nameof(CreateFindPackagesOptions), 1, e);
-                return null;
+                return default;
             }
         }
 
@@ -111,13 +111,13 @@ namespace GetStoreApp.Helpers.WinGet
                 }
                 else
                 {
-                    return null;
+                    return default;
                 }
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetFactoryHelper), nameof(CreateCreateCompositePackageCatalogOptions), 1, e);
-                return null;
+                return default;
             }
         }
 
@@ -138,13 +138,13 @@ namespace GetStoreApp.Helpers.WinGet
                 }
                 else
                 {
-                    return null;
+                    return default;
                 }
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetFactoryHelper), nameof(CreateInstallOptions), 1, e);
-                return null;
+                return default;
             }
         }
 
@@ -165,13 +165,13 @@ namespace GetStoreApp.Helpers.WinGet
                 }
                 else
                 {
-                    return null;
+                    return default;
                 }
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetFactoryHelper), nameof(CreateUninstallOptions), 1, e);
-                return null;
+                return default;
             }
         }
 
@@ -192,13 +192,13 @@ namespace GetStoreApp.Helpers.WinGet
                 }
                 else
                 {
-                    return null;
+                    return default;
                 }
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetFactoryHelper), nameof(CreatePackageMatchFilter), 1, e);
-                return null;
+                return default;
             }
         }
 
@@ -219,13 +219,13 @@ namespace GetStoreApp.Helpers.WinGet
                 }
                 else
                 {
-                    return null;
+                    return default;
                 }
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetFactoryHelper), nameof(CreateDownloadOptions), 1, e);
-                return null;
+                return default;
             }
         }
 
@@ -246,13 +246,13 @@ namespace GetStoreApp.Helpers.WinGet
                 }
                 else
                 {
-                    return null;
+                    return default;
                 }
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetFactoryHelper), nameof(CreateRepairOptions), 1, e);
-                return null;
+                return default;
             }
         }
 
@@ -273,13 +273,13 @@ namespace GetStoreApp.Helpers.WinGet
                 }
                 else
                 {
-                    return null;
+                    return default;
                 }
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetFactoryHelper), nameof(CreateAddPackageCatalogOptions), 1, e);
-                return null;
+                return default;
             }
         }
 
@@ -300,13 +300,13 @@ namespace GetStoreApp.Helpers.WinGet
                 }
                 else
                 {
-                    return null;
+                    return default;
                 }
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetFactoryHelper), nameof(CreateRemovePackageCatalogOptions), 1, e);
-                return null;
+                return default;
             }
         }
     }

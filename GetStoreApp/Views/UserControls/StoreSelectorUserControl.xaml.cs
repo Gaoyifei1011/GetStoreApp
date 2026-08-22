@@ -31,6 +31,8 @@ namespace GetStoreApp.Views.UserControls
     /// </summary>
     internal partial class StoreSelectorUserControl : UserControl, INotifyPropertyChanged
     {
+        #region 第一部分：常量、资源与状态字段
+
         private readonly string ExactSearchString = ResourceService.GetLocalized("StoreSelector/ExactSearch");
         private readonly string FastString = ResourceService.GetLocalized("StoreSelector/Fast");
         private readonly string ManifestSearchString = ResourceService.GetLocalized("StoreSelector/ManifestSearch");
@@ -45,9 +47,13 @@ namespace GetStoreApp.Views.UserControls
         private string sampleLink;
         private StorePage storePage;
 
+        #endregion 第一部分：常量、资源与状态字段
+
+        #region 第二部分：属性、集合与事件
+
         private SelectorBarItem _selectedItem;
 
-        internal SelectorBarItem SelectedItem
+        private SelectorBarItem SelectedItem
         {
             get { return _selectedItem; }
 
@@ -63,7 +69,7 @@ namespace GetStoreApp.Views.UserControls
 
         private TypeModel _selectedType;
 
-        internal TypeModel SelectedType
+        private TypeModel SelectedType
         {
             get { return _selectedType; }
 
@@ -79,7 +85,7 @@ namespace GetStoreApp.Views.UserControls
 
         private ChannelModel _selectedChannel;
 
-        internal ChannelModel SelectedChannel
+        private ChannelModel SelectedChannel
         {
             get { return _selectedChannel; }
 
@@ -93,9 +99,9 @@ namespace GetStoreApp.Views.UserControls
             }
         }
 
-        private string _linkPlaceHolderText = string.Empty;
+        private string _linkPlaceHolderText;
 
-        internal string LinkPlaceHolderText
+        private string LinkPlaceHolderText
         {
             get { return _linkPlaceHolderText; }
 
@@ -109,7 +115,7 @@ namespace GetStoreApp.Views.UserControls
             }
         }
 
-        private string _queryLinksText = string.Empty;
+        private string _queryLinksText;
 
         internal string QueryLinksText
         {
@@ -127,7 +133,7 @@ namespace GetStoreApp.Views.UserControls
 
         private bool _isQueryingLinks;
 
-        internal bool IsQueryingLinks
+        private bool IsQueryingLinks
         {
             get { return _isQueryingLinks; }
 
@@ -143,7 +149,7 @@ namespace GetStoreApp.Views.UserControls
 
         private bool _isQueryLinksResultVisible;
 
-        internal bool IsQueryLinksResultVisible
+        private bool IsQueryLinksResultVisible
         {
             get { return _isQueryLinksResultVisible; }
 
@@ -159,7 +165,7 @@ namespace GetStoreApp.Views.UserControls
 
         private ComboBoxItemModel _selectedSearchType;
 
-        internal ComboBoxItemModel SelectedSearchType
+        private ComboBoxItemModel SelectedSearchType
         {
             get { return _selectedSearchType; }
 
@@ -175,7 +181,7 @@ namespace GetStoreApp.Views.UserControls
 
         private string _searchAppsText;
 
-        internal string SearchAppsText
+        private string SearchAppsText
         {
             get { return _searchAppsText; }
 
@@ -191,7 +197,7 @@ namespace GetStoreApp.Views.UserControls
 
         private bool _isSearchingApps;
 
-        internal bool IsSearchingApps
+        private bool IsSearchingApps
         {
             get { return _isSearchingApps; }
 
@@ -207,7 +213,7 @@ namespace GetStoreApp.Views.UserControls
 
         private bool _isSearchAppsResultVisible;
 
-        internal bool IsSearchAppsResultVisible
+        private bool IsSearchAppsResultVisible
         {
             get { return _isSearchAppsResultVisible; }
 
@@ -223,7 +229,7 @@ namespace GetStoreApp.Views.UserControls
 
         private StoreInfoResultKind _storeInfoResultKind;
 
-        internal StoreInfoResultKind StoreInfoResultKind
+        private StoreInfoResultKind StoreInfoResultKind
         {
             get { return _storeInfoResultKind; }
 
@@ -239,9 +245,9 @@ namespace GetStoreApp.Views.UserControls
 
         private List<string> SampleLinkList { get; } = ["https://apps.microsoft.com/store/detail/9WZDNCRFJBMP", "9WZDNCRFJBMP",];
 
-        internal List<TypeModel> TypeList { get; } = [];
+        private List<TypeModel> TypeList { get; } = [];
 
-        internal List<ChannelModel> ChannelList { get; } = [];
+        private List<ChannelModel> ChannelList { get; } = [];
 
         private List<ComboBoxItemModel> SearchTypeList { get; } = [];
 
@@ -251,61 +257,28 @@ namespace GetStoreApp.Views.UserControls
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion 第二部分：属性、集合与事件
+
+        #region 第三部分：构造函数
+
         internal StoreSelectorUserControl()
         {
             InitializeComponent();
-
-            TypeList.Add(new()
-            {
-                DisplayName = URLString,
-                InternalName = "url",
-                ShortName = "url"
-            });
-            TypeList.Add(new()
-            {
-                DisplayName = ProductIDString,
-                InternalName = "ProductId",
-                ShortName = "pid"
-            });
-
-            ChannelList.Add(new()
-            {
-                DisplayName = FastString,
-                InternalName = "WIF",
-                ShortName = "wif"
-            });
-            ChannelList.Add(new()
-            {
-                DisplayName = SlowString,
-                InternalName = "WIS",
-                ShortName = "wis"
-            });
-            ChannelList.Add(new()
-            {
-                DisplayName = RPString,
-                InternalName = "RP",
-                ShortName = "rp"
-            });
-            ChannelList.Add(new()
-            {
-                DisplayName = RetailString,
-                InternalName = "Retail",
-                ShortName = "rt"
-            });
-
-            SearchTypeList.Add(new() { SelectedValue = "ExactSearch", DisplayMember = ExactSearchString });
-            SearchTypeList.Add(new() { SelectedValue = "ManifestSearch", DisplayMember = ManifestSearchString });
-
+            InitializeData();
             SelectedType = TypeList[0];
             SelectedChannel = ChannelList[3];
+            LinkPlaceHolderText = string.Empty;
             QueryLinksText = string.Empty;
+            SearchAppsText = string.Empty;
             sampleLink = SampleLinkList[0];
             LinkPlaceHolderText = SampleTitleString + sampleLink;
             SelectedSearchType = SearchTypeList[0];
             SelectedItem = StoreSelectorBar.Items[0];
         }
 
-        #region 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第三部分：构造函数
+
+        #region 第四部分：命令调用处理
 
         /// <summary>
         /// 复制历史记录
@@ -314,13 +287,12 @@ namespace GetStoreApp.Views.UserControls
         {
             if (args.Parameter is HistoryModel history)
             {
-                string copyHistory = await Task.Run(() =>
+                string copyHistory = await GetCopyHistoryStringAsync(history.HistoryAppName, history.HistoryTypeName, history.HistoryChannelName, history.HistoryLink);
+                if (!string.IsNullOrEmpty(copyHistory))
                 {
-                    return string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n", history.HistoryAppName, history.HistoryTypeName, history.HistoryChannelName, history.HistoryLink);
-                });
-
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyHistory);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyHistory);
+                    await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                }
             }
         }
 
@@ -358,9 +330,9 @@ namespace GetStoreApp.Views.UserControls
             }
         }
 
-        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第四部分：命令调用处理
 
-        #region 第二部分：商店选择器——挂载的事件
+        #region 第五部分：挂载事件处理
 
         /// <summary>
         /// 点击选择器栏选中项发生变化时发生的事件
@@ -378,17 +350,7 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private void OnLanguageAndRegionClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new("ms-settings:regionformatting"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
+            OpenLanguageAndRegion();
         }
 
         /// <summary>
@@ -414,10 +376,6 @@ namespace GetStoreApp.Views.UserControls
         {
             storePage.ShowUseInstruction();
         }
-
-        #endregion 第二部分：商店选择器——挂载的事件
-
-        #region 第三部分：查询链接控件——挂载的事件
 
         /// <summary>
         /// 清空查询链接输入的内容
@@ -548,10 +506,6 @@ namespace GetStoreApp.Views.UserControls
             }
         }
 
-        #endregion 第三部分：查询链接控件——挂载的事件
-
-        #region 第四部分：搜索应用控件——挂载的事件
-
         /// <summary>
         /// 选择搜索应用方式
         /// </summary>
@@ -658,7 +612,90 @@ namespace GetStoreApp.Views.UserControls
             await SearchAppsAsync();
         }
 
-        #endregion 第四部分：搜索应用控件——挂载的事件
+        #endregion 第五部分：挂载事件处理
+
+        #region 第六部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private void InitializeData()
+        {
+            TypeList.Add(new()
+            {
+                DisplayName = URLString,
+                InternalName = "url",
+                ShortName = "url"
+            });
+            TypeList.Add(new()
+            {
+                DisplayName = ProductIDString,
+                InternalName = "ProductId",
+                ShortName = "pid"
+            });
+
+            ChannelList.Add(new()
+            {
+                DisplayName = FastString,
+                InternalName = "WIF",
+                ShortName = "wif"
+            });
+            ChannelList.Add(new()
+            {
+                DisplayName = SlowString,
+                InternalName = "WIS",
+                ShortName = "wis"
+            });
+            ChannelList.Add(new()
+            {
+                DisplayName = RPString,
+                InternalName = "RP",
+                ShortName = "rp"
+            });
+            ChannelList.Add(new()
+            {
+                DisplayName = RetailString,
+                InternalName = "Retail",
+                ShortName = "rt"
+            });
+
+            SearchTypeList.Add(new() { SelectedValue = "ExactSearch", DisplayMember = ExactSearchString });
+            SearchTypeList.Add(new() { SelectedValue = "ManifestSearch", DisplayMember = ManifestSearchString });
+        }
+
+        /// <summary>
+        /// 获取复制历史记录字符串
+        /// </summary>
+        private async Task<string> GetCopyHistoryStringAsync(string historyAppName, string historyTypeName, string historyChannelName, string historyLink)
+        {
+            if (string.IsNullOrEmpty(historyAppName) || string.IsNullOrEmpty(historyTypeName) || string.IsNullOrEmpty(historyChannelName) || string.IsNullOrEmpty(historyLink))
+            {
+                return default;
+            }
+
+            return await Task.Run(() =>
+            {
+                return string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n", historyAppName, historyTypeName, historyChannelName, historyLink);
+            });
+        }
+
+        /// <summary>
+        /// 打开设置中的语言和区域
+        /// </summary>
+        private void OpenLanguageAndRegion()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new("ms-settings:regionformatting"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
 
         /// <summary>
         /// 初始化商店选择用户控件
@@ -716,9 +753,9 @@ namespace GetStoreApp.Views.UserControls
         }
 
         /// <summary>
-        /// 获取链接
+        /// 查询链接
         /// </summary>
-        internal async Task QueryLinksAsync()
+        private async Task QueryLinksAsync()
         {
             if (!IsQueryingLinks || !IsSearchingApps)
             {
@@ -740,80 +777,7 @@ namespace GetStoreApp.Views.UserControls
                 // 商店接口查询方式
                 if (string.Equals(QueryLinksModeService.QueryLinksMode, QueryLinksModeService.QueryLinksModeList[0]))
                 {
-                    (bool requestResult, bool isPackagedApp, AppInfoModel appInfoItem, List<QueryLinksResultModel> queryLinksResultList) = await Task.Run(async () =>
-                    {
-                        (bool requestResult, bool isPackagedApp, AppInfoModel appInfoItem, List<QueryLinksResultModel> queryLinksResultList) queryLinksResult = ValueTuple.Create<bool, bool, AppInfoModel, List<QueryLinksResultModel>>(false, false, null, null);
-
-                        // 解析链接对应的产品 ID
-                        string productId = Equals(SelectedType, TypeList[0]) ? QueryLinksHelper.ParseRequestContent(QueryLinksText) : QueryLinksText;
-                        string cookie = await QueryLinksHelper.GetCookieAsync();
-
-                        // 获取应用信息
-                        (bool requestResult, AppInfoModel appInfo) appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
-                        queryLinksResult.requestResult = appInformationResult.requestResult;
-                        queryLinksResult.appInfoItem = appInformationResult.appInfo;
-
-                        if (appInformationResult.requestResult)
-                        {
-                            List<QueryLinksResultModel> queryLinksResultList = [];
-
-                            // 解析非商店应用数据
-                            if (string.IsNullOrEmpty(appInformationResult.appInfo.CategoryID))
-                            {
-                                queryLinksResult.isPackagedApp = false;
-                                queryLinksResultList.AddRange(await QueryLinksHelper.GetNonAppxPackagesAsync(productId));
-                            }
-                            // 解析商店应用数据
-                            else
-                            {
-                                queryLinksResult.isPackagedApp = true;
-                                string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.appInfo.CategoryID, ChannelList[channelIndex].InternalName);
-
-                                if (!string.IsNullOrEmpty(fileListXml))
-                                {
-                                    List<QueryLinksResultModel> appxPackagesList = await QueryLinksHelper.GetAppxPackagesAsync(fileListXml, ChannelList[channelIndex].InternalName);
-                                    foreach (QueryLinksResultModel appxPackage in appxPackagesList)
-                                    {
-                                        bool isExisted = false;
-                                        foreach (QueryLinksResultModel queryLinksResultItem in queryLinksResultList)
-                                        {
-                                            if (string.Equals(queryLinksResultItem.FileName, appxPackage.FileName) && Equals(queryLinksResultItem.FileLink, appxPackage.FileLink) && Equals(queryLinksResultItem.FileSize, queryLinksResultItem.FileSize))
-                                            {
-                                                isExisted = true;
-                                            }
-                                        }
-
-                                        if (!isExisted && !string.IsNullOrEmpty(appxPackage.FileLink))
-                                        {
-                                            queryLinksResultList.Add(appxPackage);
-                                        }
-                                    }
-                                }
-                            }
-
-                            // 按设置选项设置的内容过滤列表
-                            if (LinkFilterService.EncryptedPackageFilter)
-                            {
-                                queryLinksResultList.RemoveAll(item =>
-                                string.Equals(Path.GetExtension(item.FileName), ".eappx", StringComparison.OrdinalIgnoreCase) ||
-                                string.Equals(Path.GetExtension(item.FileName), ".emsix", StringComparison.OrdinalIgnoreCase) ||
-                                string.Equals(Path.GetExtension(item.FileName), ".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
-                                string.Equals(Path.GetExtension(item.FileName), ".emsixbundle", StringComparison.OrdinalIgnoreCase)
-                                );
-                            }
-
-                            if (LinkFilterService.BlockMapFilter)
-                            {
-                                queryLinksResultList.RemoveAll(item => string.Equals(Path.GetExtension(item.FileName), ".blockmap", StringComparison.OrdinalIgnoreCase));
-                            }
-
-                            // 排序
-                            queryLinksResultList.Sort((item1, item2) => item1.FileName.CompareTo(item2.FileName));
-                            queryLinksResult.queryLinksResultList = queryLinksResultList;
-                        }
-
-                        return queryLinksResult;
-                    });
+                    (bool requestResult, bool isPackagedApp, AppInfoModel appInfoItem, List<QueryLinksResultModel> queryLinksResultList) = await QueryLinksViaOfficialInterfaceAsync(ChannelList[channelIndex].InternalName);
 
                     IsQueryingLinks = false;
                     foreach (HistoryModel historyItem in QueryLinksHistoryCollection)
@@ -852,66 +816,7 @@ namespace GetStoreApp.Views.UserControls
                 // 第三方接口查询方式
                 else if (string.Equals(QueryLinksModeService.QueryLinksMode, QueryLinksModeService.QueryLinksModeList[1]))
                 {
-                    (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksResultModel> queryLinksResultList) = await Task.Run(async () =>
-                    {
-                        (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksResultModel> queryLinksResultList) queryLinksResult = ValueTuple.Create<InfoBarSeverity, bool, string, List<QueryLinksResultModel>>(InfoBarSeverity.Error, false, null, null);
-
-                        // 生成请求的内容
-                        string generateContent = await HtmlRequestHelper.GenerateRequestContentAsync(SelectedType.InternalName, link, SelectedChannel.InternalName);
-
-                        // 获取网页反馈回的原始数据
-                        RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
-
-                        // 检查服务器返回获取的状态
-                        InfoBarSeverity requestState = HtmlRequestHelper.CheckRequestState(httpRequestData);
-                        queryLinksResult.requestState = requestState;
-
-                        if (requestState is InfoBarSeverity.Success)
-                        {
-                            HtmlParseHelper.InitializeParseData(httpRequestData);
-                            string categoryId = HtmlParseHelper.HtmlParseCID().ToUpperInvariant();
-                            queryLinksResult.categoryId = categoryId;
-                            List<QueryLinksResultModel> queryLinksResultList = [];
-
-                            // CategoryID 为空，非打包应用
-                            if (string.IsNullOrEmpty(categoryId))
-                            {
-                                queryLinksResult.categoryId = UnknownString;
-                                queryLinksResult.isPackagedApp = false;
-                                List<QueryLinksResultModel> nonPackagedAppsList = HtmlParseHelper.HtmlParseNonPackagedAppLinks();
-                                queryLinksResultList.AddRange(HtmlParseHelper.HtmlParseNonPackagedAppLinks());
-                            }
-                            else
-                            {
-                                queryLinksResult.isPackagedApp = true;
-                                List<QueryLinksResultModel> packagedAppsList = HtmlParseHelper.HtmlParsePackagedAppLinks();
-
-                                // 按设置选项设置的内容过滤列表
-                                if (LinkFilterService.EncryptedPackageFilter)
-                                {
-                                    packagedAppsList.RemoveAll(item =>
-                                    string.Equals(Path.GetExtension(item.FileName), ".eappx", StringComparison.OrdinalIgnoreCase) ||
-                                    string.Equals(Path.GetExtension(item.FileName), ".emsix", StringComparison.OrdinalIgnoreCase) ||
-                                    string.Equals(Path.GetExtension(item.FileName), ".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
-                                    string.Equals(Path.GetExtension(item.FileName), ".emsixbundle", StringComparison.OrdinalIgnoreCase)
-                                    );
-                                }
-
-                                if (LinkFilterService.BlockMapFilter)
-                                {
-                                    packagedAppsList.RemoveAll(item => string.Equals(Path.GetExtension(item.FileName), ".blockmap", StringComparison.OrdinalIgnoreCase));
-                                }
-
-                                queryLinksResultList.AddRange(packagedAppsList);
-                            }
-
-                            // 排序
-                            queryLinksResultList.Sort((item1, item2) => item1.FileName.CompareTo(item2.FileName));
-                            queryLinksResult.queryLinksResultList = queryLinksResultList;
-                        }
-
-                        return queryLinksResult;
-                    });
+                    (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksResultModel> queryLinksResultList) = await QueryLinksVia3rdInterfaceAsync(link);
 
                     IsQueryingLinks = false;
                     foreach (HistoryModel historyItem in QueryLinksHistoryCollection)
@@ -947,9 +852,163 @@ namespace GetStoreApp.Views.UserControls
         }
 
         /// <summary>
+        /// 通过官方接口查询链接
+        /// </summary>
+        private async Task<(bool, bool, AppInfoModel, List<QueryLinksResultModel>)> QueryLinksViaOfficialInterfaceAsync(string internalName)
+        {
+            return await Task.Run(async () =>
+            {
+                (bool requestResult, bool isPackagedApp, AppInfoModel appInfoItem, List<QueryLinksResultModel> queryLinksResultList) queryLinksResult = ValueTuple.Create<bool, bool, AppInfoModel, List<QueryLinksResultModel>>(false, false, null, null);
+
+                if (!string.IsNullOrEmpty(internalName))
+                {
+                    // 解析链接对应的产品 ID
+                    string productId = Equals(SelectedType, TypeList[0]) ? QueryLinksHelper.ParseRequestContent(QueryLinksText) : QueryLinksText;
+                    string cookie = await QueryLinksHelper.GetCookieAsync();
+
+                    // 获取应用信息
+                    (bool requestResult, AppInfoModel appInfo) appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
+                    queryLinksResult.requestResult = appInformationResult.requestResult;
+                    queryLinksResult.appInfoItem = appInformationResult.appInfo;
+
+                    if (appInformationResult.requestResult)
+                    {
+                        List<QueryLinksResultModel> queryLinksResultList = [];
+
+                        // 解析非商店应用数据
+                        if (string.IsNullOrEmpty(appInformationResult.appInfo.CategoryID))
+                        {
+                            queryLinksResult.isPackagedApp = false;
+                            queryLinksResultList.AddRange(await QueryLinksHelper.GetNonAppxPackagesAsync(productId));
+                        }
+                        // 解析商店应用数据
+                        else
+                        {
+                            queryLinksResult.isPackagedApp = true;
+                            string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.appInfo.CategoryID, internalName);
+
+                            if (!string.IsNullOrEmpty(fileListXml))
+                            {
+                                List<QueryLinksResultModel> appxPackagesList = await QueryLinksHelper.GetAppxPackagesAsync(fileListXml, internalName);
+                                foreach (QueryLinksResultModel appxPackage in appxPackagesList)
+                                {
+                                    bool isExisted = false;
+                                    foreach (QueryLinksResultModel queryLinksResultItem in queryLinksResultList)
+                                    {
+                                        if (string.Equals(queryLinksResultItem.FileName, appxPackage.FileName) && Equals(queryLinksResultItem.FileLink, appxPackage.FileLink) && Equals(queryLinksResultItem.FileSize, queryLinksResultItem.FileSize))
+                                        {
+                                            isExisted = true;
+                                        }
+                                    }
+
+                                    if (!isExisted && !string.IsNullOrEmpty(appxPackage.FileLink))
+                                    {
+                                        queryLinksResultList.Add(appxPackage);
+                                    }
+                                }
+                            }
+                        }
+
+                        // 按设置选项设置的内容过滤列表
+                        if (LinkFilterService.EncryptedPackageFilter)
+                        {
+                            queryLinksResultList.RemoveAll(item =>
+                            string.Equals(Path.GetExtension(item.FileName), ".eappx", StringComparison.OrdinalIgnoreCase) ||
+                            string.Equals(Path.GetExtension(item.FileName), ".emsix", StringComparison.OrdinalIgnoreCase) ||
+                            string.Equals(Path.GetExtension(item.FileName), ".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
+                            string.Equals(Path.GetExtension(item.FileName), ".emsixbundle", StringComparison.OrdinalIgnoreCase)
+                            );
+                        }
+
+                        if (LinkFilterService.BlockMapFilter)
+                        {
+                            queryLinksResultList.RemoveAll(item => string.Equals(Path.GetExtension(item.FileName), ".blockmap", StringComparison.OrdinalIgnoreCase));
+                        }
+
+                        // 排序
+                        queryLinksResultList.Sort((item1, item2) => item1.FileName.CompareTo(item2.FileName));
+                        queryLinksResult.queryLinksResultList = queryLinksResultList;
+                    }
+                }
+
+                return queryLinksResult;
+            });
+        }
+
+        /// <summary>
+        /// 通过第三方接口查询链接
+        /// </summary>
+        private async Task<(InfoBarSeverity, bool, string, List<QueryLinksResultModel>)> QueryLinksVia3rdInterfaceAsync(string link)
+        {
+            return await Task.Run(async () =>
+            {
+                (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksResultModel> queryLinksResultList) queryLinksResult = ValueTuple.Create<InfoBarSeverity, bool, string, List<QueryLinksResultModel>>(InfoBarSeverity.Error, false, null, null);
+
+                if (!string.IsNullOrEmpty(link))
+                {
+                    // 生成请求的内容
+                    string generateContent = await HtmlRequestHelper.GenerateRequestContentAsync(SelectedType.InternalName, link, SelectedChannel.InternalName);
+
+                    // 获取网页反馈回的原始数据
+                    RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
+
+                    // 检查服务器返回获取的状态
+                    InfoBarSeverity requestState = HtmlRequestHelper.CheckRequestState(httpRequestData);
+                    queryLinksResult.requestState = requestState;
+
+                    if (requestState is InfoBarSeverity.Success)
+                    {
+                        HtmlParseHelper.InitializeParseData(httpRequestData);
+                        string categoryId = HtmlParseHelper.HtmlParseCID().ToUpperInvariant();
+                        queryLinksResult.categoryId = categoryId;
+                        List<QueryLinksResultModel> queryLinksResultList = [];
+
+                        // CategoryID 为空，非打包应用
+                        if (string.IsNullOrEmpty(categoryId))
+                        {
+                            queryLinksResult.categoryId = UnknownString;
+                            queryLinksResult.isPackagedApp = false;
+                            List<QueryLinksResultModel> nonPackagedAppsList = HtmlParseHelper.HtmlParseNonPackagedAppLinks();
+                            queryLinksResultList.AddRange(HtmlParseHelper.HtmlParseNonPackagedAppLinks());
+                        }
+                        else
+                        {
+                            queryLinksResult.isPackagedApp = true;
+                            List<QueryLinksResultModel> packagedAppsList = HtmlParseHelper.HtmlParsePackagedAppLinks();
+
+                            // 按设置选项设置的内容过滤列表
+                            if (LinkFilterService.EncryptedPackageFilter)
+                            {
+                                packagedAppsList.RemoveAll(item =>
+                                string.Equals(Path.GetExtension(item.FileName), ".eappx", StringComparison.OrdinalIgnoreCase) ||
+                                string.Equals(Path.GetExtension(item.FileName), ".emsix", StringComparison.OrdinalIgnoreCase) ||
+                                string.Equals(Path.GetExtension(item.FileName), ".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
+                                string.Equals(Path.GetExtension(item.FileName), ".emsixbundle", StringComparison.OrdinalIgnoreCase)
+                                );
+                            }
+
+                            if (LinkFilterService.BlockMapFilter)
+                            {
+                                packagedAppsList.RemoveAll(item => string.Equals(Path.GetExtension(item.FileName), ".blockmap", StringComparison.OrdinalIgnoreCase));
+                            }
+
+                            queryLinksResultList.AddRange(packagedAppsList);
+                        }
+
+                        // 排序
+                        queryLinksResultList.Sort((item1, item2) => item1.FileName.CompareTo(item2.FileName));
+                        queryLinksResult.queryLinksResultList = queryLinksResultList;
+                    }
+                }
+
+                return queryLinksResult;
+            });
+        }
+
+        /// <summary>
         /// 搜索应用
         /// </summary>
-        internal async Task SearchAppsAsync()
+        private async Task SearchAppsAsync()
         {
             if (!IsQueryingLinks || !IsSearchingApps)
             {
@@ -1178,5 +1237,7 @@ namespace GetStoreApp.Views.UserControls
         {
             return Equals(selectedStoreInfoResultKind, comparedStoreInfoResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        #endregion 第六部分：数据操作与业务逻辑
     }
 }

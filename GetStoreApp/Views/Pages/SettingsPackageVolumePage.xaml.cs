@@ -105,7 +105,7 @@ namespace GetStoreApp.Views.Pages
 
         #region 第三部分：构造函数
 
-        private SettingsPackageVolumePage()
+        internal SettingsPackageVolumePage()
         {
             InitializeComponent();
         }
@@ -303,7 +303,6 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取存储卷
         /// </summary>
-        /// <returns></returns>
         private async Task<(bool, List<PackageVolumeModel>, Exception)> GetPackageVolumeAsync()
         {
             return await Task.Run(async () =>
@@ -392,26 +391,24 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<(bool, Exception)> SetDefaultVolumeAsync(PackageVolume packageVolume)
         {
-            if (packageVolume is not null)
-            {
-                return await Task.Run(() =>
-                {
-                    try
-                    {
-                        packageVolume.SetDefault();
-                        return ValueTuple.Create<bool, Exception>(true, null);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(SetDefaultVolumeAsync), 1, e);
-                        return ValueTuple.Create(true, e);
-                    }
-                });
-            }
-            else
+            if (packageVolume is null)
             {
                 return default;
             }
+
+            return await Task.Run(() =>
+            {
+                try
+                {
+                    packageVolume.SetDefault();
+                    return ValueTuple.Create<bool, Exception>(true, null);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(SetDefaultVolumeAsync), 1, e);
+                    return ValueTuple.Create(true, e);
+                }
+            });
         }
 
         /// <summary>
@@ -419,26 +416,24 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<(bool, PackageDeploymentResult, Exception)> MountVolumeAsync(PackageVolume packageVolume)
         {
-            if (packageVolume is not null)
-            {
-                return await Task.Run(async () =>
-                {
-                    try
-                    {
-                        PackageDeploymentResult packageDeploymentResult = await packageVolume.SetOnlineAsync();
-                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, packageDeploymentResult, null);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(MountVolumeAsync), 1, e);
-                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
-                    }
-                });
-            }
-            else
+            if (packageVolume is null)
             {
                 return default;
             }
+
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    PackageDeploymentResult packageDeploymentResult = await packageVolume.SetOnlineAsync();
+                    return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, packageDeploymentResult, null);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(MountVolumeAsync), 1, e);
+                    return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
+                }
+            });
         }
 
         /// <summary>
@@ -446,26 +441,24 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<(bool, PackageDeploymentResult, Exception)> DismountVolumeAsync(PackageVolume packageVolume)
         {
-            if (packageVolume is not null)
-            {
-                return await Task.Run(async () =>
-                {
-                    try
-                    {
-                        PackageDeploymentResult packageDeploymentResult = await packageVolume.SetOfflineAsync();
-                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, packageDeploymentResult, null);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(DismountVolumeAsync), 1, e);
-                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
-                    }
-                });
-            }
-            else
+            if (packageVolume is null)
             {
                 return default;
             }
+
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    PackageDeploymentResult packageDeploymentResult = await packageVolume.SetOfflineAsync();
+                    return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, packageDeploymentResult, null);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(DismountVolumeAsync), 1, e);
+                    return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
+                }
+            });
         }
 
         /// <summary>
@@ -473,26 +466,24 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<(bool, PackageDeploymentResult, Exception)> RemoveVolumeAync(PackageVolume packageVolume)
         {
-            if (packageVolume is not null)
-            {
-                return await Task.Run(async () =>
-                {
-                    try
-                    {
-                        PackageDeploymentResult packageDeploymentResult = await packageVolume.RemoveAsync();
-                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, packageDeploymentResult, null);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(RemoveVolumeAync), 1, e);
-                        return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
-                    }
-                });
-            }
-            else
+            if (packageVolume is null)
             {
                 return default;
             }
+
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    PackageDeploymentResult packageDeploymentResult = await packageVolume.RemoveAsync();
+                    return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(true, packageDeploymentResult, null);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(RemoveVolumeAync), 1, e);
+                    return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
+                }
+            });
         }
 
         /// <summary>
