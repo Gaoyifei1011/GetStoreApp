@@ -16,7 +16,6 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Store.Preview;
-using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
 using Windows.UI.Shell;
@@ -475,39 +474,41 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void InitializeData(AppInformation appInformationItem)
         {
-            if (appInformationItem is not null)
+            if (appInformationItem is null)
             {
-                appInformation = appInformationItem;
-                DisplayName = appInformation.DisplayName;
-                PackageFamilyName = appInformation.PackageFamilyName;
-                PackageFullName = appInformation.PackageFullName;
-                Description = appInformation.Description;
-                PublisherDisplayName = appInformation.PublisherDisplayName;
-                PublisherId = appInformation.PublisherId;
-                Version = appInformation.Version;
-                InstalledDate = appInformation.InstallDate;
-                Architecture = appInformation.Architecture;
-                SignatureKind = appInformation.SignatureKind;
-                ResourceId = appInformation.ResourceId;
-                IsBundle = appInformation.IsBundle;
-                IsDevelopmentMode = appInformation.IsDevelopmentMode;
-                IsFramework = appInformation.IsFramework;
-                IsOptional = appInformation.IsOptional;
-                IsResourcePackage = appInformation.IsResourcePackage;
-                IsStub = appInformation.IsStub;
-                VerifyIsOK = appInformation.VerifyIsOK;
+                return;
+            }
 
-                AppListEntryCollection.Clear();
-                foreach (AppListEntryModel appListEntry in appInformation.AppListEntryList)
-                {
-                    AppListEntryCollection.Add(appListEntry);
-                }
+            appInformation = appInformationItem;
+            DisplayName = appInformation.DisplayName;
+            PackageFamilyName = appInformation.PackageFamilyName;
+            PackageFullName = appInformation.PackageFullName;
+            Description = appInformation.Description;
+            PublisherDisplayName = appInformation.PublisherDisplayName;
+            PublisherId = appInformation.PublisherId;
+            Version = appInformation.Version;
+            InstalledDate = appInformation.InstallDate;
+            Architecture = appInformation.Architecture;
+            SignatureKind = appInformation.SignatureKind;
+            ResourceId = appInformation.ResourceId;
+            IsBundle = appInformation.IsBundle;
+            IsDevelopmentMode = appInformation.IsDevelopmentMode;
+            IsFramework = appInformation.IsFramework;
+            IsOptional = appInformation.IsOptional;
+            IsResourcePackage = appInformation.IsResourcePackage;
+            IsStub = appInformation.IsStub;
+            VerifyIsOK = appInformation.VerifyIsOK;
 
-                DependenciesCollection.Clear();
-                foreach (PackageModel packageItem in appInformation.DependenciesList)
-                {
-                    DependenciesCollection.Add(packageItem);
-                }
+            AppListEntryCollection.Clear();
+            foreach (AppListEntryModel appListEntry in appInformation.AppListEntryList)
+            {
+                AppListEntryCollection.Add(appListEntry);
+            }
+
+            DependenciesCollection.Clear();
+            foreach (PackageModel packageItem in appInformation.DependenciesList)
+            {
+                DependenciesCollection.Add(packageItem);
             }
         }
 
@@ -516,20 +517,22 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void LaunchApp(AppListEntryModel appListEntry)
         {
-            if (appListEntry is not null)
+            if (appListEntry is null)
             {
-                Task.Run(async () =>
-                {
-                    try
-                    {
-                        await appListEntry.AppListEntry.LaunchAsync();
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(LaunchApp), 1, e);
-                    }
-                });
+                return;
             }
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await appListEntry.AppListEntry.LaunchAsync();
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(LaunchApp), 1, e);
+                }
+            });
         }
 
         /// <summary>
@@ -537,20 +540,22 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OpenInstalledPath(Package package)
         {
-            if (package is not null)
+            if (package is null)
             {
-                Task.Run(async () =>
-                {
-                    try
-                    {
-                        await Launcher.LaunchFolderPathAsync(package.InstalledPath);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OpenInstalledPath), 1, e);
-                    }
-                });
+                return;
             }
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchFolderPathAsync(package.InstalledPath);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OpenInstalledPath), 1, e);
+                }
+            });
         }
 
         /// <summary>
@@ -558,20 +563,22 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OpenStore(Package package)
         {
-            if (package is not null)
+            if (package is null)
             {
-                Task.Run(async () =>
-                {
-                    try
-                    {
-                        await Launcher.LaunchUriAsync(new($"ms-windows-store://pdp/?PFN={package.Id.FamilyName}"));
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OpenStore), 1, e);
-                    }
-                });
+                return;
             }
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new($"ms-windows-store://pdp/?PFN={package.Id.FamilyName}"));
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(OpenStore), 1, e);
+                }
+            });
         }
 
         /// <summary>
@@ -637,25 +644,27 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void PinToTaskbar(AppListEntryModel appListEntry)
         {
-            if (appListEntry is not null)
+            if (appListEntry is null)
             {
-                Task.Run(async () =>
+                return;
+            }
+
+            Task.Run(async () =>
+            {
+                try
                 {
-                    try
+                    await Launcher.LaunchUriAsync(new("getstoreapppinner:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
                     {
-                        await Launcher.LaunchUriAsync(new("getstoreapppinner:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
-                        {
                             {"Type", nameof(TaskbarManager) },
                             { "AppUserModelId", appListEntry.AppUserModelId },
                             { "PackageFullName", appListEntry.PackageFullName },
-                        });
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(PinToTaskbar), 1, e);
-                    }
-                });
-            }
+                    });
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationPage), nameof(PinToTaskbar), 1, e);
+                }
+            });
         }
 
         /// <summary>

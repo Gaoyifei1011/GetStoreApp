@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Helpers.Root;
-using GetStoreApp.Views.Pages;
 using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
@@ -31,6 +30,11 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         internal static void WriteLog(LoggingLevel logLevel, string nameSpaceName, string className, string methodName, int index, Dictionary<string, string> loggingInformationDict)
         {
+            if (string.IsNullOrEmpty(nameSpaceName) || string.IsNullOrEmpty(className) || string.IsNullOrEmpty(methodName) || loggingInformationDict is null)
+            {
+                return;
+            }
+
             Task.Run(async () =>
             {
                 logSemaphoreSlim?.Wait();
@@ -85,6 +89,11 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         internal static void WriteLog(LoggingLevel logLevel, string nameSpaceName, string className, string methodName, int index, Exception exception)
         {
+            if (string.IsNullOrEmpty(nameSpaceName) || string.IsNullOrEmpty(className) || string.IsNullOrEmpty(methodName) || exception is null)
+            {
+                return;
+            }
+
             Task.Run(async () =>
             {
                 logSemaphoreSlim?.Wait();

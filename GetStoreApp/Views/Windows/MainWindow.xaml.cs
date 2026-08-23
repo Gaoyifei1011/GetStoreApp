@@ -525,33 +525,35 @@ namespace GetStoreApp.Views.Windows
             {
                 SelectedItem = args.SelectedItem as NavigationViewItemModel;
 
-                if (SelectedItem is not null)
+                if (SelectedItem is null)
                 {
-                    // 对应的页面为空，选中项修改为已经选择的页面
-                    if (SelectedItem.NavigationPage is null)
-                    {
-                        if (Equals(SelectedItem.NavigationTag, "Web"))
-                        {
-                            OpenWebView();
-                        }
+                    return;
+                }
 
-                        Type currentPageType = GetCurrentPageType();
-                        NavigationViewItemModel selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemMenuItemsCollection);
-                        if (selectedNavigationViewItem is not null)
-                        {
-                            SelectedItem = selectedNavigationViewItem;
-                        }
-                        else
-                        {
-                            selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemFooterMenuItemsCollection);
-                            SelectedItem = selectedNavigationViewItem is not null ? selectedNavigationViewItem : null;
-                        }
+                // 对应的页面为空，选中项修改为已经选择的页面
+                if (SelectedItem.NavigationPage is null)
+                {
+                    if (Equals(SelectedItem.NavigationTag, "Web"))
+                    {
+                        OpenWebView();
                     }
-                    // 切换到选中项对应的页面
+
+                    Type currentPageType = GetCurrentPageType();
+                    NavigationViewItemModel selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemMenuItemsCollection);
+                    if (selectedNavigationViewItem is not null)
+                    {
+                        SelectedItem = selectedNavigationViewItem;
+                    }
                     else
                     {
-                        NavigateTo(SelectedItem.NavigationPage);
+                        selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemFooterMenuItemsCollection);
+                        SelectedItem = selectedNavigationViewItem;
                     }
+                }
+                // 切换到选中项对应的页面
+                else
+                {
+                    NavigateTo(SelectedItem.NavigationPage);
                 }
             }
         }
@@ -575,7 +577,7 @@ namespace GetStoreApp.Views.Windows
                 else
                 {
                     selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemFooterMenuItemsCollection);
-                    SelectedItem = selectedNavigationViewItem is not null ? selectedNavigationViewItem : null;
+                    SelectedItem = selectedNavigationViewItem;
                 }
 
                 IsBackEnabled = CanGoBack();
@@ -649,7 +651,7 @@ namespace GetStoreApp.Views.Windows
         private void InitializeWindowData(AppWindow appWindow)
         {
             WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
-            overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
+            overlappedPresenter = appWindow.Presenter as OverlappedPresenter;
             ExtendsContentIntoTitleBar = true;
             appWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
             appWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
@@ -820,33 +822,35 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void SetTitleBarTheme(AppWindowTitleBar appWindowTitleBar, ElementTheme theme)
         {
-            if (appWindowTitleBar is not null)
+            if (appWindowTitleBar is null)
             {
-                appWindowTitleBar.BackgroundColor = Colors.Transparent;
-                appWindowTitleBar.ForegroundColor = Colors.Transparent;
-                appWindowTitleBar.InactiveBackgroundColor = Colors.Transparent;
-                appWindowTitleBar.InactiveForegroundColor = Colors.Transparent;
-                appWindowTitleBar.ButtonBackgroundColor = Colors.Transparent;
-                appWindowTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+                return;
+            }
 
-                if (theme is ElementTheme.Light)
-                {
-                    appWindowTitleBar.ButtonForegroundColor = Color.FromArgb(255, 23, 23, 23);
-                    appWindowTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 0, 0, 0);
-                    appWindowTitleBar.ButtonHoverForegroundColor = Colors.Black;
-                    appWindowTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 0, 0, 0);
-                    appWindowTitleBar.ButtonPressedForegroundColor = Colors.Black;
-                    appWindowTitleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 153, 153, 153);
-                }
-                else
-                {
-                    appWindowTitleBar.ButtonForegroundColor = Color.FromArgb(255, 242, 242, 242);
-                    appWindowTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 255, 255, 255);
-                    appWindowTitleBar.ButtonHoverForegroundColor = Colors.White;
-                    appWindowTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 255, 255, 255);
-                    appWindowTitleBar.ButtonPressedForegroundColor = Colors.White;
-                    appWindowTitleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 102, 102, 102);
-                }
+            appWindowTitleBar.BackgroundColor = Colors.Transparent;
+            appWindowTitleBar.ForegroundColor = Colors.Transparent;
+            appWindowTitleBar.InactiveBackgroundColor = Colors.Transparent;
+            appWindowTitleBar.InactiveForegroundColor = Colors.Transparent;
+            appWindowTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            appWindowTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+
+            if (theme is ElementTheme.Light)
+            {
+                appWindowTitleBar.ButtonForegroundColor = Color.FromArgb(255, 23, 23, 23);
+                appWindowTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 0, 0, 0);
+                appWindowTitleBar.ButtonHoverForegroundColor = Colors.Black;
+                appWindowTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 0, 0, 0);
+                appWindowTitleBar.ButtonPressedForegroundColor = Colors.Black;
+                appWindowTitleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 153, 153, 153);
+            }
+            else
+            {
+                appWindowTitleBar.ButtonForegroundColor = Color.FromArgb(255, 242, 242, 242);
+                appWindowTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 255, 255, 255);
+                appWindowTitleBar.ButtonHoverForegroundColor = Colors.White;
+                appWindowTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 255, 255, 255);
+                appWindowTitleBar.ButtonPressedForegroundColor = Colors.White;
+                appWindowTitleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 102, 102, 102);
             }
         }
 
@@ -855,21 +859,23 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void SetClassicMenuTheme(AppWindowTitleBar appWindowTitleBar, ElementTheme theme)
         {
-            if (appWindowTitleBar is not null)
+            if (appWindowTitleBar is null)
             {
-                if (theme is ElementTheme.Light)
-                {
-                    appWindowTitleBar.PreferredTheme = TitleBarTheme.Light;
-                    UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
-                }
-                else
-                {
-                    appWindowTitleBar.PreferredTheme = TitleBarTheme.Dark;
-                    UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
-                }
-
-                UxthemeLibrary.FlushMenuThemes();
+                return;
             }
+
+            if (theme is ElementTheme.Light)
+            {
+                appWindowTitleBar.PreferredTheme = TitleBarTheme.Light;
+                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
+            }
+            else
+            {
+                appWindowTitleBar.PreferredTheme = TitleBarTheme.Dark;
+                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
+            }
+
+            UxthemeLibrary.FlushMenuThemes();
         }
 
         /// <summary>

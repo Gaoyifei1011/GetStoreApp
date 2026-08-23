@@ -122,9 +122,7 @@ namespace GetStoreAppPinner
                         try
                         {
                             PackageManager packageManager = new();
-                            Package package = packageManager.FindPackageForUser(string.Empty, protocolActivatedEventArgs.Data["PackageFullName"] as string);
-
-                            if (package is not null)
+                            if (packageManager.FindPackageForUser(string.Empty, protocolActivatedEventArgs.Data["PackageFullName"] as string) is Package package)
                             {
                                 foreach (AppListEntry appListEntryItem in package.GetAppListEntries())
                                 {

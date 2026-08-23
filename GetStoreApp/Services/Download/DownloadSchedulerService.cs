@@ -496,6 +496,11 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         internal static void CreateDownload(string fileLink, string filePath)
         {
+            if (string.IsNullOrEmpty(fileLink) || string.IsNullOrEmpty(filePath))
+            {
+                return;
+            }
+
             if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
                 DeliveryOptimizationService.CreateDownload(fileLink, filePath);
@@ -515,6 +520,11 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         internal static void ContinueDownload(string downloadID)
         {
+            if (string.IsNullOrEmpty(downloadID))
+            {
+                return;
+            }
+
             if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
                 DeliveryOptimizationService.ContinueDownload(downloadID);
@@ -534,6 +544,11 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         internal static void PauseDownload(string downloadID)
         {
+            if (string.IsNullOrEmpty(downloadID))
+            {
+                return;
+            }
+
             if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
                 DeliveryOptimizationService.PauseDownload(downloadID);
@@ -553,6 +568,11 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         internal static void DeleteDownload(string downloadID)
         {
+            if (string.IsNullOrEmpty(downloadID))
+            {
+                return;
+            }
+
             if (string.Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
                 DeliveryOptimizationService.DeleteDownload(downloadID);

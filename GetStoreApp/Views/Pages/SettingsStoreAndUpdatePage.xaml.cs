@@ -420,7 +420,7 @@ namespace GetStoreApp.Views.Pages
             if (sender.IsLoaded && args.NewDate.HasValue && !Equals(AppUpdatePauseEndTime.Date, args.NewDate.Value.Date))
             {
                 AppUpdatePauseEndTime = args.NewDate.Value.Date;
-                await SetAppUpdatePauseEndTimeAsync();
+                await SetAppUpdatePauseEndTimeAsync(AppUpdatePauseEndTime);
                 AppUpdatePauseEndTime = await GetAppUpdatePauseEndTimeAsync();
                 if (!RuntimeHelper.IsElevated)
                 {
@@ -611,7 +611,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<ComboBoxItemModel> GetAppUpdateStatusAsync(List<ComboBoxItemModel> appUpdateStatusList)
         {
-            if (appUpdateStatusList is null)
+            if (appUpdateStatusList is null || appUpdateStatusList.Count is 0)
             {
                 return default;
             }
@@ -638,26 +638,28 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task SetAppUpdateStatusAsync(object selectedValue)
         {
-            if (selectedValue is not null)
+            if (selectedValue is null)
             {
-                await Task.Run(() =>
-                {
-                    if (selectedValue is "AppUpdateEnabled")
-                    {
-                        RegistryHelper.RemoveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
-                        RegistryHelper.RemoveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload");
-                    }
-                    else if (selectedValue is "AppUpdatePaused")
-                    {
-                        RegistryHelper.RemoveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
-                        RegistryHelper.SaveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload", 2);
-                    }
-                    else if (selectedValue is "AppUpdateDisabled")
-                    {
-                        RegistryHelper.SaveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload", 2);
-                    }
-                });
+                return;
             }
+
+            await Task.Run(() =>
+            {
+                if (selectedValue is "AppUpdateEnabled")
+                {
+                    RegistryHelper.RemoveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
+                    RegistryHelper.RemoveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload");
+                }
+                else if (selectedValue is "AppUpdatePaused")
+                {
+                    RegistryHelper.RemoveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload");
+                    RegistryHelper.SaveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload", 2);
+                }
+                else if (selectedValue is "AppUpdateDisabled")
+                {
+                    RegistryHelper.SaveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Policies\Microsoft\WindowsStore", "AutoDownload", 2);
+                }
+            });
         }
 
         /// <summary>
@@ -675,11 +677,11 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 设置暂停更新结束时间
         /// </summary>
-        private async Task SetAppUpdatePauseEndTimeAsync()
+        private async Task SetAppUpdatePauseEndTimeAsync(DateTimeOffset appUpdatePauseEndTime)
         {
             await Task.Run(() =>
             {
-                RegistryHelper.SaveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\InstallService\State", "AutoUpdatePauseEndTime", AppUpdatePauseEndTime.ToString("yyyy-MM-dd'T'HH:mm:sszzz"));
+                RegistryHelper.SaveRegistryKey(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\InstallService\State", "AutoUpdatePauseEndTime", appUpdatePauseEndTime.ToString("yyyy-MM-dd'T'HH:mm:sszzz"));
             });
         }
 

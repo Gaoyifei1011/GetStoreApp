@@ -235,7 +235,7 @@ namespace GetStoreAppWebView.Views.Windows
             MountWindowWndProc(AppWindow.Id);
             SetWindowTheme();
             SetSystemBackdrop();
-            SetWindowSize();
+            SetWindowSize(AppWindow);
             SetWindowPosition(AppWindow);
             SetClassicMenuTheme(AppWindow.TitleBar, (Content as FrameworkElement).ActualTheme);
             InitializeWebView();
@@ -531,12 +531,14 @@ namespace GetStoreAppWebView.Views.Windows
         private async void OnCoreProcessFailed(WebView2 sender, CoreWebView2ProcessFailedEventArgs args)
         {
             Dictionary<string, string> logInformationDict = GetLogInformationDict(args.ProcessDescription, args.Reason, args.ExitCode, args.ProcessDescription);
-            if (logInformationDict is not null)
+            if (logInformationDict is null)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppWebView), nameof(WebViewWindow), nameof(OnCoreProcessFailed), 3, logInformationDict);
-                await ShowDialogAsync(new ProcessFailedDialog());
-                (Application.Current as WebViewApp).Dispose();
+                return;
             }
+
+            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppWebView), nameof(WebViewWindow), nameof(OnCoreProcessFailed), 3, logInformationDict);
+            await ShowDialogAsync(new ProcessFailedDialog());
+            (Application.Current as WebViewApp).Dispose();
         }
 
         /// <summary>
@@ -544,14 +546,16 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void OnCoreWebView2Initialized(WebView2 sender, CoreWebView2InitializedEventArgs args)
         {
-            if (WebViewBrowser.CoreWebView2 is not null)
+            if (WebViewBrowser.CoreWebView2 is null)
             {
-                WebViewBrowser.CoreWebView2.Settings.AreDefaultScriptDialogsEnabled = false;
-                WebViewBrowser.CoreWebView2.Settings.AreDevToolsEnabled = false;
-                WebViewBrowser.CoreWebView2.NewWindowRequested += OnCoreWebViewNewWindowRequested;
-                WebViewBrowser.CoreWebView2.SourceChanged += OnSourceChanged;
-                IsEnabled = true;
+                return;
             }
+
+            WebViewBrowser.CoreWebView2.Settings.AreDefaultScriptDialogsEnabled = false;
+            WebViewBrowser.CoreWebView2.Settings.AreDevToolsEnabled = false;
+            WebViewBrowser.CoreWebView2.NewWindowRequested += OnCoreWebViewNewWindowRequested;
+            WebViewBrowser.CoreWebView2.SourceChanged += OnSourceChanged;
+            IsEnabled = true;
         }
 
         /// <summary>
@@ -613,25 +617,6 @@ namespace GetStoreAppWebView.Views.Windows
         #region 第五部分：数据操作与业务逻辑
 
         /// <summary>
-        /// 初始化窗口数据
-        /// </summary>
-        [DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
-        private void InitializeWindowData(AppWindow appWindow)
-        {
-            WebTitle = WebTitleString;
-            WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
-            overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
-            ExtendsContentIntoTitleBar = true;
-            appWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
-            appWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
-            appWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
-            IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
-            contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(appWindow.Id);
-            contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
-            inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
-        }
-
-        /// <summary>
         /// 发送窗口消息类型
         /// </summary>
         private void SendWindowMessage(Microsoft.UI.WindowId windowId, WindowMessageKind windowMessageKind)
@@ -671,6 +656,25 @@ namespace GetStoreAppWebView.Views.Windows
                 default:
                     break;
             }
+        }
+
+        /// <summary>
+        /// 初始化窗口数据
+        /// </summary>
+        [DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
+        private void InitializeWindowData(AppWindow appWindow)
+        {
+            WebTitle = WebTitleString;
+            WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
+            overlappedPresenter = appWindow.Presenter as OverlappedPresenter;
+            ExtendsContentIntoTitleBar = true;
+            appWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
+            appWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
+            appWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
+            IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
+            contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(appWindow.Id);
+            contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
+            inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
         }
 
         /// <summary>
@@ -760,9 +764,9 @@ namespace GetStoreAppWebView.Views.Windows
         /// <summary>
         /// 设置窗口大小
         /// </summary>
-        private void SetWindowSize()
+        private void SetWindowSize(AppWindow appWindow)
         {
-            AppWindow.Resize(new(Convert.ToInt32(1000 * contentIsland.RasterizationScale), Convert.ToInt32(700 * contentIsland.RasterizationScale)));
+            appWindow.Resize(new(Convert.ToInt32(1000 * contentIsland.RasterizationScale), Convert.ToInt32(700 * contentIsland.RasterizationScale)));
         }
 
         /// <summary>
@@ -783,33 +787,35 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void SetTitleBarTheme(AppWindowTitleBar appWindowTitleBar, ElementTheme theme)
         {
-            if (appWindowTitleBar is not null)
+            if (appWindowTitleBar is null)
             {
-                appWindowTitleBar.BackgroundColor = Colors.Transparent;
-                appWindowTitleBar.ForegroundColor = Colors.Transparent;
-                appWindowTitleBar.InactiveBackgroundColor = Colors.Transparent;
-                appWindowTitleBar.InactiveForegroundColor = Colors.Transparent;
-                appWindowTitleBar.ButtonBackgroundColor = Colors.Transparent;
-                appWindowTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+                return;
+            }
 
-                if (theme is ElementTheme.Light)
-                {
-                    appWindowTitleBar.ButtonForegroundColor = Color.FromArgb(255, 23, 23, 23);
-                    appWindowTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 0, 0, 0);
-                    appWindowTitleBar.ButtonHoverForegroundColor = Colors.Black;
-                    appWindowTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 0, 0, 0);
-                    appWindowTitleBar.ButtonPressedForegroundColor = Colors.Black;
-                    appWindowTitleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 153, 153, 153);
-                }
-                else
-                {
-                    appWindowTitleBar.ButtonForegroundColor = Color.FromArgb(255, 242, 242, 242);
-                    appWindowTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 255, 255, 255);
-                    appWindowTitleBar.ButtonHoverForegroundColor = Colors.White;
-                    appWindowTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 255, 255, 255);
-                    appWindowTitleBar.ButtonPressedForegroundColor = Colors.White;
-                    appWindowTitleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 102, 102, 102);
-                }
+            appWindowTitleBar.BackgroundColor = Colors.Transparent;
+            appWindowTitleBar.ForegroundColor = Colors.Transparent;
+            appWindowTitleBar.InactiveBackgroundColor = Colors.Transparent;
+            appWindowTitleBar.InactiveForegroundColor = Colors.Transparent;
+            appWindowTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            appWindowTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+
+            if (theme is ElementTheme.Light)
+            {
+                appWindowTitleBar.ButtonForegroundColor = Color.FromArgb(255, 23, 23, 23);
+                appWindowTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 0, 0, 0);
+                appWindowTitleBar.ButtonHoverForegroundColor = Colors.Black;
+                appWindowTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 0, 0, 0);
+                appWindowTitleBar.ButtonPressedForegroundColor = Colors.Black;
+                appWindowTitleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 153, 153, 153);
+            }
+            else
+            {
+                appWindowTitleBar.ButtonForegroundColor = Color.FromArgb(255, 242, 242, 242);
+                appWindowTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 255, 255, 255);
+                appWindowTitleBar.ButtonHoverForegroundColor = Colors.White;
+                appWindowTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 255, 255, 255);
+                appWindowTitleBar.ButtonPressedForegroundColor = Colors.White;
+                appWindowTitleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 102, 102, 102);
             }
         }
 
@@ -840,29 +846,31 @@ namespace GetStoreAppWebView.Views.Windows
                     });
                 }
 
-                if (coreWebView2Environment is not null)
+                if (coreWebView2Environment is null)
                 {
-                    await WebViewBrowser.EnsureCoreWebView2Async(coreWebView2Environment);
-                    if (Program.AppActivationArguments.Kind is ExtendedActivationKind.Protocol)
+                    return;
+                }
+
+                await WebViewBrowser.EnsureCoreWebView2Async(coreWebView2Environment);
+                if (Program.AppActivationArguments.Kind is ExtendedActivationKind.Protocol)
+                {
+                    ProtocolActivatedEventArgs protocolActivatedEventArgs = Program.AppActivationArguments.Data as ProtocolActivatedEventArgs;
+                    if (protocolActivatedEventArgs.Data is ValueSet protocolData && protocolData.TryGetValue("AppLink", out object appLinkObj) && appLinkObj is string appLink && !string.IsNullOrEmpty(appLink))
                     {
-                        ProtocolActivatedEventArgs protocolActivatedEventArgs = Program.AppActivationArguments.Data as ProtocolActivatedEventArgs;
-                        if (protocolActivatedEventArgs.Data is ValueSet protocolData && protocolData.TryGetValue("AppLink", out object appLinkObj) && appLinkObj is string appLink && !string.IsNullOrEmpty(appLink))
-                        {
-                            WebViewBrowser.CoreWebView2.Navigate(appLink);
-                        }
-                        else
-                        {
-                            WebViewBrowser.CoreWebView2.Navigate("https://apps.microsoft.com");
-                        }
+                        WebViewBrowser.CoreWebView2.Navigate(appLink);
                     }
                     else
                     {
                         WebViewBrowser.CoreWebView2.Navigate("https://apps.microsoft.com");
                     }
-
-                    CoreWebView2Profile coreWebView2Profile = WebViewBrowser.CoreWebView2.Profile;
-                    coreWebView2Profile.DefaultDownloadFolderPath = DownloadOptionsService.DownloadFolder;
                 }
+                else
+                {
+                    WebViewBrowser.CoreWebView2.Navigate("https://apps.microsoft.com");
+                }
+
+                CoreWebView2Profile coreWebView2Profile = WebViewBrowser.CoreWebView2.Profile;
+                coreWebView2Profile.DefaultDownloadFolderPath = DownloadOptionsService.DownloadFolder;
             });
         }
 
@@ -871,21 +879,23 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void SetClassicMenuTheme(AppWindowTitleBar appWindowTitleBar, ElementTheme theme)
         {
-            if (appWindowTitleBar is not null)
+            if (appWindowTitleBar is null)
             {
-                if (theme is ElementTheme.Light)
-                {
-                    appWindowTitleBar.PreferredTheme = TitleBarTheme.Light;
-                    UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
-                }
-                else
-                {
-                    appWindowTitleBar.PreferredTheme = TitleBarTheme.Dark;
-                    UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
-                }
-
-                UxthemeLibrary.FlushMenuThemes();
+                return;
             }
+
+            if (theme is ElementTheme.Light)
+            {
+                appWindowTitleBar.PreferredTheme = TitleBarTheme.Light;
+                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
+            }
+            else
+            {
+                appWindowTitleBar.PreferredTheme = TitleBarTheme.Dark;
+                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
+            }
+
+            UxthemeLibrary.FlushMenuThemes();
         }
 
         /// <summary>
@@ -937,10 +947,6 @@ namespace GetStoreAppWebView.Views.Windows
 
             return Comctl32Library.DefSubclassProc(hWnd, Msg, wParam, lParam);
         }
-
-        #endregion 第五部分：数据操作与业务逻辑
-
-        #region 第七部分：显示对话框和应用通知
 
         /// <summary>
         /// 显示内容对话框
@@ -1026,12 +1032,14 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private async Task ClearWebViewCacheAsync(CoreWebView2 coreWebView2)
         {
-            if (coreWebView2 is not null)
+            if (coreWebView2 is null)
             {
-                coreWebView2.CookieManager.DeleteAllCookies();
-                await coreWebView2.Profile.ClearBrowsingDataAsync(CoreWebView2BrowsingDataKinds.AllProfile | CoreWebView2BrowsingDataKinds.AllSite | CoreWebView2BrowsingDataKinds.AllDomStorage);
-                await coreWebView2.ClearServerCertificateErrorActionsAsync();
+                return;
             }
+
+            coreWebView2.CookieManager.DeleteAllCookies();
+            await coreWebView2.Profile.ClearBrowsingDataAsync(CoreWebView2BrowsingDataKinds.AllProfile | CoreWebView2BrowsingDataKinds.AllSite | CoreWebView2BrowsingDataKinds.AllDomStorage);
+            await coreWebView2.ClearServerCertificateErrorActionsAsync();
         }
 
         /// <summary>
@@ -1069,6 +1077,6 @@ namespace GetStoreAppWebView.Views.Windows
             };
         }
 
-        #endregion 第七部分：显示对话框和应用通知
+        #endregion 第五部分：数据操作与业务逻辑
     }
 }

@@ -17,8 +17,7 @@ namespace GetStoreApp.Helpers.Root
         {
             try
             {
-                ConnectionProfile connectionProfile = NetworkInformation.GetInternetConnectionProfile();
-                if (connectionProfile is not null)
+                if (NetworkInformation.GetInternetConnectionProfile() is ConnectionProfile connectionProfile)
                 {
                     NetworkConnectivityLevel networkConnectivityLevel = connectionProfile.GetNetworkConnectivityLevel();
                     return networkConnectivityLevel is NetworkConnectivityLevel.LocalAccess || networkConnectivityLevel is NetworkConnectivityLevel.ConstrainedInternetAccess || networkConnectivityLevel is NetworkConnectivityLevel.InternetAccess;

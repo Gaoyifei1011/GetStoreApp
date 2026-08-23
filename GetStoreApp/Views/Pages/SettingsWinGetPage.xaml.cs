@@ -139,7 +139,7 @@ namespace GetStoreApp.Views.Pages
 
         #endregion 第五部分：挂载事件处理
 
-        #region 第六部分：挂载事件处理
+        #region 第六部分：数据操作与业务逻辑
 
         /// <summary>
         /// 初始化数据
@@ -173,6 +173,6 @@ namespace GetStoreApp.Views.Pages
             });
         }
 
-        #endregion 第六部分：挂载事件处理
+        #endregion 第六部分：数据操作与业务逻辑
     }
 }

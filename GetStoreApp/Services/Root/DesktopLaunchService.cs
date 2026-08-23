@@ -46,6 +46,11 @@ namespace GetStoreApp.Services.Root
         [DynamicWindowsRuntimeCast(typeof(LaunchActivatedEventArgs)), DynamicWindowsRuntimeCast(typeof(ShareTargetActivatedEventArgs)), DynamicWindowsRuntimeCast(typeof(ProtocolActivatedEventArgs)), DynamicWindowsRuntimeCast(typeof(ToastNotificationActivatedEventArgs))]
         internal static async Task InitializeLaunchAsync(AppActivationArguments appActivationArguments, bool isLaunched)
         {
+            if (appActivationArguments is null)
+            {
+                return;
+            }
+
             // 正常参数启动
             if (appActivationArguments.Kind is ExtendedActivationKind.Launch)
             {
@@ -223,6 +228,11 @@ namespace GetStoreApp.Services.Root
 
         internal static void SignalAppLaunchActivated(AppLaunchArguments appLaunchArguments)
         {
+            if (appLaunchArguments is null)
+            {
+                return;
+            }
+
             AppLaunchArguments = appLaunchArguments;
             AppLaunchActivated?.Invoke(null, AppLaunchArguments);
         }

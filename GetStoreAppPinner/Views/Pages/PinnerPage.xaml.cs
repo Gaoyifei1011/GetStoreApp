@@ -6,8 +6,8 @@ using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-// 抑制 IDE0060 警告
-#pragma warning disable IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreAppPinner.Views.Pages
 {
@@ -47,7 +47,7 @@ namespace GetStoreAppPinner.Views.Pages
             InitializeComponent();
             AppWindow = appWindow;
             WindowTheme = Enum.TryParse(ThemeService.AppTheme, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
-            SetTitleBarTheme(ActualTheme);
+            SetTitleBarTheme(AppWindow.TitleBar, ActualTheme);
         }
 
         #endregion 第二部分：构造函数
@@ -59,7 +59,7 @@ namespace GetStoreAppPinner.Views.Pages
         /// </summary>
         private void OnActualThemeChanged(FrameworkElement sender, object args)
         {
-            SetTitleBarTheme(sender.ActualTheme);
+            SetTitleBarTheme(AppWindow.TitleBar, sender.ActualTheme);
         }
 
         #endregion 第三部分：父类虚方法重写
@@ -69,34 +69,37 @@ namespace GetStoreAppPinner.Views.Pages
         /// <summary>
         /// 设置标题栏按钮的主题色
         /// </summary>
-        private void SetTitleBarTheme(ElementTheme theme)
+        private void SetTitleBarTheme(AppWindowTitleBar appWindowTitleBar, ElementTheme theme)
         {
-            AppWindowTitleBar titleBar = AppWindow.TitleBar;
+            if (appWindowTitleBar is null)
+            {
+                return;
+            }
 
-            titleBar.BackgroundColor = Colors.Transparent;
-            titleBar.ForegroundColor = Colors.Transparent;
-            titleBar.InactiveBackgroundColor = Colors.Transparent;
-            titleBar.InactiveForegroundColor = Colors.Transparent;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            appWindowTitleBar.BackgroundColor = Colors.Transparent;
+            appWindowTitleBar.ForegroundColor = Colors.Transparent;
+            appWindowTitleBar.InactiveBackgroundColor = Colors.Transparent;
+            appWindowTitleBar.InactiveForegroundColor = Colors.Transparent;
+            appWindowTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            appWindowTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 
             if (theme is ElementTheme.Light)
             {
-                titleBar.ButtonForegroundColor = Color.FromArgb(255, 23, 23, 23);
-                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 0, 0, 0);
-                titleBar.ButtonHoverForegroundColor = Colors.Black;
-                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 0, 0, 0);
-                titleBar.ButtonPressedForegroundColor = Colors.Black;
-                titleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 153, 153, 153);
+                appWindowTitleBar.ButtonForegroundColor = Color.FromArgb(255, 23, 23, 23);
+                appWindowTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 0, 0, 0);
+                appWindowTitleBar.ButtonHoverForegroundColor = Colors.Black;
+                appWindowTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 0, 0, 0);
+                appWindowTitleBar.ButtonPressedForegroundColor = Colors.Black;
+                appWindowTitleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 153, 153, 153);
             }
             else
             {
-                titleBar.ButtonForegroundColor = Color.FromArgb(255, 242, 242, 242);
-                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 255, 255, 255);
-                titleBar.ButtonHoverForegroundColor = Colors.White;
-                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 255, 255, 255);
-                titleBar.ButtonPressedForegroundColor = Colors.White;
-                titleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 102, 102, 102);
+                appWindowTitleBar.ButtonForegroundColor = Color.FromArgb(255, 242, 242, 242);
+                appWindowTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(25, 255, 255, 255);
+                appWindowTitleBar.ButtonHoverForegroundColor = Colors.White;
+                appWindowTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(51, 255, 255, 255);
+                appWindowTitleBar.ButtonPressedForegroundColor = Colors.White;
+                appWindowTitleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 102, 102, 102);
             }
         }
 

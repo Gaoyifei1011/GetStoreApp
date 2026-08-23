@@ -735,7 +735,7 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         internal void UpdateData(List<string> dataList)
         {
-            if (dataList.Count is 3)
+            if (dataList is not null && dataList.Count is 3)
             {
                 SelectedItem = StoreSelectorBar.Items[0];
                 SelectedType = Convert.ToInt32(dataList[0]) is -1 ? TypeList[0] : TypeList[Convert.ToInt32(dataList[0])];
@@ -777,7 +777,7 @@ namespace GetStoreApp.Views.UserControls
                 // 商店接口查询方式
                 if (string.Equals(QueryLinksModeService.QueryLinksMode, QueryLinksModeService.QueryLinksModeList[0]))
                 {
-                    (bool requestResult, bool isPackagedApp, AppInfoModel appInfoItem, List<QueryLinksResultModel> queryLinksResultList) = await QueryLinksViaOfficialInterfaceAsync(ChannelList[channelIndex].InternalName);
+                    (bool requestResult, bool isPackagedApp, AppInfoModel appInfoItem, List<QueryLinksResultModel> queryLinksResultList) = await QueryLinksViaOfficialInterfaceAsync(TypeList[typeIndex].InternalName, ChannelList[channelIndex].InternalName, QueryLinksText);
 
                     IsQueryingLinks = false;
                     foreach (HistoryModel historyItem in QueryLinksHistoryCollection)
@@ -788,7 +788,7 @@ namespace GetStoreApp.Views.UserControls
                     if (requestResult)
                     {
                         // 获取成功
-                        if (queryLinksResultList is not null && queryLinksResultList.Count > 0)
+                        if (queryLinksResultList is not null && queryLinksResultList.Count is not 0)
                         {
                             UpdateQueryLinksResultHistory(appInfoItem.Name, typeIndex, channelIndex, link);
                             IsQueryLinksResultVisible = true;
@@ -816,7 +816,7 @@ namespace GetStoreApp.Views.UserControls
                 // 第三方接口查询方式
                 else if (string.Equals(QueryLinksModeService.QueryLinksMode, QueryLinksModeService.QueryLinksModeList[1]))
                 {
-                    (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksResultModel> queryLinksResultList) = await QueryLinksVia3rdInterfaceAsync(link);
+                    (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksResultModel> queryLinksResultList) = await QueryLinksVia3rdInterfaceAsync(link, TypeList[typeIndex].InternalName, ChannelList[channelIndex].InternalName);
 
                     IsQueryingLinks = false;
                     foreach (HistoryModel historyItem in QueryLinksHistoryCollection)
@@ -854,16 +854,16 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 通过官方接口查询链接
         /// </summary>
-        private async Task<(bool, bool, AppInfoModel, List<QueryLinksResultModel>)> QueryLinksViaOfficialInterfaceAsync(string internalName)
+        private async Task<(bool, bool, AppInfoModel, List<QueryLinksResultModel>)> QueryLinksViaOfficialInterfaceAsync(string typeInternalName, string channelInternalName, string queryLinksText)
         {
             return await Task.Run(async () =>
             {
                 (bool requestResult, bool isPackagedApp, AppInfoModel appInfoItem, List<QueryLinksResultModel> queryLinksResultList) queryLinksResult = ValueTuple.Create<bool, bool, AppInfoModel, List<QueryLinksResultModel>>(false, false, null, null);
 
-                if (!string.IsNullOrEmpty(internalName))
+                if (!string.IsNullOrEmpty(typeInternalName) && !string.IsNullOrEmpty(channelInternalName))
                 {
                     // 解析链接对应的产品 ID
-                    string productId = Equals(SelectedType, TypeList[0]) ? QueryLinksHelper.ParseRequestContent(QueryLinksText) : QueryLinksText;
+                    string productId = string.Equals(typeInternalName, "url", StringComparison.OrdinalIgnoreCase) ? QueryLinksHelper.ParseRequestContent(queryLinksText) : queryLinksText;
                     string cookie = await QueryLinksHelper.GetCookieAsync();
 
                     // 获取应用信息
@@ -885,11 +885,11 @@ namespace GetStoreApp.Views.UserControls
                         else
                         {
                             queryLinksResult.isPackagedApp = true;
-                            string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.appInfo.CategoryID, internalName);
+                            string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.appInfo.CategoryID, channelInternalName);
 
                             if (!string.IsNullOrEmpty(fileListXml))
                             {
-                                List<QueryLinksResultModel> appxPackagesList = await QueryLinksHelper.GetAppxPackagesAsync(fileListXml, internalName);
+                                List<QueryLinksResultModel> appxPackagesList = await QueryLinksHelper.GetAppxPackagesAsync(fileListXml, channelInternalName);
                                 foreach (QueryLinksResultModel appxPackage in appxPackagesList)
                                 {
                                     bool isExisted = false;
@@ -938,7 +938,7 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 通过第三方接口查询链接
         /// </summary>
-        private async Task<(InfoBarSeverity, bool, string, List<QueryLinksResultModel>)> QueryLinksVia3rdInterfaceAsync(string link)
+        private async Task<(InfoBarSeverity, bool, string, List<QueryLinksResultModel>)> QueryLinksVia3rdInterfaceAsync(string link, string typeInternalName, string channelInternalName)
         {
             return await Task.Run(async () =>
             {
@@ -947,7 +947,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!string.IsNullOrEmpty(link))
                 {
                     // 生成请求的内容
-                    string generateContent = await HtmlRequestHelper.GenerateRequestContentAsync(SelectedType.InternalName, link, SelectedChannel.InternalName);
+                    string generateContent = await HtmlRequestHelper.GenerateRequestContentAsync(typeInternalName, link, channelInternalName);
 
                     // 获取网页反馈回的原始数据
                     RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);

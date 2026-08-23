@@ -213,7 +213,7 @@ namespace GetStoreApp.Views.Dialogs
                     CurrentPackageVolume = currentPackageVolume;
                 }
 
-                if (packageVolumeList.Count is 0)
+                if (packageVolumeList is null || packageVolumeList.Count is 0)
                 {
                     PackageVolumeResultKind = PackageVolumeResultKind.Failed;
                 }
@@ -233,7 +233,7 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 获取应用包存储卷信息
         /// </summary>
-        private async Task<(PackageVolumeModel currentPackageVolume, List<PackageVolumeModel> packageVolumeList)> GetCurrentPackageAndPackageVolumeListAsync()
+        private async Task<(PackageVolumeModel, List<PackageVolumeModel>)> GetCurrentPackageAndPackageVolumeListAsync()
         {
             return await Task.Run(async () =>
             {

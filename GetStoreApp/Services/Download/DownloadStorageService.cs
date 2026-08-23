@@ -57,35 +57,37 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         internal static void AddDownloadData(DownloadSchedulerModel downloadScheduler)
         {
-            if (downloadStorageContainer is not null)
+            if (downloadScheduler is null || downloadStorageContainer is null)
             {
-                DownloadStorageSemaphoreSlim?.Wait();
-
-                try
-                {
-                    Windows.Storage.ApplicationDataCompositeValue compositeValue = [];
-
-                    downloadScheduler.DownloadKey = string.IsNullOrEmpty(downloadScheduler.DownloadKey)
-                        ? HashAlgorithmHelper.GenerateDownloadKey(downloadScheduler.FileName, downloadScheduler.FilePath)
-                        : downloadScheduler.DownloadKey;
-
-                    compositeValue[DownloadKey] = downloadScheduler.DownloadKey;
-                    compositeValue[FileName] = downloadScheduler.FileName;
-                    compositeValue[FilePath] = downloadScheduler.FilePath;
-                    compositeValue[FileSize] = downloadScheduler.TotalSize;
-
-                    if (downloadStorageContainer.Values.TryAdd(downloadScheduler.DownloadKey, compositeValue))
-                    {
-                        StorageDataAdded?.Invoke(downloadScheduler);
-                    }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(AddDownloadData), 1, e);
-                }
-
-                DownloadStorageSemaphoreSlim?.Release();
+                return;
             }
+
+            DownloadStorageSemaphoreSlim?.Wait();
+
+            try
+            {
+                Windows.Storage.ApplicationDataCompositeValue compositeValue = [];
+
+                downloadScheduler.DownloadKey = string.IsNullOrEmpty(downloadScheduler.DownloadKey)
+                    ? HashAlgorithmHelper.GenerateDownloadKey(downloadScheduler.FileName, downloadScheduler.FilePath)
+                    : downloadScheduler.DownloadKey;
+
+                compositeValue[DownloadKey] = downloadScheduler.DownloadKey;
+                compositeValue[FileName] = downloadScheduler.FileName;
+                compositeValue[FilePath] = downloadScheduler.FilePath;
+                compositeValue[FileSize] = downloadScheduler.TotalSize;
+
+                if (downloadStorageContainer.Values.TryAdd(downloadScheduler.DownloadKey, compositeValue))
+                {
+                    StorageDataAdded?.Invoke(downloadScheduler);
+                }
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(AddDownloadData), 1, e);
+            }
+
+            DownloadStorageSemaphoreSlim?.Release();
         }
 
         /// <summary>
@@ -93,24 +95,26 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         internal static void DeleteDownloadData(string downloadKey)
         {
-            if (downloadStorageContainer is not null)
+            if (string.IsNullOrEmpty(downloadKey) || downloadStorageContainer is null)
             {
-                DownloadStorageSemaphoreSlim?.Wait();
-
-                try
-                {
-                    if (downloadStorageContainer.Values.Remove(downloadKey))
-                    {
-                        StorageDataDeleted?.Invoke(downloadKey);
-                    }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(DeleteDownloadData), 1, e);
-                }
-
-                DownloadStorageSemaphoreSlim?.Release();
+                return;
             }
+
+            DownloadStorageSemaphoreSlim?.Wait();
+
+            try
+            {
+                if (downloadStorageContainer.Values.Remove(downloadKey))
+                {
+                    StorageDataDeleted?.Invoke(downloadKey);
+                }
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(DeleteDownloadData), 1, e);
+            }
+
+            DownloadStorageSemaphoreSlim?.Release();
         }
 
         /// <summary>

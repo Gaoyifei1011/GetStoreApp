@@ -435,16 +435,11 @@ namespace GetStoreApp.Views.Pages
         {
             PackageManager packageManager = await Task.Run(WinGetFactoryHelper.CreatePackageManager);
 
-            PackageCatalogReference packageCatalogReference = await Task.Run(() =>
-            {
-                return GetPackageCatalogReference(packageManager);
-            });
-
-            if (packageCatalogReference is not null)
+            if (await Task.Run(() => { return GetPackageCatalogReference(packageManager); }) is PackageCatalogReference packageCatalogReference)
             {
                 (ConnectResult connectResult, FindPackagesResult findPackagesResult, List<SearchAppsModel> searchAppsList) = await Task.Run(() =>
                 {
-                    return SearchAppsAsync(packageCatalogReference);
+                    return SearchAppsAsync(packageCatalogReference, PackageMatchField, PackageFieldMatchOption, IsIncrease);
                 });
 
                 if (connectResult is not null && findPackagesResult is not null)
@@ -542,7 +537,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 搜索应用
         /// </summary>
-        private async Task<(ConnectResult, FindPackagesResult, List<SearchAppsModel>)> SearchAppsAsync(PackageCatalogReference packageCatalogReference)
+        private async Task<(ConnectResult, FindPackagesResult, List<SearchAppsModel>)> SearchAppsAsync(PackageCatalogReference packageCatalogReference, PackageMatchField packageMatchField, PackageFieldMatchOption packageFieldMatchOption, bool isIncrease)
         {
             (ConnectResult connectResult, FindPackagesResult findPackagesResult, List<SearchAppsModel> searchAppsList) searchAppsResult = ValueTuple.Create<ConnectResult, FindPackagesResult, List<SearchAppsModel>>(null, null, null);
 
@@ -557,8 +552,8 @@ namespace GetStoreApp.Views.Pages
                     {
                         FindPackagesOptions findPackagesOptions = WinGetFactoryHelper.CreateFindPackagesOptions();
                         PackageMatchFilter packageMatchFilter = WinGetFactoryHelper.CreatePackageMatchFilter();
-                        packageMatchFilter.Field = PackageMatchField;
-                        packageMatchFilter.Option = PackageFieldMatchOption;
+                        packageMatchFilter.Field = packageMatchField;
+                        packageMatchFilter.Option = packageFieldMatchOption;
                         packageMatchFilter.Value = cachedSearchText;
 
                         findPackagesOptions.Filters.Add(packageMatchFilter);
@@ -585,7 +580,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            if (IsIncrease)
+                            if (isIncrease)
                             {
                                 searchAppsList.Sort((item1, item2) => item1.AppName.CompareTo(item2.AppName));
                             }

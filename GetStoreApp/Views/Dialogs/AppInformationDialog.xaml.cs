@@ -122,7 +122,7 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async Task<List<ContentLinkInfo>> GetDependencyInformationListAsync(List<string> propertyNameList)
         {
-            if (propertyNameList is null)
+            if (propertyNameList is null || propertyNameList.Count is 0)
             {
                 return default;
             }
@@ -204,7 +204,7 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async Task<string> GetAppInformationCopyStringListAsync(List<ContentLinkInfo> appInformationList)
         {
-            if (appInformationList is null)
+            if (appInformationList is null || appInformationList.Count is 0)
             {
                 return default;
             }
@@ -215,7 +215,7 @@ namespace GetStoreApp.Views.Dialogs
                 {
                     List<string> appInformationCopyStringList = [];
 
-                    foreach (ContentLinkInfo appInformation in AppInformationCollection)
+                    foreach (ContentLinkInfo appInformation in appInformationList)
                     {
                         appInformationCopyStringList.Add(appInformation.DisplayText + appInformation.SecondaryText);
                     }

@@ -17,6 +17,11 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         internal static bool CopyTextToClipBoard(string content)
         {
+            if (string.IsNullOrEmpty(content))
+            {
+                return false;
+            }
+
             try
             {
                 DataPackage dataPackage = new()
@@ -39,6 +44,11 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         internal static bool CopyFileToClipBoard(List<StorageFile> fileList)
         {
+            if (fileList is null || fileList.Count is 0)
+            {
+                return false;
+            }
+
             try
             {
                 DataPackage dataPackage = new()

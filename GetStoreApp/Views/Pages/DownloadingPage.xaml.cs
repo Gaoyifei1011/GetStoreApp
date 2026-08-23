@@ -470,7 +470,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private List<DownloadingModel> GetSelectedDownloadingList(List<DownloadingModel> downloadingList)
         {
-            if (downloadingList is null)
+            if (downloadingList is null || downloadingList.Count is 0)
             {
                 return default;
             }
@@ -493,10 +493,12 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void ContinueDownload(DownloadingModel downloading)
         {
-            if (downloading is not null)
+            if (downloading is null)
             {
-                DownloadSchedulerService.ContinueDownload(downloading.DownloadID);
+                return;
             }
+
+            DownloadSchedulerService.ContinueDownload(downloading.DownloadID);
         }
 
         /// <summary>
@@ -504,16 +506,18 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void DeleteDownload(DownloadingModel downloading)
         {
-            if (downloading is not null)
+            if (downloading is null)
             {
-                if (downloading.DownloadProgressState is DownloadProgressState.Queued || downloading.DownloadProgressState is DownloadProgressState.Downloading || downloading.DownloadProgressState is DownloadProgressState.Paused)
-                {
-                    DownloadSchedulerService.DeleteDownload(downloading.DownloadID);
-                }
-                else
-                {
-                    DownloadingCollection.Remove(downloading);
-                }
+                return;
+            }
+
+            if (downloading.DownloadProgressState is DownloadProgressState.Queued || downloading.DownloadProgressState is DownloadProgressState.Downloading || downloading.DownloadProgressState is DownloadProgressState.Paused)
+            {
+                DownloadSchedulerService.DeleteDownload(downloading.DownloadID);
+            }
+            else
+            {
+                DownloadingCollection.Remove(downloading);
             }
         }
 
@@ -522,10 +526,12 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void PauseDownload(DownloadingModel downloading)
         {
-            if (downloading is not null)
+            if (downloading is null)
             {
-                DownloadSchedulerService.PauseDownload(downloading.DownloadID);
+                return;
             }
+
+            DownloadSchedulerService.PauseDownload(downloading.DownloadID);
         }
 
         #endregion 第七部分：数据操作与业务逻辑

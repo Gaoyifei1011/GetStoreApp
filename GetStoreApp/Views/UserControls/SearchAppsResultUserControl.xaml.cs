@@ -132,6 +132,11 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private void OpenLink(string appLink)
         {
+            if (string.IsNullOrEmpty(appLink))
+            {
+                return;
+            }
+
             Task.Run(async () =>
             {
                 try

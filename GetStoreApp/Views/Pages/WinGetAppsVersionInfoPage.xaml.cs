@@ -665,8 +665,7 @@ namespace GetStoreApp.Views.Pages
                 if (SearchApps is not null)
                 {
                     // 获取当前应用可用版本
-                    List<AvailableVersionModel> availableVersionList = await GetAvailableVersionAysnc(SearchApps.CatalogPackage, false);
-                    if (availableVersionList is not null)
+                    if (await GetAvailableVersionAysnc(SearchApps.CatalogPackage, false) is List<AvailableVersionModel> availableVersionList && availableVersionList.Count is not 0)
                     {
                         await UpdateAvailableVersionListAsync(availableVersionList);
                     }
@@ -674,8 +673,7 @@ namespace GetStoreApp.Views.Pages
                 else if (UpgradableApps is not null)
                 {
                     // 获取当前应用可用版本
-                    List<AvailableVersionModel> availableVersionList = await GetAvailableVersionAysnc(UpgradableApps.CatalogPackage, true);
-                    if (availableVersionList is not null)
+                    if (await GetAvailableVersionAysnc(SearchApps.CatalogPackage, false) is List<AvailableVersionModel> availableVersionList && availableVersionList.Count is not 0)
                     {
                         await UpdateAvailableVersionListAsync(availableVersionList);
                     }
@@ -974,7 +972,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task UpdateAvailableVersionListAsync(List<AvailableVersionModel> availableVersionList)
         {
-            if (availableVersionList is not null)
+            if (availableVersionList is not null && availableVersionList.Count is not 0)
             {
                 foreach (AvailableVersionModel availableVersionItem in availableVersionList)
                 {

@@ -20,7 +20,6 @@ using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
 using Windows.UI.Notifications;
-using Windows.UI.ViewManagement;
 using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
@@ -295,28 +294,32 @@ namespace GetStoreApp.Views.Pages
                     if (dwRmStatus is 0)
                     {
                         List<uint> processPIDList = ProcessHelper.GetProcessPIDByName("explorer.exe");
-                        RM_UNIQUE_PROCESS[] lpRmProcList = new RM_UNIQUE_PROCESS[processPIDList.Count];
 
-                        for (int index = 0; index < processPIDList.Count; index++)
+                        if (processPIDList is not null && processPIDList.Count is not 0)
                         {
-                            lpRmProcList[index].dwProcessId = (int)processPIDList[index];
-                            nint hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_QUERY_LIMITED_INFORMATION, false, (int)processPIDList[index]);
-                            lpRmProcList[index].ProcessStartTime = hProcess != nint.Zero && Kernel32Library.GetProcessTimes(hProcess, out FILETIME creationTime, out FILETIME exitTime, out FILETIME kernelTime, out FILETIME userTime) ? creationTime : new();
-                        }
+                            RM_UNIQUE_PROCESS[] lpRmProcList = new RM_UNIQUE_PROCESS[processPIDList.Count];
 
-                        dwRmStatus = RstrtmgrLibrary.RmRegisterResources(dwSessionHandle, 0, null, (uint)processPIDList.Count, lpRmProcList, 0, null);
+                            for (int index = 0; index < processPIDList.Count; index++)
+                            {
+                                lpRmProcList[index].dwProcessId = (int)processPIDList[index];
+                                nint hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_QUERY_LIMITED_INFORMATION, false, (int)processPIDList[index]);
+                                lpRmProcList[index].ProcessStartTime = hProcess != nint.Zero && Kernel32Library.GetProcessTimes(hProcess, out FILETIME creationTime, out FILETIME exitTime, out FILETIME kernelTime, out FILETIME userTime) ? creationTime : new();
+                            }
 
-                        if (dwRmStatus is 0)
-                        {
-                            dwRmStatus = RstrtmgrLibrary.RmShutdown(dwSessionHandle, RM_SHUTDOWN_TYPE.RmForceShutdown, null);
+                            dwRmStatus = RstrtmgrLibrary.RmRegisterResources(dwSessionHandle, 0, null, (uint)processPIDList.Count, lpRmProcList, 0, null);
 
                             if (dwRmStatus is 0)
                             {
-                                dwRmStatus = RstrtmgrLibrary.RmRestart(dwSessionHandle, 0, null);
+                                dwRmStatus = RstrtmgrLibrary.RmShutdown(dwSessionHandle, RM_SHUTDOWN_TYPE.RmForceShutdown, null);
 
                                 if (dwRmStatus is 0)
                                 {
-                                    dwRmStatus = RstrtmgrLibrary.RmEndSession(dwSessionHandle);
+                                    dwRmStatus = RstrtmgrLibrary.RmRestart(dwSessionHandle, 0, null);
+
+                                    if (dwRmStatus is 0)
+                                    {
+                                        dwRmStatus = RstrtmgrLibrary.RmEndSession(dwSessionHandle);
+                                    }
                                 }
                             }
                         }

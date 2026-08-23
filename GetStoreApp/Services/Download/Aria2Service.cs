@@ -146,6 +146,11 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         internal static void CreateDownload(string url, string saveFilePath)
         {
+            if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(saveFilePath))
+            {
+                return;
+            }
+
             Task.Run(async () =>
             {
                 try
@@ -231,6 +236,11 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         internal static void ContinueDownload(string downloadID)
         {
+            if (string.IsNullOrEmpty(downloadID))
+            {
+                return;
+            }
+
             Task.Run(async () =>
             {
                 try
@@ -312,6 +322,11 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         internal static void PauseDownload(string downloadID)
         {
+            if (string.IsNullOrEmpty(downloadID))
+            {
+                return;
+            }
+
             Task.Run(async () =>
             {
                 try
@@ -380,6 +395,11 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         internal static void DeleteDownload(string downloadID)
         {
+            if (string.IsNullOrEmpty(downloadID))
+            {
+                return;
+            }
+
             Task.Run(async () =>
             {
                 try
@@ -470,16 +490,18 @@ namespace GetStoreApp.Services.Download
             double totalSize = 0;
             double downloadSpeed = 0;
 
-            try
+            if (!string.IsNullOrEmpty(downloadID))
             {
-                if (await IsAria2ExistedAsync())
+                try
                 {
-                    JsonObject jsonObject = new()
+                    if (await IsAria2ExistedAsync())
                     {
-                        ["jsonrpc"] = JsonValue.CreateStringValue("2.0"),
-                        ["id"] = JsonValue.CreateStringValue(string.Empty),
-                        ["method"] = JsonValue.CreateStringValue("aria2.tellStatus"),
-                        ["params"] = new JsonArray()
+                        JsonObject jsonObject = new()
+                        {
+                            ["jsonrpc"] = JsonValue.CreateStringValue("2.0"),
+                            ["id"] = JsonValue.CreateStringValue(string.Empty),
+                            ["method"] = JsonValue.CreateStringValue("aria2.tellStatus"),
+                            ["params"] = new JsonArray()
                         {
                             JsonValue.CreateStringValue(downloadID),
                             new JsonArray()
@@ -491,62 +513,63 @@ namespace GetStoreApp.Services.Download
                                 JsonValue.CreateStringValue("downloadSpeed")
                             }
                         }
-                    };
+                        };
 
-                    string tellStatusString = jsonObject.Stringify();
-                    byte[] contentBytes = Encoding.UTF8.GetBytes(tellStatusString);
+                        string tellStatusString = jsonObject.Stringify();
+                        byte[] contentBytes = Encoding.UTF8.GetBytes(tellStatusString);
 
-                    Uri rpcServerLinkUri = new(rpcServerLink);
-                    HttpStringContent httpStringContent = new(tellStatusString, Windows.Storage.Streams.UnicodeEncoding.Utf8);
-                    httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
-                    httpStringContent.Headers.ContentType.CharSet = "utf-8";
+                        Uri rpcServerLinkUri = new(rpcServerLink);
+                        HttpStringContent httpStringContent = new(tellStatusString, Windows.Storage.Streams.UnicodeEncoding.Utf8);
+                        httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
+                        httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
-                    HttpClient httpClient = new();
-                    httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
-                    httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
-                    httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
+                        HttpClient httpClient = new();
+                        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                        httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
+                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
 
-                    HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
+                        HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
-                    // 请求成功
-                    if (response.IsSuccessStatusCode)
-                    {
-                        isTellStatusSuccessfully = true;
-
-                        string responseContent = await response.Content.ReadAsStringAsync();
-                        JsonObject resultObject = JsonObject.Parse(responseContent);
-                        JsonObject downloadResultObject = resultObject.GetNamedObject("result");
-                        string status = downloadResultObject.GetNamedString("status");
-                        completedSize = Convert.ToDouble(downloadResultObject.GetNamedString("completedLength"));
-                        totalSize = Convert.ToDouble(downloadResultObject.GetNamedString("totalLength"));
-                        downloadSpeed = Convert.ToDouble(downloadResultObject.GetNamedString("downloadSpeed"));
-
-                        if (string.Equals(status, "active", StringComparison.OrdinalIgnoreCase))
+                        // 请求成功
+                        if (response.IsSuccessStatusCode)
                         {
-                            downloadProgressState = DownloadProgressState.Downloading;
-                        }
-                        else if (string.Equals(status, "waiting", StringComparison.OrdinalIgnoreCase))
-                        {
-                            downloadProgressState = DownloadProgressState.Queued;
-                        }
-                        else if (string.Equals(status, "paused", StringComparison.OrdinalIgnoreCase))
-                        {
-                            downloadProgressState = DownloadProgressState.Paused;
-                        }
-                        else if (string.Equals(status, "error", StringComparison.OrdinalIgnoreCase))
-                        {
-                            downloadProgressState = DownloadProgressState.Failed;
-                        }
-                        else if (string.Equals(status, "complete", StringComparison.OrdinalIgnoreCase))
-                        {
-                            downloadProgressState = DownloadProgressState.Finished;
+                            isTellStatusSuccessfully = true;
+
+                            string responseContent = await response.Content.ReadAsStringAsync();
+                            JsonObject resultObject = JsonObject.Parse(responseContent);
+                            JsonObject downloadResultObject = resultObject.GetNamedObject("result");
+                            string status = downloadResultObject.GetNamedString("status");
+                            completedSize = Convert.ToDouble(downloadResultObject.GetNamedString("completedLength"));
+                            totalSize = Convert.ToDouble(downloadResultObject.GetNamedString("totalLength"));
+                            downloadSpeed = Convert.ToDouble(downloadResultObject.GetNamedString("downloadSpeed"));
+
+                            if (string.Equals(status, "active", StringComparison.OrdinalIgnoreCase))
+                            {
+                                downloadProgressState = DownloadProgressState.Downloading;
+                            }
+                            else if (string.Equals(status, "waiting", StringComparison.OrdinalIgnoreCase))
+                            {
+                                downloadProgressState = DownloadProgressState.Queued;
+                            }
+                            else if (string.Equals(status, "paused", StringComparison.OrdinalIgnoreCase))
+                            {
+                                downloadProgressState = DownloadProgressState.Paused;
+                            }
+                            else if (string.Equals(status, "error", StringComparison.OrdinalIgnoreCase))
+                            {
+                                downloadProgressState = DownloadProgressState.Failed;
+                            }
+                            else if (string.Equals(status, "complete", StringComparison.OrdinalIgnoreCase))
+                            {
+                                downloadProgressState = DownloadProgressState.Finished;
+                            }
                         }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(Aria2Service), nameof(TellStatusAsync), 1, e);
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(Aria2Service), nameof(TellStatusAsync), 1, e);
+                }
             }
 
             return ValueTuple.Create(isTellStatusSuccessfully, downloadProgressState, completedSize, totalSize, downloadSpeed);

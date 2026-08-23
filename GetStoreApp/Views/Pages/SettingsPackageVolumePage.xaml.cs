@@ -491,36 +491,38 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void ShowSetDefaultVolumeResultNotification(PackageVolumeModel packageVolume, bool result, Exception exception)
         {
-            if (packageVolume is not null)
+            if (packageVolume is null)
             {
-                Task.Run(() =>
-                {
-                    if (result)
-                    {
-                        // 显示应用包存储默认卷设置成功通知
-                        AppNotificationBuilder appNotificationBuilder = new();
-                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                        appNotificationBuilder.AddText(string.Format(SetDefaultSuccessfullyString, packageVolume.Name));
-                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                    }
-                    else
-                    {
-                        // 显示应用包存储默认卷设置成功通知
-
-                        AppNotificationBuilder appNotificationBuilder = new();
-                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                        appNotificationBuilder.AddText(string.Format(SetDefaultFailed1String, packageVolume.Name));
-                        appNotificationBuilder.AddText(SetDefaultFailed2String);
-                        appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
-                        {
-                            string.Format(SetDefaultFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
-                            string.Format(SetDefaultFailed4String, exception is not null ? exception.Message : NotAvailableString)
-                        }));
-                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(ShowSetDefaultVolumeResultNotification), 1, exception is not null ? exception : new());
-                    }
-                });
+                return;
             }
+
+            Task.Run(() =>
+            {
+                if (result)
+                {
+                    // 显示应用包存储默认卷设置成功通知
+                    AppNotificationBuilder appNotificationBuilder = new();
+                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                    appNotificationBuilder.AddText(string.Format(SetDefaultSuccessfullyString, packageVolume.Name));
+                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                }
+                else
+                {
+                    // 显示应用包存储默认卷设置成功通知
+
+                    AppNotificationBuilder appNotificationBuilder = new();
+                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                    appNotificationBuilder.AddText(string.Format(SetDefaultFailed1String, packageVolume.Name));
+                    appNotificationBuilder.AddText(SetDefaultFailed2String);
+                    appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                    {
+                        string.Format(SetDefaultFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
+                        string.Format(SetDefaultFailed4String, exception is not null ? exception.Message : NotAvailableString)
+                    }));
+                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(ShowSetDefaultVolumeResultNotification), 1, exception is not null ? exception : new());
+                }
+            });
         }
 
         /// <summary>
@@ -528,62 +530,64 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void ShowMountVolumeResultNotification(PackageVolumeModel packageVolume, bool result, PackageDeploymentResult packageDeploymentResult, Exception exception)
         {
-            if (packageVolume is not null)
+            if (packageVolume is null)
             {
-                Task.Run(() =>
-                {
-                    if (result && packageDeploymentResult is not null)
-                    {
-                        if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
-                        {
-                            // 显示应用包存储卷挂载成功通知
-                            AppNotificationBuilder appNotificationBuilder = new();
-                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(MountSuccessfullyString, packageVolume.Name));
-                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        }
-                        else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
-                        {
-                            string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
-                            string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+                return;
+            }
 
-                            // 显示应用包存储卷挂载失败通知
-                            Task.Run(() =>
-                            {
-                                AppNotificationBuilder appNotificationBuilder = new();
-                                appNotificationBuilder.AddArgument("action", "OpenApp");
-                                appNotificationBuilder.AddText(string.Format(MountFailed1String, packageVolume.Name));
-                                appNotificationBuilder.AddText(MountFailed2String);
-                                appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
-                                {
-                                    string.Format(MountFailed3String, errorCode),
-                                    string.Format(MountFailed4String, errorMessage)
-                                }));
-                                ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(ShowMountVolumeResultNotification), 1, exception is not null ? exception : new());
-                            });
-                        }
-                    }
-                    else
+            Task.Run(() =>
+            {
+                if (result && packageDeploymentResult is not null)
+                {
+                    if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
                     {
+                        // 显示应用包存储卷挂载成功通知
+                        AppNotificationBuilder appNotificationBuilder = new();
+                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                        appNotificationBuilder.AddText(string.Format(MountSuccessfullyString, packageVolume.Name));
+                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                    }
+                    else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
+                    {
+                        string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
+                        string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+
                         // 显示应用包存储卷挂载失败通知
                         Task.Run(() =>
-                       {
-                           AppNotificationBuilder appNotificationBuilder = new();
-                           appNotificationBuilder.AddArgument("action", "OpenApp");
-                           appNotificationBuilder.AddText(string.Format(MountFailed1String, packageVolume.Name));
-                           appNotificationBuilder.AddText(MountFailed2String);
-                           appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
-                           {
-                                string.Format(MountFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
-                                string.Format(MountFailed4String, exception is not null ? exception.Message : NotAvailableString)
-                           }));
-                           ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                           LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(ShowMountVolumeResultNotification), 2, exception is not null ? exception : new());
-                       });
+                        {
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(MountFailed1String, packageVolume.Name));
+                            appNotificationBuilder.AddText(MountFailed2String);
+                            appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                            {
+                                string.Format(MountFailed3String, errorCode),
+                                string.Format(MountFailed4String, errorMessage)
+                            }));
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(ShowMountVolumeResultNotification), 1, exception is not null ? exception : new());
+                        });
                     }
-                });
-            }
+                }
+                else
+                {
+                    // 显示应用包存储卷挂载失败通知
+                    Task.Run(() =>
+                   {
+                       AppNotificationBuilder appNotificationBuilder = new();
+                       appNotificationBuilder.AddArgument("action", "OpenApp");
+                       appNotificationBuilder.AddText(string.Format(MountFailed1String, packageVolume.Name));
+                       appNotificationBuilder.AddText(MountFailed2String);
+                       appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                       {
+                            string.Format(MountFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
+                            string.Format(MountFailed4String, exception is not null ? exception.Message : NotAvailableString)
+                       }));
+                       ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                       LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(ShowMountVolumeResultNotification), 2, exception is not null ? exception : new());
+                   });
+                }
+            });
         }
 
         /// <summary>
@@ -591,41 +595,27 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void ShowDismountVolumeResultNotification(PackageVolumeModel packageVolume, bool result, PackageDeploymentResult packageDeploymentResult, Exception exception)
         {
-            if (packageVolume is not null)
+            if (packageVolume is null)
             {
-                Task.Run(() =>
+                return;
+            }
+            Task.Run(() =>
+            {
+                if (result && packageDeploymentResult is not null)
                 {
-                    if (result && packageDeploymentResult is not null)
+                    if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
                     {
-                        if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
-                        {
-                            // 显示应用包存储卷卸载成功通知
-                            AppNotificationBuilder appNotificationBuilder = new();
-                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(DismountSuccessfullyString, packageVolume.Name));
-                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        }
-                        else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
-                        {
-                            string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
-                            string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
-
-                            // 显示应用包存储卷卸载失败通知
-                            AppNotificationBuilder appNotificationBuilder = new();
-                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(DismountFailed1String, packageVolume.Name));
-                            appNotificationBuilder.AddText(DismountFailed2String);
-                            appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
-                            {
-                                string.Format(DismountFailed3String, errorCode),
-                                string.Format(DismountFailed4String, errorMessage)
-                            }));
-                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(ShowDismountVolumeResultNotification), 1, exception is not null ? exception : new());
-                        }
+                        // 显示应用包存储卷卸载成功通知
+                        AppNotificationBuilder appNotificationBuilder = new();
+                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                        appNotificationBuilder.AddText(string.Format(DismountSuccessfullyString, packageVolume.Name));
+                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                     }
-                    else
+                    else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                     {
+                        string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
+                        string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+
                         // 显示应用包存储卷卸载失败通知
                         AppNotificationBuilder appNotificationBuilder = new();
                         appNotificationBuilder.AddArgument("action", "OpenApp");
@@ -633,14 +623,29 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(DismountFailed2String);
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                            string.Format(DismountFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
-                            string.Format(DismountFailed4String, exception is not null ? exception.Message : NotAvailableString)
+                            string.Format(DismountFailed3String, errorCode),
+                            string.Format(DismountFailed4String, errorMessage)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(ShowDismountVolumeResultNotification), 2, exception is not null ? exception : new());
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(ShowDismountVolumeResultNotification), 1, exception is not null ? exception : new());
                     }
-                });
-            }
+                }
+                else
+                {
+                    // 显示应用包存储卷卸载失败通知
+                    AppNotificationBuilder appNotificationBuilder = new();
+                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                    appNotificationBuilder.AddText(string.Format(DismountFailed1String, packageVolume.Name));
+                    appNotificationBuilder.AddText(DismountFailed2String);
+                    appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                    {
+                        string.Format(DismountFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
+                        string.Format(DismountFailed4String, exception is not null ? exception.Message : NotAvailableString)
+                    }));
+                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(ShowDismountVolumeResultNotification), 2, exception is not null ? exception : new());
+                }
+            });
         }
 
         /// <summary>
@@ -648,55 +653,57 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void ShowRemoveVolumeResultNotification(PackageVolumeModel packageVolume, bool result, PackageDeploymentResult packageDeploymentResult, Exception exception)
         {
-            if (packageVolume is not null)
+            if (packageVolume is null)
             {
-                Task.Run(() =>
-                {
-                    if (result && packageDeploymentResult is not null)
-                    {
-                        if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
-                        {
-                            // 显示应用包存储卷移除成功通知
-                            AppNotificationBuilder appNotificationBuilder = new();
-                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(RemoveSuccessfullyString, packageVolume.Name));
-                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        }
-                        else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
-                        {
-                            string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
-                            string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+                return;
+            }
 
-                            // 显示应用包存储卷移除失败通知
-                            AppNotificationBuilder appNotificationBuilder = new();
-                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(RemoveFailed1String, packageVolume.Name));
-                            appNotificationBuilder.AddText(RemoveFailed2String);
-                            appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
-                            {
-                                string.Format(RemoveFailed3String, errorCode),
-                                string.Format(RemoveFailed4String, errorMessage)
-                            }));
-                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(ShowRemoveVolumeResultNotification), 1, exception is not null ? exception : new());
-                        }
-                    }
-                    else
+            Task.Run(() =>
+            {
+                if (result && packageDeploymentResult is not null)
+                {
+                    if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
                     {
+                        // 显示应用包存储卷移除成功通知
+                        AppNotificationBuilder appNotificationBuilder = new();
+                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                        appNotificationBuilder.AddText(string.Format(RemoveSuccessfullyString, packageVolume.Name));
+                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                    }
+                    else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
+                    {
+                        string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
+                        string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+
+                        // 显示应用包存储卷移除失败通知
                         AppNotificationBuilder appNotificationBuilder = new();
                         appNotificationBuilder.AddArgument("action", "OpenApp");
                         appNotificationBuilder.AddText(string.Format(RemoveFailed1String, packageVolume.Name));
                         appNotificationBuilder.AddText(RemoveFailed2String);
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                            string.Format(RemoveFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
-                            string.Format(RemoveFailed4String, exception is not null ? exception.Message : NotAvailableString)
+                            string.Format(RemoveFailed3String, errorCode),
+                            string.Format(RemoveFailed4String, errorMessage)
                         }));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(ShowRemoveVolumeResultNotification), 2, exception is not null ? exception : new());
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(ShowRemoveVolumeResultNotification), 1, exception is not null ? exception : new());
                     }
-                });
-            }
+                }
+                else
+                {
+                    AppNotificationBuilder appNotificationBuilder = new();
+                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                    appNotificationBuilder.AddText(string.Format(RemoveFailed1String, packageVolume.Name));
+                    appNotificationBuilder.AddText(RemoveFailed2String);
+                    appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                    {
+                        string.Format(RemoveFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
+                        string.Format(RemoveFailed4String, exception is not null ? exception.Message : NotAvailableString)
+                    }));
+                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsPackageVolumePage), nameof(ShowRemoveVolumeResultNotification), 2, exception is not null ? exception : new());
+                }
+            });
         }
 
         /// <summary>

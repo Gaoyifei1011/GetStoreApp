@@ -469,9 +469,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is PackageModel package)
             {
-                AppInformation appInformation = await GetAppInformationAsync(package);
-
-                if (appInformation is not null && MainWindow.Current.GetFrameContent() is AppManagerPage appManagerPage && Equals(appManagerPage.GetCurrentPageType(), appManagerPage.PageList[0]))
+                if (await GetAppInformationAsync(package) is AppInformation appInformation && MainWindow.Current.GetFrameContent() is AppManagerPage appManagerPage && Equals(appManagerPage.GetCurrentPageType(), appManagerPage.PageList[0]))
                 {
                     appManagerPage.NavigateTo(appManagerPage.PageList[1], appInformation, true);
                 }
@@ -515,8 +513,10 @@ namespace GetStoreApp.Views.Pages
             {
                 AppManagerResultKind = AppManagerResultKind.Loading;
                 AppManagerCollection.Clear();
-                List<PackageModel> filterSortPackageList = await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease);
-                UpdateFilterPackageData(filterSortPackageList);
+                if (await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is List<PackageModel> filterSortPackageList)
+                {
+                    UpdateFilterPackageData(filterSortPackageList);
+                }
             }
         }
 
@@ -530,8 +530,10 @@ namespace GetStoreApp.Views.Pages
             {
                 AppManagerResultKind = AppManagerResultKind.Loading;
                 AppManagerCollection.Clear();
-                List<PackageModel> filterSortPackageList = await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease);
-                UpdateFilterPackageData(filterSortPackageList);
+                if (await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is List<PackageModel> filterSortPackageList)
+                {
+                    UpdateFilterPackageData(filterSortPackageList);
+                }
             }
         }
 
@@ -546,8 +548,10 @@ namespace GetStoreApp.Views.Pages
                 IsIncrease = increase;
                 AppManagerResultKind = AppManagerResultKind.Loading;
                 AppManagerCollection.Clear();
-                List<PackageModel> filterSortPackageList = await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease);
-                UpdateFilterPackageData(filterSortPackageList);
+                if (await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is List<PackageModel> filterSortPackageList)
+                {
+                    UpdateFilterPackageData(filterSortPackageList);
+                }
             }
         }
 
@@ -563,8 +567,10 @@ namespace GetStoreApp.Views.Pages
 
                 AppManagerResultKind = AppManagerResultKind.Loading;
                 AppManagerCollection.Clear();
-                List<PackageModel> filterSortPackageList = await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease);
-                UpdateFilterPackageData(filterSortPackageList);
+                if (await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is List<PackageModel> filterSortPackageList)
+                {
+                    UpdateFilterPackageData(filterSortPackageList);
+                }
             }
         }
 
@@ -629,8 +635,10 @@ namespace GetStoreApp.Views.Pages
             {
                 AppManagerResultKind = AppManagerResultKind.Loading;
                 AppManagerCollection.Clear();
-                List<PackageModel> filterSortPackageList = await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease);
-                UpdateFilterPackageData(filterSortPackageList);
+                if (await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is List<PackageModel> filterSortPackageList)
+                {
+                    UpdateFilterPackageData(filterSortPackageList);
+                }
             }
 
             needToRefreshData = false;
@@ -711,24 +719,26 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OpenApp(Package package)
         {
-            if (package is not null)
+            if (package is null)
             {
-                Task.Run(async () =>
-                {
-                    try
-                    {
-                        IReadOnlyList<AppListEntry> appListEntryList = package.GetAppListEntries();
-                        if (appListEntryList.Count > 0)
-                        {
-                            await appListEntryList[0].LaunchAsync();
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OpenApp), 1, e);
-                    }
-                });
+                return;
             }
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    IReadOnlyList<AppListEntry> appListEntryList = package.GetAppListEntries();
+                    if (appListEntryList.Count > 0)
+                    {
+                        await appListEntryList[0].LaunchAsync();
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OpenApp), 1, e);
+                }
+            });
         }
 
         /// <summary>
@@ -736,23 +746,25 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OpenCacheFolder(Package package)
         {
-            if (package is not null)
+            if (package is null)
             {
-                Task.Run(async () =>
-                {
-                    try
-                    {
-                        if (ApplicationData.GetForPackageFamily(package.Id.FamilyName) is ApplicationData applicationData)
-                        {
-                            await Launcher.LaunchFolderAsync(applicationData.LocalFolder);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OpenCacheFolder), 1, e);
-                    }
-                });
+                return;
             }
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    if (ApplicationData.GetForPackageFamily(package.Id.FamilyName) is ApplicationData applicationData)
+                    {
+                        await Launcher.LaunchFolderAsync(applicationData.LocalFolder);
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OpenCacheFolder), 1, e);
+                }
+            });
         }
 
         /// <summary>
@@ -760,20 +772,22 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OpenInstalledFolder(Package package)
         {
-            if (package is not null)
+            if (package is null)
             {
-                Task.Run(async () =>
-                {
-                    try
-                    {
-                        await Launcher.LaunchFolderPathAsync(package.InstalledPath);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OpenInstalledFolder), 1, e);
-                    }
-                });
+                return;
             }
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchFolderPathAsync(package.InstalledPath);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OpenInstalledFolder), 1, e);
+                }
+            });
         }
 
         /// <summary>
@@ -781,23 +795,25 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OpenManifest(Package package)
         {
-            if (package is not null)
+            if (package is null)
             {
-                Task.Run(async () =>
-                {
-                    try
-                    {
-                        if (await global::Windows.Storage.StorageFile.GetFileFromPathAsync(Path.Combine(package.InstalledPath, "AppxManifest.xml")) is global::Windows.Storage.StorageFile file)
-                        {
-                            await Launcher.LaunchFileAsync(file);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OpenManifest), 1, e);
-                    }
-                });
+                return;
             }
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    if (await global::Windows.Storage.StorageFile.GetFileFromPathAsync(Path.Combine(package.InstalledPath, "AppxManifest.xml")) is global::Windows.Storage.StorageFile file)
+                    {
+                        await Launcher.LaunchFileAsync(file);
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OpenManifest), 1, e);
+                }
+            });
         }
 
         /// <summary>
@@ -805,20 +821,22 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OpenStore(Package package)
         {
-            if (package is not null)
+            if (package is null)
             {
-                Task.Run(async () =>
-                {
-                    try
-                    {
-                        await Launcher.LaunchUriAsync(new($"ms-windows-store://pdp/?PFN={package.Id.FamilyName}"));
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OpenStore), 1, e);
-                    }
-                });
+                return;
             }
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new($"ms-windows-store://pdp/?PFN={package.Id.FamilyName}"));
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(OpenStore), 1, e);
+                }
+            });
         }
 
         /// <summary>
@@ -989,40 +1007,23 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void ShowMoveAppResultNotification(PackageModel package, bool result, DeploymentResult deploymentResult, Exception exception)
         {
-            if (package is not null)
+            if (package is null)
             {
-                Task.Run(() =>
+                return;
+            }
+
+            Task.Run(() =>
+            {
+                // 移动成功
+                if (result && deploymentResult is not null)
                 {
-                    // 移动成功
-                    if (result && deploymentResult is not null)
+                    if (deploymentResult.ExtendedErrorCode is null)
                     {
-                        if (deploymentResult.ExtendedErrorCode is null)
-                        {
-                            // 显示 UWP 应用移动成功通知
-                            AppNotificationBuilder appNotificationBuilder = new();
-                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(MoveSuccessfullyString, package.Package.DisplayName));
-                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        }
-                        else
-                        {
-                            // 显示 UWP 应用移动失败通知
-                            AppNotificationBuilder appNotificationBuilder = new();
-                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(MoveFailed1String, package.Package.DisplayName));
-                            appNotificationBuilder.AddText(MoveFailed2String);
-                            appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
-                            {
-                                MoveFailed3String,
-                                string.Format(MoveFailed4String, deploymentResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", deploymentResult.ExtendedErrorCode.HResult) : NotAvailableString),
-                                string.Format(MoveFailed5String, deploymentResult.ErrorText)
-                            }));
-                            AppNotificationButton openSettingsButton = new(OpenSettingsString);
-                            openSettingsButton.Arguments.Add("action", "OpenSettings");
-                            appNotificationBuilder.AddButton(openSettingsButton);
-                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ShowMoveAppResultNotification), 1, deploymentResult.ExtendedErrorCode is not null ? deploymentResult.ExtendedErrorCode : new());
-                        }
+                        // 显示 UWP 应用移动成功通知
+                        AppNotificationBuilder appNotificationBuilder = new();
+                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                        appNotificationBuilder.AddText(string.Format(MoveSuccessfullyString, package.Package.DisplayName));
+                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                     }
                     else
                     {
@@ -1033,18 +1034,37 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(MoveFailed2String);
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                            MoveFailed3String,
-                            string.Format(MoveFailed4String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
-                            string.Format(MoveFailed5String, exception is not null ? exception.Message : NotAvailableString)
+                                MoveFailed3String,
+                                string.Format(MoveFailed4String, deploymentResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", deploymentResult.ExtendedErrorCode.HResult) : NotAvailableString),
+                                string.Format(MoveFailed5String, deploymentResult.ErrorText)
                         }));
                         AppNotificationButton openSettingsButton = new(OpenSettingsString);
                         openSettingsButton.Arguments.Add("action", "OpenSettings");
                         appNotificationBuilder.AddButton(openSettingsButton);
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ShowMoveAppResultNotification), 2, exception is not null ? exception : new());
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ShowMoveAppResultNotification), 1, deploymentResult.ExtendedErrorCode is not null ? deploymentResult.ExtendedErrorCode : new());
                     }
-                });
-            }
+                }
+                else
+                {
+                    // 显示 UWP 应用移动失败通知
+                    AppNotificationBuilder appNotificationBuilder = new();
+                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                    appNotificationBuilder.AddText(string.Format(MoveFailed1String, package.Package.DisplayName));
+                    appNotificationBuilder.AddText(MoveFailed2String);
+                    appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                    {
+                        MoveFailed3String,
+                        string.Format(MoveFailed4String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
+                        string.Format(MoveFailed5String, exception is not null ? exception.Message : NotAvailableString)
+                    }));
+                    AppNotificationButton openSettingsButton = new(OpenSettingsString);
+                    openSettingsButton.Arguments.Add("action", "OpenSettings");
+                    appNotificationBuilder.AddButton(openSettingsButton);
+                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ShowMoveAppResultNotification), 2, exception is not null ? exception : new());
+                }
+            });
         }
 
         /// <summary>
@@ -1052,47 +1072,30 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void ShowRepairAppResultNotification(PackageModel package, bool result, PackageDeploymentResult packageDeploymentResult, Exception exception)
         {
-            if (package is not null)
+            if (package is null)
             {
-                Task.Run(() =>
-                {
-                    // 修复成功
-                    if (result && packageDeploymentResult is not null)
-                    {
-                        if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
-                        {
-                            // 显示 UWP 应用修复成功通知
-                            AppNotificationBuilder appNotificationBuilder = new();
-                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(RepairSuccessfullyString, package.Package.DisplayName));
-                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        }
-                        // 修复失败
-                        else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
-                        {
-                            string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
-                            string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+                return;
+            }
 
-                            // 显示 UWP 应用修复失败通知
-                            AppNotificationBuilder appNotificationBuilder = new();
-                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(RepairFailed1String, package.Package.DisplayName));
-                            appNotificationBuilder.AddText(RepairFailed2String);
-                            appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
-                            {
-                                RepairFailed3String,
-                                string.Format(RepairFailed4String, errorCode),
-                                string.Format(RepairFailed5String, errorMessage)
-                            }));
-                            AppNotificationButton openSettingsButton = new(OpenSettingsString);
-                            openSettingsButton.Arguments.Add("action", "OpenSettings");
-                            appNotificationBuilder.AddButton(openSettingsButton);
-                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ShowRepairAppResultNotification), 1, packageDeploymentResult.ExtendedError is not null ? packageDeploymentResult.ExtendedError : new());
-                        }
-                    }
-                    else
+            Task.Run(() =>
+            {
+                // 修复成功
+                if (result && packageDeploymentResult is not null)
+                {
+                    if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
                     {
+                        // 显示 UWP 应用修复成功通知
+                        AppNotificationBuilder appNotificationBuilder = new();
+                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                        appNotificationBuilder.AddText(string.Format(RepairSuccessfullyString, package.Package.DisplayName));
+                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                    }
+                    // 修复失败
+                    else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
+                    {
+                        string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
+                        string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+
                         // 显示 UWP 应用修复失败通知
                         AppNotificationBuilder appNotificationBuilder = new();
                         appNotificationBuilder.AddArgument("action", "OpenApp");
@@ -1100,18 +1103,37 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(RepairFailed2String);
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                            RepairFailed3String,
-                            string.Format(RepairFailed4String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
-                            string.Format(RepairFailed5String, exception is not null ? exception.Message : NotAvailableString)
+                                RepairFailed3String,
+                                string.Format(RepairFailed4String, errorCode),
+                                string.Format(RepairFailed5String, errorMessage)
                         }));
                         AppNotificationButton openSettingsButton = new(OpenSettingsString);
                         openSettingsButton.Arguments.Add("action", "OpenSettings");
                         appNotificationBuilder.AddButton(openSettingsButton);
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ShowRepairAppResultNotification), 2, exception is not null ? exception : new());
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ShowRepairAppResultNotification), 1, packageDeploymentResult.ExtendedError is not null ? packageDeploymentResult.ExtendedError : new());
                     }
-                });
-            }
+                }
+                else
+                {
+                    // 显示 UWP 应用修复失败通知
+                    AppNotificationBuilder appNotificationBuilder = new();
+                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                    appNotificationBuilder.AddText(string.Format(RepairFailed1String, package.Package.DisplayName));
+                    appNotificationBuilder.AddText(RepairFailed2String);
+                    appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                    {
+                        RepairFailed3String,
+                        string.Format(RepairFailed4String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
+                        string.Format(RepairFailed5String, exception is not null ? exception.Message : NotAvailableString)
+                    }));
+                    AppNotificationButton openSettingsButton = new(OpenSettingsString);
+                    openSettingsButton.Arguments.Add("action", "OpenSettings");
+                    appNotificationBuilder.AddButton(openSettingsButton);
+                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ShowRepairAppResultNotification), 2, exception is not null ? exception : new());
+                }
+            });
         }
 
         /// <summary>
@@ -1119,47 +1141,30 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void ShowResetAppResultNotification(PackageModel package, bool result, PackageDeploymentResult packageDeploymentResult, Exception exception)
         {
-            if (package is not null)
+            if (package is null)
             {
-                Task.Run(() =>
-                {
-                    // 重置成功
-                    if (result && packageDeploymentResult is not null)
-                    {
-                        if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
-                        {
-                            // 显示 UWP 应用重置成功通知
-                            AppNotificationBuilder appNotificationBuilder = new();
-                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(ResetSuccessfullyString, package.Package.DisplayName));
-                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        }
-                        // 重置失败
-                        else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
-                        {
-                            string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
-                            string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+                return;
+            }
 
-                            // 显示 UWP 应用重置失败通知
-                            AppNotificationBuilder appNotificationBuilder = new();
-                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(ResetFailed1String, package.Package.DisplayName));
-                            appNotificationBuilder.AddText(ResetFailed2String);
-                            appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
-                            {
-                                ResetFailed3String,
-                                string.Format(ResetFailed4String, errorCode),
-                                string.Format(ResetFailed5String, errorMessage)
-                            }));
-                            AppNotificationButton openSettingsButton = new(OpenSettingsString);
-                            openSettingsButton.Arguments.Add("action", "OpenSettings");
-                            appNotificationBuilder.AddButton(openSettingsButton);
-                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ShowResetAppResultNotification), 1, packageDeploymentResult.ExtendedError is not null ? packageDeploymentResult.ExtendedError : new());
-                        }
-                    }
-                    else
+            Task.Run(() =>
+            {
+                // 重置成功
+                if (result && packageDeploymentResult is not null)
+                {
+                    if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
                     {
+                        // 显示 UWP 应用重置成功通知
+                        AppNotificationBuilder appNotificationBuilder = new();
+                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                        appNotificationBuilder.AddText(string.Format(ResetSuccessfullyString, package.Package.DisplayName));
+                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                    }
+                    // 重置失败
+                    else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
+                    {
+                        string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
+                        string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+
                         // 显示 UWP 应用重置失败通知
                         AppNotificationBuilder appNotificationBuilder = new();
                         appNotificationBuilder.AddArgument("action", "OpenApp");
@@ -1168,17 +1173,36 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
                             ResetFailed3String,
-                            string.Format(ResetFailed4String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
-                            string.Format(ResetFailed5String, exception is not null ? exception.Message : NotAvailableString)
+                            string.Format(ResetFailed4String, errorCode),
+                            string.Format(ResetFailed5String, errorMessage)
                         }));
                         AppNotificationButton openSettingsButton = new(OpenSettingsString);
                         openSettingsButton.Arguments.Add("action", "OpenSettings");
                         appNotificationBuilder.AddButton(openSettingsButton);
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ShowResetAppResultNotification), 2, exception is not null ? exception : new());
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ShowResetAppResultNotification), 1, packageDeploymentResult.ExtendedError is not null ? packageDeploymentResult.ExtendedError : new());
                     }
-                });
-            }
+                }
+                else
+                {
+                    // 显示 UWP 应用重置失败通知
+                    AppNotificationBuilder appNotificationBuilder = new();
+                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                    appNotificationBuilder.AddText(string.Format(ResetFailed1String, package.Package.DisplayName));
+                    appNotificationBuilder.AddText(ResetFailed2String);
+                    appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                    {
+                        ResetFailed3String,
+                        string.Format(ResetFailed4String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
+                        string.Format(ResetFailed5String, exception is not null ? exception.Message : NotAvailableString)
+                    }));
+                    AppNotificationButton openSettingsButton = new(OpenSettingsString);
+                    openSettingsButton.Arguments.Add("action", "OpenSettings");
+                    appNotificationBuilder.AddButton(openSettingsButton);
+                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ShowResetAppResultNotification), 2, exception is not null ? exception : new());
+                }
+            });
         }
 
         /// <summary>
@@ -1186,45 +1210,28 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void ShowUninstallAppResultNotification(PackageModel package, bool result, PackageDeploymentResult packageDeploymentResult, Exception exception)
         {
-            if (package is not null)
+            if (package is null)
             {
-                // 卸载成功
-                if (result && packageDeploymentResult is not null)
-                {
-                    if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
-                    {
-                        // 显示 UWP 应用卸载成功通知
-                        AppNotificationBuilder appNotificationBuilder = new();
-                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                        appNotificationBuilder.AddText(string.Format(UninstallSuccessfullyString, package.Package.DisplayName));
-                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                    }
-                    // 卸载失败
-                    else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
-                    {
-                        string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
-                        string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+                return;
+            }
 
-                        // 显示 UWP 应用卸载失败通知
-                        AppNotificationBuilder appNotificationBuilder = new();
-                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                        appNotificationBuilder.AddText(string.Format(UninstallFailed1String, package.Package.DisplayName));
-                        appNotificationBuilder.AddText(UninstallFailed2String);
-                        appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
-                        {
-                            UninstallFailed3String,
-                            string.Format(UninstallFailed4String, errorCode),
-                            string.Format(UninstallFailed5String, errorMessage)
-                        }));
-                        AppNotificationButton openSettingsButton = new(OpenSettingsString);
-                        openSettingsButton.Arguments.Add("action", "OpenSettings");
-                        appNotificationBuilder.AddButton(openSettingsButton);
-                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ShowUninstallAppResultNotification), 1, packageDeploymentResult.ExtendedError is not null ? packageDeploymentResult.ExtendedError : new());
-                    }
-                }
-                else
+            // 卸载成功
+            if (result && packageDeploymentResult is not null)
+            {
+                if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
                 {
+                    // 显示 UWP 应用卸载成功通知
+                    AppNotificationBuilder appNotificationBuilder = new();
+                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                    appNotificationBuilder.AddText(string.Format(UninstallSuccessfullyString, package.Package.DisplayName));
+                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                }
+                // 卸载失败
+                else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
+                {
+                    string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
+                    string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+
                     // 显示 UWP 应用卸载失败通知
                     AppNotificationBuilder appNotificationBuilder = new();
                     appNotificationBuilder.AddArgument("action", "OpenApp");
@@ -1233,16 +1240,35 @@ namespace GetStoreApp.Views.Pages
                     appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                     {
                         UninstallFailed3String,
-                        string.Format(UninstallFailed4String, exception is not null ? string.Format("0x{0:X8}", exception.HResult) : NotAvailableString),
-                        string.Format(UninstallFailed5String, exception is not null ? exception.Message : NotAvailableString)
+                        string.Format(UninstallFailed4String, errorCode),
+                        string.Format(UninstallFailed5String, errorMessage)
                     }));
-
                     AppNotificationButton openSettingsButton = new(OpenSettingsString);
                     openSettingsButton.Arguments.Add("action", "OpenSettings");
                     appNotificationBuilder.AddButton(openSettingsButton);
                     ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ShowUninstallAppResultNotification), 2, exception is not null ? exception : new());
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ShowUninstallAppResultNotification), 1, packageDeploymentResult.ExtendedError is not null ? packageDeploymentResult.ExtendedError : new());
                 }
+            }
+            else
+            {
+                // 显示 UWP 应用卸载失败通知
+                AppNotificationBuilder appNotificationBuilder = new();
+                appNotificationBuilder.AddArgument("action", "OpenApp");
+                appNotificationBuilder.AddText(string.Format(UninstallFailed1String, package.Package.DisplayName));
+                appNotificationBuilder.AddText(UninstallFailed2String);
+                appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                {
+                    UninstallFailed3String,
+                    string.Format(UninstallFailed4String, exception is not null ? string.Format("0x{0:X8}", exception.HResult) : NotAvailableString),
+                    string.Format(UninstallFailed5String, exception is not null ? exception.Message : NotAvailableString)
+                }));
+
+                AppNotificationButton openSettingsButton = new(OpenSettingsString);
+                openSettingsButton.Arguments.Add("action", "OpenSettings");
+                appNotificationBuilder.AddButton(openSettingsButton);
+                ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(ShowUninstallAppResultNotification), 2, exception is not null ? exception : new());
             }
         }
 
@@ -1489,7 +1515,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<List<PackageModel>> GetFilterSortPackageListAsync(List<PackageModel> appManagerList, bool isAppFramework, bool isStoreSignatureSelected, bool isSystemSignatureSelected, bool isEnterpriseSignatureSelected, bool isDeveloperSignatureSelected, bool isNoneSignatureSelected, string searchText, AppSortRuleKind appSortRuleKind, bool isIncrease)
         {
-            if (appManagerList is null)
+            if (appManagerList is null || appManagerList.Count is 0)
             {
                 return default;
             }
@@ -1619,7 +1645,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void UpdateFilterPackageData(List<PackageModel> filterSortPackageList)
         {
-            if (filterSortPackageList is not null)
+            if (filterSortPackageList is not null && filterSortPackageList.Count is not 0)
             {
                 foreach (PackageModel packageItem in filterSortPackageList)
                 {

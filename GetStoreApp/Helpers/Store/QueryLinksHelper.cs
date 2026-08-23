@@ -12,7 +12,6 @@ using Windows.Data.Json;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation.Diagnostics;
 using Windows.Web.Http;
-using Windows.Web.Http.Headers;
 
 namespace GetStoreApp.Helpers.Store
 {
@@ -31,6 +30,11 @@ namespace GetStoreApp.Helpers.Store
         /// </summary>
         internal static string ParseRequestContent(string requestContent)
         {
+            if (string.IsNullOrEmpty(requestContent))
+            {
+                return string.Empty;
+            }
+
             if (requestContent.Contains('/'))
             {
                 requestContent = requestContent[(requestContent.LastIndexOf('/') + 1)..];
@@ -116,7 +120,7 @@ namespace GetStoreApp.Helpers.Store
         /// </summary>
         /// <param name="productId">应用的产品 ID</param>
         /// <returns>打包应用：有，非打包应用：无</returns>
-        internal static async Task<(bool requestResult, AppInfoModel appInfo)> GetAppInformationAsync(string productId)
+        internal static async Task<(bool, AppInfoModel)> GetAppInformationAsync(string productId)
         {
             bool requestResult = false;
             AppInfoModel appInfo = new();
@@ -204,53 +208,56 @@ namespace GetStoreApp.Helpers.Store
         {
             string fileListXmlResult = string.Empty;
 
-            try
+            if (!string.IsNullOrEmpty(cookie) && !string.IsNullOrEmpty(categoryId) && !string.IsNullOrEmpty(ring))
             {
-                byte[] wubyteArray = ResourceService.GetEmbeddedData("Files/Assets/Embed/wu.xml");
-                string fileListXml = Encoding.UTF8.GetString(wubyteArray).Replace("{1}", cookie).Replace("{2}", categoryId).Replace("{3}", ring);
-
-                HttpStringContent httpStringContent = new(fileListXml, Windows.Storage.Streams.UnicodeEncoding.Utf8);
-                httpStringContent.TryComputeLength(out ulong length);
-                httpStringContent.Headers.Expires = DateTimeOffset.Now;
-                httpStringContent.Headers.ContentType = new("application/soap+xml");
-                httpStringContent.Headers.ContentLength = length;
-                httpStringContent.Headers.ContentType.CharSet = "utf-8";
-
-                // 默认超时时间是 20 秒
-                HttpClient httpClient = new();
-                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
-                httpClient.DefaultRequestHeaders.Referer = fileListXmlUri;
-                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", fileListXmlUri.AbsolutePath);
-
-                HttpRequestResult httpRequestResult = await httpClient.TryPostAsync(fileListXmlUri, httpStringContent);
-                httpClient.Dispose();
-
-                // 请求成功
-                if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
+                try
                 {
-                    Dictionary<string, string> responseDict = new()
+                    byte[] wubyteArray = ResourceService.GetEmbeddedData("Files/Assets/Embed/wu.xml");
+                    string fileListXml = Encoding.UTF8.GetString(wubyteArray).Replace("{1}", cookie).Replace("{2}", categoryId).Replace("{3}", ring);
+
+                    HttpStringContent httpStringContent = new(fileListXml, Windows.Storage.Streams.UnicodeEncoding.Utf8);
+                    httpStringContent.TryComputeLength(out ulong length);
+                    httpStringContent.Headers.Expires = DateTimeOffset.Now;
+                    httpStringContent.Headers.ContentType = new("application/soap+xml");
+                    httpStringContent.Headers.ContentLength = length;
+                    httpStringContent.Headers.ContentType.CharSet = "utf-8";
+
+                    // 默认超时时间是 20 秒
+                    HttpClient httpClient = new();
+                    httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                    httpClient.DefaultRequestHeaders.Referer = fileListXmlUri;
+                    httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", fileListXmlUri.AbsolutePath);
+
+                    HttpRequestResult httpRequestResult = await httpClient.TryPostAsync(fileListXmlUri, httpStringContent);
+                    httpClient.Dispose();
+
+                    // 请求成功
+                    if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
+                    {
+                        Dictionary<string, string> responseDict = new()
                     {
                         { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
                         { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetFileListXmlAsync), 1, responseDict);
-                    string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
-                    fileListXmlResult = responseString.Replace("&lt;", "<").Replace("&gt;", ">");
-                }
-                // 请求失败
-                else
-                {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetFileListXmlAsync), 2, httpRequestResult.ExtendedError);
-                }
+                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetFileListXmlAsync), 1, responseDict);
+                        string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
+                        fileListXmlResult = responseString.Replace("&lt;", "<").Replace("&gt;", ">");
+                    }
+                    // 请求失败
+                    else
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetFileListXmlAsync), 2, httpRequestResult.ExtendedError);
+                    }
 
-                httpRequestResult.Dispose();
-            }
-            // 其他异常
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetFileListXmlAsync), 3, e);
+                    httpRequestResult.Dispose();
+                }
+                // 其他异常
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetFileListXmlAsync), 3, e);
+                }
             }
 
             return fileListXmlResult;
@@ -266,84 +273,87 @@ namespace GetStoreApp.Helpers.Store
         {
             List<QueryLinksResultModel> appxPackagesList = [];
 
-            try
+            if (!string.IsNullOrEmpty(fileListXml) && !string.IsNullOrEmpty(ring))
             {
-                XmlDocument fileListDocument = new();
-                fileListDocument.LoadXml(fileListXml);
-
-                Dictionary<string, (string extension, string size, string digest)> appxPackagesInfoDict = [];
-                XmlNodeList fileList = fileListDocument.GetElementsByTagName("File");
-
-                foreach (IXmlNode fileNode in fileList)
+                try
                 {
-                    if (fileNode.Attributes.GetNamedItem("InstallerSpecificIdentifier") is IXmlNode installerSpecificIdentifierNode)
+                    XmlDocument fileListDocument = new();
+                    fileListDocument.LoadXml(fileListXml);
+
+                    Dictionary<string, (string extension, string size, string digest)> appxPackagesInfoDict = [];
+                    XmlNodeList fileList = fileListDocument.GetElementsByTagName("File");
+
+                    foreach (IXmlNode fileNode in fileList)
                     {
-                        string name = installerSpecificIdentifierNode.InnerText;
-                        string extension = fileNode.Attributes.GetNamedItem("FileName").InnerText[fileNode.Attributes.GetNamedItem("FileName").InnerText.LastIndexOf('.')..];
-                        string size = fileNode.Attributes.GetNamedItem("Size").InnerText;
-                        string digest = fileNode.Attributes.GetNamedItem("Digest").InnerText;
-
-                        if (!appxPackagesInfoDict.ContainsKey(name))
+                        if (fileNode.Attributes.GetNamedItem("InstallerSpecificIdentifier") is IXmlNode installerSpecificIdentifierNode)
                         {
-                            appxPackagesInfoDict.Add(name, ValueTuple.Create(extension, size, digest));
-                        }
-                    }
-                }
+                            string name = installerSpecificIdentifierNode.InnerText;
+                            string extension = fileNode.Attributes.GetNamedItem("FileName").InnerText[fileNode.Attributes.GetNamedItem("FileName").InnerText.LastIndexOf('.')..];
+                            string size = fileNode.Attributes.GetNamedItem("Size").InnerText;
+                            string digest = fileNode.Attributes.GetNamedItem("Digest").InnerText;
 
-                Lock appxPackagesLock = new();
-                XmlNodeList securedFragmentList = fileListDocument.DocumentElement.GetElementsByTagName("SecuredFragment");
-                List<Task> taskList = [];
-
-                foreach (IXmlNode securedFragmentNode in securedFragmentList)
-                {
-                    IXmlNode securedFragmentCloneNode = securedFragmentNode;
-                    taskList.Add(Task.Run(async () =>
-                    {
-                        IXmlNode xmlNode = securedFragmentCloneNode.ParentNode.ParentNode;
-
-                        if (xmlNode.GetElementsByName("ApplicabilityRules").GetElementsByName("Metadata").GetElementsByName("AppxPackageMetadata").GetElementsByName("AppxMetadata").Attributes.GetNamedItem("PackageMoniker") is IXmlNode packageMonikerNode)
-                        {
-                            string name = packageMonikerNode.InnerText;
-
-                            if (appxPackagesInfoDict.TryGetValue(name, out (string extension, string size, string digest) value))
+                            if (!appxPackagesInfoDict.ContainsKey(name))
                             {
-                                string fileName = name + value.extension;
-                                string fileSize = value.size;
-                                string digest = value.digest;
-                                string revisionNumber = xmlNode.GetElementsByName("UpdateIdentity").Attributes.GetNamedItem("RevisionNumber").InnerText;
-                                string updateID = xmlNode.GetElementsByName("UpdateIdentity").Attributes.GetNamedItem("UpdateID").InnerText;
-                                string uri = await GetAppxUrlAsync(updateID, revisionNumber, ring, digest);
-                                string fileSizeString = VolumeSizeHelper.ConvertVolumeSizeToString(double.TryParse(fileSize, out double size) ? size : 0);
-
-                                appxPackagesLock.Enter();
-
-                                try
-                                {
-                                    appxPackagesList.Add(new()
-                                    {
-                                        FileName = fileName,
-                                        FileLink = uri,
-                                        FileSize = fileSizeString
-                                    });
-                                }
-                                catch (Exception e)
-                                {
-                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                                }
-                                finally
-                                {
-                                    appxPackagesLock.Exit();
-                                }
+                                appxPackagesInfoDict.Add(name, ValueTuple.Create(extension, size, digest));
                             }
                         }
-                    }));
-                }
+                    }
 
-                await Task.WhenAll(taskList);
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxPackagesAsync), 1, e);
+                    Lock appxPackagesLock = new();
+                    XmlNodeList securedFragmentList = fileListDocument.DocumentElement.GetElementsByTagName("SecuredFragment");
+                    List<Task> taskList = [];
+
+                    foreach (IXmlNode securedFragmentNode in securedFragmentList)
+                    {
+                        IXmlNode securedFragmentCloneNode = securedFragmentNode;
+                        taskList.Add(Task.Run(async () =>
+                        {
+                            IXmlNode xmlNode = securedFragmentCloneNode.ParentNode.ParentNode;
+
+                            if (xmlNode.GetElementsByName("ApplicabilityRules").GetElementsByName("Metadata").GetElementsByName("AppxPackageMetadata").GetElementsByName("AppxMetadata").Attributes.GetNamedItem("PackageMoniker") is IXmlNode packageMonikerNode)
+                            {
+                                string name = packageMonikerNode.InnerText;
+
+                                if (appxPackagesInfoDict.TryGetValue(name, out (string extension, string size, string digest) value))
+                                {
+                                    string fileName = name + value.extension;
+                                    string fileSize = value.size;
+                                    string digest = value.digest;
+                                    string revisionNumber = xmlNode.GetElementsByName("UpdateIdentity").Attributes.GetNamedItem("RevisionNumber").InnerText;
+                                    string updateID = xmlNode.GetElementsByName("UpdateIdentity").Attributes.GetNamedItem("UpdateID").InnerText;
+                                    string uri = await GetAppxUrlAsync(updateID, revisionNumber, ring, digest);
+                                    string fileSizeString = VolumeSizeHelper.ConvertVolumeSizeToString(double.TryParse(fileSize, out double size) ? size : 0);
+
+                                    appxPackagesLock.Enter();
+
+                                    try
+                                    {
+                                        appxPackagesList.Add(new()
+                                        {
+                                            FileName = fileName,
+                                            FileLink = uri,
+                                            FileSize = fileSizeString
+                                        });
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        appxPackagesLock.Exit();
+                                    }
+                                }
+                            }
+                        }));
+                    }
+
+                    await Task.WhenAll(taskList);
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxPackagesAsync), 1, e);
+                }
             }
 
             return appxPackagesList;
@@ -357,69 +367,72 @@ namespace GetStoreApp.Helpers.Store
         {
             string urlResult = string.Empty;
 
-            try
+            if (!string.IsNullOrEmpty(updateID) && !string.IsNullOrEmpty(revisionNumber) && !string.IsNullOrEmpty(ring))
             {
-                byte[] urlbyteArray = ResourceService.GetEmbeddedData("Files/Assets/Embed/url.xml");
-                string url = Encoding.UTF8.GetString(ResourceService.GetEmbeddedData("Files/Assets/Embed/url.xml")).Replace("{1}", updateID).Replace("{2}", revisionNumber).Replace("{3}", ring);
-
-                HttpStringContent httpStringContent = new(url, Windows.Storage.Streams.UnicodeEncoding.Utf8);
-                httpStringContent.TryComputeLength(out ulong length);
-                httpStringContent.Headers.Expires = DateTimeOffset.Now;
-                httpStringContent.Headers.ContentType = new("application/soap+xml");
-                httpStringContent.Headers.ContentLength = length;
-                httpStringContent.Headers.ContentType.CharSet = "utf-8";
-
-                // 默认超时时间是 20 秒
-                HttpClient httpClient = new();
-                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
-                httpClient.DefaultRequestHeaders.Referer = urlUri;
-                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", urlUri.AbsolutePath);
-
-                HttpRequestResult httpRequestResult = await httpClient.TryPostAsync(urlUri, httpStringContent);
-                httpClient.Dispose();
-
-                // 请求成功
-                if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
+                try
                 {
-                    Dictionary<string, string> responseDict = new()
+                    byte[] urlbyteArray = ResourceService.GetEmbeddedData("Files/Assets/Embed/url.xml");
+                    string url = Encoding.UTF8.GetString(ResourceService.GetEmbeddedData("Files/Assets/Embed/url.xml")).Replace("{1}", updateID).Replace("{2}", revisionNumber).Replace("{3}", ring);
+
+                    HttpStringContent httpStringContent = new(url, Windows.Storage.Streams.UnicodeEncoding.Utf8);
+                    httpStringContent.TryComputeLength(out ulong length);
+                    httpStringContent.Headers.Expires = DateTimeOffset.Now;
+                    httpStringContent.Headers.ContentType = new("application/soap+xml");
+                    httpStringContent.Headers.ContentLength = length;
+                    httpStringContent.Headers.ContentType.CharSet = "utf-8";
+
+                    // 默认超时时间是 20 秒
+                    HttpClient httpClient = new();
+                    httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                    httpClient.DefaultRequestHeaders.Referer = urlUri;
+                    httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", urlUri.AbsolutePath);
+
+                    HttpRequestResult httpRequestResult = await httpClient.TryPostAsync(urlUri, httpStringContent);
+                    httpClient.Dispose();
+
+                    // 请求成功
+                    if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
+                    {
+                        Dictionary<string, string> responseDict = new()
                     {
                         { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
                         { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxUrlAsync), 1, responseDict);
-                    string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
+                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxUrlAsync), 1, responseDict);
+                        string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
-                    if (!string.IsNullOrEmpty(responseString))
-                    {
-                        XmlDocument responseStringDocument = new();
-                        responseStringDocument.LoadXml(responseString);
-
-                        XmlNodeList fileLocationList = responseStringDocument.DocumentElement.GetElementsByTagName("FileLocation");
-
-                        foreach (IXmlNode fileLocationNode in fileLocationList)
+                        if (!string.IsNullOrEmpty(responseString))
                         {
-                            if (string.Equals(fileLocationNode.GetElementsByName("FileDigest").InnerText, digest))
+                            XmlDocument responseStringDocument = new();
+                            responseStringDocument.LoadXml(responseString);
+
+                            XmlNodeList fileLocationList = responseStringDocument.DocumentElement.GetElementsByTagName("FileLocation");
+
+                            foreach (IXmlNode fileLocationNode in fileLocationList)
                             {
-                                urlResult = fileLocationNode.GetElementsByName("Url").InnerText;
-                                break;
+                                if (string.Equals(fileLocationNode.GetElementsByName("FileDigest").InnerText, digest))
+                                {
+                                    urlResult = fileLocationNode.GetElementsByName("Url").InnerText;
+                                    break;
+                                }
                             }
                         }
                     }
-                }
-                // 请求失败
-                else
-                {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxUrlAsync), 2, httpRequestResult.ExtendedError);
-                }
+                    // 请求失败
+                    else
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxUrlAsync), 2, httpRequestResult.ExtendedError);
+                    }
 
-                httpRequestResult.Dispose();
-            }
-            // 其他异常
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxUrlAsync), 3, e);
+                    httpRequestResult.Dispose();
+                }
+                // 其他异常
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxUrlAsync), 3, e);
+                }
             }
 
             return urlResult;
@@ -434,117 +447,120 @@ namespace GetStoreApp.Helpers.Store
         {
             List<QueryLinksResultModel> nonAppxPackagesList = [];
 
-            try
+            if (!string.IsNullOrEmpty(productId))
             {
-                string url = string.Format("https://storeedgefd.dsx.mp.microsoft.com/v9.0/packageManifests/{0}?market={1}", productId, StoreRegionService.StoreRegion.CodeTwoLetter);
-                Uri urlUri = new(url);
-
-                // 默认超时时间是 20 秒
-                HttpClient httpClient = new();
-                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
-                httpClient.DefaultRequestHeaders.Referer = urlUri;
-                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", urlUri.AbsolutePath);
-
-                HttpRequestResult httpRequestResult = await httpClient.TryGetAsync(urlUri);
-                httpClient.Dispose();
-
-                // 请求成功
-                if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
+                try
                 {
-                    Dictionary<string, string> responseDict = new()
+                    string url = string.Format("https://storeedgefd.dsx.mp.microsoft.com/v9.0/packageManifests/{0}?market={1}", productId, StoreRegionService.StoreRegion.CodeTwoLetter);
+                    Uri urlUri = new(url);
+
+                    // 默认超时时间是 20 秒
+                    HttpClient httpClient = new();
+                    httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                    httpClient.DefaultRequestHeaders.Referer = urlUri;
+                    httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", urlUri.AbsolutePath);
+
+                    HttpRequestResult httpRequestResult = await httpClient.TryGetAsync(urlUri);
+                    httpClient.Dispose();
+
+                    // 请求成功
+                    if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
+                    {
+                        Dictionary<string, string> responseDict = new()
                     {
                         { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
                         { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 1, responseDict);
-                    string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
+                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 1, responseDict);
+                        string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
-                    if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
-                    {
-                        JsonObject dataObject = responseStringObject.GetNamedValue("Data").GetObject();
-                        JsonObject versionsObject = dataObject.GetNamedValue("Versions").GetArray()[0].GetObject();
-                        JsonArray installersArray = versionsObject.GetNamedValue("Installers").GetArray();
-
-                        Lock nonAppxPackagesLock = new();
-                        List<Task> taskList = [];
-
-                        foreach (IJsonValue installer in installersArray)
+                        if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
                         {
-                            taskList.Add(Task.Run(async () =>
+                            JsonObject dataObject = responseStringObject.GetNamedValue("Data").GetObject();
+                            JsonObject versionsObject = dataObject.GetNamedValue("Versions").GetArray()[0].GetObject();
+                            JsonArray installersArray = versionsObject.GetNamedValue("Installers").GetArray();
+
+                            Lock nonAppxPackagesLock = new();
+                            List<Task> taskList = [];
+
+                            foreach (IJsonValue installer in installersArray)
                             {
-                                JsonObject installerObject = installer.GetObject();
-
-                                string installerType = installerObject.GetNamedString("InstallerType");
-                                string installerUrl = installerObject.GetNamedString("InstallerUrl");
-                                string fileSize = await GetNonAppxPackageFileSizeAsync(installerUrl);
-                                string fileSizeString = VolumeSizeHelper.ConvertVolumeSizeToString(double.TryParse(fileSize, out double size) ? size : 0);
-
-                                if (string.IsNullOrEmpty(installerType) || installerUrl.ToLowerInvariant().EndsWith(".exe") || installerUrl.ToLowerInvariant().EndsWith(".msi"))
+                                taskList.Add(Task.Run(async () =>
                                 {
-                                    nonAppxPackagesLock.Enter();
+                                    JsonObject installerObject = installer.GetObject();
 
-                                    try
+                                    string installerType = installerObject.GetNamedString("InstallerType");
+                                    string installerUrl = installerObject.GetNamedString("InstallerUrl");
+                                    string fileSize = await GetNonAppxPackageFileSizeAsync(installerUrl);
+                                    string fileSizeString = VolumeSizeHelper.ConvertVolumeSizeToString(double.TryParse(fileSize, out double size) ? size : 0);
+
+                                    if (string.IsNullOrEmpty(installerType) || installerUrl.ToLowerInvariant().EndsWith(".exe") || installerUrl.ToLowerInvariant().EndsWith(".msi"))
                                     {
-                                        nonAppxPackagesList.Add(new()
+                                        nonAppxPackagesLock.Enter();
+
+                                        try
                                         {
-                                            FileName = installerUrl[..installerUrl.LastIndexOf('.')][(installerUrl.LastIndexOf('/') + 1)..],
-                                            FileLink = installerUrl,
-                                            FileSize = fileSizeString
-                                        });
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                                    }
-                                    finally
-                                    {
-                                        nonAppxPackagesLock.Exit();
-                                    }
-                                }
-                                else
-                                {
-                                    string name = installerUrl.Split('/')[^1];
-
-                                    nonAppxPackagesLock.Enter();
-
-                                    try
-                                    {
-                                        nonAppxPackagesList.Add(new()
+                                            nonAppxPackagesList.Add(new()
+                                            {
+                                                FileName = installerUrl[..installerUrl.LastIndexOf('.')][(installerUrl.LastIndexOf('/') + 1)..],
+                                                FileLink = installerUrl,
+                                                FileSize = fileSizeString
+                                            });
+                                        }
+                                        catch (Exception e)
                                         {
-                                            FileName = string.Format("{0} ({1}).{2}", name, installerObject.GetNamedString("InstallerLocale"), installerType),
-                                            FileLink = installerUrl,
-                                            FileSize = fileSizeString
-                                        });
+                                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                        }
+                                        finally
+                                        {
+                                            nonAppxPackagesLock.Exit();
+                                        }
                                     }
-                                    catch (Exception e)
+                                    else
                                     {
-                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                        string name = installerUrl.Split('/')[^1];
+
+                                        nonAppxPackagesLock.Enter();
+
+                                        try
+                                        {
+                                            nonAppxPackagesList.Add(new()
+                                            {
+                                                FileName = string.Format("{0} ({1}).{2}", name, installerObject.GetNamedString("InstallerLocale"), installerType),
+                                                FileLink = installerUrl,
+                                                FileSize = fileSizeString
+                                            });
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                        }
+                                        finally
+                                        {
+                                            nonAppxPackagesLock.Exit();
+                                        }
                                     }
-                                    finally
-                                    {
-                                        nonAppxPackagesLock.Exit();
-                                    }
-                                }
-                            }));
+                                }));
+                            }
+
+                            await Task.WhenAll(taskList);
                         }
-
-                        await Task.WhenAll(taskList);
                     }
-                }
-                // 请求失败
-                else
-                {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 2, httpRequestResult.ExtendedError);
-                }
+                    // 请求失败
+                    else
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 2, httpRequestResult.ExtendedError);
+                    }
 
-                httpRequestResult.Dispose();
-            }
-            // 其他异常
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 3, e);
+                    httpRequestResult.Dispose();
+                }
+                // 其他异常
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 3, e);
+                }
             }
 
             return nonAppxPackagesList;
@@ -557,46 +573,49 @@ namespace GetStoreApp.Helpers.Store
         {
             string fileSizeResult = "0";
 
-            try
+            if (!string.IsNullOrEmpty(url))
             {
-                Uri urlUri = new(url);
-
-                // 默认超时时间是 20 秒
-                HttpClient httpClient = new();
-                HttpRequestMessage httpRequestMessage = new(HttpMethod.Head, urlUri);
-                httpRequestMessage.Headers.UserAgent.ParseAdd(userAgent);
-                httpRequestMessage.Headers.Referer = urlUri;
-                httpRequestMessage.Headers.TryAppendWithoutValidation("Origin", urlUri.AbsolutePath);
-
-                HttpRequestResult httpRequestResult = await httpClient.TrySendRequestAsync(httpRequestMessage);
-                httpClient.Dispose();
-
-                // 请求成功
-                if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
+                try
                 {
-                    Dictionary<string, string> responseDict = new()
+                    Uri urlUri = new(url);
+
+                    // 默认超时时间是 20 秒
+                    HttpClient httpClient = new();
+                    HttpRequestMessage httpRequestMessage = new(HttpMethod.Head, urlUri);
+                    httpRequestMessage.Headers.UserAgent.ParseAdd(userAgent);
+                    httpRequestMessage.Headers.Referer = urlUri;
+                    httpRequestMessage.Headers.TryAppendWithoutValidation("Origin", urlUri.AbsolutePath);
+
+                    HttpRequestResult httpRequestResult = await httpClient.TrySendRequestAsync(httpRequestMessage);
+                    httpClient.Dispose();
+
+                    // 请求成功
+                    if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
+                    {
+                        Dictionary<string, string> responseDict = new()
                     {
                         { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
                         { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackageFileSizeAsync), 1, responseDict);
-                    fileSizeResult = Convert.ToString(httpRequestResult.ResponseMessage.Content.Headers.ContentLength);
+                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackageFileSizeAsync), 1, responseDict);
+                        fileSizeResult = Convert.ToString(httpRequestResult.ResponseMessage.Content.Headers.ContentLength);
+                    }
+                    // 请求失败
+                    else
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackageFileSizeAsync), 2, httpRequestResult.ExtendedError);
+                    }
+
+                    httpRequestResult.Dispose();
                 }
-                // 请求失败
-                else
+
+                // 其他异常
+                catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackageFileSizeAsync), 2, httpRequestResult.ExtendedError);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackageFileSizeAsync), 3, e);
                 }
-
-                httpRequestResult.Dispose();
-            }
-
-            // 其他异常
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackageFileSizeAsync), 3, e);
             }
 
             return fileSizeResult;
@@ -604,6 +623,11 @@ namespace GetStoreApp.Helpers.Store
 
         private static IXmlNode GetElementsByName(this IXmlNode xmlNode, string name)
         {
+            if (xmlNode is null)
+            {
+                return default;
+            }
+
             foreach (IXmlNode node in xmlNode.ChildNodes)
             {
                 if (string.Equals(node.NodeName, name))

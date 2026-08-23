@@ -18,6 +18,11 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         internal static unsafe List<uint> GetProcessPIDByName(string processName)
         {
+            if (string.IsNullOrEmpty(processName))
+            {
+                return default;
+            }
+
             if (!processName.EndsWith(".exe"))
             {
                 processName += ".exe";

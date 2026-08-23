@@ -106,10 +106,8 @@ namespace GetStoreApp.Views.Dialogs
 
             IsCleaning = true;
 
-            List<TraceCleanupModel> selectedItemsList = GetSelectedItemsList();
-
-            List<(CleanKind cleanKind, bool cleanResult)> cleanSuccessfullyDict = await TraceCleanupAsync(selectedItemsList);
-            if (cleanSuccessfullyDict is not null)
+            List<TraceCleanupModel> selectedItemsList = GetSelectedItemsList(TraceCleanupListView.SelectedItems);
+            if (selectedItemsList is not null && selectedItemsList.Count is 0 && await TraceCleanupAsync(selectedItemsList) is List<(CleanKind cleanKind, bool cleanResult)> cleanSuccessfullyDict)
             {
                 foreach ((CleanKind cleanKind, bool cleanResult) in cleanSuccessfullyDict)
                 {
@@ -170,19 +168,24 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 获取选中项
         /// </summary>
-        private List<TraceCleanupModel> GetSelectedItemsList()
+        private List<TraceCleanupModel> GetSelectedItemsList(IList<object> selectedItemsList)
         {
-            List<TraceCleanupModel> selectedItemsList = [];
+            if (selectedItemsList is null || selectedItemsList.Count is 0)
+            {
+                return default;
+            }
 
-            foreach (object traceCleanupItemObj in TraceCleanupListView.SelectedItems)
+            List<TraceCleanupModel> selectedTraceCleanupDataList = [];
+
+            foreach (object traceCleanupItemObj in selectedItemsList)
             {
                 if (traceCleanupItemObj is TraceCleanupModel traceCleanupItem)
                 {
-                    selectedItemsList.Add(traceCleanupItem);
+                    selectedTraceCleanupDataList.Add(traceCleanupItem);
                 }
             }
 
-            return selectedItemsList;
+            return selectedTraceCleanupDataList;
         }
 
         /// <summary>
@@ -190,7 +193,7 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async Task<List<(CleanKind cleanKind, bool cleanResult)>> TraceCleanupAsync(List<TraceCleanupModel> selectedItemsList)
         {
-            if (selectedItemsList is null)
+            if (selectedItemsList is null || selectedItemsList.Count is 0)
             {
                 return default;
             }

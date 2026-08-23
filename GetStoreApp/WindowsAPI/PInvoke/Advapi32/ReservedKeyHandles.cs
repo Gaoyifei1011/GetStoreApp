@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
+﻿namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
 {
     /// <summary>
     /// 注册表保留键值的句柄

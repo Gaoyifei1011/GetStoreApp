@@ -25,6 +25,11 @@ namespace GetStoreApp.Helpers.Store
         /// </summary>
         internal static void InitializeParseData(RequestModel httpRequestData)
         {
+            if (httpRequestData is null)
+            {
+                return;
+            }
+
             parseContent = httpRequestData.RequestContent;
         }
 
@@ -33,17 +38,19 @@ namespace GetStoreApp.Helpers.Store
         /// </summary>
         internal static string HtmlParseCID()
         {
-            if (!string.IsNullOrEmpty(parseContent))
+            if (string.IsNullOrEmpty(parseContent))
             {
-                MatchCollection cidCollection = CIDRegex.Matches(parseContent);
-                if (cidCollection.Count > 0)
-                {
-                    GroupCollection cidGroups = cidCollection[0].Groups;
+                return string.Empty;
+            }
 
-                    if (cidGroups.Count > 0)
-                    {
-                        return cidGroups[1].Value;
-                    }
+            MatchCollection cidCollection = CIDRegex.Matches(parseContent);
+            if (cidCollection.Count > 0)
+            {
+                GroupCollection cidGroups = cidCollection[0].Groups;
+
+                if (cidGroups.Count > 0)
+                {
+                    return cidGroups[1].Value;
                 }
             }
             return string.Empty;

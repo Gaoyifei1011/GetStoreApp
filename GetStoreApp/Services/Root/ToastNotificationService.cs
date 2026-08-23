@@ -26,6 +26,11 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         internal static async Task HandleToastNotificationAsync(string content, bool isLaunched)
         {
+            if (string.IsNullOrEmpty(content))
+            {
+                return;
+            }
+
             string notificationArgs = new WwwFormUrlDecoder(content).GetFirstValueByName("action");
 
             if (notificationArgs is "CheckNetWorkConnection")
@@ -93,6 +98,11 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         internal static void Show(AppNotification appNotification)
         {
+            if (appNotification is null)
+            {
+                return;
+            }
+
             try
             {
                 if (AppNotificationManager.IsSupported())

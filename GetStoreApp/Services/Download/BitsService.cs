@@ -87,51 +87,58 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         internal static void CreateDownload(string url, string saveFilePath)
         {
+            if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(saveFilePath))
+            {
+                return;
+            }
+
             Task.Factory.StartNew((param) =>
             {
                 try
                 {
-                    if (backgroundCopyManager is not null)
+                    if (backgroundCopyManager is null)
                     {
-                        backgroundCopyManager.CreateJob(displayName, BG_JOB_TYPE.BG_JOB_TYPE_DOWNLOAD, out Guid downloadID, out IBackgroundCopyJob downloadJob);
-                        downloadJob.AddFile(url, saveFilePath);
-                        downloadJob.SetNotifyFlags(BG_JOB_NOTIFICATION_TYPE.BG_NOTIFY_FILE_RANGES_TRANSFERRED | BG_JOB_NOTIFICATION_TYPE.BG_NOTIFY_JOB_ERROR | BG_JOB_NOTIFICATION_TYPE.BG_NOTIFY_JOB_MODIFICATION);
-                        BackgroundCopyCallback backgroundCopyCallback = new()
-                        {
-                            DownloadID = Convert.ToString(downloadID)
-                        };
-                        backgroundCopyCallback.StatusChanged += OnStatusChanged;
-                        downloadJob.SetNotifyInterface(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(new UnknownWrapper(backgroundCopyCallback).WrappedObject, CreateComInterfaceFlags.None));
-                        downloadJob.GetProgress(out BG_JOB_PROGRESS progress);
-
-                        bitsLock.Enter();
-
-                        try
-                        {
-                            BitsDict.TryAdd(backgroundCopyCallback.DownloadID, ValueTuple.Create(saveFilePath, downloadJob, backgroundCopyCallback));
-                        }
-                        catch (Exception e)
-                        {
-                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        }
-                        finally
-                        {
-                            bitsLock.Exit();
-                        }
-
-                        DownloadProgress?.Invoke(new()
-                        {
-                            DownloadID = backgroundCopyCallback.DownloadID,
-                            DownloadProgressState = DownloadProgressState.Queued,
-                            FileName = Path.GetFileName(saveFilePath),
-                            FilePath = saveFilePath,
-                            DownloadSpeed = 0,
-                            CompletedSize = 0,
-                            TotalSize = 0,
-                        });
-
-                        downloadJob.Resume();
+                        return;
                     }
+
+                    backgroundCopyManager.CreateJob(displayName, BG_JOB_TYPE.BG_JOB_TYPE_DOWNLOAD, out Guid downloadID, out IBackgroundCopyJob downloadJob);
+                    downloadJob.AddFile(url, saveFilePath);
+                    downloadJob.SetNotifyFlags(BG_JOB_NOTIFICATION_TYPE.BG_NOTIFY_FILE_RANGES_TRANSFERRED | BG_JOB_NOTIFICATION_TYPE.BG_NOTIFY_JOB_ERROR | BG_JOB_NOTIFICATION_TYPE.BG_NOTIFY_JOB_MODIFICATION);
+                    BackgroundCopyCallback backgroundCopyCallback = new()
+                    {
+                        DownloadID = Convert.ToString(downloadID)
+                    };
+                    backgroundCopyCallback.StatusChanged += OnStatusChanged;
+                    downloadJob.SetNotifyInterface(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(new UnknownWrapper(backgroundCopyCallback).WrappedObject, CreateComInterfaceFlags.None));
+                    downloadJob.GetProgress(out BG_JOB_PROGRESS progress);
+
+                    bitsLock.Enter();
+
+                    try
+                    {
+                        BitsDict.TryAdd(backgroundCopyCallback.DownloadID, ValueTuple.Create(saveFilePath, downloadJob, backgroundCopyCallback));
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
+                    finally
+                    {
+                        bitsLock.Exit();
+                    }
+
+                    DownloadProgress?.Invoke(new()
+                    {
+                        DownloadID = backgroundCopyCallback.DownloadID,
+                        DownloadProgressState = DownloadProgressState.Queued,
+                        FileName = Path.GetFileName(saveFilePath),
+                        FilePath = saveFilePath,
+                        DownloadSpeed = 0,
+                        CompletedSize = 0,
+                        TotalSize = 0,
+                    });
+
+                    downloadJob.Resume();
                 }
                 catch (Exception e)
                 {
@@ -145,6 +152,11 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         internal static void ContinueDownload(string downloadID)
         {
+            if (string.IsNullOrEmpty(downloadID))
+            {
+                return;
+            }
+
             Task.Factory.StartNew((param) =>
             {
                 bitsLock.Enter();
@@ -186,6 +198,11 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         internal static void PauseDownload(string downloadID)
         {
+            if (string.IsNullOrEmpty(downloadID))
+            {
+                return;
+            }
+
             Task.Factory.StartNew((param) =>
             {
                 bitsLock.Enter();
@@ -227,6 +244,11 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         internal static void DeleteDownload(string downloadID)
         {
+            if (string.IsNullOrEmpty(downloadID))
+            {
+                return;
+            }
+
             Task.Factory.StartNew((param) =>
             {
                 bitsLock.Enter();

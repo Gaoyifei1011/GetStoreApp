@@ -13,7 +13,7 @@ namespace GetStoreApp.Views.NotificationTips
     /// </summary>
     internal sealed partial class OperationResultNotificationTip : TeachingTip, INotifyPropertyChanged
     {
-        #region 第二部分：属性、集合与事件
+        #region 第一部分：属性、集合与事件
 
         private bool _isSuccessOperation;
 
@@ -49,7 +49,7 @@ namespace GetStoreApp.Views.NotificationTips
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        #endregion 第二部分：属性、集合与事件
+        #endregion 第一部分：属性、集合与事件
 
         #region 第二部分：构造函数
 

@@ -1225,13 +1225,15 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void RunWinGetCommand(string arguments)
         {
-            if (!string.IsNullOrEmpty(arguments))
+            if (string.IsNullOrEmpty(arguments))
             {
-                Task.Run(() =>
-                {
-                    Shell32Library.ShellExecute(nint.Zero, "open", "winget.exe", arguments, null, WindowShowStyle.SW_SHOWNORMAL);
-                });
+                return;
             }
+
+            Task.Run(() =>
+            {
+                Shell32Library.ShellExecute(nint.Zero, "open", "winget.exe", arguments, null, WindowShowStyle.SW_SHOWNORMAL);
+            });
         }
 
         /// <summary>

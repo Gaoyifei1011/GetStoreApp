@@ -63,7 +63,6 @@ namespace GetStoreApp.Services.History
         internal static List<HistoryModel> GetQueryLinksData()
         {
             List<HistoryModel> queryLinksHistoryList = [];
-
             historyStorageLock.Enter();
 
             try
@@ -110,7 +109,6 @@ namespace GetStoreApp.Services.History
         internal static List<HistoryModel> GetSearchAppsData()
         {
             List<HistoryModel> searchAppsHistoryList = [];
-
             historyStorageLock.Enter();
 
             try
@@ -152,6 +150,11 @@ namespace GetStoreApp.Services.History
         /// </summary>
         internal static void SaveQueryLinksData(List<HistoryModel> queryLinksHistoryList)
         {
+            if (queryLinksHistoryList is null || queryLinksHistoryList.Count is 0)
+            {
+                return;
+            }
+
             historyStorageLock.Enter();
 
             try
@@ -185,6 +188,11 @@ namespace GetStoreApp.Services.History
         /// </summary>
         internal static void SaveSearchAppsData(List<HistoryModel> searchAppsHistoryList)
         {
+            if (searchAppsHistoryList is null || searchAppsHistoryList.Count is 0)
+            {
+                return;
+            }
+
             historyStorageLock.Enter();
 
             try
@@ -216,7 +224,7 @@ namespace GetStoreApp.Services.History
         [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
         internal static void UpdateQueryLinksData(HistoryModel historyItem)
         {
-            if (queryLinksContainer.Values.TryGetValue(historyItem.HistoryKey, out object compositeValueObj) && compositeValueObj is Windows.Storage.ApplicationDataCompositeValue compositeValue)
+            if (historyItem is not null && queryLinksContainer.Values.TryGetValue(historyItem.HistoryKey, out object compositeValueObj) && compositeValueObj is Windows.Storage.ApplicationDataCompositeValue compositeValue)
             {
                 compositeValue[CreateTimeStamp] = historyItem.CreateTimeStamp;
                 compositeValue[HistoryAppName] = historyItem.HistoryAppName;
@@ -229,7 +237,7 @@ namespace GetStoreApp.Services.History
         [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
         internal static void UpdateSearchAppsData(HistoryModel historyItem)
         {
-            if (searchAppsContainer.Values.TryGetValue(historyItem.HistoryKey, out object compositeValueObj) && compositeValueObj is Windows.Storage.ApplicationDataCompositeValue compositeValue)
+            if (historyItem is not null && searchAppsContainer.Values.TryGetValue(historyItem.HistoryKey, out object compositeValueObj) && compositeValueObj is Windows.Storage.ApplicationDataCompositeValue compositeValue)
             {
                 compositeValue[CreateTimeStamp] = historyItem.CreateTimeStamp;
             }
@@ -240,22 +248,24 @@ namespace GetStoreApp.Services.History
         /// </summary>
         internal static void RemoveQueryLinksData(string historyKey)
         {
-            if (!string.IsNullOrEmpty(historyKey))
+            if (string.IsNullOrEmpty(historyKey))
             {
-                historyStorageLock.Enter();
+                return;
+            }
 
-                try
-                {
-                    queryLinksContainer.Values.Remove(historyKey);
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(RemoveQueryLinksData), 1, e);
-                }
-                finally
-                {
-                    historyStorageLock.Exit();
-                }
+            historyStorageLock.Enter();
+
+            try
+            {
+                queryLinksContainer.Values.Remove(historyKey);
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(RemoveQueryLinksData), 1, e);
+            }
+            finally
+            {
+                historyStorageLock.Exit();
             }
         }
 
@@ -264,6 +274,11 @@ namespace GetStoreApp.Services.History
         /// </summary>
         internal static void RemoveSearchAppsData(string historyKey)
         {
+            if (string.IsNullOrEmpty(historyKey))
+            {
+                return;
+            }
+
             historyStorageLock.Enter();
 
             try

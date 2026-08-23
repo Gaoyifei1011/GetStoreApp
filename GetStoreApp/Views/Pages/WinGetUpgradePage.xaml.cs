@@ -404,12 +404,7 @@ namespace GetStoreApp.Views.Pages
 
             PackageManager packageManager = await Task.Run(WinGetFactoryHelper.CreatePackageManager);
 
-            PackageCatalogReference packageCatalogReference = await Task.Run(() =>
-            {
-                return GetPackageCatalogReference(packageManager);
-            });
-
-            if (packageCatalogReference is not null)
+            if (await Task.Run(() => { return GetPackageCatalogReference(packageManager); }) is PackageCatalogReference packageCatalogReference)
             {
                 (ConnectResult connectResult, FindPackagesResult findPackagesResult, List<UpgradableAppsModel> upgradableAppsList) = await Task.Run(() =>
                 {

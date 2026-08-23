@@ -17,16 +17,11 @@ namespace GetStoreApp.Helpers.Root
     internal static class DeleteFileHelper
     {
         private static readonly Guid CLSID_FileOperation = new("3AD05575-8857-4850-9277-11B85BDB8E09");
-        private static readonly IFileOperation fileOperation = null;
+        private static IFileOperation fileOperation;
 
         static DeleteFileHelper()
         {
-            int result = Ole32Library.CoCreateInstance(CLSID_FileOperation, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IFileOperation).GUID, out nint ppv);
-
-            if (result is 0)
-            {
-                fileOperation = (IFileOperation)new StrategyBasedComWrappers().GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.None);
-            }
+            CreateFileOperation();
         }
 
         /// <summary>
@@ -38,7 +33,7 @@ namespace GetStoreApp.Helpers.Root
 
             try
             {
-                if (fileOperation is not null && File.Exists(filePath))
+                if (fileOperation is not null && !string.IsNullOrEmpty(filePath) && File.Exists(filePath))
                 {
                     fileOperation.SetOperationFlags(FileOperationFlags.FOF_ALLOWUNDO);
                     if (Shell32Library.SHCreateItemFromParsingName(filePath, nint.Zero, typeof(IShellItem).GUID, out IShellItem shellItem) is 0)
@@ -70,7 +65,7 @@ namespace GetStoreApp.Helpers.Root
             {
                 if (fileOperation is not null)
                 {
-                    if (filePathList.Count > 0)
+                    if (filePathList is not null && filePathList.Count is not 0)
                     {
                         fileOperation.SetOperationFlags(FileOperationFlags.FOF_ALLOWUNDO);
                         foreach (string filePath in filePathList)
@@ -93,6 +88,19 @@ namespace GetStoreApp.Helpers.Root
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DeleteFileHelper), nameof(DeleteFilesToRecycleBin), 1, e);
             }
             return deleteResult;
+        }
+
+        /// <summary>
+        /// 创建对象
+        /// </summary>
+        private static void CreateFileOperation()
+        {
+            int result = Ole32Library.CoCreateInstance(CLSID_FileOperation, nint.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IFileOperation).GUID, out nint ppv);
+
+            if (result is 0)
+            {
+                fileOperation = (IFileOperation)new StrategyBasedComWrappers().GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.None);
+            }
         }
     }
 }

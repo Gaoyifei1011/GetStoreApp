@@ -731,6 +731,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         internal async Task AddTaskAsync(PackageOperationModel packageOperation)
         {
+            if (packageOperation is null)
+            {
+                return;
+            }
+
             switch (packageOperation.PackageOperationKind)
             {
                 // 添加下载任务
@@ -1138,43 +1143,45 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void CancelTask(PackageOperationModel packageOperation)
         {
-            if (packageOperation is not null)
+            if (packageOperation is null)
             {
-                PackageOperationLock.Enter();
-                try
-                {
-                    if (packageOperation.PackageOperationKind is PackageOperationKind.Download && packageOperation.PackageDownloadProgressState is not PackageDownloadProgressState.Finished && packageOperation.PackageDownloadProgress is not null)
-                    {
-                        packageOperation.PackageDownloadProgress.Cancel();
-                    }
-                    else if (packageOperation.PackageOperationKind is PackageOperationKind.Install && packageOperation.PackageInstallProgressState is not PackageInstallProgressState.Finished && packageOperation.PackageInstallProgress is not null)
-                    {
-                        packageOperation.PackageInstallProgress.Cancel();
-                    }
-                    else if (packageOperation.PackageOperationKind is PackageOperationKind.Uninstall && packageOperation.PackageUninstallProgressState is not PackageUninstallProgressState.Finished && packageOperation.PackageUninstallProgress is not null)
-                    {
-                        packageOperation.PackageUninstallProgress.Cancel();
-                    }
-                    else if (packageOperation.PackageOperationKind is PackageOperationKind.Repair && packageOperation.PackageRepairProgressState is not PackageRepairProgressState.Finished && packageOperation.PackageRepairProgress is not null)
-                    {
-                        packageOperation.PackageRepairProgress.Cancel();
-                    }
-                    else if (packageOperation.PackageOperationKind is PackageOperationKind.Upgrade && packageOperation.PackageInstallProgressState is not PackageInstallProgressState.Finished && packageOperation.PackageInstallProgress is not null)
-                    {
-                        packageOperation.PackageInstallProgress.Cancel();
-                    }
+                return;
+            }
 
-                    packageOperation.PackageOperationProgress = 100;
-                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Cancel;
-                }
-                catch (Exception e)
+            PackageOperationLock.Enter();
+            try
+            {
+                if (packageOperation.PackageOperationKind is PackageOperationKind.Download && packageOperation.PackageDownloadProgressState is not PackageDownloadProgressState.Finished && packageOperation.PackageDownloadProgress is not null)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(CancelTask), 1, e);
+                    packageOperation.PackageDownloadProgress.Cancel();
                 }
-                finally
+                else if (packageOperation.PackageOperationKind is PackageOperationKind.Install && packageOperation.PackageInstallProgressState is not PackageInstallProgressState.Finished && packageOperation.PackageInstallProgress is not null)
                 {
-                    PackageOperationLock.Exit();
+                    packageOperation.PackageInstallProgress.Cancel();
                 }
+                else if (packageOperation.PackageOperationKind is PackageOperationKind.Uninstall && packageOperation.PackageUninstallProgressState is not PackageUninstallProgressState.Finished && packageOperation.PackageUninstallProgress is not null)
+                {
+                    packageOperation.PackageUninstallProgress.Cancel();
+                }
+                else if (packageOperation.PackageOperationKind is PackageOperationKind.Repair && packageOperation.PackageRepairProgressState is not PackageRepairProgressState.Finished && packageOperation.PackageRepairProgress is not null)
+                {
+                    packageOperation.PackageRepairProgress.Cancel();
+                }
+                else if (packageOperation.PackageOperationKind is PackageOperationKind.Upgrade && packageOperation.PackageInstallProgressState is not PackageInstallProgressState.Finished && packageOperation.PackageInstallProgress is not null)
+                {
+                    packageOperation.PackageInstallProgress.Cancel();
+                }
+
+                packageOperation.PackageOperationProgress = 100;
+                packageOperation.PackageOperationResultKind = PackageOperationResultKind.Cancel;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(CancelTask), 1, e);
+            }
+            finally
+            {
+                PackageOperationLock.Exit();
             }
         }
 
@@ -1183,20 +1190,22 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OpenPackageFolder(string packagePath)
         {
-            if (!string.IsNullOrEmpty(packagePath))
+            if (string.IsNullOrEmpty(packagePath))
             {
-                Task.Run(async () =>
-                {
-                    try
-                    {
-                        await Launcher.LaunchFolderPathAsync(packagePath);
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    }
-                });
+                return;
             }
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchFolderPathAsync(packagePath);
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>

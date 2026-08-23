@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage.Streams;
 using Windows.Web.Http;
-using Windows.Web.Http.Headers;
 
 namespace GetStoreApp.Helpers.Store
 {
@@ -106,10 +105,15 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 检查请求后的状态信息
         /// </summary>
-        internal static InfoBarSeverity CheckRequestState(RequestModel HttpRequestData)
+        internal static InfoBarSeverity CheckRequestState(RequestModel httpRequestData)
         {
+            if (httpRequestData is null)
+            {
+                return default;
+            }
+
             // 服务器请求异常，返回错误状态值，成功下返回成功状态值，否则返回警告状态值
-            return HttpRequestData.RequestId is not 0 ? InfoBarSeverity.Error : HttpRequestData.RequestContent.Contains("The links were successfully received from the Microsoft Store server.", StringComparison.OrdinalIgnoreCase) ? InfoBarSeverity.Success : InfoBarSeverity.Warning;
+            return httpRequestData.RequestId is not 0 ? InfoBarSeverity.Error : httpRequestData.RequestContent.Contains("The links were successfully received from the Microsoft Store server.", StringComparison.OrdinalIgnoreCase) ? InfoBarSeverity.Success : InfoBarSeverity.Warning;
         }
     }
 }

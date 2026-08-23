@@ -14,6 +14,11 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         internal static T ReadSetting<T>(string key)
         {
+            if (string.IsNullOrEmpty(key))
+            {
+                return default;
+            }
+
             return localSettingsContainer.Values.TryGetValue(key, out object value) ? (T)value : default;
         }
 
@@ -22,6 +27,11 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         internal static void SaveSetting<T>(string key, T value)
         {
+            if (string.IsNullOrEmpty(key))
+            {
+                return;
+            }
+
             localSettingsContainer.Values[key] = value;
         }
     }

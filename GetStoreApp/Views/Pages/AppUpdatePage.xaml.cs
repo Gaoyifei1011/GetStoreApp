@@ -163,10 +163,9 @@ namespace GetStoreApp.Views.Pages
                         if (string.Equals(appUpdateItem.PackageFamilyName, packageFamilyName))
                         {
                             appUpdateItem.IsOperating = true;
-                            AppInstallItem appInstallItem = await UpdatAppAsync(appUpdateItem.PackageFamilyName);
 
                             // 安装更新添加成功
-                            if (appInstallItem is not null)
+                            if (await UpdatAppAsync(appUpdateItem.PackageFamilyName) is not null)
                             {
                                 appUpdateItem.IsOperating = false;
                                 appUpdateItem.AppInstallState = AppInstallState.Pending;
@@ -322,10 +321,8 @@ namespace GetStoreApp.Views.Pages
             {
                 if (!appUpdateItem.IsUpdating && appUpdateItem.IsOperating)
                 {
-                    AppInstallItem appInstallItem = await UpdatAppAsync(appUpdateItem.PackageFamilyName);
-
                     // 安装更新添加成功
-                    if (appInstallItem is not null)
+                    if (await UpdatAppAsync(appUpdateItem.PackageFamilyName) is not null)
                     {
                         appUpdateItem.IsOperating = false;
                         appUpdateItem.AppInstallState = AppInstallState.Pending;
@@ -358,9 +355,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnAppInstallItemStatusChanged(AppInstallManager sender, AppInstallManagerItemEventArgs args)
         {
-            AppInstallStatus appInstallStatus = args.Item.GetCurrentStatus();
-
-            if (appInstallStatus is not null)
+            if (args.Item.GetCurrentStatus() is AppInstallStatus appInstallStatus)
             {
                 string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
                 string installSubInformation = string.Format(InstallingSubInformationString, VolumeSizeHelper.ConvertVolumeSizeToString(appInstallStatus.DownloadSizeInBytes), VolumeSizeHelper.ConvertVolumeSizeToString(appInstallStatus.BytesDownloaded));
@@ -507,27 +502,29 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task CancelUpdateAppAsync(string packageFamilyName)
         {
-            if (!string.IsNullOrEmpty(packageFamilyName))
+            if (string.IsNullOrEmpty(packageFamilyName))
             {
-                await Task.Run(() =>
+                return;
+            }
+
+            await Task.Run(() =>
+            {
+                try
                 {
-                    try
+                    foreach (AppInstallItem appInstallItem in appInstallManager.AppInstallItems)
                     {
-                        foreach (AppInstallItem appInstallItem in appInstallManager.AppInstallItems)
+                        if (string.Equals(packageFamilyName, appInstallItem.PackageFamilyName))
                         {
-                            if (string.Equals(packageFamilyName, appInstallItem.PackageFamilyName))
-                            {
-                                appInstallItem.Cancel();
-                                break;
-                            }
+                            appInstallItem.Cancel();
+                            break;
                         }
                     }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    }
-                });
-            }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>
@@ -571,7 +568,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<List<AppUpdateModel>> GetAppUpdateListAsync(List<AppUpdateModel> appUpdateList)
         {
-            if (appUpdateList is null)
+            if (appUpdateList is null || appUpdateList.Count is 0)
             {
                 return default;
             }
@@ -677,16 +674,18 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void ShowAppUpdateNotification(string displayName)
         {
-            if (!string.IsNullOrEmpty(displayName))
+            if (string.IsNullOrEmpty(displayName))
             {
-                Task.Run(() =>
-                {
-                    AppNotificationBuilder appNotificationBuilder = new();
-                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                    appNotificationBuilder.AddText(string.Format(AppUpdateSuccessfullyString, displayName));
-                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                });
+                return;
             }
+
+            Task.Run(() =>
+            {
+                AppNotificationBuilder appNotificationBuilder = new();
+                appNotificationBuilder.AddArgument("action", "OpenApp");
+                appNotificationBuilder.AddText(string.Format(AppUpdateSuccessfullyString, displayName));
+                ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+            });
         }
 
         /// <summary>

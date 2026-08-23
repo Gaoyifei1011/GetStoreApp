@@ -464,45 +464,44 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private void ShowAddPackageVolumeResultNotification(PackageVolumeModel packageVolume, bool addResult, string saveFolder, Exception exception)
         {
-            if (packageVolume is not null)
+            if (packageVolume is null || string.IsNullOrEmpty(saveFolder))
             {
-                Task.Run(() =>
+                return;
+            }
+
+            Task.Run(() =>
+            {
+                if (addResult)
                 {
-                    if (addResult)
+                    // 显示存储卷添加成功的通知
+                    AppNotificationBuilder appNotificationBuilder = new();
+                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                    appNotificationBuilder.AddText(string.Format(CreateSuccessfullyString, string.Format("{0}[{1}]", packageVolume.Name, saveFolder)));
+                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                }
+                else
+                {
+                    try
                     {
-                        // 显示存储卷添加成功的通知
+                        // 显示存储卷添加失败的通知
                         AppNotificationBuilder appNotificationBuilder = new();
                         appNotificationBuilder.AddArgument("action", "OpenApp");
-                        appNotificationBuilder.AddText(string.Format(CreateSuccessfullyString, string.Format("{0}[{1}]", packageVolume.Name, saveFolder)));
-                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                    }
-                    else
-                    {
-                        if (exception is not null)
+                        appNotificationBuilder.AddText(string.Format(CreateFailed1String, string.Format("{0}[{1}]", packageVolume.Name, saveFolder)));
+                        appNotificationBuilder.AddText(CreateFailed2String);
+                        appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                            try
-                            {
-                                // 显示存储卷添加失败的通知
-                                AppNotificationBuilder appNotificationBuilder = new();
-                                appNotificationBuilder.AddArgument("action", "OpenApp");
-                                appNotificationBuilder.AddText(string.Format(CreateFailed1String, string.Format("{0}[{1}]", packageVolume.Name, saveFolder)));
-                                appNotificationBuilder.AddText(CreateFailed2String);
-                                appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
-                                {
-                                    string.Format(CreateFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
-                                    string.Format(CreateFailed4String, exception is not null ? exception.Message : NotAvailableString)
-                                }));
-                                ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeAddDialog), nameof(ShowAddPackageVolumeResultNotification), 1, exception is not null ? exception : new());
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                        }
+                            string.Format(CreateFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
+                            string.Format(CreateFailed4String, exception is not null ? exception.Message : NotAvailableString)
+                        }));
+                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeAddDialog), nameof(ShowAddPackageVolumeResultNotification), 1, exception is not null ? exception : new());
                     }
-                });
-            }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
+                }
+            });
         }
 
         /// <summary>
@@ -510,20 +509,22 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async Task SetDefaultVolumeAsync(PackageVolume packageVolume)
         {
-            if (packageVolume is not null)
+            if (packageVolume is null)
             {
-                await Task.Run(() =>
-                {
-                    try
-                    {
-                        packageVolume.SetDefault();
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    }
-                });
+                return;
             }
+
+            await Task.Run(() =>
+            {
+                try
+                {
+                    packageVolume.SetDefault();
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>

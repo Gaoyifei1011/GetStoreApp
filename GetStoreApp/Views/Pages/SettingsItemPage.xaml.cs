@@ -260,47 +260,49 @@ namespace GetStoreApp.Views.Pages
                 SelectedItem = sender.SelectedItem;
             }
 
-            if (SelectedItem is not null)
+            if (SelectedItem is null)
             {
-                int index = sender.Items.IndexOf(SelectedItem);
-                Type currentPage = GetCurrentPageType();
-                int currentIndex = PageList.FindIndex(item => Equals(item, currentPage));
+                return;
+            }
 
-                if (index is 0)
+            int index = sender.Items.IndexOf(SelectedItem);
+            Type currentPage = GetCurrentPageType();
+            int currentIndex = PageList.FindIndex(item => Equals(item, currentPage));
+
+            if (index is 0)
+            {
+                if (currentPage is null)
                 {
-                    if (currentPage is null)
-                    {
-                        NavigateTo(PageList[0]);
-                    }
-                    else if (!Equals(currentPage, PageList[0]))
-                    {
-                        NavigateTo(PageList[0], null, index > currentIndex);
-                    }
+                    NavigateTo(PageList[0]);
                 }
-                else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
+                else if (!Equals(currentPage, PageList[0]))
                 {
-                    NavigateTo(PageList[1], null, index > currentIndex);
+                    NavigateTo(PageList[0], null, index > currentIndex);
                 }
-                else if (index is 2 && !Equals(GetCurrentPageType(), PageList[2]))
-                {
-                    NavigateTo(PageList[2], null, index > currentIndex);
-                }
-                else if (index is 3 && !Equals(GetCurrentPageType(), PageList[3]))
-                {
-                    NavigateTo(PageList[3], null, index > currentIndex);
-                }
-                else if (index is 4 && !Equals(GetCurrentPageType(), PageList[4]))
-                {
-                    NavigateTo(PageList[4], null, index > currentIndex);
-                }
-                else if (index is 5 && !Equals(GetCurrentPageType(), PageList[5]))
-                {
-                    NavigateTo(PageList[5], null, index > currentIndex);
-                }
-                else if (index is 6 && !Equals(GetCurrentPageType(), PageList[6]))
-                {
-                    NavigateTo(PageList[6], null, index > currentIndex);
-                }
+            }
+            else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
+            {
+                NavigateTo(PageList[1], null, index > currentIndex);
+            }
+            else if (index is 2 && !Equals(GetCurrentPageType(), PageList[2]))
+            {
+                NavigateTo(PageList[2], null, index > currentIndex);
+            }
+            else if (index is 3 && !Equals(GetCurrentPageType(), PageList[3]))
+            {
+                NavigateTo(PageList[3], null, index > currentIndex);
+            }
+            else if (index is 4 && !Equals(GetCurrentPageType(), PageList[4]))
+            {
+                NavigateTo(PageList[4], null, index > currentIndex);
+            }
+            else if (index is 5 && !Equals(GetCurrentPageType(), PageList[5]))
+            {
+                NavigateTo(PageList[5], null, index > currentIndex);
+            }
+            else if (index is 6 && !Equals(GetCurrentPageType(), PageList[6]))
+            {
+                NavigateTo(PageList[6], null, index > currentIndex);
             }
         }
 
@@ -478,7 +480,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 固定到任务栏
         /// </summary>
-        private async Task<(bool needUnlock, LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully)> PinToTaskbarAsync()
+        private async Task<(bool, LimitedAccessFeatureStatus, bool)> PinToTaskbarAsync()
         {
             return await Task.Run(async () =>
             {

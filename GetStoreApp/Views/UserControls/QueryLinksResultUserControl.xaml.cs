@@ -21,7 +21,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Foundation.Diagnostics;
-using Windows.Storage;
 using Windows.System;
 
 // 抑制 CA1822，IDE0060 警告
@@ -189,7 +188,7 @@ namespace GetStoreApp.Views.UserControls
 
         #endregion 第四部分：父类虚方法重写
 
-        #region 第二部分：查询链接结果用户控件——挂载的事件
+        #region 第五部分：挂载事件处理
 
         /// <summary>
         /// 返回主页
@@ -325,10 +324,10 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private async void OnCopySelectedClicked(object sender, RoutedEventArgs args)
         {
-            List<QueryLinksResultModel> selectedQueryLinksResultList = GetSelectedItemsList();
+            List<QueryLinksResultModel> selectedQueryLinksResultList = GetSelectedItemsList(QueryLinksResultListView.SelectedItems);
 
             // 内容为空时显示空提示对话框
-            if (selectedQueryLinksResultList is not null && selectedQueryLinksResultList.Count is 0)
+            if (selectedQueryLinksResultList is null || selectedQueryLinksResultList.Count is 0)
             {
                 await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                 return;
@@ -357,7 +356,7 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private async void OnCopySelectedLinkClicked(object sender, RoutedEventArgs args)
         {
-            List<QueryLinksResultModel> selectedQueryLinksResultList = GetSelectedItemsList();
+            List<QueryLinksResultModel> selectedQueryLinksResultList = GetSelectedItemsList(QueryLinksResultListView.SelectedItems);
 
             // 内容为空时显示空提示对话框
             if (selectedQueryLinksResultList is null || selectedQueryLinksResultList.Count is 0)
@@ -386,7 +385,7 @@ namespace GetStoreApp.Views.UserControls
             if (!string.IsNullOrEmpty(downloadFolder))
             {
                 // 获取选中项
-                List<QueryLinksResultModel> selectedQueryLinksResultList = GetSelectedItemsList();
+                List<QueryLinksResultModel> selectedQueryLinksResultList = GetSelectedItemsList(QueryLinksResultListView.SelectedItems);
 
                 // 退出多选模式
                 SelectionMode = ListViewSelectionMode.None;
@@ -409,7 +408,7 @@ namespace GetStoreApp.Views.UserControls
                 }
 
                 // 内容为空时显示空提示对话框
-                if (selectedQueryLinksResultList is not null && selectedQueryLinksResultList.Count is 0)
+                if (selectedQueryLinksResultList is null && selectedQueryLinksResultList.Count is 0)
                 {
                     await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                     return;
@@ -451,7 +450,9 @@ namespace GetStoreApp.Views.UserControls
             }
         }
 
-        #endregion 第二部分：查询链接结果用户控件——挂载的事件
+        #endregion 第五部分：挂载事件处理
+
+        #region 第六部分：数据操作与业务逻辑
 
         /// <summary>
         /// 初始化查询链接结果用户控件
@@ -468,14 +469,19 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 获取选中项
         /// </summary>
-        private List<QueryLinksResultModel> GetSelectedItemsList()
+        private List<QueryLinksResultModel> GetSelectedItemsList(IList<object> selectedItemsList)
         {
+            if (selectedItemsList is null || selectedItemsList.Count is 0)
+            {
+                return default;
+            }
+
             List<QueryLinksResultModel> selectedQueryLinksResultList = [];
             queryLinksResultLock.Enter();
 
             try
             {
-                foreach (object queryLinksResultItemObj in QueryLinksResultListView.SelectedItems)
+                foreach (object queryLinksResultItemObj in selectedItemsList)
                 {
                     if (queryLinksResultItemObj is QueryLinksResultModel queryLinksResultItem)
                     {
@@ -610,7 +616,7 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private async Task<(bool, List<DownloadSchedulerModel>)> CreateDownloadTaskAsync(string downloadFolder, List<QueryLinksResultModel> queryLinksResultList)
         {
-            if (string.IsNullOrEmpty(downloadFolder) || queryLinksResultList is null)
+            if (string.IsNullOrEmpty(downloadFolder) || queryLinksResultList is null || queryLinksResultList.Count is 0)
             {
                 return default;
             }
@@ -820,5 +826,7 @@ namespace GetStoreApp.Views.UserControls
             filePath = newFullPath;
             return filePath;
         }
+
+        #endregion 第六部分：数据操作与业务逻辑
     }
 }

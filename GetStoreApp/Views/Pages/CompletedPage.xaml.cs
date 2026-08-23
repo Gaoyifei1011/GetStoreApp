@@ -140,9 +140,11 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    List<StorageFile> fileList = await GetStorageFileListAsync([completed.FilePath]);
-                    bool copyResult = CopyPasteHelper.CopyFileToClipBoard(fileList);
-                    await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                    if (await GetStorageFileListAsync([completed.FilePath]) is List<StorageFile> fileList && fileList.Count is not 0)
+                    {
+                        bool copyResult = CopyPasteHelper.CopyFileToClipBoard(fileList);
+                        await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                    }
                 }
                 catch (Exception e)
                 {
@@ -442,8 +444,10 @@ namespace GetStoreApp.Views.Pages
                         selectedFileList.Add(completedItem.FilePath);
                     }
 
-                    List<StorageFile> selectedStorageFileList = await GetStorageFileListAsync(selectedFileList);
-                    ShowShareUI(selectedStorageFileList);
+                    if (await GetStorageFileListAsync(selectedFileList) is List<StorageFile> selectedStorageFileList && selectedStorageFileList.Count is not 0)
+                    {
+                        ShowShareUI(selectedStorageFileList);
+                    }
                 }
                 catch (Exception e)
                 {
@@ -640,7 +644,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private List<CompletedModel> GetSelectedItemsList(IList<object> selectedItemsList)
         {
-            if (selectedItemsList is null)
+            if (selectedItemsList is null || selectedItemsList.Count is 0)
             {
                 return default;
             }
@@ -696,29 +700,31 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task DeleteDownloaodFileAsync(List<CompletedModel> selectedCompletedDataList, bool deleteFile)
         {
-            if (selectedCompletedDataList is not null)
+            if (selectedCompletedDataList is null || selectedCompletedDataList.Count is 0)
             {
-                await Task.Run(() =>
+                return;
+            }
+
+            await Task.Run(() =>
+            {
+                if (deleteFile)
                 {
-                    if (deleteFile)
+                    foreach (CompletedModel completedItem in selectedCompletedDataList)
                     {
-                        foreach (CompletedModel completedItem in selectedCompletedDataList)
-                        {
-                            if (!File.Exists(completedItem.FilePath) || DeleteFileHelper.DeleteFileToRecycleBin(completedItem.FilePath))
-                            {
-                                DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        foreach (CompletedModel completedItem in selectedCompletedDataList)
+                        if (!File.Exists(completedItem.FilePath) || DeleteFileHelper.DeleteFileToRecycleBin(completedItem.FilePath))
                         {
                             DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
                         }
                     }
-                });
-            }
+                }
+                else
+                {
+                    foreach (CompletedModel completedItem in selectedCompletedDataList)
+                    {
+                        DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
+                    }
+                }
+            });
         }
 
         /// <summary>
@@ -902,47 +908,49 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OpenFolder(string filePath)
         {
-            if (!string.IsNullOrEmpty(filePath))
+            if (string.IsNullOrEmpty(filePath))
             {
-                Task.Run(async () =>
+                return;
+            }
+
+            Task.Run(async () =>
+            {
+                try
                 {
-                    try
+                    if (File.Exists(filePath))
                     {
-                        if (File.Exists(filePath))
+                        // 定位文件，若定位失败，则仅启动资源管理器并打开桌面目录
+                        if (!string.IsNullOrEmpty(filePath))
                         {
-                            // 定位文件，若定位失败，则仅启动资源管理器并打开桌面目录
-                            if (!string.IsNullOrEmpty(filePath))
+                            try
                             {
-                                try
-                                {
-                                    StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
-                                    StorageFolder folder = await file.GetParentAsync();
-                                    FolderLauncherOptions options = new();
-                                    options.ItemsToSelect.Add(file);
-                                    await Launcher.LaunchFolderAsync(folder, options);
-                                }
-                                catch (Exception e)
-                                {
-                                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OpenFolder), 1, e);
-                                    await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
-                                }
+                                StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
+                                StorageFolder folder = await file.GetParentAsync();
+                                FolderLauncherOptions options = new();
+                                options.ItemsToSelect.Add(file);
+                                await Launcher.LaunchFolderAsync(folder, options);
                             }
-                            else
+                            catch (Exception e)
                             {
+                                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OpenFolder), 1, e);
                                 await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
                             }
                         }
                         else
                         {
-                            await Launcher.LaunchFolderPathAsync(DownloadOptionsService.DownloadFolder);
+                            await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
                         }
                     }
-                    catch (Exception e)
+                    else
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OpenFolder), 2, e);
+                        await Launcher.LaunchFolderPathAsync(DownloadOptionsService.DownloadFolder);
                     }
-                });
-            }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OpenFolder), 2, e);
+                }
+            });
         }
 
         /// <summary>
@@ -950,12 +958,14 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void ShowShareUI(List<StorageFile> fileList)
         {
-            if (fileList is not null)
+            if (fileList is null || fileList.Count is 0)
             {
-                DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
-                dataTransferManager.DataRequested += (sender, args) => OnDataRequested(sender, args, fileList);
-                DataTransferManagerInterop.ShowShareUIForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
+                return;
             }
+
+            DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
+            dataTransferManager.DataRequested += (sender, args) => OnDataRequested(sender, args, fileList);
+            DataTransferManagerInterop.ShowShareUIForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
         }
 
         /// <summary>
@@ -963,7 +973,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task<List<StorageFile>> GetStorageFileListAsync(List<string> fileList)
         {
-            if (fileList is null)
+            if (fileList is null || fileList.Count is 0)
             {
                 return default;
             }
