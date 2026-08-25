@@ -3521,7 +3521,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private async Task<(bool, bool, PackageDeploymentResult, Exception)> InstallPackageAsync(string packageName, string packageFamilyName, List<InstallDependencyModel> installDependencyList)
         {
-            if (string.IsNullOrEmpty(packageName) || string.IsNullOrEmpty(packageFamilyName) || installDependencyList is null || installDependencyList.Count is 0)
+            if (string.IsNullOrEmpty(packageName) || string.IsNullOrEmpty(packageFamilyName) || installDependencyList is null)
             {
                 return default;
             }
@@ -3547,9 +3547,12 @@ namespace GetStoreAppInstaller.Views.Windows
                             TargetVolume = PackageVolume.GetDefault()
                         };
 
-                        foreach (InstallDependencyModel installDependencyItem in installDependencyList)
+                        if(installDependencyList.Count > 0)
                         {
-                            addPackageOptions.DependencyPackageUris.Add(new(installDependencyItem.DependencyPath));
+                            foreach (InstallDependencyModel installDependencyItem in installDependencyList)
+                            {
+                                addPackageOptions.DependencyPackageUris.Add(new(installDependencyItem.DependencyPath));
+                            }
                         }
 
                         // 安装目标应用，并获取安装进度
@@ -3618,8 +3621,8 @@ namespace GetStoreAppInstaller.Views.Windows
                     {
                         Task.Run(() =>
                         {
-                            string errorCode = exception is not null ? string.Format("0x{0:X8}", exception.HResult) : NotAvailableString;
-                            string errorMessage = exception is not null ? exception.Message : NotAvailableString;
+                            string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
+                            string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
 
                             // 显示安装失败通知
                             AppNotificationBuilder appNotificationBuilder = new();
@@ -3633,8 +3636,9 @@ namespace GetStoreAppInstaller.Views.Windows
                 }
                 else
                 {
-                    string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
-                    string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
+                    string errorCode = exception is not null ? string.Format("0x{0:X8}", exception.HResult) : NotAvailableString;
+                    string errorMessage = exception is not null ? exception.Message : NotAvailableString;
+
                     Task.Run(() =>
                     {
                         // 显示安装失败通知
