@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
+using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 
@@ -36,25 +35,28 @@ namespace GetStoreApp.Helpers.Root
         }
 
         /// <summary>
-        /// 获取计算所得的 MD5 算法加密后的值
-        /// </summary>
-        private static string ComputeMD5(string content)
-        {
-            HashAlgorithmProvider hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5);
-            IBuffer buffer = Encoding.UTF8.GetBytes(content).AsBuffer();
-            IBuffer hashBuffer = hashAlgorithmProvider.HashData(buffer);
-            return Convert.ToHexString(hashBuffer.ToArray());
-        }
-
-        /// <summary>
         /// 获取计算所得的 SHA256 算法加密后的值
         /// </summary>
         internal static string ComputeSHA256(string content)
         {
             HashAlgorithmProvider hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
-            IBuffer buffer = Encoding.UTF8.GetBytes(content).AsBuffer();
-            IBuffer hashBuffer = hashAlgorithmProvider.HashData(buffer);
-            return Convert.ToHexString(hashBuffer.ToArray());
+            IBuffer buffHash = CryptographicBuffer.ConvertStringToBinary(content, BinaryStringEncoding.Utf8);
+            IBuffer hashedBuffer = hashAlgorithmProvider.HashData(buffHash);
+            CryptographicBuffer.CopyToByteArray(hashedBuffer, out byte[] hashBytes);
+            byte[] tokenBytes = new byte[16];
+            Array.Copy(hashBytes, tokenBytes, tokenBytes.Length);
+            return Convert.ToBase64String(tokenBytes);
+        }
+
+        /// <summary>
+        /// 获取计算所得的 MD5 算法加密后的值
+        /// </summary>
+        private static string ComputeMD5(string content)
+        {
+            HashAlgorithmProvider hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5);
+            IBuffer buffHash = CryptographicBuffer.ConvertStringToBinary(content, BinaryStringEncoding.Utf8);
+            IBuffer hashedBuffer = hashAlgorithmProvider.HashData(buffHash);
+            return CryptographicBuffer.EncodeToHexString(hashedBuffer);
         }
     }
 }

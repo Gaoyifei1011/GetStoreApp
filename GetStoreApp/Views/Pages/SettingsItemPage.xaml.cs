@@ -509,8 +509,8 @@ namespace GetStoreApp.Views.Pages
                             {
                                 needUnlock = true;
                                 string token = FeatureAccessHelper.GenerateTokenFromFeatureId(feature, featureId);
-                                string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
-                                LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
+                                string attestation = FeatureAccessHelper.GenerateAttestation(feature);
+                                LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(feature, token, attestation);
 
                                 if (accessResult.Status is LimitedAccessFeatureStatus.Available || accessResult.Status is LimitedAccessFeatureStatus.AvailableWithoutToken)
                                 {

@@ -76,3 +76,4 @@
 		<Copy SourceFiles="$(NativeOutputPath)$(AssemblyName).exe" DestinationFiles="$(ProjectDir)obj\$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\apphost.exe" />
 	</Target>
 </Project>
+ 
