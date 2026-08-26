@@ -66,7 +66,7 @@
 		<None Remove="Views\Windows\InstallerWindow.xaml" />
 
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.1" />
-		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2526" GeneratePathProperty="true" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2705" GeneratePathProperty="true" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.7.260610101" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
 		<PackageReference Include="Microsoft.WindowsAppSDK.Base" Version="2.0.4" />
 		<PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="2.3.9" />
