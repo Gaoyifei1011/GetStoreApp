@@ -25,6 +25,11 @@ namespace GetStoreApp.Helpers.Store
         /// </summary>
         internal static string GenerateManifestSearchString(string content)
         {
+            if (string.IsNullOrEmpty(content))
+            {
+                return default;
+            }
+
             try
             {
                 JsonObject queryObject = new()

@@ -15,6 +15,11 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         internal static string GetFeatureId(string feature)
         {
+            if (string.IsNullOrEmpty(feature))
+            {
+                return string.Empty;
+            }
+
             return RegistryHelper.ReadRegistryKey<string>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, string.Format(@"{0}\{1}", @"SOFTWARE\Microsoft\Windows\CurrentVersion\AppModel\LimitedAccessFeatures", feature), null);
         }
 
@@ -23,6 +28,11 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         internal static string GenerateTokenFromFeatureId(string feature, string featureId)
         {
+            if (string.IsNullOrEmpty(feature) || string.IsNullOrEmpty(featureId))
+            {
+                return string.Empty;
+            }
+
             string generatedContent = string.Format("{0}!{1}!{2}", feature, featureId, packageFamilyName);
             return HashAlgorithmHelper.ComputeSHA256(generatedContent);
         }
@@ -32,6 +42,11 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         internal static string GenerateAttestation(string featureId)
         {
+            if (string.IsNullOrEmpty(featureId))
+            {
+                return string.Empty;
+            }
+
             string[] packageFamilyNameArray = packageFamilyName.Split('_');
             return packageFamilyNameArray.Length > 0 ? string.Format("{0} has registered their use of {1} with Microsoft and agrees to the terms of use.", packageFamilyNameArray[^1], featureId) : string.Empty;
         }

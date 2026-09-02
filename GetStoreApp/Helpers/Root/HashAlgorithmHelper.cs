@@ -15,6 +15,11 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         internal static string GenerateHistoryKey(string inputContent)
         {
+            if (string.IsNullOrEmpty(inputContent))
+            {
+                return string.Empty;
+            }
+
             return ComputeMD5(inputContent);
         }
 
@@ -23,6 +28,11 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         internal static string GenerateHistoryKey(string typeName, string channelName, string currentLink)
         {
+            if (string.IsNullOrEmpty(typeName) || string.IsNullOrEmpty(channelName) || string.IsNullOrEmpty(currentLink))
+            {
+                return string.Empty;
+            }
+
             return ComputeMD5(string.Format("{0} {1} {2}", typeName, channelName, currentLink));
         }
 
@@ -31,6 +41,11 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         internal static string GenerateDownloadKey(string fileName, string filePath)
         {
+            if (string.IsNullOrEmpty(fileName) || string.IsNullOrEmpty(filePath))
+            {
+                return string.Empty;
+            }
+
             return ComputeMD5(string.Format("{0} {1}", fileName, filePath));
         }
 
@@ -39,6 +54,11 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         internal static string ComputeSHA256(string content)
         {
+            if (string.IsNullOrEmpty(content))
+            {
+                return string.Empty;
+            }
+
             HashAlgorithmProvider hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
             IBuffer buffHash = CryptographicBuffer.ConvertStringToBinary(content, BinaryStringEncoding.Utf8);
             IBuffer hashedBuffer = hashAlgorithmProvider.HashData(buffHash);
@@ -53,6 +73,11 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         private static string ComputeMD5(string content)
         {
+            if (string.IsNullOrEmpty(content))
+            {
+                return string.Empty;
+            }
+
             HashAlgorithmProvider hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5);
             IBuffer buffHash = CryptographicBuffer.ConvertStringToBinary(content, BinaryStringEncoding.Utf8);
             IBuffer hashedBuffer = hashAlgorithmProvider.HashData(buffHash);
