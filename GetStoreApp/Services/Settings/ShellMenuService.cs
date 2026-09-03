@@ -9,7 +9,6 @@ namespace GetStoreApp.Services.Settings
     internal static class ShellMenuService
     {
         private static readonly string settingsKey = ConfigKey.ShellMenuKey;
-
         private static readonly bool defaultShellMenu = true;
 
         internal static bool ShellMenu { get; private set; }

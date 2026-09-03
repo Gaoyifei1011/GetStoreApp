@@ -11,7 +11,6 @@ namespace GetStoreApp.Services.Settings
     internal static class TopMostService
     {
         private static readonly string settingsKey = ConfigKey.TopMostKey;
-
         private static readonly bool defaultTopMost = false;
 
         private static bool _topMost;

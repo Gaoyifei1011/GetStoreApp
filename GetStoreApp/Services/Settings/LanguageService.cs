@@ -54,6 +54,12 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private static bool IsExistsInLanguageList(CultureInfo currentCulture, out KeyValuePair<string, string> language)
         {
+            if (currentCulture is null)
+            {
+                language = default;
+                return false;
+            }
+
             foreach (KeyValuePair<string, string> languageItem in LanguageList)
             {
                 if (languageItem.Key.Contains(currentCulture.Name, StringComparison.OrdinalIgnoreCase))

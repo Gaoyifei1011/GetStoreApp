@@ -11,7 +11,6 @@ namespace GetStoreApp.Services.Settings
         private static readonly string allowUnsignedPackageKey = ConfigKey.AllowUnsignedPackageKey;
         private static readonly string forceAppShutdownKey = ConfigKey.ForceAppShutdownKey;
         private static readonly string forceTargetAppShutdownKey = ConfigKey.ForceTargetAppShutdownKey;
-
         private static readonly bool defaultAllowUnsignedPackage = false;
         private static readonly bool defaultForceAppShutdown = false;
         private static readonly bool defaultForceTargetAppShutdown = false;

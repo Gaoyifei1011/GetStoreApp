@@ -12,7 +12,6 @@ namespace GetStoreApp.Services.Settings
     internal static class AppLinkOpenModeService
     {
         private static readonly string appLinkOpenModeSettingsKey = ConfigKey.AppLinkOpenModeKey;
-
         private static string defaultAppLinkOpenMode;
 
         private static string _appLinkOpenMode;

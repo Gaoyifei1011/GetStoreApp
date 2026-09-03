@@ -110,6 +110,11 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         internal static void SetFolder(string downloadFolder)
         {
+            if (string.IsNullOrEmpty(downloadFolder))
+            {
+                return;
+            }
+
             DownloadFolder = downloadFolder;
             LocalSettingsService.SaveSetting(downloadFolderKey, downloadFolder);
         }
@@ -119,6 +124,11 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         internal static void SetDoEngineMode(string doEngineMode)
         {
+            if (string.IsNullOrEmpty(doEngineMode))
+            {
+                return;
+            }
+
             DoEngineMode = doEngineMode;
             LocalSettingsService.SaveSetting(doEngineModeKey, doEngineMode);
         }

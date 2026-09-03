@@ -9,7 +9,6 @@ namespace GetStoreApp.Services.Settings
     internal static class AlwaysShowBackdropService
     {
         private static readonly string settingsKey = ConfigKey.AlwaysShowBackdropKey;
-
         private static readonly bool defaultAlwaysShowBackdrop = false;
 
         internal static bool AlwaysShowBackdrop { get; private set; }

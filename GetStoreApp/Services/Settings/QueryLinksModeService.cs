@@ -12,7 +12,6 @@ namespace GetStoreApp.Services.Settings
     internal static class QueryLinksModeService
     {
         private static readonly string queryLinksModeSettingsKey = ConfigKey.QueryLinksModeKey;
-
         private static string defaultQueryLinksMode;
 
         private static string _queryLinksMode;

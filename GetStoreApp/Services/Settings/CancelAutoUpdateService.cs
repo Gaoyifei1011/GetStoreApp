@@ -11,7 +11,6 @@ namespace GetStoreApp.Services.Settings
     internal static class CancelAutoUpdateService
     {
         private static readonly string settingsKey = ConfigKey.CancelAutoUpdateKey;
-
         private static readonly bool defaultCancelAutoUpdate = false;
 
         private static bool _cancelAutoUpdate;

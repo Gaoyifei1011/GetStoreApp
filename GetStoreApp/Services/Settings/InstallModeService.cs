@@ -11,7 +11,6 @@ namespace GetStoreApp.Services.Settings
     internal static class InstallModeService
     {
         private static readonly string settingsKey = ConfigKey.InstallModeKey;
-
         private static string defaultInstallMode;
 
         internal static string InstallMode { get; private set; }

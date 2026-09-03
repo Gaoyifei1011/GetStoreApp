@@ -12,7 +12,6 @@ namespace GetStoreApp.Services.Settings
     internal static class NotificationService
     {
         private static readonly string settingsKey = ConfigKey.NotificationKey;
-
         private static readonly bool defaultAppNotification = true;
 
         internal static bool AppNotification { get; private set; }
