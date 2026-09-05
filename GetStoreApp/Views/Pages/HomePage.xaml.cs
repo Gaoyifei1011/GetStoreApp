@@ -19,6 +19,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     internal sealed partial class HomePage : Page
     {
+        #region 第一部分：属性、集合与事件
+
         private readonly string AppManagerDescriptionString = ResourceService.GetLocalized("Home/AppManagerDescription");
         private readonly string AppManagerString = ResourceService.GetLocalized("Home/AppManager");
         private readonly string AppUpdateDescriptionString = ResourceService.GetLocalized("Home/AppUpdateDescription");
@@ -32,13 +34,15 @@ namespace GetStoreApp.Views.Pages
         private readonly string WebDescriptionString = ResourceService.GetLocalized("Home/WebDescription");
         private readonly string WebString = ResourceService.GetLocalized("Home/Web");
 
-        #region 第一部分：属性、集合与事件
+        #endregion 第一部分：属性、集合与事件
+
+        #region 第二部分：属性、集合与事件
 
         private List<ControlItemModel> HomeList { get; } = [];
 
-        #endregion 第一部分：属性、集合与事件
+        #endregion 第二部分：属性、集合与事件
 
-        #region 第二部分：构造函数
+        #region 第三部分：构造函数
 
         internal HomePage()
         {
@@ -46,9 +50,9 @@ namespace GetStoreApp.Views.Pages
             InitializeData();
         }
 
-        #endregion 第二部分：构造函数
+        #endregion 第三部分：构造函数
 
-        #region 第三部分：命令调用处理
+        #region 第四部分：命令调用处理
 
         /// <summary>
         /// 点击条目时进入条目对应的页面
@@ -68,9 +72,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第三部分：命令调用处理
+        #endregion 第四部分：命令调用处理
 
-        #region 第四部分：数据操作与业务逻辑
+        #region 第五部分：数据操作与业务逻辑
 
         /// <summary>
         /// 初始化数据
@@ -145,6 +149,6 @@ namespace GetStoreApp.Views.Pages
             });
         }
 
-        #endregion 第四部分：数据操作与业务逻辑
+        #endregion 第五部分：数据操作与业务逻辑
     }
 }
