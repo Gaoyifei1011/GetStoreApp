@@ -1172,8 +1172,6 @@ namespace GetStoreAppInstaller.Views.Windows
                     args.DragUIOverride.IsGlyphVisible = true;
                     args.DragUIOverride.Caption = UnsupportedMultiFilesString;
                 }
-
-                args.Handled = true;
             }
             catch (Exception e)
             {
@@ -1181,6 +1179,7 @@ namespace GetStoreAppInstaller.Views.Windows
             }
             finally
             {
+                args.Handled = true;
                 dragOperationDeferral.Complete();
             }
         }
@@ -1215,6 +1214,7 @@ namespace GetStoreAppInstaller.Views.Windows
             }
             finally
             {
+                args.Handled = true;
                 dragOperationDeferral.Complete();
             }
 
