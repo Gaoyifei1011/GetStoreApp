@@ -462,9 +462,9 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 按下 Alt + BackSpace 键时，导航控件返回到上一页
         /// </summary>
-        private void OnKeyDown(object sender, KeyRoutedEventArgs args)
+        private void OnKeyBoardAcceleratorInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
         {
-            if (args.Key is global::Windows.System.VirtualKey.Back && args.KeyStatus.IsMenuKeyDown)
+            if (sender.Key is global::Windows.System.VirtualKey.Back && sender.Modifiers is global::Windows.System.VirtualKeyModifiers.Menu)
             {
                 if (GetFrameContent() is AppManagerPage appManagerPage && appManagerPage.BreadCollection.Count is 2)
                 {
