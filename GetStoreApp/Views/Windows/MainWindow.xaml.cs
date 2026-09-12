@@ -478,6 +478,7 @@ namespace GetStoreApp.Views.Windows
                 {
                     NavigationFrom();
                 }
+                args.Handled = true;
             }
         }
 
