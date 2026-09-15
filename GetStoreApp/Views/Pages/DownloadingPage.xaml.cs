@@ -107,6 +107,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is DownloadingModel downloading && !string.IsNullOrEmpty(downloading.DownloadID))
             {
+	            downloading.IsOperating = true;
                 DeleteDownload(downloading);
             }
         }
