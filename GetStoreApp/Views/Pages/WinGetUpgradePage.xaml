@@ -290,41 +290,22 @@
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
 
-                            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                                <TextBlock
-                                    HorizontalAlignment="Left"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    IsTextSelectionEnabled="True"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                IsTextSelectionEnabled="True"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
 
-                                    <Run Text="{x:Bind AppPublisher}" />
-                                    <Run Text=" | " />
-                                    <Run Text="{x:Bind AppCurrentVersion}" />
-                                </TextBlock>
-
-                                <FontIcon
-                                    Margin="4,1,4,0"
-                                    HorizontalAlignment="Left"
-                                    FontSize="{StaticResource CaptionTextBlockFontSize}"
-                                    FontWeight="Normal"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Glyph="&#xEBE7;" />
-
-                                <TextBlock
-                                    HorizontalAlignment="Left"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    IsTextSelectionEnabled="True"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
-
-                                    <Run Text="{x:Bind AppNewestVersion}" />
-                                    <Run Text=" | " />
-                                    <Run Text="{x:Bind AppID}" />
-                                </TextBlock>
-                            </StackPanel>
+                                <Run Text="{x:Bind AppPublisher}" />
+                                <Run Text=" | " />
+                                <Run Text="{x:Bind AppCurrentVersion}" />
+                                <Run Text=" → " />
+                                <Run Text="{x:Bind AppNewestVersion}" />
+                                <Run Text=" | " />
+                                <Run Text="{x:Bind AppID}" />
+                            </TextBlock>
 
                             <ToolTipService.ToolTip>
                                 <ToolTip>
