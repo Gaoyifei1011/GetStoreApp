@@ -163,7 +163,7 @@ namespace GetStoreApp.Views.Pages
 
         private List<ComboBoxItemModel> ThemeList { get; } = [];
 
-        private ObservableCollection<ComboBoxItemModel> BackdropCollection { get; } = [];
+        private List<ComboBoxItemModel> BackdropList { get; } = [];
 
         private ObservableCollection<ComboBoxItemModel> LanguageCollection { get; } = [];
 
@@ -199,14 +199,7 @@ namespace GetStoreApp.Views.Pages
             AlwaysShowBackdrop = AlwaysShowBackdropService.AlwaysShowBackdrop;
             TopMost = TopMostService.TopMost;
             Theme = ThemeList.Find(item => Equals(Convert.ToString(item.SelectedValue), ThemeService.AppTheme));
-            foreach (ComboBoxItemModel backdropItem in BackdropCollection)
-            {
-                if (string.Equals(Convert.ToString(backdropItem.SelectedValue), BackdropService.AppBackdrop, StringComparison.OrdinalIgnoreCase))
-                {
-                    Backdrop = backdropItem;
-                    break;
-                }
-            }
+            Backdrop = BackdropList.Find(item => Equals(Convert.ToString(item.SelectedValue), BackdropService.AppBackdrop));
             foreach (ComboBoxItemModel languageItem in LanguageCollection)
             {
                 if (string.Equals(Convert.ToString(languageItem.SelectedValue), LanguageService.AppLanguage.Key, StringComparison.OrdinalIgnoreCase))
@@ -215,7 +208,11 @@ namespace GetStoreApp.Views.Pages
                     break;
                 }
             }
-            AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Convert.ToString(Backdrop.SelectedValue), Convert.ToString(BackdropCollection[0].SelectedValue));
+
+            if (Backdrop is not null)
+            {
+                AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Convert.ToString(Backdrop.SelectedValue), Convert.ToString(BackdropList[0].SelectedValue));
+            }
         }
 
         #endregion 第四部分：父类虚方法重写
@@ -264,20 +261,17 @@ namespace GetStoreApp.Views.Pages
                     BackdropService.SetBackdrop(Convert.ToString(Backdrop.SelectedValue));
                 }
 
-                foreach (ComboBoxItemModel backdropItem in BackdropCollection)
-                {
-                    if (string.Equals(Convert.ToString(backdropItem.SelectedValue), BackdropService.AppBackdrop, StringComparison.OrdinalIgnoreCase))
-                    {
-                        Backdrop = backdropItem;
-                        break;
-                    }
-                }
-                AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Convert.ToString(Backdrop.SelectedValue), Convert.ToString(BackdropCollection[0].SelectedValue));
+                Backdrop = BackdropList.Find(item => Equals(Convert.ToString(item.SelectedValue), BackdropService.AppBackdrop));
 
-                if (Equals(Backdrop, BackdropCollection[0]))
+                if (Backdrop is not null)
                 {
-                    AlwaysShowBackdropService.SetAlwaysShowBackdrop(false);
-                    AlwaysShowBackdrop = false;
+                    AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Convert.ToString(Backdrop.SelectedValue), Convert.ToString(BackdropList[0].SelectedValue));
+
+                    if (Equals(Backdrop, BackdropList[0]))
+                    {
+                        AlwaysShowBackdropService.SetAlwaysShowBackdrop(false);
+                        AlwaysShowBackdrop = false;
+                    }
                 }
             }
         }
@@ -354,14 +348,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 应用程序退出时触发的事件
-        /// </summary>
-        private void OnApplicationExit()
-        {
-            DismountSettingsEvent();
-        }
-
-        /// <summary>
         /// 在启用或禁用系统高级 UI 效果设置时发生的事件
         /// </summary>
         private void OnAdvancedEffectsEnabledChanged(UISettings sender, object args)
@@ -369,8 +355,16 @@ namespace GetStoreApp.Views.Pages
             DispatcherQueue.TryEnqueue(() =>
             {
                 AdvancedEffectsEnabled = uiSettings.AdvancedEffectsEnabled;
-                AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Convert.ToString(Backdrop.SelectedValue), Convert.ToString(BackdropCollection[0].SelectedValue));
+                AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !string.Equals(Convert.ToString(Backdrop.SelectedValue), Convert.ToString(BackdropList[0].SelectedValue));
             });
+        }
+
+        /// <summary>
+        /// 应用程序退出时触发的事件
+        /// </summary>
+        private void OnApplicationExit()
+        {
+            DismountSettingsEvent();
         }
 
         #endregion 第五部分：挂载事件处理
@@ -386,17 +380,17 @@ namespace GetStoreApp.Views.Pages
             ThemeList.Add(new() { SelectedValue = ThemeService.ThemeList[1], DisplayMember = ThemeLightAltString });
             ThemeList.Add(new() { SelectedValue = ThemeService.ThemeList[2], DisplayMember = ThemeDarkString });
 
-            BackdropCollection.Add(new() { SelectedValue = BackdropService.BackdropList[0], DisplayMember = BackdropDefaultString });
+            BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[0], DisplayMember = BackdropDefaultString });
             if (MicaController.IsSupported())
             {
-                BackdropCollection.Add(new() { SelectedValue = BackdropService.BackdropList[1], DisplayMember = string.Format("{0} {1}", MicaString, BackdropMicaString) });
-                BackdropCollection.Add(new() { SelectedValue = BackdropService.BackdropList[2], DisplayMember = string.Format("{0} {1}", MicaString, BackdropMicaAltString) });
+                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[1], DisplayMember = string.Format("{0} {1}", MicaString, BackdropMicaString) });
+                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[2], DisplayMember = string.Format("{0} {1}", MicaString, BackdropMicaAltString) });
             }
             if (DesktopAcrylicController.IsSupported())
             {
-                BackdropCollection.Add(new() { SelectedValue = BackdropService.BackdropList[3], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicString) });
-                BackdropCollection.Add(new() { SelectedValue = BackdropService.BackdropList[4], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicBaseString) });
-                BackdropCollection.Add(new() { SelectedValue = BackdropService.BackdropList[5], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicThinString) });
+                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[3], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicString) });
+                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[4], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicBaseString) });
+                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[5], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicThinString) });
             }
 
             foreach (KeyValuePair<string, string> languageItem in LanguageService.LanguageList)
