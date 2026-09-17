@@ -7,8 +7,8 @@
   "OptionsToolTip": "Выберите параметры, которые вы хотите использовать",
   "QueryLinks": "Запросить ссылки",
   "QueryLinksToolTip": "Запросить ссылки загрузки для текущего приложения и его зависимостей",
-  "SearchResult": "Результат поиска",
   "SearchAppsResultCountInfo": "{0} результатов найдено в Microsoft Store",
+  "SearchResult": "Результат поиска",
   "StoreAppLink": "Ссылка на приложение",
   "StoreAppName": "Имя приложения",
   "StoreAppPublisher": "Издатель приложения"

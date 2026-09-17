@@ -7,8 +7,8 @@
   "OptionsToolTip": "Select the options you want to use",
   "QueryLinks": "Query links",
   "QueryLinksToolTip": "Query the download links for the current app and its dependencies",
-  "SearchResult": "Search Result",
   "SearchAppsResultCountInfo": "{0} results were searched from the Microsoft Store",
+  "SearchResult": "Search Result",
   "StoreAppLink": "App link",
   "StoreAppName": "App name",
   "StoreAppPublisher": "App publisher"

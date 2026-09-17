@@ -9,7 +9,7 @@
   "WinGetSettings": "WinGet 设置",
   "WinGetSettingsDescription": "自定义 WinGet 程序包的功能",
   "WinGetSource": "WinGet 来源设置",
-  "WinGetSourceDescription": "设置提供 WinGet 程序包功能的来源程序，需重新启动",
   "WinGetSourceConfiguration": "WinGet 数据源配置",
-  "WinGetSourceConfigurationDescription": "配置 WinGet 数据获取源，需要管理员模式"
+  "WinGetSourceConfigurationDescription": "配置 WinGet 数据获取源，需要管理员模式",
+  "WinGetSourceDescription": "设置提供 WinGet 程序包功能的来源程序，需重新启动"
 }

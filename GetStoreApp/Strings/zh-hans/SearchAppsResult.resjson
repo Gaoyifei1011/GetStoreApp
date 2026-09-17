@@ -7,8 +7,8 @@
   "OptionsToolTip": "选择您要使用的选项",
   "QueryLinks": "查询链接",
   "QueryLinksToolTip": "查询当前应用及其依赖的下载链接",
-  "SearchResult": "搜索结果",
   "SearchAppsResultCountInfo": "从微软商店中搜索到{0}条结果",
+  "SearchResult": "搜索结果",
   "StoreAppLink": "应用链接",
   "StoreAppName": "应用名称",
   "StoreAppPublisher": "发布者"
