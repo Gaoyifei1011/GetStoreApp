@@ -45,6 +45,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string ErrorString = ResourceService.GetLocalized("AppUpdate/Error");
         private readonly string InstallingString = ResourceService.GetLocalized("AppUpdate/Installing");
         private readonly string InstallingSubInformationString = ResourceService.GetLocalized("AppUpdate/InstallingSubInformation");
+        private readonly string NotAvailableString = ResourceService.GetLocalized("AppUpdate/NotAvailable");
         private readonly string PausedString = ResourceService.GetLocalized("AppUpdate/Paused");
         private readonly string PendingString = ResourceService.GetLocalized("AppUpdate/Pending");
         private readonly string ReadyToDownloadString = ResourceService.GetLocalized("AppUpdate/ReadyToDownload");
@@ -640,8 +641,8 @@ namespace GetStoreApp.Views.Pages
                                     {
                                         LogoImage = packageItem.Logo,
                                         AppInstallState = appInstallStatus.InstallState,
-                                        DisplayName = packageItem.DisplayName,
-                                        PublisherDisplayName = packageItem.PublisherDisplayName,
+                                        DisplayName = string.IsNullOrEmpty(packageItem.DisplayName) ? NotAvailableString : packageItem.DisplayName,
+                                        PublisherDisplayName = string.IsNullOrEmpty(packageItem.PublisherDisplayName) ? NotAvailableString : packageItem.PublisherDisplayName,
                                         InstallInformation = installInformation,
                                         InstallSubInformation = installSubInformation,
                                         IsUpdating = appInstallStatus.InstallState is AppInstallState.Pending ||
@@ -650,7 +651,7 @@ namespace GetStoreApp.Views.Pages
                                                      appInstallStatus.InstallState is AppInstallState.Downloading ||
                                                      appInstallStatus.InstallState is AppInstallState.RestoringData ||
                                                      appInstallStatus.InstallState is AppInstallState.Installing,
-                                        PackageFamilyName = upgradableAppItem.PackageFamilyName,
+                                        PackageFamilyName = string.IsNullOrEmpty(packageItem.Id.FamilyName) ? NotAvailableString : packageItem.Id.FamilyName,
                                         PercentComplete = appInstallStatus.PercentComplete,
                                         ProductId = upgradableAppItem.ProductId
                                     });

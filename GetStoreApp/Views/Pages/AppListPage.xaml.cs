@@ -1423,14 +1423,22 @@ namespace GetStoreApp.Views.Pages
                     {
                         for (int index = 0; index < appListEntriesList.Count; index++)
                         {
-                            appInformation.AppListEntryList.Add(new()
+                            if (appListEntriesList[index] is AppListEntry appListEntry)
                             {
-                                DisplayName = appListEntriesList[index].DisplayInfo.DisplayName,
-                                Description = appListEntriesList[index].DisplayInfo.Description,
-                                AppUserModelId = appListEntriesList[index].AppUserModelId,
-                                AppListEntry = appListEntriesList[index],
-                                PackageFullName = package.Package.Id.FullName
-                            });
+                                string displayName = appListEntry.DisplayInfo.DisplayName;
+                                string description = appListEntry.DisplayInfo.Description;
+                                string appUserModelId = appListEntry.AppUserModelId;
+                                string packageFullName = package.Package.Id.FullName;
+
+                                appInformation.AppListEntryList.Add(new()
+                                {
+                                    AppListEntry = appListEntry,
+                                    DisplayName = string.IsNullOrEmpty(displayName) ? NotAvailableString : displayName,
+                                    Description = string.IsNullOrEmpty(description) ? NotAvailableString : description,
+                                    AppUserModelId = string.IsNullOrEmpty(appUserModelId) ? NotAvailableString : appUserModelId,
+                                    PackageFullName = string.IsNullOrEmpty(packageFullName) ? NotAvailableString : packageFullName
+                                });
+                            }
                         }
                     }
                 }
@@ -1447,13 +1455,20 @@ namespace GetStoreApp.Views.Pages
                         {
                             try
                             {
-                                appInformation.DependenciesList.Add(new()
+                                if (dependencyList[index] is Package package)
                                 {
-                                    DisplayName = dependencyList[index].DisplayName,
-                                    PublisherDisplayName = dependencyList[index].PublisherDisplayName,
-                                    Version = Convert.ToString(new Version(dependencyList[index].Id.Version.Major, dependencyList[index].Id.Version.Minor, dependencyList[index].Id.Version.Build, dependencyList[index].Id.Version.Revision)),
-                                    Package = dependencyList[index]
-                                });
+                                    string displayName = package.DisplayName;
+                                    string publisherDisplayName = package.PublisherDisplayName;
+                                    Version version = new(package.Id.Version.Major, package.Id.Version.Minor, package.Id.Version.Build, package.Id.Version.Revision);
+
+                                    appInformation.DependenciesList.Add(new()
+                                    {
+                                        Package = package,
+                                        DisplayName = string.IsNullOrEmpty(displayName) ? NotAvailableString : displayName,
+                                        PublisherDisplayName = string.IsNullOrEmpty(publisherDisplayName) ? NotAvailableString : publisherDisplayName,
+                                        Version = Convert.ToString(version),
+                                    });
+                                }
                             }
                             catch
                             {
