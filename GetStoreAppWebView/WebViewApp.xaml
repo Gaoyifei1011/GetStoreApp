@@ -13,6 +13,9 @@
                 </XamlControlsResources>
             </ResourceDictionary.MergedDictionaries>
 
+            <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+            <SolidColorBrush x:Key="CommandBarBorderBrushOpen" Color="Transparent" />
+
             <!--  更新工具提示的默认控件模板样式  -->
             <Style TargetType="ToolTip">
                 <Setter Property="Foreground" Value="{ThemeResource ToolTipForegroundBrush}" />

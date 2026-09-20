@@ -94,7 +94,7 @@
                 VerticalAlignment="Center"
                 Background="Transparent"
                 DefaultLabelPosition="Right"
-                Style="{StaticResource CommandBarStyle}">
+                CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}">
 
                 <CommandBar.PrimaryCommands>
                     <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/UninstallOptions')}">
