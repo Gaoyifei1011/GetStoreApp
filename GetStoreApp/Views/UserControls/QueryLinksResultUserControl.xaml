@@ -172,8 +172,8 @@
                             Margin="0,0,-15,0"
                             VerticalAlignment="Center"
                             Background="Transparent"
-                            DefaultLabelPosition="Right"
-                            CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}">
+                            CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                            DefaultLabelPosition="Right">
 
                             <CommandBar.PrimaryCommands>
                                 <AppBarButton Click="{x:Bind OnCopyQueriedAppInfoClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/CopyQueriedAppInfo')}">
@@ -295,8 +295,8 @@
                             Margin="0,0,-15,0"
                             VerticalAlignment="Center"
                             Background="Transparent"
-                            DefaultLabelPosition="Right"
                             CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                            DefaultLabelPosition="Right"
                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
 
                             <CommandBar.PrimaryCommands>

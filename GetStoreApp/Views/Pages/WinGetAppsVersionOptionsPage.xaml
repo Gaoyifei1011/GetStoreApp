@@ -38,8 +38,8 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    DefaultLabelPosition="Right"
-                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}">
+                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                    DefaultLabelPosition="Right">
 
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnDownloadClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/Download')}">
@@ -307,8 +307,8 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    DefaultLabelPosition="Right"
-                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}">
+                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                    DefaultLabelPosition="Right">
 
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnInstallClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/Install')}">
@@ -716,8 +716,8 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    DefaultLabelPosition="Right"
-                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}">
+                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                    DefaultLabelPosition="Right">
 
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnRepairClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/Repair')}">
@@ -951,8 +951,8 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    DefaultLabelPosition="Right"
-                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}">
+                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                    DefaultLabelPosition="Right">
 
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnUpgradeClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/Upgrade')}">

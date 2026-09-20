@@ -74,34 +74,29 @@
             </Grid>
 
             <!--  商店应用控制栏  -->
-            <Grid
+            <SelectorBar
+                x:Name="StoreSelectorBar"
                 Grid.Row="1"
+                Padding="0"
                 HorizontalAlignment="Center"
-                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
-                BorderThickness="1"
-                CornerRadius="{ThemeResource ControlCornerRadius}">
+                SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
+                SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}"
+                Style="{StaticResource TokenViewSelectorBarStyle}">
 
-                <SelectorBar
-                    x:Name="StoreSelectorBar"
-                    Padding="0"
-                    HorizontalAlignment="Center"
-                    SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
-                    SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}">
+                <SelectorBarItem Style="{StaticResource TokenViewSelectorBarItemStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/QueryLinks')}">
 
-                    <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/QueryLinks')}">
-                        <SelectorBarItem.Icon>
-                            <FontIcon Glyph="&#xE71B;" />
-                        </SelectorBarItem.Icon>
-                    </SelectorBarItem>
+                    <SelectorBarItem.Icon>
+                        <FontIcon Glyph="&#xE71B;" />
+                    </SelectorBarItem.Icon>
+                </SelectorBarItem>
 
-                    <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/SearchApps')}">
-                        <SelectorBarItem.Icon>
-                            <FontIcon Glyph="&#xE721;" />
-                        </SelectorBarItem.Icon>
-                    </SelectorBarItem>
-                </SelectorBar>
-            </Grid>
+                <SelectorBarItem Style="{StaticResource TokenViewSelectorBarItemStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/SearchApps')}">
+
+                    <SelectorBarItem.Icon>
+                        <FontIcon Glyph="&#xE721;" />
+                    </SelectorBarItem.Icon>
+                </SelectorBarItem>
+            </SelectorBar>
 
             <!--  查询链接控件  -->
             <Grid

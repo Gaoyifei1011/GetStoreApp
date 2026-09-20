@@ -81,8 +81,8 @@
 
             <CommandBar
                 Grid.Column="4"
-                DefaultLabelPosition="Right"
-                CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}">
+                CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                DefaultLabelPosition="Right">
 
                 <CommandBar.PrimaryCommands>
                     <AppBarElementContainer VerticalContentAlignment="Center">

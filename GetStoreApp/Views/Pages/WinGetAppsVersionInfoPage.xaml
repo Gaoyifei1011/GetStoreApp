@@ -93,8 +93,8 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Background="Transparent"
-                        DefaultLabelPosition="Right"
                         CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                        DefaultLabelPosition="Right"
                         Visibility="{x:Bind GetWinGetAppsVisibility(SearchApps)}">
 
                         <CommandBar.PrimaryCommands>
@@ -131,8 +131,8 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Background="Transparent"
-                        DefaultLabelPosition="Right"
                         CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                        DefaultLabelPosition="Right"
                         Visibility="{x:Bind GetWinGetAppsVisibility(UpgradableApps)}">
 
                         <CommandBar.PrimaryCommands>

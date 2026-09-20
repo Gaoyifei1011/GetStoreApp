@@ -95,8 +95,8 @@
                 Margin="4,0,0,0"
                 VerticalAlignment="Center"
                 Background="Transparent"
-                DefaultLabelPosition="Right"
-                CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}">
+                CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                DefaultLabelPosition="Right">
 
                 <CommandBar.PrimaryCommands>
                     <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/SearchFilter')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WinGetSearch/SearchFilterToolTip')}">
