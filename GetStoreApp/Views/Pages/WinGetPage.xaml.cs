@@ -142,7 +142,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<Type> PageList { get; } = [typeof(WinGetSearchPage), typeof(WinGetInstalledPage), typeof(WinGetUpgradePage)];
+        private ReadOnlyCollection<Type> PageCollection { get; } = [typeof(WinGetSearchPage), typeof(WinGetInstalledPage), typeof(WinGetUpgradePage)];
 
         internal ObservableCollection<PackageOperationModel> PackageOperationCollection { get; } = [];
 
@@ -176,7 +176,7 @@ namespace GetStoreApp.Views.Pages
             // 第一次导航
             if (GetCurrentPageType() is null)
             {
-                NavigateTo(PageList[0], this);
+                NavigateTo(PageCollection[0], this);
             }
         }
 
@@ -322,26 +322,34 @@ namespace GetStoreApp.Views.Pages
             {
                 int index = sender.Items.IndexOf(SelectedItem);
                 Type currentPage = GetCurrentPageType();
-                int currentIndex = PageList.FindIndex(item => Equals(item, currentPage));
+                int currentIndex = -1;
+                for (int i = 0; i < PageCollection.Count; i++)
+                {
+                    if (Equals(PageCollection[i], currentPage))
+                    {
+                        currentIndex = i;
+                        break;
+                    }
+                }
 
                 if (index is 0)
                 {
                     if (currentPage is null)
                     {
-                        NavigateTo(PageList[0]);
+                        NavigateTo(PageCollection[0]);
                     }
-                    else if (!Equals(currentPage, PageList[0]))
+                    else if (!Equals(currentPage, PageCollection[0]))
                     {
-                        NavigateTo(PageList[0], null, index > currentIndex);
+                        NavigateTo(PageCollection[0], null, index > currentIndex);
                     }
                 }
-                else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
+                else if (index is 1 && !Equals(GetCurrentPageType(), PageCollection[1]))
                 {
-                    NavigateTo(PageList[1], this, index > currentIndex);
+                    NavigateTo(PageCollection[1], this, index > currentIndex);
                 }
-                else if (index is 2 && !Equals(GetCurrentPageType(), PageList[2]))
+                else if (index is 2 && !Equals(GetCurrentPageType(), PageCollection[2]))
                 {
-                    NavigateTo(PageList[2], this, index > currentIndex);
+                    NavigateTo(PageCollection[2], this, index > currentIndex);
                 }
             }
         }
@@ -351,7 +359,15 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+            int index = -1;
+            for (int i = 0; i < PageCollection.Count; i++)
+            {
+                if (Equals(PageCollection[i], GetCurrentPageType()))
+                {
+                    index = i;
+                    break;
+                }
+            }
 
             if (index >= 0 && index < WinGetSelectorBar.Items.Count)
             {
@@ -365,7 +381,15 @@ namespace GetStoreApp.Views.Pages
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
             args.Handled = true;
-            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+            int index = -1;
+            for (int i = 0; i < PageCollection.Count; i++)
+            {
+                if (Equals(PageCollection[i], GetCurrentPageType()))
+                {
+                    index = i;
+                    break;
+                }
+            }
 
             if (index >= 0 && index < WinGetSelectorBar.Items.Count)
             {

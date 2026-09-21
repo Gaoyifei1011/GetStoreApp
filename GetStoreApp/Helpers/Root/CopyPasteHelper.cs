@@ -42,7 +42,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 复制文件到剪贴板
         /// </summary>
-        internal static bool CopyFileToClipBoard(List<StorageFile> fileList)
+        internal static bool CopyFileToClipBoard(IReadOnlyList<StorageFile> fileList)
         {
             if (fileList is null || fileList.Count is 0)
             {

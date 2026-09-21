@@ -189,11 +189,13 @@ namespace GetStoreApp.Views.Dialogs
             {
                 try
                 {
-                    List<string> copyFileInformationCopyStringList = [];
-                    copyFileInformationCopyStringList.Add(FileNameString + completed.FileName);
-                    copyFileInformationCopyStringList.Add(FilePathString + completed.FilePath);
-                    copyFileInformationCopyStringList.Add(FileSizeString + VolumeSizeHelper.ConvertVolumeSizeToString(completed.TotalSize));
-                    copyFileInformationCopyStringList.Add(FileSHA256String + await IOHelper.GetFileSHA256Async(completed.FilePath));
+                    List<string> copyFileInformationCopyStringList =
+                    [
+                        FileNameString + completed.FileName,
+                        FilePathString + completed.FilePath,
+                        FileSizeString + VolumeSizeHelper.ConvertVolumeSizeToString(completed.TotalSize),
+                        FileSHA256String + await IOHelper.GetFileSHA256Async(completed.FilePath)
+                    ];
                     return string.Join(Environment.NewLine, copyFileInformationCopyStringList);
                 }
                 catch (Exception e)

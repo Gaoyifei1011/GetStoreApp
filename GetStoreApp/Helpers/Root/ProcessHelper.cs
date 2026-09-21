@@ -3,6 +3,7 @@ using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 using Windows.Foundation.Diagnostics;
 
@@ -16,7 +17,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 根据进程名称获取所有的进程列表信息
         /// </summary>
-        internal static unsafe List<uint> GetProcessPIDByName(string processName)
+        internal static unsafe ReadOnlyCollection<uint> GetProcessPIDByName(string processName)
         {
             if (string.IsNullOrEmpty(processName))
             {
@@ -35,7 +36,7 @@ namespace GetStoreApp.Helpers.Root
 
                 if (Equals(hSnapshot, nint.Zero) || Equals(hSnapshot, Kernel32Library.INVALID_HANDLE_VALUE))
                 {
-                    return processEntry32PIDList;
+                    return processEntry32PIDList.AsReadOnly();
                 }
 
                 PROCESSENTRY32 processEntry32 = new()
@@ -51,12 +52,12 @@ namespace GetStoreApp.Helpers.Root
                     }
                 }
                 new SafeWaitHandle(hSnapshot, false).Dispose();
-                return processEntry32PIDList;
+                return processEntry32PIDList.AsReadOnly();
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(ProcessHelper), nameof(GetProcessPIDByName), 1, e);
-                return processEntry32PIDList;
+                return processEntry32PIDList.AsReadOnly();
             }
         }
     }

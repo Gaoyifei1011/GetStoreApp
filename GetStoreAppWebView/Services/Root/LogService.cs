@@ -1,6 +1,7 @@
 ﻿using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
@@ -23,7 +24,7 @@ namespace GetStoreAppWebView.Services.Root
         /// <summary>
         /// 写入日志
         /// </summary>
-        internal static void WriteLog(LoggingLevel logLevel, string nameSpaceName, string className, string methodName, int index, Dictionary<string, string> loggingInformationDict)
+        internal static void WriteLog(LoggingLevel logLevel, string nameSpaceName, string className, string methodName, int index, ReadOnlyDictionary<string, string> loggingInformationDict)
         {
             Task.Run(async () =>
             {

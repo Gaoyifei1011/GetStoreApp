@@ -295,17 +295,17 @@ namespace GetStoreApp.Views.Pages
             WinGetSourceInternalCollection.Clear();
             WinGetSourceCustomCollection.Clear();
 
-            if (await GetWinGetSourceInternalListAsync() is List<WinGetSourceModel> winGetSourceInternalList && winGetSourceInternalList.Count > 0)
+            if (await GetWinGetSourceInternalCollectionAsync() is ReadOnlyCollection<WinGetSourceModel> winGetSourceInternalCollection && winGetSourceInternalCollection.Count > 0)
             {
-                foreach (WinGetSourceModel winGetSourceItem in winGetSourceInternalList)
+                foreach (WinGetSourceModel winGetSourceItem in winGetSourceInternalCollection)
                 {
                     WinGetSourceInternalCollection.Add(winGetSourceItem);
                 }
             }
 
-            if (await GetWinGetSourceCustomListAsync() is List<WinGetSourceModel> winGetSourceCustomList && winGetSourceCustomList.Count > 0)
+            if (await GetWinGetSourceCustomCollectionAsync() is ReadOnlyCollection<WinGetSourceModel> winGetSourceCustomCollection && winGetSourceCustomCollection.Count > 0)
             {
-                foreach (WinGetSourceModel winGetSourceItem in winGetSourceCustomList)
+                foreach (WinGetSourceModel winGetSourceItem in winGetSourceCustomCollection)
                 {
                     WinGetSourceCustomCollection.Add(winGetSourceItem);
                 }
@@ -315,7 +315,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取 WinGet 内部数据源
         /// </summary>
-        private async Task<List<WinGetSourceModel>> GetWinGetSourceInternalListAsync()
+        private async Task<ReadOnlyCollection<WinGetSourceModel>> GetWinGetSourceInternalCollectionAsync()
         {
             return await Task.Run(() =>
             {
@@ -376,14 +376,14 @@ namespace GetStoreApp.Views.Pages
                     winGetSourceInternalList.Add(winGetSource);
                 }
 
-                return winGetSourceInternalList;
+                return winGetSourceInternalList.AsReadOnly();
             });
         }
 
         /// <summary>
         /// 获取 WinGet 自定义数据源
         /// </summary>
-        private async Task<List<WinGetSourceModel>> GetWinGetSourceCustomListAsync()
+        private async Task<ReadOnlyCollection<WinGetSourceModel>> GetWinGetSourceCustomCollectionAsync()
         {
             return await Task.Run(() =>
             {
@@ -446,7 +446,7 @@ namespace GetStoreApp.Views.Pages
                     }
                 }
 
-                return winGetSourceCustomList;
+                return winGetSourceCustomList.AsReadOnly();
             });
         }
 

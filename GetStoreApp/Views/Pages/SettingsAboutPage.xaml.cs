@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
@@ -53,7 +54,7 @@ namespace GetStoreApp.Views.Pages
         #region 第二部分：属性、集合与事件
 
         //项目引用信息
-        private List<ContentLinkInfo> ReferenceList { get; } =
+        private ReadOnlyCollection<ContentLinkInfo> ReferenceCollection { get; } =
         [
             new() { DisplayText = "Microsoft.Web.WebView2", Uri = new("https://aka.ms/webview") },
             new() { DisplayText = "Microsoft.Windows.CsWinRT", Uri = new("https://github.com/microsoft/cswinrt") },
@@ -66,7 +67,7 @@ namespace GetStoreApp.Views.Pages
         ];
 
         //项目感谢者信息
-        private List<ContentLinkInfo> ThanksList { get; } =
+        private ReadOnlyCollection<ContentLinkInfo> ThanksCollection { get; } =
         [
             new() { DisplayText = "AndromedaMelody", Uri = new("https://github.com/AndromedaMelody") },
             new() { DisplayText = "cnbluefire", Uri = new("https://github.com/cnbluefire") },

@@ -5,6 +5,7 @@ using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -22,13 +23,13 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     internal static partial class DesktopLaunchService
     {
-        private static List<TypeModel> TypeList { get; } =
+        private static ReadOnlyCollection<TypeModel> TypeCollection { get; } =
         [
             new() { InternalName = "url", ShortName = "url" },
             new() { InternalName = "ProductId", ShortName = "pid" }
         ];
 
-        private static List<ChannelModel> ChannelList { get; } =
+        private static ReadOnlyCollection<ChannelModel> ChannelCollection { get; } =
         [
             new() { InternalName = "WIF", ShortName = "wif" },
             new() { InternalName = "WIS", ShortName = "wis" },
@@ -95,7 +96,6 @@ namespace GetStoreApp.Services.Root
                 {
                     appLaunchArguments.AppLaunchKind = AppLaunchKind.Launch;
                     appLaunchArguments.IsLaunched = isLaunched;
-                    appLaunchArguments.SubParameterList = [];
                 }
                 else if (argumentsList.Count is 1)
                 {
@@ -104,14 +104,16 @@ namespace GetStoreApp.Services.Root
                     {
                         appLaunchArguments.AppLaunchKind = AppLaunchKind.Launch;
                         appLaunchArguments.IsLaunched = isLaunched;
-                        appLaunchArguments.SubParameterList = ["Restart"];
+                        appLaunchArguments.SubParameterList.Add("Restart");
                     }
                     // 带参数启动：只有一个参数，直接输入链接
                     else
                     {
                         appLaunchArguments.AppLaunchKind = AppLaunchKind.Console;
                         appLaunchArguments.IsLaunched = isLaunched;
-                        appLaunchArguments.SubParameterList = ["-1", "-1", argumentsList[0]];
+                        appLaunchArguments.SubParameterList.Add("-1");
+                        appLaunchArguments.SubParameterList.Add("-1");
+                        appLaunchArguments.SubParameterList.Add(argumentsList[0]);
                     }
                 }
                 else if (argumentsList.Count >= 2)
@@ -139,7 +141,7 @@ namespace GetStoreApp.Services.Root
                             }
 
                             appLaunchArguments.IsLaunched = isLaunched;
-                            appLaunchArguments.SubParameterList = argumentsList[1..];
+                            appLaunchArguments.SubParameterList.AddRange(argumentsList[1..]);
                         }
                     }
                     // 带参数启动：包含多个参数
@@ -148,14 +150,40 @@ namespace GetStoreApp.Services.Root
                         int typeNameParameterIndex = argumentsList.FindIndex(item => string.Equals(item, "-t", StringComparison.OrdinalIgnoreCase) || string.Equals(item, "--type", StringComparison.OrdinalIgnoreCase));
                         int channelNameParameterIndex = argumentsList.FindIndex(item => string.Equals(item, "-c", StringComparison.OrdinalIgnoreCase) || string.Equals(item, "--channel", StringComparison.OrdinalIgnoreCase));
                         int linkParameterIndex = argumentsList.FindIndex(item => string.Equals(item, "-l", StringComparison.OrdinalIgnoreCase) || string.Equals(item, "--link", StringComparison.OrdinalIgnoreCase));
+                        int typeNameIndex = -1;
+                        if (typeNameParameterIndex is not -1)
+                        {
+                            string targetTypeName = argumentsList[typeNameParameterIndex + 1];
+                            for (int index = 0; index < TypeCollection.Count; index++)
+                            {
+                                if (string.Equals(TypeCollection[index].ShortName, targetTypeName, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    typeNameIndex = index;
+                                    break;
+                                }
+                            }
+                        }
 
-                        int typeNameIndex = typeNameParameterIndex is -1 ? -1 : TypeList.FindIndex(item => string.Equals(item.ShortName, argumentsList[typeNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
-                        int channelNameIndex = channelNameParameterIndex is -1 ? -1 : ChannelList.FindIndex(item => string.Equals(item.ShortName, argumentsList[channelNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
+                        int channelNameIndex = -1;
+                        if (channelNameParameterIndex is not -1)
+                        {
+                            string targetChannelName = argumentsList[channelNameParameterIndex + 1];
+                            for (int i = 0; i < ChannelCollection.Count; i++)
+                            {
+                                if (string.Equals(ChannelCollection[i].ShortName, targetChannelName, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    channelNameIndex = i;
+                                    break;
+                                }
+                            }
+                        }
+
                         string link = linkParameterIndex is -1 ? null : argumentsList[linkParameterIndex + 1];
-
                         appLaunchArguments.AppLaunchKind = AppLaunchKind.Console;
                         appLaunchArguments.IsLaunched = isLaunched;
-                        appLaunchArguments.SubParameterList = [Convert.ToString(typeNameIndex), Convert.ToString(channelNameIndex), string.IsNullOrEmpty(link) ? "PlaceHolderText" : argumentsList[5]];
+                        appLaunchArguments.SubParameterList.Add(Convert.ToString(typeNameIndex));
+                        appLaunchArguments.SubParameterList.Add(Convert.ToString(channelNameIndex));
+                        appLaunchArguments.SubParameterList.Add(string.IsNullOrEmpty(link) ? "PlaceHolderText" : argumentsList[5]);
                     }
                     else
                     {
@@ -180,10 +208,12 @@ namespace GetStoreApp.Services.Root
                     AppLaunchArguments appLaunchArguments = new()
                     {
                         AppLaunchKind = AppLaunchKind.ShareTarget,
-                        IsLaunched = isLaunched,
-                        SubParameterList = ["-1", "-1", Convert.ToString(await shareOperation.Data.GetUriAsync())]
+                        IsLaunched = isLaunched
                     };
 
+                    appLaunchArguments.SubParameterList.Add("-1");
+                    appLaunchArguments.SubParameterList.Add("-1");
+                    appLaunchArguments.SubParameterList.Add(Convert.ToString(await shareOperation.Data.GetUriAsync()));
                     SignalAppLaunchActivated(appLaunchArguments);
                 }
                 else
@@ -206,7 +236,7 @@ namespace GetStoreApp.Services.Root
 
                 if (protocolActivatedEventArgs.Data is ValueSet dataSet && dataSet.TryGetValue("Parameter", out object parameterObj))
                 {
-                    appLaunchArguments.SubParameterList = [Convert.ToString(parameterObj)];
+                    appLaunchArguments.SubParameterList.Add(Convert.ToString(parameterObj));
                 }
 
                 SignalAppLaunchActivated(appLaunchArguments);

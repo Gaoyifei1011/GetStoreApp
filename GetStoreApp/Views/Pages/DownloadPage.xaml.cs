@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
@@ -49,7 +50,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        internal List<Type> PageList { get; } = [typeof(DownloadingPage), typeof(CompletedPage)];
+        internal ReadOnlyCollection<Type> PageCollection { get; } = [typeof(DownloadingPage), typeof(CompletedPage)];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -76,7 +77,7 @@ namespace GetStoreApp.Views.Pages
 
             if (args.Parameter is AppNaviagtionArgs.Completed)
             {
-                NavigateTo(PageList[1]);
+                NavigateTo(PageCollection[1]);
             }
             else
             {
@@ -124,22 +125,30 @@ namespace GetStoreApp.Views.Pages
 
             int index = sender.Items.IndexOf(SelectedItem);
             Type currentPage = GetCurrentPageType();
-            int currentIndex = PageList.FindIndex(item => Equals(item, currentPage));
+            int currentIndex = -1;
+            for (int i = 0; i < PageCollection.Count; i++)
+            {
+                if (Equals(PageCollection[i], currentPage))
+                {
+                    currentIndex = i;
+                    break;
+                }
+            }
 
             if (index is 0)
             {
                 if (currentPage is null)
                 {
-                    NavigateTo(PageList[0]);
+                    NavigateTo(PageCollection[0]);
                 }
-                else if (!Equals(currentPage, PageList[0]))
+                else if (!Equals(currentPage, PageCollection[0]))
                 {
-                    NavigateTo(PageList[0], null, index > currentIndex);
+                    NavigateTo(PageCollection[0], null, index > currentIndex);
                 }
             }
-            else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
+            else if (index is 1 && !Equals(GetCurrentPageType(), PageCollection[1]))
             {
-                NavigateTo(PageList[1], null, index > currentIndex);
+                NavigateTo(PageCollection[1], null, index > currentIndex);
             }
         }
 
@@ -148,7 +157,15 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+            int index = -1;
+            for (int i = 0; i < PageCollection.Count; i++)
+            {
+                if (Equals(PageCollection[i], GetCurrentPageType()))
+                {
+                    index = i;
+                    break;
+                }
+            }
 
             if (index >= 0 && index < DownloadSelctorBar.Items.Count)
             {
@@ -162,7 +179,15 @@ namespace GetStoreApp.Views.Pages
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
             args.Handled = true;
-            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+            int index = -1;
+            for (int i = 0; i < PageCollection.Count; i++)
+            {
+                if (Equals(PageCollection[i], GetCurrentPageType()))
+                {
+                    index = i;
+                    break;
+                }
+            }
 
             if (index >= 0 && index < DownloadSelctorBar.Items.Count)
             {

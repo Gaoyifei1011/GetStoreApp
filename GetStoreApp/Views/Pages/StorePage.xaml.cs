@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
@@ -76,10 +77,10 @@ namespace GetStoreApp.Views.Pages
                 SearchAppsResult.InitializeSearchAppsResult(this);
             }
 
-            if (StoreSelector is not null && args.Parameter is List<string> dataList)
+            if (StoreSelector is not null && args.Parameter is ReadOnlyCollection<string> dataCollection)
             {
                 StoreControl = StoreControl.StoreSelector;
-                StoreSelector.UpdateData(dataList);
+                StoreSelector.UpdateData(dataCollection);
             }
         }
 

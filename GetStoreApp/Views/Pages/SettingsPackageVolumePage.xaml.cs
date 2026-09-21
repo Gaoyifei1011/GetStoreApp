@@ -272,18 +272,18 @@ namespace GetStoreApp.Views.Pages
             {
                 PackageVolumeResultKind = PackageVolumeResultKind.Loading;
                 PackageVolumeCollection.Clear();
-                (bool result, List<PackageVolumeModel> packageVolumeList, Exception exception) = await GetPackageVolumeAsync();
+                (bool result, ReadOnlyCollection<PackageVolumeModel> packageVolumeCollection, Exception exception) = await GetPackageVolumeAsync();
 
                 if (result)
                 {
-                    if (packageVolumeList.Count is 0)
+                    if (packageVolumeCollection.Count is 0)
                     {
                         PackageVolumeResultKind = PackageVolumeResultKind.Failed;
                         PackageVolumeFailedContent = PackageVolumeEmptyString;
                     }
                     else
                     {
-                        foreach (PackageVolumeModel packageVolumeItem in packageVolumeList)
+                        foreach (PackageVolumeModel packageVolumeItem in packageVolumeCollection)
                         {
                             PackageVolumeCollection.Add(packageVolumeItem);
                         }
@@ -303,7 +303,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取存储卷
         /// </summary>
-        private async Task<(bool, List<PackageVolumeModel>, Exception)> GetPackageVolumeAsync()
+        private async Task<(bool, ReadOnlyCollection<PackageVolumeModel>, Exception)> GetPackageVolumeAsync()
         {
             return await Task.Run(async () =>
             {
@@ -377,11 +377,11 @@ namespace GetStoreApp.Views.Pages
                         }
                     }
 
-                    return ValueTuple.Create<bool, List<PackageVolumeModel>, Exception>(true, packageVolumeList, null);
+                    return ValueTuple.Create<bool, ReadOnlyCollection<PackageVolumeModel>, Exception>(true, packageVolumeList.AsReadOnly(), null);
                 }
                 catch (Exception e)
                 {
-                    return ValueTuple.Create<bool, List<PackageVolumeModel>, Exception>(false, null, e);
+                    return ValueTuple.Create<bool, ReadOnlyCollection<PackageVolumeModel>, Exception>(false, null, e);
                 }
             });
         }

@@ -140,9 +140,9 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    if (await GetStorageFileListAsync([completed.FilePath]) is List<StorageFile> fileList && fileList.Count > 0)
+                    if (await GetStorageFileListAsync([completed.FilePath]) is ReadOnlyCollection<StorageFile> fileCollection && fileCollection.Count > 0)
                     {
-                        bool copyResult = CopyPasteHelper.CopyFileToClipBoard(fileList);
+                        bool copyResult = CopyPasteHelper.CopyFileToClipBoard(fileCollection);
                         await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
                     }
                 }
@@ -289,10 +289,9 @@ namespace GetStoreApp.Views.Pages
                 {
                     try
                     {
-                        List<StorageFile> fileList = [await StorageFile.GetFileFromPathAsync(completed.FilePath)];
-                        if (fileList.Count > 0)
+                        if (await GetStorageFileListAsync([completed.FilePath]) is ReadOnlyCollection<StorageFile> fileCollection && fileCollection.Count > 0)
                         {
-                            ShowShareUI(fileList);
+                            ShowShareUI(fileCollection);
                         }
                     }
                     catch (Exception e)
@@ -364,11 +363,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectReverseClicked(object sender, RoutedEventArgs args)
         {
-            List<object> selectedItemsList = [.. CompletedListView.SelectedItems];
+            ReadOnlyCollection<object> selectedItemsCollection = CompletedListView.SelectedItems.AsReadOnly();
 
             foreach (object item in CompletedListView.Items)
             {
-                if (selectedItemsList.Contains(item))
+                if (selectedItemsCollection.Contains(item))
                 {
                     CompletedListView.SelectedItems.Remove(item);
                 }
@@ -384,17 +383,26 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
         {
-            List<CompletedModel> selectedCompletedDataList = GetSelectedItemsList(CompletedListView.SelectedItems);
+            ReadOnlyCollection<CompletedModel> selectedCompletedDataCollection = GetSelectedItemsCollection(CompletedListView.SelectedItems);
 
             // 没有选中任何内容时显示空提示对话框
-            if (selectedCompletedDataList is null || selectedCompletedDataList.Count is 0)
+            if (selectedCompletedDataCollection is null || selectedCompletedDataCollection.Count is 0)
             {
                 await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                 return;
             }
 
             // 当前任务正在安装时，不进行其他任何操作
-            if (selectedCompletedDataList.Exists(item => item.IsInstalling))
+            bool isInstalling = false;
+            foreach (CompletedModel completedItem in selectedCompletedDataCollection)
+            {
+                if (completedItem.IsInstalling)
+                {
+                    isInstalling = true;
+                    break;
+                }
+            }
+            if (isInstalling)
             {
                 await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.InstallingNotify));
                 return;
@@ -414,12 +422,12 @@ namespace GetStoreApp.Views.Pages
 
                 List<string> selectedFileList = [];
 
-                foreach (CompletedModel completedItem in selectedCompletedDataList)
+                foreach (CompletedModel completedItem in selectedCompletedDataCollection)
                 {
                     selectedFileList.Add(completedItem.FilePath);
                 }
 
-                await DeleteDownloaodFileAsync(selectedCompletedDataList, deleteFileDialog.DeleteFileSameTime);
+                await DeleteDownloaodFileAsync(selectedCompletedDataCollection, deleteFileDialog.DeleteFileSameTime);
                 CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
             }
         }
@@ -429,10 +437,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnShowShareUIClicked(object sender, RoutedEventArgs args)
         {
-            List<CompletedModel> selectedCompletedDataList = GetSelectedItemsList(CompletedListView.SelectedItems);
+            ReadOnlyCollection<CompletedModel> selectedCompletedDataCollection = GetSelectedItemsCollection(CompletedListView.SelectedItems);
 
             // 没有选中任何内容时显示空提示对话框
-            if (selectedCompletedDataList is null || selectedCompletedDataList.Count is 0)
+            if (selectedCompletedDataCollection is null || selectedCompletedDataCollection.Count is 0)
             {
                 await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                 return;
@@ -442,19 +450,19 @@ namespace GetStoreApp.Views.Pages
                 try
                 {
                     List<string> selectedFileList = [];
-                    foreach (CompletedModel completedItem in selectedCompletedDataList)
+                    foreach (CompletedModel completedItem in selectedCompletedDataCollection)
                     {
                         selectedFileList.Add(completedItem.FilePath);
                     }
 
-                    if (await GetStorageFileListAsync(selectedFileList) is List<StorageFile> selectedStorageFileList && selectedStorageFileList.Count > 0)
+                    if (await GetStorageFileListAsync(selectedFileList) is ReadOnlyCollection<StorageFile> selectedStorageFileCollection && selectedStorageFileCollection.Count > 0)
                     {
-                        ShowShareUI(selectedStorageFileList);
+                        ShowShareUI(selectedStorageFileCollection);
                     }
                 }
                 catch (Exception e)
                 {
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.ShareFailed, true, selectedCompletedDataList.Count));
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.ShareFailed, true, selectedCompletedDataCollection.Count));
                     LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShowShareUIClicked), 2, e);
                 }
             }
@@ -465,10 +473,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnCopyClicked(object sender, RoutedEventArgs args)
         {
-            List<CompletedModel> selectedCompletedDataList = GetSelectedItemsList(CompletedListView.SelectedItems);
+            ReadOnlyCollection<CompletedModel> selectedCompletedDataCollection = GetSelectedItemsCollection(CompletedListView.SelectedItems);
 
             // 没有选中任何内容时显示空提示对话框
-            if (selectedCompletedDataList is null || selectedCompletedDataList.Count is 0)
+            if (selectedCompletedDataCollection is null || selectedCompletedDataCollection.Count is 0)
             {
                 await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                 return;
@@ -476,14 +484,14 @@ namespace GetStoreApp.Views.Pages
             else
             {
                 List<string> selectedFileList = [];
-                foreach (CompletedModel completedItem in selectedCompletedDataList)
+                foreach (CompletedModel completedItem in selectedCompletedDataCollection)
                 {
                     selectedFileList.Add(completedItem.FilePath);
                 }
 
-                if (await GetStorageFileListAsync(selectedFileList) is List<StorageFile> selectedStorageFileList && selectedCompletedDataList.Count > 0)
+                if (await GetStorageFileListAsync(selectedFileList) is ReadOnlyCollection<StorageFile> selectedStorageFileCollection && selectedCompletedDataCollection.Count > 0)
                 {
-                    bool copyResult = CopyPasteHelper.CopyFileToClipBoard(selectedStorageFileList);
+                    bool copyResult = CopyPasteHelper.CopyFileToClipBoard(selectedStorageFileCollection);
                     await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
                 }
             }
@@ -504,14 +512,14 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 在共享操作启动时发生的事件
         /// </summary>
-        private void OnDataRequested(DataTransferManager sender, DataRequestedEventArgs args, List<StorageFile> fileList)
+        private void OnDataRequested(DataTransferManager sender, DataRequestedEventArgs args, ReadOnlyCollection<StorageFile> fileCollection)
         {
             DataRequestDeferral dataRequestDeferral = args.Request.GetDeferral();
 
             try
             {
                 args.Request.Data.Properties.Title = FileShareString;
-                args.Request.Data.SetStorageItems(fileList);
+                args.Request.Data.SetStorageItems(fileCollection);
             }
             catch (Exception e)
             {
@@ -614,9 +622,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task InitializeDataAsync()
         {
-            if (await GetDownloadStorageListAsync() is List<DownloadSchedulerModel> downloadStorageList)
+            if (await GetDownloadStorageCollectionAsync() is ReadOnlyCollection<DownloadSchedulerModel> downloadStorageCollection)
             {
-                foreach (DownloadSchedulerModel downloadSchedulerItem in downloadStorageList)
+                foreach (DownloadSchedulerModel downloadSchedulerItem in downloadStorageCollection)
                 {
                     CompletedCollection.Add(new()
                     {
@@ -634,20 +642,20 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取下载存储数据
         /// </summary>
-        private async Task<List<DownloadSchedulerModel>> GetDownloadStorageListAsync()
+        private async Task<ReadOnlyCollection<DownloadSchedulerModel>> GetDownloadStorageCollectionAsync()
         {
             return await Task.Run(() =>
             {
                 packageDeploymentManager = PackageDeploymentManager.GetDefault();
                 DownloadStorageService.DownloadStorageSemaphoreSlim?.Wait();
-                return DownloadStorageService.GetDownloadDataList();
+                return DownloadStorageService.GetDownloadDataCollection();
             });
         }
 
         /// <summary>
         /// 获取选中项
         /// </summary>
-        private List<CompletedModel> GetSelectedItemsList(IList<object> selectedItemsList)
+        private ReadOnlyCollection<CompletedModel> GetSelectedItemsCollection(IList<object> selectedItemsList)
         {
             if (selectedItemsList is null || selectedItemsList.Count is 0)
             {
@@ -664,7 +672,7 @@ namespace GetStoreApp.Views.Pages
                 }
             }
 
-            return selectedCompletedDataList;
+            return selectedCompletedDataList.AsReadOnly();
         }
 
         /// <summary>
@@ -703,9 +711,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 删除下载记录和文件
         /// </summary>
-        private async Task DeleteDownloaodFileAsync(List<CompletedModel> selectedCompletedDataList, bool deleteFile)
+        private async Task DeleteDownloaodFileAsync(ReadOnlyCollection<CompletedModel> selectedCompletedDataCollection, bool deleteFile)
         {
-            if (selectedCompletedDataList is null || selectedCompletedDataList.Count is 0)
+            if (selectedCompletedDataCollection is null || selectedCompletedDataCollection.Count is 0)
             {
                 return;
             }
@@ -714,7 +722,7 @@ namespace GetStoreApp.Views.Pages
             {
                 if (deleteFile)
                 {
-                    foreach (CompletedModel completedItem in selectedCompletedDataList)
+                    foreach (CompletedModel completedItem in selectedCompletedDataCollection)
                     {
                         if (!File.Exists(completedItem.FilePath) || DeleteFileHelper.DeleteFileToRecycleBin(completedItem.FilePath))
                         {
@@ -724,7 +732,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 else
                 {
-                    foreach (CompletedModel completedItem in selectedCompletedDataList)
+                    foreach (CompletedModel completedItem in selectedCompletedDataCollection)
                     {
                         DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
                     }
@@ -753,12 +761,12 @@ namespace GetStoreApp.Views.Pages
                     else if (extension.EndsWith("appx", StringComparison.OrdinalIgnoreCase) || extension.EndsWith("appxbundle", StringComparison.OrdinalIgnoreCase) || extension.EndsWith("msix", StringComparison.OrdinalIgnoreCase) || extension.EndsWith("msixbundle", StringComparison.OrdinalIgnoreCase) || extension.EndsWith("appinstaller", StringComparison.OrdinalIgnoreCase))
                     {
                         // 使用应用安装程序安装
-                        if (string.Equals(InstallModeService.InstallMode, InstallModeService.InstallModeList[0]))
+                        if (string.Equals(InstallModeService.InstallMode, InstallModeService.InstallModeCollection[0]))
                         {
                             installAppsKind = InstallAppsKind.PackagedAppViaAppInstaller;
                         }
                         // 直接安装
-                        else if (string.Equals(InstallModeService.InstallMode, InstallModeService.InstallModeList[1]))
+                        else if (string.Equals(InstallModeService.InstallMode, InstallModeService.InstallModeCollection[1]))
                         {
                             installAppsKind = InstallAppsKind.PackagedAppDirectlyInstall;
                         }
@@ -961,22 +969,22 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 显示分享面板
         /// </summary>
-        private void ShowShareUI(List<StorageFile> fileList)
+        private void ShowShareUI(ReadOnlyCollection<StorageFile> fileCollection)
         {
-            if (fileList is null || fileList.Count is 0)
+            if (fileCollection is null || fileCollection.Count is 0)
             {
                 return;
             }
 
             DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
-            dataTransferManager.DataRequested += (sender, args) => OnDataRequested(sender, args, fileList);
+            dataTransferManager.DataRequested += (sender, args) => OnDataRequested(sender, args, fileCollection);
             DataTransferManagerInterop.ShowShareUIForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
         }
 
         /// <summary>
         /// 获取文件列表
         /// </summary>
-        private async Task<List<StorageFile>> GetStorageFileListAsync(List<string> fileList)
+        private async Task<ReadOnlyCollection<StorageFile>> GetStorageFileListAsync(List<string> fileList)
         {
             if (fileList is null || fileList.Count is 0)
             {
@@ -999,7 +1007,7 @@ namespace GetStoreApp.Views.Pages
                     continue;
                 }
             }
-            return storageFileList;
+            return new(storageFileList);
         }
 
         /// <summary>

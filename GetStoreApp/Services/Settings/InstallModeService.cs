@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace GetStoreApp.Services.Settings
 {
@@ -15,14 +15,21 @@ namespace GetStoreApp.Services.Settings
 
         internal static string InstallMode { get; private set; }
 
-        internal static List<string> InstallModeList { get; } = ["AppInstall", "CodeInstall"];
+        internal static ReadOnlyCollection<string> InstallModeCollection { get; } = ["AppInstall", "CodeInstall"];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的应用安装方式值
         /// </summary>
         internal static void InitializeInstallMode()
         {
-            defaultInstallMode = InstallModeList.Find(item => string.Equals(item, "AppInstall", StringComparison.OrdinalIgnoreCase));
+            foreach (string installModeItem in InstallModeCollection)
+            {
+                if (string.Equals(installModeItem, "AppInstall", StringComparison.OrdinalIgnoreCase))
+                {
+                    defaultInstallMode = installModeItem;
+                    break;
+                }
+            }
             InstallMode = GetInstallMode();
         }
 
@@ -36,10 +43,27 @@ namespace GetStoreApp.Services.Settings
             if (string.IsNullOrEmpty(installMode))
             {
                 SetInstallMode(defaultInstallMode);
-                return InstallModeList.Find(item => string.Equals(item, defaultInstallMode, StringComparison.OrdinalIgnoreCase));
+                string result = default;
+                foreach (string installModeItem in InstallModeCollection)
+                {
+                    if (string.Equals(installModeItem, defaultInstallMode, StringComparison.OrdinalIgnoreCase))
+                    {
+                        result = installModeItem;
+                        break;
+                    }
+                }
+                return result;
             }
 
-            string selectedInstallMode = InstallModeList.Find(item => string.Equals(item, installMode, StringComparison.OrdinalIgnoreCase));
+            string selectedInstallMode = null;
+            foreach (string installModeItem in InstallModeCollection)
+            {
+                if (string.Equals(installModeItem, installMode, StringComparison.OrdinalIgnoreCase))
+                {
+                    selectedInstallMode = installModeItem;
+                    break;
+                }
+            }
             return string.IsNullOrEmpty(selectedInstallMode) ? defaultInstallMode : selectedInstallMode;
         }
 

@@ -352,10 +352,10 @@ namespace GetStoreApp.Views.Dialogs
             if (PackageVolumeResultKind is not PackageVolumeResultKind.Loading)
             {
                 PackageVolumeResultKind = PackageVolumeResultKind.Loading;
-                if (await GetPackageVolumeListAsync() is List<PackageVolumeModel> packageVolumeList && packageVolumeList.Count > 0)
+                if (await GetPackageVolumeCollectionAsync() is ReadOnlyCollection<PackageVolumeModel> packageVolumeCollection && packageVolumeCollection.Count > 0)
                 {
                     PackageVolumeCollection.Clear();
-                    foreach (PackageVolumeModel packageVolumeItem in packageVolumeList)
+                    foreach (PackageVolumeModel packageVolumeItem in packageVolumeCollection)
                     {
                         PackageVolumeCollection.Add(packageVolumeItem);
                     }
@@ -372,7 +372,7 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 获取应用包存储卷信息
         /// </summary>
-        private async Task<List<PackageVolumeModel>> GetPackageVolumeListAsync()
+        private async Task<ReadOnlyCollection<PackageVolumeModel>> GetPackageVolumeCollectionAsync()
         {
             return await Task.Run(async () =>
             {
@@ -429,7 +429,7 @@ namespace GetStoreApp.Views.Dialogs
                     }
                 }
 
-                return packageVolumeList;
+                return packageVolumeList.AsReadOnly();
             });
         }
 

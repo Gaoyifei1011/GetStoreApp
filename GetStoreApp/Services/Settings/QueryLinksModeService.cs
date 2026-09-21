@@ -2,6 +2,7 @@
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace GetStoreApp.Services.Settings
@@ -30,7 +31,7 @@ namespace GetStoreApp.Services.Settings
             }
         }
 
-        internal static List<string> QueryLinksModeList { get; } = ["Official", "ThirdParty"];
+        internal static ReadOnlyCollection<string> QueryLinksModeCollection { get; } = ["Official", "ThirdParty"];
 
         internal static event PropertyChangedEventHandler PropertyChanged;
 
@@ -39,7 +40,14 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         internal static void InitializeQueryLinksMode()
         {
-            defaultQueryLinksMode = QueryLinksModeList.Find(item => item is "Official");
+            foreach (string queryLinksModeItem in QueryLinksModeCollection)
+            {
+                if (queryLinksModeItem is "Official")
+                {
+                    defaultQueryLinksMode = queryLinksModeItem;
+                    break;
+                }
+            }
             QueryLinksMode = GetQueryLinksMode();
         }
 
@@ -56,8 +64,16 @@ namespace GetStoreApp.Services.Settings
                 return defaultQueryLinksMode;
             }
 
-            string selectedQueryLinksMode = QueryLinksModeList.Find(item => string.Equals(item, queryLinksMode, StringComparison.OrdinalIgnoreCase));
-            return selectedQueryLinksMode is null ? defaultQueryLinksMode : selectedQueryLinksMode;
+            string selectedQueryLinksMode = null;
+            foreach (string queryLinksModeItem in QueryLinksModeCollection)
+            {
+                if (string.Equals(queryLinksModeItem, queryLinksMode, StringComparison.OrdinalIgnoreCase))
+                {
+                    selectedQueryLinksMode = queryLinksModeItem;
+                    break;
+                }
+            }
+            return string.IsNullOrEmpty(selectedQueryLinksMode) ? defaultQueryLinksMode : selectedQueryLinksMode;
         }
 
         /// <summary>

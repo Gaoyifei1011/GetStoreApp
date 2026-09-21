@@ -406,9 +406,9 @@ namespace GetStoreApp.Views.Pages
 
             if (await Task.Run(() => { return GetPackageCatalogReference(packageManager); }) is PackageCatalogReference packageCatalogReference)
             {
-                (ConnectResult connectResult, FindPackagesResult findPackagesResult, List<UpgradableAppsModel> upgradableAppsList) = await Task.Run(() =>
+                (ConnectResult connectResult, FindPackagesResult findPackagesResult, ReadOnlyCollection<UpgradableAppsModel> upgradableAppsCollection) = await Task.Run(async () =>
                 {
-                    return UpgradableAppsAsync(packageCatalogReference, SelectedAppSortRuleKind, IsIncrease);
+                    return await UpgradableAppsAsync(packageCatalogReference, SelectedAppSortRuleKind, IsIncrease);
                 });
 
                 if (connectResult is not null && findPackagesResult is not null)
@@ -417,14 +417,14 @@ namespace GetStoreApp.Views.Pages
                     {
                         if (findPackagesResult.Status is FindPackagesResultStatus.Ok)
                         {
-                            if (upgradableAppsList is null || upgradableAppsList.Count is 0)
+                            if (upgradableAppsCollection is null || upgradableAppsCollection.Count is 0)
                             {
                                 UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
                                 UpgradableFailedContent = UpgradableAppsEmptyDescriptionString;
                             }
                             else
                             {
-                                foreach (UpgradableAppsModel upgradableAppsItem in upgradableAppsList)
+                                foreach (UpgradableAppsModel upgradableAppsItem in upgradableAppsCollection)
                                 {
                                     UpgradableAppsCollection.Add(upgradableAppsItem);
                                 }
@@ -557,9 +557,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取可更新应用
         /// </summary>
-        private async Task<(ConnectResult, FindPackagesResult, List<UpgradableAppsModel>)> UpgradableAppsAsync(PackageCatalogReference packageCatalogReference, AppSortRuleKind appSortRuleKind, bool isIncrease)
+        private async Task<(ConnectResult, FindPackagesResult, ReadOnlyCollection<UpgradableAppsModel>)> UpgradableAppsAsync(PackageCatalogReference packageCatalogReference, AppSortRuleKind appSortRuleKind, bool isIncrease)
         {
-            (ConnectResult connectResult, FindPackagesResult findPackagesResult, List<UpgradableAppsModel> upgradableAppsList) upgradableAppsResult = ValueTuple.Create<ConnectResult, FindPackagesResult, List<UpgradableAppsModel>>(null, null, null);
+            (ConnectResult connectResult, FindPackagesResult findPackagesResult, ReadOnlyCollection<UpgradableAppsModel> upgradableAppsCollection) upgradableAppsResult = ValueTuple.Create<ConnectResult, FindPackagesResult, ReadOnlyCollection<UpgradableAppsModel>>(null, null, null);
 
             if (packageCatalogReference is not null)
             {
@@ -642,7 +642,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            upgradableAppsResult.upgradableAppsList = upgradableAppsList;
+                            upgradableAppsResult.upgradableAppsCollection = upgradableAppsList.AsReadOnly();
                         }
                     }
                 }

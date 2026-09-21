@@ -107,7 +107,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is DownloadingModel downloading && !string.IsNullOrEmpty(downloading.DownloadID))
             {
-	            downloading.IsOperating = true;
+                downloading.IsOperating = true;
                 DeleteDownload(downloading);
             }
         }
@@ -191,7 +191,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectReverseClicked(object sender, RoutedEventArgs args)
         {
-            List<object> selectedItemsList = [.. DownloadingListView.SelectedItems];
+            ReadOnlyCollection<object> selectedItemsList = DownloadingListView.SelectedItems.AsReadOnly();
 
             foreach (object item in DownloadingListView.Items)
             {
@@ -230,10 +230,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
         {
-            List<DownloadingModel> selectedDownloadingList = GetSelectedDownloadingList([.. DownloadingCollection]);
+            ReadOnlyCollection<DownloadingModel> selectedDownloadingCollection = GetSelectedDownloadingCollection([.. DownloadingCollection]);
 
             // 没有选中任何内容时显示空提示对话框
-            if (selectedDownloadingList is null || selectedDownloadingList.Count is 0)
+            if (selectedDownloadingCollection is null || selectedDownloadingCollection.Count is 0)
             {
                 await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                 return;
@@ -241,7 +241,7 @@ namespace GetStoreApp.Views.Pages
 
             SelectionMode = ListViewSelectionMode.None;
 
-            foreach (DownloadingModel downloadingItem in selectedDownloadingList)
+            foreach (DownloadingModel downloadingItem in selectedDownloadingCollection)
             {
                 downloadingItem.IsOperating = true;
                 DeleteDownload(downloadingItem);
@@ -469,7 +469,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取选中项
         /// </summary>
-        private List<DownloadingModel> GetSelectedDownloadingList(List<DownloadingModel> downloadingList)
+        private ReadOnlyCollection<DownloadingModel> GetSelectedDownloadingCollection(List<DownloadingModel> downloadingList)
         {
             if (downloadingList is null || downloadingList.Count is 0)
             {
@@ -486,7 +486,7 @@ namespace GetStoreApp.Views.Pages
                 }
             }
 
-            return selectedDownloadingList;
+            return selectedDownloadingList.AsReadOnly();
         }
 
         /// <summary>

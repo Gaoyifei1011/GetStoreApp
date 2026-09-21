@@ -380,17 +380,17 @@ namespace GetStoreApp.Views.Pages
             ThemeList.Add(new() { SelectedValue = ThemeService.ThemeList[1], DisplayMember = ThemeLightAltString });
             ThemeList.Add(new() { SelectedValue = ThemeService.ThemeList[2], DisplayMember = ThemeDarkString });
 
-            BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[0], DisplayMember = BackdropDefaultString });
+            BackdropList.Add(new() { SelectedValue = BackdropService.BackdropCollection[0], DisplayMember = BackdropDefaultString });
             if (MicaController.IsSupported())
             {
-                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[1], DisplayMember = string.Format("{0} {1}", MicaString, BackdropMicaString) });
-                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[2], DisplayMember = string.Format("{0} {1}", MicaString, BackdropMicaAltString) });
+                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropCollection[1], DisplayMember = string.Format("{0} {1}", MicaString, BackdropMicaString) });
+                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropCollection[2], DisplayMember = string.Format("{0} {1}", MicaString, BackdropMicaAltString) });
             }
             if (DesktopAcrylicController.IsSupported())
             {
-                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[3], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicString) });
-                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[4], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicBaseString) });
-                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropList[5], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicThinString) });
+                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropCollection[3], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicString) });
+                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropCollection[4], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicBaseString) });
+                BackdropList.Add(new() { SelectedValue = BackdropService.BackdropCollection[5], DisplayMember = string.Format("{0} {1}", DesktopAcrylicString, BackdropAcrylicThinString) });
             }
 
             foreach (KeyValuePair<string, string> languageItem in LanguageService.LanguageList)

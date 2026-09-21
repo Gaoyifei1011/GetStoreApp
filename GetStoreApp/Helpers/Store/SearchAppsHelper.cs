@@ -3,6 +3,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.Data.Json;
@@ -72,7 +73,7 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 使用商店精准搜索应用接口搜索应用
         /// </summary>
-        internal static async Task<(bool, List<SearchAppsResultModel>)> StoreExactSearchAsync(string content)
+        internal static async Task<(bool, ReadOnlyCollection<SearchAppsResultModel>)> StoreExactSearchAsync(string content)
         {
             bool requestResult = false;
             List<SearchAppsResultModel> searchAppsResultList = [];
@@ -93,13 +94,13 @@ namespace GetStoreApp.Helpers.Store
                     {
                         requestResult = true;
                         Dictionary<string, string> responseDict = new()
-                    {
-                        { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
-                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
-                    };
+                        {
+                            { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
+                            { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
+                            { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
+                        };
 
-                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchAppsHelper), nameof(StoreExactSearchAsync), 1, responseDict);
+                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchAppsHelper), nameof(StoreExactSearchAsync), 1, responseDict.AsReadOnly());
                         string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                         if (JsonArray.TryParse(responseString, out JsonArray responseStringArray) && responseStringArray.Count is 2)
@@ -146,13 +147,13 @@ namespace GetStoreApp.Helpers.Store
                 }
             }
 
-            return ValueTuple.Create(requestResult, searchAppsResultList);
+            return ValueTuple.Create(requestResult, searchAppsResultList.AsReadOnly());
         }
 
         /// <summary>
         /// 按照清单方式搜索应用
         /// </summary>
-        internal static async Task<(bool, List<SearchAppsResultModel>)> ManifestSearchAsync(string generatedContent)
+        internal static async Task<(bool, ReadOnlyCollection<SearchAppsResultModel>)> ManifestSearchAsync(string generatedContent)
         {
             bool requestResult = false;
             List<SearchAppsResultModel> searchAppsResultList = [];
@@ -178,13 +179,13 @@ namespace GetStoreApp.Helpers.Store
                     {
                         requestResult = true;
                         Dictionary<string, string> responseDict = new()
-                    {
-                        { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
-                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
-                    };
+                        {
+                            { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
+                            { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
+                            { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
+                        };
 
-                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchAppsHelper), nameof(ManifestSearchAsync), 1, responseDict);
+                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchAppsHelper), nameof(ManifestSearchAsync), 1, responseDict.AsReadOnly());
                         string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                         if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
@@ -218,7 +219,7 @@ namespace GetStoreApp.Helpers.Store
                 }
             }
 
-            return ValueTuple.Create(requestResult, searchAppsResultList);
+            return ValueTuple.Create(requestResult, searchAppsResultList.AsReadOnly());
         }
     }
 }

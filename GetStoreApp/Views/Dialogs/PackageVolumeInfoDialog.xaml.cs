@@ -206,21 +206,21 @@ namespace GetStoreApp.Views.Dialogs
             {
                 PackageVolumeResultKind = PackageVolumeResultKind.Loading;
 
-                (PackageVolumeModel currentPackageVolume, List<PackageVolumeModel> packageVolumeList) = await GetCurrentPackageAndPackageVolumeListAsync();
+                (PackageVolumeModel currentPackageVolume, ReadOnlyCollection<PackageVolumeModel> packageVolumeCollection) = await GetCurrentPackageAndPackageVolumeCollectionAsync();
 
                 if (currentPackageVolume is not null)
                 {
                     CurrentPackageVolume = currentPackageVolume;
                 }
 
-                if (packageVolumeList is null || packageVolumeList.Count is 0)
+                if (packageVolumeCollection is null || packageVolumeCollection.Count is 0)
                 {
                     PackageVolumeResultKind = PackageVolumeResultKind.Failed;
                 }
                 else
                 {
                     PackageVolumeCollection.Clear();
-                    foreach (PackageVolumeModel packageVolumeItem in packageVolumeList)
+                    foreach (PackageVolumeModel packageVolumeItem in packageVolumeCollection)
                     {
                         PackageVolumeCollection.Add(packageVolumeItem);
                     }
@@ -233,7 +233,7 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 获取应用包存储卷信息
         /// </summary>
-        private async Task<(PackageVolumeModel, List<PackageVolumeModel>)> GetCurrentPackageAndPackageVolumeListAsync()
+        private async Task<(PackageVolumeModel, ReadOnlyCollection<PackageVolumeModel>)> GetCurrentPackageAndPackageVolumeCollectionAsync()
         {
             return await Task.Run(async () =>
             {
@@ -311,7 +311,7 @@ namespace GetStoreApp.Views.Dialogs
                     }
                 }
 
-                return ValueTuple.Create(currentPackageVolume, packageVolumeList);
+                return ValueTuple.Create(currentPackageVolume, packageVolumeList.AsReadOnly());
             });
         }
 

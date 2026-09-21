@@ -4,6 +4,7 @@ using GetStoreApp.Services.Root;
 using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading;
 using Windows.Foundation.Diagnostics;
 using WinRT;
@@ -29,13 +30,13 @@ namespace GetStoreApp.Services.History
         private static ApplicationDataContainer queryLinksContainer;
         private static ApplicationDataContainer searchAppsContainer;
 
-        private static List<TypeModel> TypeList { get; } =
+        private static ReadOnlyCollection<TypeModel> TypeCollection { get; } =
         [
             new() { InternalName = "url", ShortName = "url" },
             new() { InternalName = "ProductId", ShortName = "pid" }
         ];
 
-        private static List<ChannelModel> ChannelList { get; } =
+        private static ReadOnlyCollection<ChannelModel> ChannelCollection { get; } =
         [
             new() { InternalName = "WIF", ShortName = "wif" },
             new() { InternalName = "WIS", ShortName = "wis" },
@@ -60,7 +61,7 @@ namespace GetStoreApp.Services.History
         /// 获取查询链接历史记录数据
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
-        internal static List<HistoryModel> GetQueryLinksDataList()
+        internal static ReadOnlyCollection<HistoryModel> GetQueryLinksDataCollection()
         {
             List<HistoryModel> queryLinksHistoryList = [];
             historyStorageLock.Enter();
@@ -73,8 +74,27 @@ namespace GetStoreApp.Services.History
                     {
                         if (queryLinksContainerItem.Key.Length is 32 && queryLinksContainerItem.Value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                         {
-                            TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
-                            ChannelModel channel = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
+                            TypeModel type = null;
+                            string historyType = compositeValue[HistoryType] as string;
+                            foreach (TypeModel typeItem in TypeCollection)
+                            {
+                                if (string.Equals(typeItem.InternalName, historyType, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    type = typeItem;
+                                    break;
+                                }
+                            }
+
+                            ChannelModel channel = null;
+                            string historyChannel = compositeValue[HistoryChannel] as string;
+                            foreach (ChannelModel channelItem in ChannelCollection)
+                            {
+                                if (string.Equals(channelItem.InternalName, historyChannel, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    channel = channelItem;
+                                    break;
+                                }
+                            }
 
                             queryLinksHistoryList.Add(new()
                             {
@@ -91,7 +111,7 @@ namespace GetStoreApp.Services.History
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(GetQueryLinksDataList), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(GetQueryLinksDataCollection), 1, e);
             }
             finally
             {
@@ -99,14 +119,14 @@ namespace GetStoreApp.Services.History
             }
 
             queryLinksHistoryList.Sort((item1, item2) => item2.CreateTimeStamp.CompareTo(item1.CreateTimeStamp));
-            return queryLinksHistoryList;
+            return queryLinksHistoryList.AsReadOnly();
         }
 
         /// <summary>
         /// 获取搜索应用历史记录数据
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
-        internal static List<HistoryModel> GetSearchAppsDataList()
+        internal static ReadOnlyCollection<HistoryModel> GetSearchAppsDataCollection()
         {
             List<HistoryModel> searchAppsHistoryList = [];
             historyStorageLock.Enter();
@@ -119,9 +139,27 @@ namespace GetStoreApp.Services.History
                     {
                         if (searchAppsContainerItem.Key.Length is 32 && searchAppsContainerItem.Value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
                         {
-                            TypeModel type = TypeList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryType"] as string, StringComparison.OrdinalIgnoreCase));
-                            ChannelModel channelItem = ChannelList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryChannel"] as string, StringComparison.OrdinalIgnoreCase));
+                            TypeModel type = null;
+                            string historyType = compositeValue[HistoryType] as string;
+                            foreach (TypeModel typeItem in TypeCollection)
+                            {
+                                if (string.Equals(typeItem.InternalName, historyType, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    type = typeItem;
+                                    break;
+                                }
+                            }
 
+                            ChannelModel channel = null;
+                            string historyChannel = compositeValue[HistoryChannel] as string;
+                            foreach (ChannelModel channelItem in ChannelCollection)
+                            {
+                                if (string.Equals(channelItem.InternalName, historyChannel, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    channel = channelItem;
+                                    break;
+                                }
+                            }
                             searchAppsHistoryList.Add(new()
                             {
                                 HistoryKey = searchAppsContainerItem.Key,
@@ -134,7 +172,7 @@ namespace GetStoreApp.Services.History
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(GetSearchAppsDataList), 1, e);
+                LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(GetSearchAppsDataCollection), 1, e);
             }
             finally
             {
@@ -142,7 +180,7 @@ namespace GetStoreApp.Services.History
             }
 
             searchAppsHistoryList.Sort((item1, item2) => item2.CreateTimeStamp.CompareTo(item1.CreateTimeStamp));
-            return searchAppsHistoryList;
+            return searchAppsHistoryList.AsReadOnly();
         }
 
         /// <summary>

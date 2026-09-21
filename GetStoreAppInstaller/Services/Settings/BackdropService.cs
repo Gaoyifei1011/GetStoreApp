@@ -3,6 +3,7 @@ using GetStoreAppInstaller.Services.Root;
 using Microsoft.UI.Composition.SystemBackdrops;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace GetStoreAppInstaller.Services.Settings
 {
@@ -16,14 +17,21 @@ namespace GetStoreAppInstaller.Services.Settings
 
         internal static string AppBackdrop { get; set; }
 
-        internal static List<string> BackdropList { get; } = [nameof(SystemBackdropTheme.Default), nameof(MicaKind) + nameof(MicaKind.Base), nameof(MicaKind) + nameof(MicaKind.BaseAlt), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin)];
+        internal static ReadOnlyCollection<string> BackdropCollection { get; } = [nameof(SystemBackdropTheme.Default), nameof(MicaKind) + nameof(MicaKind.Base), nameof(MicaKind) + nameof(MicaKind.BaseAlt), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin)];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的背景色值
         /// </summary>
         internal static void InitializeBackdrop()
         {
-            defaultAppBackdrop = BackdropList.Find(item => string.Equals(item, nameof(SystemBackdropTheme.Default), StringComparison.OrdinalIgnoreCase));
+            foreach (string backdrop in BackdropCollection)
+            {
+                if (string.Equals(backdrop, nameof(SystemBackdropTheme.Default), StringComparison.OrdinalIgnoreCase))
+                {
+                    defaultAppBackdrop = backdrop;
+                    break;
+                }
+            }
             AppBackdrop = GetBackdrop();
         }
 
@@ -39,7 +47,15 @@ namespace GetStoreAppInstaller.Services.Settings
                 return defaultAppBackdrop;
             }
 
-            string selectedBackdrop = BackdropList.Find(item => string.Equals(item, backdrop, StringComparison.OrdinalIgnoreCase));
+            string selectedBackdrop = default;
+            foreach (string backdropItem in BackdropCollection)
+            {
+                if (string.Equals(backdropItem, backdrop, StringComparison.OrdinalIgnoreCase))
+                {
+                    selectedBackdrop = backdropItem;
+                    break;
+                }
+            }
             return string.IsNullOrEmpty(selectedBackdrop) ? defaultAppBackdrop : selectedBackdrop;
         }
     }

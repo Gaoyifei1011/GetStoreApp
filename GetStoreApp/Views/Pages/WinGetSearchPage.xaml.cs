@@ -437,9 +437,9 @@ namespace GetStoreApp.Views.Pages
 
             if (await Task.Run(() => { return GetPackageCatalogReference(packageManager); }) is PackageCatalogReference packageCatalogReference)
             {
-                (ConnectResult connectResult, FindPackagesResult findPackagesResult, List<SearchAppsModel> searchAppsList) = await Task.Run(() =>
+                (ConnectResult connectResult, FindPackagesResult findPackagesResult, ReadOnlyCollection<SearchAppsModel> searchAppsCollection) = await Task.Run(async () =>
                 {
-                    return SearchAppsAsync(packageCatalogReference, PackageMatchField, PackageFieldMatchOption, IsIncrease);
+                    return await SearchAppsAsync(packageCatalogReference, PackageMatchField, PackageFieldMatchOption, IsIncrease);
                 });
 
                 if (connectResult is not null && findPackagesResult is not null)
@@ -448,14 +448,14 @@ namespace GetStoreApp.Views.Pages
                     {
                         if (findPackagesResult.Status is FindPackagesResultStatus.Ok)
                         {
-                            if (searchAppsList is null || searchAppsList.Count is 0)
+                            if (searchAppsCollection is null || searchAppsCollection.Count is 0)
                             {
                                 SearchAppsResultKind = SearchAppsResultKind.Failed;
                                 SearchFailedContent = SearchAppsEmptyDescriptionString;
                             }
                             else
                             {
-                                foreach (SearchAppsModel searchAppsItem in searchAppsList)
+                                foreach (SearchAppsModel searchAppsItem in searchAppsCollection)
                                 {
                                     SearchAppsCollection.Add(searchAppsItem);
                                 }
@@ -537,9 +537,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 搜索应用
         /// </summary>
-        private async Task<(ConnectResult, FindPackagesResult, List<SearchAppsModel>)> SearchAppsAsync(PackageCatalogReference packageCatalogReference, PackageMatchField packageMatchField, PackageFieldMatchOption packageFieldMatchOption, bool isIncrease)
+        private async Task<(ConnectResult, FindPackagesResult, ReadOnlyCollection<SearchAppsModel>)> SearchAppsAsync(PackageCatalogReference packageCatalogReference, PackageMatchField packageMatchField, PackageFieldMatchOption packageFieldMatchOption, bool isIncrease)
         {
-            (ConnectResult connectResult, FindPackagesResult findPackagesResult, List<SearchAppsModel> searchAppsList) searchAppsResult = ValueTuple.Create<ConnectResult, FindPackagesResult, List<SearchAppsModel>>(null, null, null);
+            (ConnectResult connectResult, FindPackagesResult findPackagesResult, ReadOnlyCollection<SearchAppsModel> searchAppsCollection) searchAppsResult = ValueTuple.Create<ConnectResult, FindPackagesResult, ReadOnlyCollection<SearchAppsModel>>(null, null, null);
 
             if (packageCatalogReference is not null)
             {
@@ -589,7 +589,7 @@ namespace GetStoreApp.Views.Pages
                                 searchAppsList.Sort((item1, item2) => item2.AppName.CompareTo(item1.AppName));
                             }
 
-                            searchAppsResult.searchAppsList = searchAppsList;
+                            searchAppsResult.searchAppsCollection = searchAppsList.AsReadOnly();
                         }
                     }
                 }

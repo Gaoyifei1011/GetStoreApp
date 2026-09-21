@@ -12,6 +12,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.InteropServices.Marshalling;
@@ -293,18 +294,18 @@ namespace GetStoreApp.Views.Pages
 
                     if (dwRmStatus is 0)
                     {
-                        if (ProcessHelper.GetProcessPIDByName("explorer.exe") is List<uint> processPIDList && processPIDList.Count > 0)
+                        if (ProcessHelper.GetProcessPIDByName("explorer.exe") is ReadOnlyCollection<uint> processPIDCollection && processPIDCollection.Count > 0)
                         {
-                            RM_UNIQUE_PROCESS[] lpRmProcList = new RM_UNIQUE_PROCESS[processPIDList.Count];
+                            RM_UNIQUE_PROCESS[] lpRmProcList = new RM_UNIQUE_PROCESS[processPIDCollection.Count];
 
-                            for (int index = 0; index < processPIDList.Count; index++)
+                            for (int index = 0; index < processPIDCollection.Count; index++)
                             {
-                                lpRmProcList[index].dwProcessId = (int)processPIDList[index];
-                                nint hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_QUERY_LIMITED_INFORMATION, false, (int)processPIDList[index]);
+                                lpRmProcList[index].dwProcessId = (int)processPIDCollection[index];
+                                nint hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_QUERY_LIMITED_INFORMATION, false, (int)processPIDCollection[index]);
                                 lpRmProcList[index].ProcessStartTime = hProcess != nint.Zero && Kernel32Library.GetProcessTimes(hProcess, out FILETIME creationTime, out FILETIME exitTime, out FILETIME kernelTime, out FILETIME userTime) ? creationTime : new();
                             }
 
-                            dwRmStatus = RstrtmgrLibrary.RmRegisterResources(dwSessionHandle, 0, null, (uint)processPIDList.Count, lpRmProcList, 0, null);
+                            dwRmStatus = RstrtmgrLibrary.RmRegisterResources(dwSessionHandle, 0, null, (uint)processPIDCollection.Count, lpRmProcList, 0, null);
 
                             if (dwRmStatus is 0)
                             {

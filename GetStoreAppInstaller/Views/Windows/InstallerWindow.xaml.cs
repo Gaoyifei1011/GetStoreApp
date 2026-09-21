@@ -738,7 +738,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private ObservableCollection<InstallDependencyModel> InstallDependencyCollection { get; } = [];
 
-        private Dictionary<string, string> CapabilityDict { get; } = new()
+        private ReadOnlyDictionary<string, string> CapabilityDict { get; } = new Dictionary<string, string>()
         {
             { "accessorymanager", ResourceService.GetLocalized("Installer/CapabilityAccessoryManager") },
             { "activity", ResourceService.GetLocalized("Installer/CapabilityActivity") },
@@ -899,7 +899,7 @@ namespace GetStoreAppInstaller.Views.Windows
             { "webcam", ResourceService.GetLocalized("Installer/CapabilityWebCam") },
             { "wificontrol", ResourceService.GetLocalized("Installer/CapabilityWifiControl") },
             { "xboxaccessorymanagement", ResourceService.GetLocalized("Installer/CapabilityXboxAccessoryManagement") },
-        };
+        }.AsReadOnly();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -1452,7 +1452,6 @@ namespace GetStoreAppInstaller.Views.Windows
                         }
                         else if (packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                         {
-                            string errorCode = packageDeploymentResult.Error is not null ? string.Format("0x{0:X8}", packageDeploymentResult.Error.HResult) : NotAvailableString;
                             string errorMessage = string.IsNullOrEmpty(packageDeploymentResult.ErrorText) ? packageDeploymentResult.Error is not null ? packageDeploymentResult.Error.Message : NotAvailableString : packageDeploymentResult.ErrorText;
 
                             // 更新应用安装状态
@@ -1690,27 +1689,27 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void SetSystemBackdrop()
         {
-            if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[1]))
+            if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropCollection[1]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(MicaKind.Base);
                 VisualStateManager.GoToState(InstallerPage, "BackgroundTransparent", false);
             }
-            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[2]))
+            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropCollection[2]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(MicaKind.BaseAlt);
                 VisualStateManager.GoToState(InstallerPage, "BackgroundTransparent", false);
             }
-            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[3]))
+            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropCollection[3]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Default);
                 VisualStateManager.GoToState(InstallerPage, "BackgroundTransparent", false);
             }
-            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[4]))
+            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropCollection[4]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Base);
                 VisualStateManager.GoToState(InstallerPage, "BackgroundTransparent", false);
             }
-            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[5]))
+            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropCollection[5]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Thin);
                 VisualStateManager.GoToState(InstallerPage, "BackgroundTransparent", false);
@@ -1940,13 +1939,13 @@ namespace GetStoreAppInstaller.Views.Windows
                                 parseResult = true;
 
                                 // 解析安装包所有文件
-                                Dictionary<string, IAppxFile> appxFileDict = ParsePackagePayloadFiles(appxPackageReader);
+                                ReadOnlyDictionary<string, IAppxFile> appxFileDict = ParsePackagePayloadFiles(appxPackageReader);
 
                                 // 解析资源包清单文件
                                 ManifestInformation manifestInformation = ParsePackageManifest(appxPackageReader, false, null);
 
                                 packageInformation.PackageFileType = PackageFileType.Package;
-                                packageInformation.CapabilitiesList = manifestInformation.CapabilitiesList;
+                                packageInformation.CapabilitiesList.AddRange(manifestInformation.CapabilitiesList);
                                 packageInformation.ProcessorArchitecture = manifestInformation.ProcessorArchitecture;
                                 packageInformation.PackageFamilyName = manifestInformation.PackageFamilyName;
                                 packageInformation.PackageFullName = manifestInformation.PackageFullName;
@@ -1956,10 +1955,10 @@ namespace GetStoreAppInstaller.Views.Windows
                                 packageInformation.DisplayName = manifestInformation.DisplayName;
                                 packageInformation.Logo = manifestInformation.Logo;
                                 packageInformation.PublisherDisplayName = manifestInformation.PublisherDisplayName;
-                                packageInformation.DependencyList = manifestInformation.DependencyList;
-                                packageInformation.TargetDeviceFamilyList = manifestInformation.TargetDeviceFamilyList;
-                                packageInformation.ApplicationList = manifestInformation.ApplicationList;
-                                packageInformation.LanguageList = manifestInformation.LanguageList;
+                                packageInformation.DependencyList.AddRange(manifestInformation.DependencyList);
+                                packageInformation.TargetDeviceFamilyList.AddRange(manifestInformation.TargetDeviceFamilyList);
+                                packageInformation.ApplicationList.AddRange(manifestInformation.ApplicationList);
+                                packageInformation.LanguageList.AddRange(manifestInformation.LanguageList);
 
                                 // 获取应用包图标
                                 if (appxFileDict is not null && appxFileDict.Count > 0 && !string.IsNullOrEmpty(packageInformation.Logo))
@@ -2015,11 +2014,11 @@ namespace GetStoreAppInstaller.Views.Windows
                                     if (packageManifestInformation is not null)
                                     {
                                         // 解析应用
-                                        if (packageManifestInformation.ApplicationDict is not null)
+                                        if (packageManifestInformation.ApplicationDict.Count > 0)
                                         {
-                                            packageInformation.LanguageList = packageManifestInformation.LanguageList;
-                                            string applicationFileName = ParsePackageBundleCompatibleFile(packageManifestInformation.ApplicationDict);
-                                            string architecture = ParsePackageBundleArchitecture(packageManifestInformation.ApplicationDict);
+                                            packageInformation.LanguageList.AddRange(packageManifestInformation.LanguageList);
+                                            string applicationFileName = ParsePackageBundleCompatibleFile(packageManifestInformation.ApplicationDict.AsReadOnly());
+                                            string architecture = ParsePackageBundleArchitecture(packageManifestInformation.ApplicationDict.AsReadOnly());
                                             packageInformation.ProcessorArchitecture = architecture;
 
                                             if (!string.IsNullOrEmpty(applicationFileName))
@@ -2033,7 +2032,7 @@ namespace GetStoreAppInstaller.Views.Windows
                                                     ManifestInformation manifestInformation = ParsePackageManifest(appxPackageReader, true, packageInformation.LanguageList);
 
                                                     packageInformation.PackageFileType = PackageFileType.Package;
-                                                    packageInformation.CapabilitiesList = manifestInformation.CapabilitiesList;
+                                                    packageInformation.CapabilitiesList.AddRange(manifestInformation.CapabilitiesList);
                                                     packageInformation.PackageFamilyName = manifestInformation.PackageFamilyName;
                                                     packageInformation.PackageFullName = manifestInformation.PackageFullName;
                                                     packageInformation.Version = manifestInformation.Version;
@@ -2042,9 +2041,9 @@ namespace GetStoreAppInstaller.Views.Windows
                                                     packageInformation.DisplayName = manifestInformation.DisplayName;
                                                     packageInformation.Logo = manifestInformation.Logo;
                                                     packageInformation.PublisherDisplayName = manifestInformation.PublisherDisplayName;
-                                                    packageInformation.DependencyList = manifestInformation.DependencyList;
-                                                    packageInformation.TargetDeviceFamilyList = manifestInformation.TargetDeviceFamilyList;
-                                                    packageInformation.ApplicationList = manifestInformation.ApplicationList;
+                                                    packageInformation.DependencyList.AddRange(manifestInformation.DependencyList);
+                                                    packageInformation.TargetDeviceFamilyList.AddRange(manifestInformation.TargetDeviceFamilyList);
+                                                    packageInformation.ApplicationList.AddRange(manifestInformation.ApplicationList);
                                                 }
                                             }
                                         }
@@ -2055,7 +2054,7 @@ namespace GetStoreAppInstaller.Views.Windows
                                             // 获取应用包图标
                                             if (!string.IsNullOrEmpty(packageInformation.Logo))
                                             {
-                                                if (ParsePackageBundleScaleFiles(appxBundleReader, packageManifestInformation.ScaleResourceList) is Dictionary<string, IAppxFile> scaleBundleFileDict)
+                                                if (ParsePackageBundleScaleFiles(appxBundleReader, packageManifestInformation.ScaleResourceList) is ReadOnlyDictionary<string, IAppxFile> scaleBundleFileDict)
                                                 {
                                                     packageInformation.ImageLogo = await GetPackageBundleLogoAsync(packageInformation.Logo, scaleBundleFileDict);
                                                 }
@@ -2214,7 +2213,6 @@ namespace GetStoreAppInstaller.Views.Windows
                             }
 
                             XmlNodeList packageNodeList = xmlDocument.GetElementsByTagName("Package");
-                            packageInformation.DependencyList = [];
 
                             foreach (IXmlNode packageNode in packageNodeList)
                             {
@@ -2335,7 +2333,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 获取应用程序入口信息
         /// </summary>
-        private List<ApplicationModel> ParsePackageApplicationList(IAppxManifestReader3 appxManifestReader, ResourceManagement resourceManagement)
+        private ReadOnlyCollection<ApplicationModel> ParsePackageApplicationCollection(IAppxManifestReader3 appxManifestReader, ResourceManagement resourceManagement)
         {
             List<ApplicationModel> applicationList = [];
 
@@ -2367,13 +2365,13 @@ namespace GetStoreAppInstaller.Views.Windows
             }
 
             applicationList.Sort((item1, item2) => item1.AppID.CompareTo(item2.AppID));
-            return applicationList;
+            return applicationList.AsReadOnly();
         }
 
         /// <summary>
         /// 解析应用包的功能
         /// </summary>
-        private List<string> ParsePackageCapabilityList(IAppxManifestReader3 appxManifestReader)
+        private ReadOnlyCollection<string> ParsePackageCapabilityCollection(IAppxManifestReader3 appxManifestReader)
         {
             List<string> capabilityList = [];
 
@@ -2388,13 +2386,13 @@ namespace GetStoreAppInstaller.Views.Windows
             }
 
             capabilityList.Sort();
-            return capabilityList;
+            return capabilityList.AsReadOnly();
         }
 
         /// <summary>
         /// 解析应用包的依赖信息
         /// </summary>
-        private List<DependencyInformation> ParsePackageDependencyList(IAppxManifestReader3 appxManifestReader)
+        private ReadOnlyCollection<DependencyInformation> ParsePackageDependencyCollection(IAppxManifestReader3 appxManifestReader)
         {
             List<DependencyInformation> dependencyList = [];
 
@@ -2426,7 +2424,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 }
             }
 
-            return dependencyList;
+            return dependencyList.AsReadOnly();
         }
 
         /// <summary>
@@ -2442,10 +2440,10 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (appxPackageReader is not null && appxPackageReader.GetManifest(out IAppxManifestReader3 appxManifestReader) is 0)
                 {
                     // 获取应用包定义的功能列表
-                    manifestInformation.CapabilitiesList = ParsePackageCapabilityList(appxManifestReader);
+                    manifestInformation.CapabilitiesList.AddRange(ParsePackageCapabilityCollection(appxManifestReader));
 
                     // 获取应用包定义的静态依赖项列表
-                    manifestInformation.DependencyList = ParsePackageDependencyList(appxManifestReader);
+                    manifestInformation.DependencyList.AddRange(ParsePackageDependencyCollection(appxManifestReader));
 
                     // 获取应用包定义的包标识符
                     if (appxManifestReader.GetPackageId(out IAppxManifestPackageId2 packageId) is 0)
@@ -2468,17 +2466,20 @@ namespace GetStoreAppInstaller.Views.Windows
                     }
 
                     // 获取包的目标设备系列
-                    manifestInformation.TargetDeviceFamilyList = ParsePackageTargetDeviceFamilyList(appxManifestReader);
+                    manifestInformation.TargetDeviceFamilyList.AddRange(ParsePackageTargetDeviceFamilyCollection(appxManifestReader));
 
                     // 查找符合显示的语言
                     if (isBundle)
                     {
-                        manifestInformation.LanguageList = bundleLanguageList is not null && bundleLanguageList.Count > 0 ? bundleLanguageList : [];
+                        if (bundleLanguageList is not null && bundleLanguageList.Count > 0)
+                        {
+                            manifestInformation.LanguageList.AddRange(bundleLanguageList);
+                        }
                     }
                     else
                     {
                         // 获取应用包定义的语言资源
-                        manifestInformation.LanguageList = ParsePackageLanguageList(appxManifestReader);
+                        manifestInformation.LanguageList.AddRange(ParsePackageLanguageCollection(appxManifestReader));
                     }
 
                     string currentLanguage = GetSpecifiedLanguage(manifestInformation.LanguageList);
@@ -2486,7 +2487,7 @@ namespace GetStoreAppInstaller.Views.Windows
                     // 获取包的所有文件信息
                     ResourceManagement resourceManagement = null;
 
-                    if (ParsePackagePayloadFiles(appxPackageReader) is Dictionary<string, IAppxFile> appxFileDict && appxFileDict.Count > 0 && GetPackageResourceFileStream(appxFileDict) is IStream resourceFileStream)
+                    if (ParsePackagePayloadFiles(appxPackageReader) is ReadOnlyDictionary<string, IAppxFile> appxFileDict && appxFileDict.Count > 0 && GetPackageResourceFileStream(appxFileDict) is IStream resourceFileStream)
                     {
                         ShCoreLibrary.CreateRandomAccessStreamOverStream(resourceFileStream, BSOS_OPTIONS.BSOS_DEFAULT, typeof(IRandomAccessStream).GUID, out nint ppv);
                         RandomAccessStreamOverStream randomAccessStreamOverStream = RandomAccessStreamOverStream.FromAbi(ppv);
@@ -2526,7 +2527,7 @@ namespace GetStoreAppInstaller.Views.Windows
                     }
 
                     // 获取应用入口信息
-                    manifestInformation.ApplicationList = ParsePackageApplicationList(appxManifestReader, resourceManagement);
+                    manifestInformation.ApplicationList.AddRange(ParsePackageApplicationCollection(appxManifestReader, resourceManagement));
 
                     // 获取应用包的属性
                     if (appxManifestReader.GetProperties(out IAppxManifestProperties packageProperties) is 0)
@@ -2561,7 +2562,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 解析应用包的所有文件
         /// </summary>
-        private Dictionary<string, IAppxFile> ParsePackagePayloadFiles(IAppxPackageReader appxPackageReader)
+        private ReadOnlyDictionary<string, IAppxFile> ParsePackagePayloadFiles(IAppxPackageReader appxPackageReader)
         {
             Dictionary<string, IAppxFile> fileDict = [];
 
@@ -2577,13 +2578,13 @@ namespace GetStoreAppInstaller.Views.Windows
                 }
             }
 
-            return fileDict;
+            return fileDict.AsReadOnly();
         }
 
         /// <summary>
         /// 解析应用包定义的语言
         /// </summary>
-        private List<string> ParsePackageLanguageList(IAppxManifestReader3 appxManifestReader)
+        private ReadOnlyCollection<string> ParsePackageLanguageCollection(IAppxManifestReader3 appxManifestReader)
         {
             List<string> languageList = [];
 
@@ -2601,13 +2602,13 @@ namespace GetStoreAppInstaller.Views.Windows
             }
 
             languageList.Sort();
-            return languageList;
+            return languageList.AsReadOnly();
         }
 
         /// <summary>
         /// 获取程序包面向的设备系列信息
         /// </summary>
-        private List<TargetDeviceFamilyModel> ParsePackageTargetDeviceFamilyList(IAppxManifestReader3 appxManifestReader)
+        private ReadOnlyCollection<TargetDeviceFamilyModel> ParsePackageTargetDeviceFamilyCollection(IAppxManifestReader3 appxManifestReader)
         {
             List<TargetDeviceFamilyModel> targetDeviceFamilyList = [];
 
@@ -2633,7 +2634,7 @@ namespace GetStoreAppInstaller.Views.Windows
             }
 
             targetDeviceFamilyList.Sort((item1, item2) => item1.TargetDeviceName.CompareTo(item2.TargetDeviceName));
-            return targetDeviceFamilyList;
+            return targetDeviceFamilyList.AsReadOnly();
         }
 
         /// <summary>
@@ -2701,7 +2702,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 解析应用包支持的处理器架构
         /// </summary>
-        private string ParsePackageBundleArchitecture(Dictionary<ProcessorArchitecture, string> applicationDict)
+        private string ParsePackageBundleArchitecture(ReadOnlyDictionary<ProcessorArchitecture, string> applicationDict)
         {
             string architecture = string.Empty;
 
@@ -2764,7 +2765,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 解析应用捆绑包适合主机系统的文件
         /// </summary>
-        private string ParsePackageBundleCompatibleFile(Dictionary<ProcessorArchitecture, string> applicationDict)
+        private string ParsePackageBundleCompatibleFile(ReadOnlyDictionary<ProcessorArchitecture, string> applicationDict)
         {
             Architecture osArchitecture = RuntimeInformation.ProcessArchitecture;
             string appxFile = null;
@@ -2836,9 +2837,9 @@ namespace GetStoreAppInstaller.Views.Windows
                         applicationDict.TryAdd(architecture, fileName);
                         scaleResourceList.Add(fileName);
 
-                        if (GetPackageBundleLanguageList(appxBundleManifestPackageInfo) is List<string> languageBundleList && languageBundleList.Count > 0)
+                        if (GetPackageBundleLanguageCollection(appxBundleManifestPackageInfo) is ReadOnlyCollection<string> languageBundleCollection && languageBundleCollection.Count > 0)
                         {
-                            foreach (string languageBundleItem in languageBundleList)
+                            foreach (string languageBundleItem in languageBundleCollection)
                             {
                                 if (!languageList.Contains(languageBundleItem))
                                 {
@@ -2861,16 +2862,19 @@ namespace GetStoreAppInstaller.Views.Windows
                 }
             }
 
-            packageManifestInformation.ApplicationDict = applicationDict;
-            packageManifestInformation.LanguageList = languageList;
-            packageManifestInformation.ScaleResourceList = scaleResourceList;
+            foreach (KeyValuePair<ProcessorArchitecture, string> application in applicationDict)
+            {
+                packageManifestInformation.ApplicationDict.TryAdd(application.Key, application.Value);
+            }
+            packageManifestInformation.LanguageList.AddRange(languageList);
+            packageManifestInformation.ScaleResourceList.AddRange(scaleResourceList);
             return packageManifestInformation;
         }
 
         /// <summary>
         /// 解析应用捆绑包带缩放资源的文件
         /// </summary>
-        private Dictionary<string, IAppxFile> ParsePackageBundleScaleFiles(IAppxBundleReader appxBundleReader, List<string> scaleResourceList)
+        private ReadOnlyDictionary<string, IAppxFile> ParsePackageBundleScaleFiles(IAppxBundleReader appxBundleReader, List<string> scaleResourceList)
         {
             Dictionary<string, IAppxFile> bundleFileDict = [];
 
@@ -2895,7 +2899,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 }
             }
 
-            return bundleFileDict;
+            return bundleFileDict.AsReadOnly();
         }
 
         /// <summary>
@@ -2949,7 +2953,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 获取应用包图标
         /// </summary>
-        private IStream GetPackageLogo(string logo, Dictionary<string, IAppxFile> appxFileDict)
+        private IStream GetPackageLogo(string logo, ReadOnlyDictionary<string, IAppxFile> appxFileDict)
         {
             if (string.IsNullOrEmpty(logo) || appxFileDict is null)
             {
@@ -2977,7 +2981,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 获取应用捆绑包图标
         /// </summary>
-        private async Task<IStream> GetPackageBundleLogoAsync(string logo, Dictionary<string, IAppxFile> scaleBundleFileDict)
+        private async Task<IStream> GetPackageBundleLogoAsync(string logo, ReadOnlyDictionary<string, IAppxFile> scaleBundleFileDict)
         {
             if (string.IsNullOrEmpty(logo) || scaleBundleFileDict is null)
             {
@@ -3003,7 +3007,7 @@ namespace GetStoreAppInstaller.Views.Windows
                     if (appxFactory is not null && appxFactory.CreatePackageReader(bundleFileStream, out IAppxPackageReader appxPackageReader) is 0)
                     {
                         // 解析安装包所有文件
-                        if (ParsePackagePayloadFiles(appxPackageReader) is Dictionary<string, IAppxFile> appxFileDict)
+                        if (ParsePackagePayloadFiles(appxPackageReader) is ReadOnlyDictionary<string, IAppxFile> appxFileDict)
                         {
                             // 读取应用包图标
                             foreach (KeyValuePair<string, IAppxFile> appxFileItem in appxFileDict)
@@ -3043,7 +3047,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 获取应用包资源文件
         /// </summary>
-        private IStream GetPackageResourceFileStream(Dictionary<string, IAppxFile> fileDict)
+        private IStream GetPackageResourceFileStream(ReadOnlyDictionary<string, IAppxFile> fileDict)
         {
             IStream resourceFileStream = null;
 
@@ -3203,7 +3207,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 获取应用捆绑包定义的语言
         /// </summary>
-        private List<string> GetPackageBundleLanguageList(IAppxBundleManifestPackageInfo appxBundleManifestPackageInfo)
+        private ReadOnlyCollection<string> GetPackageBundleLanguageCollection(IAppxBundleManifestPackageInfo appxBundleManifestPackageInfo)
         {
             List<string> languageResourceList = [];
 
@@ -3221,7 +3225,7 @@ namespace GetStoreAppInstaller.Views.Windows
             }
 
             languageResourceList.Sort();
-            return languageResourceList;
+            return languageResourceList.AsReadOnly();
         }
 
         /// <summary>

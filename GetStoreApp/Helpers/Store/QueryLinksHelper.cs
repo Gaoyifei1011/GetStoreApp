@@ -4,6 +4,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading;
@@ -83,7 +84,7 @@ namespace GetStoreApp.Helpers.Store
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetCookieAsync), 1, responseDict);
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetCookieAsync), 1, responseDict.AsReadOnly());
                     string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                     if (!string.IsNullOrEmpty(responseString))
@@ -150,7 +151,7 @@ namespace GetStoreApp.Helpers.Store
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppInformationAsync), 1, responseDict);
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppInformationAsync), 1, responseDict.AsReadOnly());
                     string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                     if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
@@ -235,13 +236,13 @@ namespace GetStoreApp.Helpers.Store
                     if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
                     {
                         Dictionary<string, string> responseDict = new()
-                    {
-                        { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
-                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
-                    };
+                        {
+                            { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
+                            { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
+                            { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
+                        };
 
-                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetFileListXmlAsync), 1, responseDict);
+                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetFileListXmlAsync), 1, responseDict.AsReadOnly());
                         string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
                         fileListXmlResult = responseString.Replace("&lt;", "<").Replace("&gt;", ">");
                     }
@@ -269,7 +270,7 @@ namespace GetStoreApp.Helpers.Store
         /// <param name="fileListXml">文件信息的字符串</param>
         /// <param name="ring">通道</param>
         /// <returns>带解析后文件信息的列表</returns>
-        internal static async Task<List<QueryLinksResultModel>> GetAppxPackagesAsync(string fileListXml, string ring)
+        internal static async Task<ReadOnlyCollection<QueryLinksResultModel>> GetAppxPackagesAsync(string fileListXml, string ring)
         {
             List<QueryLinksResultModel> appxPackagesList = [];
 
@@ -294,7 +295,7 @@ namespace GetStoreApp.Helpers.Store
 
                                 if (!appxPackagesInfoDict.ContainsKey(name))
                                 {
-                                    appxPackagesInfoDict.Add(name, ValueTuple.Create(extension, size, digest));
+                                    appxPackagesInfoDict.TryAdd(name, ValueTuple.Create(extension, size, digest));
                                 }
                             }
                         }
@@ -357,7 +358,7 @@ namespace GetStoreApp.Helpers.Store
                 }
             }
 
-            return appxPackagesList;
+            return appxPackagesList.AsReadOnly();
         }
 
         /// <summary>
@@ -395,13 +396,13 @@ namespace GetStoreApp.Helpers.Store
                     if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
                     {
                         Dictionary<string, string> responseDict = new()
-                    {
-                        { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
-                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
-                    };
+                        {
+                            { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
+                            { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
+                            { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
+                        };
 
-                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxUrlAsync), 1, responseDict);
+                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxUrlAsync), 1, responseDict.AsReadOnly());
                         string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                         if (!string.IsNullOrEmpty(responseString))
@@ -444,7 +445,7 @@ namespace GetStoreApp.Helpers.Store
         /// </summary>
         /// <param name="productId">产品 ID</param>
         /// <returns>带解析后文件信息的列表</returns>
-        internal static async Task<List<QueryLinksResultModel>> GetNonAppxPackagesAsync(string productId)
+        internal static async Task<ReadOnlyCollection<QueryLinksResultModel>> GetNonAppxPackagesAsync(string productId)
         {
             List<QueryLinksResultModel> nonAppxPackagesList = [];
 
@@ -468,13 +469,13 @@ namespace GetStoreApp.Helpers.Store
                     if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
                     {
                         Dictionary<string, string> responseDict = new()
-                    {
-                        { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
-                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
-                    };
+                        {
+                            { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
+                            { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
+                            { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
+                        };
 
-                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 1, responseDict);
+                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 1, responseDict.AsReadOnly());
                         string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                         if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
@@ -564,7 +565,7 @@ namespace GetStoreApp.Helpers.Store
                 }
             }
 
-            return nonAppxPackagesList;
+            return nonAppxPackagesList.AsReadOnly();
         }
 
         /// <summary>
@@ -594,13 +595,13 @@ namespace GetStoreApp.Helpers.Store
                     if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
                     {
                         Dictionary<string, string> responseDict = new()
-                    {
-                        { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
-                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
-                    };
+                        {
+                            { "Status code", Convert.ToString(httpRequestResult.ResponseMessage.StatusCode) },
+                            { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.Headers).Replace('\r', ' ').Replace('\n', ' ') },
+                            { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
+                        };
 
-                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackageFileSizeAsync), 1, responseDict);
+                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackageFileSizeAsync), 1, responseDict.AsReadOnly());
                         fileSizeResult = Convert.ToString(httpRequestResult.ResponseMessage.Content.Headers.ContentLength);
                     }
                     // 请求失败

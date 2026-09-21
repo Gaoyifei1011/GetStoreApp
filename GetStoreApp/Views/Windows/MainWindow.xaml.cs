@@ -468,11 +468,11 @@ namespace GetStoreApp.Views.Windows
             {
                 if (GetFrameContent() is AppManagerPage appManagerPage && appManagerPage.BreadCollection.Count is 2)
                 {
-                    appManagerPage.NavigateTo(appManagerPage.PageList[0], null, false);
+                    appManagerPage.NavigateTo(appManagerPage.PageCollection[0], null, false);
                 }
                 else if (GetFrameContent() is SettingsPage settingsPage && settingsPage.BreadCollection.Count is 2)
                 {
-                    settingsPage.NavigateTo(settingsPage.PageList[0], null, false);
+                    settingsPage.NavigateTo(settingsPage.PageCollection[0], null, false);
                 }
                 else
                 {
@@ -489,11 +489,11 @@ namespace GetStoreApp.Views.Windows
         {
             if (GetFrameContent() is AppManagerPage appManagerPage && appManagerPage.BreadCollection.Count is 2)
             {
-                appManagerPage.NavigateTo(appManagerPage.PageList[0], null, false);
+                appManagerPage.NavigateTo(appManagerPage.PageCollection[0], null, false);
             }
             else if (GetFrameContent() is SettingsPage settingsPage && settingsPage.BreadCollection.Count is 2)
             {
-                settingsPage.NavigateTo(settingsPage.PageList[0], null, false);
+                settingsPage.NavigateTo(settingsPage.PageCollection[0], null, false);
             }
             else
             {
@@ -773,27 +773,27 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void SetSystemBackdrop()
         {
-            if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[1]))
+            if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropCollection[1]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(MicaKind.Base);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
-            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[2]))
+            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropCollection[2]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(MicaKind.BaseAlt);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
-            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[3]))
+            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropCollection[3]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Default);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
-            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[4]))
+            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropCollection[4]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Base);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
-            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[5]))
+            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropCollection[5]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Thin);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
@@ -1184,20 +1184,28 @@ namespace GetStoreApp.Views.Windows
                             }
                             else if (GetFrameContent() is SettingsPage settingsPage)
                             {
-                                if (!Equals(settingsPage.GetCurrentPageType(), settingsPage.PageList[0]))
+                                if (!Equals(settingsPage.GetCurrentPageType(), settingsPage.PageCollection[0]))
                                 {
-                                    settingsPage.NavigateTo(settingsPage.PageList[0], AppNaviagtionArgs.Download);
+                                    settingsPage.NavigateTo(settingsPage.PageCollection[0], AppNaviagtionArgs.Download);
                                 }
-                                else if (settingsPage.GetFrameContent() is SettingsItemPage settingsItemPage && !Equals(settingsItemPage.GetCurrentPageType(), settingsItemPage.PageList[3]))
+                                else if (settingsPage.GetFrameContent() is SettingsItemPage settingsItemPage && !Equals(settingsItemPage.GetCurrentPageType(), settingsItemPage.PageCollection[3]))
                                 {
                                     if (settingsItemPage.IsLoaded)
                                     {
-                                        int currentIndex = settingsItemPage.PageList.FindIndex(item => Equals(item, settingsItemPage.GetCurrentPageType()));
-                                        settingsItemPage.NavigateTo(settingsItemPage.PageList[3], null, 3 > currentIndex);
+                                        int currentIndex = -1;
+                                        for (int i = 0; i < settingsItemPage.PageCollection.Count; i++)
+                                        {
+                                            if (Equals(settingsItemPage.PageCollection[i], settingsItemPage.GetCurrentPageType()))
+                                            {
+                                                currentIndex = i;
+                                                break;
+                                            }
+                                        }
+                                        settingsItemPage.NavigateTo(settingsItemPage.PageCollection[3], null, 3 > currentIndex);
                                     }
                                     else
                                     {
-                                        settingsItemPage.SetNavigateContent(true, settingsItemPage.PageList[3]);
+                                        settingsItemPage.SetNavigateContent(true, settingsItemPage.PageCollection[3]);
                                     }
                                 }
                             }
@@ -1210,20 +1218,28 @@ namespace GetStoreApp.Views.Windows
                             }
                             else if (GetFrameContent() is SettingsPage settingsPage)
                             {
-                                if (!Equals(settingsPage.GetCurrentPageType(), settingsPage.PageList[0]))
+                                if (!Equals(settingsPage.GetCurrentPageType(), settingsPage.PageCollection[0]))
                                 {
-                                    settingsPage.NavigateTo(settingsPage.PageList[0], AppNaviagtionArgs.AppInstall);
+                                    settingsPage.NavigateTo(settingsPage.PageCollection[0], AppNaviagtionArgs.AppInstall);
                                 }
-                                else if (settingsPage.GetFrameContent() is SettingsItemPage settingsItemPage && !Equals(settingsItemPage.GetCurrentPageType(), settingsItemPage.PageList[4]))
+                                else if (settingsPage.GetFrameContent() is SettingsItemPage settingsItemPage && !Equals(settingsItemPage.GetCurrentPageType(), settingsItemPage.PageCollection[4]))
                                 {
                                     if (settingsItemPage.IsLoaded)
                                     {
-                                        int currentIndex = settingsItemPage.PageList.FindIndex(item => Equals(item, settingsItemPage.GetCurrentPageType()));
-                                        settingsItemPage.NavigateTo(settingsItemPage.PageList[4], null, 4 > currentIndex);
+                                        int currentIndex = -1;
+                                        for (int i = 0; i < settingsItemPage.PageCollection.Count; i++)
+                                        {
+                                            if (Equals(settingsItemPage.PageCollection[i], settingsItemPage.GetCurrentPageType()))
+                                            {
+                                                currentIndex = i;
+                                                break;
+                                            }
+                                        }
+                                        settingsItemPage.NavigateTo(settingsItemPage.PageCollection[4], null, 4 > currentIndex);
                                     }
                                     else
                                     {
-                                        settingsItemPage.SetNavigateContent(true, settingsItemPage.PageList[4]);
+                                        settingsItemPage.SetNavigateContent(true, settingsItemPage.PageCollection[4]);
                                     }
                                 }
                             }
@@ -1246,16 +1262,24 @@ namespace GetStoreApp.Views.Windows
                         {
                             NavigateTo(typeof(DownloadPage), AppNaviagtionArgs.Completed);
                         }
-                        else if (GetFrameContent() is DownloadPage downloadPage && !Equals(downloadPage.GetCurrentPageType(), downloadPage.PageList[1]))
+                        else if (GetFrameContent() is DownloadPage downloadPage && !Equals(downloadPage.GetCurrentPageType(), downloadPage.PageCollection[1]))
                         {
                             if (downloadPage.IsLoaded)
                             {
-                                int currentIndex = downloadPage.PageList.FindIndex(item => Equals(item, downloadPage.GetCurrentPageType()));
-                                downloadPage.NavigateTo(downloadPage.PageList[1], null, 1 > currentIndex);
+                                int currentIndex = -1;
+                                for (int i = 0; i < downloadPage.PageCollection.Count; i++)
+                                {
+                                    if (Equals(downloadPage.PageCollection[i], downloadPage.GetCurrentPageType()))
+                                    {
+                                        currentIndex = i;
+                                        break;
+                                    }
+                                }
+                                downloadPage.NavigateTo(downloadPage.PageCollection[1], null, 1 > currentIndex);
                             }
                             else
                             {
-                                downloadPage.SetNavigateContent(true, downloadPage.PageList[1]);
+                                downloadPage.SetNavigateContent(true, downloadPage.PageCollection[1]);
                             }
                         }
                     }

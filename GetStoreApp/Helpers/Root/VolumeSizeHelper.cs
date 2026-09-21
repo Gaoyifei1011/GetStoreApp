@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace GetStoreApp.Helpers.Root
 {
@@ -8,12 +9,12 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     internal static class VolumeSizeHelper
     {
-        private static readonly Dictionary<string, int> sizeDict = new()
+        private static readonly ReadOnlyDictionary<string, int> sizeDict = new Dictionary<string, int>
         {
-            { "GB",1024*1024*1024 },
-            { "MB",1024*1024 },
+            { "GB",1024 * 1024 * 1024 },
+            { "MB",1024 * 1024 },
             { "KB",1024 }
-        };
+        }.AsReadOnly();
 
         /// <summary>
         /// 转换为相应格式的文件大小值

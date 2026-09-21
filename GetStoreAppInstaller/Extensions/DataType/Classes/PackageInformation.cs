@@ -134,26 +134,26 @@ namespace GetStoreAppInstaller.Extensions.DataType.Classes
         /// <summary>
         /// 应用功能列表
         /// </summary>
-        internal List<string> CapabilitiesList { get; set; }
+        internal List<string> CapabilitiesList { get; } = [];
 
         /// <summary>
         /// 依赖项列表
         /// </summary>
-        internal List<DependencyInformation> DependencyList { get; set; }
+        internal List<DependencyInformation> DependencyList { get; } = [];
 
         /// <summary>
         /// 应用包目标设备信息
         /// </summary>
-        internal List<TargetDeviceFamilyModel> TargetDeviceFamilyList { get; set; }
+        internal List<TargetDeviceFamilyModel> TargetDeviceFamilyList { get; } = [];
 
         /// <summary>
         /// 应用包应用信息
         /// </summary>
-        internal List<ApplicationModel> ApplicationList { get; set; }
+        internal List<ApplicationModel> ApplicationList { get; } = [];
 
         /// <summary>
         /// 应用包语言信息
         /// </summary>
-        internal List<string> LanguageList { get; set; }
+        internal List<string> LanguageList { get; } = [];
     }
 }

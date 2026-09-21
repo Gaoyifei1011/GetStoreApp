@@ -255,9 +255,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void InitializeData()
         {
-            DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeList[0], DisplayMember = DoEngineDoString });
-            DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeList[1], DisplayMember = DoEngineBitsString });
-            DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeList[2], DisplayMember = DoEngineAria2String });
+            DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeCollection[0], DisplayMember = DoEngineDoString });
+            DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeCollection[1], DisplayMember = DoEngineBitsString });
+            DoEngineModeList.Add(new() { SelectedValue = DownloadOptionsService.DoEngineModeCollection[2], DisplayMember = DoEngineAria2String });
         }
 
         /// <summary>

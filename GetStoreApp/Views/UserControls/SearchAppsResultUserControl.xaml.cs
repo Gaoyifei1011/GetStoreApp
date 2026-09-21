@@ -118,10 +118,10 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 更新搜索应用结果
         /// </summary>
-        internal void UpdateSearchAppsResultData(List<SearchAppsResultModel> searchAppsResultList)
+        internal void UpdateSearchAppsResultData(ReadOnlyCollection<SearchAppsResultModel> searchAppsResultCollection)
         {
             SearchAppsResultCollection.Clear();
-            foreach (SearchAppsResultModel searchAppsResultItem in searchAppsResultList)
+            foreach (SearchAppsResultModel searchAppsResultItem in searchAppsResultCollection)
             {
                 SearchAppsResultCollection.Add(searchAppsResultItem);
             }
@@ -141,14 +141,14 @@ namespace GetStoreApp.Views.UserControls
             {
                 try
                 {
-                    if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[0]))
+                    if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeCollection[0]))
                     {
                         await Launcher.LaunchUriAsync(new("getstoreappwebview:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
                             {
                                 {"AppLink", appLink },
                             });
                     }
-                    else if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[1]))
+                    else if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeCollection[1]))
                     {
                         await Launcher.LaunchUriAsync(new(appLink));
                     }

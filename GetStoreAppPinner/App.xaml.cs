@@ -29,7 +29,7 @@ namespace GetStoreAppPinner
         private bool isDisposed;
         private readonly string PinningAppString = ResourceService.GetLocalized("Pinner/PinningApp");
         private ApplicationView applicationView;
-        private readonly Dictionary<UIContext, AppWindow> appWindowList = [];
+        private readonly Dictionary<UIContext, AppWindow> appWindowDict = [];
 
         #endregion 第一部分：常量、资源与状态字段
 
@@ -59,7 +59,7 @@ namespace GetStoreAppPinner
                 if (protocolActivatedEventArgs.Uri.AbsoluteUri is "getstoreapppinner:")
                 {
                     AppWindow appWindow = await AppWindow.TryCreateAsync();
-                    appWindowList.Add(appWindow.UIContext, appWindow);
+                    appWindowDict.TryAdd(appWindow.UIContext, appWindow);
                     appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
                     ElementCompositionPreview.SetAppWindowContent(appWindow, new PinnerPage(appWindow));
                     appWindow.Title = PinningAppString;
@@ -141,7 +141,7 @@ namespace GetStoreAppPinner
                     }
 
                     await appWindow.CloseAsync();
-                    appWindowList.Remove(appWindow.UIContext);
+                    appWindowDict.Remove(appWindow.UIContext);
                 }
                 else
                 {

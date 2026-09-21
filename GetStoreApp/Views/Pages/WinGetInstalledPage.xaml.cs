@@ -646,9 +646,9 @@ namespace GetStoreApp.Views.Pages
 
             if (packageCatalogReference is not null)
             {
-                (ConnectResult connectResult, FindPackagesResult findPackagesResult, List<InstalledAppsModel> upgradableAppsList) = await Task.Run(() =>
+                (ConnectResult connectResult, FindPackagesResult findPackagesResult, ReadOnlyCollection<InstalledAppsModel> upgradableAppsCollection) = await Task.Run(async () =>
                 {
-                    return InstalledAppsAsync(packageCatalogReference, appSortRuleKind, isIncrease);
+                    return await InstalledAppsAsync(packageCatalogReference, appSortRuleKind, isIncrease);
                 });
 
                 if (connectResult is not null && findPackagesResult is not null)
@@ -657,7 +657,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         if (findPackagesResult.Status is FindPackagesResultStatus.Ok)
                         {
-                            if (upgradableAppsList is null || upgradableAppsList.Count is 0)
+                            if (upgradableAppsCollection is null || upgradableAppsCollection.Count is 0)
                             {
                                 InstalledAppsResultKind = InstalledAppsResultKind.Failed;
                                 InstalledFailedContent = InstalledAppsEmptyDescriptionString;
@@ -667,7 +667,7 @@ namespace GetStoreApp.Views.Pages
                                 InstalledAppsLock.Enter();
                                 try
                                 {
-                                    InstalledAppsList.AddRange(upgradableAppsList);
+                                    InstalledAppsList.AddRange(upgradableAppsCollection);
 
                                     if (string.IsNullOrEmpty(SearchText))
                                     {
@@ -785,9 +785,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取已安装应用
         /// </summary>
-        private async Task<(ConnectResult, FindPackagesResult, List<InstalledAppsModel>)> InstalledAppsAsync(PackageCatalogReference packageCatalogReference, AppSortRuleKind appSortRuleKind, bool isIncrease)
+        private async Task<(ConnectResult, FindPackagesResult, ReadOnlyCollection<InstalledAppsModel>)> InstalledAppsAsync(PackageCatalogReference packageCatalogReference, AppSortRuleKind appSortRuleKind, bool isIncrease)
         {
-            (ConnectResult connectResult, FindPackagesResult findPackagesResult, List<InstalledAppsModel> installedAppsList) installedAppsResult = ValueTuple.Create<ConnectResult, FindPackagesResult, List<InstalledAppsModel>>(null, null, null);
+            (ConnectResult connectResult, FindPackagesResult findPackagesResult, ReadOnlyCollection<InstalledAppsModel> installedAppsCollection) installedAppsResult = ValueTuple.Create<ConnectResult, FindPackagesResult, ReadOnlyCollection<InstalledAppsModel>>(null, null, null);
 
             if (packageCatalogReference is not null)
             {
@@ -869,7 +869,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            installedAppsResult.installedAppsList = installedAppsList;
+                            installedAppsResult.installedAppsCollection = installedAppsList.AsReadOnly();
                         }
                     }
                 }

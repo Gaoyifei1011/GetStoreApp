@@ -295,11 +295,11 @@ namespace GetStoreApp.Views.UserControls
 
             try
             {
-                List<object> selectedItemsList = [.. QueryLinksResultListView.SelectedItems];
+                ReadOnlyCollection<object> selectedItemsCollection = QueryLinksResultListView.SelectedItems.AsReadOnly();
 
                 foreach (object item in QueryLinksResultListView.Items)
                 {
-                    if (selectedItemsList.Contains(item))
+                    if (selectedItemsCollection.Contains(item))
                     {
                         QueryLinksResultListView.SelectedItems.Remove(item);
                     }
@@ -324,10 +324,10 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private async void OnCopySelectedClicked(object sender, RoutedEventArgs args)
         {
-            List<QueryLinksResultModel> selectedQueryLinksResultList = GetSelectedItemsList(QueryLinksResultListView.SelectedItems);
+            ReadOnlyCollection<QueryLinksResultModel> selectedQueryLinksResultCollection = GetSelectedItemsCollection(QueryLinksResultListView.SelectedItems);
 
             // 内容为空时显示空提示对话框
-            if (selectedQueryLinksResultList is null || selectedQueryLinksResultList.Count is 0)
+            if (selectedQueryLinksResultCollection is null || selectedQueryLinksResultCollection.Count is 0)
             {
                 await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                 return;
@@ -338,7 +338,7 @@ namespace GetStoreApp.Views.UserControls
                 {
                     List<string> queryLinksCopyStringList = [];
 
-                    foreach (QueryLinksResultModel queryLinksResultItem in selectedQueryLinksResultList)
+                    foreach (QueryLinksResultModel queryLinksResultItem in selectedQueryLinksResultCollection)
                     {
                         queryLinksCopyStringList.Add(string.Format("[\n{0}\n{1}\n{2}\n]", queryLinksResultItem.FileName, queryLinksResultItem.FileLink, queryLinksResultItem.FileSize));
                     }
@@ -356,17 +356,17 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private async void OnCopySelectedLinkClicked(object sender, RoutedEventArgs args)
         {
-            List<QueryLinksResultModel> selectedQueryLinksResultList = GetSelectedItemsList(QueryLinksResultListView.SelectedItems);
+            ReadOnlyCollection<QueryLinksResultModel> selectedQueryLinksResultCollection = GetSelectedItemsCollection(QueryLinksResultListView.SelectedItems);
 
             // 内容为空时显示空提示对话框
-            if (selectedQueryLinksResultList is null || selectedQueryLinksResultList.Count is 0)
+            if (selectedQueryLinksResultCollection is null || selectedQueryLinksResultCollection.Count is 0)
             {
                 await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                 return;
             }
             else
             {
-                string queryLinksResultCopyString = await GetQueryLinksResultCopyStringAsync(selectedQueryLinksResultList);
+                string queryLinksResultCopyString = await GetQueryLinksResultCopyStringAsync(selectedQueryLinksResultCollection);
                 if (!string.IsNullOrEmpty(queryLinksResultCopyString))
                 {
                     bool copyResult = CopyPasteHelper.CopyTextToClipBoard(queryLinksResultCopyString);
@@ -385,7 +385,7 @@ namespace GetStoreApp.Views.UserControls
             if (!string.IsNullOrEmpty(downloadFolder))
             {
                 // 获取选中项
-                List<QueryLinksResultModel> selectedQueryLinksResultList = GetSelectedItemsList(QueryLinksResultListView.SelectedItems);
+                ReadOnlyCollection<QueryLinksResultModel> selectedQueryLinksResultCollection = GetSelectedItemsCollection(QueryLinksResultListView.SelectedItems);
 
                 // 退出多选模式
                 SelectionMode = ListViewSelectionMode.None;
@@ -408,7 +408,7 @@ namespace GetStoreApp.Views.UserControls
                 }
 
                 // 内容为空时显示空提示对话框
-                if (selectedQueryLinksResultList is null && selectedQueryLinksResultList.Count is 0)
+                if (selectedQueryLinksResultCollection is null && selectedQueryLinksResultCollection.Count is 0)
                 {
                     await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
                     return;
@@ -416,7 +416,7 @@ namespace GetStoreApp.Views.UserControls
                 else
                 {
                     // 下载选中项
-                    (bool isDownloadSuccessfully, List<DownloadSchedulerModel> downloadSchedulerList) = await CreateDownloadTaskAsync(downloadFolder, selectedQueryLinksResultList);
+                    bool isDownloadSuccessfully = await CreateDownloadTaskAsync(downloadFolder, selectedQueryLinksResultCollection);
 
                     // 显示下载任务创建成功消息
                     await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
@@ -469,7 +469,7 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 获取选中项
         /// </summary>
-        private List<QueryLinksResultModel> GetSelectedItemsList(IList<object> selectedItemsList)
+        private ReadOnlyCollection<QueryLinksResultModel> GetSelectedItemsCollection(IList<object> selectedItemsList)
         {
             if (selectedItemsList is null || selectedItemsList.Count is 0)
             {
@@ -497,7 +497,7 @@ namespace GetStoreApp.Views.UserControls
             {
                 queryLinksResultLock.Exit();
             }
-            return selectedQueryLinksResultList;
+            return selectedQueryLinksResultList.AsReadOnly();
         }
 
         /// <summary>
@@ -520,7 +520,7 @@ namespace GetStoreApp.Views.UserControls
                         downloadSchedulerList.AddRange(DownloadSchedulerService.DownloadFailedList);
                     }
 
-                    downloadSchedulerList.AddRange(DownloadStorageService.GetDownloadDataList());
+                    downloadSchedulerList.AddRange(DownloadStorageService.GetDownloadDataCollection());
                 }
                 catch (Exception e)
                 {
@@ -561,13 +561,13 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 获取选中项目的信息内容
         /// </summary>
-        private static async Task<string> GetQueryLinksResultCopyStringAsync(List<QueryLinksResultModel> selectedQueryLinksResultList)
+        private static async Task<string> GetQueryLinksResultCopyStringAsync(ReadOnlyCollection<QueryLinksResultModel> selectedQueryLinksResultCollection)
         {
             return await Task.Run(() =>
             {
                 List<string> queryLinksCopyStringList = [];
 
-                foreach (QueryLinksResultModel queryLinksResultItem in selectedQueryLinksResultList)
+                foreach (QueryLinksResultModel queryLinksResultItem in selectedQueryLinksResultCollection)
                 {
                     queryLinksCopyStringList.Add(string.Format("[\n{0}\n{1}\n{2}\n]", queryLinksResultItem.FileName, queryLinksResultItem.FileLink, queryLinksResultItem.FileSize));
                 }
@@ -614,40 +614,18 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 创建下载任务
         /// </summary>
-        private async Task<(bool, List<DownloadSchedulerModel>)> CreateDownloadTaskAsync(string downloadFolder, List<QueryLinksResultModel> queryLinksResultList)
+        private async Task<bool> CreateDownloadTaskAsync(string downloadFolder, ReadOnlyCollection<QueryLinksResultModel> queryLinksResultCollection)
         {
-            if (string.IsNullOrEmpty(downloadFolder) || queryLinksResultList is null || queryLinksResultList.Count is 0)
+            if (string.IsNullOrEmpty(downloadFolder) || queryLinksResultCollection is null || queryLinksResultCollection.Count is 0)
             {
                 return default;
             }
 
             return await Task.Run(() =>
             {
-                List<DownloadSchedulerModel> downloadSchedulerList = [];
                 bool isDownloadSuccessfully = false;
-                DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
 
-                try
-                {
-                    downloadSchedulerList.AddRange(DownloadSchedulerService.DownloadSchedulerList);
-
-                    if (!DownloadSchedulerService.IsDownloadingPageInitialized)
-                    {
-                        downloadSchedulerList.AddRange(DownloadSchedulerService.DownloadFailedList);
-                    }
-
-                    downloadSchedulerList.AddRange(DownloadStorageService.GetDownloadDataList());
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksResultUserControl), nameof(CreateDownloadTaskAsync), 1, e);
-                }
-                finally
-                {
-                    DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
-                }
-
-                foreach (QueryLinksResultModel queryLinksResultItem in queryLinksResultList)
+                foreach (QueryLinksResultModel queryLinksResultItem in queryLinksResultCollection)
                 {
                     string downloadFilePath = Path.Combine(downloadFolder, queryLinksResultItem.FileName);
 
@@ -678,14 +656,14 @@ namespace GetStoreApp.Views.UserControls
                         isDownloadSuccessfully = true;
                     }
                 }
-                return ValueTuple.Create(isDownloadSuccessfully, downloadSchedulerList);
+                return isDownloadSuccessfully;
             });
         }
 
         /// <summary>
         /// 更新查询链接结果
         /// </summary>
-        internal void UpdateQueryLinksResultData(AppInfoModel appInfo, bool isPackagedApp, List<QueryLinksResultModel> queryLinksResultList)
+        internal void UpdateQueryLinksResultData(AppInfoModel appInfo, bool isPackagedApp, ReadOnlyCollection<QueryLinksResultModel> queryLinksResultCollection)
         {
             IsAppInfoVisible = false;
             IsPackagedApp = isPackagedApp;
@@ -706,7 +684,7 @@ namespace GetStoreApp.Views.UserControls
 
             try
             {
-                foreach (QueryLinksResultModel queryLinksResultItem in queryLinksResultList)
+                foreach (QueryLinksResultModel queryLinksResultItem in queryLinksResultCollection)
                 {
                     queryLinksResultItem.SelectionMode = SelectionMode;
                     QueryLinksResultCollection.Add(queryLinksResultItem);
@@ -788,14 +766,14 @@ namespace GetStoreApp.Views.UserControls
             {
                 try
                 {
-                    if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[0]))
+                    if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeCollection[0]))
                     {
                         await Launcher.LaunchUriAsync(new("getstoreappwebview:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
                             {
                                 {"AppLink", string.Format("https://apps.microsoft.com/store/detail/{0}", AppInfo.ProductID) },
                             });
                     }
-                    else if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeList[1]))
+                    else if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeCollection[1]))
                     {
                         await Launcher.LaunchUriAsync(new(string.Format("https://apps.microsoft.com/store/detail/{0}", AppInfo.ProductID)));
                     }

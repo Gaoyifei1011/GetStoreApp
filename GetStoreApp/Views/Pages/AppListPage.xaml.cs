@@ -469,9 +469,9 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is PackageModel package)
             {
-                if (await GetAppInformationAsync(package) is AppInformation appInformation && MainWindow.Current.GetFrameContent() is AppManagerPage appManagerPage && Equals(appManagerPage.GetCurrentPageType(), appManagerPage.PageList[0]))
+                if (await GetAppInformationAsync(package) is AppInformation appInformation && MainWindow.Current.GetFrameContent() is AppManagerPage appManagerPage && Equals(appManagerPage.GetCurrentPageType(), appManagerPage.PageCollection[0]))
                 {
-                    appManagerPage.NavigateTo(appManagerPage.PageList[1], appInformation, true);
+                    appManagerPage.NavigateTo(appManagerPage.PageCollection[1], appInformation, true);
                 }
             }
         }
@@ -513,7 +513,7 @@ namespace GetStoreApp.Views.Pages
             {
                 AppManagerResultKind = AppManagerResultKind.Loading;
                 AppManagerCollection.Clear();
-                if (await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is List<PackageModel> filterSortPackageList)
+                if (await GetFilterSortPackageCollectionAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is ReadOnlyCollection<PackageModel> filterSortPackageList)
                 {
                     UpdateFilterPackageData(filterSortPackageList);
                 }
@@ -530,9 +530,9 @@ namespace GetStoreApp.Views.Pages
             {
                 AppManagerResultKind = AppManagerResultKind.Loading;
                 AppManagerCollection.Clear();
-                if (await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is List<PackageModel> filterSortPackageList)
+                if (await GetFilterSortPackageCollectionAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is ReadOnlyCollection<PackageModel> filterSortPackageCollection)
                 {
-                    UpdateFilterPackageData(filterSortPackageList);
+                    UpdateFilterPackageData(filterSortPackageCollection);
                 }
             }
         }
@@ -548,9 +548,9 @@ namespace GetStoreApp.Views.Pages
                 IsIncrease = increase;
                 AppManagerResultKind = AppManagerResultKind.Loading;
                 AppManagerCollection.Clear();
-                if (await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is List<PackageModel> filterSortPackageList)
+                if (await GetFilterSortPackageCollectionAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is ReadOnlyCollection<PackageModel> filterSortPackageCollection)
                 {
-                    UpdateFilterPackageData(filterSortPackageList);
+                    UpdateFilterPackageData(filterSortPackageCollection);
                 }
             }
         }
@@ -567,9 +567,9 @@ namespace GetStoreApp.Views.Pages
 
                 AppManagerResultKind = AppManagerResultKind.Loading;
                 AppManagerCollection.Clear();
-                if (await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is List<PackageModel> filterSortPackageList)
+                if (await GetFilterSortPackageCollectionAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is ReadOnlyCollection<PackageModel> filterSortPackageCollection)
                 {
-                    UpdateFilterPackageData(filterSortPackageList);
+                    UpdateFilterPackageData(filterSortPackageCollection);
                 }
             }
         }
@@ -635,9 +635,9 @@ namespace GetStoreApp.Views.Pages
             {
                 AppManagerResultKind = AppManagerResultKind.Loading;
                 AppManagerCollection.Clear();
-                if (await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is List<PackageModel> filterSortPackageList)
+                if (await GetFilterSortPackageCollectionAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is ReadOnlyCollection<PackageModel> filterSortPackageCollection)
                 {
-                    UpdateFilterPackageData(filterSortPackageList);
+                    UpdateFilterPackageData(filterSortPackageCollection);
                 }
             }
 
@@ -703,12 +703,12 @@ namespace GetStoreApp.Views.Pages
                 AppManagerList.Clear();
                 AppManagerCollection.Clear();
 
-                if (await GetPackageListAsync() is List<PackageModel> packageList)
+                if (await GetPackageCollectionAsync() is ReadOnlyCollection<PackageModel> packageCollection)
                 {
-                    AppManagerList.AddRange(packageList);
-                    if (await GetFilterSortPackageListAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is List<PackageModel> filterSortPackageList)
+                    AppManagerList.AddRange(packageCollection);
+                    if (await GetFilterSortPackageCollectionAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is ReadOnlyCollection<PackageModel> filterSortPackageCollection)
                     {
-                        UpdateFilterPackageData(filterSortPackageList);
+                        UpdateFilterPackageData(filterSortPackageCollection);
                     }
                 }
             }
@@ -841,7 +841,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取系统应用列表
         /// </summary>
-        private async Task<List<PackageModel>> GetPackageListAsync()
+        private async Task<ReadOnlyCollection<PackageModel>> GetPackageCollectionAsync()
         {
             return await Task.Run(() =>
             {
@@ -869,10 +869,10 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(GetPackageListAsync), 1, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(GetPackageCollectionAsync), 1, e);
                 }
 
-                return packageList;
+                return packageList.AsReadOnly();
             });
         }
 
@@ -1527,7 +1527,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取按条件过滤后的应用数据
         /// </summary>
-        private async Task<List<PackageModel>> GetFilterSortPackageListAsync(List<PackageModel> appManagerList, bool isAppFramework, bool isStoreSignatureSelected, bool isSystemSignatureSelected, bool isEnterpriseSignatureSelected, bool isDeveloperSignatureSelected, bool isNoneSignatureSelected, string searchText, AppSortRuleKind appSortRuleKind, bool isIncrease)
+        private async Task<ReadOnlyCollection<PackageModel>> GetFilterSortPackageCollectionAsync(List<PackageModel> appManagerList, bool isAppFramework, bool isStoreSignatureSelected, bool isSystemSignatureSelected, bool isEnterpriseSignatureSelected, bool isDeveloperSignatureSelected, bool isNoneSignatureSelected, string searchText, AppSortRuleKind appSortRuleKind, bool isIncrease)
         {
             if (appManagerList is null || appManagerList.Count is 0)
             {
@@ -1647,21 +1647,21 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(GetFilterSortPackageListAsync), 1, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppListPage), nameof(GetFilterSortPackageCollectionAsync), 1, e);
                 }
 
-                return filterSortPackageList;
+                return filterSortPackageList.AsReadOnly();
             });
         }
 
         /// <summary>
         /// 更新过滤后的数据
         /// </summary>
-        private void UpdateFilterPackageData(List<PackageModel> filterSortPackageList)
+        private void UpdateFilterPackageData(ReadOnlyCollection<PackageModel> filterSortPackageCollection)
         {
-            if (filterSortPackageList is not null && filterSortPackageList.Count > 0)
+            if (filterSortPackageCollection is not null && filterSortPackageCollection.Count > 0)
             {
-                foreach (PackageModel packageItem in filterSortPackageList)
+                foreach (PackageModel packageItem in filterSortPackageCollection)
                 {
                     AppManagerCollection.Add(packageItem);
                 }

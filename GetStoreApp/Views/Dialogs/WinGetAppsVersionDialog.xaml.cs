@@ -38,7 +38,7 @@ namespace GetStoreApp.Views.Dialogs
 
         private object WinGetApps { get; }
 
-        internal List<Type> PageList { get; } = [typeof(WinGetAppsVersionInfoPage), typeof(WinGetAppsVersionOptionsPage)];
+        internal ReadOnlyCollection<Type> PageCollection { get; } = [typeof(WinGetAppsVersionInfoPage), typeof(WinGetAppsVersionOptionsPage)];
 
         private ObservableCollection<ContentLinkInfo> BreadCollection { get; } = [];
 
@@ -67,7 +67,7 @@ namespace GetStoreApp.Views.Dialogs
             // 第一次导航
             if (GetCurrentPageType() is null)
             {
-                NavigateTo(PageList[0], new List<object>() { WinGetPage, this, WinGetApps });
+                NavigateTo(PageCollection[0], new ReadOnlyCollection<object>([WinGetPage, this, WinGetApps]));
             }
         }
 
@@ -76,9 +76,9 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private void OnBackClicked(object sender, RoutedEventArgs args)
         {
-            if (BreadCollection.Count is 2 && Equals(GetCurrentPageType(), PageList[1]))
+            if (BreadCollection.Count is 2 && Equals(GetCurrentPageType(), PageCollection[1]))
             {
-                NavigateTo(PageList[0], null, false);
+                NavigateTo(PageCollection[0], null, false);
             }
         }
 
@@ -90,7 +90,7 @@ namespace GetStoreApp.Views.Dialogs
         {
             if (args.Item is ContentLinkInfo contentLinkInfo && BreadCollection.Count is 2 && string.Equals(contentLinkInfo.SecondaryText, BreadCollection[0].SecondaryText))
             {
-                NavigateTo(PageList[0], null, false);
+                NavigateTo(PageCollection[0], null, false);
             }
         }
 
@@ -99,7 +99,7 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            if (BreadCollection.Count is 0 && Equals(GetCurrentPageType(), PageList[0]))
+            if (BreadCollection.Count is 0 && Equals(GetCurrentPageType(), PageCollection[0]))
             {
                 BreadCollection.Add(new()
                 {
@@ -107,9 +107,9 @@ namespace GetStoreApp.Views.Dialogs
                     SecondaryText = "AppVersionInformation"
                 });
             }
-            else if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageList[1]))
+            else if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageCollection[1]))
             {
-                if (args.Parameter is List<object> argsList && argsList.Count is 3 && argsList[2] is PackageOperationModel packageOperation)
+                if (args.Parameter is ReadOnlyCollection<object> argsCollection && argsCollection.Count is 3 && argsCollection[2] is PackageOperationModel packageOperation)
                 {
                     switch (packageOperation.PackageOperationKind)
                     {
@@ -152,7 +152,7 @@ namespace GetStoreApp.Views.Dialogs
                     }
                 }
             }
-            else if (BreadCollection.Count is 2 && Equals(GetCurrentPageType(), PageList[0]))
+            else if (BreadCollection.Count is 2 && Equals(GetCurrentPageType(), PageCollection[0]))
             {
                 BreadCollection.RemoveAt(1);
             }

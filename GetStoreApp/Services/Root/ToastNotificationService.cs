@@ -74,10 +74,10 @@ namespace GetStoreApp.Services.Root
                 AppLaunchArguments appLaunchArguments = new()
                 {
                     AppLaunchKind = AppLaunchKind.ToastNotification,
-                    IsLaunched = isLaunched,
-                    SubParameterList = ["OpenApp"]
+                    IsLaunched = isLaunched
                 };
 
+                appLaunchArguments.SubParameterList.Add("OpenApp");
                 DesktopLaunchService.SignalAppLaunchActivated(appLaunchArguments);
             }
             else if (notificationArgs.Contains("ViewDownloadPage"))
@@ -85,10 +85,10 @@ namespace GetStoreApp.Services.Root
                 AppLaunchArguments appLaunchArguments = new()
                 {
                     AppLaunchKind = AppLaunchKind.ToastNotification,
-                    IsLaunched = isLaunched,
-                    SubParameterList = ["ViewDownloadPage"]
+                    IsLaunched = isLaunched
                 };
 
+                appLaunchArguments.SubParameterList.Add("ViewDownloadPage");
                 DesktopLaunchService.SignalAppLaunchActivated(appLaunchArguments);
             }
         }

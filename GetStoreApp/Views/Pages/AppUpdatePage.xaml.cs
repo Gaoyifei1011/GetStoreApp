@@ -260,14 +260,14 @@ namespace GetStoreApp.Views.Pages
                 if (!IsCheckingUpdate)
                 {
                     IsCheckingUpdate = true;
-                    if (await GetAppUpdateListAsync(AppUpdateList) is List<AppUpdateModel> appUpdateList)
+                    if (await GetAppUpdateCollectionAsync(AppUpdateList) is ReadOnlyCollection<AppUpdateModel> appUpdateCollection)
                     {
                         // 只添加未有的项
                         AppUpdateLock.Enter();
 
                         try
                         {
-                            AppUpdateList.AddRange(appUpdateList);
+                            AppUpdateList.AddRange(appUpdateCollection);
                             AppUpdateList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
                             AppUpdateCollection.Clear();
                             foreach (AppUpdateModel appUpdateItem in AppUpdateList)
@@ -567,7 +567,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取应用更新信息
         /// </summary>
-        private async Task<List<AppUpdateModel>> GetAppUpdateListAsync(List<AppUpdateModel> appUpdateList)
+        private async Task<ReadOnlyCollection<AppUpdateModel>> GetAppUpdateCollectionAsync(List<AppUpdateModel> appUpdateList)
         {
             if (appUpdateList is null || appUpdateList.Count is 0)
             {
@@ -663,10 +663,10 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppUpdatePage), nameof(GetAppUpdateListAsync), 1, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppUpdatePage), nameof(GetAppUpdateCollectionAsync), 1, e);
                 }
 
-                return appUpdateList;
+                return appUpdateList.AsReadOnly();
             });
         }
 

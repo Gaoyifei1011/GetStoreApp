@@ -5,6 +5,7 @@ using Microsoft.Management.Deployment;
 using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -30,7 +31,7 @@ namespace GetStoreApp.Services.Settings
 
         internal static string CurrentWinGetSource { get; private set; }
 
-        internal static List<string> WinGetSourceList { get; } = ["BuiltinApp", "AppInstaller"];
+        internal static ReadOnlyCollection<string> WinGetSourceCollection { get; } = ["BuiltinApp", "AppInstaller"];
 
         internal static List<KeyValuePair<string, PredefinedPackageCatalog>> PredefinedPackageCatalogList { get; } = [];
 
@@ -40,9 +41,9 @@ namespace GetStoreApp.Services.Settings
         [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
         internal static async Task InitializeWinGetConfigAsync()
         {
-            defaultWinGetSource = WinGetSourceList[0];
+            defaultWinGetSource = WinGetSourceCollection[0];
             WinGetSource = GetWinGetSource();
-            CurrentWinGetSource = Equals(WinGetSource, WinGetSourceList[0]) ? WinGetSource : WinGetFactoryHelper.IsExisted() ? WinGetSource : defaultWinGetSource;
+            CurrentWinGetSource = Equals(WinGetSource, WinGetSourceCollection[0]) ? WinGetSource : WinGetFactoryHelper.IsExisted() ? WinGetSource : defaultWinGetSource;
             winGetDataSourceContainer = localSettingsContainer.CreateContainer(WinGetDataSource, ApplicationDataCreateDisposition.Always);
             DefaultDownloadFolder = (await ApplicationData.GetDefault().LocalCacheFolder.CreateFolderAsync("WinGet", Windows.Storage.CreationCollisionOption.OpenIfExists)).Path;
 
@@ -126,10 +127,27 @@ namespace GetStoreApp.Services.Settings
             if (string.IsNullOrEmpty(winGetSource))
             {
                 SetWinGetSource(defaultWinGetSource);
-                return WinGetSourceList.Find(item => string.Equals(item, defaultWinGetSource, StringComparison.OrdinalIgnoreCase));
+                string defaultSource = default;
+                foreach (string winGetSourceItem in WinGetSourceCollection)
+                {
+                    if (string.Equals(winGetSourceItem, defaultWinGetSource, StringComparison.OrdinalIgnoreCase))
+                    {
+                        defaultSource = winGetSourceItem;
+                        break;
+                    }
+                }
+                return defaultSource;
             }
 
-            string selectedWinGetSource = WinGetSourceList.Find(item => string.Equals(item, winGetSource, StringComparison.OrdinalIgnoreCase));
+            string selectedWinGetSource = default;
+            foreach (string winGetSourceItem in WinGetSourceCollection)
+            {
+                if (string.Equals(winGetSourceItem, winGetSource, StringComparison.OrdinalIgnoreCase))
+                {
+                    selectedWinGetSource = winGetSourceItem;
+                    break;
+                }
+            }
             return string.IsNullOrEmpty(selectedWinGetSource) ? defaultWinGetSource : selectedWinGetSource;
         }
 

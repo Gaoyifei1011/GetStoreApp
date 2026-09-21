@@ -34,7 +34,7 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        internal List<Type> PageList { get; } = [typeof(SettingsItemPage), typeof(SettingsWinGetSourcePage), typeof(SettingsPackageVolumePage)];
+        internal ReadOnlyCollection<Type> PageCollection { get; } = [typeof(SettingsItemPage), typeof(SettingsWinGetSourcePage), typeof(SettingsPackageVolumePage)];
 
         internal ObservableCollection<ContentLinkInfo> BreadCollection { get; } = [];
 
@@ -62,54 +62,70 @@ namespace GetStoreApp.Views.Pages
             if (args.Parameter is AppNaviagtionArgs.WinGetDataSource)
             {
                 // 导航到 WinGet 数据源配置页面
-                if (!Equals(GetCurrentPageType(), PageList[1]))
+                if (!Equals(GetCurrentPageType(), PageCollection[1]))
                 {
-                    NavigateTo(PageList[1]);
+                    NavigateTo(PageCollection[1]);
                 }
             }
             else if (args.Parameter is AppNaviagtionArgs.PackageVolume)
             {
                 // 导航到应用包存储卷配置页面
-                if (!Equals(GetCurrentPageType(), PageList[2]))
+                if (!Equals(GetCurrentPageType(), PageCollection[2]))
                 {
-                    NavigateTo(PageList[2]);
+                    NavigateTo(PageCollection[2]);
                 }
             }
             else if (args.Parameter is AppNaviagtionArgs.Download)
             {
-                if (!Equals(GetCurrentPageType(), PageList[0]))
+                if (!Equals(GetCurrentPageType(), PageCollection[0]))
                 {
-                    NavigateTo(PageList[0], args.Parameter);
+                    NavigateTo(PageCollection[0], args.Parameter);
                 }
-                else if (GetFrameContent() is SettingsItemPage itemPage && !Equals(itemPage.GetCurrentPageType(), itemPage.PageList[3]))
+                else if (GetFrameContent() is SettingsItemPage itemPage && !Equals(itemPage.GetCurrentPageType(), itemPage.PageCollection[3]))
                 {
                     if (itemPage.IsLoaded)
                     {
-                        int currentIndex = itemPage.PageList.FindIndex(item => Equals(item, itemPage.GetCurrentPageType()));
-                        itemPage.NavigateTo(itemPage.PageList[3], null, 3 > currentIndex);
+                        int currentIndex = -1;
+                        for (int i = 0; i < itemPage.PageCollection.Count; i++)
+                        {
+                            if (Equals(itemPage.PageCollection[i], itemPage.GetCurrentPageType()))
+                            {
+                                currentIndex = i;
+                                break;
+                            }
+                        }
+                        itemPage.NavigateTo(itemPage.PageCollection[3], null, 3 > currentIndex);
                     }
                     else
                     {
-                        itemPage.SetNavigateContent(true, itemPage.PageList[3]);
+                        itemPage.SetNavigateContent(true, itemPage.PageCollection[3]);
                     }
                 }
             }
             else if (args.Parameter is AppNaviagtionArgs.AppInstall)
             {
-                if (!Equals(GetCurrentPageType(), PageList[0]))
+                if (!Equals(GetCurrentPageType(), PageCollection[0]))
                 {
-                    NavigateTo(PageList[0], args.Parameter);
+                    NavigateTo(PageCollection[0], args.Parameter);
                 }
-                else if (GetFrameContent() is SettingsItemPage itemPage && !Equals(itemPage.GetCurrentPageType(), itemPage.PageList[4]))
+                else if (GetFrameContent() is SettingsItemPage itemPage && !Equals(itemPage.GetCurrentPageType(), itemPage.PageCollection[4]))
                 {
                     if (itemPage.IsLoaded)
                     {
-                        int currentIndex = itemPage.PageList.FindIndex(item => Equals(item, itemPage.GetCurrentPageType()));
-                        itemPage.NavigateTo(itemPage.PageList[4], null, 4 > currentIndex);
+                        int currentIndex = -1;
+                        for (int i = 0; i < itemPage.PageCollection.Count; i++)
+                        {
+                            if (Equals(itemPage.PageCollection[i], itemPage.GetCurrentPageType()))
+                            {
+                                currentIndex = i;
+                                break;
+                            }
+                        }
+                        itemPage.NavigateTo(itemPage.PageCollection[4], null, 4 > currentIndex);
                     }
                     else
                     {
-                        itemPage.SetNavigateContent(true, itemPage.PageList[4]);
+                        itemPage.SetNavigateContent(true, itemPage.PageCollection[4]);
                     }
                 }
             }
@@ -118,7 +134,7 @@ namespace GetStoreApp.Views.Pages
                 // 第一次导航
                 if (GetCurrentPageType() is null)
                 {
-                    NavigateTo(PageList[0]);
+                    NavigateTo(PageCollection[0]);
                 }
             }
 
@@ -140,7 +156,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Item is ContentLinkInfo contentLinkInfo && BreadCollection.Count is 2 && string.Equals(contentLinkInfo.SecondaryText, BreadCollection[0].SecondaryText))
             {
-                NavigateTo(PageList[0], null, false);
+                NavigateTo(PageCollection[0], null, false);
             }
         }
 
@@ -151,7 +167,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (BreadCollection.Count is 0)
             {
-                if (Equals(GetCurrentPageType(), PageList[0]))
+                if (Equals(GetCurrentPageType(), PageCollection[0]))
                 {
                     BreadCollection.Add(new()
                     {
@@ -159,7 +175,7 @@ namespace GetStoreApp.Views.Pages
                         SecondaryText = "Settings"
                     });
                 }
-                else if (Equals(GetCurrentPageType(), PageList[1]))
+                else if (Equals(GetCurrentPageType(), PageCollection[1]))
                 {
                     BreadCollection.Add(new()
                     {
@@ -172,7 +188,7 @@ namespace GetStoreApp.Views.Pages
                         SecondaryText = "WinGetSourceConfiguration"
                     });
                 }
-                else if (Equals(GetCurrentPageType(), PageList[2]))
+                else if (Equals(GetCurrentPageType(), PageCollection[2]))
                 {
                     BreadCollection.Add(new()
                     {
@@ -187,7 +203,7 @@ namespace GetStoreApp.Views.Pages
                 }
             }
 
-            if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageList[1]))
+            if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageCollection[1]))
             {
                 BreadCollection.Add(new()
                 {
@@ -195,7 +211,7 @@ namespace GetStoreApp.Views.Pages
                     SecondaryText = "WinGetSourceConfiguration"
                 });
             }
-            else if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageList[2]))
+            else if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageCollection[2]))
             {
                 BreadCollection.Add(new()
                 {
@@ -203,7 +219,7 @@ namespace GetStoreApp.Views.Pages
                     SecondaryText = "PackageVolumeConfiguration"
                 });
             }
-            else if (BreadCollection.Count is 2 && Equals(GetCurrentPageType(), PageList[0]))
+            else if (BreadCollection.Count is 2 && Equals(GetCurrentPageType(), PageCollection[0]))
             {
                 BreadCollection.RemoveAt(1);
             }

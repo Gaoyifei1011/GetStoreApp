@@ -47,11 +47,11 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
+                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[0]))
                 {
                     return new PackageManager();
                 }
-                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[1]))
+                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[1]))
                 {
                     return Ole32Library.CoCreateInstance(WINGET_OUTOFPROC_COM_CLSID_PackageManager, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out nint obj) is 0 ? PackageManager.FromAbi(obj) : null;
                 }
@@ -74,11 +74,11 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
+                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[0]))
                 {
                     return new FindPackagesOptions();
                 }
-                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[1]))
+                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[1]))
                 {
                     return Ole32Library.CoCreateInstance(WINGET_OUTOFPROC_COM_CLSID_FindPackagesOptions, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out nint obj) is 0 ? FindPackagesOptions.FromAbi(obj) : null;
                 }
@@ -101,11 +101,11 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
+                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[0]))
                 {
                     return new CreateCompositePackageCatalogOptions();
                 }
-                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[1]))
+                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[1]))
                 {
                     return Ole32Library.CoCreateInstance(WINGET_OUTOFPROC_COM_CLSID_CreateCompositePackageCatalogOptions, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out nint obj) is 0 ? CreateCompositePackageCatalogOptions.FromAbi(obj) : null;
                 }
@@ -128,11 +128,11 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
+                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[0]))
                 {
                     return new InstallOptions();
                 }
-                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[1]))
+                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[1]))
                 {
                     return Ole32Library.CoCreateInstance(WINGET_OUTOFPROC_COM_CLSID_InstallOptions, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out nint obj) is 0 ? InstallOptions.FromAbi(obj) : null;
                 }
@@ -155,11 +155,11 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
+                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[0]))
                 {
                     return new UninstallOptions();
                 }
-                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[1]))
+                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[1]))
                 {
                     return Ole32Library.CoCreateInstance(WINGET_OUTOFPROC_COM_CLSID_UninstallOptions, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out nint obj) is 0 ? UninstallOptions.FromAbi(obj) : null;
                 }
@@ -182,11 +182,11 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
+                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[0]))
                 {
                     return new PackageMatchFilter();
                 }
-                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[1]))
+                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[1]))
                 {
                     return Ole32Library.CoCreateInstance(WINGET_OUTOFPROC_COM_CLSID_PackageMatchFilter, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out nint obj) is 0 ? PackageMatchFilter.FromAbi(obj) : null;
                 }
@@ -209,11 +209,11 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
+                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[0]))
                 {
                     return new DownloadOptions();
                 }
-                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[1]))
+                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[1]))
                 {
                     return Ole32Library.CoCreateInstance(WINGET_OUTOFPROC_COM_CLSID_DownloadOptions, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out nint obj) is 0 ? DownloadOptions.FromAbi(obj) : null;
                 }
@@ -236,11 +236,11 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
+                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[0]))
                 {
                     return new RepairOptions();
                 }
-                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[1]))
+                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[1]))
                 {
                     return Ole32Library.CoCreateInstance(WINGET_OUTOFPROC_COM_CLSID_RepairOptions, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out nint obj) is 0 ? RepairOptions.FromAbi(obj) : null;
                 }
@@ -263,11 +263,11 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
+                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[0]))
                 {
                     return new AddPackageCatalogOptions();
                 }
-                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[1]))
+                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[1]))
                 {
                     return Ole32Library.CoCreateInstance(WINGET_OUTOFPROC_COM_CLSID_AddPackageCatalogOptions, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out nint obj) is 0 ? AddPackageCatalogOptions.FromAbi(obj) : null;
                 }
@@ -290,11 +290,11 @@ namespace GetStoreApp.Helpers.WinGet
         {
             try
             {
-                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[0]))
+                if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[0]))
                 {
                     return new RemovePackageCatalogOptions();
                 }
-                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceList[1]))
+                else if (Equals(WinGetConfigService.CurrentWinGetSource, WinGetConfigService.WinGetSourceCollection[1]))
                 {
                     return Ole32Library.CoCreateInstance(WINGET_OUTOFPROC_COM_CLSID_RemovePackageCatalogOptions, nint.Zero, CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION, IID.IID_IUnknown, out nint obj) is 0 ? RemovePackageCatalogOptions.FromAbi(obj) : null;
                 }

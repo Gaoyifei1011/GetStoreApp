@@ -557,14 +557,14 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void InitializeData()
         {
-            QueryLinksModeList.Add(new() { SelectedValue = QueryLinksModeService.QueryLinksModeList[0], DisplayMember = QueryLinksModeOfficialString });
-            QueryLinksModeList.Add(new() { SelectedValue = QueryLinksModeService.QueryLinksModeList[1], DisplayMember = QueryLinksModeThirdPartyString });
+            QueryLinksModeList.Add(new() { SelectedValue = QueryLinksModeService.QueryLinksModeCollection[0], DisplayMember = QueryLinksModeOfficialString });
+            QueryLinksModeList.Add(new() { SelectedValue = QueryLinksModeService.QueryLinksModeCollection[1], DisplayMember = QueryLinksModeThirdPartyString });
 
-            AppLinkOpenModeList.Add(new() { SelectedValue = AppLinkOpenModeService.AppLinkOpenModeList[0], DisplayMember = AppLinkOpenModeBuiltInAppString });
-            AppLinkOpenModeList.Add(new() { SelectedValue = AppLinkOpenModeService.AppLinkOpenModeList[1], DisplayMember = AppLinkOpenModeSystemBrowserString });
+            AppLinkOpenModeList.Add(new() { SelectedValue = AppLinkOpenModeService.AppLinkOpenModeCollection[0], DisplayMember = AppLinkOpenModeBuiltInAppString });
+            AppLinkOpenModeList.Add(new() { SelectedValue = AppLinkOpenModeService.AppLinkOpenModeCollection[1], DisplayMember = AppLinkOpenModeSystemBrowserString });
 
-            InstallModeList.Add(new() { SelectedValue = InstallModeService.InstallModeList[0], DisplayMember = InstallModeAppInstallString });
-            InstallModeList.Add(new() { SelectedValue = InstallModeService.InstallModeList[1], DisplayMember = InstallModeCodeInstallString });
+            InstallModeList.Add(new() { SelectedValue = InstallModeService.InstallModeCollection[0], DisplayMember = InstallModeAppInstallString });
+            InstallModeList.Add(new() { SelectedValue = InstallModeService.InstallModeCollection[1], DisplayMember = InstallModeCodeInstallString });
 
             AppUpdateStatusList.Add(new() { SelectedValue = "AppUpdateEnabled", DisplayMember = AppUpdateEnabledString });
             AppUpdateStatusList.Add(new() { SelectedValue = "AppUpdatePaused", DisplayMember = AppUpdatePausedString });

@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace GetStoreApp.Services.Settings
@@ -30,7 +30,7 @@ namespace GetStoreApp.Services.Settings
             }
         }
 
-        internal static List<string> AppLinkOpenModeList { get; } = ["BuiltInApp", "SystemBrowser"];
+        internal static ReadOnlyCollection<string> AppLinkOpenModeCollection { get; } = ["BuiltInApp", "SystemBrowser"];
 
         internal static event PropertyChangedEventHandler PropertyChanged;
 
@@ -39,7 +39,14 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         internal static void InitializeAppLinkOpenMode()
         {
-            defaultAppLinkOpenMode = AppLinkOpenModeList.Find(item => item is "BuiltInApp");
+            foreach (string appLinkOpenMode in AppLinkOpenModeCollection)
+            {
+                if (appLinkOpenMode is "BuiltInApp")
+                {
+                    defaultAppLinkOpenMode = appLinkOpenMode;
+                    break;
+                }
+            }
             AppLinkOpenMode = GetAppLinkOpenMode();
         }
 
@@ -56,7 +63,16 @@ namespace GetStoreApp.Services.Settings
                 return defaultAppLinkOpenMode;
             }
 
-            string selectedAppLinkOpenMode = AppLinkOpenModeList.Find(item => string.Equals(item, appLinkOpenMode, StringComparison.OrdinalIgnoreCase));
+            string selectedAppLinkOpenMode = null;
+            foreach (string appLinkOpenModeItem in AppLinkOpenModeCollection)
+            {
+                if (string.Equals(appLinkOpenModeItem, appLinkOpenMode, StringComparison.OrdinalIgnoreCase))
+                {
+                    selectedAppLinkOpenMode = appLinkOpenModeItem;
+                    break;
+                }
+            }
+
             return selectedAppLinkOpenMode is null ? defaultAppLinkOpenMode : selectedAppLinkOpenMode;
         }
 

@@ -21,6 +21,7 @@ using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
@@ -530,13 +531,13 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private async void OnCoreProcessFailed(WebView2 sender, CoreWebView2ProcessFailedEventArgs args)
         {
-            Dictionary<string, string> logInformationDict = GetLogInformationDict(args.ProcessDescription, args.Reason, args.ExitCode, args.ProcessDescription);
+            ReadOnlyDictionary<string, string> logInformationDict = GetLogInformationDict(args.ProcessDescription, args.Reason, args.ExitCode, args.ProcessDescription);
             if (logInformationDict is null)
             {
                 return;
             }
 
-            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppWebView), nameof(WebViewWindow), nameof(OnCoreProcessFailed), 3, logInformationDict);
+            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppWebView), nameof(WebViewWindow), nameof(OnCoreProcessFailed), 3, logInformationDict.AsReadOnly());
             await ShowDialogAsync(new ProcessFailedDialog());
             (Application.Current as WebViewApp).Dispose();
         }
@@ -729,27 +730,27 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void SetSystemBackdrop()
         {
-            if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[1]))
+            if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropCollection[1]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(MicaKind.Base);
                 VisualStateManager.GoToState(WebViewPage, "BackgroundTransparent", false);
             }
-            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[2]))
+            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropCollection[2]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(MicaKind.BaseAlt);
                 VisualStateManager.GoToState(WebViewPage, "BackgroundTransparent", false);
             }
-            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[3]))
+            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropCollection[3]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Default);
                 VisualStateManager.GoToState(WebViewPage, "BackgroundTransparent", false);
             }
-            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[4]))
+            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropCollection[4]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Base);
                 VisualStateManager.GoToState(WebViewPage, "BackgroundTransparent", false);
             }
-            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[5]))
+            else if (string.Equals(BackdropService.AppBackdrop, BackdropService.BackdropCollection[5]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Thin);
                 VisualStateManager.GoToState(WebViewPage, "BackgroundTransparent", false);
@@ -1066,15 +1067,15 @@ namespace GetStoreAppWebView.Views.Windows
         /// <summary>
         /// 获取异常信息
         /// </summary>
-        private Dictionary<string, string> GetLogInformationDict(string processFailedKind, CoreWebView2ProcessFailedReason reason, int exitCode, string processDescription)
+        private ReadOnlyDictionary<string, string> GetLogInformationDict(string processFailedKind, CoreWebView2ProcessFailedReason reason, int exitCode, string processDescription)
         {
-            return new()
+            return new Dictionary<string, string>()
             {
                 { "Process failed kind", processFailedKind },
                 { "Reason", Convert.ToString(reason) },
                 { "Exit code", Convert.ToString(exitCode) },
                 { "Process description", processDescription },
-            };
+            }.AsReadOnly();
         }
 
         #endregion 第五部分：数据操作与业务逻辑

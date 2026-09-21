@@ -101,11 +101,11 @@ namespace GetStoreApp.Extensions.DataType.Classes
         /// <summary>
         /// 应用入口信息
         /// </summary>
-        internal List<AppListEntryModel> AppListEntryList { get; set; } = [];
+        internal List<AppListEntryModel> AppListEntryList { get; } = [];
 
         /// <summary>
         /// 应用依赖信息
         /// </summary>
-        internal List<PackageModel> DependenciesList { get; set; } = [];
+        internal List<PackageModel> DependenciesList { get; } = [];
     }
 }

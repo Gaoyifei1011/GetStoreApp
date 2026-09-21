@@ -8,16 +8,16 @@ namespace GetStoreAppInstaller.Extensions.DataType.Classes
         /// <summary>
         /// 应用信息
         /// </summary>
-        internal Dictionary<ProcessorArchitecture, string> ApplicationDict { get; set; }
+        internal Dictionary<ProcessorArchitecture, string> ApplicationDict { get; } = [];
 
         /// <summary>
         /// 语言信息
         /// </summary>
-        internal List<string> LanguageList { get; set; }
+        internal List<string> LanguageList { get; } = [];
 
         /// <summary>
         /// 规模信息
         /// </summary>
-        internal List<string> ScaleResourceList { get; set; }
+        internal List<string> ScaleResourceList { get; } = [];
     }
 }

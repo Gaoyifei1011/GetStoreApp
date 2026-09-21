@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace GetStoreApp.Helpers.Root
 {
@@ -8,12 +9,12 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     internal static class SpeedHelper
     {
-        private static readonly Dictionary<string, int> speedDict = new()
+        private static readonly ReadOnlyDictionary<string, int> speedDict = new Dictionary<string, int>
         {
-            { "GB/s",1024*1024*1024 },
-            { "MB/s",1024*1024 },
-            { "KB/s",1024 }
-        };
+            { "GB/s", 1024 * 1024 * 1024 },
+            { "MB/s", 1024 * 1024 },
+            { "KB/s", 1024 }
+        }.AsReadOnly();
 
         /// <summary>
         /// 下载速度文字显示格式化

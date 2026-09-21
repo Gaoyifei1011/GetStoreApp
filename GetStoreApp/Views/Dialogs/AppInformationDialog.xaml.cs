@@ -76,9 +76,9 @@ namespace GetStoreApp.Views.Dialogs
         private async void OnOpened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
             IsLoadCompleted = false;
-            if (await GetDependencyInformationListAsync([fileVersionProperty]) is List<ContentLinkInfo> dependencyInformationList && dependencyInformationList.Count > 0)
+            if (await GetDependencyInformationCollectionAsync([fileVersionProperty]) is ReadOnlyCollection<ContentLinkInfo> dependencyInformationCollection && dependencyInformationCollection.Count > 0)
             {
-                foreach (ContentLinkInfo dependencyInformation in dependencyInformationList)
+                foreach (ContentLinkInfo dependencyInformation in dependencyInformationCollection)
                 {
                     AppInformationCollection.Add(dependencyInformation);
                 }
@@ -120,7 +120,7 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 获取应用依赖信息
         /// </summary>
-        private async Task<List<ContentLinkInfo>> GetDependencyInformationListAsync(List<string> propertyNameList)
+        private async Task<ReadOnlyCollection<ContentLinkInfo>> GetDependencyInformationCollectionAsync(List<string> propertyNameList)
         {
             if (propertyNameList is null || propertyNameList.Count is 0)
             {
@@ -156,7 +156,7 @@ namespace GetStoreApp.Views.Dialogs
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(GetDependencyInformationListAsync), 1, e);
+                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(GetDependencyInformationCollectionAsync), 1, e);
                             dependencyInformationList.Add(new()
                             {
                                 DisplayText = WinUIVersionString,
@@ -180,7 +180,7 @@ namespace GetStoreApp.Views.Dialogs
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(GetDependencyInformationListAsync), 2, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppInformationDialog), nameof(GetDependencyInformationCollectionAsync), 2, e);
                     dependencyInformationList.Add(new()
                     {
                         DisplayText = WebView2SDKVersionString,
@@ -195,7 +195,7 @@ namespace GetStoreApp.Views.Dialogs
                     SecondaryText = Convert.ToString(Environment.Version)
                 });
 
-                return dependencyInformationList;
+                return dependencyInformationList.AsReadOnly();
             });
         }
 

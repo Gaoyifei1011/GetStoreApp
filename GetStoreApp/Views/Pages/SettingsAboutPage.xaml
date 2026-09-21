@@ -450,7 +450,7 @@
                     Padding="5"
                     HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Stretch"
-                    ItemsSource="{x:Bind ReferenceList}"
+                    ItemsSource="{x:Bind ReferenceCollection}"
                     SelectionMode="None">
 
                     <ListView.ItemContainerStyle>
@@ -537,7 +537,7 @@
                         Padding="5"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Stretch"
-                        ItemsSource="{x:Bind ThanksList}"
+                        ItemsSource="{x:Bind ThanksCollection}"
                         SelectionMode="None">
 
                         <ListView.ItemContainerStyle>

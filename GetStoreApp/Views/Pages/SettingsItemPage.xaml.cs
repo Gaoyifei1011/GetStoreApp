@@ -11,6 +11,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
@@ -93,7 +94,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        internal List<Type> PageList { get; } = [typeof(SettingsGeneralPage), typeof(SettingsStoreAndUpdatePage), typeof(SettingsWinGetPage), typeof(SettingsDownloadPage), typeof(SettingsAppInstallPage), typeof(SettingsAdvancedPage), typeof(SettingsAboutPage)];
+        internal ReadOnlyCollection<Type> PageCollection { get; } = [typeof(SettingsGeneralPage), typeof(SettingsStoreAndUpdatePage), typeof(SettingsWinGetPage), typeof(SettingsDownloadPage), typeof(SettingsAppInstallPage), typeof(SettingsAdvancedPage), typeof(SettingsAboutPage)];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -120,16 +121,16 @@ namespace GetStoreApp.Views.Pages
 
             if (args.Parameter is AppNaviagtionArgs.Download)
             {
-                if (!Equals(GetCurrentPageType(), PageList[3]))
+                if (!Equals(GetCurrentPageType(), PageCollection[3]))
                 {
-                    NavigateTo(PageList[3]);
+                    NavigateTo(PageCollection[3]);
                 }
             }
             else if (args.Parameter is AppNaviagtionArgs.AppInstall)
             {
-                if (!Equals(GetCurrentPageType(), PageList[4]))
+                if (!Equals(GetCurrentPageType(), PageCollection[4]))
                 {
-                    NavigateTo(PageList[4]);
+                    NavigateTo(PageCollection[4]);
                 }
             }
             else
@@ -137,7 +138,7 @@ namespace GetStoreApp.Views.Pages
                 // 第一次导航
                 if (GetCurrentPageType() is null)
                 {
-                    NavigateTo(PageList[0]);
+                    NavigateTo(PageCollection[0]);
                 }
             }
         }
@@ -267,42 +268,50 @@ namespace GetStoreApp.Views.Pages
 
             int index = sender.Items.IndexOf(SelectedItem);
             Type currentPage = GetCurrentPageType();
-            int currentIndex = PageList.FindIndex(item => Equals(item, currentPage));
+            int currentIndex = -1;
+            for (int i = 0; i < PageCollection.Count; i++)
+            {
+                if (Equals(PageCollection[i], currentPage))
+                {
+                    currentIndex = i;
+                    break;
+                }
+            }
 
             if (index is 0)
             {
                 if (currentPage is null)
                 {
-                    NavigateTo(PageList[0]);
+                    NavigateTo(PageCollection[0]);
                 }
-                else if (!Equals(currentPage, PageList[0]))
+                else if (!Equals(currentPage, PageCollection[0]))
                 {
-                    NavigateTo(PageList[0], null, index > currentIndex);
+                    NavigateTo(PageCollection[0], null, index > currentIndex);
                 }
             }
-            else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
+            else if (index is 1 && !Equals(GetCurrentPageType(), PageCollection[1]))
             {
-                NavigateTo(PageList[1], null, index > currentIndex);
+                NavigateTo(PageCollection[1], null, index > currentIndex);
             }
-            else if (index is 2 && !Equals(GetCurrentPageType(), PageList[2]))
+            else if (index is 2 && !Equals(GetCurrentPageType(), PageCollection[2]))
             {
-                NavigateTo(PageList[2], null, index > currentIndex);
+                NavigateTo(PageCollection[2], null, index > currentIndex);
             }
-            else if (index is 3 && !Equals(GetCurrentPageType(), PageList[3]))
+            else if (index is 3 && !Equals(GetCurrentPageType(), PageCollection[3]))
             {
-                NavigateTo(PageList[3], null, index > currentIndex);
+                NavigateTo(PageCollection[3], null, index > currentIndex);
             }
-            else if (index is 4 && !Equals(GetCurrentPageType(), PageList[4]))
+            else if (index is 4 && !Equals(GetCurrentPageType(), PageCollection[4]))
             {
-                NavigateTo(PageList[4], null, index > currentIndex);
+                NavigateTo(PageCollection[4], null, index > currentIndex);
             }
-            else if (index is 5 && !Equals(GetCurrentPageType(), PageList[5]))
+            else if (index is 5 && !Equals(GetCurrentPageType(), PageCollection[5]))
             {
-                NavigateTo(PageList[5], null, index > currentIndex);
+                NavigateTo(PageCollection[5], null, index > currentIndex);
             }
-            else if (index is 6 && !Equals(GetCurrentPageType(), PageList[6]))
+            else if (index is 6 && !Equals(GetCurrentPageType(), PageCollection[6]))
             {
-                NavigateTo(PageList[6], null, index > currentIndex);
+                NavigateTo(PageCollection[6], null, index > currentIndex);
             }
         }
 
@@ -311,7 +320,15 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+            int index = -1;
+            for (int i = 0; i < PageCollection.Count; i++)
+            {
+                if (Equals(PageCollection[i], GetCurrentPageType()))
+                {
+                    index = i;
+                    break;
+                }
+            }
 
             if (index >= 0 && index < SettingsItemSelectorBar.Items.Count)
             {
@@ -325,7 +342,15 @@ namespace GetStoreApp.Views.Pages
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
             args.Handled = true;
-            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+            int index = -1;
+            for (int i = 0; i < PageCollection.Count; i++)
+            {
+                if (Equals(PageCollection[i], GetCurrentPageType()))
+                {
+                    index = i;
+                    break;
+                }
+            }
 
             if (index >= 0 && index < SettingsItemSelectorBar.Items.Count)
             {

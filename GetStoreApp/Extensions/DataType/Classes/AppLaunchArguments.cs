@@ -12,6 +12,6 @@ namespace GetStoreApp.Extensions.DataType.Classes
 
         internal bool IsLaunched { get; set; }
 
-        internal List<string> SubParameterList { get; set; }
+        internal List<string> SubParameterList { get; } = [];
     }
 }

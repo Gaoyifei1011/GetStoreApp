@@ -125,7 +125,7 @@ namespace GetStoreApp.Views.Pages
             if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
             {
                 // 导航到 WinGet 数据源配置页面
-                settingsPage.NavigateTo(settingsPage.PageList[1], null, true);
+                settingsPage.NavigateTo(settingsPage.PageCollection[1], null, true);
             }
         }
 
@@ -146,8 +146,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void InitializeData()
         {
-            WinGetSourceList.Add(new() { SelectedValue = WinGetConfigService.WinGetSourceList[0], DisplayMember = BuiltInAppString });
-            WinGetSourceList.Add(new() { SelectedValue = WinGetConfigService.WinGetSourceList[1], DisplayMember = AppInstallerString });
+            WinGetSourceList.Add(new() { SelectedValue = WinGetConfigService.WinGetSourceCollection[0], DisplayMember = BuiltInAppString });
+            WinGetSourceList.Add(new() { SelectedValue = WinGetConfigService.WinGetSourceCollection[1], DisplayMember = AppInstallerString });
         }
 
         /// <summary>

@@ -2,7 +2,7 @@
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Composition.SystemBackdrops;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace GetStoreApp.Services.Settings
@@ -31,7 +31,7 @@ namespace GetStoreApp.Services.Settings
             }
         }
 
-        internal static List<string> BackdropList { get; } = [nameof(SystemBackdropTheme.Default), nameof(MicaKind) + nameof(MicaKind.Base), nameof(MicaKind) + nameof(MicaKind.BaseAlt), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin)];
+        internal static ReadOnlyCollection<string> BackdropCollection { get; } = [nameof(SystemBackdropTheme.Default), nameof(MicaKind) + nameof(MicaKind.Base), nameof(MicaKind) + nameof(MicaKind.BaseAlt), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin)];
 
         internal static event PropertyChangedEventHandler PropertyChanged;
 
@@ -40,7 +40,14 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         internal static void InitializeBackdrop()
         {
-            defaultAppBackdrop = BackdropList.Find(item => string.Equals(item, nameof(SystemBackdropTheme.Default), StringComparison.OrdinalIgnoreCase));
+            foreach (string backdrop in BackdropCollection)
+            {
+                if (string.Equals(backdrop, nameof(SystemBackdropTheme.Default), StringComparison.OrdinalIgnoreCase))
+                {
+                    defaultAppBackdrop = backdrop;
+                    break;
+                }
+            }
             AppBackdrop = GetBackdrop();
         }
 
@@ -57,7 +64,15 @@ namespace GetStoreApp.Services.Settings
                 return defaultAppBackdrop;
             }
 
-            string selectedBackdrop = BackdropList.Find(item => string.Equals(item, backdrop, StringComparison.OrdinalIgnoreCase));
+            string selectedBackdrop = default;
+            foreach (string backdropItem in BackdropCollection)
+            {
+                if (string.Equals(backdropItem, backdrop, StringComparison.OrdinalIgnoreCase))
+                {
+                    selectedBackdrop = backdropItem;
+                    break;
+                }
+            }
             return string.IsNullOrEmpty(selectedBackdrop) ? defaultAppBackdrop : selectedBackdrop;
         }
 

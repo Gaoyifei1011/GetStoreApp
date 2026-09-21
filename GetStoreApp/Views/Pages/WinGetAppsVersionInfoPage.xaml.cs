@@ -527,11 +527,11 @@ namespace GetStoreApp.Views.Pages
         {
             base.OnNavigatedTo(args);
 
-            if (args.Parameter is List<object> argsList && argsList.Count is 3 && WinGetPage is null && argsList[0] is WinGetPage winGetPage && argsList[1] is WinGetAppsVersionDialog winGetAppsVersionDialog)
+            if (args.Parameter is ReadOnlyCollection<object> argsCollection && argsCollection.Count is 3 && WinGetPage is null && argsCollection[0] is WinGetPage winGetPage && argsCollection[1] is WinGetAppsVersionDialog winGetAppsVersionDialog)
             {
                 WinGetPage = winGetPage;
                 WinGetAppsVersionDialog = winGetAppsVersionDialog;
-                await InitializeDataAsync(argsList[2]);
+                await InitializeDataAsync(argsCollection[2]);
             }
         }
 
@@ -665,17 +665,17 @@ namespace GetStoreApp.Views.Pages
                 if (SearchApps is not null)
                 {
                     // 获取当前应用可用版本
-                    if (await GetAvailableVersionAysnc(SearchApps.CatalogPackage, false) is List<AvailableVersionModel> availableVersionList && availableVersionList.Count > 0)
+                    if (await GetAvailableVersionAysnc(SearchApps.CatalogPackage, false) is ReadOnlyCollection<AvailableVersionModel> availableVersionCollection && availableVersionCollection.Count > 0)
                     {
-                        await UpdateAvailableVersionListAsync(availableVersionList);
+                        await UpdateAvailableVersionListAsync(availableVersionCollection);
                     }
                 }
                 else if (UpgradableApps is not null)
                 {
                     // 获取当前应用可用版本
-                    if (await GetAvailableVersionAysnc(SearchApps.CatalogPackage, false) is List<AvailableVersionModel> availableVersionList && availableVersionList.Count > 0)
+                    if (await GetAvailableVersionAysnc(SearchApps.CatalogPackage, false) is ReadOnlyCollection<AvailableVersionModel> availableVersionCollection && availableVersionCollection.Count > 0)
                     {
-                        await UpdateAvailableVersionListAsync(availableVersionList);
+                        await UpdateAvailableVersionListAsync(availableVersionCollection);
                     }
                 }
             }
@@ -686,7 +686,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取应用可用版本
         /// </summary>
-        private async Task<List<AvailableVersionModel>> GetAvailableVersionAysnc(CatalogPackage catalogPackage, bool isUpgrade)
+        private async Task<ReadOnlyCollection<AvailableVersionModel>> GetAvailableVersionAysnc(CatalogPackage catalogPackage, bool isUpgrade)
         {
             if (catalogPackage is null)
             {
@@ -747,7 +747,7 @@ namespace GetStoreApp.Views.Pages
                     });
                 }
 
-                return availableVersionList;
+                return availableVersionList.AsReadOnly();
             });
         }
 
@@ -970,11 +970,11 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 更新可用版本列表信息
         /// </summary>
-        private async Task UpdateAvailableVersionListAsync(List<AvailableVersionModel> availableVersionList)
+        private async Task UpdateAvailableVersionListAsync(ReadOnlyCollection<AvailableVersionModel> availableVersionCollection)
         {
-            if (availableVersionList is not null && availableVersionList.Count > 0)
+            if (availableVersionCollection is not null && availableVersionCollection.Count > 0)
             {
-                foreach (AvailableVersionModel availableVersionItem in availableVersionList)
+                foreach (AvailableVersionModel availableVersionItem in availableVersionCollection)
                 {
                     WinGetAppsVersionCollection.Add(availableVersionItem);
 
@@ -1035,7 +1035,7 @@ namespace GetStoreApp.Views.Pages
             {
                 case PackageOperationKind.Download:
                     {
-                        WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
+                        WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageCollection[1], new ReadOnlyCollection<object>([WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
                         {
                             PackageOperationKind = packageOperationKind,
                             AppID = searchApps.AppID,
@@ -1049,12 +1049,12 @@ namespace GetStoreApp.Views.Pages
                             TotalFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
                             PackageDownloadProgress = null,
                             SearchApps = searchApps,
-                         }}, true);
+                         }]), true);
                         break;
                     }
                 case PackageOperationKind.Install:
                     {
-                        WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
+                        WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageCollection[1], new ReadOnlyCollection<object>([WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
                         {
                             PackageOperationKind = packageOperationKind,
                             AppID = searchApps.AppID,
@@ -1068,13 +1068,13 @@ namespace GetStoreApp.Views.Pages
                             TotalFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
                             PackageInstallProgress = null,
                             SearchApps = searchApps,
-                        }}, true);
+                        }]), true);
                         break;
                     }
 
                 case PackageOperationKind.Repair:
                     {
-                        WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
+                        WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageCollection[1], new ReadOnlyCollection<object>([WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
                         {
                             PackageOperationKind = packageOperationKind,
                             AppID = searchApps.AppID,
@@ -1088,12 +1088,12 @@ namespace GetStoreApp.Views.Pages
                             TotalFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
                             PackageRepairProgress = null,
                             SearchApps = searchApps,
-                        }}, true);
+                        }]), true);
                         break;
                     }
                 case PackageOperationKind.Upgrade:
                     {
-                        WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
+                        WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageCollection[1], new ReadOnlyCollection<object>([WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
                         {
                             PackageOperationKind = packageOperationKind,
                             AppID = upgradableApps.AppID,
@@ -1107,7 +1107,7 @@ namespace GetStoreApp.Views.Pages
                             TotalFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
                             PackageInstallProgress = null,
                             UpgradableApps = upgradableApps,
-                        }}, true);
+                        }]), true);
                         break;
                     }
             }

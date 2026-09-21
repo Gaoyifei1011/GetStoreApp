@@ -5,6 +5,7 @@ using GetStoreApp.Services.Settings;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
@@ -106,7 +107,7 @@ namespace GetStoreApp.Views.Dialogs
 
             IsCleaning = true;
 
-            if (GetSelectedItemsList(TraceCleanupListView.SelectedItems) is List<TraceCleanupModel> selectedItemsList && selectedItemsList.Count > 0 && await TraceCleanupAsync(selectedItemsList) is List<(CleanKind cleanKind, bool cleanResult)> cleanSuccessfullyDict)
+            if (GetSelectedItemsCollection(TraceCleanupListView.SelectedItems) is ReadOnlyCollection<TraceCleanupModel> selectedItemsCollection && selectedItemsCollection.Count > 0 && await TraceCleanupAsync(selectedItemsCollection) is ReadOnlyDictionary<CleanKind, bool> cleanSuccessfullyDict)
             {
                 foreach ((CleanKind cleanKind, bool cleanResult) in cleanSuccessfullyDict)
                 {
@@ -167,7 +168,7 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 获取选中项
         /// </summary>
-        private List<TraceCleanupModel> GetSelectedItemsList(IList<object> selectedItemsList)
+        private ReadOnlyCollection<TraceCleanupModel> GetSelectedItemsCollection(IList<object> selectedItemsList)
         {
             if (selectedItemsList is null || selectedItemsList.Count is 0)
             {
@@ -184,25 +185,25 @@ namespace GetStoreApp.Views.Dialogs
                 }
             }
 
-            return selectedTraceCleanupDataList;
+            return selectedTraceCleanupDataList.AsReadOnly();
         }
 
         /// <summary>
         /// 痕迹清理
         /// </summary>
-        private async Task<List<(CleanKind cleanKind, bool cleanResult)>> TraceCleanupAsync(List<TraceCleanupModel> selectedItemsList)
+        private async Task<ReadOnlyDictionary<CleanKind, bool>> TraceCleanupAsync(ReadOnlyCollection<TraceCleanupModel> selectedItemsCollection)
         {
-            if (selectedItemsList is null || selectedItemsList.Count is 0)
+            if (selectedItemsCollection is null || selectedItemsCollection.Count is 0)
             {
                 return default;
             }
 
             return await Task.Run(async () =>
             {
-                List<(CleanKind cleanKind, bool cleanResult)> cleanSuccessfullyDict = [];
+                Dictionary<CleanKind, bool> cleanSuccessfullyDict = [];
                 List<CleanKind> selectedCleanList = [];
 
-                foreach (TraceCleanupModel traceCleanupItem in selectedItemsList)
+                foreach (TraceCleanupModel traceCleanupItem in selectedItemsCollection)
                 {
                     selectedCleanList.Add(traceCleanupItem.InternalName);
                 }
@@ -211,11 +212,11 @@ namespace GetStoreApp.Views.Dialogs
                 {
                     // 清理并反馈回结果，修改相应的状态信息
                     bool cleanResult = TraceCleanupService.CleanAppTraceAsync(cleanArgs);
-                    cleanSuccessfullyDict.Add(ValueTuple.Create(cleanArgs, cleanResult));
+                    cleanSuccessfullyDict.TryAdd(cleanArgs, cleanResult);
                 }
 
                 await Task.Delay(1000);
-                return cleanSuccessfullyDict;
+                return cleanSuccessfullyDict.AsReadOnly();
             });
         }
 

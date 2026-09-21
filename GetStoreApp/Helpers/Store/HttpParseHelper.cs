@@ -1,5 +1,9 @@
 ﻿using GetStoreApp.Models;
+using GetStoreApp.Services.Settings;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Text.RegularExpressions;
 
 namespace GetStoreApp.Helpers.Store
@@ -59,7 +63,7 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 解析网页数据中包含的打包应用所有信息
         /// </summary>
-        internal static List<QueryLinksResultModel> HtmlParsePackagedAppLinkList()
+        internal static ReadOnlyCollection<QueryLinksResultModel> HtmlParsePackagedAppLinkCollection(bool encryptedPackageFilter, bool blockMapFilter)
         {
             List<QueryLinksResultModel> queryLinksResultList = [];
 
@@ -86,13 +90,30 @@ namespace GetStoreApp.Helpers.Store
                     }
                 }
             }
-            return queryLinksResultList;
+
+            // 按设置选项设置的内容过滤列表
+            if (encryptedPackageFilter)
+            {
+                queryLinksResultList.RemoveAll(item =>
+                    string.Equals(Path.GetExtension(item.FileName), ".eappx", StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(Path.GetExtension(item.FileName), ".emsix", StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(Path.GetExtension(item.FileName), ".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(Path.GetExtension(item.FileName), ".emsixbundle", StringComparison.OrdinalIgnoreCase)
+                );
+            }
+
+            if (blockMapFilter)
+            {
+                queryLinksResultList.RemoveAll(item => string.Equals(Path.GetExtension(item.FileName), ".blockmap", StringComparison.OrdinalIgnoreCase));
+            }
+
+            return queryLinksResultList.AsReadOnly();
         }
 
         /// <summary>
         /// 解析网页数据中包含的非打包应用所有信息
         /// </summary>
-        internal static List<QueryLinksResultModel> HtmlParseNonPackagedAppLinkList()
+        internal static ReadOnlyCollection<QueryLinksResultModel> HtmlParseNonPackagedAppLinkCollection()
         {
             List<QueryLinksResultModel> queryLinksResultList = [];
 
@@ -119,7 +140,7 @@ namespace GetStoreApp.Helpers.Store
                     }
                 }
             }
-            return queryLinksResultList;
+            return queryLinksResultList.AsReadOnly();
         }
     }
 }

@@ -4,6 +4,7 @@ using GetStoreApp.Services.Root;
 using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading;
 using Windows.Foundation.Diagnostics;
 using WinRT;
@@ -121,13 +122,13 @@ namespace GetStoreApp.Services.Download
         /// 获取已下载完成任务数据，为保证安全访问，需要手动对访问的锁进行加锁和释放
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
-        internal static List<DownloadSchedulerModel> GetDownloadDataList()
+        internal static ReadOnlyCollection<DownloadSchedulerModel> GetDownloadDataCollection()
         {
             List<DownloadSchedulerModel> downloadSchedulerList = [];
 
             if (downloadStorageContainer is null)
             {
-                return downloadSchedulerList;
+                return new(downloadSchedulerList);
             }
 
             foreach (KeyValuePair<string, object> downloadStorageItem in downloadStorageContainer.Values)
@@ -147,11 +148,11 @@ namespace GetStoreApp.Services.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(GetDownloadDataList), 1, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadStorageService), nameof(GetDownloadDataCollection), 1, e);
                 }
             }
 
-            return downloadSchedulerList;
+            return downloadSchedulerList.AsReadOnly();
         }
 
         /// <summary>

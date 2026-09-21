@@ -4,6 +4,7 @@ using GetStoreApp.Services.Root;
 using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
@@ -31,14 +32,14 @@ namespace GetStoreApp.Services.Settings
 
         internal static string DoEngineMode { get; private set; }
 
-        internal static List<string> DoEngineModeList { get; } = ["DeliveryOptimization", "Bits", "Aria2"];
+        internal static ReadOnlyCollection<string> DoEngineModeCollection { get; } = ["DeliveryOptimization", "Bits", "Aria2"];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的下载相关内容设置值，并创建默认下载目录
         /// </summary>
         internal static async Task InitializeDownloadOptionsAsync()
         {
-            defaultDoEngineMode = InfoHelper.IsDeliveryOptimizationEnabled ? DoEngineModeList[0] : DoEngineModeList[1];
+            defaultDoEngineMode = InfoHelper.IsDeliveryOptimizationEnabled ? DoEngineModeCollection[0] : DoEngineModeCollection[1];
             DefaultDownloadFolder = (await ApplicationData.GetDefault().LocalCacheFolder.CreateFolderAsync("Downloads", Windows.Storage.CreationCollisionOption.OpenIfExists)).Path;
             DownloadFolder = GetFolder();
             DoEngineMode = GetDoEngineMode();
@@ -82,10 +83,27 @@ namespace GetStoreApp.Services.Settings
             if (string.IsNullOrEmpty(doEngineMode))
             {
                 SetDoEngineMode(defaultDoEngineMode);
-                return DoEngineModeList.Find(item => string.Equals(item, defaultDoEngineMode, StringComparison.OrdinalIgnoreCase));
+                string doEngine = default;
+                foreach (string doEngineItem in DoEngineModeCollection)
+                {
+                    if (string.Equals(doEngineItem, defaultDoEngineMode, StringComparison.OrdinalIgnoreCase))
+                    {
+                        doEngine = doEngineItem;
+                        break;
+                    }
+                }
+                return doEngine;
             }
 
-            string selectedDoEngine = DoEngineModeList.Find(item => string.Equals(item, doEngineMode, StringComparison.OrdinalIgnoreCase));
+            string selectedDoEngine = default;
+            foreach (string doEingineItem in DoEngineModeCollection)
+            {
+                if (string.Equals(doEingineItem, doEngineMode, StringComparison.OrdinalIgnoreCase))
+                {
+                    selectedDoEngine = doEingineItem;
+                    break;
+                }
+            }
             return string.IsNullOrEmpty(selectedDoEngine) ? defaultDoEngineMode : selectedDoEngine;
         }
 

@@ -17,6 +17,7 @@ using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.Storage.Pickers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
@@ -370,7 +371,7 @@ namespace GetStoreApp.Views.Pages
         {
             base.OnNavigatedTo(args);
 
-            if (args.Parameter is List<object> argsList && argsList.Count is 3 && argsList[0] is WinGetPage winGetPage && argsList[1] is WinGetAppsVersionDialog winGetAppsVersionDialog && argsList[2] is PackageOperationModel packageOperation)
+            if (args.Parameter is ReadOnlyCollection<object> argsCollection && argsCollection.Count is 3 && argsCollection[0] is WinGetPage winGetPage && argsCollection[1] is WinGetAppsVersionDialog winGetAppsVersionDialog && argsCollection[2] is PackageOperationModel packageOperation)
             {
                 WinGetPage = winGetPage;
                 WinGetAppsVersionDialog = winGetAppsVersionDialog;
