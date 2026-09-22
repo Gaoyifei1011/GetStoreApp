@@ -128,7 +128,7 @@ namespace GetStoreApp.Services.Download
 
             if (downloadStorageContainer is null)
             {
-                return new(downloadSchedulerList);
+                return downloadSchedulerList.AsReadOnly();
             }
 
             foreach (KeyValuePair<string, object> downloadStorageItem in downloadStorageContainer.Values)

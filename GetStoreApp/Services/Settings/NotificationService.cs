@@ -60,7 +60,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 应用通知显示发生修改时修改设置存储的使用说明按钮显示值
+        /// 应用通知显示发生修改后修改设置存储的使用说明按钮显示值
         /// </summary>
         internal static void SetNotification(bool appNotification)
         {

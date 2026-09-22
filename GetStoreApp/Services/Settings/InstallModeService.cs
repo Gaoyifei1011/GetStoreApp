@@ -68,7 +68,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 应用安装方式发生修改时修改设置存储的应用安装方式值
+        /// 应用安装方式发生修改后修改设置存储的应用安装方式值
         /// </summary>
         internal static void SetInstallMode(string installMode)
         {

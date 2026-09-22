@@ -42,7 +42,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 当系统默认区域发生改变时，更新默认区域
+        /// 当系统默认区域发生变化后，更新默认区域
         /// </summary>
         internal static void UpdateDefaultRegion()
         {
@@ -114,7 +114,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 使用系统区域值发生修改时修改设置存储的始终显示背景色值
+        /// 使用系统区域值发生修改后修改设置存储的始终显示背景色值
         /// </summary>
         internal static void SetUseSystemRegion(bool useSystemRegion)
         {
@@ -124,7 +124,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 应用安装方式发生修改时修改设置存储的应用安装方式值
+        /// 应用安装方式发生修改后修改设置存储的应用安装方式值
         /// </summary>
         internal static void SetRegion(GeographicRegion region)
         {

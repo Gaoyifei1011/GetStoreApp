@@ -57,7 +57,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 删除多个文件到回收站
         /// </summary>
-        internal static bool DeleteFilesToRecycleBin(List<string> filePathList)
+        internal static bool DeleteFilesToRecycleBin(IReadOnlyList<string> filePathList)
         {
             bool deleteResult = false;
 

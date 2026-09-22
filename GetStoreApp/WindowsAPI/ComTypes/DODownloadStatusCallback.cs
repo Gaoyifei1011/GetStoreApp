@@ -12,7 +12,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         internal string DownloadID { get; set; }
 
         /// <summary>
-        /// 下载状态发生变化时触发的事件
+        /// 下载状态发生变化后触发的事件
         /// </summary>
         internal event Action<DODownloadStatusCallback, IDODownload, DO_DOWNLOAD_STATUS> StatusChanged;
 

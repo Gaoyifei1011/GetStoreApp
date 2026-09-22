@@ -478,7 +478,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 是否跳过哈希检验选择发生改变时触发的事件
+        /// 是否跳过哈希检验选择发生变化后触发的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnAllowHashMismatchToggled(object sender, RoutedEventArgs args)
@@ -490,7 +490,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 应用包架构发生更改时触发的事件
+        /// 应用包架构发生更改后触发的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnPackageArchitectureSelectionChanged(object sender, SelectionChangedEventArgs args)
@@ -502,7 +502,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 应用安装包安装范围发生更改时触发的事件
+        /// 应用安装包安装范围发生更改后触发的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnPackageInstallScopeSelectionChanged(object sender, SelectionChangedEventArgs args)
@@ -659,7 +659,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 额外安装参数文本框内容发生变化时触发的事件
+        /// 额外安装参数文本框内容发生变化后触发的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(TextBox))]
         private void OnAdditionalInstallerArgumentsTextChanged(object sender, TextChangedEventArgs args)
@@ -703,7 +703,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 允许的处理器架构发生更改时触发的事件
+        /// 允许的处理器架构发生更改后触发的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(ProcessorArchitecture)), DynamicWindowsRuntimeCast(typeof(ToggleButton))]
         private void OnProcessorArchitectureClicked(object sender, RoutedEventArgs args)
@@ -770,7 +770,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 应用安装包修复范围发生更改时触发的事件
+        /// 应用安装包修复范围发生更改后触发的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnPackageRepairScopeSelectionChanged(object sender, SelectionChangedEventArgs args)

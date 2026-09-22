@@ -205,7 +205,7 @@ namespace GetStoreApp.Views.Dialogs
         }
 
         /// <summary>
-        /// 应用更新进度发生变化时触发的事件
+        /// 应用更新进度发生变化后触发的事件
         /// </summary>
         private void OnStorePackageUpdateProgress(IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus> sender, StorePackageUpdateStatus progress)
         {

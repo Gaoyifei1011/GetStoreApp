@@ -120,9 +120,9 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 获取应用依赖信息
         /// </summary>
-        private async Task<ReadOnlyCollection<ContentLinkInfo>> GetDependencyInformationCollectionAsync(List<string> propertyNameList)
+        private async Task<ReadOnlyCollection<ContentLinkInfo>> GetDependencyInformationCollectionAsync(ReadOnlyCollection<string> propertyNameCollection)
         {
-            if (propertyNameList is null || propertyNameList.Count is 0)
+            if (propertyNameCollection is null || propertyNameCollection.Count is 0)
             {
                 return default;
             }
@@ -147,7 +147,7 @@ namespace GetStoreApp.Views.Dialogs
                         try
                         {
                             StorageFile winUI3File = await StorageFile.GetFileFromPathAsync(Path.Combine(dependencyPackage.InstalledLocation.Path, "Microsoft.UI.Xaml.dll"));
-                            IDictionary<string, object> winUI3FileProperties = await winUI3File.Properties.RetrievePropertiesAsync(propertyNameList);
+                            IDictionary<string, object> winUI3FileProperties = await winUI3File.Properties.RetrievePropertiesAsync(propertyNameCollection);
                             dependencyInformationList.Add(new()
                             {
                                 DisplayText = WinUIVersionString,
@@ -171,7 +171,7 @@ namespace GetStoreApp.Views.Dialogs
                 try
                 {
                     StorageFile webView2CoreFile = await StorageFile.GetFileFromPathAsync(Path.Combine(InfoHelper.AppInstalledLocation, "Microsoft.Web.WebView2.Core.dll"));
-                    IDictionary<string, object> webView2CoreFileProperties = await webView2CoreFile.Properties.RetrievePropertiesAsync(propertyNameList);
+                    IDictionary<string, object> webView2CoreFileProperties = await webView2CoreFile.Properties.RetrievePropertiesAsync(propertyNameCollection);
                     dependencyInformationList.Add(new()
                     {
                         DisplayText = WebView2SDKVersionString,
@@ -202,9 +202,9 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 获取应用信息要准备复制的字符串内容
         /// </summary>
-        private async Task<string> GetAppInformationCopyStringListAsync(List<ContentLinkInfo> appInformationList)
+        private async Task<string> GetAppInformationCopyStringListAsync(ReadOnlyCollection<ContentLinkInfo> appInformationCollection)
         {
-            if (appInformationList is null || appInformationList.Count is 0)
+            if (appInformationCollection is null || appInformationCollection.Count is 0)
             {
                 return default;
             }
@@ -215,7 +215,7 @@ namespace GetStoreApp.Views.Dialogs
                 {
                     List<string> appInformationCopyStringList = [];
 
-                    foreach (ContentLinkInfo appInformation in appInformationList)
+                    foreach (ContentLinkInfo appInformation in appInformationCollection)
                     {
                         appInformationCopyStringList.Add(appInformation.DisplayText + appInformation.SecondaryText);
                     }

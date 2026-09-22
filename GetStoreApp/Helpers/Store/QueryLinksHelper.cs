@@ -84,7 +84,7 @@ namespace GetStoreApp.Helpers.Store
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetCookieAsync), 1, responseDict.AsReadOnly());
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetCookieAsync), 1, responseDict);
                     string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                     if (!string.IsNullOrEmpty(responseString))
@@ -151,7 +151,7 @@ namespace GetStoreApp.Helpers.Store
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppInformationAsync), 1, responseDict.AsReadOnly());
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppInformationAsync), 1, responseDict);
                     string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                     if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
@@ -242,7 +242,7 @@ namespace GetStoreApp.Helpers.Store
                             { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                         };
 
-                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetFileListXmlAsync), 1, responseDict.AsReadOnly());
+                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetFileListXmlAsync), 1, responseDict);
                         string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
                         fileListXmlResult = responseString.Replace("&lt;", "<").Replace("&gt;", ">");
                     }
@@ -402,7 +402,7 @@ namespace GetStoreApp.Helpers.Store
                             { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                         };
 
-                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxUrlAsync), 1, responseDict.AsReadOnly());
+                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxUrlAsync), 1, responseDict);
                         string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                         if (!string.IsNullOrEmpty(responseString))
@@ -475,7 +475,7 @@ namespace GetStoreApp.Helpers.Store
                             { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                         };
 
-                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 1, responseDict.AsReadOnly());
+                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 1, responseDict);
                         string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                         if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
@@ -601,7 +601,7 @@ namespace GetStoreApp.Helpers.Store
                             { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                         };
 
-                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackageFileSizeAsync), 1, responseDict.AsReadOnly());
+                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackageFileSizeAsync), 1, responseDict);
                         fileSizeResult = Convert.ToString(httpRequestResult.ResponseMessage.Content.Headers.ContentLength);
                     }
                     // 请求失败

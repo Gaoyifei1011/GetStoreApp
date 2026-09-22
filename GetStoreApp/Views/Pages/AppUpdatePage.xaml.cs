@@ -352,7 +352,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 当前应用的安装状态发生更改时的事件
+        /// 当前应用的安装状态发生更改后的事件
         /// </summary>
         private void OnAppInstallItemStatusChanged(AppInstallManager sender, AppInstallManagerItemEventArgs args)
         {

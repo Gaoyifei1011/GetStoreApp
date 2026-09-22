@@ -80,7 +80,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 允许安装未签名的安装包值发生修改时修改设置存储的允许安装未签名的安装包值
+        /// 允许安装未签名的安装包值发生修改后修改设置存储的允许安装未签名的安装包值
         /// </summary>
         internal static void SetAllowUnsignedPackage(bool allowUnsignedPackage)
         {
@@ -89,7 +89,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 安装应用时强制关闭与包关联的进程的选项值发生修改时修改设置存储的安装应用时强制关闭与包关联的进程的选项值
+        /// 安装应用时强制关闭与包关联的进程的选项值发生修改后修改设置存储的安装应用时强制关闭与包关联的进程的选项值
         /// </summary>
         internal static void SetForceAppShutdown(bool forceAppShutdown)
         {
@@ -98,7 +98,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 安装应用时强制关闭与包关联的进程的选项值发生修改时修改设置存储的安装应用时强制关闭与包关联的进程的选项值
+        /// 安装应用时强制关闭与包关联的进程的选项值发生修改后修改设置存储的安装应用时强制关闭与包关联的进程的选项值
         /// </summary>
         internal static void SetForceTargetAppShutdown(bool forceTargetAppShutdown)
         {

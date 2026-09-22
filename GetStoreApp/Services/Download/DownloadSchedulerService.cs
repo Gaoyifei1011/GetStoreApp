@@ -39,7 +39,7 @@ namespace GetStoreApp.Services.Download
         internal static event Action<DownloadSchedulerModel> DownloadProgress;
 
         /// <summary>
-        /// 下载状态发生改变时触发的事件
+        /// 下载状态发生变化后触发的事件
         /// </summary>
         private static void OnDownloadProgress(DownloadProgress downloadProgress)
         {
@@ -371,11 +371,11 @@ namespace GetStoreApp.Services.Download
         }
 
         /// <summary>
-        /// 集合的数量发生变化时修改任务栏徽标下载调度任务数量
+        /// 集合的数量发生变化后修改任务栏徽标下载调度任务数量
         /// </summary>
         private static void UpdateBadgeAndToastNotification(int count, bool needNotification)
         {
-            // 当前下载任务数量发生变化时，更新当前下载任务数量通知
+            // 当前下载任务数量发生变化后，更新当前下载任务数量通知
             if (badgeCount != count)
             {
                 BadgeNotificationService.Show(count);

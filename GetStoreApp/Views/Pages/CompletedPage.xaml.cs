@@ -363,11 +363,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectReverseClicked(object sender, RoutedEventArgs args)
         {
-            ReadOnlyCollection<object> selectedItemsCollection = CompletedListView.SelectedItems.AsReadOnly();
+            IList<object> selectedItemsList = CompletedListView.SelectedItems;
 
             foreach (object item in CompletedListView.Items)
             {
-                if (selectedItemsCollection.Contains(item))
+                if (selectedItemsList.Contains(item))
                 {
                     CompletedListView.SelectedItems.Remove(item);
                 }
@@ -589,7 +589,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 应用安装状态发生改变时触发的事件
+        /// 应用安装状态发生变化后触发的事件
         /// </summary>
         private void OnPackageInstallProgress(IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> result, PackageDeploymentProgress progress, CompletedModel completed)
         {

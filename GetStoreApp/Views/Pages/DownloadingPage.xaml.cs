@@ -191,7 +191,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectReverseClicked(object sender, RoutedEventArgs args)
         {
-            ReadOnlyCollection<object> selectedItemsList = DownloadingListView.SelectedItems.AsReadOnly();
+            IList<object> selectedItemsList = DownloadingListView.SelectedItems;
 
             foreach (object item in DownloadingListView.Items)
             {
@@ -270,7 +270,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 下载状态发生改变时触发的事件
+        /// 下载状态发生变化后触发的事件
         /// </summary>
         private void OnDownloadProgress(DownloadSchedulerModel downloadScheduler)
         {
@@ -469,16 +469,16 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取选中项
         /// </summary>
-        private ReadOnlyCollection<DownloadingModel> GetSelectedDownloadingCollection(List<DownloadingModel> downloadingList)
+        private ReadOnlyCollection<DownloadingModel> GetSelectedDownloadingCollection(ReadOnlyCollection<DownloadingModel> downloadingCollection)
         {
-            if (downloadingList is null || downloadingList.Count is 0)
+            if (downloadingCollection is null || downloadingCollection.Count is 0)
             {
                 return default;
             }
 
             List<DownloadingModel> selectedDownloadingList = [];
 
-            foreach (object downloadingItemObj in downloadingList)
+            foreach (object downloadingItemObj in downloadingCollection)
             {
                 if (downloadingItemObj is DownloadingModel downloadingItem)
                 {

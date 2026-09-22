@@ -28,7 +28,7 @@ namespace GetStoreApp.Helpers.Store
         /// </summary>
         internal static async Task<string> GenerateRequestContentAsync(string type, string url, string ring)
         {
-            HttpFormUrlEncodedContent httpFormUrlEncodedContent = new((List<KeyValuePair<string, string>>)
+            HttpFormUrlEncodedContent httpFormUrlEncodedContent = new((ReadOnlyCollection<KeyValuePair<string, string>>)
             [
                 new("type", type),
                 new("url", url),
@@ -76,7 +76,7 @@ namespace GetStoreApp.Helpers.Store
                         { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : WhiteSpaceRegex.Replace(Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage), string.Empty) }
                     };
 
-                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(HtmlRequestHelper), nameof(HttpRequestAsync), 1, responseDict.AsReadOnly());
+                    LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(HtmlRequestHelper), nameof(HttpRequestAsync), 1, responseDict);
                 }
                 // 请求失败
                 else

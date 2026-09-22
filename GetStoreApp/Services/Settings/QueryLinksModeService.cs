@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
@@ -77,7 +76,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 查询链接方式发生修改时修改设置存储的查询链接方式值
+        /// 查询链接方式发生修改后修改设置存储的查询链接方式值
         /// </summary>
         internal static void SetQueryLinksMode(string queryLinksMode)
         {

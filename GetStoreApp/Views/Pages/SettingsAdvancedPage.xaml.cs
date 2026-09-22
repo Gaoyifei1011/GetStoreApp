@@ -221,7 +221,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 设置选项发生变化时触发的事件
+        /// 设置选项发生变化后触发的事件
         /// </summary>
         private void OnServicePropertyChanged(object sender, PropertyChangedEventArgs args)
         {

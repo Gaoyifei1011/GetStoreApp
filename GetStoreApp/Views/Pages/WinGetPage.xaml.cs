@@ -309,7 +309,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 点击选择器栏选中项发生变化时发生的事件
+        /// 点击选择器栏选中项发生变化后发生的事件
         /// </summary>
         private void OnSelectorBarSelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
         {
@@ -355,7 +355,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 导航完成后发生
+        /// 导航完成后发生的事件
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
@@ -376,7 +376,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 导航失败时发生的事件
+        /// 导航失败后发生的事件
         /// </summary>
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {

@@ -100,7 +100,7 @@ namespace GetStoreApp.Helpers.Store
                             { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                         };
 
-                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchAppsHelper), nameof(StoreExactSearchAsync), 1, responseDict.AsReadOnly());
+                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchAppsHelper), nameof(StoreExactSearchAsync), 1, responseDict);
                         string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                         if (JsonArray.TryParse(responseString, out JsonArray responseStringArray) && responseStringArray.Count is 2)
@@ -185,7 +185,7 @@ namespace GetStoreApp.Helpers.Store
                             { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                         };
 
-                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchAppsHelper), nameof(ManifestSearchAsync), 1, responseDict.AsReadOnly());
+                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchAppsHelper), nameof(ManifestSearchAsync), 1, responseDict);
                         string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                         if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))

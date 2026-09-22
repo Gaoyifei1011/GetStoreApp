@@ -413,7 +413,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 暂停更新结束时间发生变化时触发的事件
+        /// 暂停更新结束时间发生变化后触发的事件
         /// </summary>
         private async void OnAppUpdatePauseEndTimeDateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
         {
@@ -520,7 +520,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 设置选项发生变化时触发的事件
+        /// 设置选项发生变化后触发的事件
         /// </summary>
         private void OnServicePropertyChanged(object sender, PropertyChangedEventArgs args)
         {
@@ -629,7 +629,15 @@ namespace GetStoreApp.Views.Pages
                     autoDownload = RegistryHelper.ReadRegistryKey<int?>(ReservedKeyHandles.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate", "AutoDownload");
                     appUpdateStatus = autoDownload.HasValue ? autoDownload.Value is 4 ? "AppUpdateEnabled" : "AppUpdatePaused" : "AppUpdateEnabled";
                 }
-                return appUpdateStatusList.Find(item => string.Equals(Convert.ToString(item.SelectedValue), appUpdateStatus, StringComparison.OrdinalIgnoreCase));
+
+                foreach (ComboBoxItemModel comboBoxItem in appUpdateStatusList)
+                {
+                    if (string.Equals(Convert.ToString(comboBoxItem.SelectedValue), appUpdateStatus, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return comboBoxItem;
+                    }
+                }
+                return default;
             });
         }
 

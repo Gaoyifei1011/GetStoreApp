@@ -59,7 +59,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 加密包显示设置的过滤值发生修改时修改设置存储的加密包显示设置的过滤值
+        /// 加密包显示设置的过滤值发生修改后修改设置存储的加密包显示设置的过滤值
         /// </summary>
         internal static void SetEncryptedPackageFilter(bool encryptedPackageFilter)
         {
@@ -68,7 +68,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 以".blockmap"的文件扩展名的过滤值发生修改时修改设置存储的以".blockmap"的文件扩展名的过滤值
+        /// 以".blockmap"的文件扩展名的过滤值发生修改后修改设置存储的以".blockmap"的文件扩展名的过滤值
         /// </summary>
         internal static void SetBlockMapFilter(bool blockMapFilter)
         {

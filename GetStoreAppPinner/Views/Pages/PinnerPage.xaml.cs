@@ -55,7 +55,7 @@ namespace GetStoreAppPinner.Views.Pages
         #region 第三部分：父类虚方法重写
 
         /// <summary>
-        /// 应用主题发生变化时修改应用的背景色
+        /// 应用主题发生变化后修改应用的背景色
         /// </summary>
         private void OnActualThemeChanged(FrameworkElement sender, object args)
         {

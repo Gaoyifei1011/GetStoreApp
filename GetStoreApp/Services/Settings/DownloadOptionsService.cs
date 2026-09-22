@@ -124,7 +124,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 下载位置发生修改时修改设置存储的下载位置值
+        /// 下载位置发生修改后修改设置存储的下载位置值
         /// </summary>
         internal static void SetFolder(string downloadFolder)
         {
@@ -138,7 +138,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 应用下载引擎发生修改时修改设置存储的下载引擎方式值
+        /// 应用下载引擎发生修改后修改设置存储的下载引擎方式值
         /// </summary>
         internal static void SetDoEngineMode(string doEngineMode)
         {
@@ -152,7 +152,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 应用下载引擎发生修改时修改设置存储的下载引擎方式值
+        /// 应用下载引擎发生修改后修改设置存储的下载引擎方式值
         /// </summary>
         internal static void SetManualSetDownloadFolder(bool manualSetDownloadFolder)
         {

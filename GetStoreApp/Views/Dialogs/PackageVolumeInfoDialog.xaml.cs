@@ -160,7 +160,7 @@ namespace GetStoreApp.Views.Dialogs
         }
 
         /// <summary>
-        /// 应用包存储卷选中项发生变化时触发的事件
+        /// 应用包存储卷选中项发生变化后触发的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(ListView))]
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)

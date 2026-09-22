@@ -86,7 +86,7 @@ namespace GetStoreApp.Views.Dialogs
         #region 第四部分：挂载事件处理
 
         /// <summary>
-        /// 选中项发生变化时触发的事件
+        /// 选中项发生变化后触发的事件
         /// </summary>
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {

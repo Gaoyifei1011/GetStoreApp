@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Models;
-using GetStoreApp.Services.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

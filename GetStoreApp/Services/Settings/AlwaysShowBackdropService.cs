@@ -38,7 +38,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 始终显示背景色发生修改时修改设置存储的始终显示背景色值
+        /// 始终显示背景色发生修改后修改设置存储的始终显示背景色值
         /// </summary>
         internal static void SetAlwaysShowBackdrop(bool alwaysShowBackdrop)
         {

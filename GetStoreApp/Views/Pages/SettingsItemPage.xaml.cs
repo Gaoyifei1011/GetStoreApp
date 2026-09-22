@@ -252,7 +252,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 点击选择器栏选中项发生变化时发生的事件
+        /// 点击选择器栏选中项发生变化后发生的事件
         /// </summary>
         private void OnSelectorBarSelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
         {

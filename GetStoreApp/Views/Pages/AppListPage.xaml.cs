@@ -645,7 +645,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 应用移动状态发生改变时触发的事件
+        /// 应用移动状态发生变化后触发的事件
         /// </summary>
         private void OnPackageMoveProgress(IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> result, DeploymentProgress progress, PackageModel package)
         {
@@ -656,7 +656,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 应用修复状态发生改变时触发的事件
+        /// 应用修复状态发生变化后触发的事件
         /// </summary>
         private void OnPackageRepairProgress(IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> result, PackageDeploymentProgress progress, PackageModel package)
         {
@@ -667,7 +667,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 应用重置状态发生改变时触发的事件
+        /// 应用重置状态发生变化后触发的事件
         /// </summary>
         private void OnPackageResetProgress(IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> result, PackageDeploymentProgress progress, PackageModel package)
         {
@@ -678,7 +678,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 应用卸载状态发生改变时触发的事件
+        /// 应用卸载状态发生变化后触发的事件
         /// </summary>
         private void OnPackageUninstallProgress(IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> result, PackageDeploymentProgress progress, PackageModel package)
         {

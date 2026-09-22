@@ -507,9 +507,9 @@ namespace GetStoreApp.Views.Pages
                 if (!Equals(winGetDataSourceName, default))
                 {
                     // 使用内置源
-                    if (winGetDataSourceName.Value)
+                    if (winGetDataSourceName.Value && WinGetConfigService.PredefinedPackageCatalogCollection is not null)
                     {
-                        foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalog in WinGetConfigService.PredefinedPackageCatalogList)
+                        foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalog in WinGetConfigService.PredefinedPackageCatalogCollection)
                         {
                             if (string.Equals(winGetDataSourceName.Key, predefinedPackageCatalog.Key))
                             {

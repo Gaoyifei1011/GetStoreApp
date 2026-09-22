@@ -77,7 +77,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 应用链接打开方式发生修改时修改设置存储的应用链接打开方式值
+        /// 应用链接打开方式发生修改后修改设置存储的应用链接打开方式值
         /// </summary>
         internal static void SetAppLinkOpenMode(string appLinkOpenMode)
         {

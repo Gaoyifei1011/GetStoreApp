@@ -295,11 +295,11 @@ namespace GetStoreApp.Views.UserControls
 
             try
             {
-                ReadOnlyCollection<object> selectedItemsCollection = QueryLinksResultListView.SelectedItems.AsReadOnly();
+                IList<object> selectedItemsList = QueryLinksResultListView.SelectedItems;
 
                 foreach (object item in QueryLinksResultListView.Items)
                 {
-                    if (selectedItemsCollection.Contains(item))
+                    if (selectedItemsList.Contains(item))
                     {
                         QueryLinksResultListView.SelectedItems.Remove(item);
                     }

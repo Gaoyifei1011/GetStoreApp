@@ -342,7 +342,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 应用卸载范围发生更改时触发的事件
+        /// 应用卸载范围发生更改后触发的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(RadioButtons))]
         private void OnPackageUninstallScopeSelectionChanged(object sender, SelectionChangedEventArgs args)
@@ -354,7 +354,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 应用卸载模式发生更改时触发的事件
+        /// 应用卸载模式发生更改后触发的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(RadioButtons))]
         private void OnPackageUninstallModeSelectionChanged(object sender, SelectionChangedEventArgs args)

@@ -283,7 +283,7 @@ namespace GetStoreApp.Services.Download
         }
 
         /// <summary>
-        /// 下载状态发生变化触发的事件
+        /// 下载状态发生变化后触发的事件
         /// </summary>
         private static void OnStatusChanged(DODownloadStatusCallback callback, IDODownload doDownload, DO_DOWNLOAD_STATUS status)
         {

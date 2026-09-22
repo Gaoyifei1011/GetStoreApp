@@ -186,7 +186,7 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 存储查询链接历史记录数据
         /// </summary>
-        internal static void SaveQueryLinksData(List<HistoryModel> queryLinksHistoryList)
+        internal static void SaveQueryLinksData(IReadOnlyList<HistoryModel> queryLinksHistoryList)
         {
             if (queryLinksHistoryList is null || queryLinksHistoryList.Count is 0)
             {
@@ -224,7 +224,7 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 存储搜索应用历史记录数据
         /// </summary>
-        internal static void SaveSearchAppsData(List<HistoryModel> searchAppsHistoryList)
+        internal static void SaveSearchAppsData(IReadOnlyList<HistoryModel> searchAppsHistoryList)
         {
             if (searchAppsHistoryList is null || searchAppsHistoryList.Count is 0)
             {

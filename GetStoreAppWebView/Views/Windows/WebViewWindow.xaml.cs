@@ -232,7 +232,7 @@ namespace GetStoreAppWebView.Views.Windows
         {
             InitializeComponent();
             InitializeWindowData(AppWindow);
-            MountWindowEvent();
+            MountWindowEvent(AppWindow);
             MountWindowWndProc(AppWindow.Id);
             SetWindowTheme();
             SetSystemBackdrop();
@@ -265,7 +265,7 @@ namespace GetStoreAppWebView.Views.Windows
         }
 
         /// <summary>
-        /// 窗口大小发生改变时的事件
+        /// 窗口大小发生变化后的事件
         /// </summary>
         private void OnSizeChanged(object sender, WindowSizeChangedEventArgs args)
         {
@@ -312,13 +312,13 @@ namespace GetStoreAppWebView.Views.Windows
         private void OnAppWindowClosing(AppWindow sender, AppWindowClosingEventArgs args)
         {
             WebViewBrowser?.Close();
-            DismountWindowEvent();
+            DismountWindowEvent(AppWindow);
             DismountWindowWndProc(sender.Id);
             (Application.Current as WebViewApp).Dispose();
         }
 
         /// <summary>
-        /// 内容岛状态发生更改时触发的事件
+        /// 内容岛状态发生更改后触发的事件
         /// </summary>
         private void OnStateChanged(ContentIsland sender, ContentIslandStateChangedEventArgs args)
         {
@@ -330,7 +330,7 @@ namespace GetStoreAppWebView.Views.Windows
         }
 
         /// <summary>
-        /// 内容岛设置发生更改时触发的事件
+        /// 内容岛设置发生更改后触发的事件
         /// </summary>
         private void OnSettingChanged(ContentIslandEnvironment sender, ContentEnvironmentSettingChangedEventArgs args)
         {
@@ -537,7 +537,7 @@ namespace GetStoreAppWebView.Views.Windows
                 return;
             }
 
-            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppWebView), nameof(WebViewWindow), nameof(OnCoreProcessFailed), 3, logInformationDict.AsReadOnly());
+            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreAppWebView), nameof(WebViewWindow), nameof(OnCoreProcessFailed), 1, new Dictionary<string, string>(logInformationDict));
             await ShowDialogAsync(new ProcessFailedDialog());
             (Application.Current as WebViewApp).Dispose();
         }
@@ -596,7 +596,7 @@ namespace GetStoreAppWebView.Views.Windows
         }
 
         /// <summary>
-        /// 当前页面对应的链接发生改变时触发这一事件
+        /// 当前页面对应的链接发生变化后触发这一事件
         /// </summary>
         private void OnSourceChanged(CoreWebView2 sender, CoreWebView2SourceChangedEventArgs args)
         {
@@ -665,6 +665,11 @@ namespace GetStoreAppWebView.Views.Windows
         [DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
         private void InitializeWindowData(AppWindow appWindow)
         {
+            if (appWindow is null)
+            {
+                return;
+            }
+
             WebTitle = WebTitleString;
             WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
             overlappedPresenter = appWindow.Presenter as OverlappedPresenter;
@@ -681,10 +686,15 @@ namespace GetStoreAppWebView.Views.Windows
         /// <summary>
         /// 挂载窗口事件
         /// </summary>
-        private void MountWindowEvent()
+        private void MountWindowEvent(AppWindow appWindow)
         {
-            AppWindow.Changed += OnAppWindowChanged;
-            AppWindow.Closing += OnAppWindowClosing;
+            if (appWindow is null)
+            {
+                return;
+            }
+
+            appWindow.Changed += OnAppWindowChanged;
+            appWindow.Closing += OnAppWindowClosing;
             contentIsland.StateChanged += OnStateChanged;
             contentIsland.Environment.SettingChanged += OnSettingChanged;
             inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
@@ -693,9 +703,14 @@ namespace GetStoreAppWebView.Views.Windows
         /// <summary>
         /// 卸载窗口事件
         /// </summary>
-        private void DismountWindowEvent()
+        private void DismountWindowEvent(AppWindow appWindow)
         {
-            AppWindow.Changed -= OnAppWindowChanged;
+            if (appWindow is null)
+            {
+                return;
+            }
+
+            appWindow.Changed -= OnAppWindowChanged;
             contentIsland.Environment.SettingChanged -= OnSettingChanged;
             inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
         }
@@ -722,7 +737,7 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void SetWindowTheme()
         {
-            WindowTheme = string.Equals(ThemeService.AppTheme, ThemeService.ThemeList[0]) ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark : Enum.TryParse(ThemeService.AppTheme, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
+            WindowTheme = string.Equals(ThemeService.AppTheme, ThemeService.ThemeCollection[0]) ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark : Enum.TryParse(ThemeService.AppTheme, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
         }
 
         /// <summary>
@@ -767,6 +782,11 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void SetWindowSize(AppWindow appWindow)
         {
+            if (appWindow is null)
+            {
+                return;
+            }
+
             appWindow.Resize(new(Convert.ToInt32(1000 * contentIsland.RasterizationScale), Convert.ToInt32(700 * contentIsland.RasterizationScale)));
         }
 
@@ -775,6 +795,11 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void SetWindowPosition(AppWindow appWindow)
         {
+            if (appWindow is null)
+            {
+                return;
+            }
+
             // 默认直接显示到窗口中间
             if (DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
             {

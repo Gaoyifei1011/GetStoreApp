@@ -11,7 +11,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     internal partial interface IDODownloadStatusCallback
     {
         /// <summary>
-        /// 每当下载状态发生更改时，传递优化将调用此方法的实现。
+        /// 每当下载状态发生更改后，传递优化将调用此方法的实现。
         /// </summary>
         /// <param name="download">指向其状态更改的 IDODownload 接口的指针。</param>
         /// <param name="status">指向包含下载状态 的DO_DOWNLOAD_STATUS 结构的指针。</param>

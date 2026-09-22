@@ -288,7 +288,7 @@ namespace GetStoreApp.Services.Download
         }
 
         /// <summary>
-        /// 下载状态发生变化触发的事件
+        /// 下载状态发生变化后触发的事件
         /// </summary>
         private static void OnStatusChanged(BackgroundCopyCallback callback, IBackgroundCopyJob downloadJob, BG_JOB_STATE state)
         {

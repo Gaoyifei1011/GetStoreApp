@@ -33,7 +33,7 @@ namespace GetStoreApp.Services.Settings
 
         internal static ReadOnlyCollection<string> WinGetSourceCollection { get; } = ["BuiltinApp", "AppInstaller"];
 
-        internal static List<KeyValuePair<string, PredefinedPackageCatalog>> PredefinedPackageCatalogList { get; } = [];
+        internal static ReadOnlyCollection<KeyValuePair<string, PredefinedPackageCatalog>> PredefinedPackageCatalogCollection { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的是否使用开发版本布尔值和 WinGet 程序包安装方式值
@@ -48,8 +48,9 @@ namespace GetStoreApp.Services.Settings
             DefaultDownloadFolder = (await ApplicationData.GetDefault().LocalCacheFolder.CreateFolderAsync("WinGet", Windows.Storage.CreationCollisionOption.OpenIfExists)).Path;
 
             // 每次获取时读取已经添加的安装源，并去除掉已经被删除的值
-            await Task.Run(() =>
+            PredefinedPackageCatalogCollection = await Task.Run(() =>
             {
+                List<KeyValuePair<string, PredefinedPackageCatalog>> predefinedPackageCatalogList = [];
                 PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
                 winGetDataSourceLock.Enter();
 
@@ -59,7 +60,7 @@ namespace GetStoreApp.Services.Settings
                     foreach (PredefinedPackageCatalog predefinedPackageCatalog in Enum.GetValues<PredefinedPackageCatalog>())
                     {
                         PackageCatalogReference packageCatalogReference = packageManager.GetPredefinedPackageCatalog(predefinedPackageCatalog);
-                        PredefinedPackageCatalogList.Add(KeyValuePair.Create(packageCatalogReference.Info.Name, predefinedPackageCatalog));
+                        predefinedPackageCatalogList.Add(KeyValuePair.Create(packageCatalogReference.Info.Name, predefinedPackageCatalog));
                     }
 
                     if (winGetDataSourceContainer.Values.TryGetValue(CurrentWinGetSource, out object value) && value is Windows.Storage.ApplicationDataCompositeValue compositeValue)
@@ -69,7 +70,7 @@ namespace GetStoreApp.Services.Settings
                         bool isModified = false;
 
                         // 保存检查完成后的数据
-                        foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalogReferenceName in PredefinedPackageCatalogList)
+                        foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalogReferenceName in predefinedPackageCatalogList)
                         {
                             if (string.Equals(winGetDataSourceName.Key, predefinedPackageCatalogReferenceName.Key) && winGetDataSourceName.Value)
                             {
@@ -114,6 +115,7 @@ namespace GetStoreApp.Services.Settings
                 {
                     winGetDataSourceLock.Exit();
                 }
+                return predefinedPackageCatalogList.AsReadOnly();
             });
         }
 
@@ -180,7 +182,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        ///  WinGet 来源发生修改时修改设置存储的 WinGet 来源值
+        ///  WinGet 来源发生修改后修改设置存储的 WinGet 来源值
         /// </summary>
         internal static void SetWinGetSource(string winGetSource)
         {

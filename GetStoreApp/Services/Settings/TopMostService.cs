@@ -56,7 +56,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 使用说明按钮显示发生修改时修改设置存储的窗口置顶值
+        /// 使用说明按钮显示发生修改后修改设置存储的窗口置顶值
         /// </summary>
         internal static void SetTopMost(bool topMost)
         {

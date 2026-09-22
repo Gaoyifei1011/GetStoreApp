@@ -335,7 +335,7 @@ namespace GetStoreApp.Views.UserControls
         #region 第五部分：挂载事件处理
 
         /// <summary>
-        /// 点击选择器栏选中项发生变化时发生的事件
+        /// 点击选择器栏选中项发生变化后发生的事件
         /// </summary>
         private void OnSelectorBarSelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
         {
@@ -430,7 +430,7 @@ namespace GetStoreApp.Views.UserControls
         }
 
         /// <summary>
-        /// 当用户提交搜索查询时发生的事件
+        /// 当用户提交搜索查询后发生的事件
         /// </summary>
         private async void OnQueryLinksQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
@@ -454,7 +454,7 @@ namespace GetStoreApp.Views.UserControls
         }
 
         /// <summary>
-        /// 查询链接输入框内容发生改变时响应的事件
+        /// 查询链接输入框内容发生变化后响应的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(AutoSuggestBox))]
         private void OnQueryLinksTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -571,7 +571,7 @@ namespace GetStoreApp.Views.UserControls
         }
 
         /// <summary>
-        /// 当用户提交搜索查询时发生的事件
+        /// 当用户提交搜索查询后发生的事件
         /// </summary>
         private async void OnSearchAppsQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
@@ -593,7 +593,7 @@ namespace GetStoreApp.Views.UserControls
         }
 
         /// <summary>
-        /// 搜索应用文本框内容发生改变时响应的事件
+        /// 搜索应用文本框内容发生变化后响应的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(AutoSuggestBox))]
         private void OnSearchAppsTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)

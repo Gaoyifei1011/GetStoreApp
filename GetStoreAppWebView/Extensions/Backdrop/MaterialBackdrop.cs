@@ -62,7 +62,7 @@ namespace GetStoreAppWebView.Extensions.Backdrop
         }
 
         /// <summary>
-        /// 重写此方法，以便在 GetDefaultSystemBackdropConfiguration 返回的对象发生变化时调用。
+        /// 重写此方法，以便在 GetDefaultSystemBackdropConfiguration 返回的对象发生变化后调用
         /// </summary>
         protected override void OnDefaultSystemBackdropConfigurationChanged(ICompositionSupportsSystemBackdrop target, XamlRoot xamlRoot)
         {

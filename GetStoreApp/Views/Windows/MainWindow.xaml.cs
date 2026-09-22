@@ -192,7 +192,7 @@ namespace GetStoreApp.Views.Windows
             Current = this;
             InitializeComponent();
             InitializeWindowData(AppWindow);
-            MountWindowEvent();
+            MountWindowEvent(AppWindow);
             MountWindowWndProc(AppWindow.Id);
             SetWindowTheme();
             SetSystemBackdrop();
@@ -216,7 +216,7 @@ namespace GetStoreApp.Views.Windows
             {
                 string displayName = navigationViewItem.NavigationTitle;
                 string tag = navigationViewItem.NavigationTag;
-                await PinToStartScreenAsync(displayName, tag);
+                await PinToStartScreenAsync(AppWindow.Id, displayName, tag);
             }
         }
 
@@ -253,7 +253,7 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 窗口大小发生改变时的事件
+        /// 窗口大小发生变化后的事件
         /// </summary>
         private void OnSizeChanged(object sender, WindowSizeChangedEventArgs args)
         {
@@ -330,7 +330,7 @@ namespace GetStoreApp.Views.Windows
 
                 if (contentDialogResult is ContentDialogResult.Primary)
                 {
-                    DismountWindowEvent();
+                    DismountWindowEvent(AppWindow);
                     DismountWindowWndProc(sender.Id);
                     DownloadSchedulerService.TerminateDownload();
                     (Application.Current as MainApp).Dispose();
@@ -345,14 +345,14 @@ namespace GetStoreApp.Views.Windows
             }
             else
             {
-                DismountWindowEvent();
+                DismountWindowEvent(AppWindow);
                 DismountWindowWndProc(sender.Id);
                 (Application.Current as MainApp).Dispose();
             }
         }
 
         /// <summary>
-        /// 内容岛状态发生更改时触发的事件
+        /// 内容岛状态发生更改后触发的事件
         /// </summary>
         private void OnStateChanged(ContentIsland sender, ContentIslandStateChangedEventArgs args)
         {
@@ -364,7 +364,7 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 内容岛设置发生更改时触发的事件
+        /// 内容岛设置发生更改后触发的事件
         /// </summary>
         private void OnSettingChanged(ContentIslandEnvironment sender, ContentEnvironmentSettingChangedEventArgs args)
         {
@@ -483,7 +483,7 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 当后退按钮收到交互（如单击或点击）时发生
+        /// 当后退按钮收到交互（如单击或点击）时发生的事件
         /// </summary>
         private void OnBackClicked(object sender, RoutedEventArgs args)
         {
@@ -518,7 +518,7 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 在当前导航控件所选项更改时发生
+        /// 在当前导航控件所选项更改时发生的事件
         /// </summary>
         private void OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
@@ -560,7 +560,7 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 导航完成后发生
+        /// 导航完成后发生的事件
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
@@ -590,7 +590,7 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 导航失败时发生
+        /// 导航失败后发生的事件
         /// </summary>
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
@@ -600,7 +600,7 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 网络状态发生变化时触发的事件
+        /// 网络状态发生变化后触发的事件
         /// </summary>
         private void OnNetworkStatusChanged(object sender)
         {
@@ -620,7 +620,7 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 设置选项发生变化时触发的事件
+        /// 设置选项发生变化后触发的事件
         /// </summary>
         private void OnServicePropertyChanged(object sender, PropertyChangedEventArgs args)
         {
@@ -651,6 +651,11 @@ namespace GetStoreApp.Views.Windows
         [DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
         private void InitializeWindowData(AppWindow appWindow)
         {
+            if (appWindow is null)
+            {
+                return;
+            }
+
             WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
             overlappedPresenter = appWindow.Presenter as OverlappedPresenter;
             ExtendsContentIntoTitleBar = true;
@@ -708,10 +713,15 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 挂载窗口事件
         /// </summary>
-        private void MountWindowEvent()
+        private void MountWindowEvent(AppWindow appWindow)
         {
-            AppWindow.Changed += OnAppWindowChanged;
-            AppWindow.Closing += OnAppWindowClosing;
+            if (appWindow is null)
+            {
+                return;
+            }
+
+            appWindow.Changed += OnAppWindowChanged;
+            appWindow.Closing += OnAppWindowClosing;
             contentIsland.StateChanged += OnStateChanged;
             contentIsland.Environment.SettingChanged += OnSettingChanged;
             inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
@@ -725,11 +735,16 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 卸载窗口事件
         /// </summary>
-        private void DismountWindowEvent()
+        private void DismountWindowEvent(AppWindow appWindow)
         {
+            if (appWindow is null)
+            {
+                return;
+            }
+
             try
             {
-                AppWindow.Changed -= OnAppWindowChanged;
+                appWindow.Changed -= OnAppWindowChanged;
                 contentIsland.Environment.SettingChanged -= OnSettingChanged;
                 inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
                 ThemeService.PropertyChanged -= OnServicePropertyChanged;
@@ -749,7 +764,7 @@ namespace GetStoreApp.Views.Windows
         private void MountWindowWndProc(Microsoft.UI.WindowId windowId)
         {
             mainWindowSubClassProc = new(MainWindowSubClassProc);
-            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0, nint.Zero);
+            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(windowId), mainWindowSubClassProc, 0, nint.Zero);
         }
 
         /// <summary>
@@ -757,7 +772,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void DismountWindowWndProc(Microsoft.UI.WindowId windowId)
         {
-            Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0);
+            Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(windowId), mainWindowSubClassProc, 0);
         }
 
         /// <summary>
@@ -810,6 +825,11 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void SetWindowPosition(AppWindow appWindow)
         {
+            if (appWindow is null)
+            {
+                return;
+            }
+
             // 默认直接显示到窗口中间
             if (DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
             {
@@ -1442,7 +1462,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 固定到开始屏幕
         /// </summary>
-        private async Task PinToStartScreenAsync(string displayName, string tag)
+        private async Task PinToStartScreenAsync(Microsoft.UI.WindowId windowId, string displayName, string tag)
         {
             if (!string.IsNullOrEmpty(displayName) && !string.IsNullOrEmpty(tag))
             {
@@ -1483,7 +1503,7 @@ namespace GetStoreApp.Views.Windows
                         secondaryTile.VisualElements.Square71x71Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
                         secondaryTile.VisualElements.Square44x44Logo = new(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
                         secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
-                        InitializeWithWindow.Initialize(secondaryTile, Win32Interop.GetWindowFromWindowId(AppWindow.Id));
+                        InitializeWithWindow.Initialize(secondaryTile, Win32Interop.GetWindowFromWindowId(windowId));
                         isPinnedSuccessfully = await secondaryTile.RequestCreateAsync();
                     }
                     catch (Exception e)

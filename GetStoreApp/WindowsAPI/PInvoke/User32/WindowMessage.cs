@@ -138,7 +138,7 @@
         WM_WININICHANGE = 0x001A,
 
         /// <summary>
-        /// 当 SystemParametersInfo 函数更改系统范围设置或策略设置发生更改时，将发送到所有顶级窗口的消息。
+        /// 当 SystemParametersInfo 函数更改系统范围设置或策略设置发生更改后，将发送到所有顶级窗口的消息。
         /// </summary>
         WM_SETTINGCHANGE = WM_WININICHANGE,
 
@@ -158,7 +158,7 @@
         WM_FONTCHANGE = 0x001D,
 
         /// <summary>
-        /// 每当系统时间发生更改时发送的消息。
+        /// 每当系统时间发生更改后发送的消息。
         /// </summary>
         WM_TIMECHANGE = 0x001E,
 
@@ -218,7 +218,7 @@
         WM_SPOOLERSTATUS = 0x002A,
 
         /// <summary>
-        /// 当按钮、组合框、列表框或菜单的可视方面发生更改时，发送到所有者绘制按钮、组合框、列表框或菜单的父窗口。
+        /// 当按钮、组合框、列表框或菜单的可视方面发生更改后，发送到所有者绘制按钮、组合框、列表框或菜单的父窗口。
         /// </summary>
         WM_DRAWITEM = 0x002B,
 
@@ -406,7 +406,7 @@
         WM_STYLECHANGED = 0x007D,
 
         /// <summary>
-        /// 显示分辨率发生更改时 ，会将 WM_DISPLAYCHANGE 消息发送到所有窗口。
+        /// 显示分辨率发生更改后 ，会将 WM_DISPLAYCHANGE 消息发送到所有窗口。
         /// </summary>
         WM_DISPLAYCHANGE = 0x007E,
 
@@ -432,7 +432,7 @@
         WM_NCDESTROY = 0x0082,
 
         /// <summary>
-        /// 在必须计算窗口工作区的大小和位置时发送。 通过处理此消息，当窗口的大小或位置发生更改时，应用程序可以控制窗口工作区的内容。
+        /// 在必须计算窗口工作区的大小和位置时发送。 通过处理此消息，当窗口的大小或位置发生更改后，应用程序可以控制窗口工作区的内容。
         /// </summary>
         WM_NCCALCSIZE = 0x0083,
 
@@ -1786,7 +1786,7 @@
         // 0x0235 - 0x0237 消息未定义
 
         /// <summary>
-        /// 当附加了数字化仪的监视器的设置发生更改时，发送到窗口。 此消息包含有关显示模式缩放的信息。
+        /// 当附加了数字化仪的监视器的设置发生更改后，发送到窗口。 此消息包含有关显示模式缩放的信息。
         /// </summary>
         WM_POINTERDEVICECHANGE = 0x0238,
 
@@ -2191,7 +2191,7 @@
         WM_DESTROYCLIPBOARD = 0x0307,
 
         /// <summary>
-        /// 当剪贴板的内容发生更改时，发送到剪贴板查看器链中的第一个窗口。 这使剪贴板查看器窗口能够显示剪贴板的新内容。
+        /// 当剪贴板的内容发生更改后，发送到剪贴板查看器链中的第一个窗口。 这使剪贴板查看器窗口能够显示剪贴板的新内容。
         /// </summary>
         WM_DRAWCLIPBOARD = 0x0308,
 
@@ -2282,7 +2282,7 @@
         WM_DESKTOPNOTIFY = 0x031C,
 
         /// <summary>
-        /// 剪贴板的内容发生更改时发送。
+        /// 剪贴板的内容发生更改后发送。
         /// </summary>
         WM_CLIPBOARDUPDATE = 0x031D,
 
@@ -2292,7 +2292,7 @@
         WM_DWMCOMPOSITIONCHANGED = 0x031E,
 
         /// <summary>
-        /// 当非工作区呈现策略发生更改时发送。
+        /// 当非工作区呈现策略发生更改后发送。
         /// </summary>
         WM_DWMNCRENDERINGCHANGED = 0x031F,
 

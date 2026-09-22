@@ -217,7 +217,7 @@ namespace GetStoreApp.Views.Dialogs
         #region 第四部分：挂载事件处理
 
         /// <summary>
-        /// 数据源名称文本输入框内容发生更改时触发的事件
+        /// 数据源名称文本输入框内容发生更改后触发的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(TextBox))]
         private void OnSourceNameTextChanged(object sender, TextChangedEventArgs args)
@@ -229,7 +229,7 @@ namespace GetStoreApp.Views.Dialogs
         }
 
         /// <summary>
-        /// 数据源链接文本输入框内容发生更改时触发的事件
+        /// 数据源链接文本输入框内容发生更改后触发的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(TextBox))]
         private void OnSourceUriTextChanged(object sender, TextChangedEventArgs args)
@@ -241,7 +241,7 @@ namespace GetStoreApp.Views.Dialogs
         }
 
         /// <summary>
-        /// 自定义标头文本输入框内容发生更改时触发的事件
+        /// 自定义标头文本输入框内容发生更改后触发的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(TextBox))]
         private void OnCustomHeaderTextChanged(object sender, TextChangedEventArgs args)
@@ -253,7 +253,7 @@ namespace GetStoreApp.Views.Dialogs
         }
 
         /// <summary>
-        /// 数据源类型文本输入框内容发生更改时触发的事件
+        /// 数据源类型文本输入框内容发生更改后触发的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(TextBox))]
         private void OnSourceTypeTextChanged(object sender, TextChangedEventArgs args)
@@ -265,7 +265,7 @@ namespace GetStoreApp.Views.Dialogs
         }
 
         /// <summary>
-        /// 是否为显性开关发生更改时触发的事件
+        /// 是否为显性开关发生更改后触发的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
         private void OnExplicitToggled(object sender, RoutedEventArgs args)
@@ -277,7 +277,7 @@ namespace GetStoreApp.Views.Dialogs
         }
 
         /// <summary>
-        /// 数据源信任等级发生更改时触发的事件
+        /// 数据源信任等级发生更改后触发的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(ComboBox))]
         private void OnCatalogTrustLevelSelectionChanged(object sender, SelectionChangedEventArgs args)

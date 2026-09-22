@@ -29,7 +29,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 写入日志
         /// </summary>
-        internal static void WriteLog(LoggingLevel logLevel, string nameSpaceName, string className, string methodName, int index, ReadOnlyDictionary<string, string> loggingInformationDict)
+        internal static void WriteLog(LoggingLevel logLevel, string nameSpaceName, string className, string methodName, int index, Dictionary<string, string> loggingInformationDict)
         {
             if (string.IsNullOrEmpty(nameSpaceName) || string.IsNullOrEmpty(className) || string.IsNullOrEmpty(methodName) || loggingInformationDict is null)
             {

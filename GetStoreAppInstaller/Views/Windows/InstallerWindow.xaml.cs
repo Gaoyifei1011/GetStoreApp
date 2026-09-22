@@ -912,14 +912,14 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             InitializeComponent();
             InitializeWindowData(AppWindow);
-            MountWindowEvent();
+            MountWindowEvent(AppWindow);
             MountWindowWndProc(AppWindow.Id);
             SetWindowTheme();
             SetSystemBackdrop();
             SetWindowSize(AppWindow);
             SetWindowPosition(AppWindow);
             SetClassicMenuTheme(AppWindow.TitleBar, (Content as FrameworkElement).ActualTheme);
-            EnableElevatedDragDrop();
+            EnableElevatedDragDrop(AppWindow.Id);
             CreateAppxInstance();
         }
 
@@ -968,7 +968,7 @@ namespace GetStoreAppInstaller.Views.Windows
         }
 
         /// <summary>
-        /// 窗口大小发生改变时的事件
+        /// 窗口大小发生变化后的事件
         /// </summary>
         private void OnSizeChanged(object sender, WindowSizeChangedEventArgs args)
         {
@@ -1015,14 +1015,14 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnAppWindowClosing(AppWindow sender, AppWindowClosingEventArgs args)
         {
-            DismountWindowEvent();
+            DismountWindowEvent(AppWindow);
             DismountWindowWndProc(sender.Id);
             DisableElevatedDragDrop();
             (Application.Current as InstallerApp).Dispose();
         }
 
         /// <summary>
-        /// 内容岛状态发生更改时触发的事件
+        /// 内容岛状态发生更改后触发的事件
         /// </summary>
         private void OnStateChanged(ContentIsland sender, ContentIslandStateChangedEventArgs args)
         {
@@ -1035,7 +1035,7 @@ namespace GetStoreAppInstaller.Views.Windows
         }
 
         /// <summary>
-        /// 内容岛设置发生更改时触发的事件
+        /// 内容岛设置发生更改后触发的事件
         /// </summary>
         private void OnSettingChanged(ContentIslandEnvironment sender, ContentEnvironmentSettingChangedEventArgs args)
         {
@@ -1549,7 +1549,7 @@ namespace GetStoreAppInstaller.Views.Windows
         }
 
         /// <summary>
-        /// 应用安装状态发生改变时触发的事件
+        /// 应用安装状态发生变化后触发的事件
         /// </summary>
         private void OnPackageInstallProgress(IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> result, PackageDeploymentProgress progress)
         {
@@ -1625,6 +1625,11 @@ namespace GetStoreAppInstaller.Views.Windows
         [DynamicWindowsRuntimeCast(typeof(OverlappedPresenter))]
         private void InitializeWindowData(AppWindow appWindow)
         {
+            if (appWindow is null)
+            {
+                return;
+            }
+
             WindowTitle = RuntimeHelper.IsElevated ? TitleString + RunningAdministratorString : TitleString;
             overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
             ExtendsContentIntoTitleBar = true;
@@ -1640,10 +1645,15 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 挂载窗口事件
         /// </summary>
-        private void MountWindowEvent()
+        private void MountWindowEvent(AppWindow appWindow)
         {
-            AppWindow.Changed += OnAppWindowChanged;
-            AppWindow.Closing += OnAppWindowClosing;
+            if (appWindow is null)
+            {
+                return;
+            }
+
+            appWindow.Changed += OnAppWindowChanged;
+            appWindow.Closing += OnAppWindowClosing;
             contentIsland.StateChanged += OnStateChanged;
             contentIsland.Environment.SettingChanged += OnSettingChanged;
             inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
@@ -1652,9 +1662,14 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 卸载窗口事件
         /// </summary>
-        private void DismountWindowEvent()
+        private void DismountWindowEvent(AppWindow appWindow)
         {
-            AppWindow.Changed -= OnAppWindowChanged;
+            if (appWindow is null)
+            {
+                return;
+            }
+
+            appWindow.Changed -= OnAppWindowChanged;
             contentIsland.Environment.SettingChanged -= OnSettingChanged;
             inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
         }
@@ -1681,7 +1696,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void SetWindowTheme()
         {
-            WindowTheme = string.Equals(ThemeService.AppTheme, ThemeService.ThemeList[0]) ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark : Enum.TryParse(ThemeService.AppTheme, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
+            WindowTheme = string.Equals(ThemeService.AppTheme, ThemeService.ThemeCollection[0]) ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark : Enum.TryParse(ThemeService.AppTheme, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
         }
 
         /// <summary>
@@ -1726,6 +1741,11 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void SetWindowSize(AppWindow appWindow)
         {
+            if (appWindow is null)
+            {
+                return;
+            }
+
             rasterizationScale = contentIsland.RasterizationScale;
             appWindow.Resize(new(Convert.ToInt32(1000 * contentIsland.RasterizationScale), Convert.ToInt32(700 * contentIsland.RasterizationScale)));
         }
@@ -1735,6 +1755,11 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void SetWindowPosition(AppWindow appWindow)
         {
+            if (appWindow is null)
+            {
+                return;
+            }
+
             // 默认直接显示到窗口中间
             if (DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
             {
@@ -2017,8 +2042,8 @@ namespace GetStoreAppInstaller.Views.Windows
                                         if (packageManifestInformation.ApplicationDict.Count > 0)
                                         {
                                             packageInformation.LanguageList.AddRange(packageManifestInformation.LanguageList);
-                                            string applicationFileName = ParsePackageBundleCompatibleFile(packageManifestInformation.ApplicationDict.AsReadOnly());
-                                            string architecture = ParsePackageBundleArchitecture(packageManifestInformation.ApplicationDict.AsReadOnly());
+                                            string applicationFileName = ParsePackageBundleCompatibleFile(packageManifestInformation.ApplicationDict);
+                                            string architecture = ParsePackageBundleArchitecture(packageManifestInformation.ApplicationDict);
                                             packageInformation.ProcessorArchitecture = architecture;
 
                                             if (!string.IsNullOrEmpty(applicationFileName))
@@ -2702,7 +2727,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 解析应用包支持的处理器架构
         /// </summary>
-        private string ParsePackageBundleArchitecture(ReadOnlyDictionary<ProcessorArchitecture, string> applicationDict)
+        private string ParsePackageBundleArchitecture(Dictionary<ProcessorArchitecture, string> applicationDict)
         {
             string architecture = string.Empty;
 
@@ -2765,7 +2790,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 解析应用捆绑包适合主机系统的文件
         /// </summary>
-        private string ParsePackageBundleCompatibleFile(ReadOnlyDictionary<ProcessorArchitecture, string> applicationDict)
+        private string ParsePackageBundleCompatibleFile(Dictionary<ProcessorArchitecture, string> applicationDict)
         {
             Architecture osArchitecture = RuntimeInformation.ProcessArchitecture;
             string appxFile = null;
@@ -3426,13 +3451,13 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 启用提升权限下的拖放支持
         /// </summary>
-        private void EnableElevatedDragDrop()
+        private void EnableElevatedDragDrop(Microsoft.UI.WindowId windowId)
         {
             if (RuntimeHelper.IsElevated)
             {
                 User32Library.ChangeWindowMessageFilter(WindowMessage.WM_DROPFILES, ChangeFilterFlags.MSGFLT_ADD);
                 User32Library.ChangeWindowMessageFilter(WindowMessage.WM_COPYGLOBALDATA, ChangeFilterFlags.MSGFLT_ADD);
-                Shell32Library.DragAcceptFiles(Win32Interop.GetWindowFromWindowId(AppWindow.Id), true);
+                Shell32Library.DragAcceptFiles(Win32Interop.GetWindowFromWindowId(windowId), true);
             }
         }
 

@@ -540,7 +540,7 @@ namespace GetStoreApp.Views.Pages
         #region 第五部分：挂载事件处理
 
         /// <summary>
-        /// 选中项发生变化时触发的事件
+        /// 选中项发生变化后触发的事件
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(ListView))]
         private async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)

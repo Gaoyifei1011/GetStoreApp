@@ -2,7 +2,7 @@
 using GetStoreAppWebView.Services.Root;
 using Microsoft.UI.Xaml;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace GetStoreAppWebView.Services.Settings
 {
@@ -17,17 +17,21 @@ namespace GetStoreAppWebView.Services.Settings
 
         internal static string AppTheme { get; set; }
 
-        internal static List<string> ThemeList { get; } = [];
+        internal static ReadOnlyCollection<string> ThemeCollection { get; } = [nameof(ElementTheme.Default), nameof(ElementTheme.Light), nameof(ElementTheme.Dark)];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的主题值
         /// </summary>
         internal static void InitializeTheme()
         {
-            ThemeList.Add(nameof(ElementTheme.Default));
-            ThemeList.Add(nameof(ElementTheme.Light));
-            ThemeList.Add(nameof(ElementTheme.Dark));
-            defaultAppTheme = ThemeList.Find(item => string.Equals(item, nameof(ElementTheme.Default), StringComparison.OrdinalIgnoreCase));
+            foreach (string themeItem in ThemeCollection)
+            {
+                if (string.Equals(themeItem, nameof(ElementTheme.Default), StringComparison.OrdinalIgnoreCase))
+                {
+                    defaultAppTheme = themeItem;
+                    break;
+                }
+            }
             AppTheme = GetTheme();
         }
 
@@ -43,7 +47,15 @@ namespace GetStoreAppWebView.Services.Settings
                 return defaultAppTheme;
             }
 
-            string selectedTheme = ThemeList.Find(item => string.Equals(item, theme, StringComparison.OrdinalIgnoreCase));
+            string selectedTheme = default;
+            foreach (string themeItem in ThemeCollection)
+            {
+                if (string.Equals(themeItem, theme, StringComparison.OrdinalIgnoreCase))
+                {
+                    selectedTheme = themeItem;
+                    break;
+                }
+            }
             return string.IsNullOrEmpty(selectedTheme) ? defaultAppTheme : selectedTheme;
         }
     }

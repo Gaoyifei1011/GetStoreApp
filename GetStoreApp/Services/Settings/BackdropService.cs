@@ -77,7 +77,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 应用背景色发生修改时修改设置存储的背景色值
+        /// 应用背景色发生修改后修改设置存储的背景色值
         /// </summary>
         internal static void SetBackdrop(string backdrop)
         {

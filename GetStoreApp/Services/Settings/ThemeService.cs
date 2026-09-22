@@ -2,7 +2,6 @@
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
@@ -78,7 +77,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 应用主题发生修改时修改设置存储的主题值
+        /// 应用主题发生修改后修改设置存储的主题值
         /// </summary>
         internal static void SetTheme(string theme)
         {
