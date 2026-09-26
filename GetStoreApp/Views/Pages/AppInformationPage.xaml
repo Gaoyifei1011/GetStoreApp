@@ -46,41 +46,45 @@
                 IsExpanded="True">
 
                 <Expander.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+                    <CommandBar
+                        Margin="0,0,-15,0"
+                        Padding="0"
+                        VerticalAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                        DefaultLabelPosition="Right"
+                        IsDynamicOverflowEnabled="False">
 
-                        <FontIcon
-                            Grid.Column="0"
-                            Margin="0,0,12,0"
-                            FontSize="16"
-                            Glyph="&#xE946;" />
+                        <CommandBar.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-                        <TextBlock
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/AppInformation')}" />
+                                <FontIcon
+                                    Grid.Column="0"
+                                    Margin="0,0,12,0"
+                                    FontSize="16"
+                                    Glyph="&#xE946;" />
 
-                        <CommandBar
-                            Grid.Column="2"
-                            Margin="0,0,-15,0"
-                            CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
-                            DefaultLabelPosition="Right">
+                                <TextBlock
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/AppInformation')}" />
+                            </Grid>
+                        </CommandBar.Content>
 
-                            <CommandBar.PrimaryCommands>
-                                <AppBarButton Click="{x:Bind OnCopyClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Copy')}">
+                        <CommandBar.PrimaryCommands>
+                            <AppBarButton Click="{x:Bind OnCopyClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('AppInformation/Copy')}">
 
-                                    <AppBarButton.Icon>
-                                        <FontIcon Glyph="&#xE8C8;" />
-                                    </AppBarButton.Icon>
-                                </AppBarButton>
-                            </CommandBar.PrimaryCommands>
-                        </CommandBar>
-                    </Grid>
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="&#xE8C8;" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                        </CommandBar.PrimaryCommands>
+                    </CommandBar>
                 </Expander.Header>
 
                 <Grid Margin="0,0,10,0" RowSpacing="3">

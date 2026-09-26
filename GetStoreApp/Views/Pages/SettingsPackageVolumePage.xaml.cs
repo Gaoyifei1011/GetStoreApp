@@ -251,10 +251,11 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 设置说明
         /// </summary>
-        private void OnSettingsInstructionClicked(object sender, RoutedEventArgs args)
+        private async void OnSettingsInstructionClicked(object sender, RoutedEventArgs args)
         {
             if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
             {
+                await Task.Delay(300);
                 settingsPage.ShowSettingsInstruction();
             }
         }

@@ -38,66 +38,73 @@
 
             <Grid
                 Height="60"
-                Padding="0,8,0,8"
                 BorderThickness="1"
                 CornerRadius="{StaticResource ControlCornerRadius}">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <FontIcon
-                    Grid.Column="0"
-                    Margin="0,0,12,0"
-                    FontSize="16"
-                    Glyph="&#xE71E;" />
-
-                <TextBlock
-                    Grid.Column="1"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/QueryResult')}" />
-
-                <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
-
-                <StackPanel Grid.Column="3" VerticalAlignment="Center">
-
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock
-                            Grid.Column="0"
-                            HorizontalAlignment="Left"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/QueriedAppType')}" />
-
-                        <TextBlock
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/NonPackagedApp')}"
-                            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPackagedApp), Mode=OneWay}" />
-
-                        <TextBlock
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/PackagedApp')}"
-                            Visibility="{x:Bind IsPackagedApp, Mode=OneWay}" />
-                    </Grid>
-
-                    <TextBlock Text="{x:Bind x:String.Format(QueryLinksResultCountInfoString, QueryLinksResultCollection.Count), Mode=OneWay}" />
-                </StackPanel>
-
                 <CommandBar
-                    Grid.Column="4"
+                    Padding="0"
                     VerticalAlignment="Center"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Center"
                     Background="Transparent"
-                    DefaultLabelPosition="Right">
+                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                    DefaultLabelPosition="Right"
+                    IsDynamicOverflowEnabled="False">
+
+                    <CommandBar.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <FontIcon
+                                Grid.Column="0"
+                                Margin="0,0,12,0"
+                                FontSize="16"
+                                Glyph="&#xE71E;" />
+
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/QueryResult')}" />
+
+                            <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
+
+                            <StackPanel Grid.Column="3" VerticalAlignment="Center">
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Left"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/QueriedAppType')}" />
+
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Left"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/NonPackagedApp')}"
+                                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPackagedApp), Mode=OneWay}" />
+
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Left"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/PackagedApp')}"
+                                        Visibility="{x:Bind IsPackagedApp, Mode=OneWay}" />
+                                </Grid>
+
+                                <TextBlock Text="{x:Bind x:String.Format(QueryLinksResultCountInfoString, QueryLinksResultCollection.Count), Mode=OneWay}" />
+                            </StackPanel>
+                        </Grid>
+                    </CommandBar.Content>
 
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnBackToHomePageClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/BackToHomePage')}">
@@ -126,7 +133,6 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <!--  查询链接结果信息栏  -->
                 <Grid
                     Grid.Row="0"
                     Margin="0,0,0,3"
@@ -141,39 +147,48 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
+                    <!--  查询链接结果信息栏  -->
                     <Grid
                         Grid.Row="0"
-                        Height="50"
-                        Padding="16,0"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                         BorderThickness="0,0,0,1">
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <FontIcon
-                            Grid.Column="0"
-                            Margin="0,0,12,0"
-                            FontSize="16"
-                            Glyph="&#xE946;" />
-
-                        <TextBlock
-                            Grid.Column="1"
-                            Margin="0,0,0,2"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/QueriedAppInfo')}" />
-
                         <CommandBar
-                            Grid.Column="2"
-                            Margin="0,0,-15,0"
+                            Padding="0"
                             VerticalAlignment="Center"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Center"
                             Background="Transparent"
                             CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
-                            DefaultLabelPosition="Right">
+                            DefaultLabelPosition="Right"
+                            IsDynamicOverflowEnabled="False">
+
+                            <CommandBar.Content>
+                                <Grid
+                                    Grid.Row="0"
+                                    Height="50"
+                                    Padding="16,0">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <FontIcon
+                                        Grid.Column="0"
+                                        Margin="0,0,12,0"
+                                        FontSize="16"
+                                        Glyph="&#xE946;" />
+
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        Margin="0,0,0,2"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/QueriedAppInfo')}" />
+                                </Grid>
+                            </CommandBar.Content>
 
                             <CommandBar.PrimaryCommands>
                                 <AppBarButton Click="{x:Bind OnCopyQueriedAppInfoClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/CopyQueriedAppInfo')}">
@@ -271,59 +286,52 @@
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                         BorderThickness="0,0,0,1">
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <FontIcon
-                            Grid.Column="0"
-                            Margin="0,0,12,0"
-                            FontSize="16"
-                            Glyph="&#xE8FD;" />
-
-                        <TextBlock
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/FileList')}" />
-
                         <CommandBar
-                            x:Name="NormalModeCommandBar"
-                            Grid.Column="2"
                             Margin="0,0,-15,0"
+                            Padding="0"
                             VerticalAlignment="Center"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Center"
                             Background="Transparent"
                             CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
                             DefaultLabelPosition="Right"
-                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
+                            IsDynamicOverflowEnabled="False">
+
+                            <CommandBar.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <FontIcon
+                                        Grid.Column="0"
+                                        Margin="0,0,12,0"
+                                        FontSize="16"
+                                        Glyph="&#xE8FD;" />
+
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/FileList')}" />
+                                </Grid>
+                            </CommandBar.Content>
 
                             <CommandBar.PrimaryCommands>
                                 <AppBarButton
                                     Click="{x:Bind OnSelectClicked}"
                                     Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/Select')}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/SelectToolTip')}">
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/SelectToolTip')}"
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
 
                                     <AppBarButton.Icon>
                                         <FontIcon Glyph="&#xE762;" />
                                     </AppBarButton.Icon>
                                 </AppBarButton>
-                            </CommandBar.PrimaryCommands>
-                        </CommandBar>
 
-                        <CommandBar
-                            x:Name="SelectionModeCommandBar"
-                            Grid.Column="2"
-                            Margin="0,0,-15,0"
-                            VerticalAlignment="Center"
-                            Background="Transparent"
-                            CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
-                            DefaultLabelPosition="Right"
-                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
-
-                            <CommandBar.PrimaryCommands>
-                                <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/MultiSelect')}">
+                                <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/MultiSelect')}" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
 
                                     <AppBarButton.Icon>
                                         <FontIcon Glyph="&#xE762;" />
@@ -355,7 +363,10 @@
                                     </AppBarButton.Flyout>
                                 </AppBarButton>
 
-                                <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/Copy')}" ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/CopyToolTip')}">
+                                <AppBarButton
+                                    Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/Copy')}"
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/CopyToolTip')}"
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
 
                                     <AppBarButton.Icon>
                                         <FontIcon Glyph="&#xE8C8;" />
@@ -376,7 +387,10 @@
                                     </AppBarButton.Flyout>
                                 </AppBarButton>
 
-                                <AppBarButton Click="{x:Bind OnDownloadClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/Download')}">
+                                <AppBarButton
+                                    Click="{x:Bind OnDownloadClicked}"
+                                    Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/Download')}"
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
 
                                     <AppBarButton.Icon>
                                         <FontIcon Glyph="&#xE74B;" />
@@ -386,7 +400,8 @@
                                 <AppBarButton
                                     Click="{x:Bind OnCancelClicked}"
                                     Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/Cancel')}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/CancelToolTip')}">
+                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/CancelToolTip')}"
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
 
                                     <AppBarButton.Icon>
                                         <FontIcon Glyph="&#xE711;" />

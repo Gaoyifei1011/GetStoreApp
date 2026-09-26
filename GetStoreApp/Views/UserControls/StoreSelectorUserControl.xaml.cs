@@ -876,16 +876,16 @@ namespace GetStoreApp.Views.UserControls
                     string cookie = await QueryLinksHelper.GetCookieAsync();
 
                     // 获取应用信息
-                    (bool requestResult, AppInfoModel appInfo) appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
-                    queryLinksResult.requestResult = appInformationResult.requestResult;
-                    queryLinksResult.appInfoItem = appInformationResult.appInfo;
+                    (bool requestResult, AppInfoModel appInfo) = await QueryLinksHelper.GetAppInformationAsync(productId);
+                    queryLinksResult.requestResult = requestResult;
+                    queryLinksResult.appInfoItem = appInfo;
 
-                    if (appInformationResult.requestResult)
+                    if (requestResult)
                     {
                         List<QueryLinksResultModel> queryLinksResultList = [];
 
                         // 解析非商店应用数据
-                        if (string.IsNullOrEmpty(appInformationResult.appInfo.CategoryID))
+                        if (string.IsNullOrEmpty(appInfo.CategoryID))
                         {
                             queryLinksResult.isPackagedApp = false;
                             if (await QueryLinksHelper.GetNonAppxPackagesAsync(productId) is ReadOnlyCollection<QueryLinksResultModel> nonAppxPackagesCollection && nonAppxPackagesCollection.Count > 0)
@@ -897,7 +897,7 @@ namespace GetStoreApp.Views.UserControls
                         else
                         {
                             queryLinksResult.isPackagedApp = true;
-                            string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.appInfo.CategoryID, channelInternalName);
+                            string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInfo.CategoryID, channelInternalName);
 
                             if (!string.IsNullOrEmpty(fileListXml) && await QueryLinksHelper.GetAppxPackagesAsync(fileListXml, channelInternalName) is ReadOnlyCollection<QueryLinksResultModel> appxPackagesCollection && appxPackagesCollection.Count > 0)
                             {

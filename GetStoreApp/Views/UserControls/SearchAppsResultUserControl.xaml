@@ -34,43 +34,49 @@
 
             <Grid
                 Height="60"
-                Padding="0,8,0,8"
                 BorderThickness="1"
                 CornerRadius="{StaticResource ControlCornerRadius}">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <FontIcon
-                    Grid.Column="0"
-                    Margin="0,0,12,0"
-                    FontSize="16"
-                    Glyph="&#xE71E;" />
-
-                <TextBlock
-                    Grid.Column="1"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchAppsResult/SearchResult')}" />
-
-                <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
-
-                <TextBlock
-                    Grid.Column="3"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Text="{x:Bind x:String.Format(SearchAppsResultCountInfoString, SearchAppsResultCollection.Count), Mode=OneWay}" />
-
                 <CommandBar
-                    Grid.Column="4"
+                    Padding="0"
                     VerticalAlignment="Center"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Center"
                     Background="Transparent"
-                    DefaultLabelPosition="Right">
+                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                    DefaultLabelPosition="Right"
+                    IsDynamicOverflowEnabled="False">
+
+                    <CommandBar.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <FontIcon
+                                Grid.Column="0"
+                                Margin="0,0,12,0"
+                                FontSize="16"
+                                Glyph="&#xE71E;" />
+
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchAppsResult/SearchResult')}" />
+
+                            <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
+
+                            <TextBlock
+                                Grid.Column="3"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind x:String.Format(SearchAppsResultCountInfoString, SearchAppsResultCollection.Count), Mode=OneWay}" />
+                        </Grid>
+                    </CommandBar.Content>
 
                     <CommandBar.PrimaryCommands>
                         <AppBarButton Click="{x:Bind OnBackToHomePageClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('SearchAppsResult/BackToHomePage')}">

@@ -1151,13 +1151,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 显示使用说明
         /// </summary>
-        internal async void ShowUseInstruction()
+        internal void ShowUseInstruction()
         {
             WinGetPaneKind = WinGetPaneKind.UseInstruction;
             if (!WinGetSplitView.IsPaneOpen)
             {
                 WinGetSplitView.OpenPaneLength = 320;
-                await Task.Delay(300);
                 WinGetSplitView.IsPaneOpen = true;
             }
         }

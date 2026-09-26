@@ -28,55 +28,60 @@
             Grid.Row="0"
             Height="60"
             Margin="30,0,30,3"
-            Padding="16,8,0,8"
+            Padding="16,0,0,0"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
             CornerRadius="{StaticResource ControlCornerRadius}">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <FontIcon
-                Grid.Column="0"
-                Margin="0,0,12,0"
-                FontSize="16"
-                Glyph="&#xE74C;" />
-
-            <TextBlock
-                Grid.Column="1"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/Operation')}" />
-
-            <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
-
-            <TextBlock
-                Grid.Column="3"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/UpgradableAppsCountEmpty')}"
-                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(UpgradableAppsCollection.Count), Mode=OneWay}" />
-
-            <TextBlock
-                Grid.Column="3"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Text="{x:Bind x:String.Format(UpgradableAppsCountInfoString, UpgradableAppsCollection.Count), Mode=OneWay}"
-                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UpgradableAppsCollection.Count), Mode=OneWay}" />
-
             <CommandBar
-                Grid.Column="4"
-                Margin="4,0,0,0"
+                Padding="0"
                 VerticalAlignment="Center"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Center"
                 Background="Transparent"
                 CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
-                DefaultLabelPosition="Right">
+                DefaultLabelPosition="Right"
+                IsDynamicOverflowEnabled="False">
+
+                <CommandBar.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xE74C;" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/Operation')}" />
+
+                        <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
+
+                        <TextBlock
+                            Grid.Column="3"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/UpgradableAppsCountEmpty')}"
+                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(UpgradableAppsCollection.Count), Mode=OneWay}" />
+
+                        <TextBlock
+                            Grid.Column="3"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="{x:Bind x:String.Format(UpgradableAppsCountInfoString, UpgradableAppsCollection.Count), Mode=OneWay}"
+                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UpgradableAppsCollection.Count), Mode=OneWay}" />
+                    </Grid>
+                </CommandBar.Content>
 
                 <CommandBar.PrimaryCommands>
                     <AppBarButton
@@ -240,7 +245,7 @@
         <!--  可更新应用结果展示项目控件  -->
         <ListView
             Grid.Row="2"
-            Padding="30,0,30,30"
+            Padding="30,0,28,30"
             ItemsSource="{x:Bind UpgradableAppsCollection, Mode=OneWay}"
             SelectionMode="None"
             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UpgradableAppsCollection.Count), Mode=OneWay}">

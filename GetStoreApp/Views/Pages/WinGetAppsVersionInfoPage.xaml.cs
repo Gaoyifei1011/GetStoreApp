@@ -610,7 +610,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (UpgradableApps is not null && SelectedItem is not null && WinGetAppsVersionDialog is not null)
             {
-                NavigateOptionsPage(PackageOperationKind.Download, null, UpgradableApps, SelectedItem.Version, SelectedItem.PackageVersionId);
+                NavigateOptionsPage(PackageOperationKind.Upgrade, null, UpgradableApps, SelectedItem.Version, SelectedItem.PackageVersionId);
             }
         }
 
@@ -673,7 +673,7 @@ namespace GetStoreApp.Views.Pages
                 else if (UpgradableApps is not null)
                 {
                     // 获取当前应用可用版本
-                    if (await GetAvailableVersionAysnc(SearchApps.CatalogPackage, false) is ReadOnlyCollection<AvailableVersionModel> availableVersionCollection && availableVersionCollection.Count > 0)
+                    if (await GetAvailableVersionAysnc(UpgradableApps.CatalogPackage, false) is ReadOnlyCollection<AvailableVersionModel> availableVersionCollection && availableVersionCollection.Count > 0)
                     {
                         await UpdateAvailableVersionListAsync(availableVersionCollection);
                     }
@@ -788,7 +788,7 @@ namespace GetStoreApp.Views.Pages
                 DisplayName = string.IsNullOrEmpty(catalogPackageMetadata.PackageName) ? NotAvailableString : catalogPackageMetadata.PackageName;
                 Description = string.IsNullOrEmpty(catalogPackageMetadata.Description) ? NotAvailableString : catalogPackageMetadata.Description;
                 Version = string.IsNullOrEmpty(packageVersionInfo.Version) ? NotAvailableString : packageVersionInfo.Version;
-                if (Uri.TryCreate(catalogPackageMetadata.PackageUrl, new(), out Uri packageLinkUri))
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.PackageUrl) && Uri.TryCreate(catalogPackageMetadata.PackageUrl, new(), out Uri packageLinkUri))
                 {
                     IsPackageLinkExisted = true;
                     PackageLink = packageLinkUri;
@@ -800,7 +800,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 Author = string.IsNullOrEmpty(catalogPackageMetadata.Author) ? NotAvailableString : catalogPackageMetadata.Author;
                 Publisher = string.IsNullOrEmpty(catalogPackageMetadata.Publisher) ? NotAvailableString : packageVersionInfo.Publisher;
-                if (Uri.TryCreate(catalogPackageMetadata.PublisherUrl, new(), out Uri publisherLinkUri))
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.PublisherUrl) && Uri.TryCreate(catalogPackageMetadata.PublisherUrl, new(), out Uri publisherLinkUri))
                 {
                     IsPublisherLinkExisted = true;
                     PublisherLink = publisherLinkUri;
@@ -810,7 +810,7 @@ namespace GetStoreApp.Views.Pages
                     IsPublisherLinkExisted = false;
                     PublisherLink = null;
                 }
-                if (Uri.TryCreate(catalogPackageMetadata.PublisherSupportUrl, new(), out Uri appPublisherSupportLinkUri))
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.PublisherSupportUrl) && Uri.TryCreate(catalogPackageMetadata.PublisherSupportUrl, new(), out Uri appPublisherSupportLinkUri))
                 {
                     IsPublisherSupportLinkExisted = true;
                     PublisherSupportLink = appPublisherSupportLinkUri;
@@ -845,7 +845,7 @@ namespace GetStoreApp.Views.Pages
                     }
                 }
                 CopyRight = string.IsNullOrEmpty(catalogPackageMetadata.Copyright) ? NotAvailableString : catalogPackageMetadata.Copyright;
-                if (Uri.TryCreate(catalogPackageMetadata.CopyrightUrl, new(), out Uri copyRightLinkUri))
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.CopyrightUrl) && Uri.TryCreate(catalogPackageMetadata.CopyrightUrl, new(), out Uri copyRightLinkUri))
                 {
                     IsCopyRightLinkExisted = true;
                     CopyRightLink = copyRightLinkUri;
@@ -856,7 +856,7 @@ namespace GetStoreApp.Views.Pages
                     CopyRightLink = null;
                 }
                 License = string.IsNullOrEmpty(catalogPackageMetadata.License) ? NotAvailableString : catalogPackageMetadata.License;
-                if (Uri.TryCreate(catalogPackageMetadata.LicenseUrl, new(), out Uri licenseLinkUri))
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.LicenseUrl) && Uri.TryCreate(catalogPackageMetadata.LicenseUrl, new(), out Uri licenseLinkUri))
                 {
                     IsLicenseLinkExisted = true;
                     LicenseLink = licenseLinkUri;
@@ -866,7 +866,7 @@ namespace GetStoreApp.Views.Pages
                     IsLicenseLinkExisted = false;
                     LicenseLink = null;
                 }
-                if (Uri.TryCreate(catalogPackageMetadata.PrivacyUrl, new(), out Uri privacyLinkUri))
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.PrivacyUrl) && Uri.TryCreate(catalogPackageMetadata.PrivacyUrl, new(), out Uri privacyLinkUri))
                 {
                     IsPrivacyLinkExisted = true;
                     PrivacyLink = privacyLinkUri;
@@ -876,7 +876,7 @@ namespace GetStoreApp.Views.Pages
                     IsPrivacyLinkExisted = false;
                     PrivacyLink = null;
                 }
-                if (Uri.TryCreate(catalogPackageMetadata.PurchaseUrl, new(), out Uri purchaseLinkUri))
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.PurchaseUrl) && Uri.TryCreate(catalogPackageMetadata.PurchaseUrl, new(), out Uri purchaseLinkUri))
                 {
                     IsPurchaseLinkExisted = true;
                     PurchaseLink = purchaseLinkUri;
@@ -887,7 +887,7 @@ namespace GetStoreApp.Views.Pages
                     PurchaseLink = null;
                 }
                 ReleaseNotes = string.IsNullOrEmpty(catalogPackageMetadata.ReleaseNotes) ? NotAvailableString : catalogPackageMetadata.ReleaseNotes;
-                if (Uri.TryCreate(catalogPackageMetadata.ReleaseNotesUrl, new(), out Uri releaseNotesLinkUri))
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.ReleaseNotesUrl) && Uri.TryCreate(catalogPackageMetadata.ReleaseNotesUrl, new(), out Uri releaseNotesLinkUri))
                 {
                     IsReleaseNotesLinkExisted = true;
                     ReleaseNotesLink = releaseNotesLinkUri;
@@ -908,7 +908,7 @@ namespace GetStoreApp.Views.Pages
                 for (int index = 0; index < catalogPackageMetadata.Documentations.Count; index++)
                 {
                     Documentation documentation = catalogPackageMetadata.Documentations[index];
-                    if (Uri.TryCreate(documentation.DocumentUrl, new(), out Uri documentUrlUri))
+                    if (!string.IsNullOrEmpty(documentation.DocumentUrl) && Uri.TryCreate(documentation.DocumentUrl, new(), out Uri documentUrlUri))
                     {
                         DocumentationCollection.Add(new() { DisplayText = documentation.DocumentLabel, Uri = documentUrlUri });
                     }

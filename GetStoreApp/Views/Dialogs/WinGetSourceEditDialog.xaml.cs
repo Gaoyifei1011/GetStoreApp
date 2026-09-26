@@ -53,7 +53,7 @@ namespace GetStoreApp.Views.Dialogs
 
         #region 第二部分：属性、集合与事件
 
-        private WinGetSourceEditKind WinGetSourceEditKind { get; }
+        private WinGetSourceEditKind WinGetSourceEditKind { get; set; }
 
         internal AddPackageCatalogStatus? AddPackageCatalogStatusResult { get; private set; } = null;
 
@@ -196,20 +196,7 @@ namespace GetStoreApp.Views.Dialogs
         internal WinGetSourceEditDialog(WinGetSourceEditKind winGetSourceEditKind, WinGetSourceModel winGetSource)
         {
             InitializeComponent();
-            WinGetSourceEditKind = winGetSourceEditKind;
-            InitializeData();
-            SelectedCatalogTrustLevel = CatalogTrustLevelList[0];
-            EditTitle = winGetSourceEditKind is WinGetSourceEditKind.Add ? WinGetDataSourceAddString : WinGetDataSourceEditString;
-
-            if (winGetSourceEditKind is WinGetSourceEditKind.Edit && winGetSource is not null)
-            {
-                SourceName = winGetSource.Name;
-                SourceUri = winGetSource.Arguments;
-                CustomHeader = string.Empty;
-                SourceType = winGetSource.Type;
-                Explicit = winGetSource.PackageCatalogInformation.Explicit;
-                SelectedCatalogTrustLevel = CatalogTrustLevelList.Find(item => Equals(item.SelectedValue, winGetSource.PackageCatalogInformation.TrustLevel));
-            }
+            InitializeData(winGetSourceEditKind, winGetSource);
         }
 
         #endregion 第三部分：构造函数
@@ -370,10 +357,23 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 初始化数据
         /// </summary>
-        private void InitializeData()
+        private void InitializeData(WinGetSourceEditKind winGetSourceEditKind, WinGetSourceModel winGetSource)
         {
+            WinGetSourceEditKind = winGetSourceEditKind;
             CatalogTrustLevelList.Add(new() { SelectedValue = PackageCatalogTrustLevel.None, DisplayMember = CatalogTrustLevelNoneString });
             CatalogTrustLevelList.Add(new() { SelectedValue = PackageCatalogTrustLevel.Trusted, DisplayMember = CatalogTrustLevelTrustedString });
+            SelectedCatalogTrustLevel = CatalogTrustLevelList[0];
+            EditTitle = winGetSourceEditKind is WinGetSourceEditKind.Add ? WinGetDataSourceAddString : WinGetDataSourceEditString;
+
+            if (winGetSourceEditKind is WinGetSourceEditKind.Edit && winGetSource is not null)
+            {
+                SourceName = winGetSource.Name;
+                SourceUri = winGetSource.Arguments;
+                CustomHeader = string.Empty;
+                SourceType = winGetSource.Type;
+                Explicit = winGetSource.PackageCatalogInformation.Explicit;
+                SelectedCatalogTrustLevel = CatalogTrustLevelList.Find(item => Equals(item.SelectedValue, winGetSource.PackageCatalogInformation.TrustLevel));
+            }
         }
 
         /// <summary>
