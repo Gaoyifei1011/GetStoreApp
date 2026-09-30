@@ -65,7 +65,6 @@
 
     <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="SourceItemGroup" />
 
-    <Content Include="Assets\Cover.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\AppManager.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\AppUpdate.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\Download.png" CopyToOutputDirectory="Always" />
@@ -76,6 +75,8 @@
     <Content Include="Assets\Icon\Control\WinGet.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Installer\Package.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\ShellMenu\PowerShell.ico" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Image\QueryLinks.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Image\SearchApps.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Installer\LargeTile.scale-100.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Installer\LargeTile.scale-125.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Installer\LargeTile.scale-150.png" CopyToOutputDirectory="Always" />
@@ -171,8 +172,6 @@
     <Content Include="Assets\StoreLogo.scale-150.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\StoreLogo.scale-200.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\StoreLogo.scale-400.png" CopyToOutputDirectory="Always" />
-    <Content Include="Assets\Store\QueryLinks.png" CopyToOutputDirectory="Always" />
-    <Content Include="Assets\Store\SearchApps.png" CopyToOutputDirectory="Always" />
     
     <Content Remove="Assets\GetStoreApp.ico" />
     <Content Remove="Assets\Embed\cookie.xml" />

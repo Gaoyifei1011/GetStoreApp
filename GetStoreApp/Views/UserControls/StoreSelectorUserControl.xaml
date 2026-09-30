@@ -39,7 +39,7 @@
                 <Image
                     Grid.Column="0"
                     Width="40"
-                    Source="ms-appx:///Assets/Store/QueryLinks.png"
+                    Source="ms-appx:///Assets/Image/QueryLinks.png"
                     Visibility="Visible" />
 
                 <TextBlock
@@ -63,7 +63,7 @@
                 <Image
                     Grid.Column="0"
                     Width="40"
-                    Source="ms-appx:///Assets/Store/SearchApps.png"
+                    Source="ms-appx:///Assets/Image/SearchApps.png"
                     Visibility="Visible" />
 
                 <TextBlock
