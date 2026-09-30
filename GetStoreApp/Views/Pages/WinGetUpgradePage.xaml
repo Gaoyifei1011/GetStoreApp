@@ -28,14 +28,13 @@
             Grid.Row="0"
             Height="60"
             Margin="30,0,30,3"
-            Padding="16,0,0,0"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
             CornerRadius="{StaticResource ControlCornerRadius}">
 
             <CommandBar
-                Padding="0"
+                Padding="16,0,0,0"
                 VerticalAlignment="Center"
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Center"
