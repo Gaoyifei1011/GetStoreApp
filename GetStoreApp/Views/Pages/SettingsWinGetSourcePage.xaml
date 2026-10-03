@@ -95,12 +95,9 @@
         <Grid Grid.Row="1">
             <!--  WinGet 数据源配置状态显示栏  -->
             <Grid
-                Height="60"
-                Padding="16,0"
-                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                BorderThickness="1"
-                CornerRadius="{StaticResource ControlCornerRadius}"
+                Margin="30,0,30,60"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsLoadedCompleted), Mode=OneWay}">
 
                 <!--  正在加载中  -->

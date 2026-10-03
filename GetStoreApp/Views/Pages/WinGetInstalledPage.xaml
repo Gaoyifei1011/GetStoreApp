@@ -153,13 +153,16 @@
                                         Margin="2,0,0,0"
                                         HorizontalAlignment="Left"
                                         Header="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/PackageUninstallScope')}"
+                                        ItemsSource="{x:Bind PackageUninstallScopeRadioList}"
                                         MaxColumns="3"
                                         SelectedIndex="{x:Bind SelectedPackageUninstallScopeIndex, Mode=OneWay}"
                                         SelectionChanged="{x:Bind OnPackageUninstallScopeSelectionChanged}">
 
-                                        <RadioButton Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/PackageUninstallScopeAny')}" />
-                                        <RadioButton Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/PackageUninstallScopeUser')}" />
-                                        <RadioButton Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/PackageUninstallScopeSystem')}" />
+                                        <RadioButtons.ItemTemplate>
+                                            <DataTemplate x:DataType="model:RadioButtonItemModel">
+                                                <RadioButton Content="{x:Bind SelectorName}" />
+                                            </DataTemplate>
+                                        </RadioButtons.ItemTemplate>
                                     </RadioButtons>
 
                                     <MenuFlyoutSeparator Margin="4,0,6,0" Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
@@ -168,13 +171,16 @@
                                         Margin="2,0,0,0"
                                         HorizontalAlignment="Left"
                                         Header="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/PackageUninstallMode')}"
+                                        ItemsSource="{x:Bind PackageUninstallModeRadioList}"
                                         MaxColumns="3"
                                         SelectedIndex="{x:Bind SelectedPackageUninstallModeIndex, Mode=OneWay}"
                                         SelectionChanged="{x:Bind OnPackageUninstallModeSelectionChanged}">
 
-                                        <RadioButton Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/PackageUninstallModeDefault')}" />
-                                        <RadioButton Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/PackageUninstallModeInteractive')}" />
-                                        <RadioButton Content="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/PackageUninstallModeSilent')}" />
+                                        <RadioButtons.ItemTemplate>
+                                            <DataTemplate x:DataType="model:RadioButtonItemModel">
+                                                <RadioButton Content="{x:Bind SelectorName}" />
+                                            </DataTemplate>
+                                        </RadioButtons.ItemTemplate>
                                     </RadioButtons>
                                 </StackPanel>
                             </Grid>

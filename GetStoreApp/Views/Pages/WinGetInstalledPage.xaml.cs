@@ -43,7 +43,14 @@ namespace GetStoreApp.Views.Pages
         private readonly string InstalledFindAppsFailedString = ResourceService.GetLocalized("WinGetInstalled/InstalledFindAppsFailed");
         private readonly string InstalledNotSelectSourceString = ResourceService.GetLocalized("WinGetInstalled/InstalledNotSelectSource");
         private readonly string NotAvailableString = ResourceService.GetLocalized("WinGetInstalled/NotAvailable");
+        private readonly string PackageUninstallModeDefaultString = ResourceService.GetLocalized("WinGetInstalled/PackageUninstallModeDefault");
+        private readonly string PackageUninstallModeInteractiveString = ResourceService.GetLocalized("WinGetInstalled/PackageUninstallModeInteractive");
+        private readonly string PackageUninstallModeSilentString = ResourceService.GetLocalized("WinGetInstalled/PackageUninstallModeSilent");
+        private readonly string PackageUninstallScopeAnyString = ResourceService.GetLocalized("WinGetInstalled/PackageUninstallScopeAny");
+        private readonly string PackageUninstallScopeSystemString = ResourceService.GetLocalized("WinGetInstalled/PackageUninstallScopeSystem");
+        private readonly string PackageUninstallScopeUserString = ResourceService.GetLocalized("WinGetInstalled/PackageUninstallScopeUser");
         private readonly Guid CLSID_OpenControlPanel = new("06622D85-6856-4460-8DE1-A81921B41C4B");
+        private bool isInitialized;
         private readonly Lock InstalledAppsLock = new();
         private IOpenControlPanel openControlPanel;
         private WinGetPage WinGetPageInstance;
@@ -180,6 +187,10 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        private List<RadioButtonItemModel> PackageUninstallScopeRadioList { get; } = [];
+
+        private List<RadioButtonItemModel> PackageUninstallModeRadioList { get; } = [];
+
         private List<InstalledAppsModel> InstalledAppsList { get; } = [];
 
         private ObservableCollection<InstalledAppsModel> InstalledAppsCollection { get; } = [];
@@ -193,6 +204,7 @@ namespace GetStoreApp.Views.Pages
         internal WinGetInstalledPage()
         {
             InitializeComponent();
+            InitializeData();
             CreateOpenControlPanel();
         }
 
@@ -207,12 +219,13 @@ namespace GetStoreApp.Views.Pages
         {
             base.OnNavigatedTo(args);
 
-            if (args.Parameter is WinGetPage winGetPage && WinGetPageInstance is null)
+            if (!isInitialized && args.Parameter is WinGetPage winGetPage && WinGetPageInstance is null)
             {
                 WinGetPageInstance = winGetPage;
+                isInitialized = true;
                 IsIncrease = true;
                 MountWinGetEvent();
-                await InitializeInstalledAppsDataAsync(SelectedAppSortRuleKind, IsIncrease);
+                await GetInstalledAppsDataAsync(SelectedAppSortRuleKind, IsIncrease);
             }
         }
 
@@ -370,7 +383,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            await InitializeInstalledAppsDataAsync(SelectedAppSortRuleKind, IsIncrease);
+            await GetInstalledAppsDataAsync(SelectedAppSortRuleKind, IsIncrease);
         }
 
         /// <summary>
@@ -494,6 +507,19 @@ namespace GetStoreApp.Views.Pages
         #endregion 第六部分：挂载事件处理
 
         #region 第七部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private void InitializeData()
+        {
+            PackageUninstallScopeRadioList.Add(new() { SelectorName = PackageUninstallScopeAnyString });
+            PackageUninstallScopeRadioList.Add(new() { SelectorName = PackageUninstallScopeUserString });
+            PackageUninstallScopeRadioList.Add(new() { SelectorName = PackageUninstallScopeSystemString });
+            PackageUninstallModeRadioList.Add(new() { SelectorName = PackageUninstallModeDefaultString });
+            PackageUninstallModeRadioList.Add(new() { SelectorName = PackageUninstallModeInteractiveString });
+            PackageUninstallModeRadioList.Add(new() { SelectorName = PackageUninstallModeSilentString });
+        }
 
         /// <summary>
         /// 创建控制面板接口对象
@@ -623,9 +649,9 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 初始化已安装应用数据
+        /// 获取已安装应用数据
         /// </summary>
-        private async Task InitializeInstalledAppsDataAsync(AppSortRuleKind appSortRuleKind, bool isIncrease)
+        private async Task GetInstalledAppsDataAsync(AppSortRuleKind appSortRuleKind, bool isIncrease)
         {
             InstalledAppsResultKind = InstalledAppsResultKind.Querying;
 
