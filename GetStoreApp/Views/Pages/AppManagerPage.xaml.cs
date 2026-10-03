@@ -2,7 +2,6 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Windows.Foundation.Diagnostics;
 using Windows.UI.Text;
@@ -29,7 +28,7 @@ namespace GetStoreApp.Views.Pages
 
         internal ReadOnlyCollection<Type> PageCollection { get; } = [typeof(AppListPage), typeof(AppInformationPage)];
 
-        internal ObservableCollection<ContentLinkInfo> BreadCollection { get; } = [];
+        internal ObservableCollection<ContentLinkInfo> BreadcrumbBarCollection { get; } = [];
 
         #endregion 第二部分：属性、集合与事件
 
@@ -69,7 +68,7 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(ContentLinkInfo))]
         private void OnItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
         {
-            if (args.Item is ContentLinkInfo contentLinkInfo && BreadCollection.Count is 2 && string.Equals(contentLinkInfo.SecondaryText, BreadCollection[0].SecondaryText))
+            if (args.Item is ContentLinkInfo breadcrumbBarItem && BreadcrumbBarCollection.Count is 2 && string.Equals(breadcrumbBarItem.SecondaryText, BreadcrumbBarCollection[0].SecondaryText))
             {
                 NavigateTo(PageCollection[0], null, false);
             }
@@ -80,25 +79,25 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            if (BreadCollection.Count is 0 && Equals(GetCurrentPageType(), PageCollection[0]))
+            if (BreadcrumbBarCollection.Count is 0 && Equals(GetCurrentPageType(), PageCollection[0]))
             {
-                BreadCollection.Add(new()
+                BreadcrumbBarCollection.Add(new()
                 {
                     DisplayText = AppListString,
                     SecondaryText = "AppList"
                 });
             }
-            else if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageCollection[1]))
+            else if (BreadcrumbBarCollection.Count is 1 && Equals(GetCurrentPageType(), PageCollection[1]))
             {
-                BreadCollection.Add(new()
+                BreadcrumbBarCollection.Add(new()
                 {
                     DisplayText = AppInformationString,
                     SecondaryText = "AppInformation"
                 });
             }
-            else if (BreadCollection.Count is 2 && Equals(GetCurrentPageType(), PageCollection[0]))
+            else if (BreadcrumbBarCollection.Count is 2 && Equals(GetCurrentPageType(), PageCollection[0]))
             {
-                BreadCollection.RemoveAt(1);
+                BreadcrumbBarCollection.RemoveAt(1);
             }
         }
 

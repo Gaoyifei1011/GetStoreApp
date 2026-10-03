@@ -557,6 +557,11 @@ namespace GetStoreApp.Views.Pages
             return isReverse ? (winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount) > 0 ? Visibility.Collapsed : Visibility.Visible : (winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount) > 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
+        private int GetLocalizedWinGetDataSourceCount(int winGetSourceInternalCollectionCount, int winGetSourceCustomCollectionCount)
+        {
+            return winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount;
+        }
+
         private string GetLocalizedWinGetDataSourceCountInfo(int winGetSourceInternalCollectionCount, int winGetSourceCustomCollectionCount)
         {
             return string.Format(WinGetDataSourceCountInfoString, winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount);

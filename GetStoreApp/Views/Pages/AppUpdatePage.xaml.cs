@@ -255,12 +255,12 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
         {
-            if (RuntimeHelper.IsElevated)
+            if (!RuntimeHelper.IsElevated)
             {
                 if (!IsCheckingUpdate)
                 {
                     IsCheckingUpdate = true;
-                    if (await GetAppUpdateCollectionAsync(AppUpdateList) is ReadOnlyCollection<AppUpdateModel> appUpdateCollection)
+                    if (await GetAppUpdateCollectionAsync() is ReadOnlyCollection<AppUpdateModel> appUpdateCollection)
                     {
                         // 只添加未有的项
                         AppUpdateLock.Enter();
@@ -292,9 +292,9 @@ namespace GetStoreApp.Views.Pages
                         }
 
                         AppUpdateLock.Exit();
-
-                        IsCheckingUpdate = false;
                     }
+                    await Task.Delay(5000);
+                    IsCheckingUpdate = false;
                 }
             }
             else
@@ -567,13 +567,8 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取应用更新信息
         /// </summary>
-        private async Task<ReadOnlyCollection<AppUpdateModel>> GetAppUpdateCollectionAsync(List<AppUpdateModel> appUpdateList)
+        private async Task<ReadOnlyCollection<AppUpdateModel>> GetAppUpdateCollectionAsync()
         {
-            if (appUpdateList is null || appUpdateList.Count is 0)
-            {
-                return default;
-            }
-
             return await Task.Run(async () =>
             {
                 List<AppUpdateModel> appUpdateList = [];

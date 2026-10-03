@@ -11,6 +11,7 @@ using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,7 +40,9 @@ namespace GetStoreApp.Views.UserControls
         private readonly string ProductIDString = ResourceService.GetLocalized("StoreSelector/ProductID");
         private readonly string RetailString = ResourceService.GetLocalized("StoreSelector/Retail");
         private readonly string RPString = ResourceService.GetLocalized("StoreSelector/RP");
+        private readonly string QueryLinksString = ResourceService.GetLocalized("StoreSelector/QueryLinks");
         private readonly string SampleTitleString = ResourceService.GetLocalized("StoreSelector/SampleTitle");
+        private readonly string SearchAppsString = ResourceService.GetLocalized("StoreSelector/SearchApps");
         private readonly string SlowString = ResourceService.GetLocalized("StoreSelector/Slow");
         private readonly string UnknownString = ResourceService.GetLocalized("StoreSelector/Unknown");
         private readonly string URLString = ResourceService.GetLocalized("StoreSelector/URL");
@@ -51,18 +54,18 @@ namespace GetStoreApp.Views.UserControls
 
         #region 第二部分：属性、集合与事件
 
-        private SelectorBarItem _selectedItem;
+        private int _selectedIndex;
 
-        private SelectorBarItem SelectedItem
+        private int SelectedIndex
         {
-            get { return _selectedItem; }
+            get { return _selectedIndex; }
 
             set
             {
-                if (!Equals(_selectedItem, value))
+                if (!Equals(_selectedIndex, value))
                 {
-                    _selectedItem = value;
-                    PropertyChanged?.Invoke(this, new(nameof(SelectedItem)));
+                    _selectedIndex = value;
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedIndex)));
                 }
             }
         }
@@ -245,6 +248,8 @@ namespace GetStoreApp.Views.UserControls
 
         private ReadOnlyCollection<string> SampleLinkCollection { get; } = ["https://apps.microsoft.com/store/detail/9WZDNCRFJBMP", "9WZDNCRFJBMP",];
 
+        private List<RadioButtonItemModel> StoreSelectorRadioList { get; } = [];
+
         private List<TypeModel> TypeList { get; } = [];
 
         private List<ChannelModel> ChannelList { get; } = [];
@@ -273,7 +278,7 @@ namespace GetStoreApp.Views.UserControls
             sampleLink = SampleLinkCollection[0];
             LinkPlaceHolderText = SampleTitleString + sampleLink;
             SelectedSearchType = SearchTypeList[0];
-            SelectedItem = StoreSelectorBar.Items[0];
+            SelectedIndex = 0;
         }
 
         #endregion 第三部分：构造函数
@@ -337,11 +342,12 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 点击选择器栏选中项发生变化后发生的事件
         /// </summary>
-        private void OnSelectorBarSelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+        [DynamicWindowsRuntimeCast(typeof(RadioButtons))]
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (!Equals(SelectedItem, sender.SelectedItem))
+            if (sender is RadioButtons radioButtons && !Equals(SelectedIndex, radioButtons.SelectedIndex))
             {
-                SelectedItem = sender.SelectedItem;
+                SelectedIndex = radioButtons.SelectedIndex;
             }
         }
 
@@ -621,6 +627,16 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private void InitializeData()
         {
+            StoreSelectorRadioList.Add(new()
+            {
+                SelectorIcon = new FontIcon() { Glyph = "\uE71B" },
+                SelectorName = QueryLinksString
+            });
+            StoreSelectorRadioList.Add(new()
+            {
+                SelectorIcon = new FontIcon() { Glyph = "\uE721" },
+                SelectorName = SearchAppsString
+            });
             TypeList.Add(new()
             {
                 DisplayName = URLString,
@@ -746,7 +762,7 @@ namespace GetStoreApp.Views.UserControls
         {
             if (dataList is not null && dataList.Count is 3)
             {
-                SelectedItem = StoreSelectorBar.Items[0];
+                SelectedIndex = 0;
                 SelectedType = Convert.ToInt32(dataList[0]) is -1 ? TypeList[0] : TypeList[Convert.ToInt32(dataList[0])];
                 SelectedChannel = Convert.ToInt32(dataList[1]) is -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(dataList[1])];
                 QueryLinksText = dataList[2] is "PlaceHolderText" ? string.Empty : dataList[2];
@@ -756,9 +772,9 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 获取选中的选择栏项
         /// </summary>
-        private Visibility GetSelectorBarItemVisibility(SelectorBarItem selectorBarItem, SelectorBarItem comparedSelectorBarItem)
+        private Visibility GetRadioMenuItemVisibility(int selectedIndex, int comparedSelectedIndex)
         {
-            return Equals(selectorBarItem, comparedSelectorBarItem) ? Visibility.Visible : Visibility.Collapsed;
+            return selectedIndex >= 0 && comparedSelectedIndex >= 0 ? Equals(selectedIndex, comparedSelectedIndex) ? Visibility.Visible : Visibility.Collapsed : Visibility.Collapsed;
         }
 
         /// <summary>

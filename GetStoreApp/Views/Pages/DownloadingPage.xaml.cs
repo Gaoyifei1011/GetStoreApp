@@ -79,8 +79,10 @@ namespace GetStoreApp.Views.Pages
             if (!isInitialized)
             {
                 isInitialized = true;
+                DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
                 await InitializeDataAsync();
                 await MountDownloadEventAsync();
+                DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
             }
         }
 
@@ -386,8 +388,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task InitializeDataAsync()
         {
-            DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
-
             try
             {
                 foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadSchedulerList)
@@ -432,10 +432,6 @@ namespace GetStoreApp.Views.Pages
             catch (Exception e)
             {
                 ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-            }
-            finally
-            {
-                DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
             }
         }
 

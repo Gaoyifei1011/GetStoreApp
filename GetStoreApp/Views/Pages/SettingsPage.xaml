@@ -4,15 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:GetStoreApp.Models"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:text="using:Windows.UI.Text"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
     <Page.Resources>
-        <x:Double x:Key="BreadcrumbBarChevronFontSize">16</x:Double>
-        <Thickness x:Key="BreadcrumbBarChevronPadding">8,0</Thickness>
-
         <TransitionCollection x:Name="SuppressNavigationTransitionCollection">
             <NavigationThemeTransition>
                 <NavigationThemeTransition.DefaultNavigationTransitionInfo>
@@ -45,22 +43,24 @@
         PaneBackground="Transparent"
         PanePlacement="Right">
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
+        <Grid Margin="0,10,0,0">
             <BreadcrumbBar
-                Grid.Row="0"
-                Margin="30,10,30,0"
-                VerticalAlignment="Center"
+                Margin="30,12,30,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Canvas.ZIndex="1"
                 ItemClicked="{x:Bind OnItemClicked}"
-                ItemsSource="{x:Bind BreadCollection}">
+                ItemsSource="{x:Bind BreadcrumbBarCollection}">
 
                 <BreadcrumbBar.ItemTemplate>
                     <DataTemplate x:DataType="text:ContentLinkInfo">
-                        <TextBlock FontSize="22" Text="{x:Bind DisplayText}" />
+                        <BreadcrumbBarItem Content="{Binding}" Style="{StaticResource PillBreadcrumbBarItemStyle}">
+                            <BreadcrumbBarItem.ContentTemplate>
+                                <DataTemplate x:DataType="text:ContentLinkInfo">
+                                    <TextBlock Text="{x:Bind DisplayText}" />
+                                </DataTemplate>
+                            </BreadcrumbBarItem.ContentTemplate>
+                        </BreadcrumbBarItem>
                     </DataTemplate>
                 </BreadcrumbBar.ItemTemplate>
             </BreadcrumbBar>
@@ -69,6 +69,8 @@
             <Frame
                 x:Name="SettingsFrame"
                 Grid.Row="1"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
                 Navigated="{x:Bind OnNavigated}"
                 NavigationFailed="{x:Bind OnNavigationFailed}" />
         </Grid>

@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:GetStoreApp.Models"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
     Loaded="{x:Bind OnLoaded}"
     NavigationCacheMode="Enabled"
@@ -42,37 +43,35 @@
         PaneBackground="Transparent"
         PanePlacement="Right">
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
+        <Grid Margin="0,10,0,0">
             <!--  下载管理控制栏  -->
-            <SelectorBar
-                x:Name="DownloadSelctorBar"
-                Grid.Row="0"
-                Margin="20,6,30,3"
+            <RadioButtons
+                Margin="30,5,0,0"
                 Padding="0"
                 HorizontalAlignment="Left"
-                SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
-                SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}">
+                VerticalAlignment="Top"
+                Canvas.ZIndex="1"
+                ItemsSource="{x:Bind DownloadSelectorRadioList}"
+                MaxColumns="3"
+                SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}"
+                SelectionChanged="{x:Bind OnSelectionChanged}">
 
-                <SelectorBarItem
-                    Padding="12,5"
-                    FontSize="22"
-                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/Downloading')}" />
+                <RadioButtons.Resources>
+                    <Thickness x:Key="RadioButtonsTopHeaderMargin">0</Thickness>
+                </RadioButtons.Resources>
 
-                <SelectorBarItem
-                    Padding="12,5"
-                    FontSize="22"
-                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Download/Completed')}" />
-            </SelectorBar>
+                <RadioButtons.ItemTemplate>
+                    <DataTemplate x:DataType="model:RadioButtonItemModel">
+                        <RadioButton Content="{x:Bind SelectorName}" Style="{StaticResource PillRadioButtonStyle}" />
+                    </DataTemplate>
+                </RadioButtons.ItemTemplate>
+            </RadioButtons>
 
             <!--  WinGet 程序包内容  -->
             <Frame
                 x:Name="DownloadFrame"
-                Grid.Row="1"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
                 Navigated="{x:Bind OnNavigated}"
                 NavigationFailed="{x:Bind OnNavigationFailed}" />
         </Grid>

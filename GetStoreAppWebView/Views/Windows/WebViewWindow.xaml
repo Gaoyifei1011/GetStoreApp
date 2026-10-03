@@ -262,8 +262,8 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    DefaultLabelPosition="Right"
-                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}">
+                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                    DefaultLabelPosition="Right">
 
                     <CommandBar.PrimaryCommands>
                         <AppBarButton

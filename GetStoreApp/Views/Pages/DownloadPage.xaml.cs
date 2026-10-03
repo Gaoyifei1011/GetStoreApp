@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
@@ -12,6 +13,7 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
+using WinRT;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -25,6 +27,9 @@ namespace GetStoreApp.Views.Pages
     {
         #region 第一部分：常量、资源与状态字段
 
+        private readonly string CompletedString = ResourceService.GetLocalized("Download/Completed");
+        private readonly string DownloadingString = ResourceService.GetLocalized("Download/Downloading");
+
         private bool needNavigate;
         private Type navigateType;
         private object navigateParameter;
@@ -34,21 +39,23 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private SelectorBarItem _selectedItem;
+        private int _selectedIndex;
 
-        private SelectorBarItem SelectedItem
+        private int SelectedIndex
         {
-            get { return _selectedItem; }
+            get { return _selectedIndex; }
 
             set
             {
-                if (!Equals(_selectedItem, value))
+                if (!Equals(_selectedIndex, value))
                 {
-                    _selectedItem = value;
-                    PropertyChanged?.Invoke(this, new(nameof(SelectedItem)));
+                    _selectedIndex = value;
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedIndex)));
                 }
             }
         }
+
+        private List<RadioButtonItemModel> DownloadSelectorRadioList { get; } = [];
 
         internal ReadOnlyCollection<Type> PageCollection { get; } = [typeof(DownloadingPage), typeof(CompletedPage)];
 
@@ -61,6 +68,7 @@ namespace GetStoreApp.Views.Pages
         internal DownloadPage()
         {
             InitializeComponent();
+            InitializeData();
         }
 
         #endregion 第三部分：构造函数
@@ -84,7 +92,7 @@ namespace GetStoreApp.Views.Pages
                 // 第一次导航
                 if (GetCurrentPageType() is null)
                 {
-                    SelectedItem = DownloadSelctorBar.Items[0];
+                    NavigateTo(PageCollection[0]);
                 }
             }
         }
@@ -111,44 +119,43 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 点击选择器栏选中项发生变化后发生的事件
         /// </summary>
-        private void OnSelectorBarSelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+        [DynamicWindowsRuntimeCast(typeof(RadioButtons))]
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (!Equals(SelectedItem, sender.SelectedItem))
+            if (sender is RadioButtons radioButtons && !Equals(SelectedIndex, radioButtons.SelectedIndex))
             {
-                SelectedItem = sender.SelectedItem;
+                SelectedIndex = radioButtons.SelectedIndex;
             }
 
-            if (SelectedItem is null)
+            if (SelectedIndex >= 0 && SelectedIndex < DownloadSelectorRadioList.Count)
             {
-                return;
-            }
+                int index = SelectedIndex;
+                Type currentPage = GetCurrentPageType();
+                int currentIndex = -1;
+                for (int i = 0; i < PageCollection.Count; i++)
+                {
+                    if (Equals(PageCollection[i], currentPage))
+                    {
+                        currentIndex = i;
+                        break;
+                    }
+                }
 
-            int index = sender.Items.IndexOf(SelectedItem);
-            Type currentPage = GetCurrentPageType();
-            int currentIndex = -1;
-            for (int i = 0; i < PageCollection.Count; i++)
-            {
-                if (Equals(PageCollection[i], currentPage))
+                if (index is 0)
                 {
-                    currentIndex = i;
-                    break;
+                    if (currentPage is null)
+                    {
+                        NavigateTo(PageCollection[0]);
+                    }
+                    else if (!Equals(currentPage, PageCollection[0]))
+                    {
+                        NavigateTo(PageCollection[0], null, index > currentIndex);
+                    }
                 }
-            }
-
-            if (index is 0)
-            {
-                if (currentPage is null)
+                else if (index is 1 && !Equals(GetCurrentPageType(), PageCollection[1]))
                 {
-                    NavigateTo(PageCollection[0]);
+                    NavigateTo(PageCollection[1], null, index > currentIndex);
                 }
-                else if (!Equals(currentPage, PageCollection[0]))
-                {
-                    NavigateTo(PageCollection[0], null, index > currentIndex);
-                }
-            }
-            else if (index is 1 && !Equals(GetCurrentPageType(), PageCollection[1]))
-            {
-                NavigateTo(PageCollection[1], null, index > currentIndex);
             }
         }
 
@@ -167,9 +174,9 @@ namespace GetStoreApp.Views.Pages
                 }
             }
 
-            if (index >= 0 && index < DownloadSelctorBar.Items.Count)
+            if (index >= 0 && index < DownloadSelectorRadioList.Count)
             {
-                SelectedItem = DownloadSelctorBar.Items[index];
+                SelectedIndex = index;
             }
         }
 
@@ -189,9 +196,9 @@ namespace GetStoreApp.Views.Pages
                 }
             }
 
-            if (index >= 0 && index < DownloadSelctorBar.Items.Count)
+            if (index >= 0 && index < DownloadSelectorRadioList.Count)
             {
-                SelectedItem = DownloadSelctorBar.Items[index];
+                SelectedIndex = index;
             }
 
             LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(DownloadPage), nameof(OnNavigationFailed), 1, args.Exception);
@@ -254,6 +261,15 @@ namespace GetStoreApp.Views.Pages
         #endregion 第五部分：挂载事件处理
 
         #region 第六部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private void InitializeData()
+        {
+            DownloadSelectorRadioList.Add(new() { SelectorName = DownloadingString });
+            DownloadSelectorRadioList.Add(new() { SelectorName = CompletedString });
+        }
 
         /// <summary>
         /// 页面向前导航

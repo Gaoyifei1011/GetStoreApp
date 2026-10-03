@@ -24,6 +24,7 @@
     </Page.Resources>
 
     <ScrollViewer
+        Margin="0,50,0,0"
         HorizontalScrollBarVisibility="Disabled"
         HorizontalScrollMode="Disabled"
         VerticalScrollBarVisibility="Auto"

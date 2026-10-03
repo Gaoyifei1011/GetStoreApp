@@ -29,7 +29,7 @@
                 Grid.Row="0"
                 HorizontalAlignment="Center"
                 ColumnSpacing="10"
-                Visibility="{x:Bind GetSelectorBarItemVisibility(SelectedItem, StoreSelectorBar.Items[0]), Mode=OneWay}">
+                Visibility="{x:Bind GetRadioMenuItemVisibility(SelectedIndex, 0), Mode=OneWay}">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -53,7 +53,7 @@
                 Grid.Row="0"
                 HorizontalAlignment="Center"
                 ColumnSpacing="10"
-                Visibility="{x:Bind GetSelectorBarItemVisibility(SelectedItem, StoreSelectorBar.Items[1]), Mode=OneWay}">
+                Visibility="{x:Bind GetRadioMenuItemVisibility(SelectedIndex, 1), Mode=OneWay}">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -74,29 +74,34 @@
             </Grid>
 
             <!--  商店应用控制栏  -->
-            <SelectorBar
-                x:Name="StoreSelectorBar"
+            <RadioButtons
                 Grid.Row="1"
-                Padding="0"
                 HorizontalAlignment="Center"
-                SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
-                SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}"
-                Style="{StaticResource TokenViewSelectorBarStyle}">
+                ItemsSource="{x:Bind StoreSelectorRadioList}"
+                MaxColumns="3"
+                SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}"
+                SelectionChanged="{x:Bind OnSelectionChanged}">
 
-                <SelectorBarItem Style="{StaticResource TokenViewSelectorBarItemStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/QueryLinks')}">
+                <RadioButtons.Resources>
+                    <Thickness x:Key="RadioButtonsTopHeaderMargin">0</Thickness>
+                </RadioButtons.Resources>
 
-                    <SelectorBarItem.Icon>
-                        <FontIcon Glyph="&#xE71B;" />
-                    </SelectorBarItem.Icon>
-                </SelectorBarItem>
+                <RadioButtons.ItemTemplate>
+                    <DataTemplate x:DataType="model:RadioButtonItemModel">
+                        <RadioButton Style="{StaticResource PillRadioButtonStyle}">
+                            <Grid ColumnSpacing="8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-                <SelectorBarItem Style="{StaticResource TokenViewSelectorBarItemStyle}" Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/SearchApps')}">
-
-                    <SelectorBarItem.Icon>
-                        <FontIcon Glyph="&#xE721;" />
-                    </SelectorBarItem.Icon>
-                </SelectorBarItem>
-            </SelectorBar>
+                                <ContentPresenter Content="{x:Bind SelectorIcon}" FontSize="16" />
+                                <TextBlock Grid.Column="1" Text="{x:Bind SelectorName}" />
+                            </Grid>
+                        </RadioButton>
+                    </DataTemplate>
+                </RadioButtons.ItemTemplate>
+            </RadioButtons>
 
             <!--  查询链接控件  -->
             <Grid
@@ -108,7 +113,7 @@
                 BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
                 BorderThickness="1"
                 CornerRadius="{ThemeResource ControlCornerRadius}"
-                Visibility="{x:Bind GetSelectorBarItemVisibility(SelectedItem, StoreSelectorBar.Items[0]), Mode=OneWay}">
+                Visibility="{x:Bind GetRadioMenuItemVisibility(SelectedIndex, 0), Mode=OneWay}">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -413,7 +418,7 @@
                 BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
                 BorderThickness="1"
                 CornerRadius="{ThemeResource ControlCornerRadius}"
-                Visibility="{x:Bind GetSelectorBarItemVisibility(SelectedItem, StoreSelectorBar.Items[1]), Mode=OneWay}">
+                Visibility="{x:Bind GetRadioMenuItemVisibility(SelectedIndex, 1), Mode=OneWay}">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />

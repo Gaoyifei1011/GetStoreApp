@@ -1,11 +1,11 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
@@ -36,7 +36,7 @@ namespace GetStoreApp.Views.Pages
 
         internal ReadOnlyCollection<Type> PageCollection { get; } = [typeof(SettingsItemPage), typeof(SettingsWinGetSourcePage), typeof(SettingsPackageVolumePage)];
 
-        internal ObservableCollection<ContentLinkInfo> BreadCollection { get; } = [];
+        internal ObservableCollection<ContentLinkInfo> BreadcrumbBarCollection { get; } = [];
 
         #endregion 第二部分：属性、集合与事件
 
@@ -154,7 +154,7 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(ContentLinkInfo))]
         private void OnItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
         {
-            if (args.Item is ContentLinkInfo contentLinkInfo && BreadCollection.Count is 2 && string.Equals(contentLinkInfo.SecondaryText, BreadCollection[0].SecondaryText))
+            if (args.Item is ContentLinkInfo breadcrumbBarItem && BreadcrumbBarCollection.Count is 2 && string.Equals(breadcrumbBarItem.SecondaryText, BreadcrumbBarCollection[0].SecondaryText))
             {
                 NavigateTo(PageCollection[0], null, false);
             }
@@ -165,11 +165,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            if (BreadCollection.Count is 0)
+            if (BreadcrumbBarCollection.Count is 0)
             {
                 if (Equals(GetCurrentPageType(), PageCollection[0]))
                 {
-                    BreadCollection.Add(new()
+                    BreadcrumbBarCollection.Add(new()
                     {
                         DisplayText = SettingsString,
                         SecondaryText = "Settings"
@@ -177,12 +177,12 @@ namespace GetStoreApp.Views.Pages
                 }
                 else if (Equals(GetCurrentPageType(), PageCollection[1]))
                 {
-                    BreadCollection.Add(new()
+                    BreadcrumbBarCollection.Add(new()
                     {
                         DisplayText = SettingsString,
                         SecondaryText = "Settings"
                     });
-                    BreadCollection.Add(new()
+                    BreadcrumbBarCollection.Add(new()
                     {
                         DisplayText = WinGetSourceConfigurationString,
                         SecondaryText = "WinGetSourceConfiguration"
@@ -190,12 +190,12 @@ namespace GetStoreApp.Views.Pages
                 }
                 else if (Equals(GetCurrentPageType(), PageCollection[2]))
                 {
-                    BreadCollection.Add(new()
+                    BreadcrumbBarCollection.Add(new()
                     {
                         DisplayText = SettingsString,
                         SecondaryText = "Settings"
                     });
-                    BreadCollection.Add(new()
+                    BreadcrumbBarCollection.Add(new()
                     {
                         DisplayText = PackageVolumeConfigurationString,
                         SecondaryText = "PackageVolumeConfiguration"
@@ -203,25 +203,25 @@ namespace GetStoreApp.Views.Pages
                 }
             }
 
-            if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageCollection[1]))
+            if (BreadcrumbBarCollection.Count is 1 && Equals(GetCurrentPageType(), PageCollection[1]))
             {
-                BreadCollection.Add(new()
+                BreadcrumbBarCollection.Add(new()
                 {
                     DisplayText = WinGetSourceConfigurationString,
                     SecondaryText = "WinGetSourceConfiguration"
                 });
             }
-            else if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageCollection[2]))
+            else if (BreadcrumbBarCollection.Count is 1 && Equals(GetCurrentPageType(), PageCollection[2]))
             {
-                BreadCollection.Add(new()
+                BreadcrumbBarCollection.Add(new()
                 {
                     DisplayText = PackageVolumeConfigurationString,
                     SecondaryText = "PackageVolumeConfiguration"
                 });
             }
-            else if (BreadCollection.Count is 2 && Equals(GetCurrentPageType(), PageCollection[0]))
+            else if (BreadcrumbBarCollection.Count is 2 && Equals(GetCurrentPageType(), PageCollection[0]))
             {
-                BreadCollection.RemoveAt(1);
+                BreadcrumbBarCollection.RemoveAt(1);
             }
         }
 

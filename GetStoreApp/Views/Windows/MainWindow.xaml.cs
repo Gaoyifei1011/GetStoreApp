@@ -466,11 +466,11 @@ namespace GetStoreApp.Views.Windows
         {
             if (sender.Key is global::Windows.System.VirtualKey.Back && sender.Modifiers is global::Windows.System.VirtualKeyModifiers.Menu)
             {
-                if (GetFrameContent() is AppManagerPage appManagerPage && appManagerPage.BreadCollection.Count is 2)
+                if (GetFrameContent() is AppManagerPage appManagerPage && appManagerPage.BreadcrumbBarCollection.Count is 2)
                 {
                     appManagerPage.NavigateTo(appManagerPage.PageCollection[0], null, false);
                 }
-                else if (GetFrameContent() is SettingsPage settingsPage && settingsPage.BreadCollection.Count is 2)
+                else if (GetFrameContent() is SettingsPage settingsPage && settingsPage.BreadcrumbBarCollection.Count is 2)
                 {
                     settingsPage.NavigateTo(settingsPage.PageCollection[0], null, false);
                 }
@@ -487,11 +487,11 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnBackClicked(object sender, RoutedEventArgs args)
         {
-            if (GetFrameContent() is AppManagerPage appManagerPage && appManagerPage.BreadCollection.Count is 2)
+            if (GetFrameContent() is AppManagerPage appManagerPage && appManagerPage.BreadcrumbBarCollection.Count is 2)
             {
                 appManagerPage.NavigateTo(appManagerPage.PageCollection[0], null, false);
             }
-            else if (GetFrameContent() is SettingsPage settingsPage && settingsPage.BreadCollection.Count is 2)
+            else if (GetFrameContent() is SettingsPage settingsPage && settingsPage.BreadcrumbBarCollection.Count is 2)
             {
                 settingsPage.NavigateTo(settingsPage.PageCollection[0], null, false);
             }

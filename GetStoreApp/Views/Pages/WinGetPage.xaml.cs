@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -35,6 +36,7 @@ namespace GetStoreApp.Views.Pages
     {
         #region 第一部分：常量、资源与状态字段
 
+        private readonly string InstalledAppsString = ResourceService.GetLocalized("WinGet/InstalledApps");
         private readonly string NotAvailableString = ResourceService.GetLocalized("WinGet/NotAvailable");
         private readonly string PackageDownloadFailedContent1String = ResourceService.GetLocalized("WinGet/PackageDownloadFailedContent1");
         private readonly string PackageDownloadFailedContent2String = ResourceService.GetLocalized("WinGet/PackageDownloadFailedContent2");
@@ -57,6 +59,8 @@ namespace GetStoreApp.Views.Pages
         private readonly string PackageUpgradeFailedContent3String = ResourceService.GetLocalized("WinGet/PackageUpgradeFailedContent3");
         private readonly string PackageUpgradeFailedContent4String = ResourceService.GetLocalized("WinGet/PackageUpgradeFailedContent4");
         private readonly string RestartPCString = ResourceService.GetLocalized("WinGet/RestartPC");
+        private readonly string SearchAppsString = ResourceService.GetLocalized("WinGet/SearchApps");
+        private readonly string UpgradableAppsString = ResourceService.GetLocalized("WinGet/UpgradableApps");
         private readonly string WinGetPackageDownloadAgreementsNotAcceptedString = ResourceService.GetLocalized("WinGet/WinGetPackageDownloadAgreementsNotAccepted");
         private readonly string WinGetPackageDownloadBlockedByPolicyString = ResourceService.GetLocalized("WinGet/WinGetPackageDownloadBlockedByPolicy");
         private readonly string WinGetPackageDownloadCatalogErrorString = ResourceService.GetLocalized("WinGet/WinGetPackageDownloadCatalogError");
@@ -110,18 +114,18 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private SelectorBarItem _selectedItem;
+        private int _selectedIndex;
 
-        private SelectorBarItem SelectedItem
+        private int SelectedIndex
         {
-            get { return _selectedItem; }
+            get { return _selectedIndex; }
 
             set
             {
-                if (!Equals(_selectedItem, value))
+                if (!Equals(_selectedIndex, value))
                 {
-                    _selectedItem = value;
-                    PropertyChanged?.Invoke(this, new(nameof(SelectedItem)));
+                    _selectedIndex = value;
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedIndex)));
                 }
             }
         }
@@ -142,6 +146,8 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        private List<RadioButtonItemModel> WinGetSelectorRadioList { get; } = [];
+
         private ReadOnlyCollection<Type> PageCollection { get; } = [typeof(WinGetSearchPage), typeof(WinGetInstalledPage), typeof(WinGetUpgradePage)];
 
         internal ObservableCollection<PackageOperationModel> PackageOperationCollection { get; } = [];
@@ -159,6 +165,7 @@ namespace GetStoreApp.Views.Pages
         internal WinGetPage()
         {
             InitializeComponent();
+            InitializeData();
         }
 
         #endregion 第三部分：构造函数
@@ -311,16 +318,17 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 点击选择器栏选中项发生变化后发生的事件
         /// </summary>
-        private void OnSelectorBarSelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+        [DynamicWindowsRuntimeCast(typeof(RadioButtons))]
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (!Equals(SelectedItem, sender.SelectedItem))
+            if (sender is RadioButtons radioButtons && !Equals(SelectedIndex, radioButtons.SelectedIndex))
             {
-                SelectedItem = sender.SelectedItem;
+                SelectedIndex = radioButtons.SelectedIndex;
             }
 
-            if (SelectedItem is not null)
+            if (SelectedIndex >= 0 && SelectedIndex < WinGetSelectorRadioList.Count)
             {
-                int index = sender.Items.IndexOf(SelectedItem);
+                int index = SelectedIndex;
                 Type currentPage = GetCurrentPageType();
                 int currentIndex = -1;
                 for (int i = 0; i < PageCollection.Count; i++)
@@ -369,9 +377,9 @@ namespace GetStoreApp.Views.Pages
                 }
             }
 
-            if (index >= 0 && index < WinGetSelectorBar.Items.Count)
+            if (index >= 0 && index < WinGetSelectorRadioList.Count)
             {
-                SelectedItem = WinGetSelectorBar.Items[index];
+                SelectedIndex = index;
             }
         }
 
@@ -391,9 +399,9 @@ namespace GetStoreApp.Views.Pages
                 }
             }
 
-            if (index >= 0 && index < WinGetSelectorBar.Items.Count)
+            if (index >= 0 && index < WinGetSelectorRadioList.Count)
             {
-                SelectedItem = WinGetSelectorBar.Items[index];
+                SelectedIndex = index;
             }
 
             LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetPage), nameof(OnNavigationFailed), 1, args.Exception);
@@ -735,6 +743,16 @@ namespace GetStoreApp.Views.Pages
         #endregion 第六部分：挂载事件处理
 
         #region 第七部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private void InitializeData()
+        {
+            WinGetSelectorRadioList.Add(new() { SelectorName = SearchAppsString });
+            WinGetSelectorRadioList.Add(new() { SelectorName = InstalledAppsString });
+            WinGetSelectorRadioList.Add(new() { SelectorName = UpgradableAppsString });
+        }
 
         /// <summary>
         /// 显示任务管理

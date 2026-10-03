@@ -9,9 +9,6 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <x:Double x:Key="BreadcrumbBarChevronFontSize">16</x:Double>
-        <Thickness x:Key="BreadcrumbBarChevronPadding">8,0</Thickness>
-
         <TransitionCollection x:Name="SuppressNavigationTransitionCollection">
             <NavigationThemeTransition>
                 <NavigationThemeTransition.DefaultNavigationTransitionInfo>
@@ -38,21 +35,24 @@
     </Page.Resources>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
         <BreadcrumbBar
             Grid.Row="0"
-            Margin="30,10,30,0"
-            VerticalAlignment="Center"
+            Margin="30,12,30,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Canvas.ZIndex="1"
             ItemClicked="{x:Bind OnItemClicked}"
-            ItemsSource="{x:Bind BreadCollection}">
+            ItemsSource="{x:Bind BreadcrumbBarCollection}">
 
             <BreadcrumbBar.ItemTemplate>
                 <DataTemplate x:DataType="text:ContentLinkInfo">
-                    <TextBlock FontSize="22" Text="{x:Bind DisplayText}" />
+                    <BreadcrumbBarItem Content="{Binding}" Style="{StaticResource PillBreadcrumbBarItemStyle}">
+                        <BreadcrumbBarItem.ContentTemplate>
+                            <DataTemplate x:DataType="text:ContentLinkInfo">
+                                <TextBlock Text="{x:Bind DisplayText}" />
+                            </DataTemplate>
+                        </BreadcrumbBarItem.ContentTemplate>
+                    </BreadcrumbBarItem>
                 </DataTemplate>
             </BreadcrumbBar.ItemTemplate>
         </BreadcrumbBar>
@@ -60,7 +60,8 @@
         <!--  应用管理内容  -->
         <Frame
             x:Name="AppManagerFrame"
-            Grid.Row="3"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
             Navigated="{x:Bind OnNavigated}"
             NavigationFailed="{x:Bind OnNavigationFailed}" />
     </Grid>

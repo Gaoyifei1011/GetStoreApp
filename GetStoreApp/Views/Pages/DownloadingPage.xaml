@@ -24,560 +24,537 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <!--  下载中文件控制栏  -->
-        <Grid
+        <CommandBar
             Grid.Row="0"
-            Height="60"
-            Margin="30,0,30,3"
-            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-            BorderThickness="1"
-            CornerRadius="{StaticResource ControlCornerRadius}">
+            Margin="30,-4,22,-3"
+            Padding="16,0,0,0"
+            VerticalAlignment="Center"
+            HorizontalContentAlignment="Right"
+            VerticalContentAlignment="Center"
+            Background="Transparent"
+            CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+            DefaultLabelPosition="Collapsed"
+            IsDynamicOverflowEnabled="False">
 
-            <CommandBar
-                Padding="16,0,0,0"
-                VerticalAlignment="Center"
-                HorizontalContentAlignment="Stretch"
-                VerticalContentAlignment="Center"
-                Background="Transparent"
-                CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
-                DefaultLabelPosition="Right"
-                IsDynamicOverflowEnabled="False">
+            <CommandBar.Content>
+                <Grid Margin="0,0,7,0">
+                    <InfoBadge
+                        Style="{StaticResource InformationalValueInfoBadgeStyle}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DownloadingEmpty')}"
+                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(DownloadingCollection.Count), Mode=OneWay}"
+                        Value="{x:Bind DownloadingCollection.Count, Mode=OneWay}" />
 
-                <CommandBar.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                    <InfoBadge
+                        ToolTipService.ToolTip="{x:Bind x:String.Format(DownloadingCountInfoString, DownloadingCollection.Count), Mode=OneWay}"
+                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DownloadingCollection.Count), Mode=OneWay}"
+                        Value="{x:Bind DownloadingCollection.Count, Mode=OneWay}" />
+                </Grid>
+            </CommandBar.Content>
 
-                        <FontIcon
-                            Grid.Column="0"
-                            Margin="0,0,12,0"
-                            FontSize="16"
-                            Glyph="&#xE74C;" />
+            <CommandBar.PrimaryCommands>
+                <AppBarButton
+                    Width="48"
+                    Click="{x:Bind OnContinueAllClicked}"
+                    IsEnabled="{x:Bind system:Convert.ToBoolean(DownloadingCollection.Count), Mode=OneWay}"
+                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/ContinueAll')}"
+                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
 
-                        <TextBlock
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Operation')}" />
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE74B;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-                        <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
+                <AppBarButton
+                    Width="48"
+                    Click="{x:Bind OnPauseAllClicked}"
+                    IsEnabled="{x:Bind system:Convert.ToBoolean(DownloadingCollection.Count), Mode=OneWay}"
+                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/PauseAll')}"
+                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
 
-                        <TextBlock
-                            Grid.Column="3"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DownloadingEmpty')}"
-                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(DownloadingCollection.Count), Mode=OneWay}" />
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE769;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-                        <TextBlock
-                            Grid.Column="3"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="{x:Bind x:String.Format(DownloadingCountInfoString, DownloadingCollection.Count), Mode=OneWay}"
-                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DownloadingCollection.Count), Mode=OneWay}" />
-                    </Grid>
-                </CommandBar.Content>
+                <AppBarButton
+                    Width="48"
+                    Click="{x:Bind OnSelectClicked}"
+                    IsEnabled="{x:Bind system:Convert.ToBoolean(DownloadingCollection.Count), Mode=OneWay}"
+                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Select')}"
+                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
 
-                <CommandBar.PrimaryCommands>
-                    <AppBarButton
-                        Click="{x:Bind OnContinueAllClicked}"
-                        IsEnabled="{x:Bind system:Convert.ToBoolean(DownloadingCollection.Count), Mode=OneWay}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/ContinueAll')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/ContinueAllToolTip')}"
-                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE762;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE74B;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
+                <AppBarButton
+                    Width="48"
+                    Label="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/MultiSelect')}"
+                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
 
-                    <AppBarButton
-                        Click="{x:Bind OnPauseAllClicked}"
-                        IsEnabled="{x:Bind system:Convert.ToBoolean(DownloadingCollection.Count), Mode=OneWay}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/PauseAll')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/PauseAllToolTip')}"
-                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE762;" />
+                    </AppBarButton.Icon>
 
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE769;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
+                    <AppBarButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem Click="{x:Bind OnSelectAllClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/SelectAll')}">
 
-                    <AppBarButton
-                        Click="{x:Bind OnSelectClicked}"
-                        IsEnabled="{x:Bind system:Convert.ToBoolean(DownloadingCollection.Count), Mode=OneWay}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Select')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/SelectToolTip')}"
-                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE8B3;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
 
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE762;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
+                            <MenuFlyoutItem Click="{x:Bind OnSelectNoneClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/SelectNone')}">
 
-                    <AppBarButton Label="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/MultiSelect')}" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE8E6;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
 
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE762;" />
-                        </AppBarButton.Icon>
+                            <MenuFlyoutItem Click="{x:Bind OnSelectReverseClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/SelectReverse')}">
 
-                        <AppBarButton.Flyout>
-                            <MenuFlyout Placement="Bottom">
-                                <MenuFlyoutItem Click="{x:Bind OnSelectAllClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/SelectAll')}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xEA98;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
 
-                                    <MenuFlyoutItem.Icon>
-                                        <FontIcon Glyph="&#xE8B3;" />
-                                    </MenuFlyoutItem.Icon>
-                                </MenuFlyoutItem>
+                <AppBarButton
+                    Width="48"
+                    Click="{x:Bind OnDeleteSelectedClicked}"
+                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DeleteSelected')}"
+                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
 
-                                <MenuFlyoutItem Click="{x:Bind OnSelectNoneClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/SelectNone')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE74D;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-                                    <MenuFlyoutItem.Icon>
-                                        <FontIcon Glyph="&#xE8E6;" />
-                                    </MenuFlyoutItem.Icon>
-                                </MenuFlyoutItem>
+                <AppBarButton
+                    Width="48"
+                    Click="{x:Bind OnCancelClicked}"
+                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Cancel')}"
+                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
 
-                                <MenuFlyoutItem Click="{x:Bind OnSelectReverseClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/SelectReverse')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE711;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar.PrimaryCommands>
 
-                                    <MenuFlyoutItem.Icon>
-                                        <FontIcon Glyph="&#xEA98;" />
-                                    </MenuFlyoutItem.Icon>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </AppBarButton.Flyout>
-                    </AppBarButton>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton
+                    Click="{x:Bind OnOpenFolderClicked}"
+                    Label="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/OpenFolder')}"
+                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/OpenFolderToolTip')}">
 
-                    <AppBarButton
-                        Click="{x:Bind OnDeleteSelectedClicked}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DeleteSelected')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DeleteSelectedToolTip')}"
-                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8B7;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE74D;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
+                <AppBarButton
+                    Click="{x:Bind OnUseInstructionClicked}"
+                    Label="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/UseInstruction')}"
+                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/UseInstructionToolTip')}">
 
-                    <AppBarButton
-                        Click="{x:Bind OnCancelClicked}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Cancel')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/CancelToolTip')}"
-                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckListViewSelectionModeVisibility(SelectionMode, controls:ListViewSelectionMode.Multiple), Mode=OneWay}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE946;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
 
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE711;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                </CommandBar.PrimaryCommands>
-
-                <CommandBar.SecondaryCommands>
-                    <AppBarButton
-                        Click="{x:Bind OnOpenFolderClicked}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/OpenFolder')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/OpenFolderToolTip')}">
-
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE8B7;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
-                    <AppBarButton
-                        Click="{x:Bind OnUseInstructionClicked}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/UseInstruction')}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/UseInstructionToolTip')}">
-
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE946;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                </CommandBar.SecondaryCommands>
-            </CommandBar>
-        </Grid>
-
-        <!--  下载内容空提示栏  -->
-        <Grid
-            Grid.Row="1"
-            Height="60"
-            Margin="30,0,30,0"
-            Padding="16,0"
-            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-            BorderThickness="1"
-            CornerRadius="{StaticResource ControlCornerRadius}"
-            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(DownloadingCollection.Count), Mode=OneWay}">
-
-            <TextBlock
+        <Grid Grid.Row="1">
+            <!--  下载内容空提示栏  -->
+            <Grid
+                Margin="30,0,30,60"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DownloadingEmptyDescription')}"
-                TextAlignment="Center" />
-        </Grid>
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(DownloadingCollection.Count), Mode=OneWay}">
 
-        <!--  下载内容列表控件  -->
-        <ListView
-            x:Name="DownloadingListView"
-            Grid.Row="2"
-            Padding="30,0,28,30"
-            ItemsSource="{x:Bind DownloadingCollection}"
-            SelectionMode="{x:Bind SelectionMode, Mode=OneWay}"
-            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DownloadingCollection.Count), Mode=OneWay}">
+                <StackPanel Spacing="20">
+                    <Image
+                        Width="150"
+                        Height="150"
+                        Source="ms-appx:///Assets/Image/DownloadDefault.png" />
 
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
-                    <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
-                    <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
-                    <Setter Property="Foreground" Value="{ThemeResource ListViewItemForeground}" />
-                    <Setter Property="TabNavigation" Value="Local" />
-                    <Setter Property="IsHoldingEnabled" Value="True" />
-                    <Setter Property="Padding" Value="0" />
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                    <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}" />
-                    <Setter Property="MinHeight" Value="0" />
-                    <Setter Property="AllowDrop" Value="False" />
-                    <Setter Property="Margin" Value="0,0,0,2" />
-                    <Setter Property="UseSystemFocusVisuals" Value="True" />
-                    <Setter Property="FocusVisualMargin" Value="1" />
-                    <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource ListViewItemFocusVisualPrimaryBrush}" />
-                    <Setter Property="FocusVisualPrimaryThickness" Value="2" />
-                    <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource ListViewItemFocusVisualSecondaryBrush}" />
-                    <Setter Property="FocusVisualSecondaryThickness" Value="1" />
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ListViewItem">
-                                <customcontrol:BorderedListViewItemPresenter
-                                    x:Name="Root"
-                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                    BorderThickness="1"
-                                    CheckBoxBorderBrush="{ThemeResource ListViewItemCheckBoxBorderBrush}"
-                                    CheckBoxBrush="{ThemeResource ListViewItemCheckBoxBrush}"
-                                    CheckBoxCornerRadius="{ThemeResource ListViewItemCheckBoxCornerRadius}"
-                                    CheckBoxDisabledBorderBrush="{ThemeResource ListViewItemCheckBoxDisabledBorderBrush}"
-                                    CheckBoxDisabledBrush="{ThemeResource ListViewItemCheckBoxDisabledBrush}"
-                                    CheckBoxPointerOverBorderBrush="{ThemeResource ListViewItemCheckBoxPointerOverBorderBrush}"
-                                    CheckBoxPointerOverBrush="{ThemeResource ControlAltFillColorTertiaryBrush}"
-                                    CheckBoxPressedBorderBrush="{ThemeResource ListViewItemCheckBoxPressedBorderBrush}"
-                                    CheckBoxPressedBrush="{ThemeResource ListViewItemCheckBoxPressedBrush}"
-                                    CheckBoxSelectedBrush="{ThemeResource ListViewItemCheckBoxSelectedBrush}"
-                                    CheckBoxSelectedDisabledBrush="{ThemeResource ListViewItemCheckBoxSelectedDisabledBrush}"
-                                    CheckBoxSelectedPointerOverBrush="{ThemeResource ListViewItemCheckBoxSelectedPointerOverBrush}"
-                                    CheckBoxSelectedPressedBrush="{ThemeResource ListViewItemCheckBoxSelectedPressedBrush}"
-                                    CheckBrush="{ThemeResource ListViewItemCheckBrush}"
-                                    CheckDisabledBrush="{ThemeResource ListViewItemCheckDisabledBrush}"
-                                    CheckMode="{ThemeResource ListViewItemCheckMode}"
-                                    CheckPressedBrush="{ThemeResource ListViewItemCheckPressedBrush}"
-                                    ContentMargin="{TemplateBinding Padding}"
-                                    ContentTransitions="{TemplateBinding ContentTransitions}"
-                                    Control.IsTemplateFocusTarget="True"
-                                    CornerRadius="{ThemeResource ListViewItemCornerRadius}"
-                                    DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-                                    DragBackground="{ThemeResource ListViewItemDragBackground}"
-                                    DragForeground="{ThemeResource ListViewItemDragForeground}"
-                                    DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-                                    FocusBorderBrush="{ThemeResource ListViewItemFocusBorderBrush}"
-                                    FocusSecondaryBorderBrush="{ThemeResource ListViewItemFocusSecondaryBorderBrush}"
-                                    FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
-                                    FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}"
-                                    FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}"
-                                    FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}"
-                                    FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}"
-                                    PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackground}"
-                                    PointerOverBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                    PointerOverForeground="{ThemeResource ListViewItemForegroundPointerOver}"
-                                    PressedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                    ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
-                                    SelectedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                    SelectedDisabledBackground="{ThemeResource ListViewItemBackgroundSelectedDisabled}"
-                                    SelectedForeground="{ThemeResource ListViewItemForegroundSelected}"
-                                    SelectedPointerOverBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                    SelectedPressedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                    SelectionCheckMarkVisualEnabled="{ThemeResource ListViewItemSelectionCheckMarkVisualEnabled}"
-                                    SelectionIndicatorBrush="{ThemeResource ListViewItemSelectionIndicatorBrush}"
-                                    SelectionIndicatorCornerRadius="{ThemeResource ListViewItemSelectionIndicatorCornerRadius}"
-                                    SelectionIndicatorDisabledBrush="{ThemeResource ListViewItemSelectionIndicatorDisabledBrush}"
-                                    SelectionIndicatorPointerOverBrush="{ThemeResource ListViewItemSelectionIndicatorPointerOverBrush}"
-                                    SelectionIndicatorPressedBrush="{ThemeResource ListViewItemSelectionIndicatorPressedBrush}"
-                                    SelectionIndicatorVisualEnabled="{ThemeResource ListViewItemSelectionIndicatorVisualEnabled}" />
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListView.ItemContainerStyle>
+                    <TextBlock
+                        MaxWidth="800"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="18"
+                        FontWeight="Medium"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DownloadingEmptyDescription')}"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </Grid>
 
-            <ItemsControl.ItemContainerTransitions>
-                <TransitionCollection />
-            </ItemsControl.ItemContainerTransitions>
+            <!--  下载内容列表控件  -->
+            <ListView
+                x:Name="DownloadingListView"
+                Padding="30,0,28,30"
+                ItemsSource="{x:Bind DownloadingCollection}"
+                SelectionMode="{x:Bind SelectionMode, Mode=OneWay}"
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DownloadingCollection.Count), Mode=OneWay}">
 
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="model:DownloadingModel">
-                    <Grid Height="60" Padding="16,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+                        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+                        <Setter Property="Foreground" Value="{ThemeResource ListViewItemForeground}" />
+                        <Setter Property="TabNavigation" Value="Local" />
+                        <Setter Property="IsHoldingEnabled" Value="True" />
+                        <Setter Property="Padding" Value="0" />
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}" />
+                        <Setter Property="MinHeight" Value="0" />
+                        <Setter Property="AllowDrop" Value="False" />
+                        <Setter Property="Margin" Value="0,0,0,2" />
+                        <Setter Property="UseSystemFocusVisuals" Value="True" />
+                        <Setter Property="FocusVisualMargin" Value="1" />
+                        <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource ListViewItemFocusVisualPrimaryBrush}" />
+                        <Setter Property="FocusVisualPrimaryThickness" Value="2" />
+                        <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource ListViewItemFocusVisualSecondaryBrush}" />
+                        <Setter Property="FocusVisualSecondaryThickness" Value="1" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <customcontrol:BorderedListViewItemPresenter
+                                        x:Name="Root"
+                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                        BorderThickness="1"
+                                        CheckBoxBorderBrush="{ThemeResource ListViewItemCheckBoxBorderBrush}"
+                                        CheckBoxBrush="{ThemeResource ListViewItemCheckBoxBrush}"
+                                        CheckBoxCornerRadius="{ThemeResource ListViewItemCheckBoxCornerRadius}"
+                                        CheckBoxDisabledBorderBrush="{ThemeResource ListViewItemCheckBoxDisabledBorderBrush}"
+                                        CheckBoxDisabledBrush="{ThemeResource ListViewItemCheckBoxDisabledBrush}"
+                                        CheckBoxPointerOverBorderBrush="{ThemeResource ListViewItemCheckBoxPointerOverBorderBrush}"
+                                        CheckBoxPointerOverBrush="{ThemeResource ControlAltFillColorTertiaryBrush}"
+                                        CheckBoxPressedBorderBrush="{ThemeResource ListViewItemCheckBoxPressedBorderBrush}"
+                                        CheckBoxPressedBrush="{ThemeResource ListViewItemCheckBoxPressedBrush}"
+                                        CheckBoxSelectedBrush="{ThemeResource ListViewItemCheckBoxSelectedBrush}"
+                                        CheckBoxSelectedDisabledBrush="{ThemeResource ListViewItemCheckBoxSelectedDisabledBrush}"
+                                        CheckBoxSelectedPointerOverBrush="{ThemeResource ListViewItemCheckBoxSelectedPointerOverBrush}"
+                                        CheckBoxSelectedPressedBrush="{ThemeResource ListViewItemCheckBoxSelectedPressedBrush}"
+                                        CheckBrush="{ThemeResource ListViewItemCheckBrush}"
+                                        CheckDisabledBrush="{ThemeResource ListViewItemCheckDisabledBrush}"
+                                        CheckMode="{ThemeResource ListViewItemCheckMode}"
+                                        CheckPressedBrush="{ThemeResource ListViewItemCheckPressedBrush}"
+                                        ContentMargin="{TemplateBinding Padding}"
+                                        ContentTransitions="{TemplateBinding ContentTransitions}"
+                                        Control.IsTemplateFocusTarget="True"
+                                        CornerRadius="{ThemeResource ListViewItemCornerRadius}"
+                                        DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                                        DragBackground="{ThemeResource ListViewItemDragBackground}"
+                                        DragForeground="{ThemeResource ListViewItemDragForeground}"
+                                        DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                                        FocusBorderBrush="{ThemeResource ListViewItemFocusBorderBrush}"
+                                        FocusSecondaryBorderBrush="{ThemeResource ListViewItemFocusSecondaryBorderBrush}"
+                                        FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
+                                        FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}"
+                                        FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}"
+                                        FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}"
+                                        FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}"
+                                        PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackground}"
+                                        PointerOverBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                        PointerOverForeground="{ThemeResource ListViewItemForegroundPointerOver}"
+                                        PressedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                        ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+                                        SelectedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                        SelectedDisabledBackground="{ThemeResource ListViewItemBackgroundSelectedDisabled}"
+                                        SelectedForeground="{ThemeResource ListViewItemForegroundSelected}"
+                                        SelectedPointerOverBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                        SelectedPressedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                        SelectionCheckMarkVisualEnabled="{ThemeResource ListViewItemSelectionCheckMarkVisualEnabled}"
+                                        SelectionIndicatorBrush="{ThemeResource ListViewItemSelectionIndicatorBrush}"
+                                        SelectionIndicatorCornerRadius="{ThemeResource ListViewItemSelectionIndicatorCornerRadius}"
+                                        SelectionIndicatorDisabledBrush="{ThemeResource ListViewItemSelectionIndicatorDisabledBrush}"
+                                        SelectionIndicatorPointerOverBrush="{ThemeResource ListViewItemSelectionIndicatorPointerOverBrush}"
+                                        SelectionIndicatorPressedBrush="{ThemeResource ListViewItemSelectionIndicatorPressedBrush}"
+                                        SelectionIndicatorVisualEnabled="{ThemeResource ListViewItemSelectionIndicatorVisualEnabled}" />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
 
-                        <FontIcon
-                            Grid.Column="0"
-                            Margin="0,0,12,0"
-                            FontSize="18"
-                            FontWeight="Thin"
-                            Glyph="&#xE958;"
-                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Queued), Mode=OneWay}" />
+                <ItemsControl.ItemContainerTransitions>
+                    <TransitionCollection />
+                </ItemsControl.ItemContainerTransitions>
 
-                        <FontIcon
-                            Grid.Column="0"
-                            Margin="0,0,12,0"
-                            FontSize="18"
-                            FontWeight="Thin"
-                            Glyph="&#xE896;"
-                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}" />
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:DownloadingModel">
+                        <Grid Height="60" Padding="16,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                        <FontIcon
-                            Grid.Column="0"
-                            Margin="0,0,12,0"
-                            FontSize="18"
-                            FontWeight="Thin"
-                            Glyph="&#xE769;"
-                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Paused), Mode=OneWay}" />
+                            <FontIcon
+                                Grid.Column="0"
+                                Margin="0,0,12,0"
+                                FontSize="18"
+                                FontWeight="Thin"
+                                Glyph="&#xE958;"
+                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Queued), Mode=OneWay}" />
 
-                        <FontIcon
-                            Grid.Column="0"
-                            Margin="0,0,12,0"
-                            FontSize="18"
-                            FontWeight="Thin"
-                            Glyph="&#xEA39;"
-                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Failed), Mode=OneWay}" />
+                            <FontIcon
+                                Grid.Column="0"
+                                Margin="0,0,12,0"
+                                FontSize="18"
+                                FontWeight="Thin"
+                                Glyph="&#xE896;"
+                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}" />
 
-                        <Grid
-                            Grid.Column="1"
-                            Margin="0,0,10,0"
-                            VerticalAlignment="Center"
-                            RowSpacing="4">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
+                            <FontIcon
+                                Grid.Column="0"
+                                Margin="0,0,12,0"
+                                FontSize="18"
+                                FontWeight="Thin"
+                                Glyph="&#xE769;"
+                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Paused), Mode=OneWay}" />
 
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
+                            <FontIcon
+                                Grid.Column="0"
+                                Margin="0,0,12,0"
+                                FontSize="18"
+                                FontWeight="Thin"
+                                Glyph="&#xEA39;"
+                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Failed), Mode=OneWay}" />
 
-                                <TextBlock
-                                    x:Name="FileNameTextBlock"
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    FontSize="16"
-                                    Text="{x:Bind FileName}"
-                                    TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                            <Grid
+                                Grid.Column="1"
+                                Margin="0,0,10,0"
+                                VerticalAlignment="Center"
+                                RowSpacing="4">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
 
-                                <TextBlock
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    FontSize="16"
-                                    Text="{x:Bind roothelper:SpeedHelper.ConvertSpeedToString(DownloadSpeed), Mode=OneWay}"
-                                    TextAlignment="Right"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}">
+                                    <TextBlock
+                                        x:Name="FileNameTextBlock"
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Text="{x:Bind FileName}"
+                                        TextAlignment="Left"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock>
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/CurrentSpeed')}" />
-                                                <Run Text="{x:Bind roothelper:SpeedHelper.ConvertSpeedToString(DownloadSpeed), Mode=OneWay}" />
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
 
-                                <TextBlock
-                                    Grid.Column="2"
-                                    Margin="4,0,4,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    FontSize="14"
-                                    Text="|"
-                                    TextAlignment="Right"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Text="{x:Bind roothelper:SpeedHelper.ConvertSpeedToString(DownloadSpeed), Mode=OneWay}"
+                                        TextAlignment="Right"
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}">
 
-                                <TextBlock
-                                    Grid.Column="3"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    FontSize="16"
-                                    Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(CompletedSize), Mode=OneWay}"
-                                    TextAlignment="Right"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}">
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/CurrentSpeed')}" />
+                                                    <Run Text="{x:Bind roothelper:SpeedHelper.ConvertSpeedToString(DownloadSpeed), Mode=OneWay}" />
+                                                </TextBlock>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock>
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/CompletedSize')}" />
-                                                <Run Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(CompletedSize), Mode=OneWay}" />
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                    <TextBlock
+                                        Grid.Column="2"
+                                        Margin="4,0,4,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Text="|"
+                                        TextAlignment="Right"
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}" />
 
-                                <TextBlock
-                                    Grid.Column="4"
-                                    Margin="4,0,4,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    FontSize="14"
-                                    Text="|"
-                                    TextAlignment="Right"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}" />
+                                    <TextBlock
+                                        Grid.Column="3"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(CompletedSize), Mode=OneWay}"
+                                        TextAlignment="Right"
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}">
 
-                                <TextBlock
-                                    Grid.Column="5"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    FontSize="16"
-                                    Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(TotalSize), Mode=OneWay}"
-                                    TextAlignment="Right">
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/CompletedSize')}" />
+                                                    <Run Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(CompletedSize), Mode=OneWay}" />
+                                                </TextBlock>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock>
-                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/FileSize')}" />
-                                                <Run Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(TotalSize), Mode=OneWay}" />
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                    <TextBlock
+                                        Grid.Column="4"
+                                        Margin="4,0,4,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Text="|"
+                                        TextAlignment="Right"
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}" />
+
+                                    <TextBlock
+                                        Grid.Column="5"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(TotalSize), Mode=OneWay}"
+                                        TextAlignment="Right">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/FileSize')}" />
+                                                    <Run Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(TotalSize), Mode=OneWay}" />
+                                                </TextBlock>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </Grid>
+
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Left"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DownloadQueued')}"
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Queued), Mode=OneWay}" />
+
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Left"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Downloading')}"
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}" />
+
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Left"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DownloadPaused')}"
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Paused), Mode=OneWay}" />
+
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Left"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DownloadFailed')}"
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Failed), Mode=OneWay}" />
+
+                                    <ProgressBar
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0"
+                                        IsIndeterminate="{x:Bind x:Object.Equals(DownloadProgressState, enum:DownloadProgressState.Queued), Mode=OneWay}"
+                                        ShowError="{x:Bind x:Object.Equals(DownloadProgressState, enum:DownloadProgressState.Failed), Mode=OneWay}"
+                                        ShowPaused="{x:Bind x:Object.Equals(DownloadProgressState, enum:DownloadProgressState.Paused), Mode=OneWay}"
+                                        Value="{x:Bind converter:ValueConverterHelper.DownloadProgress(CompletedSize, TotalSize), Mode=OneWay}" />
+                                </Grid>
                             </Grid>
 
-                            <Grid Grid.Row="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
+                            <ContentControl
+                                Grid.Column="2"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                IsEnabled="{x:Bind x:Object.Equals(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
 
-                                <TextBlock
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DownloadQueued')}"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Queued), Mode=OneWay}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <Button
+                                        Width="32"
+                                        Height="32"
+                                        Margin="5,0,0,0"
+                                        Padding="0"
+                                        Command="{StaticResource ContinueCommand}"
+                                        CommandParameter="{x:Bind}"
+                                        CornerRadius="{StaticResource ControlCornerRadius}"
+                                        IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Continue')}"
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Paused), Mode=OneWay}">
 
-                                <TextBlock
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Downloading')}"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}" />
+                                        <FontIcon FontSize="14" Glyph="&#xE768;" />
+                                    </Button>
 
-                                <TextBlock
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DownloadPaused')}"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Paused), Mode=OneWay}" />
+                                    <Button
+                                        Width="32"
+                                        Height="32"
+                                        Margin="5,0,0,0"
+                                        Padding="0"
+                                        Command="{StaticResource PauseCommand}"
+                                        CommandParameter="{x:Bind}"
+                                        CornerRadius="{StaticResource ControlCornerRadius}"
+                                        IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Pause')}"
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadingStateVisibility(DownloadProgressState), Mode=OneWay}">
 
-                                <TextBlock
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/DownloadFailed')}"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Failed), Mode=OneWay}" />
+                                        <FontIcon FontSize="14" Glyph="&#xE769;" />
+                                    </Button>
 
-                                <ProgressBar
-                                    Grid.Column="1"
-                                    Margin="10,0,0,0"
-                                    IsIndeterminate="{x:Bind x:Object.Equals(DownloadProgressState, enum:DownloadProgressState.Queued), Mode=OneWay}"
-                                    ShowError="{x:Bind x:Object.Equals(DownloadProgressState, enum:DownloadProgressState.Failed), Mode=OneWay}"
-                                    ShowPaused="{x:Bind x:Object.Equals(DownloadProgressState, enum:DownloadProgressState.Paused), Mode=OneWay}"
-                                    Value="{x:Bind converter:ValueConverterHelper.DownloadProgress(CompletedSize, TotalSize), Mode=OneWay}" />
-                            </Grid>
+                                    <Button
+                                        Width="32"
+                                        Height="32"
+                                        Margin="5,0,0,0"
+                                        Padding="0"
+                                        Command="{StaticResource DeleteCommand}"
+                                        CommandParameter="{x:Bind}"
+                                        CornerRadius="{StaticResource ControlCornerRadius}"
+                                        IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Delete')}">
+
+                                        <FontIcon FontSize="14" Glyph="&#xE711;" />
+                                    </Button>
+                                </StackPanel>
+                            </ContentControl>
                         </Grid>
-
-                        <ContentControl
-                            Grid.Column="2"
-                            Margin="10,0,0,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            IsEnabled="{x:Bind x:Object.Equals(SelectionMode, controls:ListViewSelectionMode.None), Mode=OneWay}">
-
-                            <StackPanel Orientation="Horizontal">
-                                <Button
-                                    Width="32"
-                                    Height="32"
-                                    Margin="5,0,0,0"
-                                    Padding="0"
-                                    Command="{StaticResource ContinueCommand}"
-                                    CommandParameter="{x:Bind}"
-                                    CornerRadius="{StaticResource ControlCornerRadius}"
-                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Continue')}"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressStateVisibility(DownloadProgressState, enum:DownloadProgressState.Paused), Mode=OneWay}">
-
-                                    <FontIcon FontSize="14" Glyph="&#xE768;" />
-                                </Button>
-
-                                <Button
-                                    Width="32"
-                                    Height="32"
-                                    Margin="5,0,0,0"
-                                    Padding="0"
-                                    Command="{StaticResource PauseCommand}"
-                                    CommandParameter="{x:Bind}"
-                                    CornerRadius="{StaticResource ControlCornerRadius}"
-                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Pause')}"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadingStateVisibility(DownloadProgressState), Mode=OneWay}">
-
-                                    <FontIcon FontSize="14" Glyph="&#xE769;" />
-                                </Button>
-
-                                <Button
-                                    Width="32"
-                                    Height="32"
-                                    Margin="5,0,0,0"
-                                    Padding="0"
-                                    Command="{StaticResource DeleteCommand}"
-                                    CommandParameter="{x:Bind}"
-                                    CornerRadius="{StaticResource ControlCornerRadius}"
-                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Downloading/Delete')}">
-
-                                    <FontIcon FontSize="14" Glyph="&#xE711;" />
-                                </Button>
-                            </StackPanel>
-                        </ContentControl>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </Page>

@@ -83,6 +83,7 @@
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     AllowFocusOnInteraction="True"
+                                    IsEnabled="{x:Bind GetIsInstalling(InstalledAppsResultKind), Mode=OneWay}"
                                     PlaceholderText="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/InstalledAppsPlaceHolderText')}"
                                     QuerySubmitted="{x:Bind OnQuerySubmitted}"
                                     Text="{x:Bind SearchText, Mode=OneWay}"

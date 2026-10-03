@@ -20,492 +20,482 @@
         <XamlUICommand x:Name="RemoveCommand" ExecuteRequested="{x:Bind OnRemoveExecuteRequested}" />
     </Page.Resources>
 
-    <Grid>
+    <Grid Margin="0,10,0,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <!--  应用包存储卷配置控制栏  -->
-        <Grid
+        <CommandBar
             Grid.Row="0"
-            Height="60"
-            Margin="30,5,30,3"
-            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-            BorderThickness="1"
-            CornerRadius="{StaticResource ControlCornerRadius}">
+            Margin="30,-4,22,-3"
+            Padding="16,0,0,0"
+            VerticalAlignment="Center"
+            HorizontalContentAlignment="Right"
+            VerticalContentAlignment="Center"
+            Background="Transparent"
+            CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+            DefaultLabelPosition="Collapsed"
+            IsDynamicOverflowEnabled="False">
 
-            <CommandBar
-                Padding="16,0,0,0"
+            <CommandBar.Content>
+                <Grid Margin="0,0,7,0">
+                    <InfoBadge
+                        Style="{StaticResource InformationalValueInfoBadgeStyle}"
+                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/PackageVolumeCountEmpty')}"
+                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(PackageVolumeCollection.Count), Mode=OneWay}"
+                        Value="{x:Bind PackageVolumeCollection.Count, Mode=OneWay}" />
+
+                    <InfoBadge
+                        Style="{StaticResource CautionValueInfoBadgeStyle}"
+                        ToolTipService.ToolTip="{x:Bind GetLocalizedPackageVolumeCountInfo(PackageVolumeCollection.Count), Mode=OneWay}"
+                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(PackageVolumeCollection.Count), Mode=OneWay}"
+                        Value="{x:Bind PackageVolumeCollection.Count, Mode=OneWay}" />
+                </Grid>
+            </CommandBar.Content>
+
+            <CommandBar.PrimaryCommands>
+                <AppBarButton
+                    Width="48"
+                    Click="{x:Bind OnAddNewPackageVolumeClicked}"
+                    IsEnabled="{x:Bind GetIsLoading(PackageVolumeResultKind), Mode=OneWay}"
+                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/AddNewPackageVolume')}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE710;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarButton
+                    Width="48"
+                    Click="{x:Bind OnRefreshClicked}"
+                    IsEnabled="{x:Bind GetIsLoading(PackageVolumeResultKind), Mode=OneWay}"
+                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Refresh')}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE72C;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar.PrimaryCommands>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Click="{x:Bind OnSettingsInstructionClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/SettingsInstruction')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE946;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+
+        <Grid Grid.Row="1">
+            <!--  存储卷状态显示栏  -->
+            <Grid
+                Margin="30,0,30,60"
+                HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                HorizontalContentAlignment="Stretch"
-                VerticalContentAlignment="Center"
-                Background="Transparent"
-                CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
-                DefaultLabelPosition="Right"
-                IsDynamicOverflowEnabled="False">
+                Visibility="{x:Bind GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind, x:False), Mode=OneWay}">
 
-                <CommandBar.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                <Grid>
+                    <!--  正在加载中  -->
+                    <StackPanel Spacing="20" Visibility="{x:Bind CheckPackageVolumeResultKindVisibility(PackageVolumeResultKind, enum:PackageVolumeResultKind.Loading, x:False), Mode=OneWay}">
+                        <Image
+                            Width="150"
+                            Height="150"
+                            Source="ms-appx:///Assets/Image/Search.png" />
 
-                        <FontIcon
-                            Grid.Column="0"
-                            Margin="0,0,12,0"
-                            FontSize="16"
-                            Glyph="&#xE74C;" />
+                        <Grid ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <ProgressRing
+                                Grid.Column="0"
+                                Width="30"
+                                Height="30"
+                                IsActive="True" />
+
+                            <TextBlock
+                                Grid.Column="1"
+                                MaxWidth="800"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="18"
+                                FontWeight="Medium"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/LoadingPackageVolume')}"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </Grid>
+                    </StackPanel>
+
+                    <!--  加载失败（包含搜索结果为空）  -->
+                    <StackPanel Spacing="20" Visibility="{x:Bind CheckPackageVolumeResultKindVisibility(PackageVolumeResultKind, enum:PackageVolumeResultKind.Failed, x:False), Mode=OneWay}">
+                        <Image
+                            Width="150"
+                            Height="150"
+                            Source="ms-appx:///Assets/Image/Failed.png" />
 
                         <TextBlock
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
+                            MaxWidth="800"
+                            HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Operation')}" />
-
-                        <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
-
-                        <TextBlock
-                            Grid.Column="3"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/PackageVolumeCountEmpty')}"
-                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(PackageVolumeCollection.Count), Mode=OneWay}" />
-
-                        <TextBlock
-                            Grid.Column="3"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="{x:Bind GetLocalizedPackageVolumeCountInfo(PackageVolumeCollection.Count), Mode=OneWay}"
-                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(PackageVolumeCollection.Count), Mode=OneWay}" />
-                    </Grid>
-                </CommandBar.Content>
-
-                <CommandBar.PrimaryCommands>
-                    <AppBarButton
-                        Click="{x:Bind OnAddNewPackageVolumeClicked}"
-                        IsEnabled="{x:Bind GetIsLoading(PackageVolumeResultKind), Mode=OneWay}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/AddNewPackageVolume')}">
-
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE710;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
-                    <AppBarButton
-                        Click="{x:Bind OnRefreshClicked}"
-                        IsEnabled="{x:Bind GetIsLoading(PackageVolumeResultKind), Mode=OneWay}"
-                        Label="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Refresh')}">
-
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE72C;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                </CommandBar.PrimaryCommands>
-
-                <CommandBar.SecondaryCommands>
-                    <AppBarButton Click="{x:Bind OnSettingsInstructionClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/SettingsInstruction')}">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE946;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                </CommandBar.SecondaryCommands>
-            </CommandBar>
-        </Grid>
-
-        <!--  存储卷状态显示栏  -->
-        <Grid
-            Grid.Row="1"
-            Height="60"
-            Margin="30,0,30,0"
-            Padding="16,0"
-            VerticalAlignment="Top"
-            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-            BorderThickness="1"
-            CornerRadius="{StaticResource ControlCornerRadius}"
-            Visibility="{x:Bind GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind, x:False), Mode=OneWay}">
-
-            <Grid>
-                <!--  正在加载中  -->
-                <StackPanel
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal"
-                    Spacing="10"
-                    Visibility="{x:Bind CheckPackageVolumeResultKindVisibility(PackageVolumeResultKind, enum:PackageVolumeResultKind.Loading, x:False), Mode=OneWay}">
-
-                    <ProgressRing IsActive="True" IsEnabled="True" />
-
-                    <TextBlock
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/LoadingPackageVolume')}"
-                        TextAlignment="Center" />
-                </StackPanel>
-
-                <!--  加载失败（包含搜索结果为空）  -->
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Text="{x:Bind PackageVolumeFailedContent, Mode=OneWay}"
-                    TextAlignment="Center"
-                    Visibility="{x:Bind CheckPackageVolumeResultKindVisibility(PackageVolumeResultKind, enum:PackageVolumeResultKind.Failed, x:False), Mode=OneWay}" />
+                            FontSize="18"
+                            FontWeight="Medium"
+                            Text="{x:Bind PackageVolumeFailedContent, Mode=OneWay}"
+                            TextAlignment="Center"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </Grid>
             </Grid>
-        </Grid>
 
-        <!--  存储卷列表信息控件  -->
-        <ListView
-            Grid.Row="2"
-            Padding="0,0,-2,30"
-            ItemsSource="{x:Bind PackageVolumeCollection}"
-            SelectionMode="None"
-            Visibility="{x:Bind GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind, x:True), Mode=OneWay}">
+            <!--  存储卷列表信息控件  -->
+            <ListView
+                Padding="30,0,28,30"
+                ItemsSource="{x:Bind PackageVolumeCollection}"
+                SelectionMode="None"
+                Visibility="{x:Bind GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind, x:True), Mode=OneWay}">
 
-            <ListView.ItemContainerStyle>
-                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="Margin" Value="0" />
-                    <Setter Property="MinHeight" Value="0" />
-                    <Setter Property="Padding" Value="0" />
-                </Style>
-            </ListView.ItemContainerStyle>
+                <ListView.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Margin" Value="0" />
+                        <Setter Property="MinHeight" Value="0" />
+                        <Setter Property="Padding" Value="0" />
+                    </Style>
+                </ListView.ItemContainerStyle>
 
-            <ItemsControl.ItemContainerTransitions>
-                <TransitionCollection />
-            </ItemsControl.ItemContainerTransitions>
+                <ItemsControl.ItemContainerTransitions>
+                    <TransitionCollection />
+                </ItemsControl.ItemContainerTransitions>
 
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="model:PackageVolumeModel">
-                    <Expander
-                        Margin="30,0,30,2"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Stretch"
-                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                        IsExpanded="False">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:PackageVolumeModel">
+                        <Expander
+                            Margin="0,0,0,2"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch"
+                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            IsExpanded="False">
 
-                        <Expander.Header>
+                            <Expander.Header>
+                                <Grid
+                                    Height="60"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="30" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <FontIcon
+                                        Grid.Column="0"
+                                        Margin="0,0,12,0"
+                                        FontSize="16"
+                                        Glyph="&#xEDA2;" />
+
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        Margin="0,0,10,0"
+                                        VerticalAlignment="Center"
+                                        Orientation="Vertical">
+
+                                        <TextBlock
+                                            x:Name="PackageVolumeNameTextBlock"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource BodyTextBlockStyle}"
+                                            Text="{x:Bind Name}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="{x:Bind Name}" Visibility="{Binding ElementName=PackageVolumeNameTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
+
+                                        <ProgressBar
+                                            Grid.Row="1"
+                                            Grid.ColumnSpan="2"
+                                            MinHeight="8"
+                                            Margin="0,2,0,2"
+                                            Background="{ThemeResource SurfaceStrokeColorDefaultBrush}"
+                                            CornerRadius="{StaticResource ControlCornerRadius}"
+                                            ShowError="{x:Bind IsAvailableSpaceError}"
+                                            ShowPaused="{x:Bind IsAvailableSpaceWarning}"
+                                            Value="{x:Bind PackageVolumeUsedPercentage}" />
+
+                                        <TextBlock
+                                            x:Name="PackageVolumeSpaceTextBlock"
+                                            HorizontalAlignment="Left"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            Style="{StaticResource CaptionTextBlockStyle}"
+                                            Text="{x:Bind Space}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="{x:Bind Space}" Visibility="{Binding ElementName=PackageVolumeSpaceTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <ProgressRing
+                                        Grid.Column="2"
+                                        Width="30"
+                                        Height="30"
+                                        IsActive="{x:Bind IsOperating, Mode=OneWay}"
+                                        IsIndeterminate="True"
+                                        Visibility="{x:Bind IsOperating, Mode=OneWay}" />
+
+                                    <Button
+                                        Grid.Column="3"
+                                        MinHeight="{ThemeResource AppBarThemeCompactHeight}"
+                                        Margin="-6,0,-15,0"
+                                        Padding="{ThemeResource CommandBarMoreButtonMargin}"
+                                        VerticalAlignment="Center"
+                                        Foreground="{ThemeResource CommandBarForeground}"
+                                        IsAccessKeyScope="True"
+                                        Style="{ThemeResource EllipsisButton}"
+                                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/ViewMore')}">
+
+                                        <FontIcon
+                                            Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
+                                            VerticalAlignment="Center"
+                                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                            FontSize="20"
+                                            Glyph="&#xE712;" />
+
+                                        <Button.Flyout>
+                                            <MenuFlyout Placement="Bottom">
+                                                <MenuFlyoutItem
+                                                    Command="{StaticResource SetDefaultVolumeCommand}"
+                                                    CommandParameter="{x:Bind}"
+                                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/SetDefaultVolume')}"
+                                                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsDefaultVolume), Mode=OneWay}">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE958;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+
+                                                <MenuFlyoutItem
+                                                    Command="{StaticResource MountCommand}"
+                                                    CommandParameter="{x:Bind}"
+                                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Mount')}"
+                                                    Visibility="{x:Bind IsOffline, Mode=OneWay}">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE8CE;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+
+                                                <MenuFlyoutItem
+                                                    Command="{StaticResource DismountCommand}"
+                                                    CommandParameter="{x:Bind}"
+                                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Dismount')}"
+                                                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsOffline), Mode=OneWay}">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE8CD;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+
+                                                <MenuFlyoutItem
+                                                    Command="{StaticResource RemoveCommand}"
+                                                    CommandParameter="{x:Bind}"
+                                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Remove')}">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE74D;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+                                            </MenuFlyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                </Grid>
+                            </Expander.Header>
+
                             <Grid
-                                Height="60"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center">
+                                Margin="28,0,0,0"
+                                ColumnSpacing="15"
+                                RowSpacing="3">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="30" />
-                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
-                                <FontIcon
+                                <TextBlock
+                                    Grid.Row="0"
                                     Grid.Column="0"
-                                    Margin="0,0,12,0"
-                                    FontSize="16"
-                                    Glyph="&#xEDA2;" />
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/PackageVolumeId')}" />
 
-                                <StackPanel
+                                <TextBlock
+                                    Grid.Row="0"
                                     Grid.Column="1"
-                                    Margin="0,0,10,0"
-                                    VerticalAlignment="Center"
-                                    Orientation="Vertical">
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind PackageVolumeId}"
+                                    TextWrapping="Wrap" />
 
-                                    <TextBlock
-                                        x:Name="PackageVolumeNameTextBlock"
-                                        HorizontalAlignment="Left"
-                                        Style="{StaticResource BodyTextBlockStyle}"
-                                        Text="{x:Bind Name}"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/PackageVolumePath')}" />
 
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind Name}" Visibility="{Binding ElementName=PackageVolumeNameTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind PackageVolumePath}"
+                                    TextWrapping="Wrap" />
 
-                                    <ProgressBar
-                                        Grid.Row="1"
-                                        Grid.ColumnSpan="2"
-                                        MinHeight="8"
-                                        Margin="0,2,0,2"
-                                        Background="{ThemeResource SurfaceStrokeColorDefaultBrush}"
-                                        CornerRadius="{StaticResource ControlCornerRadius}"
-                                        ShowError="{x:Bind IsAvailableSpaceError}"
-                                        ShowPaused="{x:Bind IsAvailableSpaceWarning}"
-                                        Value="{x:Bind PackageVolumeUsedPercentage}" />
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/MountPoint')}" />
 
-                                    <TextBlock
-                                        x:Name="PackageVolumeSpaceTextBlock"
-                                        HorizontalAlignment="Left"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                        Style="{StaticResource CaptionTextBlockStyle}"
-                                        Text="{x:Bind Space}"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind MountPoint}"
+                                    TextWrapping="Wrap" />
 
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind Space}" Visibility="{Binding ElementName=PackageVolumeSpaceTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-                                </StackPanel>
+                                <TextBlock
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/DefaultVolume')}" />
 
-                                <ProgressRing
-                                    Grid.Column="2"
-                                    Width="30"
-                                    Height="30"
-                                    IsActive="{x:Bind IsOperating, Mode=OneWay}"
-                                    IsIndeterminate="True"
-                                    Visibility="{x:Bind IsOperating, Mode=OneWay}" />
+                                <TextBlock
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind DefaultVolume, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
 
-                                <Button
-                                    Grid.Column="3"
-                                    MinHeight="{ThemeResource AppBarThemeCompactHeight}"
-                                    Margin="-6,0,-15,0"
-                                    Padding="{ThemeResource CommandBarMoreButtonMargin}"
-                                    VerticalAlignment="Center"
-                                    Foreground="{ThemeResource CommandBarForeground}"
-                                    IsAccessKeyScope="True"
-                                    Style="{ThemeResource EllipsisButton}"
-                                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/ViewMore')}">
+                                <TextBlock
+                                    Grid.Row="4"
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/AppxInstallSupported')}" />
 
-                                    <FontIcon
-                                        Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
-                                        VerticalAlignment="Center"
-                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                        FontSize="20"
-                                        Glyph="&#xE712;" />
+                                <TextBlock
+                                    Grid.Row="4"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind IsAppxInstallSupported, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
 
-                                    <Button.Flyout>
-                                        <MenuFlyout Placement="Bottom">
-                                            <MenuFlyoutItem
-                                                Command="{StaticResource SetDefaultVolumeCommand}"
-                                                CommandParameter="{x:Bind}"
-                                                IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/SetDefaultVolume')}"
-                                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsDefaultVolume), Mode=OneWay}">
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE958;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
+                                <TextBlock
+                                    Grid.Row="5"
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/FullTrustPackageSupported')}" />
 
-                                            <MenuFlyoutItem
-                                                Command="{StaticResource MountCommand}"
-                                                CommandParameter="{x:Bind}"
-                                                IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Mount')}"
-                                                Visibility="{x:Bind IsOffline, Mode=OneWay}">
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE8CE;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
+                                <TextBlock
+                                    Grid.Row="5"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind IsFullTrustPackageSupported, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
 
-                                            <MenuFlyoutItem
-                                                Command="{StaticResource DismountCommand}"
-                                                CommandParameter="{x:Bind}"
-                                                IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Dismount')}"
-                                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsOffline), Mode=OneWay}">
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE8CD;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
+                                <TextBlock
+                                    Grid.Row="6"
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Offline')}" />
 
-                                            <MenuFlyoutItem
-                                                Command="{StaticResource RemoveCommand}"
-                                                CommandParameter="{x:Bind}"
-                                                IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Remove')}">
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE74D;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-                                        </MenuFlyout>
-                                    </Button.Flyout>
-                                </Button>
+                                <TextBlock
+                                    Grid.Row="6"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind Offline, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="7"
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/SystemVolume')}" />
+
+                                <TextBlock
+                                    Grid.Row="7"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind IsSystemVolume, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="8"
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/SupportedHardLinks')}" />
+
+                                <TextBlock
+                                    Grid.Row="8"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    FontSize="14"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind SupportedHardLinks}"
+                                    TextWrapping="Wrap" />
                             </Grid>
-                        </Expander.Header>
-
-                        <Grid
-                            Margin="28,0,0,0"
-                            ColumnSpacing="15"
-                            RowSpacing="3">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/PackageVolumeId')}" />
-
-                            <TextBlock
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind PackageVolumeId}"
-                                TextWrapping="Wrap" />
-
-                            <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/PackageVolumePath')}" />
-
-                            <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind PackageVolumePath}"
-                                TextWrapping="Wrap" />
-
-                            <TextBlock
-                                Grid.Row="2"
-                                Grid.Column="0"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/MountPoint')}" />
-
-                            <TextBlock
-                                Grid.Row="2"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind MountPoint}"
-                                TextWrapping="Wrap" />
-
-                            <TextBlock
-                                Grid.Row="3"
-                                Grid.Column="0"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/DefaultVolume')}" />
-
-                            <TextBlock
-                                Grid.Row="3"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind DefaultVolume, Mode=OneWay}"
-                                TextWrapping="Wrap" />
-
-                            <TextBlock
-                                Grid.Row="4"
-                                Grid.Column="0"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/AppxInstallSupported')}" />
-
-                            <TextBlock
-                                Grid.Row="4"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind IsAppxInstallSupported, Mode=OneWay}"
-                                TextWrapping="Wrap" />
-
-                            <TextBlock
-                                Grid.Row="5"
-                                Grid.Column="0"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/FullTrustPackageSupported')}" />
-
-                            <TextBlock
-                                Grid.Row="5"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind IsFullTrustPackageSupported, Mode=OneWay}"
-                                TextWrapping="Wrap" />
-
-                            <TextBlock
-                                Grid.Row="6"
-                                Grid.Column="0"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/Offline')}" />
-
-                            <TextBlock
-                                Grid.Row="6"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind Offline, Mode=OneWay}"
-                                TextWrapping="Wrap" />
-
-                            <TextBlock
-                                Grid.Row="7"
-                                Grid.Column="0"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/SystemVolume')}" />
-
-                            <TextBlock
-                                Grid.Row="7"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind IsSystemVolume, Mode=OneWay}"
-                                TextWrapping="Wrap" />
-
-                            <TextBlock
-                                Grid.Row="8"
-                                Grid.Column="0"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/SupportedHardLinks')}" />
-
-                            <TextBlock
-                                Grid.Row="8"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                FontSize="14"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind SupportedHardLinks}"
-                                TextWrapping="Wrap" />
-                        </Grid>
-                    </Expander>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                        </Expander>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </Page>

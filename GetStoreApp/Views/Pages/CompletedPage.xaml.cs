@@ -121,8 +121,11 @@ namespace GetStoreApp.Views.Pages
             if (!isInitialized)
             {
                 isInitialized = true;
+                CompletedResultKind = CompletedResultKind.Loading;
+                DownloadStorageService.DownloadStorageSemaphoreSlim?.Wait();
                 await InitializeDataAsync();
                 await MountDownloadEventAsync();
+                DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
                 CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
             }
         }
@@ -623,20 +626,27 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task InitializeDataAsync()
         {
-            if (await GetDownloadStorageCollectionAsync() is ReadOnlyCollection<DownloadSchedulerModel> downloadStorageCollection)
+            try
             {
-                foreach (DownloadSchedulerModel downloadSchedulerItem in downloadStorageCollection)
+                if (await GetDownloadStorageCollectionAsync() is ReadOnlyCollection<DownloadSchedulerModel> downloadStorageCollection)
                 {
-                    CompletedCollection.Add(new()
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in downloadStorageCollection)
                     {
-                        SelectionMode = SelectionMode,
-                        IconImage = await GetFileIconImageAsync(downloadSchedulerItem.FilePath),
-                        DownloadKey = downloadSchedulerItem.DownloadKey,
-                        FileName = downloadSchedulerItem.FileName,
-                        FilePath = downloadSchedulerItem.FilePath,
-                        TotalSize = downloadSchedulerItem.TotalSize
-                    });
+                        CompletedCollection.Add(new()
+                        {
+                            SelectionMode = SelectionMode,
+                            IconImage = await GetFileIconImageAsync(downloadSchedulerItem.FilePath),
+                            DownloadKey = downloadSchedulerItem.DownloadKey,
+                            FileName = downloadSchedulerItem.FileName,
+                            FilePath = downloadSchedulerItem.FilePath,
+                            TotalSize = downloadSchedulerItem.TotalSize
+                        });
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
             }
         }
 
@@ -648,7 +658,6 @@ namespace GetStoreApp.Views.Pages
             return await Task.Run(() =>
             {
                 packageDeploymentManager = PackageDeploymentManager.GetDefault();
-                DownloadStorageService.DownloadStorageSemaphoreSlim?.Wait();
                 return DownloadStorageService.GetDownloadDataCollection();
             });
         }
@@ -687,7 +696,6 @@ namespace GetStoreApp.Views.Pages
                 DownloadStorageService.StorageDataAdded += OnStorageDataAdded;
                 DownloadStorageService.StorageDataDeleted += OnStorageDataDeleted;
                 DownloadStorageService.StorageDataCleared += OnStorageDataCleared;
-                DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
             });
         }
 

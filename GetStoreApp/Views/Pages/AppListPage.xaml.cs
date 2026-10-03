@@ -509,6 +509,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
+            if (WinGetSearchFlyout.IsOpen)
+            {
+                WinGetSearchFlyout.Hide();
+            }
+
             if (!string.IsNullOrEmpty(SearchText) && AppManagerResultKind is not AppManagerResultKind.Loading)
             {
                 AppManagerResultKind = AppManagerResultKind.Loading;

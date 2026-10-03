@@ -404,6 +404,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
+            if (WinGetInstalledFlyout.IsOpen)
+            {
+                WinGetInstalledFlyout.Hide();
+            }
+
             if (!string.IsNullOrEmpty(SearchText) && InstalledAppsResultKind is InstalledAppsResultKind.Successfully)
             {
                 InitializeMatchedInstalledApps(SelectedAppSortRuleKind, IsIncrease, SearchText);
@@ -926,6 +931,14 @@ namespace GetStoreApp.Views.Pages
         private Visibility CheckInstalledAppsResultKindVisibility(InstalledAppsResultKind installedAppsResultKind, InstalledAppsResultKind comparedInstalledAppsResultKind)
         {
             return Equals(installedAppsResultKind, comparedInstalledAppsResultKind) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// 检查搜索应用是否失败或搜索结果为空
+        /// </summary>
+        private Visibility GetInstalledAppsResultKindFailedOrEmptyVisibility(InstalledAppsResultKind installedAppsResultKind, int count)
+        {
+            return installedAppsResultKind is InstalledAppsResultKind.Failed || (installedAppsResultKind is InstalledAppsResultKind.SearchResult && count is 0) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
