@@ -12,7 +12,6 @@
   "NotCheckUpdate": "Click Check for updates to see the updatable status of your installed apps",
   "OpenTempFolder": "Open download folder",
   "OpenTempFolderToolTip": "Open the local directory where the app installation package was temporarily downloaded",
-  "Operation": "Operation",
   "Sort": "Sort",
   "SortByDisplayName": "Sort by display name",
   "SortByPublisher": "Sort by publisher",

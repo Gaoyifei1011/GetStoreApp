@@ -22,7 +22,6 @@
   "No": "否",
   "NotAvailable": "N/A",
   "Offline": "脱机状态：",
-  "Operation": "操作",
   "PackageVolumeCountEmpty": "没有可用的存储卷",
   "PackageVolumeCountInfo": "共有{0}个可用的存储卷",
   "PackageVolumeEmpty": "没有可用的存储卷",

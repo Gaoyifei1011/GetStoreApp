@@ -22,7 +22,6 @@
   "No": "No",
   "NotAvailable": "N/A",
   "Offline": "Offline state: ",
-  "Operation": "Operation",
   "PackageVolumeCountEmpty": "There are no available package volumes",
   "PackageVolumeCountInfo": "There are {0} available package volumes",
   "PackageVolumeEmpty": "There are no available package volumes",

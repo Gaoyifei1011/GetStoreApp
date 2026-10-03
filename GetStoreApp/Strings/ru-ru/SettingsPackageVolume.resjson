@@ -22,7 +22,6 @@
   "No": "Нет",
   "NotAvailable": "N/A",
   "Offline": "Автономное состояние: ",
-  "Operation": "Операция",
   "PackageVolumeCountEmpty": "Нет доступных томов пакета",
   "PackageVolumeCountInfo": "Доступных томов пакета: {0}",
   "PackageVolumeEmpty": "Нет доступных томов пакета",
