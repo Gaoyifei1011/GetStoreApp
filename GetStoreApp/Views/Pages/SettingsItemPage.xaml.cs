@@ -7,7 +7,6 @@ using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
@@ -23,6 +22,7 @@ using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -40,61 +40,30 @@ namespace GetStoreApp.Views.Pages
         private Type navigateType;
         private object navigateParameter;
         private bool? slideDirection;
-        private bool canScrollHorizontally;
 
         #endregion 第一部分：常量、资源与状态字段
 
         #region 第二部分：属性、集合与事件
 
-        private bool _isPreviousEnabled;
+        private int _selectedIndex;
 
-        private bool IsPreviousEnabled
+        private int SelectedIndex
         {
-            get { return _isPreviousEnabled; }
+            get { return _selectedIndex; }
 
             set
             {
-                if (!Equals(_isPreviousEnabled, value))
+                if (!Equals(_selectedIndex, value))
                 {
-                    _isPreviousEnabled = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsPreviousEnabled)));
-                }
-            }
-        }
-
-        private bool _isNextEnabled;
-
-        private bool IsNextEnabled
-        {
-            get { return _isNextEnabled; }
-
-            set
-            {
-                if (!Equals(_isNextEnabled, value))
-                {
-                    _isNextEnabled = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsNextEnabled)));
-                }
-            }
-        }
-
-        private SelectorBarItem _selectedItem;
-
-        private SelectorBarItem SelectedItem
-        {
-            get { return _selectedItem; }
-
-            set
-            {
-                if (!Equals(_selectedItem, value))
-                {
-                    _selectedItem = value;
-                    PropertyChanged?.Invoke(this, new(nameof(SelectedItem)));
+                    _selectedIndex = value;
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedIndex)));
                 }
             }
         }
 
         internal ReadOnlyCollection<Type> PageCollection { get; } = [typeof(SettingsGeneralPage), typeof(SettingsStoreAndUpdatePage), typeof(SettingsWinGetPage), typeof(SettingsDownloadPage), typeof(SettingsAppInstallPage), typeof(SettingsAdvancedPage), typeof(SettingsAboutPage)];
+
+        private List<string> SettingsItemTabList { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -105,6 +74,7 @@ namespace GetStoreApp.Views.Pages
         internal SettingsItemPage()
         {
             InitializeComponent();
+            InitializeData();
         }
 
         #endregion 第三部分：构造函数
@@ -148,170 +118,65 @@ namespace GetStoreApp.Views.Pages
         #region 第五部分：挂载事件处理
 
         /// <summary>
-        /// 设置项页面加载完成后触发的事件
-        /// </summary>
-        private void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            canScrollHorizontally = SettingsScrollViewer.ExtentWidth > SettingsScrollViewer.ViewportWidth;
-            IsPreviousEnabled = false;
-            IsNextEnabled = false;
-
-            if (needNavigate)
-            {
-                NavigateTo(navigateType, navigateParameter, slideDirection);
-                needNavigate = false;
-                navigateType = null;
-                navigateParameter = null;
-                slideDirection = null;
-            }
-        }
-
-        /// <summary>
-        /// 鼠标进入后触发的事件
-        /// </summary>
-        private void OnSelectorBarPointerEntered(object sender, PointerRoutedEventArgs args)
-        {
-            if (canScrollHorizontally)
-            {
-                if (SettingsScrollViewer.HorizontalOffset <= 0)
-                {
-                    IsPreviousEnabled = false;
-                    IsNextEnabled = true;
-                }
-                else if (SettingsScrollViewer.HorizontalOffset >= SettingsScrollViewer.ScrollableWidth)
-                {
-                    IsPreviousEnabled = true;
-                    IsNextEnabled = false;
-                }
-                else
-                {
-                    IsPreviousEnabled = true;
-                    IsNextEnabled = true;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 鼠标退出后触发的事件
-        /// </summary>
-        private void OnSelectorBarPointerExited(object sender, PointerRoutedEventArgs args)
-        {
-            IsPreviousEnabled = false;
-            IsNextEnabled = false;
-        }
-
-        /// <summary>
-        /// 大小发生变化后触发的事件
-        /// </summary>
-        private void OnSizeChanged(object sender, SizeChangedEventArgs args)
-        {
-            canScrollHorizontally = SettingsScrollViewer.ExtentWidth > SettingsScrollViewer.ViewportWidth;
-            IsPreviousEnabled = false;
-            IsNextEnabled = false;
-        }
-
-        /// <summary>
-        /// 当滚动和缩放等操作导致视图更改时发生的事件
-        /// </summary>
-        private void OnViewChanged(object sender, ScrollViewerViewChangedEventArgs args)
-        {
-            if (canScrollHorizontally)
-            {
-                if (SettingsScrollViewer.HorizontalOffset <= 0)
-                {
-                    IsPreviousEnabled = false;
-                    IsNextEnabled = true;
-                }
-                else if (SettingsScrollViewer.HorizontalOffset >= SettingsScrollViewer.ScrollableWidth)
-                {
-                    IsPreviousEnabled = true;
-                    IsNextEnabled = false;
-                }
-                else
-                {
-                    IsPreviousEnabled = true;
-                    IsNextEnabled = true;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 向前移动
-        /// </summary>
-        private void OnPreviousClick(object sender, RoutedEventArgs args)
-        {
-            SettingsScrollViewer.ChangeView(SettingsScrollViewer.HorizontalOffset < 150 ? 0 : SettingsScrollViewer.HorizontalOffset - 150, null, null);
-        }
-
-        /// <summary>
-        /// 向后移动
-        /// </summary>
-        private void OnNextClick(object sender, RoutedEventArgs args)
-        {
-            SettingsScrollViewer.ChangeView(SettingsScrollViewer.HorizontalOffset >= SettingsScrollViewer.ScrollableWidth - 150 ? SettingsScrollViewer.ScrollableWidth : SettingsScrollViewer.HorizontalOffset + 150, null, null);
-        }
-
-        /// <summary>
         /// 点击选择器栏选中项发生变化后发生的事件
         /// </summary>
-        private void OnSelectorBarSelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+        [DynamicWindowsRuntimeCast(typeof(TabView))]
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            if (!Equals(SelectedItem, sender.SelectedItem))
+            if (sender is TabView tabView && !Equals(SelectedIndex, tabView.SelectedIndex))
             {
-                SelectedItem = sender.SelectedItem;
+                SelectedIndex = tabView.SelectedIndex;
             }
 
-            if (SelectedItem is null)
+            if (SelectedIndex >= 0 && SelectedIndex < SettingsItemTabList.Count)
             {
-                return;
-            }
+                int index = SelectedIndex;
+                Type currentPage = GetCurrentPageType();
+                int currentIndex = -1;
+                for (int i = 0; i < PageCollection.Count; i++)
+                {
+                    if (Equals(PageCollection[i], currentPage))
+                    {
+                        currentIndex = i;
+                        break;
+                    }
+                }
 
-            int index = sender.Items.IndexOf(SelectedItem);
-            Type currentPage = GetCurrentPageType();
-            int currentIndex = -1;
-            for (int i = 0; i < PageCollection.Count; i++)
-            {
-                if (Equals(PageCollection[i], currentPage))
+                if (index is 0)
                 {
-                    currentIndex = i;
-                    break;
+                    if (currentPage is null)
+                    {
+                        NavigateTo(PageCollection[0]);
+                    }
+                    else if (!Equals(currentPage, PageCollection[0]))
+                    {
+                        NavigateTo(PageCollection[0], null, index > currentIndex);
+                    }
                 }
-            }
-
-            if (index is 0)
-            {
-                if (currentPage is null)
+                else if (index is 1 && !Equals(GetCurrentPageType(), PageCollection[1]))
                 {
-                    NavigateTo(PageCollection[0]);
+                    NavigateTo(PageCollection[1], null, index > currentIndex);
                 }
-                else if (!Equals(currentPage, PageCollection[0]))
+                else if (index is 2 && !Equals(GetCurrentPageType(), PageCollection[2]))
                 {
-                    NavigateTo(PageCollection[0], null, index > currentIndex);
+                    NavigateTo(PageCollection[2], null, index > currentIndex);
                 }
-            }
-            else if (index is 1 && !Equals(GetCurrentPageType(), PageCollection[1]))
-            {
-                NavigateTo(PageCollection[1], null, index > currentIndex);
-            }
-            else if (index is 2 && !Equals(GetCurrentPageType(), PageCollection[2]))
-            {
-                NavigateTo(PageCollection[2], null, index > currentIndex);
-            }
-            else if (index is 3 && !Equals(GetCurrentPageType(), PageCollection[3]))
-            {
-                NavigateTo(PageCollection[3], null, index > currentIndex);
-            }
-            else if (index is 4 && !Equals(GetCurrentPageType(), PageCollection[4]))
-            {
-                NavigateTo(PageCollection[4], null, index > currentIndex);
-            }
-            else if (index is 5 && !Equals(GetCurrentPageType(), PageCollection[5]))
-            {
-                NavigateTo(PageCollection[5], null, index > currentIndex);
-            }
-            else if (index is 6 && !Equals(GetCurrentPageType(), PageCollection[6]))
-            {
-                NavigateTo(PageCollection[6], null, index > currentIndex);
+                else if (index is 3 && !Equals(GetCurrentPageType(), PageCollection[3]))
+                {
+                    NavigateTo(PageCollection[3], null, index > currentIndex);
+                }
+                else if (index is 4 && !Equals(GetCurrentPageType(), PageCollection[4]))
+                {
+                    NavigateTo(PageCollection[4], null, index > currentIndex);
+                }
+                else if (index is 5 && !Equals(GetCurrentPageType(), PageCollection[5]))
+                {
+                    NavigateTo(PageCollection[5], null, index > currentIndex);
+                }
+                else if (index is 6 && !Equals(GetCurrentPageType(), PageCollection[6]))
+                {
+                    NavigateTo(PageCollection[6], null, index > currentIndex);
+                }
             }
         }
 
@@ -330,9 +195,9 @@ namespace GetStoreApp.Views.Pages
                 }
             }
 
-            if (index >= 0 && index < SettingsItemSelectorBar.Items.Count)
+            if (index >= 0 && index < SettingsItemTabList.Count)
             {
-                SelectedItem = SettingsItemSelectorBar.Items[index];
+                SelectedIndex = index;
             }
         }
 
@@ -352,9 +217,9 @@ namespace GetStoreApp.Views.Pages
                 }
             }
 
-            if (index >= 0 && index < SettingsItemSelectorBar.Items.Count)
+            if (index >= 0 && index < SettingsItemTabList.Count)
             {
-                SelectedItem = SettingsItemSelectorBar.Items[index];
+                SelectedIndex = index;
             }
 
             LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsItemPage), nameof(OnNavigationFailed), 1, args.Exception);
@@ -431,6 +296,20 @@ namespace GetStoreApp.Views.Pages
         #endregion 第五部分：挂载事件处理
 
         #region 第六部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private void InitializeData()
+        {
+            SettingsItemTabList.Add(ResourceService.GetLocalized("SettingsItem/General"));
+            SettingsItemTabList.Add(ResourceService.GetLocalized("SettingsItem/StoreAndUpdate"));
+            SettingsItemTabList.Add(ResourceService.GetLocalized("SettingsItem/WinGet"));
+            SettingsItemTabList.Add(ResourceService.GetLocalized("SettingsItem/Download"));
+            SettingsItemTabList.Add(ResourceService.GetLocalized("SettingsItem/AppInstaller"));
+            SettingsItemTabList.Add(ResourceService.GetLocalized("SettingsItem/Advanced"));
+            SettingsItemTabList.Add(ResourceService.GetLocalized("SettingsItem/About"));
+        }
 
         private async Task RunAsAdministartorAsync()
         {

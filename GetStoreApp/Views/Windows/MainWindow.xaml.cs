@@ -666,6 +666,7 @@ namespace GetStoreApp.Views.Windows
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(appWindow.Id);
             contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
             inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
+            SetTitleBar(AppTitlebar);
         }
 
         /// <summary>

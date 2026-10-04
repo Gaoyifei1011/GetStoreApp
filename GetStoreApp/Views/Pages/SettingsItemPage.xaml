@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:roothelper="using:GetStoreApp.Helpers.Root"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
-    Loaded="{x:Bind OnLoaded}"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -45,145 +44,106 @@
         </Grid.RowDefinitions>
 
         <!--  设置项控制栏  -->
-        <Grid Grid.Row="0" Margin="20,0,30,3">
+        <TabView
+            Grid.Row="0"
+            Margin="14,4,30,0"
+            Padding="0"
+            AllowDropTabs="False"
+            CanDrag="False"
+            CanDragTabs="False"
+            CanReorderTabs="False"
+            IsAddTabButtonVisible="False"
+            SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}"
+            SelectionChanged="{x:Bind OnSelectionChanged}"
+            Style="{StaticResource TabViewStyle}"
+            TabItemsSource="{x:Bind SettingsItemTabList}"
+            TabWidthMode="SizeToContent">
 
-            <Grid
-                Margin="0,0,40,0"
-                PointerEntered="{x:Bind OnSelectorBarPointerEntered}"
-                PointerExited="{x:Bind OnSelectorBarPointerExited}"
-                SizeChanged="{x:Bind OnSizeChanged}">
+            <TabView.TabItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                    <TabViewItem
+                        Header="{x:Bind}"
+                        IsClosable="False"
+                        Style="{StaticResource TabViewItemStyle}" />
+                </DataTemplate>
+            </TabView.TabItemTemplate>
 
+            <TabView.TabStripFooter>
                 <Button
-                    Width="16"
-                    Height="32"
-                    Margin="10,0,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Canvas.ZIndex="1"
-                    Click="{x:Bind OnPreviousClick}"
-                    CornerRadius="{StaticResource ControlCornerRadius}"
-                    IsTabStop="False"
-                    Template="{StaticResource HorizontalPreviousTemplate}"
-                    UseSystemFocusVisuals="False"
-                    Visibility="{x:Bind IsPreviousEnabled, Mode=OneWay}" />
-
-                <Button
-                    Width="16"
-                    Height="32"
-                    Margin="1"
+                    Width="34"
+                    Height="34"
+                    Margin="0,0,0,2"
+                    Padding="0"
                     HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Canvas.ZIndex="1"
-                    Click="{x:Bind OnNextClick}"
-                    CornerRadius="{StaticResource ControlCornerRadius}"
-                    IsTabStop="False"
-                    Template="{StaticResource HorizontalNextTemplate}"
-                    UseSystemFocusVisuals="False"
-                    Visibility="{x:Bind IsNextEnabled, Mode=OneWay}" />
+                    ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/ViewMore')}">
 
-                <ScrollViewer
-                    x:Name="SettingsScrollViewer"
-                    Margin="12,0,4,0"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Center"
-                    HorizontalScrollBarVisibility="Hidden"
-                    HorizontalScrollMode="Enabled"
-                    VerticalScrollBarVisibility="Disabled"
-                    VerticalScrollMode="Disabled"
-                    ViewChanged="{x:Bind OnViewChanged}">
+                    <FontIcon FontSize="16" Glyph="&#xE712;" />
 
-                    <SelectorBar
-                        x:Name="SettingsItemSelectorBar"
-                        Margin="-12,0,0,0"
-                        Padding="0"
-                        HorizontalAlignment="Left"
-                        SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
-                        SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}">
+                    <Button.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnRestartAppsClicked}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/RestartApp')}"
+                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/RestartAppToolTip')}">
 
-                        <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/General')}" />
-                        <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/StoreAndUpdate')}" />
-                        <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/WinGet')}" />
-                        <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/Download')}" />
-                        <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/AppInstaller')}" />
-                        <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/Advanced')}" />
-                        <SelectorBarItem FontSize="16" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/About')}" />
-                    </SelectorBar>
-                </ScrollViewer>
-            </Grid>
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE895;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
 
-            <Button
-                Width="34"
-                Height="34"
-                Padding="0"
-                HorizontalAlignment="Right"
-                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/ViewMore')}">
+                            <MenuFlyoutItem Click="{x:Bind OnSettingsInstructionClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/SettingsInstruction')}">
 
-                <FontIcon FontSize="16" Glyph="&#xE712;" />
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE946;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
 
-                <Button.Flyout>
-                    <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutItem
-                            Click="{x:Bind OnRestartAppsClicked}"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/RestartApp')}"
-                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/RestartAppToolTip')}">
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnRunAsAdministratorClicked}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/RunAsAdministrator')}"
+                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(roothelper:RuntimeHelper.IsElevated)}">
 
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE895;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE7EF;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
 
-                        <MenuFlyoutItem Click="{x:Bind OnSettingsInstructionClicked}" Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/SettingsInstruction')}">
+                            <MenuFlyoutSeparator />
 
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE946;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnPinToDesktopClicked}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToDesktop')}"
+                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToDesktopToolTip')}">
 
-                        <MenuFlyoutItem
-                            Click="{x:Bind OnRunAsAdministratorClicked}"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/RunAsAdministrator')}"
-                            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(roothelper:RuntimeHelper.IsElevated)}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE70A;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
 
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE7EF;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnPinToStartScreenClicked}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToStartScreen')}"
+                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToStartScreenToolTip')}">
 
-                        <MenuFlyoutSeparator />
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE8FC;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
 
-                        <MenuFlyoutItem
-                            Click="{x:Bind OnPinToDesktopClicked}"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToDesktop')}"
-                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToDesktopToolTip')}">
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnPinToTaskbarClicked}"
+                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToTaskbar')}"
+                                ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToTaskbarToolTip')}">
 
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE70A;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-
-                        <MenuFlyoutItem
-                            Click="{x:Bind OnPinToStartScreenClicked}"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToStartScreen')}"
-                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToStartScreenToolTip')}">
-
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE8FC;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-
-                        <MenuFlyoutItem
-                            Click="{x:Bind OnPinToTaskbarClicked}"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToTaskbar')}"
-                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('SettingsItem/PinToTaskbarToolTip')}">
-
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE75B;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-                    </MenuFlyout>
-                </Button.Flyout>
-            </Button>
-        </Grid>
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE75B;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
+            </TabView.TabStripFooter>
+        </TabView>
 
         <MenuFlyoutSeparator Grid.Row="1" Margin="34,0,35,3" />
 
