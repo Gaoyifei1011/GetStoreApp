@@ -36,6 +36,14 @@ namespace GetStoreApp.Views.Pages
     {
         #region 第一部分：常量、资源与状态字段
 
+        private readonly string AboutString = ResourceService.GetLocalized("SettingsItem/About");
+        private readonly string AdvancedString = ResourceService.GetLocalized("SettingsItem/Advanced");
+        private readonly string AppInstallerString = ResourceService.GetLocalized("SettingsItem/AppInstaller");
+        private readonly string DownloadString = ResourceService.GetLocalized("SettingsItem/Download");
+        private readonly string GeneralString = ResourceService.GetLocalized("SettingsItem/General");
+        private readonly string StoreAndUpdateString = ResourceService.GetLocalized("SettingsItem/StoreAndUpdate");
+        private readonly string WinGetString = ResourceService.GetLocalized("SettingsItem/WinGet");
+
         private bool needNavigate;
         private Type navigateType;
         private object navigateParameter;
@@ -116,6 +124,21 @@ namespace GetStoreApp.Views.Pages
         #endregion 第四部分：父类虚方法重写
 
         #region 第五部分：挂载事件处理
+
+        /// <summary>
+        /// 设置项页面加载完成后触发的事件
+        /// </summary>
+        private void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            if (needNavigate)
+            {
+                NavigateTo(navigateType, navigateParameter, slideDirection);
+                needNavigate = false;
+                navigateType = null;
+                navigateParameter = null;
+                slideDirection = null;
+            }
+        }
 
         /// <summary>
         /// 点击选择器栏选中项发生变化后发生的事件
@@ -302,13 +325,13 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void InitializeData()
         {
-            SettingsItemTabList.Add(ResourceService.GetLocalized("SettingsItem/General"));
-            SettingsItemTabList.Add(ResourceService.GetLocalized("SettingsItem/StoreAndUpdate"));
-            SettingsItemTabList.Add(ResourceService.GetLocalized("SettingsItem/WinGet"));
-            SettingsItemTabList.Add(ResourceService.GetLocalized("SettingsItem/Download"));
-            SettingsItemTabList.Add(ResourceService.GetLocalized("SettingsItem/AppInstaller"));
-            SettingsItemTabList.Add(ResourceService.GetLocalized("SettingsItem/Advanced"));
-            SettingsItemTabList.Add(ResourceService.GetLocalized("SettingsItem/About"));
+            SettingsItemTabList.Add(GeneralString);
+            SettingsItemTabList.Add(StoreAndUpdateString);
+            SettingsItemTabList.Add(WinGetString);
+            SettingsItemTabList.Add(DownloadString);
+            SettingsItemTabList.Add(AppInstallerString);
+            SettingsItemTabList.Add(AdvancedString);
+            SettingsItemTabList.Add(AboutString);
         }
 
         private async Task RunAsAdministartorAsync()
