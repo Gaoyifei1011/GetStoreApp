@@ -78,7 +78,6 @@
     <Content Include="Assets\Image\Cover.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Image\DownloadDefault.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Image\Failed.png" CopyToOutputDirectory="Always" />
-    <Content Include="Assets\Image\LoadApp.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Image\NotCheckUpdate.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Image\QueryLinks.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Image\Search.png" CopyToOutputDirectory="Always" />
