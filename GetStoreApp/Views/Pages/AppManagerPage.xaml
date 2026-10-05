@@ -37,7 +37,7 @@
     <Grid>
         <BreadcrumbBar
             Grid.Row="0"
-            Margin="30,12,30,0"
+            Margin="30,15,30,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Canvas.ZIndex="1"

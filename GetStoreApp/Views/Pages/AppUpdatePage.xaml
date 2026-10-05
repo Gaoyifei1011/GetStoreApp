@@ -284,7 +284,6 @@
                                     Spacing="2">
 
                                     <TextBlock
-                                        MinWidth="50"
                                         HorizontalAlignment="Left"
                                         FontSize="14"
                                         HorizontalTextAlignment="Left"
@@ -294,7 +293,6 @@
                                         TextWrapping="NoWrap" />
 
                                     <TextBlock
-                                        MinWidth="50"
                                         HorizontalAlignment="Left"
                                         FontSize="12"
                                         Text="{x:Bind InstallSubInformation, Mode=OneWay}"

@@ -29,7 +29,7 @@
         <!--  应用包存储卷配置控制栏  -->
         <CommandBar
             Grid.Row="0"
-            Margin="30,-4,22,-3"
+            Margin="30,-14,22,-3"
             Padding="16,0,0,0"
             VerticalAlignment="Center"
             HorizontalContentAlignment="Right"

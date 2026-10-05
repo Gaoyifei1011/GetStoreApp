@@ -243,7 +243,6 @@
                                 <TextBlock
                                     x:Name="StoreAppNameTextBlock"
                                     Grid.Column="0"
-                                    MinWidth="50"
                                     Margin="10,0,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
@@ -262,7 +261,6 @@
                                 <TextBlock
                                     x:Name="StoreAppPublisherTextBlock"
                                     Grid.Column="1"
-                                    MinWidth="50"
                                     Margin="10,0,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"

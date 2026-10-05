@@ -142,7 +142,6 @@
                         <TextBlock
                             x:Name="ArgumentNameTextBlock"
                             Grid.Column="0"
-                            MinWidth="50"
                             Margin="10,0,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
@@ -160,7 +159,6 @@
                         <TextBlock
                             x:Name="ArgumentTextBlock"
                             Grid.Column="1"
-                            MinWidth="50"
                             Margin="10,0,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
@@ -178,7 +176,6 @@
                         <TextBlock
                             x:Name="IsRequiredTextBlock"
                             Grid.Column="2"
-                            MinWidth="50"
                             Margin="10,0,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
@@ -196,7 +193,6 @@
                         <TextBlock
                             x:Name="ArgumentContentTextBlock"
                             Grid.Column="3"
-                            MinWidth="50"
                             Margin="10,0,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
