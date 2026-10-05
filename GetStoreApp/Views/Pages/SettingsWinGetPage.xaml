@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:GetStoreApp.Models"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:system="using:System"
     NavigationCacheMode="Enabled"
@@ -94,11 +95,17 @@
                 <ComboBox
                     Grid.Column="3"
                     VerticalAlignment="Center"
-                    DisplayMemberPath="DisplayMember"
                     ItemsSource="{x:Bind WinGetSourceList}"
                     SelectedItem="{x:Bind WinGetSource, Mode=OneWay}"
                     SelectionChanged="{x:Bind OnWinGetSourceSelectionChanged}"
-                    Style="{StaticResource ComboBoxStyle}" />
+                    Style="{StaticResource ComboBoxStyle}">
+
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="model:ComboBoxItemModel">
+                            <TextBlock Text="{x:Bind DisplayMember}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </Grid>
 
             <!--  WinGet 数据源配置  -->

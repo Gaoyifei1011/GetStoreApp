@@ -5,6 +5,7 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:GetStoreApp.Models"
     xmlns:roothelper="using:GetStoreApp.Helpers.Root"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
     NavigationCacheMode="Enabled"
@@ -244,11 +245,17 @@
                 <ComboBox
                     Grid.Column="3"
                     VerticalAlignment="Center"
-                    DisplayMemberPath="DisplayMember"
                     ItemsSource="{x:Bind DoEngineModeList}"
                     SelectedItem="{x:Bind DoEngineMode, Mode=OneWay}"
                     SelectionChanged="{x:Bind OnDoEngineModeSelectionChanged}"
-                    Style="{StaticResource ComboBoxStyle}" />
+                    Style="{StaticResource ComboBoxStyle}">
+
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="model:ComboBoxItemModel">
+                            <TextBlock Text="{x:Bind DisplayMember}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </Grid>
 
             <!--  传递优化设置  -->

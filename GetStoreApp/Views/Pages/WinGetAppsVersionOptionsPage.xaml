@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:GetStoreApp.Models"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:system="using:System"
     xmlns:winrtsystem="using:Windows.System"
@@ -139,11 +140,17 @@
                         <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            DisplayMemberPath="DisplayMember"
                             ItemsSource="{x:Bind PackageArchitectureList}"
                             SelectedItem="{x:Bind PackageArchitecture, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnPackageArchitectureSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}" />
+                            Style="{StaticResource ComboBoxStyle}">
+
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="model:ComboBoxItemModel">
+                                    <TextBlock Text="{x:Bind DisplayMember}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </Grid>
 
                     <!--  安装包安装范围  -->
@@ -172,11 +179,17 @@
                         <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            DisplayMemberPath="DisplayMember"
                             ItemsSource="{x:Bind PackageInstallScopeList}"
                             SelectedItem="{x:Bind PackageInstallScope, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnPackageInstallScopeSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}" />
+                            Style="{StaticResource ComboBoxStyle}">
+
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="model:ComboBoxItemModel">
+                                    <TextBlock Text="{x:Bind DisplayMember}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </Grid>
 
                     <!--  安装程序下载到的目录  -->
@@ -508,11 +521,17 @@
                         <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            DisplayMemberPath="DisplayMember"
                             ItemsSource="{x:Bind PackageInstallScopeList}"
                             SelectedItem="{x:Bind PackageInstallScope, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnPackageInstallScopeSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}" />
+                            Style="{StaticResource ComboBoxStyle}">
+
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="model:ComboBoxItemModel">
+                                    <TextBlock Text="{x:Bind DisplayMember}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </Grid>
 
                     <!--  应用安装模式  -->
@@ -541,11 +560,17 @@
                         <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            DisplayMemberPath="DisplayMember"
                             ItemsSource="{x:Bind PackageInstallModeList}"
                             SelectedItem="{x:Bind PackageInstallMode, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnPackageInstallModeSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}" />
+                            Style="{StaticResource ComboBoxStyle}">
+
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="model:ComboBoxItemModel">
+                                    <TextBlock Text="{x:Bind DisplayMember}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </Grid>
 
                     <!--  应用安装路径  -->
@@ -881,11 +906,17 @@
                         <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            DisplayMemberPath="DisplayMember"
                             ItemsSource="{x:Bind PackageRepairScopeList}"
                             SelectedItem="{x:Bind PackageRepairScope, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnPackageRepairScopeSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}" />
+                            Style="{StaticResource ComboBoxStyle}">
+
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="model:ComboBoxItemModel">
+                                    <TextBlock Text="{x:Bind DisplayMember}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </Grid>
 
                     <!--  应用修复模式  -->
@@ -913,11 +944,17 @@
                         <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            DisplayMemberPath="DisplayMember"
                             ItemsSource="{x:Bind PackageRepairModeList}"
                             SelectedItem="{x:Bind PackageRepairMode, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnPackageRepairModeSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}" />
+                            Style="{StaticResource ComboBoxStyle}">
+
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="model:ComboBoxItemModel">
+                                    <TextBlock Text="{x:Bind DisplayMember}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </Grid>
                 </Grid>
             </ScrollViewer>
@@ -1150,11 +1187,17 @@
                         <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            DisplayMemberPath="DisplayMember"
                             ItemsSource="{x:Bind PackageInstallScopeList}"
                             SelectedItem="{x:Bind PackageInstallScope, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnPackageInstallScopeSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}" />
+                            Style="{StaticResource ComboBoxStyle}">
+
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="model:ComboBoxItemModel">
+                                    <TextBlock Text="{x:Bind DisplayMember}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </Grid>
 
                     <!--  应用安装模式  -->
@@ -1183,11 +1226,17 @@
                         <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            DisplayMemberPath="DisplayMember"
                             ItemsSource="{x:Bind PackageInstallModeList}"
                             SelectedItem="{x:Bind PackageInstallMode, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnPackageInstallModeSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}" />
+                            Style="{StaticResource ComboBoxStyle}">
+
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="model:ComboBoxItemModel">
+                                    <TextBlock Text="{x:Bind DisplayMember}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </Grid>
 
                     <!--  应用安装路径  -->

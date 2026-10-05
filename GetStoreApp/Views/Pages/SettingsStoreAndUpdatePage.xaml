@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:GetStoreApp.Models"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
@@ -78,11 +79,17 @@
                 <ComboBox
                     Grid.Column="2"
                     VerticalAlignment="Center"
-                    DisplayMemberPath="DisplayMember"
                     ItemsSource="{x:Bind QueryLinksModeList}"
                     SelectedItem="{x:Bind QueryLinksMode, Mode=OneWay}"
                     SelectionChanged="{x:Bind OnQueryLinksModeSelectionChanged}"
-                    Style="{StaticResource ComboBoxStyle}" />
+                    Style="{StaticResource ComboBoxStyle}">
+
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="model:ComboBoxItemModel">
+                            <TextBlock Text="{x:Bind DisplayMember}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </Grid>
 
             <!--  应用链接打开方式设置  -->
@@ -137,11 +144,17 @@
                 <ComboBox
                     Grid.Column="2"
                     VerticalAlignment="Center"
-                    DisplayMemberPath="DisplayMember"
                     ItemsSource="{x:Bind AppLinkOpenModeList}"
                     SelectedItem="{x:Bind AppLinkOpenMode, Mode=OneWay}"
                     SelectionChanged="{x:Bind OnAppLinkOpenModeSelectionChanged}"
-                    Style="{StaticResource ComboBoxStyle}" />
+                    Style="{StaticResource ComboBoxStyle}">
+
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="model:ComboBoxItemModel">
+                            <TextBlock Text="{x:Bind DisplayMember}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </Grid>
 
             <!--  应用安装方式设置  -->
@@ -195,11 +208,17 @@
                 <ComboBox
                     Grid.Column="2"
                     VerticalAlignment="Center"
-                    DisplayMemberPath="DisplayMember"
                     ItemsSource="{x:Bind InstallModeList}"
                     SelectedItem="{x:Bind InstallMode, Mode=OneWay}"
                     SelectionChanged="{x:Bind OnInstallModeSelectionChanged}"
-                    Style="{StaticResource ComboBoxStyle}" />
+                    Style="{StaticResource ComboBoxStyle}">
+
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="model:ComboBoxItemModel">
+                            <TextBlock Text="{x:Bind DisplayMember}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </Grid>
 
             <!--  取消自动更新  -->
@@ -408,11 +427,17 @@
                         <ComboBox
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            DisplayMemberPath="DisplayMember"
                             ItemsSource="{x:Bind AppUpdateStatusList}"
                             SelectedItem="{x:Bind AppUpdateStatus, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnAppUpdateStatusSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}" />
+                            Style="{StaticResource ComboBoxStyle}">
+
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="model:ComboBoxItemModel">
+                                    <TextBlock Text="{x:Bind DisplayMember}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </Grid>
 
                     <MenuFlyoutSeparator Visibility="{x:Bind GetAppUpdateStatusVisibility(AppUpdateStatus.SelectedValue, AppUpdateStatusList[1].SelectedValue), Mode=OneWay}" />
@@ -626,12 +651,18 @@
                         <ComboBox
                             Grid.Column="3"
                             VerticalAlignment="Center"
-                            DisplayMemberPath="DisplayMember"
                             IsEnabled="{x:Bind UseSystemRegion.Equals(x:False), Mode=OneWay}"
                             ItemsSource="{x:Bind StoreRegionCollection}"
                             SelectedItem="{x:Bind StoreRegion, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnStoreRegionSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}" />
+                            Style="{StaticResource ComboBoxStyle}">
+
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="model:ComboBoxItemModel">
+                                    <TextBlock Text="{x:Bind DisplayMember}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </Grid>
                 </StackPanel>
             </Expander>
