@@ -72,6 +72,7 @@ namespace GetStoreApp.Views.Pages
             new() { DisplayText = "AndromedaMelody", Uri = new("https://github.com/AndromedaMelody") },
             new() { DisplayText = "cnbluefire", Uri = new("https://github.com/cnbluefire") },
             new() { DisplayText = "driver1998", Uri = new("https://github.com/driver1998") },
+            new() { DisplayText = "ghost1372", Uri = new("https://github.com/ghost1372") },
             new() { DisplayText = "Goo-aw233", Uri = new("https://github.com/Goo-aw233") },
             new() { DisplayText = "GreenShadeZhang", Uri = new("https://github.com/GreenShadeZhang") },
             new() { DisplayText = "hez2010", Uri = new("https://github.com/hez2010") },
@@ -80,6 +81,7 @@ namespace GetStoreApp.Views.Pages
             new() { DisplayText = "MouriNaruto", Uri = new("https://github.com/MouriNaruto") },
             new() { DisplayText = "muhammadbahaa2001", Uri = new("https://github.com/muhammadbahaa2001") },
             new() { DisplayText = "TaylorShi", Uri = new("https://github.com/TaylorShi") },
+            new() { DisplayText = "tinodin", Uri = new("https://github.com/tinodin") },
             new() { DisplayText = "wherewhere", Uri = new("https://github.com/wherewhere") },
             new() { DisplayText = "Y-PLONI", Uri = new("https://github.com/Y-PLONI") },
         ];

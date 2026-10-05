@@ -204,6 +204,7 @@
 > * [AndromedaMelody](https://github.com/AndromedaMelody)&emsp;
 > * [cnbluefire](https://github.com/cnbluefire)&emsp;
 > * [driver1998](https://github.com/driver1998)&emsp;
+> * [ghost1372](https://github.com/ghost1372)&emsp;
 > * [Goo-aw233](https://github.com/Goo-aw233)&emsp;
 > * [GreenShadeZhang](https://github.com/GreenShadeZhang)&emsp;
 > * [hez2010](https://github.com/hez2010)&emsp;
@@ -212,6 +213,7 @@
 > * [MouriNaruto](https://github.com/MouriNaruto)&emsp;
 > * [muhammadbahaa2001](https://github.com/muhammadbahaa2001)&emsp;
 > * [TaylorShi](https://github.com/TaylorShi)&emsp;
+> * [tinodin](https://github.com/tinodin)&emsp;
 > * [wherewhere](https://github.com/wherewhere)&emsp;
 > * [Y-PLONI](https://github.com/Y-PLONI)&emsp;
 
