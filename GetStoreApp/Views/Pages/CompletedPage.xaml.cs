@@ -1074,7 +1074,6 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取是否正在加载中
         /// </summary>
-
         private bool GetIsLoading(CompletedResultKind completedResultKind)
         {
             return completedResultKind is not CompletedResultKind.Loading;

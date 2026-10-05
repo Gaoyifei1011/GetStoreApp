@@ -58,18 +58,18 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private bool _isLoadedCompleted;
+        private SettingsWinGetSourceResultKind _settingsWinGetSourceResultKind;
 
-        private bool IsLoadedCompleted
+        private SettingsWinGetSourceResultKind SettingsWinGetSourceResultKind
         {
-            get { return _isLoadedCompleted; }
+            get { return _settingsWinGetSourceResultKind; }
 
             set
             {
-                if (!Equals(_isLoadedCompleted, value))
+                if (!Equals(_settingsWinGetSourceResultKind, value))
                 {
-                    _isLoadedCompleted = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsLoadedCompleted)));
+                    _settingsWinGetSourceResultKind = value;
+                    PropertyChanged?.Invoke(this, new(nameof(SettingsWinGetSourceResultKind)));
                 }
             }
         }
@@ -118,7 +118,6 @@ namespace GetStoreApp.Views.Pages
             {
                 isInitialized = true;
                 await InitializeWinGetSourceDataAsync();
-                IsLoadedCompleted = true;
             }
         }
 
@@ -138,9 +137,7 @@ namespace GetStoreApp.Views.Pages
 
                 if (contentDialogResult is ContentDialogResult.Primary && winGetSourceEditDialog.AddPackageCatalogStatusResult.HasValue && winGetSourceEditDialog.AddPackageCatalogStatusResult is AddPackageCatalogStatus.Ok)
                 {
-                    IsLoadedCompleted = false;
                     await InitializeWinGetSourceDataAsync();
-                    IsLoadedCompleted = true;
                 }
             }
             else
@@ -267,9 +264,7 @@ namespace GetStoreApp.Views.Pages
 
                 if (contentDialogResult is ContentDialogResult.Primary && winGetSourceEditDialog.AddPackageCatalogStatusResult.HasValue && winGetSourceEditDialog.AddPackageCatalogStatusResult is AddPackageCatalogStatus.Ok)
                 {
-                    IsLoadedCompleted = false;
                     await InitializeWinGetSourceDataAsync();
-                    IsLoadedCompleted = true;
                 }
             }
             else
@@ -283,9 +278,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            IsLoadedCompleted = false;
             await InitializeWinGetSourceDataAsync();
-            IsLoadedCompleted = true;
         }
 
         [DynamicWindowsRuntimeCast(typeof(ListView))]
@@ -330,6 +323,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task InitializeWinGetSourceDataAsync()
         {
+            SettingsWinGetSourceResultKind = SettingsWinGetSourceResultKind.Loading;
             WinGetSourceGroupCollection.Clear();
 
             if (await GetWinGetSourceInternalCollectionAsync() is ReadOnlyCollection<WinGetSourceModel> winGetSourceInternalCollection && winGetSourceInternalCollection.Count > 0)
@@ -374,6 +368,7 @@ namespace GetStoreApp.Views.Pages
                     }
                 }
             }
+            SettingsWinGetSourceResultKind = WinGetSourceGroupCollection.Count is 0 ? SettingsWinGetSourceResultKind.Empty : SettingsWinGetSourceResultKind.Successfully;
         }
 
         /// <summary>
@@ -631,6 +626,30 @@ namespace GetStoreApp.Views.Pages
                 count += winGetSourceGroupItem.WinGetSourceCollection.Count;
             }
             return count;
+        }
+
+        /// <summary>
+        /// 获取加载 WinGet 数据源配置是否成功
+        /// </summary>
+        private Visibility GetSettingsWinGetSourceSuccessfullyVisibility(SettingsWinGetSourceResultKind settingsWinGetSourceResultKind, bool isSuccessfully)
+        {
+            return isSuccessfully ? settingsWinGetSourceResultKind is SettingsWinGetSourceResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed : settingsWinGetSourceResultKind is SettingsWinGetSourceResultKind.Successfully ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        /// <summary>
+        /// 检查加载 WinGet 数据源配置是否成功
+        /// </summary>
+        private Visibility CheckSettingsWinGetSourceResultKindVisibility(SettingsWinGetSourceResultKind settingsWinGetSourceResultKind, SettingsWinGetSourceResultKind comparedSettingsWinGetSourceResultKind)
+        {
+            return Equals(settingsWinGetSourceResultKind, comparedSettingsWinGetSourceResultKind) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// 获取是否正在加载中
+        /// </summary>
+        private bool GetIsLoading(SettingsWinGetSourceResultKind settingsWinGetSourceResultKind)
+        {
+            return settingsWinGetSourceResultKind is not SettingsWinGetSourceResultKind.Loading;
         }
 
         #endregion 第七部分：数据操作与业务逻辑
