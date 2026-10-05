@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -31,7 +32,9 @@ namespace GetStoreApp.Views.Pages
     {
         #region 第一部分：常量、资源与状态字段
 
+        private readonly string CustomDataSourceString = ResourceService.GetLocalized("SettingsWinGetSource/CustomDataSource");
         private readonly string DistrustedString = ResourceService.GetLocalized("SettingsWinGetSource/Distrusted");
+        private readonly string InternalDataSourceString = ResourceService.GetLocalized("SettingsWinGetSource/InternalDataSource");
         private readonly string MicrosoftEntraIdString = ResourceService.GetLocalized("SettingsWinGetSource/MicrosoftEntraId");
         private readonly string MicrosoftEntraIdForAzureBlobStorageString = ResourceService.GetLocalized("SettingsWinGetSource/MicrosoftEntraIdForAzureBlobStorage");
         private readonly string NoString = ResourceService.GetLocalized("SettingsWinGetSource/No");
@@ -71,9 +74,23 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private ObservableCollection<WinGetSourceModel> WinGetSourceInternalCollection { get; } = [];
+        private WinGetSourceModel _selectedItem;
 
-        private ObservableCollection<WinGetSourceModel> WinGetSourceCustomCollection { get; } = [];
+        public WinGetSourceModel SelectedItem
+        {
+            get { return _selectedItem; }
+
+            set
+            {
+                if (!Equals(_selectedItem, value))
+                {
+                    _selectedItem = value;
+                    PropertyChanged?.Invoke(this, new(nameof(SelectedItem)));
+                }
+            }
+        }
+
+        private ObservableCollection<WinGetSourceGroupModel> WinGetSourceGroupCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -110,33 +127,6 @@ namespace GetStoreApp.Views.Pages
         #region 第五部分：命令调用处理
 
         /// <summary>
-        /// 搜索时是否使用本数据源
-        /// </summary>
-        private void OnRadioButtonClickExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is WinGetSourceModel winGetSource)
-            {
-                foreach (WinGetSourceModel winGetSourceInternalItem in WinGetSourceInternalCollection)
-                {
-                    if (!Equals(winGetSourceInternalItem, winGetSource))
-                    {
-                        winGetSourceInternalItem.IsSelected = false;
-                    }
-                }
-
-                foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
-                {
-                    if (!Equals(winGetSourceCustomItem, winGetSource))
-                    {
-                        winGetSourceCustomItem.IsSelected = false;
-                    }
-                }
-
-                UpdateWinGetSourceData(winGetSource.Name, winGetSource.IsInternal, winGetSource.IsSelected);
-            }
-        }
-
-        /// <summary>
         /// 编辑 WinGet 数据源
         /// </summary>
         private async void OnEditExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
@@ -166,12 +156,15 @@ namespace GetStoreApp.Views.Pages
         {
             if (RuntimeHelper.IsElevated && args.Parameter is WinGetSourceModel winGetSource)
             {
-                foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
+                foreach (WinGetSourceGroupModel winGetSourceGroupItem in WinGetSourceGroupCollection)
                 {
-                    if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
+                    foreach (WinGetSourceModel winGetSourceItem in winGetSourceGroupItem.WinGetSourceCollection)
                     {
-                        winGetSourceCustomItem.IsOperating = true;
-                        break;
+                        if (string.Equals(winGetSourceItem.Name, winGetSource.Name))
+                        {
+                            winGetSourceItem.IsOperating = true;
+                            break;
+                        }
                     }
                 }
 
@@ -180,11 +173,21 @@ namespace GetStoreApp.Views.Pages
                 {
                     await RemoveWinGetDataSourceNameAsync(winGetSource.Name, winGetSource.IsInternal);
 
-                    foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
+                    foreach (WinGetSourceGroupModel winGetSourceGroupItem in WinGetSourceGroupCollection)
                     {
-                        if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
+                        foreach (WinGetSourceModel winGetSourceCustomItem in winGetSourceGroupItem.WinGetSourceCollection)
                         {
-                            WinGetSourceCustomCollection.Remove(winGetSourceCustomItem);
+                            if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name) && Equals(winGetSourceCustomItem.IsInternal, winGetSource.IsInternal))
+                            {
+                                winGetSourceGroupItem.WinGetSourceCollection.Remove(winGetSourceCustomItem);
+                                break;
+                            }
+                        }
+
+                        // 组为空，删除空组
+                        if (winGetSourceGroupItem.WinGetSourceCollection.Count is 0)
+                        {
+                            WinGetSourceGroupCollection.Remove(winGetSourceGroupItem);
                             break;
                         }
                     }
@@ -204,12 +207,15 @@ namespace GetStoreApp.Views.Pages
         {
             if (RuntimeHelper.IsElevated && args.Parameter is WinGetSourceModel winGetSource)
             {
-                foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
+                foreach (WinGetSourceGroupModel winGetSourceGroupItem in WinGetSourceGroupCollection)
                 {
-                    if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
+                    foreach (WinGetSourceModel winGetSourceItem in winGetSourceGroupItem.WinGetSourceCollection)
                     {
-                        winGetSourceCustomItem.IsOperating = true;
-                        break;
+                        if (string.Equals(winGetSourceItem.Name, winGetSource.Name))
+                        {
+                            winGetSourceItem.IsOperating = true;
+                            break;
+                        }
                     }
                 }
 
@@ -218,11 +224,21 @@ namespace GetStoreApp.Views.Pages
                 {
                     await RemoveWinGetDataSourceNameAsync(winGetSource.Name, winGetSource.IsInternal);
 
-                    foreach (WinGetSourceModel winGetSourceCustomItem in WinGetSourceCustomCollection)
+                    foreach (WinGetSourceGroupModel winGetSourceGroupItem in WinGetSourceGroupCollection)
                     {
-                        if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name))
+                        foreach (WinGetSourceModel winGetSourceCustomItem in winGetSourceGroupItem.WinGetSourceCollection)
                         {
-                            WinGetSourceCustomCollection.Remove(winGetSourceCustomItem);
+                            if (string.Equals(winGetSourceCustomItem.Name, winGetSource.Name) && Equals(winGetSourceCustomItem.IsInternal, winGetSource.IsInternal))
+                            {
+                                winGetSourceGroupItem.WinGetSourceCollection.Remove(winGetSourceCustomItem);
+                                break;
+                            }
+                        }
+
+                        // 组为空，删除空组
+                        if (winGetSourceGroupItem.WinGetSourceCollection.Count is 0)
+                        {
+                            WinGetSourceGroupCollection.Remove(winGetSourceGroupItem);
                             break;
                         }
                     }
@@ -272,6 +288,27 @@ namespace GetStoreApp.Views.Pages
             IsLoadedCompleted = true;
         }
 
+        [DynamicWindowsRuntimeCast(typeof(ListView))]
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            if (sender is ListView listView && !Equals(SelectedItem, listView.SelectedItem))
+            {
+                SelectedItem = listView.SelectedItem is WinGetSourceModel winGetSource ? winGetSource : null;
+
+                if (SelectedItem is not null)
+                {
+                    UpdateWinGetSourceData(SelectedItem.Name, SelectedItem.IsInternal, true);
+                }
+                else
+                {
+                    if (args.RemovedItems.Count > 0 && args.RemovedItems[0] is WinGetSourceModel lastSelectedItem)
+                    {
+                        UpdateWinGetSourceData(lastSelectedItem.Name, lastSelectedItem.IsInternal, true);
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// 设置说明
         /// </summary>
@@ -293,22 +330,48 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task InitializeWinGetSourceDataAsync()
         {
-            WinGetSourceInternalCollection.Clear();
-            WinGetSourceCustomCollection.Clear();
+            WinGetSourceGroupCollection.Clear();
 
             if (await GetWinGetSourceInternalCollectionAsync() is ReadOnlyCollection<WinGetSourceModel> winGetSourceInternalCollection && winGetSourceInternalCollection.Count > 0)
             {
+                WinGetSourceGroupModel winGetSourceGroup = new()
+                {
+                    GroupName = InternalDataSourceString,
+                    WinGetSourceCollection = []
+                };
+
                 foreach (WinGetSourceModel winGetSourceItem in winGetSourceInternalCollection)
                 {
-                    WinGetSourceInternalCollection.Add(winGetSourceItem);
+                    winGetSourceGroup.WinGetSourceCollection.Add(winGetSourceItem);
                 }
+                WinGetSourceGroupCollection.Add(winGetSourceGroup);
             }
 
             if (await GetWinGetSourceCustomCollectionAsync() is ReadOnlyCollection<WinGetSourceModel> winGetSourceCustomCollection && winGetSourceCustomCollection.Count > 0)
             {
+                WinGetSourceGroupModel winGetSourceGroup = new()
+                {
+                    GroupName = CustomDataSourceString,
+                    WinGetSourceCollection = []
+                };
+
                 foreach (WinGetSourceModel winGetSourceItem in winGetSourceCustomCollection)
                 {
-                    WinGetSourceCustomCollection.Add(winGetSourceItem);
+                    winGetSourceGroup.WinGetSourceCollection.Add(winGetSourceItem);
+                }
+                WinGetSourceGroupCollection.Add(winGetSourceGroup);
+            }
+
+            KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+            foreach (WinGetSourceGroupModel winGetSourceGroupItem in WinGetSourceGroupCollection)
+            {
+                foreach (WinGetSourceModel winGetSourceItem in winGetSourceGroupItem.WinGetSourceCollection)
+                {
+                    if (Equals(winGetDataSourceName, KeyValuePair.Create(winGetSourceItem.Name, winGetSourceItem.IsInternal)))
+                    {
+                        SelectedItem = winGetSourceItem;
+                        break;
+                    }
                 }
             }
         }
@@ -322,7 +385,6 @@ namespace GetStoreApp.Views.Pages
             {
                 PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
                 List<WinGetSourceModel> winGetSourceInternalList = [];
-                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
 
                 foreach (PredefinedPackageCatalog predefinedPackageCatalog in Enum.GetValues<PredefinedPackageCatalog>())
                 {
@@ -348,7 +410,6 @@ namespace GetStoreApp.Views.Pages
                     WinGetSourceModel winGetSource = new()
                     {
                         IsOperating = false,
-                        IsSelected = Equals(winGetDataSourceName, KeyValuePair.Create(packageCatalogInformation.Name, true)),
                         PackageCatalogInformation = packageCatalogInformation,
                         Name = packageCatalogInformation.Name,
                         Arguments = string.IsNullOrEmpty(packageCatalogInformation.Arguments) ? NoneString : packageCatalogReference.Info.Argument,
@@ -390,7 +451,6 @@ namespace GetStoreApp.Views.Pages
             {
                 PackageManager packageManager = WinGetFactoryHelper.CreatePackageManager();
                 List<WinGetSourceModel> winGetSourceCustomList = [];
-                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
 
                 if (packageManager.GetPackageCatalogs() is IReadOnlyList<PackageCatalogReference> packageCatalogReferenceList && packageCatalogReferenceList.Count > 0)
                 {
@@ -418,7 +478,6 @@ namespace GetStoreApp.Views.Pages
                         WinGetSourceModel winGetSource = new()
                         {
                             IsOperating = false,
-                            IsSelected = Equals(winGetDataSourceName, KeyValuePair.Create(packageCatalogInformation.Name, false)),
                             PackageCatalogInformation = packageCatalogInformation,
                             Name = packageCatalogInformation.Name,
                             Arguments = string.IsNullOrEmpty(packageCatalogInformation.Arguments) ? NoneString : packageCatalogReference.Info.Argument,
@@ -552,19 +611,26 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private Visibility GetCountVisibility(int winGetSourceInternalCollectionCount, int winGetSourceCustomCollectionCount, bool isReverse)
+        private Visibility GetCountVisibility(ObservableCollection<WinGetSourceGroupModel> winGetSourceGroupCollection, bool isReverse)
         {
-            return isReverse ? (winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount) > 0 ? Visibility.Collapsed : Visibility.Visible : (winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount) > 0 ? Visibility.Visible : Visibility.Collapsed;
+            int count = GetWinGetSourceListCount(winGetSourceGroupCollection);
+            return isReverse ? count > 0 ? Visibility.Collapsed : Visibility.Visible : count > 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private int GetLocalizedWinGetDataSourceCount(int winGetSourceInternalCollectionCount, int winGetSourceCustomCollectionCount)
+        private string GetLocalizedWinGetDataSourceCountInfo(ObservableCollection<WinGetSourceGroupModel> winGetSourceGroupCollection)
         {
-            return winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount;
+            int count = GetWinGetSourceListCount(winGetSourceGroupCollection);
+            return string.Format(WinGetDataSourceCountInfoString, count);
         }
 
-        private string GetLocalizedWinGetDataSourceCountInfo(int winGetSourceInternalCollectionCount, int winGetSourceCustomCollectionCount)
+        private int GetWinGetSourceListCount(ObservableCollection<WinGetSourceGroupModel> winGetSourceGroupCollection)
         {
-            return string.Format(WinGetDataSourceCountInfoString, winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount);
+            int count = 0;
+            foreach (WinGetSourceGroupModel winGetSourceGroupItem in winGetSourceGroupCollection)
+            {
+                count += winGetSourceGroupItem.WinGetSourceCollection.Count;
+            }
+            return count;
         }
 
         #endregion 第七部分：数据操作与业务逻辑
