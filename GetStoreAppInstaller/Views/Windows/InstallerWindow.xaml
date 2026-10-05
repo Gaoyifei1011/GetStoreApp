@@ -495,9 +495,7 @@
                                                                     </Style>
                                                                 </ListView.ItemContainerStyle>
 
-                                                                <ItemsControl.ItemContainerTransitions>
-                                                                    <TransitionCollection />
-                                                                </ItemsControl.ItemContainerTransitions>
+                                                                <ListView.ItemContainerTransitions />
 
                                                                 <ListView.ItemTemplate>
                                                                     <DataTemplate x:DataType="model:InstallDependencyModel">
@@ -1405,9 +1403,7 @@
                                                 </Style>
                                             </ListView.ItemContainerStyle>
 
-                                            <ItemsControl.ItemContainerTransitions>
-                                                <TransitionCollection />
-                                            </ItemsControl.ItemContainerTransitions>
+                                            <ListView.ItemContainerTransitions />
 
                                             <ListView.Header>
                                                 <Grid
@@ -1594,9 +1590,7 @@
                                                     </Style>
                                                 </ListView.ItemContainerStyle>
 
-                                                <ItemsControl.ItemContainerTransitions>
-                                                    <TransitionCollection />
-                                                </ItemsControl.ItemContainerTransitions>
+                                                <ListView.ItemContainerTransitions />
 
                                                 <ListView.Header>
                                                     <Grid
@@ -1745,9 +1739,7 @@
                                                     </Style>
                                                 </ListView.ItemContainerStyle>
 
-                                                <ItemsControl.ItemContainerTransitions>
-                                                    <TransitionCollection />
-                                                </ItemsControl.ItemContainerTransitions>
+                                                <ListView.ItemContainerTransitions />
 
                                                 <ListView.Header>
                                                     <Grid
@@ -2089,9 +2081,7 @@
                                                 </Style>
                                             </ListView.ItemContainerStyle>
 
-                                            <ItemsControl.ItemContainerTransitions>
-                                                <TransitionCollection />
-                                            </ItemsControl.ItemContainerTransitions>
+                                            <ListView.ItemContainerTransitions />
 
                                             <ListView.Header>
                                                 <Grid

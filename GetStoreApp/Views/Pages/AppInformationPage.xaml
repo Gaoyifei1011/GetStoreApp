@@ -490,9 +490,7 @@
                         </Style>
                     </ListView.ItemContainerStyle>
 
-                    <ItemsControl.ItemContainerTransitions>
-                        <TransitionCollection />
-                    </ItemsControl.ItemContainerTransitions>
+                    <ListView.ItemContainerTransitions />
 
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="model:AppListEntryModel">
@@ -651,9 +649,7 @@
                         </Style>
                     </ListView.ItemContainerStyle>
 
-                    <ItemsControl.ItemContainerTransitions>
-                        <TransitionCollection />
-                    </ItemsControl.ItemContainerTransitions>
+                    <ListView.ItemContainerTransitions />
 
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="model:PackageModel">

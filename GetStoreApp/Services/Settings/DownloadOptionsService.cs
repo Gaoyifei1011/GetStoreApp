@@ -3,7 +3,6 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using Microsoft.Windows.Storage;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;

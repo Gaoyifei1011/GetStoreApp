@@ -533,9 +533,7 @@
                                 </ItemsPanelTemplate>
                             </ListView.ItemsPanel>
 
-                            <ItemsControl.ItemContainerTransitions>
-                                <TransitionCollection />
-                            </ItemsControl.ItemContainerTransitions>
+                            <ListView.ItemContainerTransitions />
 
                             <ListView.Header>
                                 <TextBlock Margin="0,0,0,5" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Tag')}" />
@@ -590,9 +588,7 @@
                                 </ItemsPanelTemplate>
                             </ListView.ItemsPanel>
 
-                            <ItemsControl.ItemContainerTransitions>
-                                <TransitionCollection />
-                            </ItemsControl.ItemContainerTransitions>
+                            <ListView.ItemContainerTransitions />
 
                             <ListView.Header>
                                 <TextBlock Margin="0,0,0,5" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Documention')}" />

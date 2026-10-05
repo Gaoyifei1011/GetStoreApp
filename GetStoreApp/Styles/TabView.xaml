@@ -62,7 +62,9 @@
                                 CanReorderItems="{TemplateBinding CanReorderTabs}"
                                 ItemTemplate="{TemplateBinding TabItemTemplate}"
                                 ItemTemplateSelector="{TemplateBinding TabItemTemplateSelector}"
-                                ItemsSource="{TemplateBinding TabItemsSource}" />
+                                ItemsSource="{TemplateBinding TabItemsSource}">
+                                <primitives:TabViewListView.ItemContainerTransitions />
+                            </primitives:TabViewListView>
                             <Border
                                 Grid.Column="2"
                                 Padding="{ThemeResource TabViewItemAddButtonContainerPadding}"

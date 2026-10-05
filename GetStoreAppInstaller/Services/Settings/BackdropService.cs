@@ -2,7 +2,6 @@
 using GetStoreAppInstaller.Services.Root;
 using Microsoft.UI.Composition.SystemBackdrops;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace GetStoreAppInstaller.Services.Settings

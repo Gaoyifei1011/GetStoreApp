@@ -128,9 +128,7 @@
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
 
-                <ItemsControl.ItemContainerTransitions>
-                    <TransitionCollection />
-                </ItemsControl.ItemContainerTransitions>
+                <ListView.ItemContainerTransitions />
 
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="model:ControlItemModel">
