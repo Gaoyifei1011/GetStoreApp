@@ -468,7 +468,9 @@
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
 
-                    <ListView.ItemContainerTransitions />
+                    <ListView.ItemContainerTransitions>
+                        <TransitionCollection />
+                    </ListView.ItemContainerTransitions>
 
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="text:ContentLinkInfo">
@@ -553,7 +555,9 @@
                             </ItemsPanelTemplate>
                         </ListView.ItemsPanel>
 
-                        <ListView.ItemContainerTransitions />
+                        <ListView.ItemContainerTransitions>
+                            <TransitionCollection />
+                        </ListView.ItemContainerTransitions>
 
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="text:ContentLinkInfo">

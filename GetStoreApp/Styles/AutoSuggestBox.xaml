@@ -78,7 +78,10 @@
                                         ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
                                         ItemTemplate="{TemplateBinding ItemTemplate}"
                                         ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}">
-                                        <ListView.ItemContainerTransitions />
+
+                                        <ListView.ItemContainerTransitions>
+                                            <TransitionCollection />
+                                        </ListView.ItemContainerTransitions>
                                     </ListView>
                                 </Grid>
                             </Border>

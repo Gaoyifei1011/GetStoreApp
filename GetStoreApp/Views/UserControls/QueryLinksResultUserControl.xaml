@@ -503,7 +503,9 @@
                             </Style>
                         </ListView.ItemContainerStyle>
 
-                        <ListView.ItemContainerTransitions />
+                        <ListView.ItemContainerTransitions>
+                            <TransitionCollection />
+                        </ListView.ItemContainerTransitions>
 
                         <ListView.Header>
                             <ListView ItemContainerTransitions="{x:Bind QueryLinksResultListView.ItemContainerTransitions, Mode=OneWay}" SelectionMode="{x:Bind QueryLinksResultListView.SelectionMode, Mode=OneWay}">

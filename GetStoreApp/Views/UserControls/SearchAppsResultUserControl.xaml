@@ -151,7 +151,9 @@
                         </Style>
                     </ListView.ItemContainerStyle>
 
-                    <ListView.ItemContainerTransitions />
+                    <ListView.ItemContainerTransitions>
+                        <TransitionCollection />
+                    </ListView.ItemContainerTransitions>
 
                     <ListView.Header>
                         <Grid

@@ -396,7 +396,9 @@
                     </Style>
                 </ListView.ItemContainerStyle>
 
-                <ListView.ItemContainerTransitions />
+                <ListView.ItemContainerTransitions>
+                    <TransitionCollection />
+                </ListView.ItemContainerTransitions>
 
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="model:PackageModel">

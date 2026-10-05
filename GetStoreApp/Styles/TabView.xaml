@@ -63,7 +63,10 @@
                                 ItemTemplate="{TemplateBinding TabItemTemplate}"
                                 ItemTemplateSelector="{TemplateBinding TabItemTemplateSelector}"
                                 ItemsSource="{TemplateBinding TabItemsSource}">
-                                <primitives:TabViewListView.ItemContainerTransitions />
+
+                                <primitives:TabViewListView.ItemContainerTransitions>
+                                    <TransitionCollection />
+                                </primitives:TabViewListView.ItemContainerTransitions>
                             </primitives:TabViewListView>
                             <Border
                                 Grid.Column="2"
