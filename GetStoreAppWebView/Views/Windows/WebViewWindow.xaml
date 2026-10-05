@@ -154,72 +154,62 @@
                 </Grid.ColumnDefinitions>
 
                 <!--  左侧控制栏  -->
-                <Grid
+                <CommandBar
                     Grid.Column="0"
-                    Margin="4,0,0,0"
+                    Padding="2,0,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    ColumnSpacing="4">
+                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                    DefaultLabelPosition="Collapsed"
+                    IsDynamicOverflowEnabled="False"
+                    Style="{StaticResource DefaultCommandBarStyle}">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+                    <CommandBar.PrimaryCommands>
+                        <AppBarButton
+                            Width="48"
+                            Click="{x:Bind OnBrowserBackClicked}"
+                            IsEnabled="{x:Bind CanGoBack, Mode=OneWay}"
+                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Back')}">
 
-                    <Button
-                        Grid.Column="0"
-                        Width="34"
-                        Height="34"
-                        Padding="8"
-                        Click="{x:Bind OnBrowserBackClicked}"
-                        IsEnabled="{x:Bind CanGoBack, Mode=OneWay}"
-                        Style="{StaticResource SubtleButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Back')}">
+                            <AppBarButton.Icon>
+                                <FontIcon FontSize="16" Glyph="&#xE72B;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
 
-                        <FontIcon FontSize="16" Glyph="&#xE72B;" />
-                    </Button>
+                        <AppBarButton
+                            Width="48"
+                            Click="{x:Bind OnBrowserForwardClicked}"
+                            IsEnabled="{x:Bind CanGoForward, Mode=OneWay}"
+                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Forward')}"
+                            Visibility="{x:Bind CanGoForward, Mode=OneWay}">
 
-                    <Button
-                        Grid.Column="1"
-                        Width="34"
-                        Height="34"
-                        Padding="8"
-                        Click="{x:Bind OnBrowserForwardClicked}"
-                        IsEnabled="{x:Bind CanGoForward, Mode=OneWay}"
-                        Style="{StaticResource SubtleButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Forward')}"
-                        Visibility="{x:Bind CanGoForward, Mode=OneWay}">
+                            <AppBarButton.Icon>
+                                <FontIcon FontSize="16" Glyph="&#xE72A;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
 
-                        <FontIcon FontSize="16" Glyph="&#xE72A;" />
-                    </Button>
+                        <AppBarButton
+                            Width="48"
+                            Click="{x:Bind OnRefreshClicked}"
+                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Refresh')}">
 
-                    <Button
-                        Grid.Column="2"
-                        Width="34"
-                        Height="34"
-                        Padding="8"
-                        Click="{x:Bind OnRefreshClicked}"
-                        Style="{StaticResource SubtleButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Refresh')}">
+                            <AppBarButton.Icon>
+                                <FontIcon FontSize="16" Glyph="&#xE72C;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
 
-                        <FontIcon FontSize="16" Glyph="&#xE72C;" />
-                    </Button>
+                        <AppBarButton
+                            Width="48"
+                            Click="{x:Bind OnHomeClicked}"
+                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Home')}">
 
-                    <Button
-                        Grid.Column="3"
-                        Width="34"
-                        Height="34"
-                        Padding="8"
-                        Click="{x:Bind OnHomeClicked}"
-                        Style="{StaticResource SubtleButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Home')}">
-
-                        <FontIcon FontSize="16" Glyph="&#xE80F;" />
-                    </Button>
-                </Grid>
+                            <AppBarButton.Icon>
+                                <FontIcon FontSize="16" Glyph="&#xE80F;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar.PrimaryCommands>
+                </CommandBar>
 
                 <!--  网页标题  -->
                 <Grid
@@ -263,13 +253,15 @@
                     VerticalAlignment="Center"
                     Background="Transparent"
                     CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
-                    DefaultLabelPosition="Right">
+                    DefaultLabelPosition="Collapsed"
+                    IsDynamicOverflowEnabled="False">
 
                     <CommandBar.PrimaryCommands>
                         <AppBarButton
+                            Width="48"
                             Click="{x:Bind OnDownloadClicked}"
                             IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
-                            Label="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Download')}">
+                            ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('WebView/Download')}">
 
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE896;" />
