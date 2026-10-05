@@ -26,7 +26,7 @@
         <!--  WinGet 数据源配置控制栏  -->
         <CommandBar
             Grid.Row="0"
-            Margin="30,-4,22,-3"
+            Margin="30,-14,22,-3"
             Padding="16,0,0,0"
             VerticalAlignment="Center"
             HorizontalContentAlignment="Right"
@@ -269,7 +269,7 @@
                                             x:Name="SelectSquare"
                                             Width="20"
                                             Height="20"
-                                            Margin="12,22,0,0"
+                                            Margin="14,22,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Background="{ThemeResource CheckBoxCheckBackgroundFillUnchecked}"
@@ -530,7 +530,7 @@
                             </Expander.Header>
 
                             <Grid
-                                Margin="40,0,0,0"
+                                Margin="28,0,0,0"
                                 ColumnSpacing="15"
                                 RowSpacing="3">
                                 <Grid.RowDefinitions>

@@ -32,7 +32,7 @@
                             <ToggleButton
                                 x:Name="ExpanderHeader"
                                 MinHeight="{TemplateBinding MinHeight}"
-                                Margin="40,0,0,0"
+                                Margin="28,0,0,0"
                                 Padding="{StaticResource ExpanderHeaderPadding}"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="{StaticResource ExpanderHeaderHorizontalContentAlignment}"
