@@ -658,7 +658,7 @@
                             Style="{StaticResource ComboBoxStyle}">
 
                             <ComboBox.ItemTemplate>
-                                <DataTemplate x:DataType="model:ComboBoxItemModel">
+                                <DataTemplate x:DataType="model:StoreRegionModel">
                                     <TextBlock Text="{x:Bind DisplayMember}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
