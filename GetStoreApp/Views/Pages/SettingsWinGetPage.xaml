@@ -98,7 +98,7 @@
                     ItemsSource="{x:Bind WinGetSourceList}"
                     SelectedItem="{x:Bind WinGetSource, Mode=OneWay}"
                     SelectionChanged="{x:Bind OnWinGetSourceSelectionChanged}"
-                    Style="{StaticResource ComboBoxStyle}">
+                    Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="model:ComboBoxItemModel">

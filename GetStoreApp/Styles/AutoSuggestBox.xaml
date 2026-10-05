@@ -4,7 +4,7 @@
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives">
 
-    <Style x:Key="AutoSuggestBoxStyle" TargetType="AutoSuggestBox">
+    <Style x:Key="AutoSuggestBoxWithSystemBackdropStyle" TargetType="AutoSuggestBox">
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />

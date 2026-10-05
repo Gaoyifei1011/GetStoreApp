@@ -85,7 +85,7 @@
                     HorizontalContentAlignment="Stretch"
                     VerticalContentAlignment="Center"
                     Background="Transparent"
-                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterWithSystemBackdropStyle}"
                     DefaultLabelPosition="Right"
                     IsDynamicOverflowEnabled="False">
 

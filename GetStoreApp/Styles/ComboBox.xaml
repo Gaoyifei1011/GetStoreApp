@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals">
 
-    <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
+    <Style x:Key="ComboBoxWithSystemBackdropStyle" TargetType="ComboBox">
         <Setter Property="Padding" Value="{ThemeResource ComboBoxPadding}" />
         <Setter Property="MaxDropDownHeight" Value="504" />
         <Setter Property="Foreground" Value="{ThemeResource ComboBoxForeground}" />

@@ -255,7 +255,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
         {
-            if (!RuntimeHelper.IsElevated)
+            if (RuntimeHelper.IsElevated)
             {
                 if (!IsCheckingUpdate)
                 {
@@ -293,7 +293,6 @@ namespace GetStoreApp.Views.Pages
 
                         AppUpdateLock.Exit();
                     }
-                    await Task.Delay(5000);
                     IsCheckingUpdate = false;
                 }
             }

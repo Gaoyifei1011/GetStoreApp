@@ -52,7 +52,7 @@
                         Padding="0"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                        CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterWithSystemBackdropStyle}"
                         DefaultLabelPosition="Right"
                         IsDynamicOverflowEnabled="False">
 

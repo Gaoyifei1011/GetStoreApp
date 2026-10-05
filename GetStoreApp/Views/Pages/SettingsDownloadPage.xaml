@@ -248,7 +248,7 @@
                     ItemsSource="{x:Bind DoEngineModeList}"
                     SelectedItem="{x:Bind DoEngineMode, Mode=OneWay}"
                     SelectionChanged="{x:Bind OnDoEngineModeSelectionChanged}"
-                    Style="{StaticResource ComboBoxStyle}">
+                    Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="model:ComboBoxItemModel">

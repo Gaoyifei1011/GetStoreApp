@@ -88,7 +88,7 @@
                     ItemsSource="{x:Bind ThemeList}"
                     SelectedItem="{x:Bind Theme, Mode=OneWay}"
                     SelectionChanged="{x:Bind OnThemeSelectionChanged}"
-                    Style="{StaticResource ComboBoxStyle}">
+                    Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="model:ComboBoxItemModel">
@@ -161,7 +161,7 @@
                     ItemsSource="{x:Bind BackdropList}"
                     SelectedItem="{x:Bind Backdrop, Mode=OneWay}"
                     SelectionChanged="{x:Bind OnBackdropSelectionChanged}"
-                    Style="{StaticResource ComboBoxStyle}">
+                    Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="model:ComboBoxItemModel">
@@ -291,7 +291,7 @@
                     ItemsSource="{x:Bind LanguageCollection}"
                     SelectedItem="{x:Bind AppLanguage, Mode=OneWay}"
                     SelectionChanged="{x:Bind OnLanguageSelectionChanged}"
-                    Style="{StaticResource ComboBoxStyle}">
+                    Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="model:ComboBoxItemModel">

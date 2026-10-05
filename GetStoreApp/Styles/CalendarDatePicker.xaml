@@ -4,7 +4,7 @@
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives">
 
-    <Style x:Key="CalendarDatePickerStyle" TargetType="CalendarDatePicker">
+    <Style x:Key="CalendarDatePickerWithSystemBackdropStyle" TargetType="CalendarDatePicker">
         <Setter Property="Foreground" Value="{ThemeResource CalendarDatePickerTextForeground}" />
         <Setter Property="Background" Value="{ThemeResource CalendarDatePickerBackground}" />
         <Setter Property="BorderBrush" Value="{ThemeResource CalendarDatePickerBorderBrush}" />
@@ -227,7 +227,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="CalendarViewStyle" TargetType="CalendarView">
+    <Style x:Key="CalendarViewWithSystemBackdropStyle" TargetType="CalendarView">
         <Setter Property="BlackoutStrikethroughBrush" Value="{ThemeResource CalendarViewBlackoutStrikethroughBrush}" />
         <Setter Property="SelectedHoverBorderBrush" Value="{ThemeResource CalendarViewSelectedHoverBorderBrush}" />
         <Setter Property="SelectedPressedBorderBrush" Value="{ThemeResource CalendarViewSelectedPressedBorderBrush}" />

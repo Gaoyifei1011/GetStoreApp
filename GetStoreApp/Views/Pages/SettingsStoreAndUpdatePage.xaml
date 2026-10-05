@@ -82,7 +82,7 @@
                     ItemsSource="{x:Bind QueryLinksModeList}"
                     SelectedItem="{x:Bind QueryLinksMode, Mode=OneWay}"
                     SelectionChanged="{x:Bind OnQueryLinksModeSelectionChanged}"
-                    Style="{StaticResource ComboBoxStyle}">
+                    Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="model:ComboBoxItemModel">
@@ -147,7 +147,7 @@
                     ItemsSource="{x:Bind AppLinkOpenModeList}"
                     SelectedItem="{x:Bind AppLinkOpenMode, Mode=OneWay}"
                     SelectionChanged="{x:Bind OnAppLinkOpenModeSelectionChanged}"
-                    Style="{StaticResource ComboBoxStyle}">
+                    Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="model:ComboBoxItemModel">
@@ -211,7 +211,7 @@
                     ItemsSource="{x:Bind InstallModeList}"
                     SelectedItem="{x:Bind InstallMode, Mode=OneWay}"
                     SelectionChanged="{x:Bind OnInstallModeSelectionChanged}"
-                    Style="{StaticResource ComboBoxStyle}">
+                    Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="model:ComboBoxItemModel">
@@ -430,7 +430,7 @@
                             ItemsSource="{x:Bind AppUpdateStatusList}"
                             SelectedItem="{x:Bind AppUpdateStatus, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnAppUpdateStatusSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}">
+                            Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="model:ComboBoxItemModel">
@@ -484,10 +484,10 @@
                         <CalendarDatePicker
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            CalendarViewStyle="{StaticResource CalendarViewStyle}"
+                            CalendarViewStyle="{StaticResource CalendarViewWithSystemBackdropStyle}"
                             Date="{x:Bind AppUpdatePauseEndTime, Mode=OneWay}"
                             DateChanged="{x:Bind OnAppUpdatePauseEndTimeDateChanged}"
-                            Style="{StaticResource CalendarDatePickerStyle}" />
+                            Style="{StaticResource CalendarDatePickerWithSystemBackdropStyle}" />
                     </Grid>
                 </StackPanel>
             </Expander>
@@ -655,7 +655,7 @@
                             ItemsSource="{x:Bind StoreRegionCollection}"
                             SelectedItem="{x:Bind StoreRegion, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnStoreRegionSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}">
+                            Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="model:StoreRegionModel">

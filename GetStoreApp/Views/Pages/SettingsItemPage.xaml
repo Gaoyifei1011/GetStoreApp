@@ -56,7 +56,7 @@
             IsAddTabButtonVisible="False"
             SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}"
             SelectionChanged="{x:Bind OnSelectionChanged}"
-            Style="{StaticResource TabViewStyle}"
+            Style="{StaticResource TabViewSelectorBarStyle}"
             TabItemsSource="{x:Bind SettingsItemTabList}"
             TabWidthMode="SizeToContent">
 
@@ -65,7 +65,7 @@
                     <TabViewItem
                         Header="{x:Bind}"
                         IsClosable="False"
-                        Style="{StaticResource TabViewItemStyle}" />
+                        Style="{StaticResource TabViewSelectorBarItemStyle}" />
                 </DataTemplate>
             </TabView.TabItemTemplate>
 

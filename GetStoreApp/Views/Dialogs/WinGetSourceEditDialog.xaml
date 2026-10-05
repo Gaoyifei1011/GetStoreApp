@@ -241,7 +241,7 @@
                             ItemsSource="{x:Bind CatalogTrustLevelList}"
                             SelectedItem="{x:Bind SelectedCatalogTrustLevel, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnCatalogTrustLevelSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}">
+                            Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="model:ComboBoxItemModel">

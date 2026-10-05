@@ -160,7 +160,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterWithSystemBackdropStyle}"
                     DefaultLabelPosition="Collapsed"
                     IsDynamicOverflowEnabled="False"
                     Style="{StaticResource DefaultCommandBarStyle}">
@@ -252,7 +252,7 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                    CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterWithSystemBackdropStyle}"
                     DefaultLabelPosition="Collapsed"
                     IsDynamicOverflowEnabled="False">
 

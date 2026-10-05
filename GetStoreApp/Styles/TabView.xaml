@@ -7,7 +7,7 @@
         <XamlControlsResources />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="TabViewStyle" TargetType="TabView">
+    <Style x:Key="TabViewSelectorBarStyle" TargetType="TabView">
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="Padding" Value="{ThemeResource TabViewHeaderPadding}" />
         <Setter Property="IsTabStop" Value="False" />
@@ -109,7 +109,7 @@
         </Setter>
     </Style>
 
-    <Style x:Name="TabViewItemStyle" TargetType="TabViewItem">
+    <Style x:Name="TabViewSelectorBarItemStyle" TargetType="TabViewItem">
         <Setter Property="Background" Value="{ThemeResource TabViewItemHeaderBackground}" />
         <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
         <Setter Property="MinHeight" Value="{ThemeResource TabViewItemMinHeight}" />

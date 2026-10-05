@@ -30,7 +30,7 @@
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Center"
                 Background="Transparent"
-                CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterWithSystemBackdropStyle}"
                 DefaultLabelPosition="Right"
                 IsDynamicOverflowEnabled="False">
 
@@ -143,7 +143,7 @@
                             ItemsSource="{x:Bind PackageArchitectureList}"
                             SelectedItem="{x:Bind PackageArchitecture, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnPackageArchitectureSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}">
+                            Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="model:ComboBoxItemModel">
@@ -182,7 +182,7 @@
                             ItemsSource="{x:Bind PackageInstallScopeList}"
                             SelectedItem="{x:Bind PackageInstallScope, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnPackageInstallScopeSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}">
+                            Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="model:ComboBoxItemModel">
@@ -310,7 +310,7 @@
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Center"
                 Background="Transparent"
-                CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterWithSystemBackdropStyle}"
                 DefaultLabelPosition="Right"
                 IsDynamicOverflowEnabled="False">
 
@@ -524,7 +524,7 @@
                             ItemsSource="{x:Bind PackageInstallScopeList}"
                             SelectedItem="{x:Bind PackageInstallScope, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnPackageInstallScopeSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}">
+                            Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="model:ComboBoxItemModel">
@@ -563,7 +563,7 @@
                             ItemsSource="{x:Bind PackageInstallModeList}"
                             SelectedItem="{x:Bind PackageInstallMode, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnPackageInstallModeSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}">
+                            Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="model:ComboBoxItemModel">
@@ -730,7 +730,7 @@
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Center"
                 Background="Transparent"
-                CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterWithSystemBackdropStyle}"
                 DefaultLabelPosition="Right"
                 IsDynamicOverflowEnabled="False">
 
@@ -909,7 +909,7 @@
                             ItemsSource="{x:Bind PackageRepairScopeList}"
                             SelectedItem="{x:Bind PackageRepairScope, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnPackageRepairScopeSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}">
+                            Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="model:ComboBoxItemModel">
@@ -947,7 +947,7 @@
                             ItemsSource="{x:Bind PackageRepairModeList}"
                             SelectedItem="{x:Bind PackageRepairMode, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnPackageRepairModeSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}">
+                            Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="model:ComboBoxItemModel">
@@ -976,7 +976,7 @@
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Center"
                 Background="Transparent"
-                CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterStyle}"
+                CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterWithSystemBackdropStyle}"
                 DefaultLabelPosition="Right"
                 IsDynamicOverflowEnabled="False">
 
@@ -1190,7 +1190,7 @@
                             ItemsSource="{x:Bind PackageInstallScopeList}"
                             SelectedItem="{x:Bind PackageInstallScope, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnPackageInstallScopeSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}">
+                            Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="model:ComboBoxItemModel">
@@ -1229,7 +1229,7 @@
                             ItemsSource="{x:Bind PackageInstallModeList}"
                             SelectedItem="{x:Bind PackageInstallMode, Mode=OneWay}"
                             SelectionChanged="{x:Bind OnPackageInstallModeSelectionChanged}"
-                            Style="{StaticResource ComboBoxStyle}">
+                            Style="{StaticResource ComboBoxWithSystemBackdropStyle}">
 
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="model:ComboBoxItemModel">
