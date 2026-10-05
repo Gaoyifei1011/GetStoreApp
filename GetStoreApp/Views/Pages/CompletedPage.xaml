@@ -386,7 +386,6 @@
                                     <TextBlock
                                         x:Name="FileNameTextBlock"
                                         Grid.Column="0"
-                                        MinWidth="50"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         FontSize="16"
@@ -399,15 +398,23 @@
                                             <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
+                                </Grid>
+
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Margin="0,-3,0,0"
+                                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalling), Mode=OneWay}">
 
                                     <TextBlock
-                                        Grid.Column="1"
-                                        MinWidth="50"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        FontSize="16"
-                                        Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(TotalSize), Mode=OneWay}"
-                                        TextAlignment="Right">
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        TextAlignment="Left">
+
+                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DownloadCompleted')}" />
+                                        <Run Text="-" />
+                                        <Run Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(TotalSize), Mode=OneWay}" />
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip>
@@ -418,19 +425,7 @@
                                             </ToolTip>
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
-                                </Grid>
-
-                                <TextBlock
-                                    Grid.Row="1"
-                                    MinWidth="50"
-                                    Margin="0,-3,0,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/DownloadCompleted')}"
-                                    TextAlignment="Left"
-                                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalling), Mode=OneWay}" />
+                                </StackPanel>
 
                                 <Grid
                                     x:Name="InstallInfoGrid"
@@ -446,7 +441,6 @@
 
                                     <TextBlock
                                         Grid.Column="0"
-                                        MinWidth="50"
                                         Margin="0,-3,0,0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
@@ -463,7 +457,6 @@
 
                                     <TextBlock
                                         Grid.Column="2"
-                                        MinWidth="50"
                                         Margin="0,-3,0,0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
