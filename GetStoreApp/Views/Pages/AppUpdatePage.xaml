@@ -32,7 +32,7 @@
             VerticalContentAlignment="Center"
             Background="Transparent"
             CommandBarOverflowPresenterStyle="{StaticResource CommandBarOverflowPresenterWithSystemBackdropStyle}"
-            DefaultLabelPosition="Right"
+            DefaultLabelPosition="Collapsed"
             IsDynamicOverflowEnabled="False">
 
             <CommandBar.Content>

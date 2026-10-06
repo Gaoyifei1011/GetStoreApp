@@ -131,69 +131,6 @@
 
                 <XamlUICommand x:Name="PinToStartScreenCommand" ExecuteRequested="{x:Bind OnPinToStartScreenExecuteRequested}" />
                 <XamlUICommand x:Name="PinToTaskbarCommand" ExecuteRequested="{x:Bind OnPinToTaskbarExecuteRequested}" />
-
-                <!--  普通导航项数据模板  -->
-                <DataTemplate x:Key="NavigationViewItemTemplate" x:DataType="model:NavigationViewItemModel">
-                    <NavigationViewItem Icon="{x:Bind NavigationIcon}" Style="{StaticResource CardNavigationViewItemStyle}">
-
-                        <TextBlock
-                            x:Name="NavigationViewItemTextBlock"
-                            Text="{x:Bind NavigationTitle}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind NavigationTitle}" Visibility="{Binding ElementName=NavigationViewItemTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
-
-                        <NavigationViewItem.ContextFlyout>
-                            <MenuFlyout Placement="Bottom">
-                                <MenuFlyoutItem
-                                    Command="{StaticResource PinToStartScreenCommand}"
-                                    CommandParameter="{x:Bind}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToStartScreen')}">
-
-                                    <MenuFlyoutItem.Icon>
-                                        <FontIcon Glyph="&#xE8FC;" />
-                                    </MenuFlyoutItem.Icon>
-                                </MenuFlyoutItem>
-
-                                <MenuFlyoutItem
-                                    Command="{StaticResource PinToTaskbarCommand}"
-                                    CommandParameter="{x:Bind}"
-                                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToTaskbar')}">
-
-                                    <MenuFlyoutItem.Icon>
-                                        <FontIcon Glyph="&#xE75B;" />
-                                    </MenuFlyoutItem.Icon>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </NavigationViewItem.ContextFlyout>
-                    </NavigationViewItem>
-                </DataTemplate>
-
-                <!--  设置导航项数据模板  -->
-                <DataTemplate x:Key="NavigationViewSettingsItemTemplate" x:DataType="model:NavigationViewItemModel">
-                    <NavigationViewItem Icon="{x:Bind NavigationIcon}" Style="{StaticResource CardNavigationViewItemStyle}">
-
-                        <TextBlock
-                            x:Name="NavigationViewItemTextBlock"
-                            Text="{x:Bind NavigationTitle}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind NavigationTitle}" Visibility="{Binding ElementName=NavigationViewItemTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
-                    </NavigationViewItem>
-                </DataTemplate>
-
-                <!--  导航项分割线数据模板  -->
-                <DataTemplate x:Key="NavigationViewItemSeparatorTemplate" x:DataType="model:NavigationViewItemModel">
-                    <NavigationViewItemSeparator Margin="0,0,5,0" />
-                </DataTemplate>
             </ResourceDictionary>
         </Page.Resources>
 
@@ -266,10 +203,77 @@
                 SelectionChanged="{x:Bind OnSelectionChanged}">
 
                 <NavigationView.MenuItemTemplateSelector>
-                    <datatemplate:NavigationViewItemTemplateSelector
-                        NavigationViewItemSeparatorTemplate="{StaticResource NavigationViewItemSeparatorTemplate}"
-                        NavigationViewItemTemplate="{StaticResource NavigationViewItemTemplate}"
-                        NavigationViewSettingsItemTemplate="{StaticResource NavigationViewSettingsItemTemplate}" />
+                    <datatemplate:NavigationViewItemTemplateSelector>
+
+                        <datatemplate:NavigationViewItemTemplateSelector.NavigationViewItemSeparatorTemplate>
+                            <!--  导航项分割线数据模板  -->
+                            <DataTemplate x:DataType="model:NavigationViewItemModel">
+                                <NavigationViewItemSeparator Margin="0,0,5,0" />
+                            </DataTemplate>
+                        </datatemplate:NavigationViewItemTemplateSelector.NavigationViewItemSeparatorTemplate>
+
+                        <datatemplate:NavigationViewItemTemplateSelector.NavigationViewItemTemplate>
+                            <!--  普通导航项数据模板  -->
+                            <DataTemplate x:DataType="model:NavigationViewItemModel">
+                                <NavigationViewItem Icon="{x:Bind NavigationIcon}" Style="{StaticResource CardNavigationViewItemStyle}">
+
+                                    <TextBlock
+                                        x:Name="NavigationViewItemTextBlock"
+                                        Text="{x:Bind NavigationTitle}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip Content="{x:Bind NavigationTitle}" Visibility="{Binding ElementName=NavigationViewItemTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+
+                                    <NavigationViewItem.ContextFlyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem
+                                                Command="{StaticResource PinToStartScreenCommand}"
+                                                CommandParameter="{x:Bind}"
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToStartScreen')}">
+
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE8FC;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+
+                                            <MenuFlyoutItem
+                                                Command="{StaticResource PinToTaskbarCommand}"
+                                                CommandParameter="{x:Bind}"
+                                                Text="{x:Bind rootservice:ResourceService.GetLocalized('Window/PinToTaskbar')}">
+
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE75B;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </NavigationViewItem.ContextFlyout>
+                                </NavigationViewItem>
+                            </DataTemplate>
+                        </datatemplate:NavigationViewItemTemplateSelector.NavigationViewItemTemplate>
+
+                        <datatemplate:NavigationViewItemTemplateSelector.NavigationViewSettingsItemTemplate>
+                            <!--  设置导航项数据模板  -->
+                            <DataTemplate x:DataType="model:NavigationViewItemModel">
+                                <NavigationViewItem Icon="{x:Bind NavigationIcon}" Style="{StaticResource CardNavigationViewItemStyle}">
+
+                                    <TextBlock
+                                        x:Name="NavigationViewItemTextBlock"
+                                        Text="{x:Bind NavigationTitle}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip Content="{x:Bind NavigationTitle}" Visibility="{Binding ElementName=NavigationViewItemTextBlock, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </NavigationViewItem>
+                            </DataTemplate>
+                        </datatemplate:NavigationViewItemTemplateSelector.NavigationViewSettingsItemTemplate>
+                    </datatemplate:NavigationViewItemTemplateSelector>
                 </NavigationView.MenuItemTemplateSelector>
 
                 <Frame

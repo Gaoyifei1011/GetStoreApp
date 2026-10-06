@@ -1,10 +1,10 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -31,27 +31,20 @@ namespace GetStoreApp.Views.Pages
     {
         #region 第一部分：常量、资源与状态字段
 
-        private static readonly string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36 Edg/149.0.0.0";
-
-        private bool _isChecking;
-
-        private bool IsChecking
-        {
-            get { return _isChecking; }
-
-            set
-            {
-                if (!Equals(_isChecking, value))
-                {
-                    _isChecking = value;
-                    PropertyChanged.Invoke(this, new(nameof(IsChecking)));
-                }
-            }
-        }
+        private readonly string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36 Edg/149.0.0.0";
+        private readonly string AppInformationString = ResourceService.GetLocalized("SettingsAbout/AppInformation");
+        private readonly string HelpTranslateString = ResourceService.GetLocalized("SettingsAbout/HelpTranslate");
+        private readonly string ProjectHomePageString = ResourceService.GetLocalized("SettingsAbout/ProjectHomePage");
+        private readonly string SendFeedbackString = ResourceService.GetLocalized("SettingsAbout/SendFeedback");
+        private readonly string ShowLicenseString = ResourceService.GetLocalized("SettingsAbout/ShowLicense");
+        private readonly string ShowReleaseNotesString = ResourceService.GetLocalized("SettingsAbout/ShowReleaseNotes");
+        private readonly string SystemInformationString = ResourceService.GetLocalized("SettingsAbout/SystemInformation");
 
         #endregion 第一部分：常量、资源与状态字段
 
         #region 第二部分：属性、集合与事件
+
+        private List<OperationBarItemModel> OperationBarItemList { get; } = [];
 
         //项目引用信息
         private ReadOnlyCollection<ContentLinkInfo> ReferenceCollection { get; } =
@@ -95,6 +88,7 @@ namespace GetStoreApp.Views.Pages
         internal SettingsAboutPage()
         {
             InitializeComponent();
+            InitializeData();
         }
 
         #endregion 第三部分：构造函数
@@ -102,112 +96,101 @@ namespace GetStoreApp.Views.Pages
         #region 第四部分：挂载事件处理
 
         /// <summary>
-        /// 查看更新日志
+        /// 点击操作栏项目时触发的事件
         /// </summary>
-        private void OnShowReleaseNotesClicked(object sender, RoutedEventArgs args)
+        private async void OnItemClicked(object sender, ItemClickEventArgs args)
         {
-            ShowReleaseNotes();
-        }
-
-        /// <summary>
-        /// 应用信息
-        /// </summary>
-        private async void OnAppInformationClicked(object sender, RoutedEventArgs args)
-        {
-            await MainWindow.Current.ShowDialogAsync(new AppInformationDialog());
-        }
-
-        /// <summary>
-        /// 系统信息
-        /// </summary>
-        private void OnSystemInformationClicked(object sender, RoutedEventArgs args)
-        {
-            ShowSystemInformation();
-        }
-
-        /// <summary>
-        /// 查看许可证
-        /// </summary>
-        private async void OnShowLicenseClicked(object sender, RoutedEventArgs args)
-        {
-            await MainWindow.Current.ShowDialogAsync(new LicenseDialog());
-        }
-
-        /// <summary>
-        /// 帮助翻译应用
-        /// </summary>
-        private void OnHelpTranslateClicked(object sender, RoutedEventArgs args)
-        {
-            HelpTranslate();
-        }
-
-        /// <summary>
-        /// 项目主页
-        /// </summary>
-        private void OnProjectDescriptionClicked(object sender, RoutedEventArgs args)
-        {
-            OpenProjectDescription();
-        }
-
-        /// <summary>
-        /// 发送反馈
-        /// </summary>
-        private void OnSendFeedbackClicked(object sender, RoutedEventArgs args)
-        {
-            SendFeedback();
-        }
-
-        /// <summary>
-        /// 检查更新
-        /// </summary>
-        private async void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
-        {
-            if (!IsChecking)
+            if (args.ClickedItem is OperationBarItemModel operationBarItem)
             {
-                IsChecking = true;
-                if (NetWorkHelper.IsNetWorkConnected())
+                switch (operationBarItem.Tag)
                 {
-                    if (RuntimeHelper.IsStoreVersion)
-                    {
-                        bool isNewest = false;
-
-                        try
+                    case "ProjectHomePage":
                         {
-                            IsChecking = true;
-                            bool? checkResult = await CheckCurrentAppIsNewestVersionAsync(RuntimeHelper.IsStoreVersion);
-                            isNewest = checkResult is not null && checkResult.HasValue && checkResult.Value;
-                            IsChecking = false;
-                            DispatcherQueue.TryEnqueue(async () =>
+                            OpenProjectHomePage();
+                            break;
+                        }
+                    case "SendFeedback":
+                        {
+                            SendFeedback();
+                            break;
+                        }
+                    case "CheckUpdate":
+                        {
+                            if (!operationBarItem.IsCheckingUpdate)
                             {
-                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, Convert.ToInt32(isNewest)));
-                            });
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(OnCheckUpdateClicked), 1, e);
-                            IsChecking = false;
-                            DispatcherQueue.TryEnqueue(async () =>
-                            {
-                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, 2));
-                            });
-                        }
+                                operationBarItem.IsCheckingUpdate = true;
+                                if (NetWorkHelper.IsNetWorkConnected())
+                                {
+                                    if (RuntimeHelper.IsStoreVersion)
+                                    {
+                                        bool isNewest = false;
 
-                        if (!isNewest)
-                        {
-                            await MainWindow.Current.ShowDialogAsync(new UpdateAppDialog());
+                                        try
+                                        {
+                                            operationBarItem.IsCheckingUpdate = true;
+                                            bool? checkResult = await CheckCurrentAppIsNewestVersionAsync(RuntimeHelper.IsStoreVersion);
+                                            isNewest = checkResult is not null && checkResult.HasValue && checkResult.Value;
+                                            operationBarItem.IsCheckingUpdate = false;
+                                            DispatcherQueue.TryEnqueue(async () =>
+                                            {
+                                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, Convert.ToInt32(isNewest)));
+                                            });
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(SettingsAboutPage), nameof(OnItemClicked), 1, e);
+                                            operationBarItem.IsCheckingUpdate = false;
+                                            DispatcherQueue.TryEnqueue(async () =>
+                                            {
+                                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, 2));
+                                            });
+                                        }
+
+                                        if (!isNewest)
+                                        {
+                                            await MainWindow.Current.ShowDialogAsync(new UpdateAppDialog());
+                                        }
+                                    }
+                                    else
+                                    {
+                                        bool? isNewest = await CheckCurrentAppIsNewestVersionAsync(RuntimeHelper.IsStoreVersion);
+                                        operationBarItem.IsCheckingUpdate = false;
+                                        await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, isNewest is not null && isNewest.HasValue ? Convert.ToInt32(isNewest.Value) : 2));
+                                    }
+                                }
+                                else
+                                {
+                                    operationBarItem.IsCheckingUpdate = false;
+                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, 2));
+                                }
+                            }
+                            break;
                         }
-                    }
-                    else
-                    {
-                        bool? isNewest = await CheckCurrentAppIsNewestVersionAsync(RuntimeHelper.IsStoreVersion);
-                        IsChecking = false;
-                        await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, isNewest is not null && isNewest.HasValue ? Convert.ToInt32(isNewest.Value) : 2));
-                    }
-                }
-                else
-                {
-                    IsChecking = false;
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, 2));
+                    case "HelpTranslate":
+                        {
+                            HelpTranslate();
+                            break;
+                        }
+                    case "ShowLicense":
+                        {
+                            await MainWindow.Current.ShowDialogAsync(new LicenseDialog());
+                            break;
+                        }
+                    case "ShowReleaseNotes":
+                        {
+                            ShowReleaseNotes();
+                            break;
+                        }
+                    case "AppInformation":
+                        {
+                            await MainWindow.Current.ShowDialogAsync(new AppInformationDialog());
+                            break;
+                        }
+                    case "SystemInformation":
+                        {
+                            ShowSystemInformation();
+                            break;
+                        }
                 }
             }
         }
@@ -215,6 +198,68 @@ namespace GetStoreApp.Views.Pages
         #endregion 第四部分：挂载事件处理
 
         #region 第五部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private void InitializeData()
+        {
+            OperationBarItemList.Add(new()
+            {
+                Title = ProjectHomePageString,
+                Tag = "ProjectHomePage",
+                OperationBarKind = OperationBarKind.Ordinary,
+                IconGlyph = "\uE80F"
+            });
+            OperationBarItemList.Add(new()
+            {
+                Title = SendFeedbackString,
+                Tag = "SendFeedback",
+                OperationBarKind = OperationBarKind.Ordinary,
+                IconGlyph = "\uED15"
+            });
+            OperationBarItemList.Add(new()
+            {
+                Tag = "CheckUpdate",
+                OperationBarKind = OperationBarKind.CheckUpdate,
+                IconGlyph = "\uE895"
+            });
+            OperationBarItemList.Add(new()
+            {
+                Title = HelpTranslateString,
+                Tag = "HelpTranslate",
+                OperationBarKind = OperationBarKind.Ordinary,
+                IconGlyph = "\uF2B7"
+            });
+            OperationBarItemList.Add(new()
+            {
+                Title = ShowLicenseString,
+                Tag = "ShowLicense",
+                OperationBarKind = OperationBarKind.Ordinary,
+                IconGlyph = "\uE779"
+            });
+            OperationBarItemList.Add(new()
+            {
+                Title = ShowReleaseNotesString,
+                Tag = "ShowReleaseNotes",
+                OperationBarKind = OperationBarKind.Ordinary,
+                IconGlyph = "\uE70B"
+            });
+            OperationBarItemList.Add(new()
+            {
+                Title = AppInformationString,
+                Tag = "AppInformation",
+                OperationBarKind = OperationBarKind.Ordinary,
+                IconGlyph = "\uECAA"
+            });
+            OperationBarItemList.Add(new()
+            {
+                Title = SystemInformationString,
+                Tag = "SystemInformation",
+                OperationBarKind = OperationBarKind.Ordinary,
+                IconGlyph = "\uE770"
+            });
+        }
 
         /// <summary>
         /// 查看更新日志
@@ -273,7 +318,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开项目主页
         /// </summary>
-        private void OpenProjectDescription()
+        private void OpenProjectHomePage()
         {
             Task.Run(async () =>
             {

@@ -171,7 +171,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!string.Equals(_packageLink, value))
+                if (!Equals(_packageLink, value))
                 {
                     _packageLink = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageLink)));
@@ -673,7 +673,7 @@ namespace GetStoreApp.Views.Pages
                 else if (UpgradableApps is not null)
                 {
                     // 获取当前应用可用版本
-                    if (await GetAvailableVersionAysnc(UpgradableApps.CatalogPackage, false) is ReadOnlyCollection<AvailableVersionModel> availableVersionCollection && availableVersionCollection.Count > 0)
+                    if (await GetAvailableVersionAysnc(UpgradableApps.CatalogPackage, true) is ReadOnlyCollection<AvailableVersionModel> availableVersionCollection && availableVersionCollection.Count > 0)
                     {
                         await UpdateAvailableVersionListAsync(availableVersionCollection);
                     }
@@ -709,7 +709,11 @@ namespace GetStoreApp.Views.Pages
                         {
                             if (catalogPackage.InstalledVersion.CompareToVersion(packageVersionId.Version) is CompareResult.Lesser)
                             {
-                                (bool isDefaultVersion, hasDefaultVersion) = CheckDefaultVersion(catalogPackage.DefaultInstallVersion, packageVersionId);
+                                (bool isDefaultVersion, bool checkedHasDefaultVersion) = CheckDefaultVersion(catalogPackage.DefaultInstallVersion, packageVersionId);
+                                if (checkedHasDefaultVersion && !hasDefaultVersion)
+                                {
+                                    hasDefaultVersion = true;
+                                }
 
                                 // 添加所有已经获取到的所有版本
                                 availableVersionList.Add(new()
@@ -722,7 +726,11 @@ namespace GetStoreApp.Views.Pages
                         }
                         else
                         {
-                            (bool isDefaultVersion, hasDefaultVersion) = CheckDefaultVersion(catalogPackage.DefaultInstallVersion, packageVersionId);
+                            (bool isDefaultVersion, bool checkedHasDefaultVersion) = CheckDefaultVersion(catalogPackage.DefaultInstallVersion, packageVersionId);
+                            if (checkedHasDefaultVersion && !hasDefaultVersion)
+                            {
+                                hasDefaultVersion = true;
+                            }
 
                             // 添加所有已经获取到的所有版本
                             availableVersionList.Add(new()

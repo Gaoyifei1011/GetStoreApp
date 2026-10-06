@@ -66,6 +66,10 @@
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+
+                <ListView.ItemContainerTransitions>
+                    <TransitionCollection />
+                </ListView.ItemContainerTransitions>
             </ListView>
 
             <AppBarSeparator Grid.Column="1" Margin="0,-10,0,-10" />
