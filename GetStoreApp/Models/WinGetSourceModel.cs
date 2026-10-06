@@ -7,7 +7,7 @@ namespace GetStoreApp.Models
     /// <summary>
     /// WinGet 数据源模型
     /// </summary>
-    public partial class WinGetSourceModel : INotifyPropertyChanged
+    public sealed partial class WinGetSourceModel : INotifyPropertyChanged
     {
         private bool _isOperating;
 

@@ -1,13 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using WinRT;
 
 namespace GetStoreApp.Models
 {
     /// <summary>
-    /// WinGet 数据源分组模型
+    /// 主页面项目分组模型
     /// </summary>
     [GeneratedBindableCustomProperty]
-    public sealed partial class WinGetSourceGroupModel
+    public sealed partial class HomeItemGroupModel
     {
         /// <summary>
         /// 分组名称
@@ -15,8 +15,8 @@ namespace GetStoreApp.Models
         public string GroupName { get; set; }
 
         /// <summary>
-        /// 数据列表
+        /// 主页面项目数据列表
         /// </summary>
-        public ObservableCollection<WinGetSourceModel> WinGetSourceCollection { get; set; }
+        public List<HomeItemModel> HomeItemList { get; set; }
     }
 }

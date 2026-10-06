@@ -27,7 +27,7 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 设置关于页面
     /// </summary>
-    internal sealed partial class SettingsAboutPage : Page, INotifyPropertyChanged
+    internal sealed partial class SettingsAboutPage : Page
     {
         #region 第一部分：常量、资源与状态字段
 
@@ -78,8 +78,6 @@ namespace GetStoreApp.Views.Pages
             new() { DisplayText = "wherewhere", Uri = new("https://github.com/wherewhere") },
             new() { DisplayText = "Y-PLONI", Uri = new("https://github.com/Y-PLONI") },
         ];
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion 第二部分：属性、集合与事件
 

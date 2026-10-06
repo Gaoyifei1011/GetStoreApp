@@ -2,7 +2,6 @@
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.Marshalling;
@@ -27,6 +26,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string AppUpdateString = ResourceService.GetLocalized("Home/AppUpdate");
         private readonly string DownloadDescriptionString = ResourceService.GetLocalized("Home/DownloadDescription");
         private readonly string DownloadString = ResourceService.GetLocalized("Home/Download");
+        private readonly string FunctionSummaryString = ResourceService.GetLocalized("Home/FunctionSummary");
         private readonly string StoreDescriptionString = ResourceService.GetLocalized("Home/StoreDescription");
         private readonly string StoreString = ResourceService.GetLocalized("Home/Store");
         private readonly string WinGetDescriptionString = ResourceService.GetLocalized("Home/WinGetDescription");
@@ -38,7 +38,7 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private List<ControlItemModel> HomeList { get; } = [];
+        private List<HomeItemGroupModel> HomeGroupList { get; } = [];
 
         #endregion 第二部分：属性、集合与事件
 
@@ -57,15 +57,15 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 点击条目时进入条目对应的页面
         /// </summary>
-        private void OnControlItemClickExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnItemClicked(object sender, ItemClickEventArgs args)
         {
-            if (args.Parameter is ControlItemModel controlItem)
+            if (args.ClickedItem is HomeItemModel homeItem)
             {
-                if (controlItem.Tag is "Web")
+                if (homeItem.Tag is "Web")
                 {
                     LaunchWebView();
                 }
-                else if (MainWindow.Current.GetSelectedItem(controlItem.NavigationPage, MainWindow.Current.NavigationViewItemMenuItemsCollection) is NavigationViewItemModel navigationViewItem)
+                else if (MainWindow.Current.GetSelectedItem(homeItem.NavigationPage, MainWindow.Current.NavigationViewItemMenuItemsCollection) is NavigationViewItemModel navigationViewItem)
                 {
                     MainWindow.Current.NavigateTo(navigationViewItem.NavigationPage);
                 }
@@ -81,53 +81,60 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void InitializeData()
         {
-            HomeList.Add(new()
+            HomeGroupList.Add(new()
             {
-                Title = StoreString,
-                Description = StoreDescriptionString,
-                ImagePath = "ms-appx:///Assets/Icon/Control/Store.png",
-                Tag = "Store",
-                NavigationPage = typeof(StorePage)
-            });
-            HomeList.Add(new()
-            {
-                Title = AppUpdateString,
-                Description = AppUpdateDescriptionString,
-                ImagePath = "ms-appx:///Assets/Icon/Control/AppUpdate.png",
-                Tag = "AppUpdate",
-                NavigationPage = typeof(AppUpdatePage)
-            });
-            HomeList.Add(new()
-            {
-                Title = WinGetString,
-                Description = WinGetDescriptionString,
-                ImagePath = "ms-appx:///Assets/Icon/Control/WinGet.png",
-                Tag = "WinGet",
-                NavigationPage = typeof(WinGetPage)
-            });
-            HomeList.Add(new()
-            {
-                Title = AppManagerString,
-                Description = AppManagerDescriptionString,
-                ImagePath = "ms-appx:///Assets/Icon/Control/AppManager.png",
-                Tag = "AppManager",
-                NavigationPage = typeof(AppManagerPage)
-            });
-            HomeList.Add(new()
-            {
-                Title = DownloadString,
-                Description = DownloadDescriptionString,
-                ImagePath = "ms-appx:///Assets/Icon/Control/Download.png",
-                Tag = "Download",
-                NavigationPage = typeof(DownloadPage)
-            });
-            HomeList.Add(new()
-            {
-                Title = WebString,
-                Description = WebDescriptionString,
-                ImagePath = "ms-appx:///Assets/Icon/Control/Web.png",
-                Tag = "Web",
-                NavigationPage = null
+                GroupName = FunctionSummaryString,
+                HomeItemList =
+                [
+                    new()
+                    {
+                        Title = StoreString,
+                        Description = StoreDescriptionString,
+                        ImagePath = "ms-appx:///Assets/Icon/Control/Store.png",
+                        Tag = "Store",
+                        NavigationPage = typeof(StorePage)
+                    },
+                    new()
+                    {
+                        Title = AppUpdateString,
+                        Description = AppUpdateDescriptionString,
+                        ImagePath = "ms-appx:///Assets/Icon/Control/AppUpdate.png",
+                        Tag = "AppUpdate",
+                        NavigationPage = typeof(AppUpdatePage)
+                    },
+                    new()
+                    {
+                        Title = WinGetString,
+                        Description = WinGetDescriptionString,
+                        ImagePath = "ms-appx:///Assets/Icon/Control/WinGet.png",
+                        Tag = "WinGet",
+                        NavigationPage = typeof(WinGetPage)
+                    },
+                    new()
+                    {
+                        Title = AppManagerString,
+                        Description = AppManagerDescriptionString,
+                        ImagePath = "ms-appx:///Assets/Icon/Control/AppManager.png",
+                        Tag = "AppManager",
+                        NavigationPage = typeof(AppManagerPage)
+                    },
+                    new()
+                    {
+                        Title = DownloadString,
+                        Description = DownloadDescriptionString,
+                        ImagePath = "ms-appx:///Assets/Icon/Control/Download.png",
+                        Tag = "Download",
+                        NavigationPage = typeof(DownloadPage)
+                    },
+                    new()
+                    {
+                        Title = WebString,
+                        Description = WebDescriptionString,
+                        ImagePath = "ms-appx:///Assets/Icon/Control/Web.png",
+                        Tag = "Web",
+                        NavigationPage = null
+                    }
+                ]
             });
         }
 

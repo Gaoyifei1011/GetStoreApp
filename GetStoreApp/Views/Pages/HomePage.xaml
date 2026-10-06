@@ -26,8 +26,6 @@
                     </LinearGradientBrush>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
-
-            <XamlUICommand x:Name="ControlItemClickCommand" ExecuteRequested="{x:Bind OnControlItemClickExecuteRequested}" />
         </ResourceDictionary>
     </Page.Resources>
 
@@ -104,21 +102,168 @@
             <!--  选择栏  -->
             <ListView
                 Margin="0,10,0,0"
-                ItemsSource="{x:Bind HomeList}"
+                IsItemClickEnabled="True"
+                ItemClick="{x:Bind OnItemClicked}"
+                ItemsSource="{x:Bind HomeCollectionViewSource.View, Mode=OneWay}"
                 SelectionMode="None"
                 TabIndex="1">
 
-                <ListView.Header>
-                    <TextBlock
-                        Margin="0,0,0,16"
-                        FontSize="22"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Home/FunctionSummary')}" />
-                </ListView.Header>
+                <ListView.Resources>
+                    <CollectionViewSource
+                        x:Name="HomeCollectionViewSource"
+                        IsSourceGrouped="True"
+                        ItemsPath="HomeItemList"
+                        Source="{x:Bind HomeGroupList}" />
+                </ListView.Resources>
+
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderContainerStyle>
+                            <Style TargetType="ListViewHeaderItem">
+                                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                                <Setter Property="FontSize" Value="{ThemeResource ListViewHeaderItemThemeFontSize}" />
+                                <Setter Property="Background" Value="{ThemeResource ListViewHeaderItemBackground}" />
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                <Setter Property="VerticalContentAlignment" Value="Top" />
+                                <Setter Property="MinHeight" Value="0" />
+                                <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewHeaderItem">
+                                            <StackPanel
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="{TemplateBinding CornerRadius}">
+                                                <ContentPresenter
+                                                    x:Name="ContentPresenter"
+                                                    Margin="{TemplateBinding Padding}"
+                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                    Content="{TemplateBinding Content}"
+                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                    ContentTransitions="{TemplateBinding ContentTransitions}" />
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.HeaderContainerStyle>
+
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate x:DataType="model:HomeItemGroupModel">
+                                <TextBlock
+                                    Margin="0,0,0,16"
+                                    FontSize="22"
+                                    Text="{x:Bind GroupName}" />
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
 
                 <ListView.ItemContainerStyle>
-                    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
+                        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+                        <Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
+                        <Setter Property="Background" Value="{ThemeResource ButtonBackground}" />
+                        <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}" />
+                        <Setter Property="FontWeight" Value="Normal" />
+                        <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}" />
+                        <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}" />
+                        <Setter Property="TabNavigation" Value="Local" />
+                        <Setter Property="HorizontalAlignment" Value="Left" />
                         <Setter Property="Margin" Value="0,0,10,10" />
-                        <Setter Property="Padding" Value="0" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="Padding" Value="8,5,8,6" />
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}" />
+                        <Setter Property="MinHeight" Value="{ThemeResource ListViewItemMinHeight}" />
+                        <Setter Property="AllowDrop" Value="False" />
+                        <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
+                        <Setter Property="FocusVisualMargin" Value="-3" />
+                        <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource ListViewItemFocusVisualPrimaryBrush}" />
+                        <Setter Property="FocusVisualPrimaryThickness" Value="2" />
+                        <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource ListViewItemFocusVisualSecondaryBrush}" />
+                        <Setter Property="FocusVisualSecondaryThickness" Value="1" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <ContentPresenter
+                                        x:Name="ContentPresenter"
+                                        Padding="{TemplateBinding Padding}"
+                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        AnimatedIcon.State="Normal"
+                                        AutomationProperties.AccessibilityView="Raw"
+                                        Background="{TemplateBinding Background}"
+                                        BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        ContentTransitions="{TemplateBinding ContentTransitions}"
+                                        CornerRadius="{TemplateBinding CornerRadius}"
+                                        Foreground="{TemplateBinding Foreground}">
+                                        <ContentPresenter.BackgroundTransition>
+                                            <BrushTransition Duration="0:0:0.083" />
+                                        </ContentPresenter.BackgroundTransition>
+
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal" />
+
+                                                <VisualState x:Name="PointerOver">
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}" />
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}" />
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}" />
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </VisualState>
+
+                                                <VisualState x:Name="Pressed">
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPressed}" />
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}" />
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}" />
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </VisualState>
+
+                                                <VisualState x:Name="Disabled">
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundDisabled}" />
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}" />
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}" />
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </ContentPresenter>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
                     </Style>
                 </ListView.ItemContainerStyle>
 
@@ -133,16 +278,9 @@
                 </ListView.ItemContainerTransitions>
 
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="model:ControlItemModel">
-                        <Button
-                            Width="300"
-                            Height="90"
-                            Padding="0"
-                            HorizontalContentAlignment="Stretch"
-                            Command="{StaticResource ControlItemClickCommand}"
-                            CommandParameter="{x:Bind}">
-
-                            <Grid Margin="8,0,0,0" HorizontalAlignment="Stretch">
+                    <DataTemplate x:DataType="model:HomeItemModel">
+                        <Grid Width="280" Height="75">
+                            <Grid HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
@@ -188,7 +326,7 @@
                                     </TextBlock>
                                 </StackPanel>
                             </Grid>
-                        </Button>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
