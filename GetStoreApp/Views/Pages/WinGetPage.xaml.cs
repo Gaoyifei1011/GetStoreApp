@@ -757,12 +757,13 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 显示任务管理
         /// </summary>
-        internal void ShowTaskManager()
+        internal async Task ShowTaskManagerAsync()
         {
             WinGetPaneKind = WinGetPaneKind.TaskManager;
 
             if (!WinGetSplitView.IsPaneOpen)
             {
+                await Task.Delay(300);
                 WinGetSplitView.OpenPaneLength = 400;
                 WinGetSplitView.IsPaneOpen = true;
             }
@@ -1169,11 +1170,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 显示使用说明
         /// </summary>
-        internal void ShowUseInstruction()
+        internal async Task ShowUseInstructionAsync()
         {
             WinGetPaneKind = WinGetPaneKind.UseInstruction;
             if (!WinGetSplitView.IsPaneOpen)
             {
+                await Task.Delay(300);
                 WinGetSplitView.OpenPaneLength = 320;
                 WinGetSplitView.IsPaneOpen = true;
             }

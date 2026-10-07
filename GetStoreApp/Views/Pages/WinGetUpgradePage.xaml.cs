@@ -254,9 +254,9 @@ namespace GetStoreApp.Views.Pages
         /// 打开任务管理
         /// </summary>
 
-        private void OnTaskManagerClicked(object sender, RoutedEventArgs args)
+        private async void OnTaskManagerClicked(object sender, RoutedEventArgs args)
         {
-            WinGetPageInstance?.ShowTaskManager();
+            await WinGetPageInstance?.ShowTaskManagerAsync();
         }
 
         /// <summary>
@@ -272,8 +272,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnUseInstructionClicked(object sender, RoutedEventArgs args)
         {
-            await Task.Delay(300);
-            WinGetPageInstance?.ShowUseInstruction();
+            await WinGetPageInstance?.ShowUseInstructionAsync();
         }
 
         /// <summary>
