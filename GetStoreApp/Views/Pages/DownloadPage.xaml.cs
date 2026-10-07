@@ -226,7 +226,7 @@ namespace GetStoreApp.Views.Pages
 
             if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
             {
-                settingsPage.ShowSettingsInstruction();
+                await settingsPage.ShowSettingsInstructionAsync(false);
             }
         }
 
@@ -300,10 +300,11 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 显示下载使用说明
         /// </summary>
-        internal void ShowUseInstruction()
+        internal async Task ShowUseInstructionAsync()
         {
             if (!DownloadSplitView.IsPaneOpen)
             {
+                await Task.Delay(300);
                 DownloadSplitView.IsPaneOpen = true;
             }
         }

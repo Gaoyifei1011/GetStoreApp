@@ -309,8 +309,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
             {
-                await Task.Delay(300);
-                settingsPage.ShowSettingsInstruction();
+                await settingsPage.ShowSettingsInstructionAsync(true);
             }
         }
 

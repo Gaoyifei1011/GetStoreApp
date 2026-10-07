@@ -329,8 +329,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (MainWindow.Current.GetFrameContent() is DownloadPage downloadPage)
             {
-                await Task.Delay(300);
-                downloadPage.ShowUseInstruction();
+                await downloadPage.ShowUseInstructionAsync();
             }
         }
 

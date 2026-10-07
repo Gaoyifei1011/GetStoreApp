@@ -197,11 +197,11 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 下载引擎说明
         /// </summary>
-        private void OnLearnDoEngineClicked(object sender, RoutedEventArgs args)
+        private async void OnLearnDoEngineClicked(object sender, RoutedEventArgs args)
         {
             if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
             {
-                settingsPage.ShowSettingsInstruction();
+                await settingsPage.ShowSettingsInstructionAsync(false);
             }
         }
 

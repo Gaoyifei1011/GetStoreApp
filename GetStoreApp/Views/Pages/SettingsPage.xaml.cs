@@ -343,10 +343,14 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 显示设置说明
         /// </summary>
-        internal void ShowSettingsInstruction()
+        internal async Task ShowSettingsInstructionAsync(bool needWait)
         {
             if (!SettingsSplitView.IsPaneOpen)
             {
+                if (needWait)
+                {
+                    await Task.Delay(300);
+                }
                 SettingsSplitView.IsPaneOpen = true;
             }
         }
