@@ -161,22 +161,34 @@
             <Grid
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                RowSpacing="10"
                 Visibility="{x:Bind IsParseEmpty, Mode=OneWay}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto " />
                     <RowDefinition Height="Auto " />
+                    <RowDefinition Height="Auto " />
                 </Grid.RowDefinitions>
 
-                <TextBlock
+                <Image
                     Grid.Row="0"
+                    Width="160"
+                    Height="160"
+                    Source="ms-appx:///Assets/Icon/Installer/Package.png" />
+
+                <TextBlock
+                    Grid.Row="1"
+                    MaxWidth="800"
+                    Margin="0,0,0,10"
                     HorizontalAlignment="Center"
-                    FontSize="26"
-                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ParseEmpty')}" />
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    FontWeight="Medium"
+                    Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ParseEmpty')}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap" />
 
                 <Button
-                    Grid.Row="1"
+                    Grid.Row="2"
                     HorizontalAlignment="Center"
                     Click="{x:Bind OnOpenPackageClicked}"
                     Content="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenPackage')}" />
@@ -203,8 +215,14 @@
 
                     <TextBlock
                         Grid.Row="1"
-                        FontSize="26"
-                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ParsingApp')}" />
+                        MaxWidth="800"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="18"
+                        FontWeight="Medium"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Installer/ParsingApp')}"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap" />
                 </Grid>
 
                 <Grid Visibility="{x:Bind IsLoadCompleted, Mode=OneWay}">
@@ -233,7 +251,7 @@
                                 Width="100"
                                 Height="100"
                                 Margin="0,0,12,0"
-                                Background="#3076C6"
+                                Background="{ThemeResource AccentFillColorDefaultBrush}"
                                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                 BorderThickness="1"
                                 CornerRadius="{StaticResource ControlCornerRadius}"
