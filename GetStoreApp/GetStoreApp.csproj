@@ -348,7 +348,6 @@
     <None Remove="Styles\CalendarDatePicker.xaml" />
     <None Remove="Styles\ComboBox.xaml" />
     <None Remove="Styles\CommandBar.xaml" />
-    <None Remove="Styles\Expander.xaml" />
     <None Remove="Styles\ListView.xaml" />
     <None Remove="Styles\NavigationView.xaml" />
     <None Remove="Styles\RadioButton.xaml" />
@@ -420,7 +419,6 @@
     <Page Update="Styles\CalendarDatePicker.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\ComboBox.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\CommandBar.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Styles\Expander.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\ListView.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\NavigationView.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\RadioButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

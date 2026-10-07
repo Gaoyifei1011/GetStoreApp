@@ -431,12 +431,12 @@
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Stretch"
                             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                            IsExpanded="False"
-                            Style="{StaticResource ExpanderListViewStyle}">
+                            IsExpanded="False">
 
                             <Expander.Header>
                                 <Grid
                                     Height="60"
+                                    Margin="28,0,0,0"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center">
 
