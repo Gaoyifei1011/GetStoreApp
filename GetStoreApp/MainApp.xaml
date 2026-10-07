@@ -240,7 +240,6 @@
                         <ResourceDictionary Source="ms-appx:///Styles/CalendarDatePicker.xaml" />
                         <ResourceDictionary Source="ms-appx:///Styles/ComboBox.xaml" />
                         <ResourceDictionary Source="ms-appx:///Styles/CommandBar.xaml" />
-                        <ResourceDictionary Source="ms-appx:///Styles/Expander.xaml" />
                         <ResourceDictionary Source="ms-appx:///Styles/ListView.xaml" />
                         <ResourceDictionary Source="ms-appx:///Styles/NavigationView.xaml" />
                         <ResourceDictionary Source="ms-appx:///Styles/RadioButton.xaml" />
