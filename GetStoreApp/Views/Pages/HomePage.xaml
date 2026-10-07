@@ -82,21 +82,6 @@
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('Home/GetStoreAppDescription')}" />
                     </StackPanel>
                 </Grid>
-
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroup x:Name="LayoutVisualStates">
-                        <VisualState x:Name="WideLayout">
-                            <VisualState.StateTriggers>
-                                <AdaptiveTrigger MinWindowWidth="1200" />
-                            </VisualState.StateTriggers>
-                        </VisualState>
-                        <VisualState x:Name="NarrowLayout">
-                            <VisualState.StateTriggers>
-                                <AdaptiveTrigger MinWindowWidth="0" />
-                            </VisualState.StateTriggers>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateManager.VisualStateGroups>
             </Grid>
 
             <!--  选择栏  -->

@@ -52,7 +52,7 @@ namespace GetStoreApp.Views.Pages
 
         #endregion 第三部分：构造函数
 
-        #region 第四部分：命令调用处理
+        #region 第四部分：挂载事件处理
 
         /// <summary>
         /// 点击条目时进入条目对应的页面
@@ -72,7 +72,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第四部分：命令调用处理
+        #endregion 第四部分：挂载事件处理
 
         #region 第五部分：数据操作与业务逻辑
 
