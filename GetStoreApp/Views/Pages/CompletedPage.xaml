@@ -532,28 +532,26 @@
                                                         <FontIcon Glyph="&#xE72D;" />
                                                     </MenuFlyoutSubItem.Icon>
 
-                                                    <MenuFlyoutSubItem.Items>
-                                                        <MenuFlyoutItem
-                                                            Command="{StaticResource ShowShareUICommand}"
-                                                            CommandParameter="{x:Bind}"
-                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/ShowShareUI')}"
-                                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckShareUIVisibility()}">
+                                                    <MenuFlyoutItem
+                                                        Command="{StaticResource ShowShareUICommand}"
+                                                        CommandParameter="{x:Bind}"
+                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/ShowShareUI')}"
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckShareUIVisibility()}">
 
-                                                            <MenuFlyoutItem.Icon>
-                                                                <FontIcon Glyph="&#xE70A;" />
-                                                            </MenuFlyoutItem.Icon>
-                                                        </MenuFlyoutItem>
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon Glyph="&#xE70A;" />
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
 
-                                                        <MenuFlyoutItem
-                                                            Command="{StaticResource CopyCommand}"
-                                                            CommandParameter="{x:Bind}"
-                                                            Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/Copy')}">
+                                                    <MenuFlyoutItem
+                                                        Command="{StaticResource CopyCommand}"
+                                                        CommandParameter="{x:Bind}"
+                                                        Text="{x:Bind rootservice:ResourceService.GetLocalized('Completed/Copy')}">
 
-                                                            <MenuFlyoutItem.Icon>
-                                                                <FontIcon Glyph="&#xE8C8;" />
-                                                            </MenuFlyoutItem.Icon>
-                                                        </MenuFlyoutItem>
-                                                    </MenuFlyoutSubItem.Items>
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon Glyph="&#xE8C8;" />
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
                                                 </MenuFlyoutSubItem>
 
                                                 <MenuFlyoutItem
