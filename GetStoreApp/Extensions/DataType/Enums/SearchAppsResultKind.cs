@@ -8,6 +8,6 @@
         NotSearch = 0,
         Searching = 1,
         Failed = 2,
-        Successfully = 3,
+        HasResult = 3,
     }
 }

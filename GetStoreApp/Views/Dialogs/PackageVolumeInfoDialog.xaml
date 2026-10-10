@@ -167,7 +167,7 @@
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
                 CornerRadius="{StaticResource ControlCornerRadius}"
-                Visibility="{x:Bind GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind, x:False), Mode=OneWay}">
+                Visibility="{x:Bind GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind, x:True), Mode=OneWay}">
 
                 <Grid>
                     <!--  存储卷列表为空  -->
@@ -187,7 +187,7 @@
                 SelectedItem="{x:Bind SelectedPackageVolume, Mode=OneWay}"
                 SelectionChanged="{x:Bind OnSelectionChanged}"
                 SelectionMode="Single"
-                Visibility="{x:Bind GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind, x:True), Mode=OneWay}">
+                Visibility="{x:Bind GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind, x:False), Mode=OneWay}">
 
                 <ListView.ItemContainerStyle>
                     <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">

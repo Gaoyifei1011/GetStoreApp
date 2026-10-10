@@ -439,7 +439,7 @@ namespace GetStoreApp.Views.Pages
                         AppManagerList.Remove(package);
                         AppManagerCollection.Remove(package);
 
-                        AppManagerResultKind = AppManagerCollection.Count is 0 ? AppManagerResultKind.Failed : AppManagerResultKind.Successfully;
+                        AppManagerResultKind = AppManagerCollection.Count is 0 ? AppManagerResultKind.EmptyApps : AppManagerResultKind.HasApps;
                         if (AppManagerList.Count is 0)
                         {
                             AppManagerFailedContent = PackageEmptyDescriptionString;
@@ -1671,7 +1671,7 @@ namespace GetStoreApp.Views.Pages
                     AppManagerCollection.Add(packageItem);
                 }
 
-                AppManagerResultKind = AppManagerCollection.Count is 0 ? AppManagerResultKind.Failed : AppManagerResultKind.Successfully;
+                AppManagerResultKind = AppManagerCollection.Count is 0 ? AppManagerResultKind.EmptyApps : AppManagerResultKind.HasApps;
                 if (AppManagerList.Count is 0)
                 {
                     AppManagerFailedContent = PackageEmptyDescriptionString;
@@ -1687,7 +1687,7 @@ namespace GetStoreApp.Views.Pages
             }
             else
             {
-                AppManagerResultKind = AppManagerResultKind.Failed;
+                AppManagerResultKind = AppManagerResultKind.EmptyApps;
                 AppManagerFailedContent = PackageEmptyDescriptionString;
             }
         }
@@ -1695,9 +1695,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取加载应用是否成功
         /// </summary>
-        private Visibility GetAppManagerSuccessfullyVisibility(AppManagerResultKind appManagerResultKind, bool isSuccessfully)
+        private Visibility GetAppManagerSuccessfullyVisibility(AppManagerResultKind appManagerResultKind, bool isReverse)
         {
-            return isSuccessfully ? appManagerResultKind is AppManagerResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed : appManagerResultKind is AppManagerResultKind.Successfully ? Visibility.Collapsed : Visibility.Visible;
+            return isReverse ? appManagerResultKind is AppManagerResultKind.HasApps ? Visibility.Collapsed : Visibility.Visible : appManagerResultKind is AppManagerResultKind.HasApps ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

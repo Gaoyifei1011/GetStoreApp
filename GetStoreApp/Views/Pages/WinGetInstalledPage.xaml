@@ -292,7 +292,7 @@
                 Margin="30,0,30,60"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Visibility="{x:Bind GetInstalledAppsSuccessfullyVisibility(InstalledAppsResultKind, InstalledAppsCollection.Count, x:False), Mode=OneWay}">
+                Visibility="{x:Bind GetInstalledAppsSuccessfullyVisibility(InstalledAppsResultKind, InstalledAppsCollection.Count, x:True), Mode=OneWay}">
 
                 <Grid>
                     <!--  正在搜索中  -->
@@ -355,7 +355,7 @@
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/InstalledAppsSearchEmptyDescription')}"
                             TextAlignment="Center"
                             TextWrapping="Wrap"
-                            Visibility="{x:Bind CheckInstalledAppsResultKindVisibility(InstalledAppsResultKind, enum:InstalledAppsResultKind.SearchResult), Mode=OneWay}" />
+                            Visibility="{x:Bind CheckInstalledAppsResultKindVisibility(InstalledAppsResultKind, enum:InstalledAppsResultKind.SearchedHasResult), Mode=OneWay}" />
                     </StackPanel>
                 </Grid>
             </Grid>
@@ -365,7 +365,7 @@
                 Padding="30,0,28,30"
                 ItemsSource="{x:Bind InstalledAppsCollection, Mode=OneWay}"
                 SelectionMode="None"
-                Visibility="{x:Bind GetInstalledAppsSuccessfullyVisibility(InstalledAppsResultKind, InstalledAppsCollection.Count, x:True), Mode=OneWay}">
+                Visibility="{x:Bind GetInstalledAppsSuccessfullyVisibility(InstalledAppsResultKind, InstalledAppsCollection.Count, x:False), Mode=OneWay}">
 
                 <ListView.ItemContainerStyle>
                     <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">

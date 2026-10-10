@@ -52,7 +52,6 @@
                         Value="{x:Bind GetWinGetSourceListCount(WinGetSourceGroupCollection), Mode=OneWay}" />
 
                     <InfoBadge
-                        Style="{StaticResource CautionValueInfoBadgeStyle}"
                         ToolTipService.ToolTip="{x:Bind GetLocalizedWinGetDataSourceCountInfo(WinGetSourceGroupCollection), Mode=OneWay}"
                         Visibility="{x:Bind GetCountVisibility(WinGetSourceGroupCollection, x:False), Mode=OneWay}"
                         Value="{x:Bind GetWinGetSourceListCount(WinGetSourceGroupCollection), Mode=OneWay}" />

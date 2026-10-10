@@ -1,5 +1,6 @@
 ﻿{
   "AppCurrentVersion": "Current version: ",
+  "AppAllUpdateToDate": "All apps are up to date",
   "AppID": "App ID: ",
   "AppName": "App name: ",
   "AppNewestVersion": "Newest version: ",
@@ -23,7 +24,6 @@
   "TaskManager": "Task manager",
   "UpgradableAppsCountEmpty": "There is no upgradeable apps",
   "UpgradableAppsCountInfo": "There are {0} upgradable apps",
-  "UpgradableAppsEmptyDescription": "All of your applications are up to date",
   "UpgradableAppsFailed": "Check app update failed. Error reason: {0}, error code: {1}",
   "UpgradableCatalogReferenceFailed": "Read data source failed",
   "UpgradableFindAppsFailed": "Find apps failed",

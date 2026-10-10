@@ -222,7 +222,7 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(RadioMenuFlyoutItem))]
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is bool increase && UpgradableAppsResultKind is UpgradableAppsResultKind.Successfully)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is bool increase && UpgradableAppsResultKind is UpgradableAppsResultKind.HasResult)
             {
                 IsIncrease = Convert.ToBoolean(increase);
                 InitializeMatchedUpgradableApps(SelectedAppSortRuleKind, IsIncrease);
@@ -235,7 +235,7 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(RadioMenuFlyoutItem))]
         private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind && UpgradableAppsResultKind is UpgradableAppsResultKind.Successfully)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind && UpgradableAppsResultKind is UpgradableAppsResultKind.HasResult)
             {
                 SelectedAppSortRuleKind = appSortRuleKind;
                 InitializeMatchedUpgradableApps(SelectedAppSortRuleKind, IsIncrease);
@@ -315,12 +315,13 @@ namespace GetStoreApp.Views.Pages
 
                         if (UpgradableAppsCollection.Count is 0)
                         {
-                            UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
-                            UpgradableFailedContent = UpgradableAppsEmptyDescriptionString;
+                            UpgradableAppsResultKind = UpgradableAppsResultKind.AllUpdateToDate;
+                            UpgradableFailedContent = string.Empty;
                         }
                         else
                         {
-                            UpgradableAppsResultKind = UpgradableAppsResultKind.Successfully;
+                            UpgradableAppsResultKind = UpgradableAppsResultKind.HasResult;
+                            UpgradableFailedContent = string.Empty;
                         }
                     }
                     else
@@ -396,6 +397,7 @@ namespace GetStoreApp.Views.Pages
 
         /// <summary>
         /// 初始化可更新应用数据
+        /// TODO：需要改造：显示内容获取失败和成功，集合为空时要区分是否是检测更新失败还是所有应用已经是最新版本
         /// </summary>
         private async Task InitializeUpgradableAppsDataAsync()
         {
@@ -419,8 +421,8 @@ namespace GetStoreApp.Views.Pages
                         {
                             if (upgradableAppsCollection is null || upgradableAppsCollection.Count is 0)
                             {
-                                UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
-                                UpgradableFailedContent = UpgradableAppsEmptyDescriptionString;
+                                UpgradableAppsResultKind = UpgradableAppsResultKind.AllUpdateToDate;
+                                UpgradableFailedContent = string.Empty;
                             }
                             else
                             {
@@ -429,7 +431,8 @@ namespace GetStoreApp.Views.Pages
                                     UpgradableAppsCollection.Add(upgradableAppsItem);
                                 }
 
-                                UpgradableAppsResultKind = UpgradableAppsResultKind.Successfully;
+                                UpgradableAppsResultKind = UpgradableAppsResultKind.HasResult;
+                                UpgradableFailedContent = string.Empty;
                             }
                         }
                         else
@@ -551,7 +554,7 @@ namespace GetStoreApp.Views.Pages
             {
                 UpgradableAppsCollection.Add(upgradableAppsItem);
             }
-            UpgradableAppsResultKind = UpgradableAppsResultKind.Successfully;
+            UpgradableAppsResultKind = UpgradableAppsResultKind.HasResult;
         }
 
         /// <summary>
@@ -658,9 +661,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取可更新应用是否成功
         /// </summary>
-        private Visibility GetUpgradableAppsSuccessfullyVisibility(UpgradableAppsResultKind upgradableAppsResultKind, bool isSuccessfully)
+        private Visibility GetUpgradableAppsSuccessfullyVisibility(UpgradableAppsResultKind upgradableAppsResultKind, bool isReverse)
         {
-            return isSuccessfully ? upgradableAppsResultKind is UpgradableAppsResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed : upgradableAppsResultKind is not UpgradableAppsResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed;
+            return isReverse ? upgradableAppsResultKind is UpgradableAppsResultKind.HasResult ? Visibility.Collapsed : Visibility.Visible : upgradableAppsResultKind is UpgradableAppsResultKind.HasResult ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

@@ -216,7 +216,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     else
                     {
-                        PackageVolumeResultKind = PackageVolumeResultKind.Successfully;
+                        PackageVolumeResultKind = PackageVolumeResultKind.HasResult;
                         PackageVolumeFailedContent = string.Empty;
                     }
                 }
@@ -288,7 +288,7 @@ namespace GetStoreApp.Views.Pages
                             PackageVolumeCollection.Add(packageVolumeItem);
                         }
 
-                        PackageVolumeResultKind = PackageVolumeResultKind.Successfully;
+                        PackageVolumeResultKind = PackageVolumeResultKind.HasResult;
                         PackageVolumeFailedContent = string.Empty;
                     }
                 }
@@ -718,9 +718,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取包存储卷是否加载完成
         /// </summary>
-        private Visibility GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind packageVolumeResultKind, bool isSuccessfully)
+        private Visibility GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind packageVolumeResultKind, bool isReverse)
         {
-            return isSuccessfully ? packageVolumeResultKind is PackageVolumeResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed : packageVolumeResultKind is PackageVolumeResultKind.Successfully ? Visibility.Collapsed : Visibility.Visible;
+            return isReverse ? packageVolumeResultKind is PackageVolumeResultKind.HasResult ? Visibility.Collapsed : Visibility.Visible : packageVolumeResultKind is PackageVolumeResultKind.HasResult ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

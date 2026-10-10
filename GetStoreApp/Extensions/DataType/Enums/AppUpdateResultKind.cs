@@ -6,7 +6,8 @@
     internal enum AppUpdateResultKind
     {
         NotCheckUpdate = 0,
-        Failed = 1,
-        Successfully = 2,
+        UpdateFailed = 1,
+        HasUpdate = 2,
+        AllUptoDate = 3
     }
 }

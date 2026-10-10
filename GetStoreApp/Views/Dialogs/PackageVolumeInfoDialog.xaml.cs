@@ -225,7 +225,7 @@ namespace GetStoreApp.Views.Dialogs
                         PackageVolumeCollection.Add(packageVolumeItem);
                     }
 
-                    PackageVolumeResultKind = PackageVolumeResultKind.Successfully;
+                    PackageVolumeResultKind = PackageVolumeResultKind.HasResult;
                 }
             }
         }
@@ -334,9 +334,9 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 获取包存储卷是否加载完成
         /// </summary>
-        private Visibility GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind packageVolumeResultKind, bool isSuccessfully)
+        private Visibility GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind packageVolumeResultKind, bool isReverse)
         {
-            return isSuccessfully ? packageVolumeResultKind is PackageVolumeResultKind.Successfully || packageVolumeResultKind is PackageVolumeResultKind.Operating ? Visibility.Visible : Visibility.Collapsed : packageVolumeResultKind is PackageVolumeResultKind.Successfully || packageVolumeResultKind is PackageVolumeResultKind.Operating ? Visibility.Collapsed : Visibility.Visible;
+            return isReverse ? packageVolumeResultKind is PackageVolumeResultKind.HasResult || packageVolumeResultKind is PackageVolumeResultKind.Operating ? Visibility.Collapsed : Visibility.Visible : packageVolumeResultKind is PackageVolumeResultKind.HasResult || packageVolumeResultKind is PackageVolumeResultKind.Operating ? Visibility.Visible : Visibility.Collapsed;
         }
 
         #endregion 第五部分：数据操作与业务逻辑

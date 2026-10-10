@@ -126,7 +126,7 @@ namespace GetStoreApp.Views.Pages
                 await InitializeDataAsync();
                 await MountDownloadEventAsync();
                 DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
-                CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
+                CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.HasResult;
             }
         }
 
@@ -431,7 +431,7 @@ namespace GetStoreApp.Views.Pages
                 }
 
                 await DeleteDownloaodFileAsync(selectedCompletedDataCollection, deleteFileDialog.DeleteFileSameTime);
-                CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
+                CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.HasResult;
             }
         }
 
@@ -559,7 +559,7 @@ namespace GetStoreApp.Views.Pages
                     TotalSize = downloadScheduler.TotalSize,
                 });
 
-                CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
+                CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.HasResult;
             });
         }
 
@@ -579,7 +579,7 @@ namespace GetStoreApp.Views.Pages
                     }
                 }
 
-                CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
+                CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.HasResult;
             });
         }
 
@@ -1057,9 +1057,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取加载下载已完成文件是否成功
         /// </summary>
-        private Visibility GetCompletedSuccessfullyVisibility(CompletedResultKind completedResultKind, bool isSuccessfully)
+        private Visibility GetCompletedSuccessfullyVisibility(CompletedResultKind completedResultKind, bool isReverse)
         {
-            return isSuccessfully ? completedResultKind is CompletedResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed : completedResultKind is CompletedResultKind.Successfully ? Visibility.Collapsed : Visibility.Visible;
+            return isReverse ? completedResultKind is CompletedResultKind.HasResult ? Visibility.Collapsed : Visibility.Visible : completedResultKind is CompletedResultKind.HasResult ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

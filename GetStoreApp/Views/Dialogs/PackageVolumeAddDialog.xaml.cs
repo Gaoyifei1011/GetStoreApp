@@ -317,7 +317,7 @@ namespace GetStoreApp.Views.Dialogs
                     }
                     else
                     {
-                        PackageVolumeResultKind = PackageVolumeResultKind.Successfully;
+                        PackageVolumeResultKind = PackageVolumeResultKind.HasResult;
                     }
                 }
                 else
@@ -327,7 +327,7 @@ namespace GetStoreApp.Views.Dialogs
                     {
                         await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectFolderEmpty));
                     });
-                    PackageVolumeResultKind = PackageVolumeResultKind.Successfully;
+                    PackageVolumeResultKind = PackageVolumeResultKind.HasResult;
                 }
             }
             catch (Exception e)
@@ -360,7 +360,7 @@ namespace GetStoreApp.Views.Dialogs
                         PackageVolumeCollection.Add(packageVolumeItem);
                     }
 
-                    PackageVolumeResultKind = PackageVolumeResultKind.Successfully;
+                    PackageVolumeResultKind = PackageVolumeResultKind.HasResult;
                 }
                 else
                 {
@@ -539,7 +539,7 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private bool GetIsLoadSuccessfullyAndItemSelected(PackageVolumeResultKind packageVolumeResultKind, bool isItemSelected)
         {
-            return packageVolumeResultKind is PackageVolumeResultKind.Successfully && isItemSelected;
+            return packageVolumeResultKind is PackageVolumeResultKind.HasResult && isItemSelected;
         }
 
         /// <summary>
@@ -553,17 +553,17 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 检查包可用存储卷是否加载成功
         /// </summary>
-        private Visibility CheckPackageVolumeResultKindVisibility(PackageVolumeResultKind packageVolumeResultKind, PackageVolumeResultKind comparedPackageVolumeResultKind, bool needReverse)
+        private Visibility CheckPackageVolumeResultKindVisibility(PackageVolumeResultKind packageVolumeResultKind, PackageVolumeResultKind comparedPackageVolumeResultKind, bool isReverse)
         {
-            return needReverse ? Equals(packageVolumeResultKind, comparedPackageVolumeResultKind) ? Visibility.Collapsed : Visibility.Visible : Equals(packageVolumeResultKind, comparedPackageVolumeResultKind) ? Visibility.Visible : Visibility.Collapsed;
+            return isReverse ? Equals(packageVolumeResultKind, comparedPackageVolumeResultKind) ? Visibility.Collapsed : Visibility.Visible : Equals(packageVolumeResultKind, comparedPackageVolumeResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
         /// 获取包可用存储卷是否加载完成
         /// </summary>
-        private Visibility GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind packageVolumeResultKind, bool isSuccessfully)
+        private Visibility GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind packageVolumeResultKind, bool isReverse)
         {
-            return isSuccessfully ? packageVolumeResultKind is PackageVolumeResultKind.Successfully || packageVolumeResultKind is PackageVolumeResultKind.Operating ? Visibility.Visible : Visibility.Collapsed : packageVolumeResultKind is PackageVolumeResultKind.Successfully || packageVolumeResultKind is PackageVolumeResultKind.Operating ? Visibility.Collapsed : Visibility.Visible;
+            return isReverse ? packageVolumeResultKind is PackageVolumeResultKind.HasResult || packageVolumeResultKind is PackageVolumeResultKind.Operating ? Visibility.Collapsed : Visibility.Visible : packageVolumeResultKind is PackageVolumeResultKind.HasResult || packageVolumeResultKind is PackageVolumeResultKind.Operating ? Visibility.Visible : Visibility.Collapsed;
         }
 
         #endregion 第五部分：数据操作与业务逻辑

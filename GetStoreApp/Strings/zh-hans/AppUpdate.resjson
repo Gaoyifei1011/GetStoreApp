@@ -1,8 +1,9 @@
 ﻿{
   "AcquiringLicense": "正在获取许可证",
+  "AppAllUpdateToDate": "所有应用已是最新版本",
   "AppUpdate": "应用更新",
   "AppUpdateCountInfo": "共有{0}个可更新的应用",
-  "AppUpdateEmpty": "没有可更新的应用",
+  "AppUpdateFailed": "应用更新失败，{0}",
   "AppUpdateSuccessfully": "应用 {0} 更新成功",
   "Cancel": "取消",
   "Canceled": "安装已取消",

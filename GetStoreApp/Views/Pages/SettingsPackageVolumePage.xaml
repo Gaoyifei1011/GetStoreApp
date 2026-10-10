@@ -48,7 +48,6 @@
                         Value="{x:Bind PackageVolumeCollection.Count, Mode=OneWay}" />
 
                     <InfoBadge
-                        Style="{StaticResource CautionValueInfoBadgeStyle}"
                         ToolTipService.ToolTip="{x:Bind GetLocalizedPackageVolumeCountInfo(PackageVolumeCollection.Count), Mode=OneWay}"
                         Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(PackageVolumeCollection.Count), Mode=OneWay}"
                         Value="{x:Bind PackageVolumeCollection.Count, Mode=OneWay}" />
@@ -94,7 +93,7 @@
                 Margin="30,0,30,60"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Visibility="{x:Bind GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind, x:False), Mode=OneWay}">
+                Visibility="{x:Bind GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind, x:True), Mode=OneWay}">
 
                 <Grid>
                     <!--  正在加载中  -->
@@ -154,7 +153,7 @@
                 Padding="30,0,28,30"
                 ItemsSource="{x:Bind PackageVolumeCollection}"
                 SelectionMode="None"
-                Visibility="{x:Bind GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind, x:True), Mode=OneWay}">
+                Visibility="{x:Bind GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind, x:False), Mode=OneWay}">
 
                 <ListView.ItemContainerStyle>
                     <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">

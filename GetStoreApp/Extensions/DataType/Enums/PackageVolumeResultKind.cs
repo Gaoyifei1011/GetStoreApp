@@ -6,6 +6,6 @@
         Loading = 1,
         Operating = 2,
         Failed = 3,
-        Successfully = 4
+        HasResult = 4
     }
 }

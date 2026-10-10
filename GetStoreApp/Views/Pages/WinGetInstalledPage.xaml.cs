@@ -316,10 +316,10 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(RadioMenuFlyoutItem))]
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is bool increase && (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult))
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is bool increase && (InstalledAppsResultKind is InstalledAppsResultKind.HasResult || InstalledAppsResultKind is InstalledAppsResultKind.SearchedHasResult))
             {
                 IsIncrease = increase;
-                if (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult)
+                if (InstalledAppsResultKind is InstalledAppsResultKind.HasResult || InstalledAppsResultKind is InstalledAppsResultKind.SearchedHasResult)
                 {
                     InitializeMatchedInstalledApps(SelectedAppSortRuleKind, IsIncrease, SearchText);
                 }
@@ -332,10 +332,10 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(RadioMenuFlyoutItem))]
         private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind && (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult))
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind && (InstalledAppsResultKind is InstalledAppsResultKind.HasResult || InstalledAppsResultKind is InstalledAppsResultKind.SearchedHasResult))
             {
                 SelectedAppSortRuleKind = appSortRuleKind;
-                if (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult)
+                if (InstalledAppsResultKind is InstalledAppsResultKind.HasResult || InstalledAppsResultKind is InstalledAppsResultKind.SearchedHasResult)
                 {
                     InitializeMatchedInstalledApps(SelectedAppSortRuleKind, IsIncrease, SearchText);
                 }
@@ -421,7 +421,7 @@ namespace GetStoreApp.Views.Pages
                 WinGetInstalledFlyout.Hide();
             }
 
-            if (!string.IsNullOrEmpty(SearchText) && InstalledAppsResultKind is InstalledAppsResultKind.Successfully)
+            if (!string.IsNullOrEmpty(SearchText) && InstalledAppsResultKind is not InstalledAppsResultKind.Querying && InstalledAppsResultKind is not InstalledAppsResultKind.Failed)
             {
                 InitializeMatchedInstalledApps(SelectedAppSortRuleKind, IsIncrease, SearchText);
             }
@@ -433,7 +433,7 @@ namespace GetStoreApp.Views.Pages
         private void OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             SearchText = sender.Text;
-            if (string.IsNullOrEmpty(SearchText) && InstalledAppsResultKind is InstalledAppsResultKind.SearchResult)
+            if (string.IsNullOrEmpty(SearchText) && InstalledAppsResultKind is not InstalledAppsResultKind.Querying && InstalledAppsResultKind is not InstalledAppsResultKind.Failed)
             {
                 InitializeMatchedInstalledApps(SelectedAppSortRuleKind, IsIncrease, SearchText);
             }
@@ -477,7 +477,7 @@ namespace GetStoreApp.Views.Pages
                         }
                         else
                         {
-                            InstalledAppsResultKind = string.IsNullOrEmpty(SearchText) ? InstalledAppsResultKind.Successfully : InstalledAppsResultKind.SearchResult;
+                            InstalledAppsResultKind = string.IsNullOrEmpty(SearchText) ? InstalledAppsResultKind.HasResult : InstalledAppsResultKind.SearchedHasResult;
                         }
                     }
                     else
@@ -727,7 +727,7 @@ namespace GetStoreApp.Views.Pages
                                     InstalledAppsLock.Exit();
                                 }
 
-                                InstalledAppsResultKind = string.IsNullOrEmpty(SearchText) ? InstalledAppsResultKind.Successfully : InstalledAppsResultKind.SearchResult;
+                                InstalledAppsResultKind = string.IsNullOrEmpty(SearchText) ? InstalledAppsResultKind.HasResult : InstalledAppsResultKind.SearchedHasResult;
                             }
                         }
                         else
@@ -810,7 +810,7 @@ namespace GetStoreApp.Views.Pages
             {
                 InstalledAppsLock.Exit();
             }
-            InstalledAppsResultKind = string.IsNullOrEmpty(searchText) ? InstalledAppsResultKind.Successfully : InstalledAppsResultKind.SearchResult;
+            InstalledAppsResultKind = string.IsNullOrEmpty(searchText) ? InstalledAppsResultKind.HasResult : InstalledAppsResultKind.SearchedHasResult;
         }
 
         /// <summary>
@@ -916,36 +916,36 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取搜索应用是否成功
         /// </summary>
-        private Visibility GetInstalledAppsSuccessfullyVisibility(InstalledAppsResultKind installedAppsResultKind, int count, bool isSuccessfully)
+        private Visibility GetInstalledAppsSuccessfullyVisibility(InstalledAppsResultKind installedAppsResultKind, int count, bool isReverse)
         {
-            if (isSuccessfully)
+            if (isReverse)
             {
-                if (installedAppsResultKind is InstalledAppsResultKind.Successfully)
-                {
-                    return Visibility.Visible;
-                }
-                else if (installedAppsResultKind is InstalledAppsResultKind.SearchResult)
-                {
-                    return count > 0 ? Visibility.Visible : Visibility.Collapsed;
-                }
-                else
+                if (installedAppsResultKind is InstalledAppsResultKind.HasResult)
                 {
                     return Visibility.Collapsed;
                 }
-            }
-            else
-            {
-                if (installedAppsResultKind is InstalledAppsResultKind.Successfully)
-                {
-                    return Visibility.Collapsed;
-                }
-                else if (installedAppsResultKind is InstalledAppsResultKind.SearchResult)
+                else if (installedAppsResultKind is InstalledAppsResultKind.SearchedHasResult)
                 {
                     return count > 0 ? Visibility.Collapsed : Visibility.Visible;
                 }
                 else
                 {
                     return Visibility.Visible;
+                }
+            }
+            else
+            {
+                if (installedAppsResultKind is InstalledAppsResultKind.HasResult)
+                {
+                    return Visibility.Visible;
+                }
+                else if (installedAppsResultKind is InstalledAppsResultKind.SearchedHasResult)
+                {
+                    return count > 0 ? Visibility.Visible : Visibility.Collapsed;
+                }
+                else
+                {
+                    return Visibility.Collapsed;
                 }
             }
         }
@@ -963,7 +963,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private Visibility GetInstalledAppsResultKindFailedOrEmptyVisibility(InstalledAppsResultKind installedAppsResultKind, int count)
         {
-            return installedAppsResultKind is InstalledAppsResultKind.Failed || (installedAppsResultKind is InstalledAppsResultKind.SearchResult && count is 0) ? Visibility.Visible : Visibility.Collapsed;
+            return installedAppsResultKind is InstalledAppsResultKind.Failed || (installedAppsResultKind is InstalledAppsResultKind.SearchedHasResult && count is 0) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

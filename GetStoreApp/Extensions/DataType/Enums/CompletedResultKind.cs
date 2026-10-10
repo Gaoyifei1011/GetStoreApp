@@ -4,6 +4,6 @@
     {
         Empty = 0,
         Loading = 1,
-        Successfully = 2,
+        HasResult = 2,
     }
 }

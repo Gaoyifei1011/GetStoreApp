@@ -37,7 +37,7 @@ namespace GetStoreApp.Views.Pages
 
         private readonly string AcquiringLicenseString = ResourceService.GetLocalized("AppUpdate/AcquiringLicense");
         private readonly string AppUpdateCountInfoString = ResourceService.GetLocalized("AppUpdate/AppUpdateCountInfo");
-        private readonly string AppUpdateEmptyString = ResourceService.GetLocalized("AppUpdate/AppUpdateEmpty");
+        private readonly string AppUpdateFailedString = ResourceService.GetLocalized("AppUpdate/AppUpdateFailed");
         private readonly string AppUpdateSuccessfullyString = ResourceService.GetLocalized("AppUpdate/AppUpdateSuccessfully");
         private readonly string CanceledString = ResourceService.GetLocalized("AppUpdate/Canceled");
         private readonly string CompletedString = ResourceService.GetLocalized("AppUpdate/Completed");
@@ -260,7 +260,8 @@ namespace GetStoreApp.Views.Pages
                 if (!IsCheckingUpdate)
                 {
                     IsCheckingUpdate = true;
-                    if (await GetAppUpdateCollectionAsync() is ReadOnlyCollection<AppUpdateModel> appUpdateCollection)
+                    (bool appUpdateCheckResult, ReadOnlyCollection<AppUpdateModel> appUpdateCollection, Exception exception) = await GetAppUpdateAsync();
+                    if (appUpdateCheckResult)
                     {
                         // 只添加未有的项
                         AppUpdateLock.Enter();
@@ -277,13 +278,13 @@ namespace GetStoreApp.Views.Pages
 
                             if (AppUpdateList.Count > 0)
                             {
-                                AppUpdateResultKind = AppUpdateResultKind.Successfully;
+                                AppUpdateResultKind = AppUpdateResultKind.HasUpdate;
                                 AppUpdateFailedContent = string.Empty;
                             }
                             else
                             {
-                                AppUpdateResultKind = AppUpdateResultKind.Failed;
-                                AppUpdateFailedContent = AppUpdateEmptyString;
+                                AppUpdateResultKind = AppUpdateResultKind.AllUptoDate;
+                                AppUpdateFailedContent = string.Empty;
                             }
                         }
                         catch (Exception e)
@@ -292,6 +293,14 @@ namespace GetStoreApp.Views.Pages
                         }
 
                         AppUpdateLock.Exit();
+                    }
+                    else
+                    {
+                        if (AppUpdateCollection.Count is 0)
+                        {
+                            AppUpdateResultKind = AppUpdateResultKind.UpdateFailed;
+                            AppUpdateFailedContent = string.Format(AppUpdateFailedString, exception is not null && !string.IsNullOrEmpty(exception.Message) ? exception.Message : NotAvailableString);
+                        }
                     }
                     IsCheckingUpdate = false;
                 }
@@ -396,13 +405,13 @@ namespace GetStoreApp.Views.Pages
 
                                     if (AppUpdateList.Count > 0)
                                     {
-                                        AppUpdateResultKind = AppUpdateResultKind.Successfully;
+                                        AppUpdateResultKind = AppUpdateResultKind.HasUpdate;
                                         AppUpdateFailedContent = string.Empty;
                                     }
                                     else
                                     {
-                                        AppUpdateResultKind = AppUpdateResultKind.Failed;
-                                        AppUpdateFailedContent = AppUpdateEmptyString;
+                                        AppUpdateResultKind = AppUpdateResultKind.AllUptoDate;
+                                        AppUpdateFailedContent = string.Empty;
                                     }
                                 }
                                 break;
@@ -565,12 +574,15 @@ namespace GetStoreApp.Views.Pages
 
         /// <summary>
         /// 获取应用更新信息
+        /// TODO：需要改造：显示内容获取失败和成功，集合为空时要区分是否是检测更新失败还是所有应用已经是最新版本
         /// </summary>
-        private async Task<ReadOnlyCollection<AppUpdateModel>> GetAppUpdateCollectionAsync()
+        private async Task<(bool, ReadOnlyCollection<AppUpdateModel>, Exception)> GetAppUpdateAsync()
         {
             return await Task.Run(async () =>
             {
+                bool checkUpdateResult = false;
                 List<AppUpdateModel> appUpdateList = [];
+                Exception exception = null;
 
                 try
                 {
@@ -591,7 +603,7 @@ namespace GetStoreApp.Views.Pages
 
                         try
                         {
-                            foreach (AppUpdateModel appUpdateItem in appUpdateList)
+                            foreach (AppUpdateModel appUpdateItem in AppUpdateList)
                             {
                                 if (string.Equals(appUpdateItem.PackageFamilyName, upgradableAppItem.PackageFamilyName))
                                 {
@@ -654,13 +666,15 @@ namespace GetStoreApp.Views.Pages
                             }
                         }
                     }
+                    checkUpdateResult = true;
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppUpdatePage), nameof(GetAppUpdateCollectionAsync), 1, e);
+                    exception = e;
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(AppUpdatePage), nameof(GetAppUpdateAsync), 1, e);
                 }
 
-                return appUpdateList.AsReadOnly();
+                return ValueTuple.Create(checkUpdateResult, appUpdateList.AsReadOnly(), exception);
             });
         }
 
@@ -686,9 +700,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取加载应用更新是否成功
         /// </summary>
-        private Visibility GetAppUpdateSuccessfullyVisibility(AppUpdateResultKind appUpdateResultKind, bool isSuccessfully)
+        private Visibility GetAppUpdateSuccessfullyVisibility(AppUpdateResultKind appUpdateResultKind, bool isReverse)
         {
-            return isSuccessfully ? appUpdateResultKind is AppUpdateResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed : appUpdateResultKind is AppUpdateResultKind.Successfully ? Visibility.Collapsed : Visibility.Visible;
+            return isReverse ? appUpdateResultKind is AppUpdateResultKind.HasUpdate ? Visibility.Collapsed : Visibility.Visible : appUpdateResultKind is AppUpdateResultKind.HasUpdate ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

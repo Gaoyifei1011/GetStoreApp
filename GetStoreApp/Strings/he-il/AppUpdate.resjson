@@ -1,8 +1,9 @@
 {
   "AcquiringLicense": "מקבל רישיון",
+  "AppAllUpdateToDate": "כל האפליקציות מעודכנות לגרסה האחרונה",
   "AppUpdate": "עדכון יישום",
   "AppUpdateCountInfo": "ישנם {0} יישומים הניתנים לעדכון",
-  "AppUpdateEmpty": "אין יישומים הניתנים לעדכון",
+  "AppUpdateFailed": "עדכון האפליקציה נכשל, {0}",
   "AppUpdateSuccessfully": "יישום {0} עודכן בהצלחה",
   "Cancel": "בטל",
   "Canceled": "ההתקנה בוטלה",

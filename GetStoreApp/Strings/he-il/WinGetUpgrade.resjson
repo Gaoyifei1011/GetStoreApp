@@ -1,5 +1,6 @@
 ﻿{
   "AppCurrentVersion": "גרסה נוכחית: ",
+  "AppAllUpdateToDate": "כל האפליקציות מעודכנות לגרסה האחרונה",
   "AppID": "מזהה יישום: ",
   "AppName": "שם יישום: ",
   "AppNewestVersion": "גרסה עדכנית ביותר: ",
@@ -23,7 +24,6 @@
   "TaskManager": "מנהל המשימות",
   "UpgradableAppsCountEmpty": "אין יישומים הניתנים לעדכון",
   "UpgradableAppsCountInfo": "ישנם בסך הכל {0} יישומים הניתנים לעדכון",
-  "UpgradableAppsEmptyDescription": "כל היישומים שלך כבר בגרסה העדכנית ביותר",
   "UpgradableAppsFailed": "בדיקת עדכוני יישומים נכשלה. סיבת השגיאה: {0}, קוד שגיאה: {1}",
   "UpgradableCatalogReferenceFailed": "קריאת מקור נתונים נכשלה",
   "UpgradableFindAppsFailed": "חיפוש יישומים נכשל",

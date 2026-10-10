@@ -1,5 +1,6 @@
 ﻿{
   "AppCurrentVersion": "Текущая версия: ",
+  "AppAllUpdateToDate": "Все приложения обновлены до последней версии",
   "AppID": "ID приложения: ",
   "AppName": "Имя приложения: ",
   "AppNewestVersion": "Последняя версия: ",
@@ -23,7 +24,6 @@
   "TaskManager": "Диспетчер задач",
   "UpgradableAppsCountEmpty": "Нет приложений для обновления",
   "UpgradableAppsCountInfo": "Приложений для обновления: {0}",
-  "UpgradableAppsEmptyDescription": "Все ваши приложения актуальны",
   "UpgradableAppsFailed": "Проверка обновления приложения не удалась. Причина ошибки: {0}, код ошибки: {1}",
   "UpgradableCatalogReferenceFailed": "Не удалось прочитать источник данных",
   "UpgradableFindAppsFailed": "Не удалось найти приложения",

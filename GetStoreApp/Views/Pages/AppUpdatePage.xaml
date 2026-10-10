@@ -66,7 +66,6 @@
                             Value="{x:Bind AppUpdateCollection.Count, Mode=OneWay}" />
 
                         <InfoBadge
-                            Style="{StaticResource CautionValueInfoBadgeStyle}"
                             ToolTipService.ToolTip="{x:Bind x:String.Format(AppUpdateCountInfoString, AppUpdateCollection.Count), Mode=OneWay}"
                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppUpdateCollection.Count), Mode=OneWay}"
                             Value="{x:Bind AppUpdateCollection.Count, Mode=OneWay}" />
@@ -146,7 +145,7 @@
                 Margin="30,0,30,60"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Visibility="{x:Bind GetAppUpdateSuccessfullyVisibility(AppUpdateResultKind, x:False), Mode=OneWay}">
+                Visibility="{x:Bind GetAppUpdateSuccessfullyVisibility(AppUpdateResultKind, x:True), Mode=OneWay}">
 
                 <!--  未检查更新  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckAppUpdateResultKindVisibility(AppUpdateResultKind, enum:AppUpdateResultKind.NotCheckUpdate), Mode=OneWay}">
@@ -164,12 +163,28 @@
                         TextAlignment="Center" />
                 </StackPanel>
 
-                <!--  没有可更新的应用  -->
-                <StackPanel Spacing="20" Visibility="{x:Bind CheckAppUpdateResultKindVisibility(AppUpdateResultKind, enum:AppUpdateResultKind.Failed), Mode=OneWay}">
+                <!--  所有应用已经到最新版本  -->
+                <StackPanel Spacing="20" Visibility="{x:Bind CheckAppUpdateResultKindVisibility(AppUpdateResultKind, enum:AppUpdateResultKind.AllUptoDate), Mode=OneWay}">
                     <Image
                         Width="150"
                         Height="150"
                         Source="ms-appx:///Assets/Image/Successfully.png" />
+
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="18"
+                        FontWeight="Medium"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('AppUpdate/AppAllUpdateToDate')}"
+                        TextAlignment="Center" />
+                </StackPanel>
+
+                <!--  应用检查更新失败  -->
+                <StackPanel Spacing="20" Visibility="{x:Bind CheckAppUpdateResultKindVisibility(AppUpdateResultKind, enum:AppUpdateResultKind.UpdateFailed), Mode=OneWay}">
+                    <Image
+                        Width="150"
+                        Height="150"
+                        Source="ms-appx:///Assets/Image/Failed.png" />
 
                     <TextBlock
                         HorizontalAlignment="Center"
@@ -186,7 +201,7 @@
                 Padding="30,0,28,30"
                 ItemsSource="{x:Bind AppUpdateCollection}"
                 SelectionMode="None"
-                Visibility="{x:Bind GetAppUpdateSuccessfullyVisibility(AppUpdateResultKind, x:True), Mode=OneWay}">
+                Visibility="{x:Bind GetAppUpdateSuccessfullyVisibility(AppUpdateResultKind, x:False), Mode=OneWay}">
 
                 <ListView.ItemContainerStyle>
                     <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">

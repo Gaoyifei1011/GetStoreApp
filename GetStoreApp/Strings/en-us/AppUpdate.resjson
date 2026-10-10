@@ -1,8 +1,9 @@
 ﻿{
   "AcquiringLicense": "Acquiring license",
+  "AppAllUpdateToDate": "All apps are up to date",
   "AppUpdate": "App update",
   "AppUpdateCountInfo": "There are {0} upgradable apps",
-  "AppUpdateEmpty": "There is no upgradable apps",
+  "AppUpdateFailed": "App update failed, {0}",
   "AppUpdateSuccessfully": "App {0} update successfully",
   "Cancel": "Cancel",
   "Canceled": "Canceled",

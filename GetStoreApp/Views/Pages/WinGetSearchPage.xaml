@@ -290,7 +290,7 @@
                 Margin="30,0,30,60"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Visibility="{x:Bind GetSearchAppsSuccessfullyVisibility(SearchAppsResultKind, x:False), Mode=OneWay}">
+                Visibility="{x:Bind GetSearchAppsSuccessfullyVisibility(SearchAppsResultKind, x:True), Mode=OneWay}">
 
                 <Grid>
                     <!--  未搜索  -->
@@ -368,7 +368,7 @@
                 Padding="30,0,28,30"
                 ItemsSource="{x:Bind SearchAppsCollection}"
                 SelectionMode="None"
-                Visibility="{x:Bind GetSearchAppsSuccessfullyVisibility(SearchAppsResultKind, x:True), Mode=OneWay}">
+                Visibility="{x:Bind GetSearchAppsSuccessfullyVisibility(SearchAppsResultKind, x:False), Mode=OneWay}">
 
                 <ListView.ItemContainerStyle>
                     <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">

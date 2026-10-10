@@ -7,7 +7,7 @@
     {
         Querying = 0,
         Failed = 1,
-        Successfully = 2,
-        SearchResult = 3
+        HasResult = 2,
+        SearchedHasResult = 3
     }
 }

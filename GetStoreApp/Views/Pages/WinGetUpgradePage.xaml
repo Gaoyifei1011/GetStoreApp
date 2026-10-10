@@ -169,7 +169,7 @@
                 Margin="30,0,30,60"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Visibility="{x:Bind GetUpgradableAppsSuccessfullyVisibility(UpgradableAppsResultKind, x:False), Mode=OneWay}">
+                Visibility="{x:Bind GetUpgradableAppsSuccessfullyVisibility(UpgradableAppsResultKind, x:True), Mode=OneWay}">
 
                 <Grid>
                     <!--  未检查更新  -->
@@ -223,6 +223,24 @@
                     </StackPanel>
 
                     <!--  检查更新失败  -->
+                    <StackPanel Spacing="20" Visibility="{x:Bind CheckUpgradableAppsResultKindVisibility(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.AllUpdateToDate), Mode=OneWay}">
+                        <Image
+                            Width="150"
+                            Height="150"
+                            Source="ms-appx:///Assets/Image/Successfully.png" />
+
+                        <TextBlock
+                            MaxWidth="800"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="18"
+                            FontWeight="Medium"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetUpgrade/AppAllUpdateToDate')}"
+                            TextAlignment="Center"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <!--  检查更新失败  -->
                     <StackPanel Spacing="20" Visibility="{x:Bind CheckUpgradableAppsResultKindVisibility(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.Failed), Mode=OneWay}">
                         <Image
                             Width="150"
@@ -247,7 +265,7 @@
                 Padding="30,0,28,30"
                 ItemsSource="{x:Bind UpgradableAppsCollection, Mode=OneWay}"
                 SelectionMode="None"
-                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UpgradableAppsCollection.Count), Mode=OneWay}">
+                Visibility="{x:Bind GetUpgradableAppsSuccessfullyVisibility(UpgradableAppsResultKind, x:False), Mode=OneWay}">
 
                 <ListView.ItemContainerStyle>
                     <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">

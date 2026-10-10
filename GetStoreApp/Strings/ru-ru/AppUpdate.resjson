@@ -1,8 +1,9 @@
 ﻿{
   "AcquiringLicense": "Получение лицензии",
+  "AppAllUpdateToDate": "Все приложения обновлены до последней версии",
   "AppUpdate": "Обновление приложений",
   "AppUpdateCountInfo": "Доступных для обновления приложений: {0}",
-  "AppUpdateEmpty": "Нет приложений для обновления",
+  "AppUpdateFailed": "Обновление приложения не удалось, {0}",
   "AppUpdateSuccessfully": "Приложение {0} успешно обновлено",
   "Cancel": "Отмена",
   "Canceled": "Отменено",

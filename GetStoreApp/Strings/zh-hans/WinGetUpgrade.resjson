@@ -1,5 +1,6 @@
 ﻿{
   "AppCurrentVersion": "当前版本：",
+  "AppAllUpdateToDate": "所有应用已是最新版本",
   "AppID": "应用ID：",
   "AppName": "应用名称：",
   "AppNewestVersion": "最新版本：",
@@ -23,7 +24,6 @@
   "TaskManager": "任务管理",
   "UpgradableAppsCountEmpty": "没有可更新的应用",
   "UpgradableAppsCountInfo": "共有{0}个可更新的应用",
-  "UpgradableAppsEmptyDescription": "您的所有应用已经是最新版本了",
   "UpgradableAppsFailed": "检查应用更新失败。错误原因：{0}，错误代码：{1}",
   "UpgradableCatalogReferenceFailed": "读取数据源失败",
   "UpgradableFindAppsFailed": "查找应用失败",

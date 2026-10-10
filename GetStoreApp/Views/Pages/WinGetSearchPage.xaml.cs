@@ -292,7 +292,7 @@ namespace GetStoreApp.Views.Pages
         [DynamicWindowsRuntimeCast(typeof(RadioMenuFlyoutItem))]
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is bool increase && SearchAppsResultKind is SearchAppsResultKind.Successfully)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is bool increase && SearchAppsResultKind is SearchAppsResultKind.HasResult)
             {
                 IsIncrease = increase;
                 SearchAppsResultKind = SearchAppsResultKind.Searching;
@@ -311,7 +311,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     SearchAppsCollection.Add(searchAppsItem);
                 }
-                SearchAppsResultKind = SearchAppsResultKind.Successfully;
+                SearchAppsResultKind = SearchAppsResultKind.HasResult;
             }
         }
 
@@ -465,7 +465,7 @@ namespace GetStoreApp.Views.Pages
                                     SearchAppsCollection.Add(searchAppsItem);
                                 }
 
-                                SearchAppsResultKind = SearchAppsResultKind.Successfully;
+                                SearchAppsResultKind = SearchAppsResultKind.HasResult;
                             }
                         }
                         else
@@ -610,9 +610,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取搜索应用是否成功
         /// </summary>
-        private Visibility GetSearchAppsSuccessfullyVisibility(SearchAppsResultKind searchAppsResultKind, bool isSuccessfully)
+        private Visibility GetSearchAppsSuccessfullyVisibility(SearchAppsResultKind searchAppsResultKind, bool isReverse)
         {
-            return isSuccessfully ? Equals(searchAppsResultKind, SearchAppsResultKind.Successfully) ? Visibility.Visible : Visibility.Collapsed : !Equals(searchAppsResultKind, SearchAppsResultKind.Successfully) ? Visibility.Visible : Visibility.Collapsed;
+            return isReverse ? searchAppsResultKind is SearchAppsResultKind.HasResult ? Visibility.Collapsed : Visibility.Visible : searchAppsResultKind is SearchAppsResultKind.HasResult ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
