@@ -2438,6 +2438,10 @@ namespace GetStoreApp.Views.Pages
             {
                 ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
             }
+            finally
+            {
+                PackageOperationLock.Exit();
+            }
 
             if (taskCompleted)
             {
