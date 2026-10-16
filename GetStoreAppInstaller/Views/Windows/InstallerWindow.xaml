@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:converter="using:GetStoreAppInstaller.Helpers.Converters"
+    xmlns:customcontrol="using:GetStoreAppInstaller.Views.CustomControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="using:GetStoreAppInstaller.Extensions.DataType.Enums"
     xmlns:globalization="using:System.Globalization"
@@ -1415,11 +1416,86 @@
                                         <ListView ItemsSource="{x:Bind TargetDeviceFamilyCollection}" SelectionMode="None">
 
                                             <ListView.ItemContainerStyle>
-                                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                                    <Setter Property="Background" Value="Transparent" />
-                                                    <Setter Property="Margin" Value="0" />
-                                                    <Setter Property="MinHeight" Value="0" />
+                                                <Style TargetType="ListViewItem">
+                                                    <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                                                    <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+                                                    <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+                                                    <Setter Property="Foreground" Value="{ThemeResource ListViewItemForeground}" />
+                                                    <Setter Property="TabNavigation" Value="Local" />
+                                                    <Setter Property="IsHoldingEnabled" Value="True" />
                                                     <Setter Property="Padding" Value="0" />
+                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                                                    <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}" />
+                                                    <Setter Property="MinHeight" Value="0" />
+                                                    <Setter Property="AllowDrop" Value="False" />
+                                                    <Setter Property="UseSystemFocusVisuals" Value="True" />
+                                                    <Setter Property="FocusVisualMargin" Value="1" />
+                                                    <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource ListViewItemFocusVisualPrimaryBrush}" />
+                                                    <Setter Property="FocusVisualPrimaryThickness" Value="2" />
+                                                    <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource ListViewItemFocusVisualSecondaryBrush}" />
+                                                    <Setter Property="FocusVisualSecondaryThickness" Value="1" />
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="ListViewItem">
+                                                                <customcontrol:BorderedListViewItemPresenter
+                                                                    x:Name="Root"
+                                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                                    BorderThickness="0,0,0,1"
+                                                                    CheckBoxBorderBrush="Transparent"
+                                                                    CheckBoxBrush="Transparent"
+                                                                    CheckBoxCornerRadius="0"
+                                                                    CheckBoxDisabledBorderBrush="Transparent"
+                                                                    CheckBoxDisabledBrush="Transparent"
+                                                                    CheckBoxPointerOverBorderBrush="Transparent"
+                                                                    CheckBoxPointerOverBrush="Transparent"
+                                                                    CheckBoxPressedBorderBrush="Transparent"
+                                                                    CheckBoxPressedBrush="Transparent"
+                                                                    CheckBoxSelectedBrush="Transparent"
+                                                                    CheckBoxSelectedDisabledBrush="Transparent"
+                                                                    CheckBoxSelectedPointerOverBrush="Transparent"
+                                                                    CheckBoxSelectedPressedBrush="Transparent"
+                                                                    CheckBrush="{ThemeResource ListViewItemCheckBrush}"
+                                                                    CheckDisabledBrush="{ThemeResource ListViewItemCheckDisabledBrush}"
+                                                                    CheckMode="{ThemeResource ListViewItemCheckMode}"
+                                                                    CheckPressedBrush="{ThemeResource ListViewItemCheckPressedBrush}"
+                                                                    ContentMargin="{TemplateBinding Padding}"
+                                                                    ContentTransitions="{TemplateBinding ContentTransitions}"
+                                                                    Control.IsTemplateFocusTarget="True"
+                                                                    CornerRadius="0"
+                                                                    DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                                                                    DragBackground="{ThemeResource ListViewItemDragBackground}"
+                                                                    DragForeground="{ThemeResource ListViewItemDragForeground}"
+                                                                    DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                                                                    FocusBorderBrush="{ThemeResource ListViewItemFocusBorderBrush}"
+                                                                    FocusSecondaryBorderBrush="{ThemeResource ListViewItemFocusSecondaryBorderBrush}"
+                                                                    FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
+                                                                    FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}"
+                                                                    FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}"
+                                                                    FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}"
+                                                                    FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}"
+                                                                    PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackground}"
+                                                                    PointerOverBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                    PointerOverForeground="{ThemeResource ListViewItemForegroundPointerOver}"
+                                                                    PressedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                    ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+                                                                    SelectedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                    SelectedDisabledBackground="{ThemeResource ListViewItemBackgroundSelectedDisabled}"
+                                                                    SelectedForeground="{ThemeResource ListViewItemForegroundSelected}"
+                                                                    SelectedPointerOverBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                    SelectedPressedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                    SelectionCheckMarkVisualEnabled="{ThemeResource ListViewItemSelectionCheckMarkVisualEnabled}"
+                                                                    SelectionIndicatorBrush="{ThemeResource ListViewItemSelectionIndicatorBrush}"
+                                                                    SelectionIndicatorCornerRadius="{ThemeResource ListViewItemSelectionIndicatorCornerRadius}"
+                                                                    SelectionIndicatorDisabledBrush="{ThemeResource ListViewItemSelectionIndicatorDisabledBrush}"
+                                                                    SelectionIndicatorPointerOverBrush="{ThemeResource ListViewItemSelectionIndicatorPointerOverBrush}"
+                                                                    SelectionIndicatorPressedBrush="{ThemeResource ListViewItemSelectionIndicatorPressedBrush}"
+                                                                    SelectionIndicatorVisualEnabled="{ThemeResource ListViewItemSelectionIndicatorVisualEnabled}" />
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
                                                 </Style>
                                             </ListView.ItemContainerStyle>
 
@@ -1494,7 +1570,7 @@
                                                 <DataTemplate x:DataType="model:TargetDeviceFamilyModel">
                                                     <Grid
                                                         Height="35"
-                                                        Padding="10,0,16,0"
+                                                        Padding="10,0,14,0"
                                                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                                         BorderThickness="0,1,0,0">
 
@@ -1604,11 +1680,86 @@
                                                 Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageFileTypeVisibility(PackageFileType, enum:PackageFileType.Package), Mode=OneWay}">
 
                                                 <ListView.ItemContainerStyle>
-                                                    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                                        <Setter Property="Background" Value="Transparent" />
-                                                        <Setter Property="Margin" Value="0" />
-                                                        <Setter Property="MinHeight" Value="0" />
+                                                    <Style TargetType="ListViewItem">
+                                                        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                                                        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+                                                        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+                                                        <Setter Property="Foreground" Value="{ThemeResource ListViewItemForeground}" />
+                                                        <Setter Property="TabNavigation" Value="Local" />
+                                                        <Setter Property="IsHoldingEnabled" Value="True" />
                                                         <Setter Property="Padding" Value="0" />
+                                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                                                        <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}" />
+                                                        <Setter Property="MinHeight" Value="0" />
+                                                        <Setter Property="AllowDrop" Value="False" />
+                                                        <Setter Property="UseSystemFocusVisuals" Value="True" />
+                                                        <Setter Property="FocusVisualMargin" Value="1" />
+                                                        <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource ListViewItemFocusVisualPrimaryBrush}" />
+                                                        <Setter Property="FocusVisualPrimaryThickness" Value="2" />
+                                                        <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource ListViewItemFocusVisualSecondaryBrush}" />
+                                                        <Setter Property="FocusVisualSecondaryThickness" Value="1" />
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="ListViewItem">
+                                                                    <customcontrol:BorderedListViewItemPresenter
+                                                                        x:Name="Root"
+                                                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                                        BorderThickness="0,0,0,1"
+                                                                        CheckBoxBorderBrush="Transparent"
+                                                                        CheckBoxBrush="Transparent"
+                                                                        CheckBoxCornerRadius="0"
+                                                                        CheckBoxDisabledBorderBrush="Transparent"
+                                                                        CheckBoxDisabledBrush="Transparent"
+                                                                        CheckBoxPointerOverBorderBrush="Transparent"
+                                                                        CheckBoxPointerOverBrush="Transparent"
+                                                                        CheckBoxPressedBorderBrush="Transparent"
+                                                                        CheckBoxPressedBrush="Transparent"
+                                                                        CheckBoxSelectedBrush="Transparent"
+                                                                        CheckBoxSelectedDisabledBrush="Transparent"
+                                                                        CheckBoxSelectedPointerOverBrush="Transparent"
+                                                                        CheckBoxSelectedPressedBrush="Transparent"
+                                                                        CheckBrush="{ThemeResource ListViewItemCheckBrush}"
+                                                                        CheckDisabledBrush="{ThemeResource ListViewItemCheckDisabledBrush}"
+                                                                        CheckMode="{ThemeResource ListViewItemCheckMode}"
+                                                                        CheckPressedBrush="{ThemeResource ListViewItemCheckPressedBrush}"
+                                                                        ContentMargin="{TemplateBinding Padding}"
+                                                                        ContentTransitions="{TemplateBinding ContentTransitions}"
+                                                                        Control.IsTemplateFocusTarget="True"
+                                                                        CornerRadius="0"
+                                                                        DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                                                                        DragBackground="{ThemeResource ListViewItemDragBackground}"
+                                                                        DragForeground="{ThemeResource ListViewItemDragForeground}"
+                                                                        DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                                                                        FocusBorderBrush="{ThemeResource ListViewItemFocusBorderBrush}"
+                                                                        FocusSecondaryBorderBrush="{ThemeResource ListViewItemFocusSecondaryBorderBrush}"
+                                                                        FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
+                                                                        FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}"
+                                                                        FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}"
+                                                                        FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}"
+                                                                        FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}"
+                                                                        PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackground}"
+                                                                        PointerOverBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                        PointerOverForeground="{ThemeResource ListViewItemForegroundPointerOver}"
+                                                                        PressedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                        ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+                                                                        SelectedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                        SelectedDisabledBackground="{ThemeResource ListViewItemBackgroundSelectedDisabled}"
+                                                                        SelectedForeground="{ThemeResource ListViewItemForegroundSelected}"
+                                                                        SelectedPointerOverBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                        SelectedPressedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                        SelectionCheckMarkVisualEnabled="{ThemeResource ListViewItemSelectionCheckMarkVisualEnabled}"
+                                                                        SelectionIndicatorBrush="{ThemeResource ListViewItemSelectionIndicatorBrush}"
+                                                                        SelectionIndicatorCornerRadius="{ThemeResource ListViewItemSelectionIndicatorCornerRadius}"
+                                                                        SelectionIndicatorDisabledBrush="{ThemeResource ListViewItemSelectionIndicatorDisabledBrush}"
+                                                                        SelectionIndicatorPointerOverBrush="{ThemeResource ListViewItemSelectionIndicatorPointerOverBrush}"
+                                                                        SelectionIndicatorPressedBrush="{ThemeResource ListViewItemSelectionIndicatorPressedBrush}"
+                                                                        SelectionIndicatorVisualEnabled="{ThemeResource ListViewItemSelectionIndicatorVisualEnabled}" />
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
                                                     </Style>
                                                 </ListView.ItemContainerStyle>
 
@@ -1684,7 +1835,7 @@
                                                     <DataTemplate x:DataType="model:DependencyModel">
                                                         <Grid
                                                             Height="35"
-                                                            Padding="10,0,16,0"
+                                                            Padding="10,0,14,0"
                                                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                                             BorderThickness="0,1,0,0">
 
@@ -1731,7 +1882,7 @@
                                                             <TextBlock
                                                                 x:Name="PackageDependencyMinVersionTextBlock"
                                                                 Grid.Column="2"
-                                                                Margin="6,0,0,0"
+                                                                Margin="8,0,0,0"
                                                                 HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
                                                                 IsTextSelectionEnabled="True"
@@ -1755,11 +1906,86 @@
                                                 Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageFileTypeVisibility(PackageFileType, enum:PackageFileType.AppInstaller), Mode=OneWay}">
 
                                                 <ListView.ItemContainerStyle>
-                                                    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                                        <Setter Property="Background" Value="Transparent" />
-                                                        <Setter Property="Margin" Value="0" />
-                                                        <Setter Property="MinHeight" Value="0" />
+                                                    <Style TargetType="ListViewItem">
+                                                        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                                                        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+                                                        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+                                                        <Setter Property="Foreground" Value="{ThemeResource ListViewItemForeground}" />
+                                                        <Setter Property="TabNavigation" Value="Local" />
+                                                        <Setter Property="IsHoldingEnabled" Value="True" />
                                                         <Setter Property="Padding" Value="0" />
+                                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                                                        <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}" />
+                                                        <Setter Property="MinHeight" Value="0" />
+                                                        <Setter Property="AllowDrop" Value="False" />
+                                                        <Setter Property="UseSystemFocusVisuals" Value="True" />
+                                                        <Setter Property="FocusVisualMargin" Value="1" />
+                                                        <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource ListViewItemFocusVisualPrimaryBrush}" />
+                                                        <Setter Property="FocusVisualPrimaryThickness" Value="2" />
+                                                        <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource ListViewItemFocusVisualSecondaryBrush}" />
+                                                        <Setter Property="FocusVisualSecondaryThickness" Value="1" />
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="ListViewItem">
+                                                                    <customcontrol:BorderedListViewItemPresenter
+                                                                        x:Name="Root"
+                                                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                                        BorderThickness="0,0,0,1"
+                                                                        CheckBoxBorderBrush="Transparent"
+                                                                        CheckBoxBrush="Transparent"
+                                                                        CheckBoxCornerRadius="0"
+                                                                        CheckBoxDisabledBorderBrush="Transparent"
+                                                                        CheckBoxDisabledBrush="Transparent"
+                                                                        CheckBoxPointerOverBorderBrush="Transparent"
+                                                                        CheckBoxPointerOverBrush="Transparent"
+                                                                        CheckBoxPressedBorderBrush="Transparent"
+                                                                        CheckBoxPressedBrush="Transparent"
+                                                                        CheckBoxSelectedBrush="Transparent"
+                                                                        CheckBoxSelectedDisabledBrush="Transparent"
+                                                                        CheckBoxSelectedPointerOverBrush="Transparent"
+                                                                        CheckBoxSelectedPressedBrush="Transparent"
+                                                                        CheckBrush="{ThemeResource ListViewItemCheckBrush}"
+                                                                        CheckDisabledBrush="{ThemeResource ListViewItemCheckDisabledBrush}"
+                                                                        CheckMode="{ThemeResource ListViewItemCheckMode}"
+                                                                        CheckPressedBrush="{ThemeResource ListViewItemCheckPressedBrush}"
+                                                                        ContentMargin="{TemplateBinding Padding}"
+                                                                        ContentTransitions="{TemplateBinding ContentTransitions}"
+                                                                        Control.IsTemplateFocusTarget="True"
+                                                                        CornerRadius="0"
+                                                                        DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                                                                        DragBackground="{ThemeResource ListViewItemDragBackground}"
+                                                                        DragForeground="{ThemeResource ListViewItemDragForeground}"
+                                                                        DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                                                                        FocusBorderBrush="{ThemeResource ListViewItemFocusBorderBrush}"
+                                                                        FocusSecondaryBorderBrush="{ThemeResource ListViewItemFocusSecondaryBorderBrush}"
+                                                                        FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
+                                                                        FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}"
+                                                                        FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}"
+                                                                        FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}"
+                                                                        FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}"
+                                                                        PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackground}"
+                                                                        PointerOverBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                        PointerOverForeground="{ThemeResource ListViewItemForegroundPointerOver}"
+                                                                        PressedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                        ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+                                                                        SelectedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                        SelectedDisabledBackground="{ThemeResource ListViewItemBackgroundSelectedDisabled}"
+                                                                        SelectedForeground="{ThemeResource ListViewItemForegroundSelected}"
+                                                                        SelectedPointerOverBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                        SelectedPressedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                        SelectionCheckMarkVisualEnabled="{ThemeResource ListViewItemSelectionCheckMarkVisualEnabled}"
+                                                                        SelectionIndicatorBrush="{ThemeResource ListViewItemSelectionIndicatorBrush}"
+                                                                        SelectionIndicatorCornerRadius="{ThemeResource ListViewItemSelectionIndicatorCornerRadius}"
+                                                                        SelectionIndicatorDisabledBrush="{ThemeResource ListViewItemSelectionIndicatorDisabledBrush}"
+                                                                        SelectionIndicatorPointerOverBrush="{ThemeResource ListViewItemSelectionIndicatorPointerOverBrush}"
+                                                                        SelectionIndicatorPressedBrush="{ThemeResource ListViewItemSelectionIndicatorPressedBrush}"
+                                                                        SelectionIndicatorVisualEnabled="{ThemeResource ListViewItemSelectionIndicatorVisualEnabled}" />
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
                                                     </Style>
                                                 </ListView.ItemContainerStyle>
 
@@ -1869,7 +2095,7 @@
                                                     <DataTemplate x:DataType="model:DependencyModel">
                                                         <Grid
                                                             Height="35"
-                                                            Padding="10,0,16,0"
+                                                            Padding="10,0,14,0"
                                                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                                             BorderThickness="0,1,0,0">
 
@@ -1953,6 +2179,7 @@
                                                                 Grid.Column="4"
                                                                 Margin="6,0,0,0"
                                                                 HorizontalAlignment="Left"
+                                                                VerticalAlignment="Center"
                                                                 IsTextSelectionEnabled="True"
                                                                 TextTrimming="CharacterEllipsis"
                                                                 ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Installer/OpenLink')}">
@@ -2012,9 +2239,10 @@
 
                                             <ListView.ItemContainerStyle>
                                                 <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                                    <Setter Property="Margin" Value="0,0,2,0" />
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                    <Setter Property="Margin" Value="0" />
                                                     <Setter Property="MinHeight" Value="0" />
-                                                    <Setter Property="Padding" Value="0,0,0,0" />
+                                                    <Setter Property="Padding" Value="0" />
                                                 </Style>
                                             </ListView.ItemContainerStyle>
 
@@ -2099,11 +2327,86 @@
                                         <ListView ItemsSource="{x:Bind ApplicationCollection}" SelectionMode="None">
 
                                             <ListView.ItemContainerStyle>
-                                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                                    <Setter Property="Background" Value="Transparent" />
-                                                    <Setter Property="Margin" Value="0" />
-                                                    <Setter Property="MinHeight" Value="0" />
+                                                <Style TargetType="ListViewItem">
+                                                    <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                                                    <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+                                                    <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+                                                    <Setter Property="Foreground" Value="{ThemeResource ListViewItemForeground}" />
+                                                    <Setter Property="TabNavigation" Value="Local" />
+                                                    <Setter Property="IsHoldingEnabled" Value="True" />
                                                     <Setter Property="Padding" Value="0" />
+                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                                                    <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}" />
+                                                    <Setter Property="MinHeight" Value="0" />
+                                                    <Setter Property="AllowDrop" Value="False" />
+                                                    <Setter Property="UseSystemFocusVisuals" Value="True" />
+                                                    <Setter Property="FocusVisualMargin" Value="1" />
+                                                    <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource ListViewItemFocusVisualPrimaryBrush}" />
+                                                    <Setter Property="FocusVisualPrimaryThickness" Value="2" />
+                                                    <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource ListViewItemFocusVisualSecondaryBrush}" />
+                                                    <Setter Property="FocusVisualSecondaryThickness" Value="1" />
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="ListViewItem">
+                                                                <customcontrol:BorderedListViewItemPresenter
+                                                                    x:Name="Root"
+                                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                                    BorderThickness="0,0,0,1"
+                                                                    CheckBoxBorderBrush="Transparent"
+                                                                    CheckBoxBrush="Transparent"
+                                                                    CheckBoxCornerRadius="0"
+                                                                    CheckBoxDisabledBorderBrush="Transparent"
+                                                                    CheckBoxDisabledBrush="Transparent"
+                                                                    CheckBoxPointerOverBorderBrush="Transparent"
+                                                                    CheckBoxPointerOverBrush="Transparent"
+                                                                    CheckBoxPressedBorderBrush="Transparent"
+                                                                    CheckBoxPressedBrush="Transparent"
+                                                                    CheckBoxSelectedBrush="Transparent"
+                                                                    CheckBoxSelectedDisabledBrush="Transparent"
+                                                                    CheckBoxSelectedPointerOverBrush="Transparent"
+                                                                    CheckBoxSelectedPressedBrush="Transparent"
+                                                                    CheckBrush="{ThemeResource ListViewItemCheckBrush}"
+                                                                    CheckDisabledBrush="{ThemeResource ListViewItemCheckDisabledBrush}"
+                                                                    CheckMode="{ThemeResource ListViewItemCheckMode}"
+                                                                    CheckPressedBrush="{ThemeResource ListViewItemCheckPressedBrush}"
+                                                                    ContentMargin="{TemplateBinding Padding}"
+                                                                    ContentTransitions="{TemplateBinding ContentTransitions}"
+                                                                    Control.IsTemplateFocusTarget="True"
+                                                                    CornerRadius="0"
+                                                                    DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                                                                    DragBackground="{ThemeResource ListViewItemDragBackground}"
+                                                                    DragForeground="{ThemeResource ListViewItemDragForeground}"
+                                                                    DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                                                                    FocusBorderBrush="{ThemeResource ListViewItemFocusBorderBrush}"
+                                                                    FocusSecondaryBorderBrush="{ThemeResource ListViewItemFocusSecondaryBorderBrush}"
+                                                                    FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
+                                                                    FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}"
+                                                                    FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}"
+                                                                    FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}"
+                                                                    FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}"
+                                                                    PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackground}"
+                                                                    PointerOverBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                    PointerOverForeground="{ThemeResource ListViewItemForegroundPointerOver}"
+                                                                    PressedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                    ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+                                                                    SelectedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                    SelectedDisabledBackground="{ThemeResource ListViewItemBackgroundSelectedDisabled}"
+                                                                    SelectedForeground="{ThemeResource ListViewItemForegroundSelected}"
+                                                                    SelectedPointerOverBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                    SelectedPressedBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                    SelectionCheckMarkVisualEnabled="{ThemeResource ListViewItemSelectionCheckMarkVisualEnabled}"
+                                                                    SelectionIndicatorBrush="{ThemeResource ListViewItemSelectionIndicatorBrush}"
+                                                                    SelectionIndicatorCornerRadius="{ThemeResource ListViewItemSelectionIndicatorCornerRadius}"
+                                                                    SelectionIndicatorDisabledBrush="{ThemeResource ListViewItemSelectionIndicatorDisabledBrush}"
+                                                                    SelectionIndicatorPointerOverBrush="{ThemeResource ListViewItemSelectionIndicatorPointerOverBrush}"
+                                                                    SelectionIndicatorPressedBrush="{ThemeResource ListViewItemSelectionIndicatorPressedBrush}"
+                                                                    SelectionIndicatorVisualEnabled="{ThemeResource ListViewItemSelectionIndicatorVisualEnabled}" />
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
                                                 </Style>
                                             </ListView.ItemContainerStyle>
 
@@ -2212,7 +2515,7 @@
                                                 <DataTemplate x:DataType="model:ApplicationModel">
                                                     <Grid
                                                         Height="35"
-                                                        Padding="10,0,16,0"
+                                                        Padding="10,0,14,0"
                                                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                                         BorderThickness="0,1,0,0">
 
