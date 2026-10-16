@@ -1537,7 +1537,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnOpenAppInstallerSourceLinkClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            OpenAppInstallerSourceLink(PackageFamilyName);
+            OpenAppInstallerSourceLink(AppInstallerSourceLink);
         }
 
         /// <summary>
@@ -1545,7 +1545,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void OnOpenPackageSourceLinkClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            OnOpenPackageSourceLink(PackageFamilyName);
+            OnOpenPackageSourceLink(PackageSourceLink);
         }
 
         /// <summary>
