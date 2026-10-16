@@ -1832,9 +1832,9 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 应用主窗口消息处理
         /// </summary>
-        private nint InstallerWindowSubClassProc(nint hWnd, WindowMessage Msg, nuint wParam, nint lParam, uint uIdSubclass, nint dwRefData)
+        private nint InstallerWindowSubClassProc(nint hWnd, WindowMessage windowMessage, nuint wParam, nint lParam, uint uIdSubclass, nint dwRefData)
         {
-            switch (Msg)
+            switch (windowMessage)
             {
                 // 当用户按下鼠标左键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCLBUTTONDOWN:
@@ -1908,7 +1908,7 @@ namespace GetStoreAppInstaller.Views.Windows
                     }
             }
 
-            return Comctl32Library.DefSubclassProc(hWnd, Msg, wParam, lParam);
+            return Comctl32Library.DefSubclassProc(hWnd, windowMessage, wParam, lParam);
         }
 
         /// <summary>
