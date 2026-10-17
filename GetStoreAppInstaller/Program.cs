@@ -80,6 +80,7 @@ namespace GetStoreAppInstaller
             AlwaysShowBackdropService.InitializeAlwaysShowBackdrop();
             BackdropService.InitializeBackdrop();
             ThemeService.InitializeTheme();
+            WindowInfoService.Initialize();
             AppInstallService.InitializeAppInstall();
         }
     }

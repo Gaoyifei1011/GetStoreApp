@@ -80,6 +80,7 @@ namespace GetStoreAppWebView
             AlwaysShowBackdropService.InitializeAlwaysShowBackdrop();
             BackdropService.InitializeBackdrop();
             ThemeService.InitializeTheme();
+            WindowInfoService.Initialize();
         }
     }
 }

@@ -196,7 +196,7 @@ namespace GetStoreApp.Views.Windows
             MountWindowWndProc(AppWindow.Id);
             SetWindowTheme();
             SetSystemBackdrop();
-            SetWindowPosition(AppWindow);
+            SetWindowInformation(AppWindow);
             SetClassicMenuTheme(AppWindow.TitleBar, (Content as FrameworkElement).ActualTheme);
             SetTopMost();
             CheckNetwork();
@@ -332,6 +332,7 @@ namespace GetStoreApp.Views.Windows
                 {
                     DismountWindowEvent(AppWindow);
                     DismountWindowWndProc(sender.Id);
+                    WindowInfoService.SaveWindowInfo(AppWindow, IsWindowMaximized);
                     DownloadSchedulerService.TerminateDownload();
                     (Application.Current as MainApp).Dispose();
                 }
@@ -347,6 +348,7 @@ namespace GetStoreApp.Views.Windows
             {
                 DismountWindowEvent(AppWindow);
                 DismountWindowWndProc(sender.Id);
+                WindowInfoService.SaveWindowInfo(AppWindow, IsWindowMaximized);
                 (Application.Current as MainApp).Dispose();
             }
         }
@@ -822,20 +824,52 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 设置窗口大小和位置
+        /// 设置窗口信息
         /// </summary>
-        private void SetWindowPosition(AppWindow appWindow)
+        private void SetWindowInformation(AppWindow appWindow)
         {
             if (appWindow is null)
             {
                 return;
             }
 
-            // 默认直接显示到窗口中间
-            if (DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
+            if (WindowInfoService.IsWindowInformationExisted())
             {
-                RectInt32 workArea = displayArea.WorkArea;
-                appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
+                (bool isWindowMaximized, RectInt32 positionAndSize) = WindowInfoService.GetWindowInfo();
+
+                if (isWindowMaximized)
+                {
+                    overlappedPresenter.Maximize();
+                    appWindow.Show();
+                }
+                else
+                {
+                    DisplayArea displayArea = DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest);
+
+                    int left = positionAndSize.X;
+                    int top = positionAndSize.Y;
+                    int right = positionAndSize.X + positionAndSize.Width;
+                    int bottom = positionAndSize.Y + positionAndSize.Height;
+
+                    if (left > 0 && top > 0 && right < displayArea.WorkArea.Width && bottom < displayArea.WorkArea.Height)
+                    {
+                        AppWindow.MoveAndResize(positionAndSize);
+                    }
+                    else
+                    {
+                        RectInt32 workArea = displayArea.WorkArea;
+                        appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
+                    }
+                }
+            }
+            else
+            {
+                // 默认直接显示到窗口中间
+                if (DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
+                {
+                    RectInt32 workArea = displayArea.WorkArea;
+                    appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
+                }
             }
         }
 

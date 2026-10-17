@@ -318,7 +318,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
             set
             {
-                if (!string.Equals(_version, value))
+                if (!Equals(_version, value))
                 {
                     _version = value;
                     PropertyChanged?.Invoke(this, new(nameof(Version)));
@@ -917,7 +917,7 @@ namespace GetStoreAppInstaller.Views.Windows
             SetWindowTheme();
             SetSystemBackdrop();
             SetWindowSize(AppWindow);
-            SetWindowPosition(AppWindow);
+            SetWindowInformation(AppWindow);
             SetClassicMenuTheme(AppWindow.TitleBar, (Content as FrameworkElement).ActualTheme);
             EnableElevatedDragDrop(AppWindow.Id);
             CreateAppxInstance();
@@ -1018,6 +1018,7 @@ namespace GetStoreAppInstaller.Views.Windows
             DismountWindowEvent(AppWindow);
             DismountWindowWndProc(sender.Id);
             DisableElevatedDragDrop();
+            WindowInfoService.SaveWindowInfo(AppWindow);
             (Application.Current as InstallerApp).Dispose();
         }
 
@@ -1028,8 +1029,8 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             if (args.DidRasterizationScaleChange)
             {
-                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1000 * contentIsland.RasterizationScale);
-                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(600 * contentIsland.RasterizationScale);
+                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(800 * contentIsland.RasterizationScale);
+                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(560 * contentIsland.RasterizationScale);
                 rasterizationScale = contentIsland.RasterizationScale;
             }
         }
@@ -1751,20 +1752,46 @@ namespace GetStoreAppInstaller.Views.Windows
         }
 
         /// <summary>
-        /// 设置窗口大小和位置
+        /// 设置窗口信息
         /// </summary>
-        private void SetWindowPosition(AppWindow appWindow)
+        private void SetWindowInformation(AppWindow appWindow)
         {
             if (appWindow is null)
             {
                 return;
             }
 
-            // 默认直接显示到窗口中间
-            if (DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
+            if (contentIsland is not null)
             {
-                RectInt32 workArea = displayArea.WorkArea;
-                appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
+                if (WindowInfoService.IsWindowInformationExisted())
+                {
+                    PointInt32 position = WindowInfoService.GetWindowInfo();
+                    DisplayArea displayArea = DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest);
+
+                    int left = position.X;
+                    int top = position.Y;
+                    int right = position.X + Convert.ToInt32(1000 * contentIsland.RasterizationScale);
+                    int bottom = position.Y + Convert.ToInt32(600 * contentIsland.RasterizationScale);
+
+                    if (left > 0 && top > 0 && right < displayArea.WorkArea.Width && bottom < displayArea.WorkArea.Height)
+                    {
+                        AppWindow.Move(position);
+                    }
+                    else
+                    {
+                        RectInt32 workArea = displayArea.WorkArea;
+                        appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
+                    }
+                }
+                else
+                {
+                    // 默认直接显示到窗口中间
+                    if (DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
+                    {
+                        RectInt32 workArea = displayArea.WorkArea;
+                        appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
+                    }
+                }
             }
         }
 
