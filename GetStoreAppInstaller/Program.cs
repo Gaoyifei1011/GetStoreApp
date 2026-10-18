@@ -1,6 +1,7 @@
 ﻿using GetStoreAppInstaller.Helpers.Root;
 using GetStoreAppInstaller.Services.Root;
 using GetStoreAppInstaller.Services.Settings;
+using GetStoreAppInstaller.Views.Windows;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32;
 using Microsoft.Windows.AppLifecycle;
 using System;
@@ -80,7 +81,7 @@ namespace GetStoreAppInstaller
             AlwaysShowBackdropService.InitializeAlwaysShowBackdrop();
             BackdropService.InitializeBackdrop();
             ThemeService.InitializeTheme();
-            WindowInfoService.Initialize();
+            WindowInfoService.Initialize(nameof(InstallerWindow));
             AppInstallService.InitializeAppInstall();
         }
     }

@@ -828,11 +828,12 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void SetWindowInformation(AppWindow appWindow)
         {
-            if (appWindow is null)
+            if (appWindow is null || contentIsland is null)
             {
                 return;
             }
 
+            DisplayArea displayArea = DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Primary);
             if (WindowInfoService.IsWindowInformationExisted())
             {
                 (bool isWindowMaximized, RectInt32 positionAndSize) = WindowInfoService.GetWindowInfo();
@@ -844,8 +845,6 @@ namespace GetStoreApp.Views.Windows
                 }
                 else
                 {
-                    DisplayArea displayArea = DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest);
-
                     int left = positionAndSize.X;
                     int top = positionAndSize.Y;
                     int right = positionAndSize.X + positionAndSize.Width;
@@ -853,7 +852,7 @@ namespace GetStoreApp.Views.Windows
 
                     if (left > 0 && top > 0 && right < displayArea.WorkArea.Width && bottom < displayArea.WorkArea.Height)
                     {
-                        AppWindow.MoveAndResize(positionAndSize);
+                        appWindow.MoveAndResize(positionAndSize);
                     }
                     else
                     {
@@ -864,12 +863,8 @@ namespace GetStoreApp.Views.Windows
             }
             else
             {
-                // 默认直接显示到窗口中间
-                if (DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
-                {
-                    RectInt32 workArea = displayArea.WorkArea;
-                    appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
-                }
+                RectInt32 workArea = displayArea.WorkArea;
+                appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
             }
         }
 

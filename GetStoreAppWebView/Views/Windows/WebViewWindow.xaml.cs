@@ -281,8 +281,8 @@ namespace GetStoreAppWebView.Views.Windows
 
             if (contentIsland is not null)
             {
-                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(800 * contentIsland.RasterizationScale);
-                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(560 * contentIsland.RasterizationScale);
+                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1000 * contentIsland.RasterizationScale);
+                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(700 * contentIsland.RasterizationScale);
             }
         }
 
@@ -325,8 +325,8 @@ namespace GetStoreAppWebView.Views.Windows
         {
             if (args.DidRasterizationScaleChange)
             {
-                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(800 * contentIsland.RasterizationScale);
-                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(560 * contentIsland.RasterizationScale);
+                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1000 * contentIsland.RasterizationScale);
+                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(700 * contentIsland.RasterizationScale);
             }
         }
 
@@ -796,42 +796,35 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private void SetWindowPosition(AppWindow appWindow)
         {
-            if (appWindow is null)
+            if (appWindow is null || contentIsland is null)
             {
                 return;
             }
 
-            if (contentIsland is not null)
+            DisplayArea displayArea = DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Primary);
+            if (WindowInfoService.IsWindowInformationExisted())
             {
-                if (WindowInfoService.IsWindowInformationExisted())
+                PointInt32 position = WindowInfoService.GetWindowInfo();
+
+                int left = position.X;
+                int top = position.Y;
+                int right = position.X + Convert.ToInt32(1000 * contentIsland.RasterizationScale);
+                int bottom = position.Y + Convert.ToInt32(700 * contentIsland.RasterizationScale);
+
+                if (left > 0 && top > 0 && right < displayArea.WorkArea.Width && bottom < displayArea.WorkArea.Height)
                 {
-                    PointInt32 position = WindowInfoService.GetWindowInfo();
-                    DisplayArea displayArea = DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest);
-
-                    int left = position.X;
-                    int top = position.Y;
-                    int right = position.X + Convert.ToInt32(1000 * contentIsland.RasterizationScale);
-                    int bottom = position.Y + Convert.ToInt32(700 * contentIsland.RasterizationScale);
-
-                    if (left > 0 && top > 0 && right < displayArea.WorkArea.Width && bottom < displayArea.WorkArea.Height)
-                    {
-                        AppWindow.Move(position);
-                    }
-                    else
-                    {
-                        RectInt32 workArea = displayArea.WorkArea;
-                        appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
-                    }
+                    appWindow.Move(position);
                 }
                 else
                 {
-                    // 默认直接显示到窗口中间
-                    if (DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
-                    {
-                        RectInt32 workArea = displayArea.WorkArea;
-                        appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
-                    }
+                    RectInt32 workArea = displayArea.WorkArea;
+                    appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
                 }
+            }
+            else
+            {
+                RectInt32 workArea = displayArea.WorkArea;
+                appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
             }
         }
 

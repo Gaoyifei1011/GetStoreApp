@@ -1748,7 +1748,7 @@ namespace GetStoreAppInstaller.Views.Windows
             }
 
             rasterizationScale = contentIsland.RasterizationScale;
-            appWindow.Resize(new(Convert.ToInt32(1000 * contentIsland.RasterizationScale), Convert.ToInt32(700 * contentIsland.RasterizationScale)));
+            appWindow.Resize(new(Convert.ToInt32(801 * contentIsland.RasterizationScale), Convert.ToInt32(561 * contentIsland.RasterizationScale)));
         }
 
         /// <summary>
@@ -1763,15 +1763,15 @@ namespace GetStoreAppInstaller.Views.Windows
 
             if (contentIsland is not null)
             {
+                DisplayArea displayArea = DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Primary);
                 if (WindowInfoService.IsWindowInformationExisted())
                 {
                     PointInt32 position = WindowInfoService.GetWindowInfo();
-                    DisplayArea displayArea = DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest);
 
                     int left = position.X;
                     int top = position.Y;
-                    int right = position.X + Convert.ToInt32(1000 * contentIsland.RasterizationScale);
-                    int bottom = position.Y + Convert.ToInt32(600 * contentIsland.RasterizationScale);
+                    int right = position.X + Convert.ToInt32(800 * contentIsland.RasterizationScale);
+                    int bottom = position.Y + Convert.ToInt32(560 * contentIsland.RasterizationScale);
 
                     if (left > 0 && top > 0 && right < displayArea.WorkArea.Width && bottom < displayArea.WorkArea.Height)
                     {
@@ -1785,12 +1785,8 @@ namespace GetStoreAppInstaller.Views.Windows
                 }
                 else
                 {
-                    // 默认直接显示到窗口中间
-                    if (DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea && contentIsland is not null)
-                    {
-                        RectInt32 workArea = displayArea.WorkArea;
-                        appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
-                    }
+                    RectInt32 workArea = displayArea.WorkArea;
+                    appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
                 }
             }
         }

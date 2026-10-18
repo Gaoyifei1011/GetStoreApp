@@ -3,6 +3,7 @@ using GetStoreApp.Services.Download;
 using GetStoreApp.Services.History;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
+using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using Microsoft.Windows.AppLifecycle;
 using System;
@@ -104,7 +105,7 @@ namespace GetStoreApp
             QueryLinksModeService.InitializeQueryLinksMode();
             AppLinkOpenModeService.InitializeAppLinkOpenMode();
             await DownloadOptionsService.InitializeDownloadOptionsAsync();
-            WindowInfoService.Initialize();
+            WindowInfoService.Initialize(nameof(MainWindow));
             DownloadStorageService.Initialize();
             AppInstallService.InitializeAppInstall();
 
