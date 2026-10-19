@@ -33,7 +33,7 @@ namespace GetStoreAppWebView.Services.Root
         /// </summary>
         internal static bool IsWindowInformationExisted()
         {
-            return windowContainer is not null && windowContainer.Values.ContainsKey("WindowInformationExisted");
+            return isInitialized && windowContainer is not null && windowContainer.Values.ContainsKey("WindowInformationExisted");
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace GetStoreAppWebView.Services.Root
         /// </summary>
         internal static PointInt32 GetWindowInfo()
         {
-            return windowContainer is not null && IsWindowInformationExisted() ? new PointInt32(Convert.ToInt32(windowContainer.Values["X"]), Convert.ToInt32(windowContainer.Values["Y"])) : default;
+            return IsWindowInformationExisted() ? new PointInt32(Convert.ToInt32(windowContainer.Values["X"]), Convert.ToInt32(windowContainer.Values["Y"])) : default;
         }
 
         /// <summary>

@@ -33,7 +33,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         internal static bool IsWindowInformationExisted()
         {
-            return windowContainer is not null && windowContainer.Values.ContainsKey("WindowInformationExisted");
+            return isInitialized && windowContainer is not null && windowContainer.Values.ContainsKey("WindowInformationExisted");
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         internal static (bool, RectInt32) GetWindowInfo()
         {
-            return windowContainer is not null && IsWindowInformationExisted() ? (Convert.ToBoolean(windowContainer.Values["IsWindowMaximized"]), new(Convert.ToInt32(windowContainer.Values["X"]), Convert.ToInt32(windowContainer.Values["Y"]), Convert.ToInt32(windowContainer.Values["Width"]), Convert.ToInt32(windowContainer.Values["Height"]))) : default;
+            return IsWindowInformationExisted() ? (Convert.ToBoolean(windowContainer.Values["IsWindowMaximized"]), new(Convert.ToInt32(windowContainer.Values["X"]), Convert.ToInt32(windowContainer.Values["Y"]), Convert.ToInt32(windowContainer.Values["Width"]), Convert.ToInt32(windowContainer.Values["Height"]))) : default;
         }
 
         /// <summary>

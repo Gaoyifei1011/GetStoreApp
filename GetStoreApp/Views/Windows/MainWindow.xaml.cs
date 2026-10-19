@@ -833,7 +833,7 @@ namespace GetStoreApp.Views.Windows
                 return;
             }
 
-            DisplayArea displayArea = DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Primary);
+            RectInt32 workArea = DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Primary).WorkArea;
             if (WindowInfoService.IsWindowInformationExisted())
             {
                 (bool isWindowMaximized, RectInt32 positionAndSize) = WindowInfoService.GetWindowInfo();
@@ -850,20 +850,18 @@ namespace GetStoreApp.Views.Windows
                     int right = positionAndSize.X + positionAndSize.Width;
                     int bottom = positionAndSize.Y + positionAndSize.Height;
 
-                    if (left > 0 && top > 0 && right < displayArea.WorkArea.Width && bottom < displayArea.WorkArea.Height)
+                    if (left > 0 && top > 0 && right < workArea.Width && bottom < workArea.Height)
                     {
                         appWindow.MoveAndResize(positionAndSize);
                     }
                     else
                     {
-                        RectInt32 workArea = displayArea.WorkArea;
                         appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
                     }
                 }
             }
             else
             {
-                RectInt32 workArea = displayArea.WorkArea;
                 appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
             }
         }

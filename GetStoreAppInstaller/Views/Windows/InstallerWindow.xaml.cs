@@ -1763,7 +1763,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
             if (contentIsland is not null)
             {
-                DisplayArea displayArea = DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Primary);
+                RectInt32 workArea = DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Primary).WorkArea;
                 if (WindowInfoService.IsWindowInformationExisted())
                 {
                     PointInt32 position = WindowInfoService.GetWindowInfo();
@@ -1773,19 +1773,17 @@ namespace GetStoreAppInstaller.Views.Windows
                     int right = position.X + Convert.ToInt32(800 * contentIsland.RasterizationScale);
                     int bottom = position.Y + Convert.ToInt32(560 * contentIsland.RasterizationScale);
 
-                    if (left > 0 && top > 0 && right < displayArea.WorkArea.Width && bottom < displayArea.WorkArea.Height)
+                    if (left > 0 && top > 0 && right < workArea.Width && bottom < workArea.Height)
                     {
                         AppWindow.Move(position);
                     }
                     else
                     {
-                        RectInt32 workArea = displayArea.WorkArea;
                         appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
                     }
                 }
                 else
                 {
-                    RectInt32 workArea = displayArea.WorkArea;
                     appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
                 }
             }

@@ -78,10 +78,10 @@ namespace GetStoreAppInstaller
             LanguageService.InitializeLanguage();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
 
+            WindowInfoService.Initialize(nameof(InstallerWindow));
             AlwaysShowBackdropService.InitializeAlwaysShowBackdrop();
             BackdropService.InitializeBackdrop();
             ThemeService.InitializeTheme();
-            WindowInfoService.Initialize(nameof(InstallerWindow));
             AppInstallService.InitializeAppInstall();
         }
     }

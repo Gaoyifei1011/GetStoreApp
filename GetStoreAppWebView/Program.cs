@@ -78,10 +78,10 @@ namespace GetStoreAppWebView
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
             await DownloadOptionsService.InitializeDownloadOptionsAsync();
 
+            WindowInfoService.Initialize(nameof(WebViewWindow));
             AlwaysShowBackdropService.InitializeAlwaysShowBackdrop();
             BackdropService.InitializeBackdrop();
             ThemeService.InitializeTheme();
-            WindowInfoService.Initialize(nameof(WebViewWindow));
         }
     }
 }

@@ -237,7 +237,7 @@ namespace GetStoreAppWebView.Views.Windows
             SetWindowTheme();
             SetSystemBackdrop();
             SetWindowSize(AppWindow);
-            SetWindowPosition(AppWindow);
+            SetWindowInformation(AppWindow);
             SetClassicMenuTheme(AppWindow.TitleBar, (Content as FrameworkElement).ActualTheme);
             InitializeWebView();
         }
@@ -794,14 +794,14 @@ namespace GetStoreAppWebView.Views.Windows
         /// <summary>
         /// 设置窗口信息
         /// </summary>
-        private void SetWindowPosition(AppWindow appWindow)
+        private void SetWindowInformation(AppWindow appWindow)
         {
             if (appWindow is null || contentIsland is null)
             {
                 return;
             }
 
-            DisplayArea displayArea = DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Primary);
+            RectInt32 workArea = DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Primary).WorkArea;
             if (WindowInfoService.IsWindowInformationExisted())
             {
                 PointInt32 position = WindowInfoService.GetWindowInfo();
@@ -811,19 +811,17 @@ namespace GetStoreAppWebView.Views.Windows
                 int right = position.X + Convert.ToInt32(1000 * contentIsland.RasterizationScale);
                 int bottom = position.Y + Convert.ToInt32(700 * contentIsland.RasterizationScale);
 
-                if (left > 0 && top > 0 && right < displayArea.WorkArea.Width && bottom < displayArea.WorkArea.Height)
+                if (left > 0 && top > 0 && right < workArea.Width && bottom < workArea.Height)
                 {
                     appWindow.Move(position);
                 }
                 else
                 {
-                    RectInt32 workArea = displayArea.WorkArea;
                     appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
                 }
             }
             else
             {
-                RectInt32 workArea = displayArea.WorkArea;
                 appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
             }
         }
