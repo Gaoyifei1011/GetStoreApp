@@ -13,5 +13,5 @@ using System.Runtime.Versioning;
 [assembly: AssemblyTitle("固定辅助程序")]
 [assembly: AssemblyVersion("6.25.1017.0")]
 [assembly: NeutralResourcesLanguage("en-us")]
-[assembly: SupportedOSPlatform("windows10.0.26100")]
+[assembly: SupportedOSPlatform("windows10.0.28000")]
 [assembly: DisableRuntimeMarshalling]
