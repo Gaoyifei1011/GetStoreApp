@@ -6,6 +6,41 @@
     <BackgroundSizing x:Key="PillRadioButtonBackgroundSizing">InnerBorderEdge</BackgroundSizing>
     <BackgroundSizing x:Key="PillRadioButtonCheckedBackgroundSizing">InnerBorderEdge</BackgroundSizing>
 
+    <Style x:Key="HorizontalRadioButtonsStyle" TargetType="RadioButtons">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="TabNavigation" Value="Once" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButtons">
+                    <StackPanel>
+                        <ContentPresenter
+                            x:Name="HeaderContentPresenter"
+                            Margin="{ThemeResource RadioButtonsTopHeaderMargin}"
+                            Content="{TemplateBinding Header}"
+                            ContentTemplate="{TemplateBinding HeaderTemplate}"
+                            Foreground="{ThemeResource RadioButtonsHeaderForeground}" />
+                        <ItemsRepeater x:Name="InnerRepeater">
+                            <ItemsRepeater.Layout>
+                                <StackLayout Orientation="Horizontal" Spacing="5" />
+                            </ItemsRepeater.Layout>
+                        </ItemsRepeater>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+
+                                <VisualState x:Name="Disabled">
+                                    <VisualState.Setters>
+                                        <Setter Target="HeaderContentPresenter.Foreground" Value="{ThemeResource RadioButtonsHeaderForegroundDisabled}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="PillRadioButtonStyle" TargetType="RadioButton">
         <Setter Property="Background" Value="{ThemeResource PillItemBackground}" />
         <Setter Property="BackgroundSizing" Value="{ThemeResource PillRadioButtonBackgroundSizing}" />

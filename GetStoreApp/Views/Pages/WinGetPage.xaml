@@ -58,9 +58,9 @@
                 VerticalAlignment="Top"
                 Canvas.ZIndex="1"
                 ItemsSource="{x:Bind WinGetSelectorRadioList}"
-                MaxColumns="3"
                 SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}"
-                SelectionChanged="{x:Bind OnSelectionChanged}">
+                SelectionChanged="{x:Bind OnSelectionChanged}"
+                Style="{StaticResource HorizontalRadioButtonsStyle}">
 
                 <RadioButtons.Resources>
                     <Thickness x:Key="RadioButtonsTopHeaderMargin">0</Thickness>
