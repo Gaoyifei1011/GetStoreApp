@@ -39,14 +39,14 @@
                                 x:Name="LeftBottomBorderLine"
                                 Height="1"
                                 VerticalAlignment="Bottom"
-                                Background="Transparent" />
+                                Background="{ThemeResource TabViewBorderBrush}" />
                             <Border
                                 x:Name="RightBottomBorderLine"
                                 Grid.Column="2"
                                 Grid.ColumnSpan="2"
                                 Height="1"
                                 VerticalAlignment="Bottom"
-                                Background="Transparent" />
+                                Background="{ThemeResource TabViewBorderBrush}" />
                             <ContentPresenter
                                 x:Name="LeftContentPresenter"
                                 Grid.Column="0"
@@ -142,7 +142,7 @@
                             Grid.ColumnSpan="3"
                             Height="1"
                             VerticalAlignment="Bottom"
-                            Background="Transparent" />
+                            Background="{ThemeResource TabViewBorderBrush}" />
                         <Path
                             x:Name="LeftRadiusRenderArc"
                             Width="4"
@@ -151,7 +151,7 @@
                             VerticalAlignment="Bottom"
                             x:Load="False"
                             Data="M4 0C4 1.19469 3.47624 2.26706 2.64582 3H0C1.65685 3 3 1.65685 3 0H4Z"
-                            Fill="Transparent"
+                            Fill="{ThemeResource TabViewBorderBrush}"
                             Visibility="Collapsed" />
                         <Path
                             x:Name="RightRadiusRenderArc"
@@ -162,7 +162,7 @@
                             VerticalAlignment="Bottom"
                             x:Load="False"
                             Data="M0 0C0 1.19469 0.523755 2.26706 1.35418 3H4C2.34315 3 1 1.65685 1 0H0Z"
-                            Fill="Transparent"
+                            Fill="{ThemeResource TabViewBorderBrush}"
                             Visibility="Collapsed" />
                         <!--  This Path wrapped in a Canvas to prevent an infinite loop in calculating its width.  -->
                         <Canvas>
@@ -188,7 +188,7 @@
                             x:Name="TabDragVisualContainer"
                             Grid.Column="1"
                             Background="Transparent"
-                            BorderBrush="Transparent"
+                            BorderBrush="{ThemeResource TabViewBorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding CornerRadius}"
                             Visibility="Collapsed" />

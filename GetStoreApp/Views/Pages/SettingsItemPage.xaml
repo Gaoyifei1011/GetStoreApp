@@ -60,6 +60,10 @@
             TabItemsSource="{x:Bind SettingsItemTabList}"
             TabWidthMode="SizeToContent">
 
+            <TabView.Resources>
+                <SolidColorBrush x:Key="TabViewBorderBrush" Color="Transparent" />
+            </TabView.Resources>
+
             <TabView.TabItemTemplate>
                 <DataTemplate x:DataType="x:String">
                     <TabViewItem
