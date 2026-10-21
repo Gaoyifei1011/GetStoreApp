@@ -10,6 +10,7 @@ using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
+using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using GetStoreApp.WindowsAPI.PInvoke.Uxtheme;
 using Microsoft.UI;
@@ -516,7 +517,7 @@ namespace GetStoreApp.Views.Windows
 
             // 初始化启动信息
             AppLaunchArguments appLaunchArguments = DesktopLaunchService.AppLaunchArguments;
-            await ParseAppLaunchArgumentsAsync(appLaunchArguments, true);
+            await ParseAppLaunchArgumentsAsync(AppWindow.Id, appLaunchArguments, true);
         }
 
         /// <summary>
@@ -617,7 +618,7 @@ namespace GetStoreApp.Views.Windows
             DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
             {
                 // 初始化启动信息
-                await ParseAppLaunchArgumentsAsync(args, false);
+                await ParseAppLaunchArgumentsAsync(AppWindow.Id, args, false);
             });
         }
 
@@ -1120,7 +1121,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 解析应用启动参数
         /// </summary>
-        private async Task ParseAppLaunchArgumentsAsync(AppLaunchArguments appLaunchArguments, bool isFirstLaunch)
+        private async Task ParseAppLaunchArgumentsAsync(Microsoft.UI.WindowId windowId, AppLaunchArguments appLaunchArguments, bool isFirstLaunch)
         {
             Activate();
 
@@ -1260,6 +1261,7 @@ namespace GetStoreApp.Views.Windows
                         }
                         else if (appLaunchArguments.SubParameterList[0] is "AppInstallSettings")
                         {
+                            BringWindowToForeground(Win32Interop.GetWindowFromWindowId(AppWindow.Id));
                             if (GetFrameContent() is not SettingsPage)
                             {
                                 NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.AppInstall);
@@ -1657,6 +1659,29 @@ namespace GetStoreApp.Views.Windows
                     ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 }
             });
+        }
+
+        /// <summary>
+        /// 把应用窗口带到前台
+        /// </summary>
+        private void BringWindowToForeground(nint hWnd)
+        {
+            nint hCurWnd = User32Library.GetForegroundWindow();
+
+            if (Equals(hCurWnd, hWnd))
+            {
+                return;
+            }
+
+            uint dwMyID = Kernel32Library.GetCurrentThreadId();
+            User32Library.GetWindowThreadProcessId(hCurWnd, out uint dwCurID);
+            User32Library.AttachThreadInput(dwCurID, dwMyID, true);
+            User32Library.SetWindowPos(hWnd, -1, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOMOVE);
+            User32Library.SetWindowPos(hWnd, -2, 0, 0, 0, 0, SetWindowPosFlags.SWP_SHOWWINDOW | SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOMOVE);
+            User32Library.SetForegroundWindow(hWnd);
+            User32Library.SetFocus(hWnd);
+            Activate();
+            User32Library.AttachThreadInput(dwCurID, dwMyID, false);
         }
 
         #endregion 第六部分：数据操作与业务逻辑

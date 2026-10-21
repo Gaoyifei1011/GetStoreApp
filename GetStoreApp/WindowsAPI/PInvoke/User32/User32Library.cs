@@ -13,6 +13,33 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         private const string User32 = "user32.dll";
 
         /// <summary>
+        /// 将一个线程的输入处理机制附加到或分离另一个线程的输入处理机制。
+        /// </summary>
+        /// <param name="idAttach">要附加到另一个线程的线程的标识符。 要附加的线程不能是系统线程。</param>
+        /// <param name="idAttachTo">idAttach 将附加到的线程的标识符。 此线程不能是系统线程。线程无法附加到自身。 因此， idAttachTo 不能等于 idAttach。</param>
+        /// <param name="fAttach">如果此参数为 TRUE，则附加两个线程。 如果参数为 FALSE，则分离线程。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [LibraryImport(User32, EntryPoint = "AttachThreadInput", SetLastError = false), PreserveSig]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static partial bool AttachThreadInput(uint idAttach, uint idAttachTo, [MarshalAs(UnmanagedType.Bool)] bool fAttach);
+
+        /// <summary>
+        /// 检索前台窗口的句柄， (用户当前正在使用) 窗口。 系统为创建前台窗口的线程分配的优先级略高于其他线程的优先级。
+        /// </summary>
+        /// <returns>返回值是前台窗口的句柄。 在某些情况下（例如，当窗口丢失激活时），前台窗口可以为 NULL 。</returns>
+        [LibraryImport(User32, EntryPoint = "GetForegroundWindow", SetLastError = false), PreserveSig]
+        internal static partial nint GetForegroundWindow();
+
+        /// <summary>
+        /// 检索创建指定窗口的线程的标识符，以及创建该窗口的进程（可选）的标识符。
+        /// </summary>
+        /// <param name="hWnd">窗口的句柄。</param>
+        /// <param name="lpdwProcessId">指向接收进程标识符的变量的指针。 如果此参数不为 NULL， 则 GetWindowThreadProcessId 会将进程的标识符复制到变量;否则，它不会。 如果函数失败，则变量的值保持不变。</param>
+        /// <returns>如果函数成功，则返回值是创建窗口的线程的标识符。 如果窗口句柄无效，则返回值为零。</returns>
+        [LibraryImport(User32, EntryPoint = "GetWindowThreadProcessId", SetLastError = false), PreserveSig]
+        internal static partial uint GetWindowThreadProcessId(nint hWnd, out uint lpdwProcessId);
+
+        /// <summary>
         /// 创建从指定文件中提取的图标的句柄数组。
         /// </summary>
         /// <param name="lpszFile">要从中提取图标的文件的路径和名称。</param>
@@ -30,6 +57,23 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </returns>
         [LibraryImport(User32, EntryPoint = "PrivateExtractIconsW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
         internal static partial int PrivateExtractIcons([MarshalAs(UnmanagedType.LPWStr)] string lpszFile, int nIconIndex, int cxIcon, int cyIcon, [Out, MarshalAs(UnmanagedType.LPArray)] nint[] phicon, [Out, MarshalAs(UnmanagedType.LPArray)] int[] piconid, int nIcons, int flags);
+
+        /// <summary>
+        /// 将键盘焦点设置为指定的窗口。 窗口必须附加到调用线程的消息队列。
+        /// </summary>
+        /// <param name="hWnd">将接收键盘输入的窗口的句柄。 如果此参数为 NULL，则忽略击键。</param>
+        /// <returns>如果函数成功，则返回值是以前具有键盘焦点的窗口的句柄。 如果 hWnd 参数无效或窗口未附加到调用线程的消息队列，则返回值为 NULL。</returns>
+        [LibraryImport(User32, EntryPoint = "SetFocus", SetLastError = false), PreserveSig]
+        internal static partial nint SetFocus(nint hWnd);
+
+        /// <summary>
+        /// 将创建指定窗口的线程引入前台并激活窗口。 键盘输入将定向到窗口，用户会更改各种视觉提示。 系统为创建前台窗口的线程分配的优先级略高于其他线程。
+        /// </summary>
+        /// <param name="hWnd">应激活并带到前台的窗口的句柄。</param>
+        /// <returns>如果窗口被带到前台，则返回值为非零。如果未将窗口带到前台，则返回值为零。</returns>
+        [LibraryImport(User32, EntryPoint = "SetForegroundWindow", SetLastError = false), PreserveSig]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static partial bool SetForegroundWindow(nint hWnd);
 
         /// <summary>
         /// 将指定的消息发送到窗口或窗口。 SendMessage 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。
@@ -54,5 +98,20 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         [LibraryImport(User32, EntryPoint = "SetProcessDefaultLayout", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static partial bool SetProcessDefaultLayout(uint dwDefaultLayout);
+
+        /// <summary>
+        /// 更改子窗口、弹出窗口或顶级窗口的大小、位置和 Z 顺序。 这些窗口根据屏幕上的外观进行排序。 最上面的窗口接收最高排名，是 Z 顺序中的第一个窗口。
+        /// </summary>
+        /// <param name="hWnd">更改子窗口、弹出窗口或顶级窗口的大小、位置和 Z 顺序。 这些窗口根据屏幕上的外观进行排序。 最上面的窗口接收最高排名，是 Z 顺序中的第一个窗口。</param>
+        /// <param name="hWndInsertAfter">在 Z 顺序中定位窗口之前窗口的句柄。 </param>
+        /// <param name="X">以客户端坐标表示的窗口左侧的新位置。 </param>
+        /// <param name="Y">窗口顶部的新位置，以客户端坐标表示。</param>
+        /// <param name="cx">窗口的新宽度（以像素为单位）。</param>
+        /// <param name="cy">窗口的新高度（以像素为单位）。</param>
+        /// <param name="uFlags">窗口大小调整和定位标志。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 </returns>
+        [LibraryImport(User32, EntryPoint = "SetWindowPos", SetLastError = false), PreserveSig]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static partial bool SetWindowPos(nint hWnd, nint hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
     }
 }

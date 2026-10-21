@@ -50,6 +50,13 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         internal static partial nint GetCurrentProcess();
 
         /// <summary>
+        /// 检索调用线程的线程标识符。
+        /// </summary>
+        /// <returns>返回值是调用线程的线程标识符。</returns>
+        [LibraryImport(Kernel32, EntryPoint = "GetCurrentThreadId", SetLastError = false), PreserveSig]
+        internal static partial uint GetCurrentThreadId();
+
+        /// <summary>
         /// 检索指定进程的计时信息。
         /// </summary>
         /// <param name="hProcess">要获取其计时信息的进程的句柄。 句柄必须具有 PROCESS_QUERY_INFORMATION 或 PROCESS_QUERY_LIMITED_INFORMATION 访问权限。</param>
