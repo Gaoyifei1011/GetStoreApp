@@ -105,7 +105,7 @@ namespace GetStoreApp
             QueryLinksModeService.InitializeQueryLinksMode();
             AppLinkOpenModeService.InitializeAppLinkOpenMode();
             await DownloadOptionsService.InitializeDownloadOptionsAsync();
-            WindowInfoService.Initialize(nameof(MainWindow));
+            WindowPlacementService.Initialize();
             DownloadStorageService.Initialize();
             AppInstallService.InitializeAppInstall();
 

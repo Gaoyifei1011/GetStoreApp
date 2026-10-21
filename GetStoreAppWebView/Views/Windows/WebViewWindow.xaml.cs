@@ -314,7 +314,13 @@ namespace GetStoreAppWebView.Views.Windows
             WebViewBrowser?.Close();
             DismountWindowEvent(AppWindow);
             DismountWindowWndProc(sender.Id);
-            WindowInfoService.SaveWindowInfo(AppWindow);
+            WINDOWPLACEMENT windowPlacement = new();
+            unsafe
+            {
+                windowPlacement.length = sizeof(WINDOWPLACEMENT);
+            }
+            User32Library.GetWindowPlacement(Win32Interop.GetWindowFromWindowId(AppWindow.Id), ref windowPlacement);
+            WindowPlacementService.SaveWindowPlacement(nameof(WebViewWindow), windowPlacement);
             (Application.Current as WebViewApp).Dispose();
         }
 
@@ -801,27 +807,14 @@ namespace GetStoreAppWebView.Views.Windows
                 return;
             }
 
-            RectInt32 workArea = DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Primary).WorkArea;
-            if (WindowInfoService.IsWindowInformationExisted())
+            WINDOWPLACEMENT? windowPlacement = WindowPlacementService.GetWindowPlacement(contentIsland.RasterizationScale, nameof(WebViewWindow));
+            if (windowPlacement.HasValue)
             {
-                PointInt32 position = WindowInfoService.GetWindowInfo();
-
-                int left = position.X;
-                int top = position.Y;
-                int right = position.X + Convert.ToInt32(1000 * contentIsland.RasterizationScale);
-                int bottom = position.Y + Convert.ToInt32(700 * contentIsland.RasterizationScale);
-
-                if (left > 0 && top > 0 && right < workArea.Width && bottom < workArea.Height)
-                {
-                    appWindow.Move(position);
-                }
-                else
-                {
-                    appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
-                }
+                User32Library.SetWindowPlacement(Win32Interop.GetWindowFromWindowId(AppWindow.Id), windowPlacement.Value);
             }
             else
             {
+                RectInt32 workArea = DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Primary).WorkArea;
                 appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
             }
         }

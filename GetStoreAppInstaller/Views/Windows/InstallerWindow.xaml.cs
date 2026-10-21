@@ -1018,7 +1018,13 @@ namespace GetStoreAppInstaller.Views.Windows
             DismountWindowEvent(AppWindow);
             DismountWindowWndProc(sender.Id);
             DisableElevatedDragDrop();
-            WindowInfoService.SaveWindowInfo(AppWindow);
+            WINDOWPLACEMENT windowPlacement = new();
+            unsafe
+            {
+                windowPlacement.length = sizeof(WINDOWPLACEMENT);
+            }
+            User32Library.GetWindowPlacement(Win32Interop.GetWindowFromWindowId(AppWindow.Id), ref windowPlacement);
+            WindowPlacementService.SaveWindowPlacement(nameof(InstallerWindow), windowPlacement);
             (Application.Current as InstallerApp).Dispose();
         }
 
@@ -1748,7 +1754,7 @@ namespace GetStoreAppInstaller.Views.Windows
             }
 
             rasterizationScale = contentIsland.RasterizationScale;
-            appWindow.Resize(new(Convert.ToInt32(801 * contentIsland.RasterizationScale), Convert.ToInt32(561 * contentIsland.RasterizationScale)));
+            appWindow.Resize(new(Convert.ToInt32(800 * contentIsland.RasterizationScale), Convert.ToInt32(560 * contentIsland.RasterizationScale)));
         }
 
         /// <summary>
@@ -1756,36 +1762,20 @@ namespace GetStoreAppInstaller.Views.Windows
         /// </summary>
         private void SetWindowInformation(AppWindow appWindow)
         {
-            if (appWindow is null)
+            if (appWindow is null || contentIsland is null)
             {
                 return;
             }
 
-            if (contentIsland is not null)
+            WINDOWPLACEMENT? windowPlacement = WindowPlacementService.GetWindowPlacement(contentIsland.RasterizationScale, nameof(InstallerWindow));
+            if (windowPlacement.HasValue)
+            {
+                User32Library.SetWindowPlacement(Win32Interop.GetWindowFromWindowId(AppWindow.Id), windowPlacement.Value);
+            }
+            else
             {
                 RectInt32 workArea = DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Primary).WorkArea;
-                if (WindowInfoService.IsWindowInformationExisted())
-                {
-                    PointInt32 position = WindowInfoService.GetWindowInfo();
-
-                    int left = position.X;
-                    int top = position.Y;
-                    int right = position.X + Convert.ToInt32(800 * contentIsland.RasterizationScale);
-                    int bottom = position.Y + Convert.ToInt32(560 * contentIsland.RasterizationScale);
-
-                    if (left > 0 && top > 0 && right < workArea.Width && bottom < workArea.Height)
-                    {
-                        AppWindow.Move(position);
-                    }
-                    else
-                    {
-                        appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
-                    }
-                }
-                else
-                {
-                    appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
-                }
+                appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
             }
         }
 

@@ -78,7 +78,7 @@ namespace GetStoreAppWebView
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
             await DownloadOptionsService.InitializeDownloadOptionsAsync();
 
-            WindowInfoService.Initialize(nameof(WebViewWindow));
+            WindowPlacementService.Initialize();
             AlwaysShowBackdropService.InitializeAlwaysShowBackdrop();
             BackdropService.InitializeBackdrop();
             ThemeService.InitializeTheme();

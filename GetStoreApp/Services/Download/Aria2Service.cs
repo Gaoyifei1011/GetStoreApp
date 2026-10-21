@@ -3,6 +3,7 @@ using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Windows.Storage;
 using System;
 using System.Collections.Generic;
@@ -74,7 +75,7 @@ namespace GetStoreApp.Services.Download
             {
                 try
                 {
-                    Shell32Library.ShellExecute(nint.Zero, "open", aria2FilePath, aria2Arguments, null, WindowShowStyle.SW_HIDE);
+                    Shell32Library.ShellExecute(nint.Zero, "open", aria2FilePath, aria2Arguments, null, SHOWWINDOWCMD.SW_HIDE);
                     aria2Timer = ThreadPoolTimer.CreatePeriodicTimer(OnTimerElapsed, TimeSpan.FromSeconds(1));
                 }
                 catch (Exception e)

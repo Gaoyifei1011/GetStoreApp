@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 // 抑制 CA1401 警告
 #pragma warning disable CA1401
@@ -21,6 +22,42 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         [LibraryImport(User32, EntryPoint = "ChangeWindowMessageFilter", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static partial bool ChangeWindowMessageFilter(WindowMessage message, ChangeFilterFlags dwFlag);
+
+        /// <summary>
+        /// EnumDisplayMonitors 函数枚举显示监视器 (包括与镜像驱动程序关联的不可见伪监视器) ，这些监视器与指定剪裁矩形的交集与设备上下文的可见区域相交而形成的区域相交。 EnumDisplayMonitors 为枚举的每个监视器调用一次应用程序定义的 MonitorEnumProc 回调函数。 请注意， GetSystemMetrics (SM_CMONITORS) 仅对显示监视器进行计数。
+        /// </summary>
+        /// <param name="hdc">
+        /// 显示设备上下文的句柄，用于定义感兴趣的可见区域。
+        /// 如果此参数为 NULL，则传递给回调函数的 hdcMonitor 参数将为 NULL，并且关注的可见区域是包含桌面上所有显示器的虚拟屏幕。
+        /// </param>
+        /// <param name="lprcClip">
+        /// 指向指定剪裁矩形的 RECT 结构的指针。 感兴趣区域是剪裁矩形与 hdc 指定的可见区域的交集。
+        /// 如果 hdc 为非 NULL，则剪裁矩形的坐标相对于 hdc 的原点。 如果 hdc 为 NULL，则坐标为虚拟屏幕坐标。
+        /// 如果不想剪辑 hdc 指定的区域，此参数可以为 NULL。</param>
+        /// <param name="lpfnEnum">指向 MonitorEnumProc 应用程序定义的回调函数的指针。</param>
+        /// <param name="dwData">EnumDisplayMonitors 直接传递给 MonitorEnumProc 函数的应用程序定义数据。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [LibraryImport(User32, EntryPoint = "EnumDisplayMonitors", SetLastError = false), PreserveSig]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static partial bool EnumDisplayMonitors(nint hdc, nint lprcClip, MONITORENUMPROC lpfnEnum, nint dwData);
+
+        /// <summary>
+        /// 返回指定窗口的每英寸点数 (dpi) 值。
+        /// </summary>
+        /// <param name="hwnd">要获取其相关信息的窗口。</param>
+        /// <returns>窗口的 DPI，取决于窗口 DPI_AWARENESS 。 有关详细信息，请参阅备注部分。 无效 的 hwnd 值将导致返回值 0。</returns>
+        [LibraryImport(User32, EntryPoint = "GetDpiForWindow", SetLastError = false), PreserveSig]
+        internal static partial uint GetDpiForWindow(nint hwnd);
+
+        /// <summary>
+        /// 检索指定窗口的显示状态以及还原、最小化和最大化的位置。
+        /// </summary>
+        /// <param name="hWnd">窗口的句柄。</param>
+        /// <param name="lpwndpl">指向接收显示状态和位置信息的 WINDOWPLACEMENT 结构的指针。 在调用 GetWindowPlacement 之前，请将 length 成员设置为 sizeof(WINDOWPLACEMENT)。 如果未正确设置 lpwndpl-length，GetWindowPlacement > 将失败。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [LibraryImport(User32, EntryPoint = "GetWindowPlacement", SetLastError = false), PreserveSig]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static partial bool GetWindowPlacement(nint hWnd, ref WINDOWPLACEMENT lpwndpl);
 
         /// <summary>
         /// 创建从指定文件中提取的图标的句柄数组。
@@ -64,5 +101,15 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         [LibraryImport(User32, EntryPoint = "SetProcessDefaultLayout", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static partial bool SetProcessDefaultLayout(uint dwDefaultLayout);
+
+        /// <summary>
+        /// 设置指定窗口的显示状态和还原、最小化和最大化的位置。
+        /// </summary>
+        /// <param name="hWnd">窗口的句柄。</param>
+        /// <param name="lpwndpl">指向 WINDOWPLACEMENT 结构的指针，该结构指定新的显示状态和窗口位置。在调用 SetWindowPlacement 之前，请将 WINDOWPLACEMENT 结构的长度成员设置为 sizeof (WINDOWPLACEMENT) 。 如果未正确设置长度成员，SetWindowPlacement 将失败。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [LibraryImport(User32, EntryPoint = "SetWindowPlacement", SetLastError = false), PreserveSig]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static partial bool SetWindowPlacement(nint hWnd, WINDOWPLACEMENT lpwndpl);
     }
 }

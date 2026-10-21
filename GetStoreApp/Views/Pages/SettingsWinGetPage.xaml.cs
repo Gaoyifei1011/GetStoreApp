@@ -3,6 +3,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -167,7 +168,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     else
                     {
-                        Shell32Library.ShellExecute(nint.Zero, "open", "winget.exe", "settings", null, WindowShowStyle.SW_HIDE);
+                        Shell32Library.ShellExecute(nint.Zero, "open", "winget.exe", "settings", null, SHOWWINDOWCMD.SW_HIDE);
                     }
                 }
             });

@@ -5,6 +5,7 @@ using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -338,7 +339,7 @@ namespace GetStoreApp.Views.Pages
         {
             int result = await Task.Run(() =>
             {
-                return Shell32Library.ShellExecute(nint.Zero, "runas", Path.Combine(InfoHelper.UserDataPath.LocalAppData, @"Microsoft\WindowsApps", Package.Current.Id.FamilyName, Path.GetFileName(Environment.ProcessPath)), null, null, WindowShowStyle.SW_SHOWNORMAL);
+                return Shell32Library.ShellExecute(nint.Zero, "runas", Path.Combine(InfoHelper.UserDataPath.LocalAppData, @"Microsoft\WindowsApps", Package.Current.Id.FamilyName, Path.GetFileName(Environment.ProcessPath)), null, null, SHOWWINDOWCMD.SW_SHOWNORMAL);
             });
 
             //返回值大于 32 代表函数执行成功

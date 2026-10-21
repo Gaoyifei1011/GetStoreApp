@@ -333,7 +333,13 @@ namespace GetStoreApp.Views.Windows
                 {
                     DismountWindowEvent(AppWindow);
                     DismountWindowWndProc(sender.Id);
-                    WindowInfoService.SaveWindowInfo(AppWindow, IsWindowMaximized);
+                    WINDOWPLACEMENT windowPlacement = new();
+                    unsafe
+                    {
+                        windowPlacement.length = sizeof(WINDOWPLACEMENT);
+                    }
+                    User32Library.GetWindowPlacement(Win32Interop.GetWindowFromWindowId(AppWindow.Id), ref windowPlacement);
+                    WindowPlacementService.SaveWindowPlacement(nameof(MainWindow), windowPlacement);
                     DownloadSchedulerService.TerminateDownload();
                     (Application.Current as MainApp).Dispose();
                 }
@@ -349,7 +355,13 @@ namespace GetStoreApp.Views.Windows
             {
                 DismountWindowEvent(AppWindow);
                 DismountWindowWndProc(sender.Id);
-                WindowInfoService.SaveWindowInfo(AppWindow, IsWindowMaximized);
+                WINDOWPLACEMENT windowPlacement = new();
+                unsafe
+                {
+                    windowPlacement.length = sizeof(WINDOWPLACEMENT);
+                }
+                User32Library.GetWindowPlacement(Win32Interop.GetWindowFromWindowId(AppWindow.Id), ref windowPlacement);
+                WindowPlacementService.SaveWindowPlacement(nameof(MainWindow), windowPlacement);
                 (Application.Current as MainApp).Dispose();
             }
         }
@@ -834,35 +846,14 @@ namespace GetStoreApp.Views.Windows
                 return;
             }
 
-            RectInt32 workArea = DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Primary).WorkArea;
-            if (WindowInfoService.IsWindowInformationExisted())
+            WINDOWPLACEMENT? windowPlacement = WindowPlacementService.GetWindowPlacement(nameof(MainWindow));
+            if (windowPlacement.HasValue)
             {
-                (bool isWindowMaximized, RectInt32 positionAndSize) = WindowInfoService.GetWindowInfo();
-
-                if (isWindowMaximized)
-                {
-                    overlappedPresenter.Maximize();
-                    appWindow.Show();
-                }
-                else
-                {
-                    int left = positionAndSize.X;
-                    int top = positionAndSize.Y;
-                    int right = positionAndSize.X + positionAndSize.Width;
-                    int bottom = positionAndSize.Y + positionAndSize.Height;
-
-                    if (left > 0 && top > 0 && right < workArea.Width && bottom < workArea.Height)
-                    {
-                        appWindow.MoveAndResize(positionAndSize);
-                    }
-                    else
-                    {
-                        appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
-                    }
-                }
+                User32Library.SetWindowPlacement(Win32Interop.GetWindowFromWindowId(AppWindow.Id), windowPlacement.Value);
             }
             else
             {
+                RectInt32 workArea = DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Primary).WorkArea;
                 appWindow.Move(new((workArea.Width - appWindow.Size.Width) / 2, (workArea.Height - appWindow.Size.Height) / 2));
             }
         }

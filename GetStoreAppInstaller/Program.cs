@@ -3,6 +3,7 @@ using GetStoreAppInstaller.Services.Root;
 using GetStoreAppInstaller.Services.Settings;
 using GetStoreAppInstaller.Views.Windows;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32;
+using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.IO;
@@ -31,7 +32,7 @@ namespace GetStoreAppInstaller
 
             if (!RuntimeHelper.IsMSIX)
             {
-                Shell32Library.ShellExecute(nint.Zero, "open", "GetStoreAppInstaller.exe", null, null, WindowShowStyle.SW_SHOWNORMAL);
+                Shell32Library.ShellExecute(nint.Zero, "open", "GetStoreAppInstaller.exe", null, null, SHOWWINDOWCMD.SW_SHOWNORMAL);
                 return;
             }
 
@@ -78,7 +79,7 @@ namespace GetStoreAppInstaller
             LanguageService.InitializeLanguage();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
 
-            WindowInfoService.Initialize(nameof(InstallerWindow));
+            WindowPlacementService.Initialize();
             AlwaysShowBackdropService.InitializeAlwaysShowBackdrop();
             BackdropService.InitializeBackdrop();
             ThemeService.InitializeTheme();

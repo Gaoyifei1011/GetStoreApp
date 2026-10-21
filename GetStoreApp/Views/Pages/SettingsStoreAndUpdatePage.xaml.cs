@@ -7,6 +7,7 @@ using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Advapi32;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -700,7 +701,7 @@ namespace GetStoreApp.Views.Pages
         {
             Task.Run(() =>
             {
-                Shell32Library.ShellExecute(nint.Zero, "open", "wsreset.exe", string.Empty, null, WindowShowStyle.SW_SHOWNORMAL);
+                Shell32Library.ShellExecute(nint.Zero, "open", "wsreset.exe", string.Empty, null, SHOWWINDOWCMD.SW_SHOWNORMAL);
             });
         }
 
