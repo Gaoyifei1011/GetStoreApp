@@ -99,7 +99,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// <param name="phkResult">一个变量的指针，此变量指向已打开键的句柄。</param>
         /// <returns>如果函数成功，则返回值为 ERROR_SUCCESS。如果函数失败，则返回值为 Winerror.h 中定义的非零错误代码。</returns>
         [LibraryImport(Advapi32, EntryPoint = "RegOpenKeyExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
-        internal static partial int RegOpenKeyEx(nuint hKey, [MarshalAs(UnmanagedType.LPWStr)] string lpSubKey, int ulOptions, RegistryAccessRights samDesired, out nint phkResult);
+        internal static partial int RegOpenKeyEx(nuint hKey, [MarshalAs(UnmanagedType.LPWStr)] string lpSubKey, int ulOptions, REGSAM samDesired, out nint phkResult);
 
         /// <summary>
         /// 检索与打开的注册表项关联的指定值名称的类型和数据。

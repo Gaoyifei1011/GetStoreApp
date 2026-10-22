@@ -1667,8 +1667,8 @@ namespace GetStoreApp.Views.Windows
             uint dwMyID = Kernel32Library.GetCurrentThreadId();
             User32Library.GetWindowThreadProcessId(hCurWnd, out uint dwCurID);
             User32Library.AttachThreadInput(dwCurID, dwMyID, true);
-            User32Library.SetWindowPos(hWnd, -1, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOMOVE);
-            User32Library.SetWindowPos(hWnd, -2, 0, 0, 0, 0, SetWindowPosFlags.SWP_SHOWWINDOW | SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOMOVE);
+            User32Library.SetWindowPos(hWnd, -1, 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE);
+            User32Library.SetWindowPos(hWnd, -2, 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW | SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE);
             User32Library.SetForegroundWindow(hWnd);
             User32Library.SetFocus(hWnd);
             Activate();

@@ -151,6 +151,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 </returns>
         [LibraryImport(User32, EntryPoint = "SetWindowPos", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static partial bool SetWindowPos(nint hWnd, nint hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
+        internal static partial bool SetWindowPos(nint hWnd, nint hWndInsertAfter, int X, int Y, int cx, int cy, SET_WINDOW_POS_FLAGS uFlags);
     }
 }

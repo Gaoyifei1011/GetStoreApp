@@ -6,7 +6,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
     /// 窗口大小调整和定位标志。
     /// </summary>
     [Flags]
-    internal enum SetWindowPosFlags : uint
+    internal enum SET_WINDOW_POS_FLAGS : uint
     {
         /// <summary>
         /// 如果调用线程和拥有窗口的线程附加到不同的输入队列，系统会将请求发布到拥有该窗口的线程。

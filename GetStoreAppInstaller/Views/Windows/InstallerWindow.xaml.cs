@@ -3466,8 +3466,8 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             if (RuntimeHelper.IsElevated)
             {
-                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_DROPFILES, ChangeFilterFlags.MSGFLT_ADD);
-                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_COPYGLOBALDATA, ChangeFilterFlags.MSGFLT_ADD);
+                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_DROPFILES, MSGFLT.MSGFLT_ADD);
+                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_COPYGLOBALDATA, MSGFLT.MSGFLT_ADD);
                 Shell32Library.DragAcceptFiles(Win32Interop.GetWindowFromWindowId(windowId), true);
             }
         }
@@ -3479,8 +3479,8 @@ namespace GetStoreAppInstaller.Views.Windows
         {
             if (RuntimeHelper.IsElevated)
             {
-                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_DROPFILES, ChangeFilterFlags.MSGFLT_REMOVE);
-                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_COPYGLOBALDATA, ChangeFilterFlags.MSGFLT_REMOVE);
+                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_DROPFILES, MSGFLT.MSGFLT_REMOVE);
+                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_COPYGLOBALDATA, MSGFLT.MSGFLT_REMOVE);
             }
         }
 

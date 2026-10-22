@@ -15,6 +15,9 @@
         /// </summary>
         SW_SHOWNORMAL = 1,
 
+        /// <summary>
+        /// 激活并显示窗口。 如果窗口最小化或最大化，系统会将其还原到其原始大小和位置。 首次显示窗口时，应用程序应指定此标志。
+        /// </summary>
         SW_NORMAL = SW_SHOWNORMAL,
 
         /// <summary>

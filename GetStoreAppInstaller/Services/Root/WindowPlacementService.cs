@@ -33,7 +33,7 @@ namespace GetStoreAppInstaller.Services.Root
         /// </summary>
         internal static unsafe WINDOWPLACEMENT? GetWindowPlacement(double dpi, string windowName)
         {
-            if (!string.IsNullOrEmpty(windowName) && windowInfoServiceContainer is not null)
+            if (isInitialized && !string.IsNullOrEmpty(windowName) && windowInfoServiceContainer is not null)
             {
                 try
                 {
@@ -46,14 +46,14 @@ namespace GetStoreAppInstaller.Services.Root
                         for (uint index = 0; index < monitorArray.Count; index++)
                         {
                             JsonObject monitorObject = monitorArray.GetObjectAt(index);
-                            int left = Convert.ToInt32(monitorObject.GetNamedNumber("Left"));
-                            int top = Convert.ToInt32(monitorObject.GetNamedNumber("Top"));
-                            int right = Convert.ToInt32(monitorObject.GetNamedNumber("Right"));
-                            int bottom = Convert.ToInt32(monitorObject.GetNamedNumber("Bottom"));
+                            int left = Convert.ToInt32(monitorObject.GetNamedNumber("left"));
+                            int top = Convert.ToInt32(monitorObject.GetNamedNumber("top"));
+                            int right = Convert.ToInt32(monitorObject.GetNamedNumber("right"));
+                            int bottom = Convert.ToInt32(monitorObject.GetNamedNumber("bottom"));
 
                             foreach (RECT monitorInfo in monitorInfoList)
                             {
-                                if (!Equals(monitorInfo.Left, left) || !Equals(monitorInfo.Top, top) || !Equals(monitorInfo.Right, right) || !Equals(monitorInfo.Bottom, bottom))
+                                if (!Equals(monitorInfo.left, left) || !Equals(monitorInfo.top, top) || !Equals(monitorInfo.right, right) || !Equals(monitorInfo.bottom, bottom))
                                 {
                                     return null;
                                 }
@@ -75,10 +75,10 @@ namespace GetStoreAppInstaller.Services.Root
                         windowPlacement.ptMinPosition.Y = Convert.ToInt32(windowPlacementObject.GetNamedNumber("MinPositionY"));
                         windowPlacement.ptMaxPosition.X = Convert.ToInt32(windowPlacementObject.GetNamedNumber("MaxPositionX"));
                         windowPlacement.ptMaxPosition.Y = Convert.ToInt32(windowPlacementObject.GetNamedNumber("MaxPositionY"));
-                        windowPlacement.rcNormalPosition.Left = Convert.ToInt32(windowPlacementObject.GetNamedNumber("RcNormalPositionLeft"));
-                        windowPlacement.rcNormalPosition.Top = Convert.ToInt32(windowPlacementObject.GetNamedNumber("RcNormalPositionTop"));
-                        windowPlacement.rcNormalPosition.Right = Convert.ToInt32(windowPlacement.rcNormalPosition.Left + 800 * dpi);
-                        windowPlacement.rcNormalPosition.Bottom = Convert.ToInt32(windowPlacement.rcNormalPosition.Top + 560 * dpi);
+                        windowPlacement.rcNormalPosition.left = Convert.ToInt32(windowPlacementObject.GetNamedNumber("RcNormalPositionLeft"));
+                        windowPlacement.rcNormalPosition.top = Convert.ToInt32(windowPlacementObject.GetNamedNumber("RcNormalPositionTop"));
+                        windowPlacement.rcNormalPosition.right = Convert.ToInt32(windowPlacement.rcNormalPosition.left + 800 * dpi);
+                        windowPlacement.rcNormalPosition.bottom = Convert.ToInt32(windowPlacement.rcNormalPosition.top + 560 * dpi);
                         return windowPlacement;
                     }
                     else
@@ -103,7 +103,7 @@ namespace GetStoreAppInstaller.Services.Root
         /// </summary>
         internal static void SaveWindowPlacement(string windowName, WINDOWPLACEMENT windowPlacement)
         {
-            if (!string.IsNullOrEmpty(windowName) && windowInfoServiceContainer is not null)
+            if (isInitialized && !string.IsNullOrEmpty(windowName) && windowInfoServiceContainer is not null)
             {
                 try
                 {
@@ -116,10 +116,10 @@ namespace GetStoreAppInstaller.Services.Root
                     {
                         JsonObject monitorObject = new()
                         {
-                            ["Left"] = JsonValue.CreateNumberValue(monitorInfo.Left),
-                            ["Top"] = JsonValue.CreateNumberValue(monitorInfo.Top),
-                            ["Right"] = JsonValue.CreateNumberValue(monitorInfo.Right),
-                            ["Bottom"] = JsonValue.CreateNumberValue(monitorInfo.Bottom),
+                            ["left"] = JsonValue.CreateNumberValue(monitorInfo.left),
+                            ["top"] = JsonValue.CreateNumberValue(monitorInfo.top),
+                            ["right"] = JsonValue.CreateNumberValue(monitorInfo.right),
+                            ["bottom"] = JsonValue.CreateNumberValue(monitorInfo.bottom),
                         };
                         monitorArray.Add(monitorObject);
                     }
@@ -134,8 +134,8 @@ namespace GetStoreAppInstaller.Services.Root
                         ["MinPositionY"] = JsonValue.CreateNumberValue(windowPlacement.ptMinPosition.Y),
                         ["MaxPositionX"] = JsonValue.CreateNumberValue(windowPlacement.ptMaxPosition.X),
                         ["MaxPositionY"] = JsonValue.CreateNumberValue(windowPlacement.ptMinPosition.Y),
-                        ["RcNormalPositionLeft"] = JsonValue.CreateNumberValue(windowPlacement.rcNormalPosition.Left),
-                        ["RcNormalPositionTop"] = JsonValue.CreateNumberValue(windowPlacement.rcNormalPosition.Top),
+                        ["RcNormalPositionLeft"] = JsonValue.CreateNumberValue(windowPlacement.rcNormalPosition.left),
+                        ["RcNormalPositionTop"] = JsonValue.CreateNumberValue(windowPlacement.rcNormalPosition.top),
                     };
                     windowPlacementRootObject["WindowPlacement"] = windowPlacementObject;
                     windowInfoServiceContainer.Values[windowName] = windowPlacementRootObject.Stringify();

@@ -96,7 +96,7 @@ namespace GetStoreAppShellExtension.Commands
                     arguments += " -ForceTargetApplicationShutdown";
                 }
 
-                Shell32Library.ShellExecute(nint.Zero, "runas", "PowerShell.exe", arguments, Path.GetDirectoryName(filePath), WindowShowStyle.SW_SHOWNORMAL);
+                Shell32Library.ShellExecute(nint.Zero, "runas", "PowerShell.exe", arguments, Path.GetDirectoryName(filePath), SHOWWINDOWCMD.SW_SHOWNORMAL);
             }
             return 0;
         }

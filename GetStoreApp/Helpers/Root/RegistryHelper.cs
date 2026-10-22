@@ -22,7 +22,7 @@ namespace GetStoreApp.Helpers.Root
             T value = default;
             try
             {
-                if ((Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CLASSES_ROOT) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_CONFIG) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_USER) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_LOCAL_MACHINE) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_PERFORMANCE_DATA) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_USERS)) && Advapi32Library.RegOpenKeyEx(rootRegistryKey, rootKey, 0, RegistryAccessRights.KEY_READ, out nint hKey) is 0)
+                if ((Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CLASSES_ROOT) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_CONFIG) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_USER) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_LOCAL_MACHINE) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_PERFORMANCE_DATA) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_USERS)) && Advapi32Library.RegOpenKeyEx(rootRegistryKey, rootKey, 0, REGSAM.KEY_READ, out nint hKey) is 0)
                 {
                     int size = 0;
                     object getValue = null;
@@ -117,7 +117,7 @@ namespace GetStoreApp.Helpers.Root
         {
             try
             {
-                if ((Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CLASSES_ROOT) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_CONFIG) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_USER) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_LOCAL_MACHINE) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_PERFORMANCE_DATA) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_USERS)) && Advapi32Library.RegOpenKeyEx(rootRegistryKey, rootKey, 0, RegistryAccessRights.KEY_ALL_ACCESS, out nint hKey) is 0)
+                if ((Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CLASSES_ROOT) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_CONFIG) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_USER) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_LOCAL_MACHINE) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_PERFORMANCE_DATA) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_USERS)) && Advapi32Library.RegOpenKeyEx(rootRegistryKey, rootKey, 0, REGSAM.KEY_ALL_ACCESS, out nint hKey) is 0)
                 {
                     REG_VALUE_TYPE regValueType = REG_VALUE_TYPE.REG_NONE;
                     byte[] saveData = [];
@@ -200,7 +200,7 @@ namespace GetStoreApp.Helpers.Root
         {
             try
             {
-                if ((Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CLASSES_ROOT) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_CONFIG) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_USER) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_LOCAL_MACHINE) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_PERFORMANCE_DATA) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_USERS)) && Advapi32Library.RegOpenKeyEx(rootRegistryKey, rootKey, 0, RegistryAccessRights.KEY_ALL_ACCESS, out nint hKey) is 0)
+                if ((Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CLASSES_ROOT) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_CONFIG) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_USER) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_LOCAL_MACHINE) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_PERFORMANCE_DATA) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_USERS)) && Advapi32Library.RegOpenKeyEx(rootRegistryKey, rootKey, 0, REGSAM.KEY_ALL_ACCESS, out nint hKey) is 0)
                 {
                     Advapi32Library.RegDeleteValue(hKey, key);
                     Advapi32Library.RegCloseKey(hKey);

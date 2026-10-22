@@ -22,7 +22,7 @@ namespace GetStoreApp.Helpers.Root
             T value = default;
             try
             {
-                if ((Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CLASSES_ROOT) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_CONFIG) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_USER) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_LOCAL_MACHINE) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_PERFORMANCE_DATA) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_USERS)) && Advapi32Library.RegOpenKeyEx(rootRegistryKey, rootKey, 0, RegistryAccessRights.KEY_READ, out nint hKey) is 0)
+                if ((Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CLASSES_ROOT) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_CONFIG) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_CURRENT_USER) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_LOCAL_MACHINE) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_PERFORMANCE_DATA) || Equals(rootRegistryKey, ReservedKeyHandles.HKEY_USERS)) && Advapi32Library.RegOpenKeyEx(rootRegistryKey, rootKey, 0, REGSAM.KEY_READ, out nint hKey) is 0)
                 {
                     int size = 0;
                     object getValue = null;

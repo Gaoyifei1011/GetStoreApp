@@ -3,7 +3,7 @@
     /// <summary>
     /// 过滤消息时指定的操作
     /// </summary>
-    internal enum ChangeFilterFlags : uint
+    internal enum MSGFLT : uint
     {
         /// <summary>
         /// 将消息添加到筛选器。这具有允许接收消息的效果。

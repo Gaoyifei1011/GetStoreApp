@@ -3,7 +3,7 @@
     /// <summary>
     /// 注册表访问权限枚举值
     /// </summary>
-    internal enum RegistryAccessRights : uint
+    internal enum REGSAM : uint
     {
         /// <summary>查询注册表项的值所必需的。</summary>
         KEY_QUERY_VALUE = 0x0001,
@@ -40,12 +40,12 @@
         /// <summary>
         /// 合并 STANDARD_RIGHTS_WRITE, KEY_SET_VALUE, 和 KEY_CREATE_SUB_KEY 访问权限。
         /// </summary>
-        KEY_WRITE = (int)StandardRight.STANDARD_RIGHTS_WRITE | KEY_SET_VALUE | KEY_CREATE_SUB_KEY,
+        KEY_WRITE = (int)ACCESS_MASK.STANDARD_RIGHTS_WRITE | KEY_SET_VALUE | KEY_CREATE_SUB_KEY,
 
         /// <summary>
         /// 合并 STANDARD_RIGHTS_READ, KEY_QUERY_VALUE, KEY_ENUMERATE_SUB_KEYS, 和 KEY_NOTIFY 值。
         /// </summary>
-        KEY_READ = (int)StandardRight.STANDARD_RIGHTS_READ | KEY_QUERY_VALUE | KEY_ENUMERATE_SUB_KEYS | KEY_NOTIFY,
+        KEY_READ = (int)ACCESS_MASK.STANDARD_RIGHTS_READ | KEY_QUERY_VALUE | KEY_ENUMERATE_SUB_KEYS | KEY_NOTIFY,
 
         /// <summary>等效于 KEY_READ。</summary>
         KEY_EXECUTE = KEY_READ,
@@ -53,6 +53,6 @@
         /// <summary>
         /// 合并 STANDARD_RIGHTS_REQUIRED, KEY_QUERY_VALUE, KEY_SET_VALUE, KEY_CREATE_SUB_KEY, KEY_ENUMERATE_SUB_KEYS, KEY_NOTIFY, 和 KEY_CREATE_LINK 访问权限。
         /// </summary>
-        KEY_ALL_ACCESS = (int)StandardRight.STANDARD_RIGHTS_REQUIRED | KEY_QUERY_VALUE | KEY_SET_VALUE | KEY_CREATE_SUB_KEY | KEY_ENUMERATE_SUB_KEYS | KEY_NOTIFY | KEY_CREATE_LINK,
+        KEY_ALL_ACCESS = (int)ACCESS_MASK.STANDARD_RIGHTS_REQUIRED | KEY_QUERY_VALUE | KEY_SET_VALUE | KEY_CREATE_SUB_KEY | KEY_ENUMERATE_SUB_KEYS | KEY_NOTIFY | KEY_CREATE_LINK,
     }
 }

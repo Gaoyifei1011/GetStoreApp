@@ -32,7 +32,7 @@ namespace GetStoreApp.Helpers.Root
             List<uint> processEntry32PIDList = [];
             try
             {
-                nint hSnapshot = Kernel32Library.CreateToolhelp32Snapshot(CreateToolhelp32SnapshotFlags.TH32CS_SNAPPROCESS, 0);
+                nint hSnapshot = Kernel32Library.CreateToolhelp32Snapshot(TH32CS.TH32CS_SNAPPROCESS, 0);
 
                 if (Equals(hSnapshot, nint.Zero) || Equals(hSnapshot, Kernel32Library.INVALID_HANDLE_VALUE))
                 {

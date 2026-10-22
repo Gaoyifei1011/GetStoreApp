@@ -6,7 +6,7 @@ namespace GetStoreAppPinner.WindowsAPI.PInvoke.Advapi32
     /// 包含对象的标准访问权限
     /// </summary>
     [Flags]
-    internal enum StandardRight : uint
+    internal enum ACCESS_MASK : uint
     {
         /// <summary>
         /// 删除对象的权限。
@@ -39,17 +39,17 @@ namespace GetStoreAppPinner.WindowsAPI.PInvoke.Advapi32
         STANDARD_RIGHTS_REQUIRED = 0x000F0000,
 
         /// <summary>
-        /// 当前定义为等于 <see cref="READ_CONTROL"/>
+        /// 当前定义为等于 READ_CONTROL
         /// </summary>
         STANDARD_RIGHTS_READ = READ_CONTROL,
 
         /// <summary>
-        /// 当前定义为等于 <see cref="READ_CONTROL"/>
+        /// 当前定义为等于 READ_CONTROL
         /// </summary>
         STANDARD_RIGHTS_WRITE = READ_CONTROL,
 
         /// <summary>
-        /// 当前定义为等于 <see cref="READ_CONTROL"/>
+        /// 当前定义为等于 READ_CONTROL
         /// </summary>
         STANDARD_RIGHTS_EXECUTE = READ_CONTROL,
 

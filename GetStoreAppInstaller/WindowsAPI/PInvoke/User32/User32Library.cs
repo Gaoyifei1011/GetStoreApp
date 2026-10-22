@@ -21,7 +21,7 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         /// <returns>如果成功，则为 TRUE;否则为 FALSE。</returns>
         [LibraryImport(User32, EntryPoint = "ChangeWindowMessageFilter", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static partial bool ChangeWindowMessageFilter(WindowMessage message, ChangeFilterFlags dwFlag);
+        internal static partial bool ChangeWindowMessageFilter(WindowMessage message, MSGFLT dwFlag);
 
         /// <summary>
         /// EnumDisplayMonitors 函数枚举显示监视器 (包括与镜像驱动程序关联的不可见伪监视器) ，这些监视器与指定剪裁矩形的交集与设备上下文的可见区域相交而形成的区域相交。 EnumDisplayMonitors 为枚举的每个监视器调用一次应用程序定义的 MonitorEnumProc 回调函数。 请注意， GetSystemMetrics (SM_CMONITORS) 仅对显示监视器进行计数。

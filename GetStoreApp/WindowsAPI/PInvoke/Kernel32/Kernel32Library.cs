@@ -29,7 +29,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 如果函数成功，它将返回指定快照的打开句柄。如果函数失败，它将返回 INVALID_HANDLE_VALUE。 要获得更多的错误信息，请调用 GetLastError。 可能的错误代码包括 ERROR_BAD_LENGTH。
         /// </returns>
         [LibraryImport(Kernel32, EntryPoint = "CreateToolhelp32Snapshot", SetLastError = false), PreserveSig]
-        internal static partial nint CreateToolhelp32Snapshot(CreateToolhelp32SnapshotFlags dwFlags, uint th32ProcessID);
+        internal static partial nint CreateToolhelp32Snapshot(TH32CS dwFlags, uint th32ProcessID);
 
         /// <summary>
         /// 枚举由两个字母组成的国际标准化组织 (ISO) 3166-1 代码或数字联合国 (联合国) 系列 M，编号 49 (M.49) 操作系统上可用的地理位置代码。
