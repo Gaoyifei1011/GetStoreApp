@@ -26,7 +26,7 @@
         <!--  应用更新控制栏  -->
         <CommandBar
             Grid.Row="0"
-            Margin="24,5,22,-1"
+            Margin="24,7,22,-2"
             VerticalAlignment="Center"
             HorizontalContentAlignment="Stretch"
             VerticalContentAlignment="Center"

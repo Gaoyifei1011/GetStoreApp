@@ -95,57 +95,55 @@
                 VerticalAlignment="Center"
                 Visibility="{x:Bind GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind, x:True), Mode=OneWay}">
 
-                <Grid>
-                    <!--  正在加载中  -->
-                    <StackPanel Spacing="20" Visibility="{x:Bind CheckPackageVolumeResultKindVisibility(PackageVolumeResultKind, enum:PackageVolumeResultKind.Loading, x:False), Mode=OneWay}">
-                        <Image
-                            Width="150"
-                            Height="150"
-                            Source="ms-appx:///Assets/Image/Search.png" />
+                <!--  正在加载中  -->
+                <StackPanel Spacing="20" Visibility="{x:Bind CheckPackageVolumeResultKindVisibility(PackageVolumeResultKind, enum:PackageVolumeResultKind.Loading, x:False), Mode=OneWay}">
+                    <Image
+                        Width="150"
+                        Height="150"
+                        Source="ms-appx:///Assets/Image/Search.png" />
 
-                        <Grid ColumnSpacing="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                    <Grid ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                            <ProgressRing
-                                Grid.Column="0"
-                                Width="30"
-                                Height="30"
-                                IsActive="True" />
-
-                            <TextBlock
-                                Grid.Column="1"
-                                MaxWidth="800"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontSize="18"
-                                FontWeight="Medium"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/LoadingPackageVolume')}"
-                                TextAlignment="Center"
-                                TextWrapping="Wrap" />
-                        </Grid>
-                    </StackPanel>
-
-                    <!--  加载失败（包含搜索结果为空）  -->
-                    <StackPanel Spacing="20" Visibility="{x:Bind CheckPackageVolumeResultKindVisibility(PackageVolumeResultKind, enum:PackageVolumeResultKind.Failed, x:False), Mode=OneWay}">
-                        <Image
-                            Width="150"
-                            Height="150"
-                            Source="ms-appx:///Assets/Image/Failed.png" />
+                        <ProgressRing
+                            Grid.Column="0"
+                            Width="30"
+                            Height="30"
+                            IsActive="True" />
 
                         <TextBlock
+                            Grid.Column="1"
                             MaxWidth="800"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             FontSize="18"
                             FontWeight="Medium"
-                            Text="{x:Bind PackageVolumeFailedContent, Mode=OneWay}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsPackageVolume/LoadingPackageVolume')}"
                             TextAlignment="Center"
                             TextWrapping="Wrap" />
-                    </StackPanel>
-                </Grid>
+                    </Grid>
+                </StackPanel>
+
+                <!--  加载失败（包含搜索结果为空）  -->
+                <StackPanel Spacing="20" Visibility="{x:Bind CheckPackageVolumeResultKindVisibility(PackageVolumeResultKind, enum:PackageVolumeResultKind.Failed, x:False), Mode=OneWay}">
+                    <Image
+                        Width="150"
+                        Height="150"
+                        Source="ms-appx:///Assets/Image/Failed.png" />
+
+                    <TextBlock
+                        MaxWidth="800"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="18"
+                        FontWeight="Medium"
+                        Text="{x:Bind PackageVolumeFailedContent, Mode=OneWay}"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap" />
+                </StackPanel>
             </Grid>
 
             <!--  存储卷列表信息控件  -->

@@ -52,7 +52,7 @@
         <Grid Margin="0,10,0,0">
             <!--  WinGet 程序包控制栏  -->
             <RadioButtons
-                Margin="30,5,0,0"
+                Margin="30,7,0,0"
                 Padding="0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"

@@ -26,7 +26,7 @@
         <!--  已安装应用控制栏  -->
         <CommandBar
             Grid.Row="0"
-            Margin="30,-4,22,-3"
+            Margin="30,-3,22,-3"
             Padding="16,0,0,0"
             VerticalAlignment="Center"
             HorizontalContentAlignment="Right"
@@ -294,70 +294,68 @@
                 VerticalAlignment="Center"
                 Visibility="{x:Bind GetInstalledAppsSuccessfullyVisibility(InstalledAppsResultKind, InstalledAppsCollection.Count, x:True), Mode=OneWay}">
 
-                <Grid>
-                    <!--  正在搜索中  -->
-                    <StackPanel Spacing="20" Visibility="{x:Bind CheckInstalledAppsResultKindVisibility(InstalledAppsResultKind, enum:InstalledAppsResultKind.Querying), Mode=OneWay}">
-                        <Image
-                            Width="150"
-                            Height="150"
-                            Source="ms-appx:///Assets/Image/Search.png" />
+                <!--  正在搜索中  -->
+                <StackPanel Spacing="20" Visibility="{x:Bind CheckInstalledAppsResultKindVisibility(InstalledAppsResultKind, enum:InstalledAppsResultKind.Querying), Mode=OneWay}">
+                    <Image
+                        Width="150"
+                        Height="150"
+                        Source="ms-appx:///Assets/Image/Search.png" />
 
-                        <Grid ColumnSpacing="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                    <Grid ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                            <ProgressRing
-                                Grid.Column="0"
-                                Width="30"
-                                Height="30"
-                                IsActive="True" />
+                        <ProgressRing
+                            Grid.Column="0"
+                            Width="30"
+                            Height="30"
+                            IsActive="True" />
 
-                            <TextBlock
-                                Grid.Column="1"
-                                MaxWidth="800"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontSize="18"
-                                FontWeight="Medium"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/LoadingInstalledApps')}"
-                                TextAlignment="Center"
-                                TextWrapping="Wrap" />
-                        </Grid>
-                    </StackPanel>
-
-                    <StackPanel Spacing="20" Visibility="{x:Bind GetInstalledAppsResultKindFailedOrEmptyVisibility(InstalledAppsResultKind, InstalledAppsCollection.Count), Mode=OneWay}">
-                        <Image
-                            Width="150"
-                            Height="150"
-                            Source="ms-appx:///Assets/Image/Failed.png" />
-
-                        <!--  搜索失败  -->
                         <TextBlock
+                            Grid.Column="1"
                             MaxWidth="800"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             FontSize="18"
                             FontWeight="Medium"
-                            Text="{x:Bind InstalledFailedContent, Mode=OneWay}"
+                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/LoadingInstalledApps')}"
                             TextAlignment="Center"
-                            TextWrapping="Wrap"
-                            Visibility="{x:Bind CheckInstalledAppsResultKindVisibility(InstalledAppsResultKind, enum:InstalledAppsResultKind.Failed), Mode=OneWay}" />
+                            TextWrapping="Wrap" />
+                    </Grid>
+                </StackPanel>
 
-                        <!--  搜索结果为空  -->
-                        <TextBlock
-                            MaxWidth="800"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="18"
-                            FontWeight="Medium"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/InstalledAppsSearchEmptyDescription')}"
-                            TextAlignment="Center"
-                            TextWrapping="Wrap"
-                            Visibility="{x:Bind CheckInstalledAppsResultKindVisibility(InstalledAppsResultKind, enum:InstalledAppsResultKind.SearchedHasResult), Mode=OneWay}" />
-                    </StackPanel>
-                </Grid>
+                <StackPanel Spacing="20" Visibility="{x:Bind GetInstalledAppsResultKindFailedOrEmptyVisibility(InstalledAppsResultKind, InstalledAppsCollection.Count), Mode=OneWay}">
+                    <Image
+                        Width="150"
+                        Height="150"
+                        Source="ms-appx:///Assets/Image/Failed.png" />
+
+                    <!--  搜索失败  -->
+                    <TextBlock
+                        MaxWidth="800"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="18"
+                        FontWeight="Medium"
+                        Text="{x:Bind InstalledFailedContent, Mode=OneWay}"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap"
+                        Visibility="{x:Bind CheckInstalledAppsResultKindVisibility(InstalledAppsResultKind, enum:InstalledAppsResultKind.Failed), Mode=OneWay}" />
+
+                    <!--  搜索结果为空  -->
+                    <TextBlock
+                        MaxWidth="800"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="18"
+                        FontWeight="Medium"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetInstalled/InstalledAppsSearchEmptyDescription')}"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap"
+                        Visibility="{x:Bind CheckInstalledAppsResultKindVisibility(InstalledAppsResultKind, enum:InstalledAppsResultKind.SearchedHasResult), Mode=OneWay}" />
+                </StackPanel>
             </Grid>
 
             <!--  已安装应用结果展示项目控件  -->
