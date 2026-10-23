@@ -110,7 +110,8 @@
       <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="'%(FileName)%(Extension)'=='Microsoft.Web.WebView2.Core.Projection.dll'" />
       <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="'%(FileName)%(Extension)'=='Microsoft.WindowsAppRuntime.Bootstrap.dll'" />
       <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="'%(FileName)%(Extension)'=='Microsoft.Windows.ApplicationModel.Background.UniversalBGTask.dll'" />
-      <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="$([System.String]::new('%(Identity)').EndsWith('WebView2Loader.dll'))" />
+      <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="'%(FileName)%(Extension)'=='WebView2Loader.dll'" />
+      <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="'%(Extension)' == '.pri' And $([System.String]::new('%(Filename)').StartsWith('GetStoreApp'))" />
     </ItemGroup>
   </Target>
 </Project>
