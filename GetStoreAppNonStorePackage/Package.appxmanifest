@@ -68,7 +68,19 @@
 
         <desktop4:Extension Category="windows.fileExplorerContextMenus">
           <desktop4:FileExplorerContextMenus>
-            <desktop4:ItemType Type="*">
+            <desktop4:ItemType Type=".appx">
+              <desktop4:Verb Id="CGetStoreAppCommand" Clsid="C098FAB9-A297-5829-B47E-07EBB207E64A" />
+            </desktop4:ItemType>
+            <desktop4:ItemType Type=".appxbundle">
+              <desktop4:Verb Id="CGetStoreAppCommand" Clsid="C098FAB9-A297-5829-B47E-07EBB207E64A" />
+            </desktop4:ItemType>
+            <desktop4:ItemType Type=".msix">
+              <desktop4:Verb Id="CGetStoreAppCommand" Clsid="C098FAB9-A297-5829-B47E-07EBB207E64A" />
+            </desktop4:ItemType>
+            <desktop4:ItemType Type=".msixbundle">
+              <desktop4:Verb Id="CGetStoreAppCommand" Clsid="C098FAB9-A297-5829-B47E-07EBB207E64A" />
+            </desktop4:ItemType>
+            <desktop4:ItemType Type=".xml">
               <desktop4:Verb Id="CGetStoreAppCommand" Clsid="C098FAB9-A297-5829-B47E-07EBB207E64A" />
             </desktop4:ItemType>
           </desktop4:FileExplorerContextMenus>
