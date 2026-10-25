@@ -128,7 +128,7 @@ namespace GetStoreApp.Services.Download
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new();
-                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                 httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
                 httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
 
@@ -184,17 +184,15 @@ namespace GetStoreApp.Services.Download
                         httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                         HttpClient httpClient = new();
-                        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                        httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                         httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
                         httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
 
                         HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
                         // 请求成功
-                        if (response.IsSuccessStatusCode)
+                        if (response.IsSuccessStatusCode && await response.Content.ReadAsStringAsync() is string responseContent && JsonObject.TryParse(responseContent, out JsonObject resultObject))
                         {
-                            string responseContent = await response.Content.ReadAsStringAsync();
-                            JsonObject resultObject = JsonObject.Parse(responseContent);
                             string gid = resultObject.GetNamedString("result");
 
                             Aria2SemaphoreSlim?.Wait();
@@ -269,17 +267,15 @@ namespace GetStoreApp.Services.Download
                         httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                         HttpClient httpClient = new();
-                        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                        httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                         httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
                         httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
 
                         HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
                         // 请求成功
-                        if (response.IsSuccessStatusCode)
+                        if (response.IsSuccessStatusCode && await response.Content.ReadAsStringAsync() is string responseContent && JsonObject.TryParse(responseContent, out JsonObject resultObject))
                         {
-                            string responseContent = await response.Content.ReadAsStringAsync();
-                            JsonObject resultObject = JsonObject.Parse(responseContent);
                             string gid = resultObject.GetNamedString("result");
 
                             Aria2SemaphoreSlim?.Wait();
@@ -355,17 +351,15 @@ namespace GetStoreApp.Services.Download
                         httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                         HttpClient httpClient = new();
-                        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                        httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                         httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
                         httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
 
                         HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
                         // 请求成功
-                        if (response.IsSuccessStatusCode)
+                        if (response.IsSuccessStatusCode && await response.Content.ReadAsStringAsync() is string responseContent && JsonObject.TryParse(responseContent, out JsonObject resultObject))
                         {
-                            string responseContent = await response.Content.ReadAsStringAsync();
-                            JsonObject resultObject = JsonObject.Parse(responseContent);
                             string gid = resultObject.GetNamedString("result");
 
                             if (Aria2DownloadDict.TryGetValue(gid, out string saveFilePath))
@@ -428,17 +422,15 @@ namespace GetStoreApp.Services.Download
                         httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                         HttpClient httpClient = new();
-                        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                        httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                         httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
                         httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
 
                         HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
                         // 请求成功
-                        if (response.IsSuccessStatusCode)
+                        if (response.IsSuccessStatusCode && await response.Content.ReadAsStringAsync() is string responseContent && JsonObject.TryParse(responseContent, out JsonObject resultObject))
                         {
-                            string responseContent = await response.Content.ReadAsStringAsync();
-                            JsonObject resultObject = JsonObject.Parse(responseContent);
                             string gid = resultObject.GetNamedString("result");
 
                             Aria2SemaphoreSlim?.Wait();
@@ -525,19 +517,15 @@ namespace GetStoreApp.Services.Download
                         httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                         HttpClient httpClient = new();
-                        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                        httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                         httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
                         httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
 
                         HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
                         // 请求成功
-                        if (response.IsSuccessStatusCode)
+                        if (response.IsSuccessStatusCode && await response.Content.ReadAsStringAsync() is string responseContent && JsonObject.TryParse(responseContent, out JsonObject resultObject))
                         {
-                            isTellStatusSuccessfully = true;
-
-                            string responseContent = await response.Content.ReadAsStringAsync();
-                            JsonObject resultObject = JsonObject.Parse(responseContent);
                             JsonObject downloadResultObject = resultObject.GetNamedObject("result");
                             string status = downloadResultObject.GetNamedString("status");
                             completedSize = Convert.ToDouble(downloadResultObject.GetNamedString("completedLength"));
@@ -657,7 +645,7 @@ namespace GetStoreApp.Services.Download
                         httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                         HttpClient httpClient = new();
-                        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                        httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                         httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
                         httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
 

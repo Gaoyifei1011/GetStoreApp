@@ -368,7 +368,7 @@ namespace GetStoreApp.Views.Pages
 
                     // 默认超时时间是 20 秒
                     HttpClient httpClient = new();
-                    httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                    httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                     httpClient.DefaultRequestHeaders.Referer = checkUpdateLinkUri;
                     httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", checkUpdateLinkUri.AbsolutePath);
 

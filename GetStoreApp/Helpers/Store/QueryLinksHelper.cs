@@ -67,7 +67,7 @@ namespace GetStoreApp.Helpers.Store
 
                 // 默认超时时间是 20 秒
                 HttpClient httpClient = new();
-                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                 httpClient.DefaultRequestHeaders.Referer = cookieUri;
                 httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", cookieUri.AbsolutePath);
 
@@ -133,7 +133,7 @@ namespace GetStoreApp.Helpers.Store
 
                 // 默认超时时间是 20 秒
                 HttpClient httpClient = new();
-                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                 httpClient.DefaultRequestHeaders.Referer = categoryIDAPIUri;
                 httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", categoryIDAPIUri.AbsolutePath);
 
@@ -225,7 +225,7 @@ namespace GetStoreApp.Helpers.Store
 
                     // 默认超时时间是 20 秒
                     HttpClient httpClient = new();
-                    httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                    httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                     httpClient.DefaultRequestHeaders.Referer = fileListXmlUri;
                     httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", fileListXmlUri.AbsolutePath);
 
@@ -385,7 +385,7 @@ namespace GetStoreApp.Helpers.Store
 
                     // 默认超时时间是 20 秒
                     HttpClient httpClient = new();
-                    httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                    httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                     httpClient.DefaultRequestHeaders.Referer = urlUri;
                     httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", urlUri.AbsolutePath);
 
@@ -458,7 +458,7 @@ namespace GetStoreApp.Helpers.Store
 
                     // 默认超时时间是 20 秒
                     HttpClient httpClient = new();
-                    httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                    httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                     httpClient.DefaultRequestHeaders.Referer = urlUri;
                     httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", urlUri.AbsolutePath);
 
@@ -584,7 +584,7 @@ namespace GetStoreApp.Helpers.Store
                     // 默认超时时间是 20 秒
                     HttpClient httpClient = new();
                     HttpRequestMessage httpRequestMessage = new(HttpMethod.Head, urlUri);
-                    httpRequestMessage.Headers.UserAgent.ParseAdd(userAgent);
+                    httpRequestMessage.Headers.UserAgent.TryParseAdd(userAgent);
                     httpRequestMessage.Headers.Referer = urlUri;
                     httpRequestMessage.Headers.TryAppendWithoutValidation("Origin", urlUri.AbsolutePath);
 

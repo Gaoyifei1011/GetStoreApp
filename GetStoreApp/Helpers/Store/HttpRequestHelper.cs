@@ -55,7 +55,7 @@ namespace GetStoreApp.Helpers.Store
 
                 // 默认超时时间是 20 秒
                 HttpClient httpClient = new();
-                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                 httpClient.DefaultRequestHeaders.Referer = apiUri;
                 httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", apiUri.AbsolutePath);
 
