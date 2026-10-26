@@ -9,6 +9,7 @@
                 <XamlControlsResources>
                     <XamlControlsResources.MergedDictionaries>
                         <ResourceDictionary Source="ms-appx:///Styles/CommandBar.xaml" />
+                        <ResourceDictionary Source="ms-appx:///Styles/ContentDialog.xaml" />
                     </XamlControlsResources.MergedDictionaries>
                 </XamlControlsResources>
             </ResourceDictionary.MergedDictionaries>

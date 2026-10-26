@@ -9,5 +9,5 @@
     BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     CloseButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/OK')}"
     Content="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/WebViewProcessFailedContent')}"
-    Style="{StaticResource DefaultContentDialogStyle}"
+    Style="{StaticResource ContentDialogWithSystemBackdropStyle}"
     mc:Ignorable="d" />

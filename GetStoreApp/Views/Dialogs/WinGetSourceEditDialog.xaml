@@ -17,7 +17,7 @@
     PrimaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Save')}"
     RequestedTheme="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).RequestedTheme, Mode=OneWay}"
     SecondaryButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Cancel')}"
-    Style="{StaticResource DefaultContentDialogStyle}"
+    Style="{StaticResource ContentDialogWithSystemBackdropStyle}"
     mc:Ignorable="d">
 
     <ContentDialog.Resources>

@@ -21,7 +21,7 @@
     RequestedTheme="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).RequestedTheme, Mode=OneWay}"
     SecondaryButtonClick="{x:Bind OnCancelOrCloseClicked}"
     SecondaryButtonText="{x:Bind CloseText, Mode=OneWay}"
-    Style="{StaticResource DefaultContentDialogStyle}"
+    Style="{StaticResource ContentDialogWithSystemBackdropStyle}"
     mc:Ignorable="d">
 
     <ContentDialog.Resources>

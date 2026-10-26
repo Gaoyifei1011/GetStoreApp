@@ -8,7 +8,7 @@
     Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/BrowserInformation')}"
     BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     CloseButtonText="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/Close')}"
-    Style="{StaticResource DefaultContentDialogStyle}"
+    Style="{StaticResource ContentDialogWithSystemBackdropStyle}"
     mc:Ignorable="d">
 
     <TextBlock>

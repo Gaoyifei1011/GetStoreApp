@@ -349,6 +349,7 @@
     <None Remove="Styles\CalendarDatePicker.xaml" />
     <None Remove="Styles\ComboBox.xaml" />
     <None Remove="Styles\CommandBar.xaml" />
+    <None Remove="Styles\ContentDialog.xaml" />
     <None Remove="Styles\ListView.xaml" />
     <None Remove="Styles\NavigationView.xaml" />
     <None Remove="Styles\RadioButtons.xaml" />
@@ -420,6 +421,7 @@
     <Page Update="Styles\CalendarDatePicker.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\ComboBox.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\CommandBar.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\ContentDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\ListView.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\NavigationView.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\RadioButtons.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -630,7 +632,7 @@
     <Content Include="$(PkgMicrosoft_WindowsPackageManager_InProcCom)\runtimes\win-$(Platform)\native\Microsoft.Management.Deployment.InProc.dll" Link="Microsoft.Management.Deployment.dll" CopyToOutputDirectory="Always" />
     <Content Include="$(PkgMicrosoft_WindowsPackageManager_InProcCom)\runtimes\win-$(Platform)\native\WindowsPackageManager.dll" Link="WindowsPackageManager.dll" CopyToOutputDirectory="Always" />
   </ItemGroup>
-
+  
   <!-- 测试 AOT 发布后的文件 -->
   <Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Debug|true|true'">
     <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Publish" />

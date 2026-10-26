@@ -99,6 +99,7 @@
                         <ResourceDictionary Source="ms-appx:///Styles/BreadcrumbBar.xaml" />
                         <ResourceDictionary Source="ms-appx:///Styles/CalendarDatePicker.xaml" />
                         <ResourceDictionary Source="ms-appx:///Styles/ComboBox.xaml" />
+                        <ResourceDictionary Source="ms-appx:///Styles/ContentDialog.xaml" />
                         <ResourceDictionary Source="ms-appx:///Styles/CommandBar.xaml" />
                         <ResourceDictionary Source="ms-appx:///Styles/ListView.xaml" />
                         <ResourceDictionary Source="ms-appx:///Styles/NavigationView.xaml" />

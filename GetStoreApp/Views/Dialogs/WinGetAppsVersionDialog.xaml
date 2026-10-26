@@ -11,7 +11,7 @@
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
     Opened="{x:Bind OnOpened}"
     RequestedTheme="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).RequestedTheme, Mode=OneWay}"
-    Style="{StaticResource DefaultContentDialogStyle}"
+    Style="{StaticResource ContentDialogWithSystemBackdropStyle}"
     mc:Ignorable="d">
 
     <ContentDialog.Resources>
@@ -56,7 +56,6 @@
         <Grid
             Grid.Row="0"
             Margin="3,0,0,0"
-            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="0,0,0,1">
 
@@ -120,7 +119,6 @@
         <Frame
             x:Name="WinGetAppsVersionFrame"
             Grid.Row="1"
-            Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
             Navigated="{x:Bind OnNavigated}"
             NavigationFailed="{x:Bind OnNavigationFailed}" />
     </Grid>
