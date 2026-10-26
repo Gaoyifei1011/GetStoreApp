@@ -6,9 +6,11 @@ using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
+using Windows.UI.Text;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -48,69 +50,7 @@ namespace GetStoreApp.Views.Dialogs
             }
         }
 
-        private string _fileName;
-
-        private string FileName
-        {
-            get { return _fileName; }
-
-            set
-            {
-                if (!string.Equals(_fileName, value))
-                {
-                    _fileName = value;
-                    PropertyChanged?.Invoke(this, new(nameof(FileName)));
-                }
-            }
-        }
-
-        private string _filePath;
-
-        private string FilePath
-        {
-            get { return _filePath; }
-
-            set
-            {
-                if (!string.Equals(_filePath, value))
-                {
-                    _filePath = value;
-                    PropertyChanged?.Invoke(this, new(nameof(FilePath)));
-                }
-            }
-        }
-
-        private string _fileSize;
-
-        private string FileSize
-        {
-            get { return _fileSize; }
-
-            set
-            {
-                if (!Equals(_fileSize, value))
-                {
-                    _fileSize = value;
-                    PropertyChanged?.Invoke(this, new(nameof(FileSize)));
-                }
-            }
-        }
-
-        private string _fileSHA256;
-
-        private string FileSHA256
-        {
-            get { return _fileSHA256; }
-
-            set
-            {
-                if (!string.Equals(_fileSHA256, value))
-                {
-                    _fileSHA256 = value;
-                    PropertyChanged?.Invoke(this, new(nameof(FileSHA256)));
-                }
-            }
-        }
+        private ObservableCollection<ContentLinkInfo> FileInformationCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -136,12 +76,12 @@ namespace GetStoreApp.Views.Dialogs
             IsLoadCompleted = false;
             if (completed is not null)
             {
-                FileName = completed.FileName;
-                FilePath = completed.FilePath;
-                FileSize = VolumeSizeHelper.ConvertVolumeSizeToString(completed.TotalSize);
+                FileInformationCollection.Clear();
+                FileInformationCollection.Add(new() { DisplayText = FileNameString, SecondaryText = completed.FileName });
+                FileInformationCollection.Add(new() { DisplayText = FilePathString, SecondaryText = completed.FilePath });
+                FileInformationCollection.Add(new() { DisplayText = FileSizeString, SecondaryText = VolumeSizeHelper.ConvertVolumeSizeToString(completed.TotalSize) });
+                FileInformationCollection.Add(new() { DisplayText = FileSHA256String, SecondaryText = await Task.Run(async () => await IOHelper.GetFileSHA256Async(completed.FilePath)) });
             }
-
-            FileSHA256 = await Task.Run(async () => await IOHelper.GetFileSHA256Async(FilePath));
             IsLoadCompleted = true;
         }
 

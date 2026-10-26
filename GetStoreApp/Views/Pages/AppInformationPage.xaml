@@ -88,7 +88,7 @@
                     </CommandBar>
                 </Expander.Header>
 
-                <!--  TODO：使用 ListView With DataTemplate 进行优化  -->
+                <!--  TODO：使用 TableView With DataTemplate 进行优化  -->
                 <Grid Margin="0,0,10,0" RowSpacing="3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -477,6 +477,7 @@
                     </Grid>
                 </Expander.Header>
 
+                <!--  TODO：未来迁移到 TableView  -->
                 <ListView
                     CornerRadius="0"
                     ItemsSource="{x:Bind AppListEntryCollection}"
@@ -637,6 +638,7 @@
                     </Grid>
                 </Expander.Header>
 
+                <!--  TODO：未来迁移到 TableView  -->
                 <ListView
                     CornerRadius="0"
                     ItemsSource="{x:Bind DependenciesCollection}"

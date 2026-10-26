@@ -75,6 +75,7 @@
                 </StackPanel>
             </Grid>
 
+            <!--  TODO：未来迁移到 TableView  -->
             <!--  快捷操作栏  -->
             <ListView
                 Grid.Row="1"
@@ -375,6 +376,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/Reference')}" />
                 </Expander.Header>
 
+                <!--  TODO：未来迁移到 TableView  -->
                 <ListView
                     Margin="26,0,16,0"
                     Padding="5"
@@ -462,6 +464,7 @@
 
                     <MenuFlyoutSeparator />
 
+                    <!--  TODO：未来迁移到 TableView  -->
                     <ListView
                         Margin="26,0,16,0"
                         Padding="5"

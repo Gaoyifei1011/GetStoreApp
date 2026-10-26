@@ -38,6 +38,7 @@
             <TextBlock VerticalAlignment="Center" Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/LoadingAppInformation')}" />
         </StackPanel>
 
+        <!--  TODO：未来迁移到 TableView  -->
         <ListView
             CornerRadius="0"
             ItemsSource="{x:Bind AppInformationCollection}"

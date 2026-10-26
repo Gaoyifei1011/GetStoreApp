@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
+    xmlns:text="using:Windows.UI.Text"
     xmlns:window="using:GetStoreApp.Views.Windows"
     Title="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/FileInformation')}"
     Closing="{x:Bind OnClosing}"
@@ -38,86 +39,51 @@
             <TextBlock VerticalAlignment="Center" Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/LoadingFileInformation')}" />
         </StackPanel>
 
-        <Grid Margin="2,0,0,0" Visibility="{x:Bind IsLoadCompleted, Mode=OneWay}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+        <!--  TODO：未来迁移到 TableView  -->
+        <ListView
+            CornerRadius="0"
+            ItemsSource="{x:Bind FileInformationCollection}"
+            SelectionMode="None"
+            Visibility="{x:Bind IsLoadCompleted, Mode=OneWay}">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="MinHeight" Value="0" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </ListView.ItemContainerStyle>
 
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="0"
-                HorizontalAlignment="Left"
-                Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/FileName')}"
-                TextAlignment="Justify"
-                TextWrapping="Wrap" />
+            <ListView.ItemContainerTransitions>
+                <TransitionCollection />
+            </ListView.ItemContainerTransitions>
 
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="1"
-                HorizontalAlignment="Left"
-                IsTextSelectionEnabled="True"
-                Text="{x:Bind FileName, Mode=OneWay}"
-                TextAlignment="DetectFromContent"
-                TextWrapping="Wrap" />
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="text:ContentLinkInfo">
+                    <Grid Margin="1,0,0,5" ColumnSpacing="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-            <TextBlock
-                Grid.Row="1"
-                Grid.Column="0"
-                HorizontalAlignment="Left"
-                Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/FilePath')}"
-                TextAlignment="Justify"
-                TextWrapping="Wrap" />
+                        <TextBlock
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
+                            Text="{x:Bind DisplayText}"
+                            TextWrapping="Wrap" />
 
-            <TextBlock
-                Grid.Row="1"
-                Grid.Column="1"
-                HorizontalAlignment="Left"
-                IsTextSelectionEnabled="True"
-                Text="{x:Bind FilePath, Mode=OneWay}"
-                TextAlignment="DetectFromContent"
-                TextWrapping="Wrap" />
-
-            <TextBlock
-                Grid.Row="2"
-                Grid.Column="0"
-                HorizontalAlignment="Left"
-                Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/FileSize')}"
-                TextAlignment="Justify"
-                TextWrapping="Wrap" />
-
-            <TextBlock
-                Grid.Row="2"
-                Grid.Column="1"
-                HorizontalAlignment="Left"
-                IsTextSelectionEnabled="True"
-                Text="{x:Bind FileSize, Mode=OneWay}"
-                TextAlignment="DetectFromContent"
-                TextWrapping="Wrap" />
-
-            <TextBlock
-                Grid.Row="3"
-                Grid.Column="0"
-                HorizontalAlignment="Left"
-                Text="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/FileSHA256')}"
-                TextAlignment="Justify"
-                TextWrapping="Wrap" />
-
-            <TextBlock
-                Grid.Row="3"
-                Grid.Column="1"
-                HorizontalAlignment="Left"
-                IsTextSelectionEnabled="True"
-                Text="{x:Bind FileSHA256, Mode=OneWay}"
-                TextAlignment="Justify"
-                TextWrapping="Wrap" />
-        </Grid>
+                        <TextBlock
+                            Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            IsTextSelectionEnabled="True"
+                            Text="{x:Bind SecondaryText}"
+                            TextAlignment="DetectFromContent"
+                            TextWrapping="Wrap" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </ContentDialog>

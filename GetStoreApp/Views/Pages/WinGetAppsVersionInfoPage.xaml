@@ -201,6 +201,7 @@
 
                         <MenuFlyoutSeparator Grid.Row="2" Margin="2,10" />
 
+                        <!--  TODO：未来迁移到 TableView  -->
                         <ListView
                             Grid.Row="3"
                             ItemsSource="{x:Bind WinGetAppInfoCollection}"
@@ -275,6 +276,7 @@
                             Margin="2,10"
                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(TagCollection.Count), Mode=OneWay}" />
 
+                        <!--  TODO：未来迁移到 TableView  -->
                         <ListView
                             Grid.Row="5"
                             ItemsSource="{x:Bind TagCollection}"
@@ -332,6 +334,7 @@
                             Margin="2,10"
                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DocumentationCollection.Count), Mode=OneWay}" />
 
+                        <!--  TODO：未来迁移到 TableView  -->
                         <ListView
                             Grid.Row="7"
                             ItemsSource="{x:Bind DocumentationCollection}"

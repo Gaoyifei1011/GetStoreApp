@@ -358,6 +358,7 @@
                 </StackPanel>
             </Grid>
 
+            <!--  TODO：未来迁移到 TableView  -->
             <!--  已安装应用结果展示项目控件  -->
             <ListView
                 Padding="30,0,28,30"

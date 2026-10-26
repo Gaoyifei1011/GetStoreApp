@@ -135,6 +135,7 @@
                         Text="{x:Bind rootservice:ResourceService.GetLocalized('SearchAppsResult/AppList')}" />
                 </Grid>
 
+                <!--  TODO：未来迁移到 TableView  -->
                 <ListView
                     Grid.Row="1"
                     CornerRadius="0"
