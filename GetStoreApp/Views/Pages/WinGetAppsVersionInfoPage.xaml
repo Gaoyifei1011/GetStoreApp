@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:datatemplate="using:GetStoreApp.Views.DataTemplates"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
@@ -200,317 +201,74 @@
 
                         <MenuFlyoutSeparator Grid.Row="2" Margin="2,10" />
 
-                        <!--  TODO：使用 ListView With DataTemplate 进行优化  -->
-                        <Grid
+                        <ListView
                             Grid.Row="3"
-                            ColumnSpacing="5"
-                            RowSpacing="3">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
+                            ItemsSource="{x:Bind WinGetAppInfoCollection}"
+                            SelectionMode="None"
+                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(WinGetAppInfoCollection.Count), Mode=OneWay}">
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                            <ListView.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Margin" Value="0" />
+                                    <Setter Property="MinHeight" Value="0" />
+                                    <Setter Property="Padding" Value="0" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
 
-                            <TextBlock
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/AppVersion')}" />
+                            <ListView.ItemContainerTransitions>
+                                <TransitionCollection />
+                            </ListView.ItemContainerTransitions>
 
-                            <TextBlock
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind Version, Mode=OneWay}"
-                                TextWrapping="Wrap" />
+                            <ListView.ItemTemplateSelector>
+                                <datatemplate:WinGetAppInfoTemplateSelector>
+                                    <!--  字符串信息数据模板  -->
+                                    <datatemplate:WinGetAppInfoTemplateSelector.StringInfoTemplate>
+                                        <DataTemplate x:DataType="model:WinGetAppInfoModel">
+                                            <Grid Margin="0,0,0,3">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="100" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
 
-                            <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/PackageLink')}" />
+                                                <TextBlock Grid.Column="0" Text="{x:Bind ClassName}" />
 
-                            <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                IsTextSelectionEnabled="True"
-                                TextWrapping="Wrap"
-                                Visibility="{x:Bind IsPackageLinkExisted, Mode=OneWay}">
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    IsTextSelectionEnabled="True"
+                                                    Text="{x:Bind StringContent}"
+                                                    TextWrapping="Wrap" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </datatemplate:WinGetAppInfoTemplateSelector.StringInfoTemplate>
 
-                                <Hyperlink NavigateUri="{x:Bind PackageLink, Mode=OneWay}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind PackageLink, Mode=OneWay}" />
-                                </Hyperlink>
-                            </TextBlock>
+                                    <!--  链接信息数据模板  -->
+                                    <datatemplate:WinGetAppInfoTemplateSelector.UriInfoTemplate>
+                                        <DataTemplate x:DataType="model:WinGetAppInfoModel">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="100" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
 
-                            <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/NotAvailable')}"
-                                TextWrapping="Wrap"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPackageLinkExisted), Mode=OneWay}" />
+                                                <TextBlock Grid.Column="0" Text="{x:Bind ClassName}" />
 
-                            <TextBlock
-                                Grid.Row="2"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Author')}" />
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    HorizontalAlignment="Left"
+                                                    IsTextSelectionEnabled="True"
+                                                    TextWrapping="Wrap">
 
-                            <TextBlock
-                                Grid.Row="2"
-                                Grid.Column="1"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind Author, Mode=OneWay}"
-                                TextWrapping="Wrap" />
-
-                            <TextBlock
-                                Grid.Row="3"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/AppPublisher')}" />
-
-                            <TextBlock
-                                Grid.Row="3"
-                                Grid.Column="1"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind Publisher, Mode=OneWay}"
-                                TextWrapping="Wrap" />
-
-                            <TextBlock
-                                Grid.Row="4"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/PublisherLink')}" />
-
-                            <TextBlock
-                                Grid.Row="4"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                IsTextSelectionEnabled="True"
-                                TextWrapping="Wrap"
-                                Visibility="{x:Bind IsPublisherLinkExisted, Mode=OneWay}">
-
-                                <Hyperlink NavigateUri="{x:Bind PublisherLink, Mode=OneWay}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind PublisherLink, Mode=OneWay}" />
-                                </Hyperlink>
-                            </TextBlock>
-
-                            <TextBlock
-                                Grid.Row="4"
-                                Grid.Column="1"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/NotAvailable')}"
-                                TextWrapping="Wrap"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPublisherLinkExisted), Mode=OneWay}" />
-
-                            <TextBlock
-                                Grid.Row="5"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/PublisherSupportLink')}" />
-
-                            <TextBlock
-                                Grid.Row="5"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                IsTextSelectionEnabled="True"
-                                TextWrapping="Wrap"
-                                Visibility="{x:Bind IsPublisherSupportLinkExisted, Mode=OneWay}">
-
-                                <Hyperlink NavigateUri="{x:Bind PublisherSupportLink, Mode=OneWay}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind PublisherSupportLink, Mode=OneWay}" />
-                                </Hyperlink>
-                            </TextBlock>
-
-                            <TextBlock
-                                Grid.Row="5"
-                                Grid.Column="1"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/NotAvailable')}"
-                                TextWrapping="Wrap"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPublisherSupportLinkExisted), Mode=OneWay}" />
-
-                            <TextBlock
-                                Grid.Row="6"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Locale')}" />
-
-                            <TextBlock
-                                Grid.Row="6"
-                                Grid.Column="1"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind Locale, Mode=OneWay}"
-                                TextWrapping="Wrap" />
-
-                            <TextBlock
-                                Grid.Row="7"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/CopyRight')}" />
-
-                            <TextBlock
-                                Grid.Row="7"
-                                Grid.Column="1"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind CopyRight, Mode=OneWay}"
-                                TextWrapping="Wrap" />
-
-                            <TextBlock
-                                Grid.Row="8"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/CopyRightLink')}" />
-
-                            <TextBlock
-                                Grid.Row="8"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                IsTextSelectionEnabled="True"
-                                TextWrapping="Wrap"
-                                Visibility="{x:Bind IsCopyRightLinkExisted, Mode=OneWay}">
-
-                                <Hyperlink NavigateUri="{x:Bind CopyRightLink, Mode=OneWay}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind CopyRightLink, Mode=OneWay}" />
-                                </Hyperlink>
-                            </TextBlock>
-
-                            <TextBlock
-                                Grid.Row="8"
-                                Grid.Column="1"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/NotAvailable')}"
-                                TextWrapping="Wrap"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsCopyRightLinkExisted), Mode=OneWay}" />
-
-                            <TextBlock
-                                Grid.Row="9"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/License')}" />
-
-                            <TextBlock
-                                Grid.Row="9"
-                                Grid.Column="1"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind License, Mode=OneWay}"
-                                TextWrapping="Wrap" />
-
-                            <TextBlock
-                                Grid.Row="10"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/LicenseLink')}" />
-
-                            <TextBlock
-                                Grid.Row="10"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                IsTextSelectionEnabled="True"
-                                TextWrapping="Wrap"
-                                Visibility="{x:Bind IsLicenseLinkExisted, Mode=OneWay}">
-                                <Hyperlink NavigateUri="{x:Bind LicenseLink, Mode=OneWay}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind LicenseLink, Mode=OneWay}" />
-                                </Hyperlink>
-                            </TextBlock>
-
-                            <TextBlock
-                                Grid.Row="10"
-                                Grid.Column="1"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/NotAvailable')}"
-                                TextWrapping="Wrap"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsLicenseLinkExisted), Mode=OneWay}" />
-
-                            <TextBlock
-                                Grid.Row="11"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/PrivacyLink')}" />
-
-                            <TextBlock
-                                Grid.Row="11"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                IsTextSelectionEnabled="True"
-                                TextWrapping="Wrap"
-                                Visibility="{x:Bind IsPrivacyLinkExisted, Mode=OneWay}">
-
-                                <Hyperlink NavigateUri="{x:Bind PrivacyLink, Mode=OneWay}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind PrivacyLink, Mode=OneWay}" />
-                                </Hyperlink>
-                            </TextBlock>
-
-                            <TextBlock
-                                Grid.Row="11"
-                                Grid.Column="1"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/NotAvailable')}"
-                                TextWrapping="Wrap"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPrivacyLinkExisted), Mode=OneWay}" />
-
-                            <TextBlock
-                                Grid.Row="12"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/PurchaseLink')}" />
-
-                            <TextBlock
-                                Grid.Row="12"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                IsTextSelectionEnabled="True"
-                                TextWrapping="Wrap"
-                                Visibility="{x:Bind IsPurchaseLinkExisted, Mode=OneWay}">
-
-                                <Hyperlink NavigateUri="{x:Bind PurchaseLink, Mode=OneWay}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind PurchaseLink, Mode=OneWay}" />
-                                </Hyperlink>
-                            </TextBlock>
-
-                            <TextBlock
-                                Grid.Row="12"
-                                Grid.Column="1"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/NotAvailable')}"
-                                TextWrapping="Wrap"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPurchaseLinkExisted), Mode=OneWay}" />
-
-                            <TextBlock
-                                Grid.Row="13"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/ReleaseNotes')}" />
-
-                            <TextBlock
-                                Grid.Row="13"
-                                Grid.Column="1"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind ReleaseNotes, Mode=OneWay}"
-                                TextWrapping="Wrap" />
-
-                            <TextBlock
-                                Grid.Row="14"
-                                Grid.Column="0"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/ReleaseNotesLink')}" />
-
-                            <TextBlock
-                                Grid.Row="14"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                IsTextSelectionEnabled="True"
-                                TextWrapping="Wrap"
-                                Visibility="{x:Bind IsReleaseNotesLinkExisted, Mode=OneWay}">
-
-                                <Hyperlink NavigateUri="{x:Bind ReleaseNotesLink, Mode=OneWay}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind ReleaseNotesLink, Mode=OneWay}" />
-                                </Hyperlink>
-                            </TextBlock>
-
-                            <TextBlock
-                                Grid.Row="14"
-                                Grid.Column="1"
-                                Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/NotAvailable')}"
-                                TextWrapping="Wrap"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsReleaseNotesLinkExisted), Mode=OneWay}" />
-                        </Grid>
+                                                    <Hyperlink NavigateUri="{x:Bind UriContent, Mode=OneWay}" UnderlineStyle="None">
+                                                        <Run Text="{x:Bind UriContent, Mode=OneWay}" />
+                                                    </Hyperlink>
+                                                </TextBlock>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </datatemplate:WinGetAppInfoTemplateSelector.UriInfoTemplate>
+                                </datatemplate:WinGetAppInfoTemplateSelector>
+                            </ListView.ItemTemplateSelector>
+                        </ListView>
 
                         <MenuFlyoutSeparator
                             Grid.Row="4"

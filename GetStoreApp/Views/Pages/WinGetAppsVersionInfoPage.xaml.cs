@@ -131,375 +131,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private string _version;
-
-        private string Version
-        {
-            get { return _version; }
-
-            set
-            {
-                if (!string.Equals(_version, value))
-                {
-                    _version = value;
-                    PropertyChanged?.Invoke(this, new(nameof(Version)));
-                }
-            }
-        }
-
-        private bool _isPackageLinkExisted;
-
-        private bool IsPackageLinkExisted
-        {
-            get { return _isPackageLinkExisted; }
-
-            set
-            {
-                if (!Equals(_isPackageLinkExisted, value))
-                {
-                    _isPackageLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsPackageLinkExisted)));
-                }
-            }
-        }
-
-        private Uri _packageLink;
-
-        private Uri PackageLink
-        {
-            get { return _packageLink; }
-
-            set
-            {
-                if (!Equals(_packageLink, value))
-                {
-                    _packageLink = value;
-                    PropertyChanged?.Invoke(this, new(nameof(PackageLink)));
-                }
-            }
-        }
-
-        private string _author;
-
-        private string Author
-        {
-            get { return _author; }
-
-            set
-            {
-                if (!string.Equals(_author, value))
-                {
-                    _author = value;
-                    PropertyChanged?.Invoke(this, new(nameof(Author)));
-                }
-            }
-        }
-
-        private string _publisher;
-
-        private string Publisher
-        {
-            get { return _publisher; }
-
-            set
-            {
-                if (!string.Equals(_publisher, value))
-                {
-                    _publisher = value;
-                    PropertyChanged?.Invoke(this, new(nameof(Publisher)));
-                }
-            }
-        }
-
-        private bool _isPublisherLinkExisted;
-
-        private bool IsPublisherLinkExisted
-        {
-            get { return _isPublisherLinkExisted; }
-
-            set
-            {
-                if (!Equals(_isPublisherLinkExisted, value))
-                {
-                    _isPublisherLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsPublisherLinkExisted)));
-                }
-            }
-        }
-
-        private Uri _publisherLink;
-
-        private Uri PublisherLink
-        {
-            get { return _publisherLink; }
-
-            set
-            {
-                if (!Equals(_publisherLink, value))
-                {
-                    _publisherLink = value;
-                    PropertyChanged?.Invoke(this, new(nameof(PublisherLink)));
-                }
-            }
-        }
-
-        private bool _isPublisherSupportLinkExisted;
-
-        private bool IsPublisherSupportLinkExisted
-        {
-            get { return _isPublisherSupportLinkExisted; }
-
-            set
-            {
-                if (!Equals(_isPublisherSupportLinkExisted, value))
-                {
-                    _isPublisherSupportLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsPublisherSupportLinkExisted)));
-                }
-            }
-        }
-
-        private Uri _publisherSupportLink;
-
-        private Uri PublisherSupportLink
-        {
-            get { return _publisherSupportLink; }
-
-            set
-            {
-                if (!Equals(_publisherSupportLink, value))
-                {
-                    _publisherSupportLink = value;
-                    PropertyChanged?.Invoke(this, new(nameof(PublisherSupportLink)));
-                }
-            }
-        }
-
-        private string _locale;
-
-        private string Locale
-        {
-            get { return _locale; }
-
-            set
-            {
-                if (!string.Equals(_locale, value))
-                {
-                    _locale = value;
-                    PropertyChanged?.Invoke(this, new(nameof(Locale)));
-                }
-            }
-        }
-
-        private string _copyRight;
-
-        private string CopyRight
-        {
-            get { return _copyRight; }
-
-            set
-            {
-                if (!string.Equals(_copyRight, value))
-                {
-                    _copyRight = value;
-                    PropertyChanged?.Invoke(this, new(nameof(CopyRight)));
-                }
-            }
-        }
-
-        private bool _isCopyRightLinkExisted;
-
-        private bool IsCopyRightLinkExisted
-        {
-            get { return _isCopyRightLinkExisted; }
-
-            set
-            {
-                if (!Equals(_isCopyRightLinkExisted, value))
-                {
-                    _isCopyRightLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsCopyRightLinkExisted)));
-                }
-            }
-        }
-
-        private Uri _copyRightLink;
-
-        private Uri CopyRightLink
-        {
-            get { return _copyRightLink; }
-
-            set
-            {
-                if (!Equals(_copyRightLink, value))
-                {
-                    _copyRightLink = value;
-                    PropertyChanged?.Invoke(this, new(nameof(CopyRightLink)));
-                }
-            }
-        }
-
-        private string _license;
-
-        private string License
-        {
-            get { return _license; }
-
-            set
-            {
-                if (!string.Equals(_license, value))
-                {
-                    _license = value;
-                    PropertyChanged?.Invoke(this, new(nameof(License)));
-                }
-            }
-        }
-
-        private bool _isLicenseLinkExisted;
-
-        private bool IsLicenseLinkExisted
-        {
-            get { return _isLicenseLinkExisted; }
-
-            set
-            {
-                if (!Equals(_isLicenseLinkExisted, value))
-                {
-                    _isLicenseLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsLicenseLinkExisted)));
-                }
-            }
-        }
-
-        private Uri _licenseLink;
-
-        private Uri LicenseLink
-        {
-            get { return _licenseLink; }
-
-            set
-            {
-                if (!Equals(_licenseLink, value))
-                {
-                    _licenseLink = value;
-                    PropertyChanged?.Invoke(this, new(nameof(LicenseLink)));
-                }
-            }
-        }
-
-        private bool _isPrivacyLinkExisted;
-
-        private bool IsPrivacyLinkExisted
-        {
-            get { return _isPrivacyLinkExisted; }
-
-            set
-            {
-                if (!Equals(_isPrivacyLinkExisted, value))
-                {
-                    _isPrivacyLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsPrivacyLinkExisted)));
-                }
-            }
-        }
-
-        private Uri _privacyLink;
-
-        private Uri PrivacyLink
-        {
-            get { return _privacyLink; }
-
-            set
-            {
-                if (!Equals(_privacyLink, value))
-                {
-                    _privacyLink = value;
-                    PropertyChanged?.Invoke(this, new(nameof(PrivacyLink)));
-                }
-            }
-        }
-
-        private bool _isPurchaseLinkExisted;
-
-        private bool IsPurchaseLinkExisted
-        {
-            get { return _isPurchaseLinkExisted; }
-
-            set
-            {
-                if (!Equals(_isPurchaseLinkExisted, value))
-                {
-                    _isPurchaseLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsPurchaseLinkExisted)));
-                }
-            }
-        }
-
-        private Uri _purchaseLink;
-
-        private Uri PurchaseLink
-        {
-            get { return _purchaseLink; }
-
-            set
-            {
-                if (!Equals(_purchaseLink, value))
-                {
-                    _purchaseLink = value;
-                    PropertyChanged?.Invoke(this, new(nameof(PurchaseLink)));
-                }
-            }
-        }
-
-        private string _releaseNotes;
-
-        private string ReleaseNotes
-        {
-            get { return _releaseNotes; }
-
-            set
-            {
-                if (!string.Equals(_releaseNotes, value))
-                {
-                    _releaseNotes = value;
-                    PropertyChanged?.Invoke(this, new(nameof(ReleaseNotes)));
-                }
-            }
-        }
-
-        private bool _isReleaseNotesLinkExisted;
-
-        private bool IsReleaseNotesLinkExisted
-        {
-            get { return _isReleaseNotesLinkExisted; }
-
-            set
-            {
-                if (!Equals(_isReleaseNotesLinkExisted, value))
-                {
-                    _isReleaseNotesLinkExisted = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsReleaseNotesLinkExisted)));
-                }
-            }
-        }
-
-        private Uri _releaseNotesLink;
-
-        private Uri ReleaseNotesLink
-        {
-            get { return _releaseNotesLink; }
-
-            set
-            {
-                if (!Equals(_releaseNotesLink, value))
-                {
-                    _releaseNotesLink = value;
-                    PropertyChanged?.Invoke(this, new(nameof(ReleaseNotesLink)));
-                }
-            }
-        }
-
         private ObservableCollection<AvailableVersionModel> WinGetAppsVersionCollection { get; } = [];
+
+        private ObservableCollection<WinGetAppInfoModel> WinGetAppInfoCollection { get; } = [];
 
         private ObservableCollection<string> TagCollection { get; } = [];
 
@@ -562,7 +196,7 @@ namespace GetStoreApp.Views.Pages
 
         private async void OnCopyInformationClicked(object sender, RoutedEventArgs args)
         {
-            string copyInformation = await GetCopyInformationStringAsync(DisplayName, Description, Version, PackageLink, Author, Publisher, PublisherLink, PublisherSupportLink, Locale, CopyRight, CopyRightLink, License, LicenseLink, PrivacyLink, PurchaseLink, ReleaseNotes, ReleaseNotesLink);
+            string copyInformation = await GetCopyInformationStringAsync(DisplayName, Description, WinGetAppInfoCollection.AsReadOnly());
             if (!string.IsNullOrEmpty(copyInformation))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyInformation);
@@ -636,29 +270,6 @@ namespace GetStoreApp.Views.Pages
 
             DisplayName = NotAvailableString;
             Description = NotAvailableString;
-            Version = NotAvailableString;
-            PackageLink = null;
-            IsPackageLinkExisted = false;
-            Author = NotAvailableString;
-            Publisher = NotAvailableString;
-            PublisherLink = null;
-            IsPublisherLinkExisted = false;
-            PublisherSupportLink = null;
-            IsPublisherLinkExisted = false;
-            Locale = NotAvailableString;
-            CopyRight = NotAvailableString;
-            CopyRightLink = null;
-            IsCopyRightLinkExisted = false;
-            License = NotAvailableString;
-            LicenseLink = null;
-            IsLicenseLinkExisted = false;
-            PrivacyLink = null;
-            IsPrivacyLinkExisted = false;
-            PurchaseLink = null;
-            IsPrivacyLinkExisted = false;
-            ReleaseNotes = NotAvailableString;
-            ReleaseNotesLink = null;
-            IsReleaseNotesLinkExisted = false;
 
             if (!IsLoadCompleted)
             {
@@ -795,115 +406,149 @@ namespace GetStoreApp.Views.Pages
             {
                 DisplayName = string.IsNullOrEmpty(catalogPackageMetadata.PackageName) ? NotAvailableString : catalogPackageMetadata.PackageName;
                 Description = string.IsNullOrEmpty(catalogPackageMetadata.Description) ? NotAvailableString : catalogPackageMetadata.Description;
-                Version = string.IsNullOrEmpty(packageVersionInfo.Version) ? NotAvailableString : packageVersionInfo.Version;
+
+                WinGetAppInfoCollection.Clear();
+                if (!string.IsNullOrEmpty(packageVersionInfo.Version))
+                {
+                    WinGetAppInfoCollection.Add(new()
+                    {
+                        WinGetAppInfoKind = WinGetAppInfoKind.String,
+                        ClassName = VersionString,
+                        StringContent = packageVersionInfo.Version
+                    });
+                }
                 if (!string.IsNullOrEmpty(catalogPackageMetadata.PackageUrl) && Uri.TryCreate(catalogPackageMetadata.PackageUrl, new(), out Uri packageLinkUri))
                 {
-                    IsPackageLinkExisted = true;
-                    PackageLink = packageLinkUri;
+                    WinGetAppInfoCollection.Add(new()
+                    {
+                        WinGetAppInfoKind = WinGetAppInfoKind.Uri,
+                        ClassName = PackageLinkString,
+                        UriContent = packageLinkUri
+                    });
                 }
-                else
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.Author))
                 {
-                    IsPackageLinkExisted = false;
-                    PackageLink = null;
+                    WinGetAppInfoCollection.Add(new()
+                    {
+                        WinGetAppInfoKind = WinGetAppInfoKind.String,
+                        ClassName = AuthorString,
+                        StringContent = catalogPackageMetadata.Author
+                    });
                 }
-                Author = string.IsNullOrEmpty(catalogPackageMetadata.Author) ? NotAvailableString : catalogPackageMetadata.Author;
-                Publisher = string.IsNullOrEmpty(catalogPackageMetadata.Publisher) ? NotAvailableString : packageVersionInfo.Publisher;
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.Publisher))
+                {
+                    WinGetAppInfoCollection.Add(new()
+                    {
+                        WinGetAppInfoKind = WinGetAppInfoKind.String,
+                        ClassName = PublisherString,
+                        StringContent = catalogPackageMetadata.Publisher
+                    });
+                }
                 if (!string.IsNullOrEmpty(catalogPackageMetadata.PublisherUrl) && Uri.TryCreate(catalogPackageMetadata.PublisherUrl, new(), out Uri publisherLinkUri))
                 {
-                    IsPublisherLinkExisted = true;
-                    PublisherLink = publisherLinkUri;
+                    WinGetAppInfoCollection.Add(new()
+                    {
+                        WinGetAppInfoKind = WinGetAppInfoKind.Uri,
+                        ClassName = PublisherLinkString,
+                        UriContent = publisherLinkUri
+                    });
                 }
-                else
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.PublisherSupportUrl) && Uri.TryCreate(catalogPackageMetadata.PublisherSupportUrl, new(), out Uri publisherSupportLinkUri))
                 {
-                    IsPublisherLinkExisted = false;
-                    PublisherLink = null;
+                    WinGetAppInfoCollection.Add(new()
+                    {
+                        WinGetAppInfoKind = WinGetAppInfoKind.Uri,
+                        ClassName = PublisherSupportLinkString,
+                        UriContent = publisherSupportLinkUri
+                    });
                 }
-                if (!string.IsNullOrEmpty(catalogPackageMetadata.PublisherSupportUrl) && Uri.TryCreate(catalogPackageMetadata.PublisherSupportUrl, new(), out Uri appPublisherSupportLinkUri))
-                {
-                    IsPublisherSupportLinkExisted = true;
-                    PublisherSupportLink = appPublisherSupportLinkUri;
-                }
-                else
-                {
-                    IsPublisherLinkExisted = false;
-                    PublisherLink = null;
-                }
-                if (string.IsNullOrEmpty(catalogPackageMetadata.Locale))
-                {
-                    Locale = NotAvailableString;
-                }
-                else
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.Locale))
                 {
                     try
                     {
-                        // 无特定区域
-                        if (catalogPackageMetadata.Locale.Contains("Neutral", StringComparison.OrdinalIgnoreCase))
+                        WinGetAppInfoCollection.Add(new()
                         {
-                            Locale = NoSpecificLocaleString;
-                        }
-                        else
-                        {
-                            Locale = new CultureInfo(catalogPackageMetadata.Locale).DisplayName;
-                        }
+                            WinGetAppInfoKind = WinGetAppInfoKind.String,
+                            ClassName = LocaleString,
+                            StringContent = catalogPackageMetadata.Locale.Contains("Neutral", StringComparison.OrdinalIgnoreCase) ? NoSpecificLocaleString : new CultureInfo(catalogPackageMetadata.Locale).DisplayName
+                        });
                     }
                     catch (Exception e)
                     {
-                        Locale = NotAvailableString;
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                     }
                 }
-                CopyRight = string.IsNullOrEmpty(catalogPackageMetadata.Copyright) ? NotAvailableString : catalogPackageMetadata.Copyright;
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.Copyright))
+                {
+                    WinGetAppInfoCollection.Add(new()
+                    {
+                        WinGetAppInfoKind = WinGetAppInfoKind.String,
+                        ClassName = CopyRightString,
+                        StringContent = catalogPackageMetadata.Copyright
+                    });
+                }
                 if (!string.IsNullOrEmpty(catalogPackageMetadata.CopyrightUrl) && Uri.TryCreate(catalogPackageMetadata.CopyrightUrl, new(), out Uri copyRightLinkUri))
                 {
-                    IsCopyRightLinkExisted = true;
-                    CopyRightLink = copyRightLinkUri;
+                    WinGetAppInfoCollection.Add(new()
+                    {
+                        WinGetAppInfoKind = WinGetAppInfoKind.Uri,
+                        ClassName = CopyRightLinkString,
+                        UriContent = copyRightLinkUri
+                    });
                 }
-                else
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.License))
                 {
-                    IsCopyRightLinkExisted = false;
-                    CopyRightLink = null;
+                    WinGetAppInfoCollection.Add(new()
+                    {
+                        WinGetAppInfoKind = WinGetAppInfoKind.String,
+                        ClassName = LicenseString,
+                        StringContent = catalogPackageMetadata.License
+                    });
                 }
-                License = string.IsNullOrEmpty(catalogPackageMetadata.License) ? NotAvailableString : catalogPackageMetadata.License;
                 if (!string.IsNullOrEmpty(catalogPackageMetadata.LicenseUrl) && Uri.TryCreate(catalogPackageMetadata.LicenseUrl, new(), out Uri licenseLinkUri))
                 {
-                    IsLicenseLinkExisted = true;
-                    LicenseLink = licenseLinkUri;
-                }
-                else
-                {
-                    IsLicenseLinkExisted = false;
-                    LicenseLink = null;
+                    WinGetAppInfoCollection.Add(new()
+                    {
+                        WinGetAppInfoKind = WinGetAppInfoKind.Uri,
+                        ClassName = LicenseLinkString,
+                        UriContent = licenseLinkUri
+                    });
                 }
                 if (!string.IsNullOrEmpty(catalogPackageMetadata.PrivacyUrl) && Uri.TryCreate(catalogPackageMetadata.PrivacyUrl, new(), out Uri privacyLinkUri))
                 {
-                    IsPrivacyLinkExisted = true;
-                    PrivacyLink = privacyLinkUri;
-                }
-                else
-                {
-                    IsPrivacyLinkExisted = false;
-                    PrivacyLink = null;
+                    WinGetAppInfoCollection.Add(new()
+                    {
+                        WinGetAppInfoKind = WinGetAppInfoKind.Uri,
+                        ClassName = PrivacyLinkString,
+                        UriContent = privacyLinkUri
+                    });
                 }
                 if (!string.IsNullOrEmpty(catalogPackageMetadata.PurchaseUrl) && Uri.TryCreate(catalogPackageMetadata.PurchaseUrl, new(), out Uri purchaseLinkUri))
                 {
-                    IsPurchaseLinkExisted = true;
-                    PurchaseLink = purchaseLinkUri;
+                    WinGetAppInfoCollection.Add(new()
+                    {
+                        WinGetAppInfoKind = WinGetAppInfoKind.Uri,
+                        ClassName = PurchaseLinkString,
+                        UriContent = purchaseLinkUri
+                    });
                 }
-                else
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.ReleaseNotes))
                 {
-                    IsPurchaseLinkExisted = false;
-                    PurchaseLink = null;
+                    WinGetAppInfoCollection.Add(new()
+                    {
+                        WinGetAppInfoKind = WinGetAppInfoKind.String,
+                        ClassName = ReleaseNotesString,
+                        StringContent = catalogPackageMetadata.ReleaseNotes
+                    });
                 }
-                ReleaseNotes = string.IsNullOrEmpty(catalogPackageMetadata.ReleaseNotes) ? NotAvailableString : catalogPackageMetadata.ReleaseNotes;
                 if (!string.IsNullOrEmpty(catalogPackageMetadata.ReleaseNotesUrl) && Uri.TryCreate(catalogPackageMetadata.ReleaseNotesUrl, new(), out Uri releaseNotesLinkUri))
                 {
-                    IsReleaseNotesLinkExisted = true;
-                    ReleaseNotesLink = releaseNotesLinkUri;
-                }
-                else
-                {
-                    IsReleaseNotesLinkExisted = false;
-                    ReleaseNotesLink = null;
+                    WinGetAppInfoCollection.Add(new()
+                    {
+                        WinGetAppInfoKind = WinGetAppInfoKind.Uri,
+                        ClassName = ReleaseNotesLinkString,
+                        UriContent = releaseNotesLinkUri
+                    });
                 }
 
                 TagCollection.Clear();
@@ -926,29 +571,7 @@ namespace GetStoreApp.Views.Pages
             {
                 DisplayName = NotAvailableString;
                 Description = NotAvailableString;
-                Version = NotAvailableString;
-                PackageLink = null;
-                IsPackageLinkExisted = false;
-                Author = NotAvailableString;
-                Publisher = NotAvailableString;
-                PublisherLink = null;
-                IsPublisherLinkExisted = false;
-                PublisherSupportLink = null;
-                IsPublisherLinkExisted = false;
-                Locale = NotAvailableString;
-                CopyRight = NotAvailableString;
-                CopyRightLink = null;
-                IsCopyRightLinkExisted = false;
-                License = NotAvailableString;
-                LicenseLink = null;
-                IsLicenseLinkExisted = false;
-                PrivacyLink = null;
-                IsPrivacyLinkExisted = false;
-                PurchaseLink = null;
-                IsPrivacyLinkExisted = false;
-                ReleaseNotes = NotAvailableString;
-                ReleaseNotesLink = null;
-                IsReleaseNotesLinkExisted = false;
+                WinGetAppInfoCollection.Clear();
                 TagCollection.Clear();
                 DocumentationCollection.Clear();
             }
@@ -998,7 +621,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取复制信息
         /// </summary>
-        private async Task<string> GetCopyInformationStringAsync(string displayName, string description, string version, Uri packageLink, string author, string publisher, Uri publisherLink, Uri publisherSupportLink, string locale, string copyRight, Uri copyRightLink, string license, Uri licenseLink, Uri privacyLink, Uri purchaseLink, string releaseNotes, Uri releaseNotesLink)
+        private async Task<string> GetCopyInformationStringAsync(string displayName, string description, ReadOnlyCollection<WinGetAppInfoModel> winGetAppInfoCollection)
         {
             return await Task.Run(() =>
             {
@@ -1008,22 +631,18 @@ namespace GetStoreApp.Views.Pages
                     [
                         string.Format("{0}\t{1}", DisplayNameString, string.IsNullOrEmpty(displayName) ? NotAvailableString : displayName),
                         string.Format("{0}\t{1}", DescriptionString, string.IsNullOrEmpty(description) ? NotAvailableString : description),
-                        string.Format("{0}\t{1}", VersionString, string.IsNullOrEmpty(version) ? NotAvailableString : version),
-                        string.Format("{0}\t{1}", PackageLinkString, packageLink is not null ? packageLink.AbsoluteUri : NotAvailableString),
-                        string.Format("{0}\t{1}", AuthorString, string.IsNullOrEmpty(author) ? NotAvailableString : author),
-                        string.Format("{0}\t{1}", PublisherString, string.IsNullOrEmpty(publisher) ? NotAvailableString : publisher),
-                        string.Format("{0}\t{1}", PublisherLinkString, publisherLink is not null ? publisherLink.AbsoluteUri : NotAvailableString),
-                        string.Format("{0}\t{1}", PublisherSupportLinkString, publisherSupportLink is not null ? publisherSupportLink.AbsoluteUri : NotAvailableString),
-                        string.Format("{0}\t{1}", LocaleString, string.IsNullOrEmpty(locale) ? NotAvailableString : locale),
-                        string.Format("{0}\t{1}", CopyRightString, string.IsNullOrEmpty(copyRight) ? NotAvailableString : copyRight),
-                        string.Format("{0}\t{1}", CopyRightLinkString, copyRightLink is not null ? copyRightLink.AbsoluteUri : NotAvailableString),
-                        string.Format("{0}\t{1}", LicenseString, string.IsNullOrEmpty(license) ? NotAvailableString : license),
-                        string.Format("{0}\t{1}", LicenseLinkString, licenseLink is not null ? licenseLink.AbsoluteUri : NotAvailableString),
-                        string.Format("{0}\t{1}", PrivacyLinkString, privacyLink is not null ? privacyLink.AbsoluteUri : NotAvailableString),
-                        string.Format("{0}\t{1}", PurchaseLinkString, purchaseLink is not null ? purchaseLink.AbsoluteUri : NotAvailableString),
-                        string.Format("{0}\t{1}", ReleaseNotesString, string.IsNullOrEmpty(releaseNotes) ? NotAvailableString : releaseNotes),
-                        string.Format("{0}\t{1}", ReleaseNotesLinkString, releaseNotesLink is not null ? releaseNotesLink.AbsoluteUri : NotAvailableString)
                     ];
+                    foreach (WinGetAppInfoModel winGetAppInfo in winGetAppInfoCollection)
+                    {
+                        if (winGetAppInfo.WinGetAppInfoKind is WinGetAppInfoKind.String)
+                        {
+                            copyInformationList.Add(string.Format("{0}\t{1}", winGetAppInfo.ClassName, string.IsNullOrEmpty(winGetAppInfo.StringContent) ? NotAvailableString : winGetAppInfo.StringContent));
+                        }
+                        else if (winGetAppInfo.WinGetAppInfoKind is WinGetAppInfoKind.Uri)
+                        {
+                            copyInformationList.Add(string.Format("{0}\t{1}", winGetAppInfo.ClassName, string.IsNullOrEmpty(winGetAppInfo.UriContent.AbsoluteUri) ? NotAvailableString : winGetAppInfo.UriContent.AbsoluteUri));
+                        }
+                    }
                     return string.Join(Environment.NewLine, copyInformationList);
                 }
                 catch (Exception e)

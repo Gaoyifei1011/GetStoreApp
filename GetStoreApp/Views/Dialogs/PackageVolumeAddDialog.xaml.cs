@@ -38,7 +38,6 @@ namespace GetStoreApp.Views.Dialogs
         private readonly string CreateFailed3String = ResourceService.GetLocalized("Dialog/CreateFailed3");
         private readonly string CreateFailed4String = ResourceService.GetLocalized("Dialog/CreateFailed4");
         private readonly string CreateSuccessfullyString = ResourceService.GetLocalized("Dialog/CreateSuccessfully");
-        private readonly string NotAvailableString = ResourceService.GetLocalized("Dialog/NotAvailable");
         private readonly string VolumeSpaceString = ResourceService.GetLocalized("Dialog/VolumeSpace");
 
         #endregion 第一部分：常量、资源与状态字段
@@ -486,11 +485,14 @@ namespace GetStoreApp.Views.Dialogs
                         appNotificationBuilder.AddArgument("action", "OpenApp");
                         appNotificationBuilder.AddText(string.Format(CreateFailed1String, string.Format("{0}[{1}]", packageVolume.Name, saveFolder)));
                         appNotificationBuilder.AddText(CreateFailed2String);
-                        appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                        if (exception is not null)
                         {
-                            string.Format(CreateFailed3String, exception is not null ? string.Format("0x{0:X8}",exception.HResult) : NotAvailableString),
-                            string.Format(CreateFailed4String, exception is not null ? exception.Message : NotAvailableString)
-                        }));
+                            appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                            {
+                                string.Format(CreateFailed3String, string.Format("0x{0:X8}",exception.HResult)),
+                                string.Format(CreateFailed4String, exception.Message)
+                            }));
+                        }
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                         LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeAddDialog), nameof(ShowAddPackageVolumeResultNotification), 1, exception is not null ? exception : new());
                     }
