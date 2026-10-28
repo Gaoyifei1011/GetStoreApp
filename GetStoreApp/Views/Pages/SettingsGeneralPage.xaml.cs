@@ -57,7 +57,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!string.Equals(_theme, value))
+                if (!Equals(_theme, value))
                 {
                     _theme = value;
                     PropertyChanged?.Invoke(this, new(nameof(Theme)));

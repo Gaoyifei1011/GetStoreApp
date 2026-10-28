@@ -88,7 +88,7 @@ namespace GetStoreApp.Views.Dialogs
         {
             get { return _selectedPackageVolume; }
 
-            set
+            private set
             {
                 if (!Equals(_selectedPackageVolume, value))
                 {

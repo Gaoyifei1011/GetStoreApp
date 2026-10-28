@@ -510,7 +510,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
             set
             {
-                if (!Equals(_hoursBetweenUpdateChecks, value))
+                if (!string.Equals(_hoursBetweenUpdateChecks, value))
                 {
                     _hoursBetweenUpdateChecks = value;
                     PropertyChanged?.Invoke(this, new(nameof(HoursBetweenUpdateChecks)));

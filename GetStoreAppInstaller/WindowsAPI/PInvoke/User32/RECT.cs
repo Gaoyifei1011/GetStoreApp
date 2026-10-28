@@ -6,26 +6,26 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
     /// RECT 结构通过矩形的左上角和右下角的坐标来定义矩形。
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public struct RECT
+    internal struct RECT
     {
         /// <summary>
         /// 指定矩形左上角的 x 坐标。
         /// </summary>
-        public int left;
+        internal int left;
 
         /// <summary>
         /// 指定矩形左上角的 y 坐标。
         /// </summary>
-        public int top;
+        internal int top;
 
         /// <summary>
         /// 指定矩形右下角的 x 坐标。
         /// </summary>
-        public int right;
+        internal int right;
 
         /// <summary>
         /// 指定矩形右下角的 y 坐标。
         /// </summary>
-        public int bottom;
+        internal int bottom;
     }
 }

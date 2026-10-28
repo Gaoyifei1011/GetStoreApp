@@ -19,7 +19,7 @@ namespace GetStoreApp.Views.Dialogs
         {
             get { return _deleteFileSameTime; }
 
-            set
+            private set
             {
                 if (!Equals(_deleteFileSameTime, value))
                 {

@@ -50,7 +50,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(_downloadFolder, value))
+                if (!string.Equals(_downloadFolder, value))
                 {
                     _downloadFolder = value;
                     PropertyChanged?.Invoke(this, new(nameof(DownloadFolder)));

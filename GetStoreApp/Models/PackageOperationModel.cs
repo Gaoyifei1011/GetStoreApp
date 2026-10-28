@@ -68,7 +68,7 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 已下载文件的大小
         /// </summary>
-        internal string _downloadedFileSize;
+        private string _downloadedFileSize;
 
         internal string DownloadedFileSize
         {
