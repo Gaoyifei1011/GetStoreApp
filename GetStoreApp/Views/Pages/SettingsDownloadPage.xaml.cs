@@ -128,7 +128,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnDownloadOpenFolderClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            Task.Run(DownloadOptionsService.OpenFolderAsync);
+            DownloadOptionsService.OpenFolder();
         }
 
         /// <summary>

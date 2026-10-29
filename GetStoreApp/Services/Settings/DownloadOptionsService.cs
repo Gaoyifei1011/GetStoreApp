@@ -162,21 +162,24 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 安全访问目录（当目录不存在的时候直接创建目录）
         /// </summary>
-        internal static async Task OpenFolderAsync()
+        internal static void OpenFolder()
         {
-            try
+            Task.Run(async () =>
             {
-                if (!Directory.Exists(DownloadFolder))
+                try
                 {
-                    Directory.CreateDirectory(DownloadFolder);
-                }
+                    if (!Directory.Exists(DownloadFolder))
+                    {
+                        Directory.CreateDirectory(DownloadFolder);
+                    }
 
-                await Launcher.LaunchFolderPathAsync(DownloadFolder);
-            }
-            catch (Exception e)
-            {
-                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-            }
+                    await Launcher.LaunchFolderPathAsync(DownloadFolder);
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
     }
 }

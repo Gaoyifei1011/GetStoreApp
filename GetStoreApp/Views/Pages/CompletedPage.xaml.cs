@@ -321,7 +321,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenFolderClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(DownloadOptionsService.OpenFolderAsync);
+            DownloadOptionsService.OpenFolder();
         }
 
         /// <summary>
