@@ -9,6 +9,7 @@ using GetStoreApp.Views.Pages;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.Windows.Storage.Pickers;
 using System;
@@ -295,18 +296,11 @@ namespace GetStoreApp.Views.UserControls
 
             try
             {
-                IList<object> selectedItemsList = QueryLinksResultListView.SelectedItems;
-
-                foreach (object item in QueryLinksResultListView.Items)
+                ReadOnlyCollection<ItemIndexRange> selectedRangeCollection = [.. QueryLinksResultListView.SelectedRanges];
+                QueryLinksResultListView.SelectAll();
+                foreach (ItemIndexRange itemIndexRange in selectedRangeCollection)
                 {
-                    if (selectedItemsList.Contains(item))
-                    {
-                        QueryLinksResultListView.SelectedItems.Remove(item);
-                    }
-                    else
-                    {
-                        QueryLinksResultListView.SelectedItems.Add(item);
-                    }
+                    QueryLinksResultListView.DeselectRange(itemIndexRange);
                 }
             }
             catch (Exception e)

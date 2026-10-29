@@ -12,6 +12,7 @@ using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
@@ -367,18 +368,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectReverseClicked(object sender, RoutedEventArgs args)
         {
-            IList<object> selectedItemsList = CompletedListView.SelectedItems;
-
-            foreach (object item in CompletedListView.Items)
+            ReadOnlyCollection<ItemIndexRange> selectedRangeCollection = [.. CompletedListView.SelectedRanges];
+            CompletedListView.SelectAll();
+            foreach (ItemIndexRange itemIndexRange in selectedRangeCollection)
             {
-                if (selectedItemsList.Contains(item))
-                {
-                    CompletedListView.SelectedItems.Remove(item);
-                }
-                else
-                {
-                    CompletedListView.SelectedItems.Add(item);
-                }
+                CompletedListView.DeselectRange(itemIndexRange);
             }
         }
 

@@ -7,6 +7,7 @@ using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
@@ -193,18 +194,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectReverseClicked(object sender, RoutedEventArgs args)
         {
-            IList<object> selectedItemsList = DownloadingListView.SelectedItems;
-
-            foreach (object item in DownloadingListView.Items)
+            ReadOnlyCollection<ItemIndexRange> selectedRangeCollection = [.. DownloadingListView.SelectedRanges];
+            DownloadingListView.SelectAll();
+            foreach (ItemIndexRange itemIndexRange in selectedRangeCollection)
             {
-                if (selectedItemsList.Contains(item))
-                {
-                    DownloadingListView.SelectedItems.Remove(item);
-                }
-                else
-                {
-                    DownloadingListView.SelectedItems.Add(item);
-                }
+                DownloadingListView.DeselectRange(itemIndexRange);
             }
         }
 
