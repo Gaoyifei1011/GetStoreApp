@@ -110,7 +110,7 @@
                             IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOnContent')}"
-                            Style="{StaticResource ToggleSwitchStyle}"
+                            Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                             Toggled="{x:Bind OnAllowHashMismatchToggled}" />
                     </Grid>
 
@@ -395,7 +395,7 @@
                             IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOnContent')}"
-                            Style="{StaticResource ToggleSwitchStyle}"
+                            Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                             Toggled="{x:Bind OnAllowHashMismatchToggled}" />
                     </Grid>
 
@@ -427,7 +427,7 @@
                             IsOn="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOnContent')}"
-                            Style="{StaticResource ToggleSwitchStyle}"
+                            Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                             Toggled="{x:Bind OnBypassIsStoreClientBlockedPolicyCheckToggled}" />
                     </Grid>
 
@@ -459,7 +459,7 @@
                             IsOn="{x:Bind AllowUpgradeToUnknownVersion, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowUpgradeToUnknownVersionOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowUpgradeToUnknownVersionOnContent')}"
-                            Style="{StaticResource ToggleSwitchStyle}"
+                            Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                             Toggled="{x:Bind OnAllowUpgradeToUnknownVersionToggled}" />
                     </Grid>
 
@@ -491,7 +491,7 @@
                             IsOn="{x:Bind ForceInstall, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceInstallOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceInstallOnContent')}"
-                            Style="{StaticResource ToggleSwitchStyle}"
+                            Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                             Toggled="{x:Bind OnForceInstallToggled}" />
                     </Grid>
 
@@ -812,7 +812,7 @@
                             IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOnContent')}"
-                            Style="{StaticResource ToggleSwitchStyle}"
+                            Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                             Toggled="{x:Bind OnAllowHashMismatchToggled}" />
                     </Grid>
 
@@ -844,7 +844,7 @@
                             IsOn="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOnContent')}"
-                            Style="{StaticResource ToggleSwitchStyle}"
+                            Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                             Toggled="{x:Bind OnBypassIsStoreClientBlockedPolicyCheckToggled}" />
                     </Grid>
 
@@ -876,7 +876,7 @@
                             IsOn="{x:Bind ForceInstall, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceInstallOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceInstallOnContent')}"
-                            Style="{StaticResource ToggleSwitchStyle}"
+                            Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                             Toggled="{x:Bind OnForceInstallToggled}" />
                     </Grid>
 
@@ -1061,7 +1061,7 @@
                             IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowHashMismatchOnContent')}"
-                            Style="{StaticResource ToggleSwitchStyle}"
+                            Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                             Toggled="{x:Bind OnAllowHashMismatchToggled}" />
                     </Grid>
 
@@ -1093,7 +1093,7 @@
                             IsOn="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/BypassIsStoreClientBlockedPolicyCheckOnContent')}"
-                            Style="{StaticResource ToggleSwitchStyle}"
+                            Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                             Toggled="{x:Bind OnBypassIsStoreClientBlockedPolicyCheckToggled}" />
                     </Grid>
 
@@ -1125,7 +1125,7 @@
                             IsOn="{x:Bind AllowUpgradeToUnknownVersion, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowUpgradeToUnknownVersionOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/AllowUpgradeToUnknownVersionOnContent')}"
-                            Style="{StaticResource ToggleSwitchStyle}"
+                            Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                             Toggled="{x:Bind OnAllowUpgradeToUnknownVersionToggled}" />
                     </Grid>
 
@@ -1157,7 +1157,7 @@
                             IsOn="{x:Bind ForceInstall, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceInstallOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionOptions/ForceInstallOnContent')}"
-                            Style="{StaticResource ToggleSwitchStyle}"
+                            Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                             Toggled="{x:Bind OnForceInstallToggled}" />
                     </Grid>
 

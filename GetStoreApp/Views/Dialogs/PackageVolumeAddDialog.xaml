@@ -243,7 +243,7 @@
                     IsOn="{x:Bind UseWindowsAppsFolder, Mode=OneWay}"
                     OffContent="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UseWindowsAppsFolderOffContent')}"
                     OnContent="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/UseWindowsAppsFolderOnContent')}"
-                    Style="{StaticResource ToggleSwitchStyle}"
+                    Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                     Toggled="{x:Bind OnUseWindowsAppsFolderToggled}" />
             </Grid>
 
@@ -264,7 +264,7 @@
                     IsOn="{x:Bind SetDefaultVolume, Mode=OneWay}"
                     OffContent="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SetDefaultVolumeOffContent')}"
                     OnContent="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/SetDefaultVolumeOnContent')}"
-                    Style="{StaticResource ToggleSwitchStyle}"
+                    Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                     Toggled="{x:Bind OnSetDefaultVolumeToggled}" />
             </Grid>
         </Grid>

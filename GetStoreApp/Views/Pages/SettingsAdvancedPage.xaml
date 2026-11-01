@@ -85,7 +85,7 @@
                     IsOn="{x:Bind Notification, Mode=OneWay}"
                     OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/NotificationOffContent')}"
                     OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/NotificationOnContent')}"
-                    Style="{StaticResource ToggleSwitchStyle}"
+                    Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                     Toggled="{x:Bind OnNotificationToggled}" />
             </Grid>
 
@@ -157,7 +157,7 @@
                     IsOn="{x:Bind ShellMenu, Mode=OneWay}"
                     OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ShellMenuOffContent')}"
                     OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAdvanced/ShellMenuOnContent')}"
-                    Style="{StaticResource ToggleSwitchStyle}"
+                    Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                     Toggled="{x:Bind OnShellMenuToggled}" />
             </Grid>
 

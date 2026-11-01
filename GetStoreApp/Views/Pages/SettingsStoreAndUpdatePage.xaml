@@ -274,7 +274,7 @@
                     IsOn="{x:Bind CancelAutoUpdate, Mode=OneWay}"
                     OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdateOffContent')}"
                     OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/CancelAutoUpdateOnContent')}"
-                    Style="{StaticResource ToggleSwitchStyle}"
+                    Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                     Toggled="{x:Bind OnCancelAutoUpdateToggled}" />
             </Grid>
 
@@ -604,7 +604,7 @@
                             IsOn="{x:Bind UseSystemRegion, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/UseSystemRegionOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/UseSystemRegionOnContent')}"
-                            Style="{StaticResource ToggleSwitchStyle}"
+                            Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                             Toggled="{x:Bind OnUseSystemRegionToggled}" />
                     </Grid>
 
@@ -764,7 +764,7 @@
                             IsOn="{x:Bind EncryptedPackageFilter, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/EncryptedPackageOnContent')}"
-                            Style="{StaticResource ToggleSwitchStyle}"
+                            Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                             Toggled="{x:Bind OnEncryptedPackageToggled}" />
                     </Grid>
 
@@ -812,7 +812,7 @@
                             IsOn="{x:Bind BlockMapFilter, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsStoreAndUpdate/BlockMapOnContent')}"
-                            Style="{StaticResource ToggleSwitchStyle}"
+                            Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                             Toggled="{x:Bind OnBlockMapToggled}" />
                     </Grid>
                 </StackPanel>

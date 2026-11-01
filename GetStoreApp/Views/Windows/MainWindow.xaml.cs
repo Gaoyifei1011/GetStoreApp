@@ -1122,6 +1122,7 @@ namespace GetStoreApp.Views.Windows
                 // 应用已经启动
                 if (!isFirstLaunch && appLaunchArguments.IsLaunched && !(appLaunchArguments.SubParameterList is not null && appLaunchArguments.SubParameterList.Count > 0 && appLaunchArguments.SubParameterList[0] is "Restart"))
                 {
+                    BringWindowToForeground(Win32Interop.GetWindowFromWindowId(windowId));
                     await ShowDialogAsync(new AppRunningDialog());
                 }
             }
@@ -1209,6 +1210,7 @@ namespace GetStoreApp.Views.Windows
                 {
                     if (!isFirstLaunch && appLaunchArguments.IsLaunched)
                     {
+                        BringWindowToForeground(Win32Interop.GetWindowFromWindowId(windowId));
                         await ShowDialogAsync(new AppRunningDialog());
                     }
                 }
@@ -1295,6 +1297,7 @@ namespace GetStoreApp.Views.Windows
                 {
                     if (!isFirstLaunch && appLaunchArguments.IsLaunched && appLaunchArguments.SubParameterList[0] is "OpenApp")
                     {
+                        BringWindowToForeground(Win32Interop.GetWindowFromWindowId(windowId));
                         await ShowDialogAsync(new AppRunningDialog());
                     }
                     else if (appLaunchArguments.SubParameterList[0] is "ViewDownloadPage")

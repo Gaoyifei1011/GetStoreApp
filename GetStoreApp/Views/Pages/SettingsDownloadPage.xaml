@@ -182,7 +182,7 @@
                     IsOn="{x:Bind ManualSetDownloadFolder, Mode=OneWay}"
                     OffContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/ManualSetDownloadFolderOffContent')}"
                     OnContent="{x:Bind rootservice:ResourceService.GetLocalized('SettingsDownload/ManualSetDownloadFolderOnContent')}"
-                    Style="{StaticResource ToggleSwitchStyle}"
+                    Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                     Toggled="{x:Bind OnManualSetDownloadFolderToggled}" />
             </Grid>
 

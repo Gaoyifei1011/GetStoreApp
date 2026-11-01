@@ -211,7 +211,7 @@
                             IsOn="{x:Bind Explicit, Mode=OneWay}"
                             OffContent="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/ExplicitOffContent')}"
                             OnContent="{x:Bind rootservice:ResourceService.GetLocalized('Dialog/ExplicitOnContent')}"
-                            Style="{StaticResource ToggleSwitchStyle}"
+                            Style="{StaticResource ToggleSwitchOnOffContentPositionOppositeStyle}"
                             Toggled="{x:Bind OnExplicitToggled}" />
                     </Grid>
 
