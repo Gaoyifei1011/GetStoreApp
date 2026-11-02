@@ -34,17 +34,15 @@ namespace GetStoreApp.Views.Dialogs
 
         #region 第二部分：属性、列表与事件
 
-        private bool _isLoadCompleted;
-
         private bool IsLoadCompleted
         {
-            get { return _isLoadCompleted; }
+            get;
 
             set
             {
-                if (!Equals(_isLoadCompleted, value))
+                if (!Equals(field, value))
                 {
-                    _isLoadCompleted = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsLoadCompleted)));
                 }
             }

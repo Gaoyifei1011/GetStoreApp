@@ -20,17 +20,15 @@ namespace GetStoreAppPinner.Views.Pages
 
         private AppWindow AppWindow { get; }
 
-        private ElementTheme _windowTheme;
-
         private ElementTheme WindowTheme
         {
-            get { return _windowTheme; }
+            get;
 
             set
             {
-                if (!Equals(_windowTheme, value))
+                if (!Equals(field, value))
                 {
-                    _windowTheme = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(WindowTheme)));
                 }
             }

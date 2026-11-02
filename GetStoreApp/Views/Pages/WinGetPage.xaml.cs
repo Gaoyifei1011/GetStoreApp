@@ -114,33 +114,29 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private int _selectedIndex;
-
         private int SelectedIndex
         {
-            get { return _selectedIndex; }
+            get;
 
             set
             {
-                if (!Equals(_selectedIndex, value))
+                if (!Equals(field, value))
                 {
-                    _selectedIndex = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectedIndex)));
                 }
             }
         }
 
-        private WinGetPaneKind _winGetPaneKind;
-
         private WinGetPaneKind WinGetPaneKind
         {
-            get { return _winGetPaneKind; }
+            get;
 
             set
             {
-                if (!Equals(_winGetPaneKind, value))
+                if (!Equals(field, value))
                 {
-                    _winGetPaneKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(WinGetPaneKind)));
                 }
             }

@@ -49,193 +49,155 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private ComboBoxItemModel _queryLinksMode;
-
         private ComboBoxItemModel QueryLinksMode
         {
-            get { return _queryLinksMode; }
+            get;
 
             set
             {
-                if (!Equals(_queryLinksMode, value))
+                if (!Equals(field, value))
                 {
-                    _queryLinksMode = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(QueryLinksMode)));
                 }
             }
         }
 
-        private ComboBoxItemModel _searchAppsMode;
-
-        private ComboBoxItemModel SearchAppsMode
-        {
-            get { return _searchAppsMode; }
-
-            set
-            {
-                if (!Equals(_searchAppsMode, value))
-                {
-                    _searchAppsMode = value;
-                    PropertyChanged?.Invoke(this, new(nameof(SearchAppsMode)));
-                }
-            }
-        }
-
-        private ComboBoxItemModel _appLinkOpenMode;
-
         private ComboBoxItemModel AppLinkOpenMode
         {
-            get { return _appLinkOpenMode; }
+            get;
 
             set
             {
-                if (!Equals(_appLinkOpenMode, value))
+                if (!Equals(field, value))
                 {
-                    _appLinkOpenMode = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AppLinkOpenMode)));
                 }
             }
         }
 
-        private ComboBoxItemModel _installMode;
-
         private ComboBoxItemModel InstallMode
         {
-            get { return _installMode; }
+            get;
 
             set
             {
-                if (!Equals(_installMode, value))
+                if (!Equals(field, value))
                 {
-                    _installMode = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(InstallMode)));
                 }
             }
         }
 
-        private bool _cancelAutoUpdate;
-
         private bool CancelAutoUpdate
         {
-            get { return _cancelAutoUpdate; }
+            get;
 
             set
             {
-                if (!Equals(_cancelAutoUpdate, value))
+                if (!Equals(field, value))
                 {
-                    _cancelAutoUpdate = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(CancelAutoUpdate)));
                 }
             }
         }
 
-        private ComboBoxItemModel _appUpdateStatus;
-
         private ComboBoxItemModel AppUpdateStatus
         {
-            get { return _appUpdateStatus; }
+            get;
 
             set
             {
-                if (!Equals(_appUpdateStatus, value))
+                if (!Equals(field, value))
                 {
-                    _appUpdateStatus = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AppUpdateStatus)));
                 }
             }
         }
 
-        private DateTimeOffset _appUpdatePauseEndTime;
-
         private DateTimeOffset AppUpdatePauseEndTime
         {
-            get { return _appUpdatePauseEndTime; }
+            get;
 
             set
             {
-                if (!Equals(_appUpdatePauseEndTime, value))
+                if (!Equals(field, value))
                 {
-                    _appUpdatePauseEndTime = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AppUpdatePauseEndTime)));
                 }
             }
         }
 
-        private bool _useSystemRegion;
-
         private bool UseSystemRegion
         {
-            get { return _useSystemRegion; }
+            get;
 
             set
             {
-                if (!Equals(_useSystemRegion, value))
+                if (!Equals(field, value))
                 {
-                    _useSystemRegion = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(UseSystemRegion)));
                 }
             }
         }
 
-        private GeographicRegion _currentCountryOrRegion;
-
         private GeographicRegion CurrentCountryOrRegion
         {
-            get { return _currentCountryOrRegion; }
+            get;
 
             set
             {
-                if (!Equals(_currentCountryOrRegion, value))
+                if (!Equals(field, value))
                 {
-                    _currentCountryOrRegion = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(CurrentCountryOrRegion)));
                 }
             }
         }
 
-        private StoreRegionModel _storeRegion;
-
         private StoreRegionModel StoreRegion
         {
-            get { return _storeRegion; }
+            get;
 
             set
             {
-                if (!Equals(_storeRegion, value))
+                if (!Equals(field, value))
                 {
-                    _storeRegion = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(StoreRegion)));
                 }
             }
         }
 
-        private bool _encryptedPackageFilter;
-
         private bool EncryptedPackageFilter
         {
-            get { return _encryptedPackageFilter; }
+            get;
 
             set
             {
-                if (!Equals(_encryptedPackageFilter, value))
+                if (!Equals(field, value))
                 {
-                    _encryptedPackageFilter = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(EncryptedPackageFilter)));
                 }
             }
         }
 
-        private bool _blockMapFilter = LinkFilterService.BlockMapFilter;
-
         private bool BlockMapFilter
         {
-            get { return _blockMapFilter; }
+            get;
 
             set
             {
-                if (!Equals(_blockMapFilter, value))
+                if (!Equals(field, value))
                 {
-                    _blockMapFilter = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(BlockMapFilter)));
                 }
             }
@@ -580,6 +542,8 @@ namespace GetStoreApp.Views.Pages
                     GeographicRegion = geographicRegionItem
                 });
             }
+
+            BlockMapFilter = LinkFilterService.BlockMapFilter;
         }
 
         /// <summary>

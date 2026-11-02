@@ -34,33 +34,29 @@ namespace GetStoreApp.Views.Dialogs
 
         #region 第二部分：属性、集合与事件
 
-        private bool _isItemSelected;
-
         private bool IsItemSelected
         {
-            get { return _isItemSelected; }
+            get;
 
             set
             {
-                if (!Equals(_isItemSelected, value))
+                if (!Equals(field, value))
                 {
-                    _isItemSelected = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsItemSelected)));
                 }
             }
         }
 
-        private bool _isCleaning;
-
         private bool IsCleaning
         {
-            get { return _isCleaning; }
+            get;
 
             set
             {
-                if (!Equals(_isCleaning, value))
+                if (!Equals(field, value))
                 {
-                    _isCleaning = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsCleaning)));
                 }
             }

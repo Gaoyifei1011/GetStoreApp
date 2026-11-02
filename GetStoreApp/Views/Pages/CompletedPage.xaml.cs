@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Classes;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Download;
@@ -64,33 +65,29 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private CompletedResultKind _completedResultKind;
-
         private CompletedResultKind CompletedResultKind
         {
-            get { return _completedResultKind; }
+            get;
 
             set
             {
-                if (!Equals(_completedResultKind, value))
+                if (!Equals(field, value))
                 {
-                    _completedResultKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(CompletedResultKind)));
                 }
             }
         }
 
-        private ListViewSelectionMode _selectionMode;
-
         private ListViewSelectionMode SelectionMode
         {
-            get { return _selectionMode; }
+            get;
 
             set
             {
-                if (!Equals(_selectionMode, value))
+                if (!Equals(field, value))
                 {
-                    _selectionMode = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectionMode)));
                 }
             }
@@ -540,7 +537,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 添加已下载完成任务
         /// </summary>
-        private void OnStorageDataAdded(DownloadSchedulerModel downloadScheduler)
+        private void OnStorageDataAdded(DownloadScheduler downloadScheduler)
         {
             DispatcherQueue.TryEnqueue(async () =>
             {
@@ -622,9 +619,9 @@ namespace GetStoreApp.Views.Pages
         {
             try
             {
-                if (await GetDownloadStorageCollectionAsync() is ReadOnlyCollection<DownloadSchedulerModel> downloadStorageCollection)
+                if (await GetDownloadStorageCollectionAsync() is ReadOnlyCollection<DownloadScheduler> downloadStorageCollection)
                 {
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in downloadStorageCollection)
+                    foreach (DownloadScheduler downloadSchedulerItem in downloadStorageCollection)
                     {
                         CompletedCollection.Add(new()
                         {
@@ -647,7 +644,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取下载存储数据
         /// </summary>
-        private async Task<ReadOnlyCollection<DownloadSchedulerModel>> GetDownloadStorageCollectionAsync()
+        private async Task<ReadOnlyCollection<DownloadScheduler>> GetDownloadStorageCollectionAsync()
         {
             return await Task.Run(() =>
             {

@@ -14,17 +14,15 @@ namespace GetStoreApp.Services.Settings
         private static readonly string queryLinksModeSettingsKey = ConfigKey.QueryLinksModeKey;
         private static string defaultQueryLinksMode;
 
-        private static string _queryLinksMode;
-
         internal static string QueryLinksMode
         {
-            get { return _queryLinksMode; }
+            get;
 
             private set
             {
-                if (!string.Equals(_queryLinksMode, value))
+                if (!string.Equals(field, value))
                 {
-                    _queryLinksMode = value;
+                    field = value;
                     PropertyChanged?.Invoke(null, new(nameof(QueryLinksMode)));
                 }
             }

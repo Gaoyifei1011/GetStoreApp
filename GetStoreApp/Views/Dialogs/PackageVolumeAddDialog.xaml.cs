@@ -44,97 +44,85 @@ namespace GetStoreApp.Views.Dialogs
 
         #region 第二部分：属性、集合与事件
 
-        private bool _isItemSelected;
-
         private bool IsItemSelected
         {
-            get { return _isItemSelected; }
+            get;
 
             set
             {
-                if (!Equals(_isItemSelected, value))
+                if (!Equals(field, value))
                 {
-                    _isItemSelected = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsItemSelected)));
                 }
             }
         }
 
-        private PackageVolumeResultKind _packageVolumeResultKind;
-
         private PackageVolumeResultKind PackageVolumeResultKind
         {
-            get { return _packageVolumeResultKind; }
+            get;
 
             set
             {
-                if (!Equals(_packageVolumeResultKind, value))
+                if (!Equals(field, value))
                 {
-                    _packageVolumeResultKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageVolumeResultKind)));
                 }
             }
         }
 
-        private PackageVolumeModel _selectedPackageVolume;
-
         private PackageVolumeModel SelectedPackageVolume
         {
-            get { return _selectedPackageVolume; }
+            get;
 
             set
             {
-                if (!Equals(_selectedPackageVolume, value))
+                if (!Equals(field, value))
                 {
-                    _selectedPackageVolume = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectedPackageVolume)));
                 }
             }
         }
 
-        private string _selectedFolder;
-
         private string SelectedFolder
         {
-            get { return _selectedFolder; }
+            get;
 
             set
             {
-                if (!string.Equals(_selectedFolder, value))
+                if (!string.Equals(field, value))
                 {
-                    _selectedFolder = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectedFolder)));
                 }
             }
         }
 
-        private bool _useWindowsAppsFolder = true;
-
         private bool UseWindowsAppsFolder
         {
-            get { return _useWindowsAppsFolder; }
+            get;
 
             set
             {
-                if (!Equals(_useWindowsAppsFolder, value))
+                if (!Equals(field, value))
                 {
-                    _useWindowsAppsFolder = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(UseWindowsAppsFolder)));
                 }
             }
         }
 
-        private bool _setDefaultVolume;
-
         private bool SetDefaultVolume
         {
-            get { return _setDefaultVolume; }
+            get;
 
             set
             {
-                if (!Equals(_setDefaultVolume, value))
+                if (!Equals(field, value))
                 {
-                    _setDefaultVolume = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SetDefaultVolume)));
                 }
             }

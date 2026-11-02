@@ -67,65 +67,57 @@ namespace GetStoreApp.Views.Pages
 
         private UpgradableAppsModel UpgradableApps { get; set; }
 
-        private bool _isLoadCompleted;
-
         private bool IsLoadCompleted
         {
-            get { return _isLoadCompleted; }
+            get;
 
             set
             {
-                if (!Equals(_isLoadCompleted, value))
+                if (!Equals(field, value))
                 {
-                    _isLoadCompleted = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsLoadCompleted)));
                 }
             }
         }
 
-        private AvailableVersionModel _selectedItem;
-
         private AvailableVersionModel SelectedItem
         {
-            get { return _selectedItem; }
+            get;
 
             set
             {
-                if (!Equals(_selectedItem, value))
+                if (!Equals(field, value))
                 {
-                    _selectedItem = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectedItem)));
                 }
             }
         }
 
-        private string _displayName;
-
         private string DisplayName
         {
-            get { return _displayName; }
+            get;
 
             set
             {
-                if (!string.Equals(_displayName, value))
+                if (!string.Equals(field, value))
                 {
-                    _displayName = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(DisplayName)));
                 }
             }
         }
 
-        private string _description;
-
         private string Description
         {
-            get { return _description; }
+            get;
 
             set
             {
-                if (!string.Equals(_description, value))
+                if (!string.Equals(field, value))
                 {
-                    _description = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(Description)));
                 }
             }

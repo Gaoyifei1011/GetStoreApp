@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Classes;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
 using Microsoft.Windows.AppNotifications;
@@ -32,11 +31,11 @@ namespace GetStoreApp.Services.Download
 
         internal static SemaphoreSlim DownloadSchedulerSemaphoreSlim { get; private set; } = new(1, 1);
 
-        internal static List<DownloadSchedulerModel> DownloadSchedulerList { get; } = [];
+        internal static List<DownloadScheduler> DownloadSchedulerList { get; } = [];
 
-        internal static List<DownloadSchedulerModel> DownloadFailedList { get; } = [];
+        internal static List<DownloadScheduler> DownloadFailedList { get; } = [];
 
-        internal static event Action<DownloadSchedulerModel> DownloadProgress;
+        internal static event Action<DownloadScheduler> DownloadProgress;
 
         /// <summary>
         /// 下载状态发生变化后触发的事件
@@ -51,7 +50,7 @@ namespace GetStoreApp.Services.Download
                 try
                 {
                     // 下载任务已经存在，更新下载状态
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                    foreach (DownloadScheduler downloadSchedulerItem in DownloadSchedulerList)
                     {
                         if (string.Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
@@ -71,7 +70,7 @@ namespace GetStoreApp.Services.Download
                     }
 
                     // 不存在则添加任务
-                    DownloadSchedulerModel downloadScheduler = new()
+                    DownloadScheduler downloadScheduler = new()
                     {
                         DownloadID = downloadProgress.DownloadID,
                         DownloadProgressState = downloadProgress.DownloadProgressState,
@@ -126,7 +125,7 @@ namespace GetStoreApp.Services.Download
 
                 try
                 {
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                    foreach (DownloadScheduler downloadSchedulerItem in DownloadSchedulerList)
                     {
                         if (string.Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
@@ -164,7 +163,7 @@ namespace GetStoreApp.Services.Download
 
                 try
                 {
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                    foreach (DownloadScheduler downloadSchedulerItem in DownloadSchedulerList)
                     {
                         if (string.Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
@@ -199,7 +198,7 @@ namespace GetStoreApp.Services.Download
 
                 try
                 {
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                    foreach (DownloadScheduler downloadSchedulerItem in DownloadSchedulerList)
                     {
                         if (string.Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
@@ -268,7 +267,7 @@ namespace GetStoreApp.Services.Download
 
                 try
                 {
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                    foreach (DownloadScheduler downloadSchedulerItem in DownloadSchedulerList)
                     {
                         if (string.Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
@@ -323,7 +322,7 @@ namespace GetStoreApp.Services.Download
 
                 try
                 {
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                    foreach (DownloadScheduler downloadSchedulerItem in DownloadSchedulerList)
                     {
                         if (string.Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {

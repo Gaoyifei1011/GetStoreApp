@@ -13,17 +13,15 @@ namespace GetStoreApp.Services.Settings
         private static readonly string settingsKey = ConfigKey.TopMostKey;
         private static readonly bool defaultTopMost = false;
 
-        private static bool _topMost;
-
         internal static bool TopMost
         {
-            get { return _topMost; }
+            get;
 
             private set
             {
-                if (!Equals(_topMost, value))
+                if (!Equals(field, value))
                 {
-                    _topMost = value;
+                    field = value;
                     PropertyChanged?.Invoke(null, new(nameof(TopMost)));
                 }
             }

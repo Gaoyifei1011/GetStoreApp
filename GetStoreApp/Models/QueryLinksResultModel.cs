@@ -11,17 +11,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 是否处于多选模式
         /// </summary>
-        private ListViewSelectionMode _selectionMode;
-
         internal ListViewSelectionMode SelectionMode
         {
-            get { return _selectionMode; }
+            get;
 
             set
             {
-                if (!Equals(_selectionMode, value))
+                if (!Equals(field, value))
                 {
-                    _selectionMode = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectionMode)));
                 }
             }

@@ -118,609 +118,533 @@ namespace GetStoreAppInstaller.Views.Windows
         [GeneratedRegex("""scale-(\d{3})""", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
         private static partial Regex ScaleRegex { get; }
 
-        private string _windowTitle;
-
         private string WindowTitle
         {
-            get { return _windowTitle; }
+            get;
 
             set
             {
-                if (!string.Equals(_windowTitle, value))
+                if (!string.Equals(field, value))
                 {
-                    _windowTitle = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(WindowTitle)));
                 }
             }
         }
 
-        private SystemBackdrop _windowSystemBackdrop;
-
         private SystemBackdrop WindowSystemBackdrop
         {
-            get { return _windowSystemBackdrop; }
+            get;
 
             set
             {
-                if (!Equals(_windowSystemBackdrop, value))
+                if (!Equals(field, value))
                 {
-                    _windowSystemBackdrop = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(WindowSystemBackdrop)));
                 }
             }
         }
 
-        private ElementTheme _windowTheme;
-
         private ElementTheme WindowTheme
         {
-            get { return _windowTheme; }
+            get;
 
             set
             {
-                if (!Equals(_windowTheme, value))
+                if (!Equals(field, value))
                 {
-                    _windowTheme = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(WindowTheme)));
                 }
             }
         }
 
-        private bool _isWindowMaximized;
-
         private bool IsWindowMaximized
         {
-            get { return _isWindowMaximized; }
+            get;
 
             set
             {
-                if (!Equals(_isWindowMaximized, value))
+                if (!Equals(field, value))
                 {
-                    _isWindowMaximized = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsWindowMaximized)));
                 }
             }
         }
 
-        private bool _isParseEmpty;
-
         private bool IsParseEmpty
         {
-            get { return _isParseEmpty; }
+            get;
 
             set
             {
-                if (!Equals(_isParseEmpty, value))
+                if (!Equals(field, value))
                 {
-                    _isParseEmpty = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsParseEmpty)));
                 }
             }
         }
 
-        private bool _isLoadCompleted;
-
         private bool IsLoadCompleted
         {
-            get { return _isLoadCompleted; }
+            get;
 
             set
             {
-                if (!Equals(_isLoadCompleted, value))
+                if (!Equals(field, value))
                 {
-                    _isLoadCompleted = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsLoadCompleted)));
                 }
             }
         }
 
-        private bool _canDragFile;
-
         private bool CanDragFile
         {
-            get { return _canDragFile; }
+            get;
 
             set
             {
-                if (!Equals(_canDragFile, value))
+                if (!Equals(field, value))
                 {
-                    _canDragFile = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(CanDragFile)));
                 }
             }
         }
 
-        private bool _isParseSuccessfully;
-
         private bool IsParseSuccessfully
         {
-            get { return _isParseSuccessfully; }
+            get;
 
             set
             {
-                if (!Equals(_isParseSuccessfully, value))
+                if (!Equals(field, value))
                 {
-                    _isParseSuccessfully = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsParseSuccessfully)));
                 }
             }
         }
 
-        private PackageFileType _packageFileType;
-
         private PackageFileType PackageFileType
         {
-            get { return _packageFileType; }
+            get;
 
             set
             {
-                if (!Equals(_packageFileType, value))
+                if (!Equals(field, value))
                 {
-                    _packageFileType = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageFileType)));
                 }
             }
         }
 
-        private ImageSource _packageIconImage;
-
         private ImageSource PackageIconImage
         {
-            get { return _packageIconImage; }
+            get;
 
             set
             {
-                if (!Equals(_packageIconImage, value))
+                if (!Equals(field, value))
                 {
-                    _packageIconImage = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageIconImage)));
                 }
             }
         }
 
-        private string _packageName;
-
         private string PackageName
         {
-            get { return _packageName; }
+            get;
 
             set
             {
-                if (!string.Equals(_packageName, value))
+                if (!string.Equals(field, value))
                 {
-                    _packageName = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageName)));
                 }
             }
         }
 
-        private string _publisherDisplayName;
-
         private string PublisherDisplayName
         {
-            get { return _publisherDisplayName; }
+            get;
 
             set
             {
-                if (!string.Equals(_publisherDisplayName, value))
+                if (!string.Equals(field, value))
                 {
-                    _publisherDisplayName = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PublisherDisplayName)));
                 }
             }
         }
 
-        private Version _version;
-
         private Version Version
         {
-            get { return _version; }
+            get;
 
             set
             {
-                if (!Equals(_version, value))
+                if (!Equals(field, value))
                 {
-                    _version = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(Version)));
                 }
             }
         }
 
-        private string _packageDescription;
-
         private string PackageDescription
         {
-            get { return _packageDescription; }
+            get;
 
             set
             {
-                if (!string.Equals(_packageDescription, value))
+                if (!string.Equals(field, value))
                 {
-                    _packageDescription = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageDescription)));
                 }
             }
         }
 
-        private string _packageFamilyName;
-
         private string PackageFamilyName
         {
-            get { return _packageFamilyName; }
+            get;
 
             set
             {
-                if (!string.Equals(_packageFamilyName, value))
+                if (!string.Equals(field, value))
                 {
-                    _packageFamilyName = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageFamilyName)));
                 }
             }
         }
 
-        private string _packageFullName;
-
         private string PackageFullName
         {
-            get { return _packageFullName; }
+            get;
 
             set
             {
-                if (!string.Equals(_packageFullName, value))
+                if (!string.Equals(field, value))
                 {
-                    _packageFullName = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageFullName)));
                 }
             }
         }
 
-        private string _supportedArchitecture;
-
         private string SupportedArchitecture
         {
-            get { return _supportedArchitecture; }
+            get;
 
             set
             {
-                if (!string.Equals(_supportedArchitecture, value))
+                if (!string.Equals(field, value))
                 {
-                    _supportedArchitecture = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SupportedArchitecture)));
                 }
             }
         }
 
-        private string _isFramework;
-
         private string IsFramework
         {
-            get { return _isFramework; }
+            get;
 
             set
             {
-                if (!string.Equals(_isFramework, value))
+                if (!string.Equals(field, value))
                 {
-                    _isFramework = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsFramework)));
                 }
             }
         }
 
-        private string _appInstalledState;
-
         private string AppInstalledState
         {
-            get { return _appInstalledState; }
+            get;
 
             set
             {
-                if (!string.Equals(_appInstalledState, value))
+                if (!string.Equals(field, value))
                 {
-                    _appInstalledState = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AppInstalledState)));
                 }
             }
         }
 
-        private string _appInstallerSourceLink;
-
         private string AppInstallerSourceLink
         {
-            get { return _appInstallerSourceLink; }
+            get;
 
             set
             {
-                if (!string.Equals(_appInstallerSourceLink, value))
+                if (!string.Equals(field, value))
                 {
-                    _appInstallerSourceLink = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AppInstallerSourceLink)));
                 }
             }
         }
 
-        private bool _isAppInstallerSourceLinkExisted;
-
         private bool IsAppInstallerSourceLinkExisted
         {
-            get { return _isAppInstallerSourceLinkExisted; }
+            get;
 
             set
             {
-                if (!Equals(_isAppInstallerSourceLinkExisted, value))
+                if (!Equals(field, value))
                 {
-                    _isAppInstallerSourceLinkExisted = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsAppInstallerSourceLinkExisted)));
                 }
             }
         }
 
-        private string _packageSourceLink;
-
         private string PackageSourceLink
         {
-            get { return _packageSourceLink; }
+            get;
 
             set
             {
-                if (!string.Equals(_packageSourceLink, value))
+                if (!string.Equals(field, value))
                 {
-                    _packageSourceLink = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageSourceLink)));
                 }
             }
         }
 
-        private bool _isPackageSourceLinkExisted;
-
         private bool IsPackageSourceLinkExisted
         {
-            get { return _isPackageSourceLinkExisted; }
+            get;
 
             set
             {
-                if (!Equals(_isPackageSourceLinkExisted, value))
+                if (!Equals(field, value))
                 {
-                    _isPackageSourceLinkExisted = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsPackageSourceLinkExisted)));
                 }
             }
         }
 
-        private string _packageType;
-
         private string PackageType
         {
-            get { return _packageType; }
+            get;
 
             set
             {
-                if (!string.Equals(_packageType, value))
+                if (!string.Equals(field, value))
                 {
-                    _packageType = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageType)));
                 }
             }
         }
 
-        private string _hoursBetweenUpdateChecks;
-
         private string HoursBetweenUpdateChecks
         {
-            get { return _hoursBetweenUpdateChecks; }
+            get;
 
             set
             {
-                if (!string.Equals(_hoursBetweenUpdateChecks, value))
+                if (!string.Equals(field, value))
                 {
-                    _hoursBetweenUpdateChecks = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(HoursBetweenUpdateChecks)));
                 }
             }
         }
 
-        private string _updateBlocksActivation;
-
         private string UpdateBlocksActivation
         {
-            get { return _updateBlocksActivation; }
+            get;
 
             set
             {
-                if (!string.Equals(_updateBlocksActivation, value))
+                if (!string.Equals(field, value))
                 {
-                    _updateBlocksActivation = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(UpdateBlocksActivation)));
                 }
             }
         }
 
-        private string _showPrompt;
-
         private string ShowPrompt
         {
-            get { return _showPrompt; }
+            get;
 
             set
             {
-                if (!string.Equals(_showPrompt, value))
+                if (!string.Equals(field, value))
                 {
-                    _showPrompt = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(ShowPrompt)));
                 }
             }
         }
 
-        private string _forceUpdateFromAnyVersion;
-
         private string ForceUpdateFromAnyVersion
         {
-            get { return _forceUpdateFromAnyVersion; }
+            get;
 
             set
             {
-                if (!string.Equals(_forceUpdateFromAnyVersion, value))
+                if (!string.Equals(field, value))
                 {
-                    _forceUpdateFromAnyVersion = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(ForceUpdateFromAnyVersion)));
                 }
             }
         }
 
-        private string _automaticBackgroundTask;
-
         private string AutomaticBackgroundTask
         {
-            get { return _automaticBackgroundTask; }
+            get;
 
             set
             {
-                if (!string.Equals(_automaticBackgroundTask, value))
+                if (!string.Equals(field, value))
                 {
-                    _automaticBackgroundTask = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AutomaticBackgroundTask)));
                 }
             }
         }
 
-        private bool _isAppInstalled;
-
         private bool IsAppInstalled
         {
-            get { return _isAppInstalled; }
+            get;
 
             set
             {
-                if (!Equals(_isAppInstalled, value))
+                if (!Equals(field, value))
                 {
-                    _isAppInstalled = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsAppInstalled)));
                 }
             }
         }
 
-        private bool _isUpdateSettingsExisted;
-
         private bool IsUpdateSettingsExisted
         {
-            get { return _isUpdateSettingsExisted; }
+            get;
 
             set
             {
-                if (!Equals(_isUpdateSettingsExisted, value))
+                if (!Equals(field, value))
                 {
-                    _isUpdateSettingsExisted = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsUpdateSettingsExisted)));
                 }
             }
         }
 
-        private bool _isInstalling;
-
         private bool IsInstalling
         {
-            get { return _isInstalling; }
+            get;
 
             set
             {
-                if (!Equals(_isInstalling, value))
+                if (!Equals(field, value))
                 {
-                    _isInstalling = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsInstalling)));
                 }
             }
         }
 
-        private double _installProgressValue;
-
         private double InstallProgressValue
         {
-            get { return _installProgressValue; }
+            get;
 
             set
             {
-                if (!Equals(_installProgressValue, value))
+                if (!Equals(field, value))
                 {
-                    _installProgressValue = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(InstallProgressValue)));
                 }
             }
         }
 
-        private bool _isInstallWaiting;
-
         private bool IsInstallWaiting
         {
-            get { return _isInstallWaiting; }
+            get;
 
             set
             {
-                if (!Equals(_isInstallWaiting, value))
+                if (!Equals(field, value))
                 {
-                    _isInstallWaiting = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsInstallWaiting)));
                 }
             }
         }
 
-        private bool _isInstallFailed;
-
         private bool IsInstallFailed
         {
-            get { return _isInstallFailed; }
+            get;
 
             set
             {
-                if (!Equals(_isInstallFailed, value))
+                if (!Equals(field, value))
                 {
-                    _isInstallFailed = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsInstallFailed)));
                 }
             }
         }
 
-        private bool _isCancelInstall;
-
         private bool IsCancelInstall
         {
-            get { return _isCancelInstall; }
+            get;
 
             set
             {
-                if (!Equals(_isCancelInstall, value))
+                if (!Equals(field, value))
                 {
-                    _isCancelInstall = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsCancelInstall)));
                 }
             }
         }
 
-        private string _installStateString;
-
         private string InstallStateString
         {
-            get { return _installStateString; }
+            get;
 
             set
             {
-                if (!string.Equals(_installStateString, value))
+                if (!string.Equals(field, value))
                 {
-                    _installStateString = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(InstallStateString)));
                 }
             }
         }
 
-        private string _installFailedInformation;
-
         private string InstallFailedInformation
         {
-            get { return _installFailedInformation; }
+            get;
 
             set
             {
-                if (!string.Equals(_installFailedInformation, value))
+                if (!string.Equals(field, value))
                 {
-                    _installFailedInformation = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(InstallFailedInformation)));
                 }
             }

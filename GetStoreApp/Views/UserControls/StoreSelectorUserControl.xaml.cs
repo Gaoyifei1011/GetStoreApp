@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Classes;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Store;
 using GetStoreApp.Models;
@@ -53,193 +54,169 @@ namespace GetStoreApp.Views.UserControls
 
         #region 第二部分：属性、集合与事件
 
-        private int _selectedIndex;
-
         private int SelectedIndex
         {
-            get { return _selectedIndex; }
+            get;
 
             set
             {
-                if (!Equals(_selectedIndex, value))
+                if (!Equals(field, value))
                 {
-                    _selectedIndex = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectedIndex)));
                 }
             }
         }
 
-        private TypeModel _selectedType;
-
         private TypeModel SelectedType
         {
-            get { return _selectedType; }
+            get;
 
             set
             {
-                if (!Equals(_selectedType, value))
+                if (!Equals(field, value))
                 {
-                    _selectedType = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectedType)));
                 }
             }
         }
 
-        private ChannelModel _selectedChannel;
-
         private ChannelModel SelectedChannel
         {
-            get { return _selectedChannel; }
+            get;
 
             set
             {
-                if (!Equals(_selectedChannel, value))
+                if (!Equals(field, value))
                 {
-                    _selectedChannel = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectedChannel)));
                 }
             }
         }
 
-        private string _linkPlaceHolderText;
-
         private string LinkPlaceHolderText
         {
-            get { return _linkPlaceHolderText; }
+            get;
 
             set
             {
-                if (!string.Equals(_linkPlaceHolderText, value))
+                if (!string.Equals(field, value))
                 {
-                    _linkPlaceHolderText = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(LinkPlaceHolderText)));
                 }
             }
         }
 
-        private string _queryLinksText;
-
         internal string QueryLinksText
         {
-            get { return _queryLinksText; }
+            get;
 
             set
             {
-                if (!string.Equals(_queryLinksText, value))
+                if (!string.Equals(field, value))
                 {
-                    _queryLinksText = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(QueryLinksText)));
                 }
             }
         }
 
-        private bool _isQueryingLinks;
-
         private bool IsQueryingLinks
         {
-            get { return _isQueryingLinks; }
+            get;
 
             set
             {
-                if (!Equals(_isQueryingLinks, value))
+                if (!Equals(field, value))
                 {
-                    _isQueryingLinks = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsQueryingLinks)));
                 }
             }
         }
 
-        private bool _isQueryLinksResultVisible;
-
         private bool IsQueryLinksResultVisible
         {
-            get { return _isQueryLinksResultVisible; }
+            get;
 
             set
             {
-                if (!Equals(_isQueryLinksResultVisible, value))
+                if (!Equals(field, value))
                 {
-                    _isQueryLinksResultVisible = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsQueryLinksResultVisible)));
                 }
             }
         }
 
-        private ComboBoxItemModel _selectedSearchType;
-
         private ComboBoxItemModel SelectedSearchType
         {
-            get { return _selectedSearchType; }
+            get;
 
             set
             {
-                if (!Equals(_selectedSearchType, value))
+                if (!Equals(field, value))
                 {
-                    _selectedSearchType = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectedSearchType)));
                 }
             }
         }
 
-        private string _searchAppsText;
-
         private string SearchAppsText
         {
-            get { return _searchAppsText; }
+            get;
 
             set
             {
-                if (!string.Equals(_searchAppsText, value))
+                if (!string.Equals(field, value))
                 {
-                    _searchAppsText = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SearchAppsText)));
                 }
             }
         }
 
-        private bool _isSearchingApps;
-
         private bool IsSearchingApps
         {
-            get { return _isSearchingApps; }
+            get;
 
             set
             {
-                if (!Equals(_isSearchingApps, value))
+                if (!Equals(field, value))
                 {
-                    _isSearchingApps = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsSearchingApps)));
                 }
             }
         }
 
-        private bool _isSearchAppsResultVisible;
-
         private bool IsSearchAppsResultVisible
         {
-            get { return _isSearchAppsResultVisible; }
+            get;
 
             set
             {
-                if (!Equals(_isSearchAppsResultVisible, value))
+                if (!Equals(field, value))
                 {
-                    _isSearchAppsResultVisible = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsSearchAppsResultVisible)));
                 }
             }
         }
 
-        private StoreInfoResultKind _storeInfoResultKind;
-
         private StoreInfoResultKind StoreInfoResultKind
         {
-            get { return _storeInfoResultKind; }
+            get;
 
             set
             {
-                if (!Equals(_storeInfoResultKind, value))
+                if (!Equals(field, value))
                 {
-                    _storeInfoResultKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(StoreInfoResultKind)));
                 }
             }
@@ -976,7 +953,7 @@ namespace GetStoreApp.Views.UserControls
                     string generateContent = await HtmlRequestHelper.GenerateRequestContentAsync(typeInternalName, link, channelInternalName);
 
                     // 获取网页反馈回的原始数据
-                    RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
+                    HttpRequetstData httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
 
                     // 检查服务器返回获取的状态
                     InfoBarSeverity requestState = HtmlRequestHelper.CheckRequestState(httpRequestData);

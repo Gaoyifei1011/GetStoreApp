@@ -60,129 +60,113 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private string _searchText;
-
         private string SearchText
         {
-            get { return _searchText; }
+            get;
 
             set
             {
-                if (!string.Equals(_searchText, value))
+                if (!string.Equals(field, value))
                 {
-                    _searchText = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SearchText)));
                 }
             }
         }
 
-        private bool _isIncrease;
-
         private bool IsIncrease
         {
-            get { return _isIncrease; }
+            get;
 
             set
             {
-                if (!Equals(_isIncrease, value))
+                if (!Equals(field, value))
                 {
-                    _isIncrease = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsIncrease)));
                 }
             }
         }
 
-        private AppSortRuleKind _selectedAppSortRuleKind = AppSortRuleKind.DisplayName;
-
         private AppSortRuleKind SelectedAppSortRuleKind
         {
-            get { return _selectedAppSortRuleKind; }
+            get;
 
             set
             {
-                if (!Equals(_selectedAppSortRuleKind, value))
+                if (!Equals(field, value))
                 {
-                    _selectedAppSortRuleKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectedAppSortRuleKind)));
                 }
             }
         }
 
-        private bool _forceUninstall;
-
         private bool ForceUninstall
         {
-            get { return _forceUninstall; }
+            get;
 
             set
             {
-                if (!Equals(_forceUninstall, value))
+                if (!Equals(field, value))
                 {
-                    _forceUninstall = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(ForceUninstall)));
                 }
             }
         }
 
-        private int _selectedPackageUninstallScopeIndex;
-
         private int SelectedPackageUninstallScopeIndex
         {
-            get { return _selectedPackageUninstallScopeIndex; }
+            get;
 
             set
             {
-                if (!Equals(_selectedPackageUninstallScopeIndex, value))
+                if (!Equals(field, value))
                 {
-                    _selectedPackageUninstallScopeIndex = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectedPackageUninstallScopeIndex)));
                 }
             }
         }
 
-        private int _selectedPackageUninstallModeIndex;
-
         private int SelectedPackageUninstallModeIndex
         {
-            get { return _selectedPackageUninstallModeIndex; }
+            get;
 
             set
             {
-                if (!Equals(_selectedPackageUninstallModeIndex, value))
+                if (!Equals(field, value))
                 {
-                    _selectedPackageUninstallModeIndex = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectedPackageUninstallModeIndex)));
                 }
             }
         }
 
-        private InstalledAppsResultKind _installedAppsResultKind;
-
         private InstalledAppsResultKind InstalledAppsResultKind
         {
-            get { return _installedAppsResultKind; }
+            get;
 
             set
             {
-                if (!Equals(_installedAppsResultKind, value))
+                if (!Equals(field, value))
                 {
-                    _installedAppsResultKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(InstalledAppsResultKind)));
                 }
             }
         }
 
-        private string _installedFailedContent;
-
         private string InstalledFailedContent
         {
-            get { return _installedFailedContent; }
+            get;
 
             set
             {
-                if (!string.Equals(_installedFailedContent, value))
+                if (!string.Equals(field, value))
                 {
-                    _installedFailedContent = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(InstalledFailedContent)));
                 }
             }
@@ -519,6 +503,7 @@ namespace GetStoreApp.Views.Pages
             PackageUninstallModeRadioList.Add(new() { SelectorName = PackageUninstallModeDefaultString });
             PackageUninstallModeRadioList.Add(new() { SelectorName = PackageUninstallModeInteractiveString });
             PackageUninstallModeRadioList.Add(new() { SelectorName = PackageUninstallModeSilentString });
+            SelectedAppSortRuleKind = AppSortRuleKind.DisplayName;
         }
 
         /// <summary>

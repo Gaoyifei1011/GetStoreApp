@@ -9,17 +9,15 @@ namespace GetStoreApp.Models
     /// </summary>
     internal sealed partial class CompletedModel : INotifyPropertyChanged
     {
-        private ImageSource _iconImage;
-
         internal ImageSource IconImage
         {
-            get { return _iconImage; }
+            get;
 
             set
             {
-                if (!Equals(_iconImage, value))
+                if (!Equals(field, value))
                 {
-                    _iconImage = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IconImage)));
                 }
             }
@@ -28,17 +26,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 是否处于多选模式
         /// </summary>
-        private ListViewSelectionMode _selectionMode;
-
         internal ListViewSelectionMode SelectionMode
         {
-            get { return _selectionMode; }
+            get;
 
             set
             {
-                if (!Equals(_selectionMode, value))
+                if (!Equals(field, value))
                 {
-                    _selectionMode = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectionMode)));
                 }
             }
@@ -72,17 +68,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 标志是否处于正在安装状态
         /// </summary>
-        private bool _isInstalling;
-
         internal bool IsInstalling
         {
-            get { return _isInstalling; }
+            get;
 
             set
             {
-                if (!Equals(_isInstalling, value))
+                if (!Equals(field, value))
                 {
-                    _isInstalling = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsInstalling)));
                 }
             }
@@ -91,17 +85,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 安装文件的进度
         /// </summary>
-        private double _installProgressValue;
-
         internal double InstallProgressValue
         {
-            get { return _installProgressValue; }
+            get;
 
             set
             {
-                if (!Equals(_installProgressValue, value))
+                if (!Equals(field, value))
                 {
-                    _installProgressValue = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(InstallProgressValue)));
                 }
             }
@@ -110,33 +102,29 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 安装是否处于等待中
         /// </summary>
-        private bool _isInstallWaiting;
-
         internal bool IsInstallWaiting
         {
-            get { return _isInstallWaiting; }
+            get;
 
             set
             {
-                if (!Equals(_isInstallWaiting, value))
+                if (!Equals(field, value))
                 {
-                    _isInstallWaiting = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsInstallWaiting)));
                 }
             }
         }
 
-        private string _installStateString;
-
         internal string InstallStateString
         {
-            get { return _installStateString; }
+            get;
 
             set
             {
-                if (!string.Equals(_installStateString, value))
+                if (!string.Equals(field, value))
                 {
-                    _installStateString = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(InstallStateString)));
                 }
             }
@@ -145,17 +133,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 安装是否失败
         /// </summary>
-        private bool _installFailed;
-
         internal bool InstallFailed
         {
-            get { return _installFailed; }
+            get;
 
             set
             {
-                if (!Equals(_installFailed, value))
+                if (!Equals(field, value))
                 {
-                    _installFailed = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(InstallFailed)));
                 }
             }

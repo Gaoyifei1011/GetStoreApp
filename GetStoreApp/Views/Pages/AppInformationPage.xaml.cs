@@ -58,289 +58,253 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private string _displayName;
-
         private string DisplayName
         {
-            get { return _displayName; }
+            get;
 
             set
             {
-                if (!string.Equals(_displayName, value))
+                if (!string.Equals(field, value))
                 {
-                    _displayName = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(DisplayName)));
                 }
             }
         }
 
-        private string _packageFamilyName;
-
         private string PackageFamilyName
         {
-            get { return _packageFamilyName; }
+            get;
 
             set
             {
-                if (!string.Equals(_packageFamilyName, value))
+                if (!string.Equals(field, value))
                 {
-                    _packageFamilyName = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageFamilyName)));
                 }
             }
         }
 
-        private string _packageFullName;
-
         private string PackageFullName
         {
-            get { return _packageFullName; }
+            get;
 
             set
             {
-                if (!string.Equals(_packageFullName, value))
+                if (!string.Equals(field, value))
                 {
-                    _packageFullName = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageFullName)));
                 }
             }
         }
 
-        private string _description;
-
         private string Description
         {
-            get { return _description; }
+            get;
 
             set
             {
-                if (!string.Equals(_description, value))
+                if (!string.Equals(field, value))
                 {
-                    _description = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(Description)));
                 }
             }
         }
 
-        private string _publisherDisplayName;
-
         private string PublisherDisplayName
         {
-            get { return _publisherDisplayName; }
+            get;
 
             set
             {
-                if (!string.Equals(_publisherDisplayName, value))
+                if (!string.Equals(field, value))
                 {
-                    _publisherDisplayName = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PublisherDisplayName)));
                 }
             }
         }
 
-        private string _publisherId;
-
         private string PublisherId
         {
-            get { return _publisherId; }
+            get;
 
             set
             {
-                if (!string.Equals(_publisherId, value))
+                if (!string.Equals(field, value))
                 {
-                    _publisherId = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PublisherId)));
                 }
             }
         }
 
-        private string _version;
-
         private string Version
         {
-            get { return _version; }
+            get;
 
             set
             {
-                if (!string.Equals(_version, value))
+                if (!string.Equals(field, value))
                 {
-                    _version = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(Version)));
                 }
             }
         }
 
-        private string _installedDate;
-
         private string InstalledDate
         {
-            get { return _installedDate; }
+            get;
 
             set
             {
-                if (!string.Equals(_installedDate, value))
+                if (!string.Equals(field, value))
                 {
-                    _installedDate = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(InstalledDate)));
                 }
             }
         }
 
-        private string _architecture;
-
         private string Architecture
         {
-            get { return _architecture; }
+            get;
 
             set
             {
-                if (!string.Equals(_architecture, value))
+                if (!string.Equals(field, value))
                 {
-                    _architecture = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(Architecture)));
                 }
             }
         }
 
-        private string _signatureKind;
-
         private string SignatureKind
         {
-            get { return _signatureKind; }
+            get;
 
             set
             {
-                if (!string.Equals(_signatureKind, value))
+                if (!string.Equals(field, value))
                 {
-                    _signatureKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SignatureKind)));
                 }
             }
         }
 
-        private string _resourceId;
-
         private string ResourceId
         {
-            get { return _resourceId; }
+            get;
 
             set
             {
-                if (!string.Equals(_resourceId, value))
+                if (!string.Equals(field, value))
                 {
-                    _resourceId = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(ResourceId)));
                 }
             }
         }
 
-        private string _isBundle;
-
         private string IsBundle
         {
-            get { return _isBundle; }
+            get;
 
             set
             {
-                if (!string.Equals(_isBundle, value))
+                if (!string.Equals(field, value))
                 {
-                    _isBundle = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsBundle)));
                 }
             }
         }
 
-        private string _isDevelopmentMode;
-
         private string IsDevelopmentMode
         {
-            get { return _isDevelopmentMode; }
+            get;
 
             set
             {
-                if (!string.Equals(_isDevelopmentMode, value))
+                if (!string.Equals(field, value))
                 {
-                    _isDevelopmentMode = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsDevelopmentMode)));
                 }
             }
         }
 
-        private string _isFramework;
-
         private string IsFramework
         {
-            get { return _isFramework; }
+            get;
 
             set
             {
-                if (!string.Equals(_isFramework, value))
+                if (!string.Equals(field, value))
                 {
-                    _isFramework = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsFramework)));
                 }
             }
         }
 
-        private string _isOptional;
-
         private string IsOptional
         {
-            get { return _isOptional; }
+            get;
 
             set
             {
-                if (!string.Equals(_isOptional, value))
+                if (!string.Equals(field, value))
                 {
-                    _isOptional = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsOptional)));
                 }
             }
         }
 
-        private string _isResourcePackage;
-
         private string IsResourcePackage
         {
-            get { return _isResourcePackage; }
+            get;
 
             set
             {
-                if (!string.Equals(_isResourcePackage, value))
+                if (!string.Equals(field, value))
                 {
-                    _isResourcePackage = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsResourcePackage)));
                 }
             }
         }
 
-        private string _isStub;
-
         private string IsStub
         {
-            get { return _isStub; }
+            get;
 
             set
             {
-                if (!string.Equals(_isStub, value))
+                if (!string.Equals(field, value))
                 {
-                    _isStub = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsStub)));
                 }
             }
         }
 
-        private string _verifyIsOK;
-
         private string VerifyIsOK
         {
-            get { return _verifyIsOK; }
+            get;
 
             set
             {
-                if (!string.Equals(_verifyIsOK, value))
+                if (!string.Equals(field, value))
                 {
-                    _verifyIsOK = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(VerifyIsOK)));
                 }
             }

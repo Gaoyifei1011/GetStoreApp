@@ -12,17 +12,15 @@ namespace GetStoreApp.Views.Dialogs
     {
         #region 第一部分：属性、集合与事件
 
-        private string _licenseText = Encoding.UTF8.GetString(ResourceService.GetEmbeddedData("Files/Assets/Embed/LICENSE"));
-
         private string LicenseText
         {
-            get { return _licenseText; }
+            get;
 
             set
             {
-                if (!string.Equals(_licenseText, value))
+                if (!string.Equals(field, value))
                 {
-                    _licenseText = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(LicenseText)));
                 }
             }
@@ -37,6 +35,7 @@ namespace GetStoreApp.Views.Dialogs
         internal LicenseDialog()
         {
             InitializeComponent();
+            LicenseText = Encoding.UTF8.GetString(ResourceService.GetEmbeddedData("Files/Assets/Embed/LICENSE"));
         }
 
         #endregion 第二部分：构造函数

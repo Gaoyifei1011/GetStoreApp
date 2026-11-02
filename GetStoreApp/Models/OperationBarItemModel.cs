@@ -11,17 +11,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 操作栏类型
         /// </summary>
-        private OperationBarKind _operationBarKind;
-
         internal OperationBarKind OperationBarKind
         {
-            get { return _operationBarKind; }
+            get;
 
             set
             {
-                if (!Equals(_operationBarKind, value))
+                if (!Equals(field, value))
                 {
-                    _operationBarKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(OperationBarKind)));
                 }
             }
@@ -45,17 +43,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 是否正在检查更新
         /// </summary>
-        private bool _isCheckingUpdate;
-
         internal bool IsCheckingUpdate
         {
-            get { return _isCheckingUpdate; }
+            get;
 
             set
             {
-                if (!Equals(_isCheckingUpdate, value))
+                if (!Equals(field, value))
                 {
-                    _isCheckingUpdate = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsCheckingUpdate)));
                 }
             }

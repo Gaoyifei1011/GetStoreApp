@@ -42,49 +42,43 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private string _downloadFolder;
-
         private string DownloadFolder
         {
-            get { return _downloadFolder; }
+            get;
 
             set
             {
-                if (!string.Equals(_downloadFolder, value))
+                if (!string.Equals(field, value))
                 {
-                    _downloadFolder = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(DownloadFolder)));
                 }
             }
         }
 
-        private bool _manualSetDownloadFolder;
-
         private bool ManualSetDownloadFolder
         {
-            get { return _manualSetDownloadFolder; }
+            get;
 
             set
             {
-                if (!Equals(_manualSetDownloadFolder, value))
+                if (!Equals(field, value))
                 {
-                    _manualSetDownloadFolder = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(ManualSetDownloadFolder)));
                 }
             }
         }
 
-        private ComboBoxItemModel _doEngineMode;
-
         private ComboBoxItemModel DoEngineMode
         {
-            get { return _doEngineMode; }
+            get;
 
             set
             {
-                if (!Equals(_doEngineMode, value))
+                if (!Equals(field, value))
                 {
-                    _doEngineMode = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(DoEngineMode)));
                 }
             }

@@ -7,65 +7,57 @@ namespace GetStoreApp.Models
     /// </summary>
     internal sealed partial class AppInfoModel : INotifyPropertyChanged
     {
-        private string _name = string.Empty;
-
         internal string Name
         {
-            get { return _name; }
+            get;
 
             set
             {
-                if (!string.Equals(_name, value))
+                if (!string.Equals(field, value))
                 {
-                    _name = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(Name)));
                 }
             }
         }
 
-        private string _publisher = string.Empty;
-
         internal string Publisher
         {
-            get { return _publisher; }
+            get;
 
             set
             {
-                if (!string.Equals(_publisher, value))
+                if (!string.Equals(field, value))
                 {
-                    _publisher = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(Publisher)));
                 }
             }
         }
 
-        private string _description = string.Empty;
-
         internal string Description
         {
-            get { return _description; }
+            get;
 
             set
             {
-                if (!string.Equals(_description, value))
+                if (!string.Equals(field, value))
                 {
-                    _description = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(Description)));
                 }
             }
         }
 
-        private string _categoryID = string.Empty;
-
         internal string CategoryID
         {
-            get { return _categoryID; }
+            get;
 
             set
             {
-                if (!string.Equals(_categoryID, value))
+                if (!string.Equals(field, value))
                 {
-                    _categoryID = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(CategoryID)));
                 }
             }

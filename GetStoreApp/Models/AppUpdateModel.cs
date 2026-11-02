@@ -12,17 +12,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 应用图标
         /// </summary>
-        private Uri _logoImage;
-
         internal Uri LogoImage
         {
-            get { return _logoImage; }
+            get;
 
             set
             {
-                if (!Equals(_logoImage, value))
+                if (!Equals(field, value))
                 {
-                    _logoImage = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(LogoImage)));
                 }
             }
@@ -31,33 +29,29 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 标志应用是否处于升级状态
         /// </summary>
-        private bool _isUpdating;
-
         internal bool IsUpdating
         {
-            get { return _isUpdating; }
+            get;
 
             set
             {
-                if (!Equals(_isUpdating, value))
+                if (!Equals(field, value))
                 {
-                    _isUpdating = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsUpdating)));
                 }
             }
         }
 
-        private bool _isOperating;
-
         internal bool IsOperating
         {
-            get { return _isOperating; }
+            get;
 
             set
             {
-                if (!Equals(_isOperating, value))
+                if (!Equals(field, value))
                 {
-                    _isOperating = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsOperating)));
                 }
             }
@@ -81,33 +75,29 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 安装信息
         /// </summary>
-        private string _installInformation = string.Empty;
-
         internal string InstallInformation
         {
-            get { return _installInformation; }
+            get;
 
             set
             {
-                if (!string.Equals(_installInformation, value))
+                if (!string.Equals(field, value))
                 {
-                    _installInformation = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(InstallInformation)));
                 }
             }
         }
 
-        private string _installSubInformation = string.Empty;
-
         internal string InstallSubInformation
         {
-            get { return _installSubInformation; }
+            get;
 
             set
             {
-                if (!string.Equals(_installSubInformation, value))
+                if (!string.Equals(field, value))
                 {
-                    _installSubInformation = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(InstallSubInformation)));
                 }
             }
@@ -121,17 +111,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 当前应用的安装状态
         /// </summary>
-        private AppInstallState _appInstallState;
-
         internal AppInstallState AppInstallState
         {
-            get { return _appInstallState; }
+            get;
 
             set
             {
-                if (!Equals(_appInstallState, value))
+                if (!Equals(field, value))
                 {
-                    _appInstallState = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AppInstallState)));
                 }
             }
@@ -140,17 +128,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 当前应用的安装完成百分比
         /// </summary>
-        private double _percentComplete;
-
         internal double PercentComplete
         {
-            get { return _percentComplete; }
+            get;
 
             set
             {
-                if (!Equals(_percentComplete, value))
+                if (!Equals(field, value))
                 {
-                    _percentComplete = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PercentComplete)));
                 }
             }

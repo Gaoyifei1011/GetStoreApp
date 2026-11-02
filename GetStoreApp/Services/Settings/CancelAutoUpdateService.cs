@@ -13,17 +13,15 @@ namespace GetStoreApp.Services.Settings
         private static readonly string settingsKey = ConfigKey.CancelAutoUpdateKey;
         private static readonly bool defaultCancelAutoUpdate = false;
 
-        private static bool _cancelAutoUpdate;
-
         internal static bool CancelAutoUpdate
         {
-            get { return _cancelAutoUpdate; }
+            get;
 
             private set
             {
-                if (!Equals(_cancelAutoUpdate, value))
+                if (!Equals(field, value))
                 {
-                    _cancelAutoUpdate = value;
+                    field = value;
                     PropertyChanged?.Invoke(null, new(nameof(CancelAutoUpdate)));
                 }
             }

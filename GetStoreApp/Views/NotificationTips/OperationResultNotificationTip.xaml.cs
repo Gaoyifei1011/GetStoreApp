@@ -15,33 +15,29 @@ namespace GetStoreApp.Views.NotificationTips
     {
         #region 第一部分：属性、集合与事件
 
-        private bool _isSuccessOperation;
-
         private bool IsSuccessOperation
         {
-            get { return _isSuccessOperation; }
+            get;
 
             set
             {
-                if (!Equals(_isSuccessOperation, value))
+                if (!Equals(field, value))
                 {
-                    _isSuccessOperation = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsSuccessOperation)));
                 }
             }
         }
 
-        private string _operationContent;
-
         private string OperationContent
         {
-            get { return _operationContent; }
+            get;
 
             set
             {
-                if (!string.Equals(_operationContent, value))
+                if (!string.Equals(field, value))
                 {
-                    _operationContent = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(OperationContent)));
                 }
             }

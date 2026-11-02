@@ -1,6 +1,4 @@
-﻿using WinRT;
-
-namespace GetStoreApp.Models
+﻿namespace GetStoreApp.Models
 {
     /// <summary>
     /// 下拉框数据模型

@@ -35,33 +35,29 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private ComboBoxItemModel _currentWinGetSource;
-
         private ComboBoxItemModel CurrentWinGetSource
         {
-            get { return _currentWinGetSource; }
+            get;
 
             set
             {
-                if (!Equals(_currentWinGetSource, value))
+                if (!Equals(field, value))
                 {
-                    _currentWinGetSource = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(CurrentWinGetSource)));
                 }
             }
         }
 
-        private ComboBoxItemModel _winGetSource;
-
         private ComboBoxItemModel WinGetSource
         {
-            get { return _winGetSource; }
+            get;
 
             set
             {
-                if (!Equals(_winGetSource, value))
+                if (!Equals(field, value))
                 {
-                    _winGetSource = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(WinGetSource)));
                 }
             }

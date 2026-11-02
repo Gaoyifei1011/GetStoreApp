@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Models;
+﻿using GetStoreApp.Extensions.DataType.Classes;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -40,9 +40,9 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 发送网页请求并获取结果
         /// </summary>
-        internal static async Task<RequestModel> HttpRequestAsync(string content)
+        internal static async Task<HttpRequetstData> HttpRequestAsync(string content)
         {
-            RequestModel request = new();
+            HttpRequetstData request = new();
 
             try
             {
@@ -106,7 +106,7 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 检查请求后的状态信息
         /// </summary>
-        internal static InfoBarSeverity CheckRequestState(RequestModel httpRequestData)
+        internal static InfoBarSeverity CheckRequestState(HttpRequetstData httpRequestData)
         {
             if (httpRequestData is null)
             {

@@ -49,17 +49,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 应用包操作进度
         /// </summary>
-        private double _packageOperationProgress;
-
         internal double PackageOperationProgress
         {
-            get { return _packageOperationProgress; }
+            get;
 
             set
             {
-                if (!Equals(_packageOperationProgress, value))
+                if (!Equals(field, value))
                 {
-                    _packageOperationProgress = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageOperationProgress)));
                 }
             }
@@ -68,17 +66,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 已下载文件的大小
         /// </summary>
-        private string _downloadedFileSize;
-
         internal string DownloadedFileSize
         {
-            get { return _downloadedFileSize; }
+            get;
 
             set
             {
-                if (!string.Equals(_downloadedFileSize, value))
+                if (!string.Equals(field, value))
                 {
-                    _downloadedFileSize = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(DownloadedFileSize)));
                 }
             }
@@ -87,33 +83,29 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 总文件大小
         /// </summary>
-        internal string _totalFileSize;
-
         internal string TotalFileSize
         {
-            get { return _totalFileSize; }
+            get;
 
             set
             {
-                if (!Equals(_totalFileSize, value))
+                if (!Equals(field, value))
                 {
-                    _totalFileSize = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(TotalFileSize)));
                 }
             }
         }
 
-        private PackageOperationResultKind _packageOperationResultKind;
-
         internal PackageOperationResultKind PackageOperationResultKind
         {
-            get { return _packageOperationResultKind; }
+            get;
 
             set
             {
-                if (!Equals(_packageOperationResultKind, value))
+                if (!Equals(field, value))
                 {
-                    _packageOperationResultKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageOperationResultKind)));
                 }
             }
@@ -122,17 +114,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 应用包下载状态
         /// </summary>
-        private PackageDownloadProgressState _packageDownloadProgressState;
-
         internal PackageDownloadProgressState PackageDownloadProgressState
         {
-            get { return _packageDownloadProgressState; }
+            get;
 
             set
             {
-                if (!Equals(_packageDownloadProgressState, value))
+                if (!Equals(field, value))
                 {
-                    _packageDownloadProgressState = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageDownloadProgressState)));
                 }
             }
@@ -141,65 +131,57 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 应用包安装状态
         /// </summary>
-        private PackageInstallProgressState _packageInstallProgressState;
-
         internal PackageInstallProgressState PackageInstallProgressState
         {
-            get { return _packageInstallProgressState; }
+            get;
 
             set
             {
-                if (!Equals(_packageInstallProgressState, value))
+                if (!Equals(field, value))
                 {
-                    _packageInstallProgressState = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageInstallProgressState)));
                 }
             }
         }
 
-        private PackageUninstallProgressState _packageUninstallProgressState;
-
         internal PackageUninstallProgressState PackageUninstallProgressState
         {
-            get { return _packageUninstallProgressState; }
+            get;
 
             set
             {
-                if (!Equals(_packageUninstallProgressState, value))
+                if (!Equals(field, value))
                 {
-                    _packageUninstallProgressState = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageUninstallProgressState)));
                 }
             }
         }
 
-        private PackageRepairProgressState _packageRepairProgressState;
-
         internal PackageRepairProgressState PackageRepairProgressState
         {
-            get { return _packageRepairProgressState; }
+            get;
 
             set
             {
-                if (!Equals(_packageRepairProgressState, value))
+                if (!Equals(field, value))
                 {
-                    _packageRepairProgressState = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageRepairProgressState)));
                 }
             }
         }
 
-        private string _packageOperationFailedContent;
-
         internal string PackageOperationFailedContent
         {
-            get { return _packageOperationFailedContent; }
+            get;
 
             set
             {
-                if (!string.Equals(_packageOperationFailedContent, value))
+                if (!string.Equals(field, value))
                 {
-                    _packageOperationFailedContent = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageOperationFailedContent)));
                 }
             }

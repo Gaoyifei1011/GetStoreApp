@@ -15,17 +15,15 @@ namespace GetStoreApp.Services.Settings
         private static readonly string settingsKey = ConfigKey.BackdropKey;
         private static string defaultAppBackdrop;
 
-        private static string _appBackdrop;
-
         internal static string AppBackdrop
         {
-            get { return _appBackdrop; }
+            get;
 
             private set
             {
-                if (!string.Equals(_appBackdrop, value))
+                if (!string.Equals(field, value))
                 {
-                    _appBackdrop = value;
+                    field = value;
                     PropertyChanged?.Invoke(null, new(nameof(AppBackdrop)));
                 }
             }

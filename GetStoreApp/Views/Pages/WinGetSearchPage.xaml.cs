@@ -48,97 +48,85 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private string _searchText;
-
         private string SearchText
         {
-            get { return _searchText; }
+            get;
 
             set
             {
-                if (!string.Equals(_searchText, value))
+                if (!string.Equals(field, value))
                 {
-                    _searchText = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SearchText)));
                 }
             }
         }
 
-        private bool _isIncrease;
-
         private bool IsIncrease
         {
-            get { return _isIncrease; }
+            get;
 
             set
             {
-                if (!Equals(_isIncrease, value))
+                if (!Equals(field, value))
                 {
-                    _isIncrease = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsIncrease)));
                 }
             }
         }
 
-        private SearchAppsResultKind _searchAppsResultKind;
-
         private SearchAppsResultKind SearchAppsResultKind
         {
-            get { return _searchAppsResultKind; }
+            get;
 
             set
             {
-                if (!Equals(_searchAppsResultKind, value))
+                if (!Equals(field, value))
                 {
-                    _searchAppsResultKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SearchAppsResultKind)));
                 }
             }
         }
 
-        private PackageMatchField _packageMatchField;
-
         private PackageMatchField PackageMatchField
         {
-            get { return _packageMatchField; }
+            get;
 
             set
             {
-                if (!Equals(_packageMatchField, value))
+                if (!Equals(field, value))
                 {
-                    _packageMatchField = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageMatchField)));
                 }
             }
         }
 
-        private PackageFieldMatchOption _packageFieldMatchOption;
-
         private PackageFieldMatchOption PackageFieldMatchOption
         {
-            get { return _packageFieldMatchOption; }
+            get;
 
             set
             {
-                if (!Equals(_packageFieldMatchOption, value))
+                if (!Equals(field, value))
                 {
-                    _packageFieldMatchOption = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageFieldMatchOption)));
                 }
             }
         }
 
-        private string _searchFailedContent;
-
         private string SearchFailedContent
         {
-            get { return _searchFailedContent; }
+            get;
 
             set
             {
-                if (!string.Equals(_searchFailedContent, value))
+                if (!string.Equals(field, value))
                 {
-                    _searchFailedContent = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SearchFailedContent)));
                 }
             }

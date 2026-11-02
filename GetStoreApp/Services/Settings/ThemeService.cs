@@ -15,17 +15,15 @@ namespace GetStoreApp.Services.Settings
         private static readonly string settingsKey = ConfigKey.ThemeKey;
         private static string defaultAppTheme;
 
-        private static string _appTheme;
-
         internal static string AppTheme
         {
-            get { return _appTheme; }
+            get;
 
             private set
             {
-                if (!string.Equals(_appTheme, value))
+                if (!string.Equals(field, value))
                 {
-                    _appTheme = value;
+                    field = value;
                     PropertyChanged?.Invoke(null, new(nameof(AppTheme)));
                 }
             }

@@ -50,65 +50,57 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private bool _isIncrease;
-
         private bool IsIncrease
         {
-            get { return _isIncrease; }
+            get;
 
             set
             {
-                if (!Equals(_isIncrease, value))
+                if (!Equals(field, value))
                 {
-                    _isIncrease = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsIncrease)));
                 }
             }
         }
 
-        private AppSortRuleKind _selectedAppSortRuleKind;
-
         private AppSortRuleKind SelectedAppSortRuleKind
         {
-            get { return _selectedAppSortRuleKind; }
+            get;
 
             set
             {
-                if (!Equals(_selectedAppSortRuleKind, value))
+                if (!Equals(field, value))
                 {
-                    _selectedAppSortRuleKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectedAppSortRuleKind)));
                 }
             }
         }
 
-        private UpgradableAppsResultKind _upgradableAppsResultKind;
-
         private UpgradableAppsResultKind UpgradableAppsResultKind
         {
-            get { return _upgradableAppsResultKind; }
+            get;
 
             set
             {
-                if (!Equals(_upgradableAppsResultKind, value))
+                if (!Equals(field, value))
                 {
-                    _upgradableAppsResultKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(UpgradableAppsResultKind)));
                 }
             }
         }
 
-        private string _upgradableFailedContent;
-
         private string UpgradableFailedContent
         {
-            get { return _upgradableFailedContent; }
+            get;
 
             set
             {
-                if (!string.Equals(_upgradableFailedContent, value))
+                if (!string.Equals(field, value))
                 {
-                    _upgradableFailedContent = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(UpgradableFailedContent)));
                 }
             }

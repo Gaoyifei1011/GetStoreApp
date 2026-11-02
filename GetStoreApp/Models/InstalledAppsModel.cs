@@ -31,17 +31,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 是否正在卸载应用
         /// </summary>
-        private bool _isUninstalling;
-
         internal bool IsUninstalling
         {
-            get { return _isUninstalling; }
+            get;
 
             set
             {
-                if (!Equals(_isUninstalling, value))
+                if (!Equals(field, value))
                 {
-                    _isUninstalling = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsUninstalling)));
                 }
             }

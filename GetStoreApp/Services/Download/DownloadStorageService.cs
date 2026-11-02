@@ -1,5 +1,5 @@
-﻿using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models;
+﻿using GetStoreApp.Extensions.DataType.Classes;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using Microsoft.Windows.Storage;
 using System;
@@ -27,7 +27,7 @@ namespace GetStoreApp.Services.Download
 
         internal static SemaphoreSlim DownloadStorageSemaphoreSlim { get; private set; } = new(1, 1);
 
-        internal static event Action<DownloadSchedulerModel> StorageDataAdded;
+        internal static event Action<DownloadScheduler> StorageDataAdded;
 
         internal static event Action<string> StorageDataDeleted;
 
@@ -56,7 +56,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 直接添加已下载完成任务数据
         /// </summary>
-        internal static void AddDownloadData(DownloadSchedulerModel downloadScheduler)
+        internal static void AddDownloadData(DownloadScheduler downloadScheduler)
         {
             if (downloadScheduler is null || downloadStorageContainer is null)
             {
@@ -122,9 +122,9 @@ namespace GetStoreApp.Services.Download
         /// 获取已下载完成任务数据，为保证安全访问，需要手动对访问的锁进行加锁和释放
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(Windows.Storage.ApplicationDataCompositeValue))]
-        internal static ReadOnlyCollection<DownloadSchedulerModel> GetDownloadDataCollection()
+        internal static ReadOnlyCollection<DownloadScheduler> GetDownloadDataCollection()
         {
-            List<DownloadSchedulerModel> downloadSchedulerList = [];
+            List<DownloadScheduler> downloadSchedulerList = [];
 
             if (downloadStorageContainer is null)
             {

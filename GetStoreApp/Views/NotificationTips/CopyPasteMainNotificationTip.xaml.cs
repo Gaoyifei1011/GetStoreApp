@@ -13,17 +13,15 @@ namespace GetStoreApp.Views.NotificationTips
     {
         #region 第一部分：属性、集合与事件
 
-        private bool _isSuccessfully;
-
         private bool IsSuccessfully
         {
-            get { return _isSuccessfully; }
+            get;
 
             set
             {
-                if (!Equals(_isSuccessfully, value))
+                if (!Equals(field, value))
                 {
-                    _isSuccessfully = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsSuccessfully)));
                 }
             }

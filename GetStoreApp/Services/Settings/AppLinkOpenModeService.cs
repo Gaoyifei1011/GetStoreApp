@@ -14,17 +14,15 @@ namespace GetStoreApp.Services.Settings
         private static readonly string appLinkOpenModeSettingsKey = ConfigKey.AppLinkOpenModeKey;
         private static string defaultAppLinkOpenMode;
 
-        private static string _appLinkOpenMode;
-
         internal static string AppLinkOpenMode
         {
-            get { return _appLinkOpenMode; }
+            get;
 
             private set
             {
-                if (!string.Equals(_appLinkOpenMode, value))
+                if (!string.Equals(field, value))
                 {
-                    _appLinkOpenMode = value;
+                    field = value;
                     PropertyChanged?.Invoke(null, new(nameof(AppLinkOpenMode)));
                 }
             }

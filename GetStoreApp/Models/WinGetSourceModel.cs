@@ -9,17 +9,15 @@ namespace GetStoreApp.Models
     /// </summary>
     public sealed partial class WinGetSourceModel : INotifyPropertyChanged
     {
-        private bool _isOperating;
-
         public bool IsOperating
         {
-            get { return _isOperating; }
+            get;
 
             set
             {
-                if (!Equals(_isOperating, value))
+                if (!Equals(field, value))
                 {
-                    _isOperating = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsOperating)));
                 }
             }

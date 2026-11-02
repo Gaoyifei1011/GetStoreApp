@@ -13,17 +13,15 @@ namespace GetStoreApp.Views.Dialogs
     {
         #region 第一部分：属性、集合与事件
 
-        private bool _deleteFileSameTime;
-
         internal bool DeleteFileSameTime
         {
-            get { return _deleteFileSameTime; }
+            get;
 
             private set
             {
-                if (!Equals(_deleteFileSameTime, value))
+                if (!Equals(field, value))
                 {
-                    _deleteFileSameTime = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(DeleteFileSameTime)));
                 }
             }

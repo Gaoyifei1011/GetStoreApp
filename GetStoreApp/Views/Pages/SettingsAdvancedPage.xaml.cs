@@ -40,65 +40,57 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private bool _notification;
-
         private bool Notification
         {
-            get { return _notification; }
+            get;
 
             set
             {
-                if (!Equals(_notification, value))
+                if (!Equals(field, value))
                 {
-                    _notification = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(Notification)));
                 }
             }
         }
 
-        private bool _notificationEnabled;
-
         private bool NotificationEnabled
         {
-            get { return _notificationEnabled; }
+            get;
 
             set
             {
-                if (!Equals(_notificationEnabled, value))
+                if (!Equals(field, value))
                 {
-                    _notificationEnabled = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(NotificationEnabled)));
                 }
             }
         }
 
-        private bool _isRestarting = false;
-
         private bool IsRestarting
         {
-            get { return _isRestarting; }
+            get;
 
             set
             {
-                if (!Equals(_isRestarting, value))
+                if (!Equals(field, value))
                 {
-                    _isRestarting = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsRestarting)));
                 }
             }
         }
 
-        private bool _shellMenu;
-
         private bool ShellMenu
         {
-            get { return _shellMenu; }
+            get;
 
             set
             {
-                if (!Equals(_shellMenu, value))
+                if (!Equals(field, value))
                 {
-                    _shellMenu = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(ShellMenu)));
                 }
             }

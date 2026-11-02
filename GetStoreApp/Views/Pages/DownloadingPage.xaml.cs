@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Classes;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Download;
 using GetStoreApp.Services.Root;
@@ -37,17 +38,15 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private ListViewSelectionMode _selectionMode;
-
         private ListViewSelectionMode SelectionMode
         {
-            get { return _selectionMode; }
+            get;
 
             set
             {
-                if (!Equals(_selectionMode, value))
+                if (!Equals(field, value))
                 {
-                    _selectionMode = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectionMode)));
                 }
             }
@@ -268,7 +267,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 下载状态发生变化后触发的事件
         /// </summary>
-        private void OnDownloadProgress(DownloadSchedulerModel downloadScheduler)
+        private void OnDownloadProgress(DownloadScheduler downloadScheduler)
         {
             // 处于等待中（新添加下载任务或者已经恢复下载）
             if (downloadScheduler.DownloadProgressState is DownloadProgressState.Queued)
@@ -383,7 +382,7 @@ namespace GetStoreApp.Views.Pages
         {
             try
             {
-                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadSchedulerList)
+                foreach (DownloadScheduler downloadSchedulerItem in DownloadSchedulerService.DownloadSchedulerList)
                 {
                     DownloadingCollection.Add(new()
                     {
@@ -403,7 +402,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     DownloadSchedulerService.IsDownloadingPageInitialized = true;
 
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadFailedList)
+                    foreach (DownloadScheduler downloadSchedulerItem in DownloadSchedulerService.DownloadFailedList)
                     {
                         DownloadingCollection.Add(new()
                         {

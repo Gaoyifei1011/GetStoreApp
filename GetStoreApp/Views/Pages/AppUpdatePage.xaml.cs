@@ -60,49 +60,43 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private AppUpdateResultKind _appUpdateResultKind;
-
         private AppUpdateResultKind AppUpdateResultKind
         {
-            get { return _appUpdateResultKind; }
+            get;
 
             set
             {
-                if (!Equals(_appUpdateResultKind, value))
+                if (!Equals(field, value))
                 {
-                    _appUpdateResultKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AppUpdateResultKind)));
                 }
             }
         }
 
-        private bool _isCheckingUpdate;
-
         private bool IsCheckingUpdate
         {
-            get { return _isCheckingUpdate; }
+            get;
 
             set
             {
-                if (!Equals(_isCheckingUpdate, value))
+                if (!Equals(field, value))
                 {
-                    _isCheckingUpdate = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsCheckingUpdate)));
                 }
             }
         }
 
-        private string _appUpdateFailedContent;
-
         private string AppUpdateFailedContent
         {
-            get { return _appUpdateFailedContent; }
+            get;
 
             set
             {
-                if (!string.Equals(_appUpdateFailedContent, value))
+                if (!string.Equals(field, value))
                 {
-                    _appUpdateFailedContent = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AppUpdateFailedContent)));
                 }
             }

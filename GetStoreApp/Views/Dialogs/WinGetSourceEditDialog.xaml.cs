@@ -57,129 +57,113 @@ namespace GetStoreApp.Views.Dialogs
 
         internal AddPackageCatalogStatus? AddPackageCatalogStatusResult { get; private set; } = null;
 
-        private bool _isSaving;
-
         private bool IsSaving
         {
-            get { return _isSaving; }
+            get;
 
             set
             {
-                if (!Equals(_isSaving, value))
+                if (!Equals(field, value))
                 {
-                    _isSaving = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsSaving)));
                 }
             }
         }
 
-        private string _editTitle;
-
         private string EditTitle
         {
-            get { return _editTitle; }
+            get;
 
             set
             {
-                if (!string.Equals(_editTitle, value))
+                if (!string.Equals(field, value))
                 {
-                    _editTitle = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(EditTitle)));
                 }
             }
         }
 
-        private string _sourceName;
-
         private string SourceName
         {
-            get { return _sourceName; }
+            get;
 
             set
             {
-                if (!string.Equals(_sourceName, value))
+                if (!string.Equals(field, value))
                 {
-                    _sourceName = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SourceName)));
                 }
             }
         }
 
-        private string _sourceUri;
-
         private string SourceUri
         {
-            get { return _sourceUri; }
+            get;
 
             set
             {
-                if (!string.Equals(_sourceUri, value))
+                if (!string.Equals(field, value))
                 {
-                    _sourceUri = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SourceUri)));
                 }
             }
         }
 
-        private string _customHeader;
-
         private string CustomHeader
         {
-            get { return _customHeader; }
+            get;
 
             set
             {
-                if (!string.Equals(_customHeader, value))
+                if (!string.Equals(field, value))
                 {
-                    _customHeader = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(CustomHeader)));
                 }
             }
         }
 
-        private string _sourceType;
-
         private string SourceType
         {
-            get { return _sourceType; }
+            get;
 
             set
             {
-                if (!string.Equals(_sourceType, value))
+                if (!string.Equals(field, value))
                 {
-                    _sourceType = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SourceType)));
                 }
             }
         }
 
-        private bool _explicit;
-
         private bool Explicit
         {
-            get { return _explicit; }
+            get;
 
             set
             {
-                if (!Equals(_explicit, value))
+                if (!Equals(field, value))
                 {
-                    _explicit = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(Explicit)));
                 }
             }
         }
 
-        private ComboBoxItemModel _selectedCatalogTrustLevel;
-
         private ComboBoxItemModel SelectedCatalogTrustLevel
         {
-            get { return _selectedCatalogTrustLevel; }
+            get;
 
             set
             {
-                if (!Equals(_selectedCatalogTrustLevel, value))
+                if (!Equals(field, value))
                 {
-                    _selectedCatalogTrustLevel = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectedCatalogTrustLevel)));
                 }
             }

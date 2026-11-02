@@ -80,177 +80,155 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private string _searchText;
-
         private string SearchText
         {
-            get { return _searchText; }
+            get;
 
             set
             {
-                if (!string.Equals(_searchText, value))
+                if (!string.Equals(field, value))
                 {
-                    _searchText = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SearchText)));
                 }
             }
         }
 
-        private bool _isIncrease;
-
         private bool IsIncrease
         {
-            get { return _isIncrease; }
+            get;
 
             set
             {
-                if (!Equals(_isIncrease, value))
+                if (!Equals(field, value))
                 {
-                    _isIncrease = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsIncrease)));
                 }
             }
         }
 
-        private AppManagerResultKind _appManagerResultKind;
-
         private AppManagerResultKind AppManagerResultKind
         {
-            get { return _appManagerResultKind; }
+            get;
 
             set
             {
-                if (!Equals(_appManagerResultKind, value))
+                if (!Equals(field, value))
                 {
-                    _appManagerResultKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AppManagerResultKind)));
                 }
             }
         }
 
-        private bool _isAppFramework;
-
         private bool IsAppFramework
         {
-            get { return _isAppFramework; }
+            get;
 
             set
             {
-                if (!Equals(_isAppFramework, value))
+                if (!Equals(field, value))
                 {
-                    _isAppFramework = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsAppFramework)));
                 }
             }
         }
 
-        private AppSortRuleKind _selectedAppSortRuleKind;
-
         private AppSortRuleKind SelectedAppSortRuleKind
         {
-            get { return _selectedAppSortRuleKind; }
+            get;
 
             set
             {
-                if (!Equals(_selectedAppSortRuleKind, value))
+                if (!Equals(field, value))
                 {
-                    _selectedAppSortRuleKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectedAppSortRuleKind)));
                 }
             }
         }
 
-        private bool _isStoreSignatureSelected;
-
         private bool IsStoreSignatureSelected
         {
-            get { return _isStoreSignatureSelected; }
+            get;
 
             set
             {
-                if (!Equals(_isStoreSignatureSelected, value))
+                if (!Equals(field, value))
                 {
-                    _isStoreSignatureSelected = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsStoreSignatureSelected)));
                 }
             }
         }
 
-        private bool _isSystemSignatureSelected;
-
         private bool IsSystemSignatureSelected
         {
-            get { return _isSystemSignatureSelected; }
+            get;
 
             set
             {
-                if (!Equals(_isSystemSignatureSelected, value))
+                if (!Equals(field, value))
                 {
-                    _isSystemSignatureSelected = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsSystemSignatureSelected)));
                 }
             }
         }
 
-        private bool _isEnterpriseSignatureSelected;
-
         private bool IsEnterpriseSignatureSelected
         {
-            get { return _isEnterpriseSignatureSelected; }
+            get;
 
             set
             {
-                if (!Equals(_isEnterpriseSignatureSelected, value))
+                if (!Equals(field, value))
                 {
-                    _isEnterpriseSignatureSelected = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsEnterpriseSignatureSelected)));
                 }
             }
         }
 
-        private bool _isDeveloperSignatureSelected;
-
         private bool IsDeveloperSignatureSelected
         {
-            get { return _isDeveloperSignatureSelected; }
+            get;
 
             set
             {
-                if (!Equals(_isDeveloperSignatureSelected, value))
+                if (!Equals(field, value))
                 {
-                    _isDeveloperSignatureSelected = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsDeveloperSignatureSelected)));
                 }
             }
         }
 
-        private bool _isNoneSignatureSelected;
-
         private bool IsNoneSignatureSelected
         {
-            get { return _isNoneSignatureSelected; }
+            get;
 
             set
             {
-                if (!Equals(_isNoneSignatureSelected, value))
+                if (!Equals(field, value))
                 {
-                    _isNoneSignatureSelected = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsNoneSignatureSelected)));
                 }
             }
         }
 
-        private string _appManagerFailedContent;
-
         private string AppManagerFailedContent
         {
-            get { return _appManagerFailedContent; }
+            get;
 
             set
             {
-                if (!string.Equals(_appManagerFailedContent, value))
+                if (!string.Equals(field, value))
                 {
-                    _appManagerFailedContent = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AppManagerFailedContent)));
                 }
             }

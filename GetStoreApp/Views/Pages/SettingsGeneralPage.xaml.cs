@@ -49,113 +49,99 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private ComboBoxItemModel _theme;
-
         private ComboBoxItemModel Theme
         {
-            get { return _theme; }
+            get;
 
             set
             {
-                if (!Equals(_theme, value))
+                if (!Equals(field, value))
                 {
-                    _theme = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(Theme)));
                 }
             }
         }
 
-        private ComboBoxItemModel _backdrop;
-
         private ComboBoxItemModel Backdrop
         {
-            get { return _backdrop; }
+            get;
 
             set
             {
-                if (!Equals(_backdrop, value))
+                if (!Equals(field, value))
                 {
-                    _backdrop = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(Backdrop)));
                 }
             }
         }
 
-        private bool _alwaysShowBackdrop;
-
         private bool AlwaysShowBackdrop
         {
-            get { return _alwaysShowBackdrop; }
+            get;
 
             set
             {
-                if (!Equals(_alwaysShowBackdrop, value))
+                if (!Equals(field, value))
                 {
-                    _alwaysShowBackdrop = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AlwaysShowBackdrop)));
                 }
             }
         }
 
-        private bool _alwaysShowBackdropEnabled;
-
         private bool AlwaysShowBackdropEnabled
         {
-            get { return _alwaysShowBackdropEnabled; }
+            get;
 
             set
             {
-                if (!Equals(_alwaysShowBackdropEnabled, value))
+                if (!Equals(field, value))
                 {
-                    _alwaysShowBackdropEnabled = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AlwaysShowBackdropEnabled)));
                 }
             }
         }
 
-        private bool _advancedEffectsEnabled;
-
         private bool AdvancedEffectsEnabled
         {
-            get { return _advancedEffectsEnabled; }
+            get;
 
             set
             {
-                if (!Equals(_advancedEffectsEnabled, value))
+                if (!Equals(field, value))
                 {
-                    _advancedEffectsEnabled = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AdvancedEffectsEnabled)));
                 }
             }
         }
 
-        private ComboBoxItemModel _appLanguage;
-
         private ComboBoxItemModel AppLanguage
         {
-            get { return _appLanguage; }
+            get;
 
             set
             {
-                if (!Equals(_appLanguage, value))
+                if (!Equals(field, value))
                 {
-                    _appLanguage = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AppLanguage)));
                 }
             }
         }
 
-        private bool _topMost;
-
         private bool TopMost
         {
-            get { return _topMost; }
+            get;
 
             set
             {
-                if (!Equals(_topMost, value))
+                if (!Equals(field, value))
                 {
-                    _topMost = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(TopMost)));
                 }
             }

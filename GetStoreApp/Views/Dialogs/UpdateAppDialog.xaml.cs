@@ -34,65 +34,57 @@ namespace GetStoreApp.Views.Dialogs
 
         #region 第二部分：属性、集合与事件
 
-        private UpdateAppResultKind _updateAppResultKind;
-
         private UpdateAppResultKind UpdateAppResultKind
         {
-            get { return _updateAppResultKind; }
+            get;
 
             set
             {
-                if (!Equals(_updateAppResultKind, value))
+                if (!Equals(field, value))
                 {
-                    _updateAppResultKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(UpdateAppResultKind)));
                 }
             }
         }
 
-        private string _primaryText;
-
         private string PrimaryText
         {
-            get { return _primaryText; }
+            get;
 
             set
             {
-                if (!string.Equals(_primaryText, value))
+                if (!string.Equals(field, value))
                 {
-                    _primaryText = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PrimaryText)));
                 }
             }
         }
 
-        private string _closeText;
-
         private string CloseText
         {
-            get { return _closeText; }
+            get;
 
             set
             {
-                if (!string.Equals(_closeText, value))
+                if (!string.Equals(field, value))
                 {
-                    _closeText = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(CloseText)));
                 }
             }
         }
 
-        private string _updateDownloadString;
-
         private string UpdateDownloadString
         {
-            get { return _updateDownloadString; }
+            get;
 
             set
             {
-                if (!string.Equals(_updateDownloadString, value))
+                if (!string.Equals(field, value))
                 {
-                    _updateDownloadString = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(UpdateDownloadString)));
                 }
             }

@@ -12,17 +12,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 应用图标
         /// </summary>
-        private Uri _logoImage;
-
         internal Uri LogoImage
         {
-            get { return _logoImage; }
+            get;
 
             set
             {
-                if (!Equals(_logoImage, value))
+                if (!Equals(field, value))
                 {
-                    _logoImage = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(LogoImage)));
                 }
             }
@@ -71,17 +69,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 应用是否正在操作中
         /// </summary>
-        private bool _isOperating;
-
         internal bool IsOperating
         {
-            get { return _isOperating; }
+            get;
 
             set
             {
-                if (!Equals(_isOperating, value))
+                if (!Equals(field, value))
                 {
-                    _isOperating = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsOperating)));
                 }
             }
@@ -90,17 +86,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 应用包操作进度
         /// </summary>
-        private double _packageOperationProgress;
-
         internal double PackageOperationProgress
         {
-            get { return _packageOperationProgress; }
+            get;
 
             set
             {
-                if (!Equals(_packageOperationProgress, value))
+                if (!Equals(field, value))
                 {
-                    _packageOperationProgress = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageOperationProgress)));
                 }
             }

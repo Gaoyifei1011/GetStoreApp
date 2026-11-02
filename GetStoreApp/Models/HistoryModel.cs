@@ -7,17 +7,15 @@ namespace GetStoreApp.Models
     /// </summary>
     internal sealed partial class HistoryModel : INotifyPropertyChanged
     {
-        private bool _isQuerying;
-
         internal bool IsQuerying
         {
-            get { return _isQuerying; }
+            get;
 
             set
             {
-                if (!Equals(_isQuerying, value))
+                if (!Equals(field, value))
                 {
-                    _isQuerying = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsQuerying)));
                 }
             }

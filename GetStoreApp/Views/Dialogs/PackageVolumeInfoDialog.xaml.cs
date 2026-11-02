@@ -34,97 +34,85 @@ namespace GetStoreApp.Views.Dialogs
 
         #region 第二部分：属性、集合与事件
 
-        private bool _isItemSelected;
-
         private bool IsItemSelected
         {
-            get { return _isItemSelected; }
+            get;
 
             set
             {
-                if (!Equals(_isItemSelected, value))
+                if (!Equals(field, value))
                 {
-                    _isItemSelected = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsItemSelected)));
                 }
             }
         }
 
-        private PackageVolumeResultKind _packageVolumeResultKind;
-
         private PackageVolumeResultKind PackageVolumeResultKind
         {
-            get { return _packageVolumeResultKind; }
+            get;
 
             set
             {
-                if (!Equals(_packageVolumeResultKind, value))
+                if (!Equals(field, value))
                 {
-                    _packageVolumeResultKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageVolumeResultKind)));
                 }
             }
         }
 
-        private PackageVolumeModel _currentPackageVolume = new();
-
         private PackageVolumeModel CurrentPackageVolume
         {
-            get { return _currentPackageVolume; }
+            get;
 
             set
             {
-                if (!Equals(_currentPackageVolume, value))
+                if (!Equals(field, value))
                 {
-                    _currentPackageVolume = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(CurrentPackageVolume)));
                 }
             }
         }
 
-        private PackageVolumeModel _selectedPackageVolume;
-
         internal PackageVolumeModel SelectedPackageVolume
         {
-            get { return _selectedPackageVolume; }
+            get;
 
             private set
             {
-                if (!Equals(_selectedPackageVolume, value))
+                if (!Equals(field, value))
                 {
-                    _selectedPackageVolume = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectedPackageVolume)));
                 }
             }
         }
 
-        private bool _isRemovingPackageVolume;
-
         private bool IsRemovingPackageVolume
         {
-            get { return _isRemovingPackageVolume; }
+            get;
 
             set
             {
-                if (!Equals(_isRemovingPackageVolume, value))
+                if (!Equals(field, value))
                 {
-                    _isRemovingPackageVolume = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsRemovingPackageVolume)));
                 }
             }
         }
 
-        private bool _isRemovePackageVolumeEnabled;
-
         private bool IsRemovePackageVolumeEnabled
         {
-            get { return _isRemovePackageVolumeEnabled; }
+            get;
 
             set
             {
-                if (!Equals(_isRemovePackageVolumeEnabled, value))
+                if (!Equals(field, value))
                 {
-                    _isRemovePackageVolumeEnabled = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsRemovePackageVolumeEnabled)));
                 }
             }
@@ -207,11 +195,7 @@ namespace GetStoreApp.Views.Dialogs
                 PackageVolumeResultKind = PackageVolumeResultKind.Loading;
 
                 (PackageVolumeModel currentPackageVolume, ReadOnlyCollection<PackageVolumeModel> packageVolumeCollection) = await GetCurrentPackageAndPackageVolumeCollectionAsync();
-
-                if (currentPackageVolume is not null)
-                {
-                    CurrentPackageVolume = currentPackageVolume;
-                }
+                CurrentPackageVolume = currentPackageVolume is not null ? currentPackageVolume : new();
 
                 if (packageVolumeCollection is null || packageVolumeCollection.Count is 0)
                 {

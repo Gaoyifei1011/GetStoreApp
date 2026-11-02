@@ -11,17 +11,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 标志该清理选项是否清理失败
         /// </summary>
-        private bool _isCleanFailed;
-
         internal bool IsCleanFailed
         {
-            get { return _isCleanFailed; }
+            get;
 
             set
             {
-                if (!Equals(_isCleanFailed, value))
+                if (!Equals(field, value))
                 {
-                    _isCleanFailed = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsCleanFailed)));
                 }
             }

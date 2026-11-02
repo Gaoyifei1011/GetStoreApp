@@ -58,33 +58,29 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private SettingsWinGetSourceResultKind _settingsWinGetSourceResultKind;
-
         private SettingsWinGetSourceResultKind SettingsWinGetSourceResultKind
         {
-            get { return _settingsWinGetSourceResultKind; }
+            get;
 
             set
             {
-                if (!Equals(_settingsWinGetSourceResultKind, value))
+                if (!Equals(field, value))
                 {
-                    _settingsWinGetSourceResultKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SettingsWinGetSourceResultKind)));
                 }
             }
         }
 
-        private WinGetSourceModel _selectedItem;
-
         public WinGetSourceModel SelectedItem
         {
-            get { return _selectedItem; }
+            get;
 
             set
             {
-                if (!Equals(_selectedItem, value))
+                if (!Equals(field, value))
                 {
-                    _selectedItem = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectedItem)));
                 }
             }

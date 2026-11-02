@@ -61,161 +61,141 @@ namespace GetStoreAppWebView.Views.Windows
 
         #region 第二部分：属性、集合与事件
 
-        private string _windowTitle;
-
         private string WindowTitle
         {
-            get { return _windowTitle; }
+            get;
 
             set
             {
-                if (!string.Equals(_windowTitle, value))
+                if (!string.Equals(field, value))
                 {
-                    _windowTitle = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(WindowTitle)));
                 }
             }
         }
 
-        private SystemBackdrop _windowSystemBackdrop;
-
         private SystemBackdrop WindowSystemBackdrop
         {
-            get { return _windowSystemBackdrop; }
+            get;
 
             set
             {
-                if (!Equals(_windowSystemBackdrop, value))
+                if (!Equals(field, value))
                 {
-                    _windowSystemBackdrop = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(WindowSystemBackdrop)));
                 }
             }
         }
 
-        private ElementTheme _windowTheme;
-
         private ElementTheme WindowTheme
         {
-            get { return _windowTheme; }
+            get;
 
             set
             {
-                if (!Equals(_windowTheme, value))
+                if (!Equals(field, value))
                 {
-                    _windowTheme = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(WindowTheme)));
                 }
             }
         }
 
-        private bool _isWindowMaximized;
-
         private bool IsWindowMaximized
         {
-            get { return _isWindowMaximized; }
+            get;
 
             set
             {
-                if (!Equals(_isWindowMaximized, value))
+                if (!Equals(field, value))
                 {
-                    _isWindowMaximized = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsWindowMaximized)));
                 }
             }
         }
 
-        private bool _canGoBack;
-
         private bool CanGoBack
         {
-            get { return _canGoBack; }
+            get;
 
             set
             {
-                if (!Equals(_canGoBack, value))
+                if (!Equals(field, value))
                 {
-                    _canGoBack = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(CanGoBack)));
                 }
             }
         }
 
-        private bool _canGoForward;
-
         private bool CanGoForward
         {
-            get { return _canGoForward; }
+            get;
 
             set
             {
-                if (!Equals(_canGoForward, value))
+                if (!Equals(field, value))
                 {
-                    _canGoForward = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(CanGoForward)));
                 }
             }
         }
 
-        private bool _isLoading;
-
         private bool IsLoading
         {
-            get { return _isLoading; }
+            get;
 
             set
             {
-                if (!Equals(_isLoading, value))
+                if (!Equals(field, value))
                 {
-                    _isLoading = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsLoading)));
                 }
             }
         }
 
-        private string _webTitle;
-
         private string WebTitle
         {
-            get { return _webTitle; }
+            get;
 
             set
             {
-                if (!string.Equals(_webTitle, value))
+                if (!string.Equals(field, value))
                 {
-                    _webTitle = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(WebTitle)));
                 }
             }
         }
 
-        private bool _isDownloadClickEnabled;
-
         private bool IsDownloadClickEnabled
         {
-            get { return _isDownloadClickEnabled; }
+            get;
 
             set
             {
-                if (!Equals(_isDownloadClickEnabled, value))
+                if (!Equals(field, value))
                 {
-                    _isDownloadClickEnabled = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsDownloadClickEnabled)));
                 }
             }
         }
 
-        private bool _isEnabled;
-
         private bool IsEnabled
         {
-            get { return _isEnabled; }
+            get;
 
             set
             {
-                if (!Equals(_isEnabled, value))
+                if (!Equals(field, value))
                 {
-                    _isEnabled = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsEnabled)));
                 }
             }

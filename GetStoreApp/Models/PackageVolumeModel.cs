@@ -11,17 +11,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 是否正在操作中
         /// </summary>
-        private bool _isOperating;
-
         internal bool IsOperating
         {
-            get { return _isOperating; }
+            get;
 
             set
             {
-                if (!Equals(_isOperating, value))
+                if (!Equals(field, value))
                 {
-                    _isOperating = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsOperating)));
                 }
             }
@@ -80,17 +78,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 是否为默认卷（字符串）
         /// </summary>
-        private string _defaultVolume;
-
         internal string DefaultVolume
         {
-            get { return _defaultVolume; }
+            get;
 
             set
             {
-                if (!string.Equals(_defaultVolume, value))
+                if (!string.Equals(field, value))
                 {
-                    _defaultVolume = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(DefaultVolume)));
                 }
             }
@@ -99,17 +95,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 是否为默认卷
         /// </summary>
-        private bool _isDefaultVolume;
-
         internal bool IsDefaultVolume
         {
-            get { return _isDefaultVolume; }
+            get;
 
             set
             {
-                if (!Equals(_isDefaultVolume, value))
+                if (!Equals(field, value))
                 {
-                    _isDefaultVolume = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsDefaultVolume)));
                 }
             }
@@ -118,17 +112,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 是否支持 APPX 安装
         /// </summary>
-        private string _isAppxInstallSupported;
-
         internal string IsAppxInstallSupported
         {
-            get { return _isAppxInstallSupported; }
+            get;
 
             set
             {
-                if (!string.Equals(_isAppxInstallSupported, value))
+                if (!string.Equals(field, value))
                 {
-                    _isAppxInstallSupported = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsAppxInstallSupported)));
                 }
             }
@@ -137,17 +129,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 是否支持完全信任包
         /// </summary>
-        private string _isFullTrustPackageSupported;
-
         internal string IsFullTrustPackageSupported
         {
-            get { return _isFullTrustPackageSupported; }
+            get;
 
             set
             {
-                if (!string.Equals(_isFullTrustPackageSupported, value))
+                if (!string.Equals(field, value))
                 {
-                    _isFullTrustPackageSupported = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsFullTrustPackageSupported)));
                 }
             }
@@ -156,17 +146,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 是否处于脱机状态（字符串）
         /// </summary>
-        private string _offline;
-
         internal string Offline
         {
-            get { return _offline; }
+            get;
 
             set
             {
-                if (!string.Equals(_offline, value))
+                if (!string.Equals(field, value))
                 {
-                    _offline = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(Offline)));
                 }
             }
@@ -175,17 +163,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 是否处于脱机状态
         /// </summary>
-        private bool _isOffline;
-
         internal bool IsOffline
         {
-            get { return _isOffline; }
+            get;
 
             set
             {
-                if (!Equals(_isOffline, value))
+                if (!Equals(field, value))
                 {
-                    _isOffline = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsFullTrustPackageSupported)));
                 }
             }
@@ -194,17 +180,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 是否为系统卷
         /// </summary>
-        private string _isSystemVolume;
-
         internal string IsSystemVolume
         {
-            get { return _isSystemVolume; }
+            get;
 
             set
             {
-                if (!string.Equals(_isSystemVolume, value))
+                if (!string.Equals(field, value))
                 {
-                    _isSystemVolume = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsSystemVolume)));
                 }
             }
@@ -213,17 +197,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 是否支持在其文件系统中创建硬链接
         /// </summary>
-        private string _supportedHardLinks;
-
         internal string SupportedHardLinks
         {
-            get { return _supportedHardLinks; }
+            get;
 
             set
             {
-                if (!string.Equals(_supportedHardLinks, value))
+                if (!string.Equals(field, value))
                 {
-                    _supportedHardLinks = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsSystemVolume)));
                 }
             }

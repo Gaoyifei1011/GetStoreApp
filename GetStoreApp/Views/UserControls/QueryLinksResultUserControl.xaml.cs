@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Classes;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Download;
@@ -48,65 +49,57 @@ namespace GetStoreApp.Views.UserControls
 
         #region 第二部分：属性、集合与事件
 
-        private AppInfoModel _appInfo;
-
         private AppInfoModel AppInfo
         {
-            get { return _appInfo; }
+            get;
 
             set
             {
-                if (!Equals(_appInfo, value))
+                if (!Equals(field, value))
                 {
-                    _appInfo = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AppInfo)));
                 }
             }
         }
 
-        private bool _isAppInfoVisible;
-
         private bool IsAppInfoVisible
         {
-            get { return _isAppInfoVisible; }
+            get;
 
             set
             {
-                if (!Equals(_isAppInfoVisible, value))
+                if (!Equals(field, value))
                 {
-                    _isAppInfoVisible = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsAppInfoVisible)));
                 }
             }
         }
 
-        private bool _isPackagedApp;
-
         private bool IsPackagedApp
         {
-            get { return _isPackagedApp; }
+            get;
 
             set
             {
-                if (!Equals(_isPackagedApp, value))
+                if (!Equals(field, value))
                 {
-                    _isPackagedApp = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsPackagedApp)));
                 }
             }
         }
 
-        private ListViewSelectionMode _selectionMode;
-
         private ListViewSelectionMode SelectionMode
         {
-            get { return _selectionMode; }
+            get;
 
             set
             {
-                if (!Equals(_selectionMode, value))
+                if (!Equals(field, value))
                 {
-                    _selectionMode = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(SelectionMode)));
                 }
             }
@@ -502,7 +495,7 @@ namespace GetStoreApp.Views.UserControls
             return await Task.Run(() =>
             {
                 bool isDownloadSuccessfully = false;
-                List<DownloadSchedulerModel> downloadSchedulerList = [];
+                List<DownloadScheduler> downloadSchedulerList = [];
                 DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
 
                 try

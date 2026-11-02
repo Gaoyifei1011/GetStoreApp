@@ -67,273 +67,239 @@ namespace GetStoreApp.Views.Pages
 
         private PackageOperationModel PackageOperation { get; set; }
 
-        private string _winGetAppsOptionsTitle;
-
         private string WinGetAppsOptionsTitle
         {
-            get { return _winGetAppsOptionsTitle; }
+            get;
 
             set
             {
-                if (!string.Equals(_winGetAppsOptionsTitle, value))
+                if (!string.Equals(field, value))
                 {
-                    _winGetAppsOptionsTitle = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(WinGetAppsOptionsTitle)));
                 }
             }
         }
 
-        private PackageOperationKind _packageOperationKind;
-
         private PackageOperationKind PackageOperationKind
         {
-            get { return _packageOperationKind; }
+            get;
 
             set
             {
-                if (!Equals(_packageOperationKind, value))
+                if (!Equals(field, value))
                 {
-                    _packageOperationKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageOperationKind)));
                 }
             }
         }
 
-        private bool _allowHashMismatch;
-
         private bool AllowHashMismatch
         {
-            get { return _allowHashMismatch; }
+            get;
 
             set
             {
-                if (!Equals(_allowHashMismatch, value))
+                if (!Equals(field, value))
                 {
-                    _allowHashMismatch = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AllowHashMismatch)));
                 }
             }
         }
 
-        private string _packageDownloadPath;
-
         private string PackageDownloadPath
         {
-            get { return _packageDownloadPath; }
+            get;
 
             set
             {
-                if (!string.Equals(_packageDownloadPath, value))
+                if (!string.Equals(field, value))
                 {
-                    _packageDownloadPath = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageDownloadPath)));
                 }
             }
         }
 
-        private ComboBoxItemModel _packageInstallScope;
-
         private ComboBoxItemModel PackageInstallScope
         {
-            get { return _packageInstallScope; }
+            get;
 
             set
             {
-                if (!Equals(_packageInstallScope, value))
+                if (!Equals(field, value))
                 {
-                    _packageInstallScope = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageInstallScope)));
                 }
             }
         }
 
-        private ComboBoxItemModel _packageArchitecture;
-
         private ComboBoxItemModel PackageArchitecture
         {
-            get { return _packageArchitecture; }
+            get;
 
             set
             {
-                if (!Equals(_packageArchitecture, value))
+                if (!Equals(field, value))
                 {
-                    _packageArchitecture = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageArchitecture)));
                 }
             }
         }
 
-        private bool _bypassIsStoreClientBlockedPolicyCheck;
-
         private bool BypassIsStoreClientBlockedPolicyCheck
         {
-            get { return _bypassIsStoreClientBlockedPolicyCheck; }
+            get;
 
             set
             {
-                if (!Equals(_bypassIsStoreClientBlockedPolicyCheck, value))
+                if (!Equals(field, value))
                 {
-                    _bypassIsStoreClientBlockedPolicyCheck = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(BypassIsStoreClientBlockedPolicyCheck)));
                 }
             }
         }
 
-        private bool _AllowUpgradeToUnknownVersion;
-
         private bool AllowUpgradeToUnknownVersion
         {
-            get { return _AllowUpgradeToUnknownVersion; }
+            get;
 
             set
             {
-                if (!Equals(_AllowUpgradeToUnknownVersion, value))
+                if (!Equals(field, value))
                 {
-                    _AllowUpgradeToUnknownVersion = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AllowUpgradeToUnknownVersion)));
                 }
             }
         }
 
-        private bool _forceInstall;
-
         private bool ForceInstall
         {
-            get { return _forceInstall; }
+            get;
 
             set
             {
-                if (!Equals(_forceInstall, value))
+                if (!Equals(field, value))
                 {
-                    _forceInstall = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(ForceInstall)));
                 }
             }
         }
 
-        private ComboBoxItemModel _packageInstallMode;
-
         private ComboBoxItemModel PackageInstallMode
         {
-            get { return _packageInstallMode; }
+            get;
 
             set
             {
-                if (!Equals(_packageInstallMode, value))
+                if (!Equals(field, value))
                 {
-                    _packageInstallMode = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageInstallMode)));
                 }
             }
         }
 
-        private string _packageInstallPath;
-
         private string PackageInstallPath
         {
-            get { return _packageInstallPath; }
+            get;
 
             set
             {
-                if (!string.Equals(_packageInstallPath, value))
+                if (!string.Equals(field, value))
                 {
-                    _packageInstallPath = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageInstallPath)));
                 }
             }
         }
 
-        private bool _isX86ProcessorArchitecture;
-
         private bool IsX86ProcessorArchitecture
         {
-            get { return _isX86ProcessorArchitecture; }
+            get;
 
             set
             {
-                if (!Equals(_isX86ProcessorArchitecture, value))
+                if (!Equals(field, value))
                 {
-                    _isX86ProcessorArchitecture = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsX86ProcessorArchitecture)));
                 }
             }
         }
 
-        private bool _isX64ProcessorArchitecture;
-
         private bool IsX64ProcessorArchitecture
         {
-            get { return _isX64ProcessorArchitecture; }
+            get;
 
             set
             {
-                if (!Equals(_isX64ProcessorArchitecture, value))
+                if (!Equals(field, value))
                 {
-                    _isX64ProcessorArchitecture = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsX64ProcessorArchitecture)));
                 }
             }
         }
 
-        private bool _isArm64ProcessorArchitecture;
-
         private bool IsArm64ProcessorArchitecture
         {
-            get { return _isArm64ProcessorArchitecture; }
+            get;
 
             set
             {
-                if (!Equals(_isArm64ProcessorArchitecture, value))
+                if (!Equals(field, value))
                 {
-                    _isArm64ProcessorArchitecture = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsArm64ProcessorArchitecture)));
                 }
             }
         }
 
-        private string _additionalInstallerArguments;
-
         private string AdditionalInstallerArguments
         {
-            get { return _additionalInstallerArguments; }
+            get;
 
             set
             {
-                if (!string.Equals(_additionalInstallerArguments, value))
+                if (!string.Equals(field, value))
                 {
-                    _additionalInstallerArguments = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AdditionalInstallerArguments)));
                 }
             }
         }
 
-        private ComboBoxItemModel _packageRepairScope;
-
         private ComboBoxItemModel PackageRepairScope
         {
-            get { return _packageRepairScope; }
+            get;
 
             set
             {
-                if (!Equals(_packageRepairScope, value))
+                if (!Equals(field, value))
                 {
-                    _packageRepairScope = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageRepairScope)));
                 }
             }
         }
 
-        private ComboBoxItemModel _packageRepairMode;
-
         private ComboBoxItemModel PackageRepairMode
         {
-            get { return _packageRepairMode; }
+            get;
 
             set
             {
-                if (!Equals(_packageRepairMode, value))
+                if (!Equals(field, value))
                 {
-                    _packageRepairMode = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageRepairMode)));
                 }
             }

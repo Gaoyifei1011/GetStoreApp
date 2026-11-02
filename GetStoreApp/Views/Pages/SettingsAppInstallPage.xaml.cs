@@ -22,49 +22,43 @@ namespace GetStoreApp.Views.Pages
     {
         #region 第一部分：属性、集合与事件
 
-        private bool _allowUnsignedPackage;
-
         private bool AllowUnsignedPackage
         {
-            get { return _allowUnsignedPackage; }
+            get;
 
             set
             {
-                if (!Equals(_allowUnsignedPackage, value))
+                if (!Equals(field, value))
                 {
-                    _allowUnsignedPackage = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AllowUnsignedPackage)));
                 }
             }
         }
 
-        private bool _forceAppShutdown;
-
         private bool ForceAppShutdown
         {
-            get { return _forceAppShutdown; }
+            get;
 
             set
             {
-                if (!Equals(_forceAppShutdown, value))
+                if (!Equals(field, value))
                 {
-                    _forceAppShutdown = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(ForceAppShutdown)));
                 }
             }
         }
 
-        private bool _forceTargetAppShutdown;
-
         private bool ForceTargetAppShutdown
         {
-            get { return _forceTargetAppShutdown; }
+            get;
 
             set
             {
-                if (!Equals(_forceTargetAppShutdown, value))
+                if (!Equals(field, value))
                 {
-                    _forceTargetAppShutdown = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(ForceTargetAppShutdown)));
                 }
             }

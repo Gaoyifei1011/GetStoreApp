@@ -16,17 +16,15 @@ namespace GetStoreApp.Services.Settings
 
         internal static bool AppNotification { get; private set; }
 
-        private static NotificationSetting _notificationSetting;
-
         internal static NotificationSetting NotificationSetting
         {
-            get { return _notificationSetting; }
+            get;
 
             private set
             {
-                if (!Equals(_notificationSetting, value))
+                if (!Equals(field, value))
                 {
-                    _notificationSetting = value;
+                    field = value;
                     PropertyChanged?.Invoke(null, new(nameof(NotificationSetting)));
                 }
             }

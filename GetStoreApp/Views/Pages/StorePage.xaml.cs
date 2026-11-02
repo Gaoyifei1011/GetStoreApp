@@ -30,17 +30,15 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private StoreControl _storeControl;
-
         internal StoreControl StoreControl
         {
-            get { return _storeControl; }
+            get;
 
             set
             {
-                if (!Equals(_storeControl, value))
+                if (!Equals(field, value))
                 {
-                    _storeControl = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(StoreControl)));
                 }
             }

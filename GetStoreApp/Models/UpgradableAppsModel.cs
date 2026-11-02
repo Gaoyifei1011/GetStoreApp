@@ -36,17 +36,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 应用是否处于正在升级中状态
         /// </summary>
-        private bool _isUpgrading;
-
         internal bool IsUpgrading
         {
-            get { return _isUpgrading; }
+            get;
 
             set
             {
-                if (!Equals(_isUpgrading, value))
+                if (!Equals(field, value))
                 {
-                    _isUpgrading = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(IsUpgrading)));
                 }
             }

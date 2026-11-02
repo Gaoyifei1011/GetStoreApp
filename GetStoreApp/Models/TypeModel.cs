@@ -1,6 +1,4 @@
-﻿using WinRT;
-
-namespace GetStoreApp.Models
+﻿namespace GetStoreApp.Models
 {
     /// <summary>
     /// 应用类型数据模型

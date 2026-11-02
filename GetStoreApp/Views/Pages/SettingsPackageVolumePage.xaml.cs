@@ -65,33 +65,29 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：属性、集合与事件
 
-        private PackageVolumeResultKind _packageVolumeResultKind;
-
         private PackageVolumeResultKind PackageVolumeResultKind
         {
-            get { return _packageVolumeResultKind; }
+            get;
 
             set
             {
-                if (!Equals(_packageVolumeResultKind, value))
+                if (!Equals(field, value))
                 {
-                    _packageVolumeResultKind = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageVolumeResultKind)));
                 }
             }
         }
 
-        private string _packageVolumeFailedContent;
-
         private string PackageVolumeFailedContent
         {
-            get { return _packageVolumeFailedContent; }
+            get;
 
             set
             {
-                if (!string.Equals(_packageVolumeFailedContent, value))
+                if (!string.Equals(field, value))
                 {
-                    _packageVolumeFailedContent = value;
+                    field = value;
                     PropertyChanged?.Invoke(this, new(nameof(PackageVolumeFailedContent)));
                 }
             }
