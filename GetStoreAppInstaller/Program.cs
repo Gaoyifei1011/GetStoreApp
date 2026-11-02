@@ -8,6 +8,7 @@ using Microsoft.Windows.AppLifecycle;
 using System;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
+using Windows.ApplicationModel.Activation;
 using Windows.Foundation.Diagnostics;
 using WinRT;
 
@@ -23,9 +24,15 @@ namespace GetStoreAppInstaller
     {
         internal static AppActivationArguments AppActivationArguments { get; private set; }
 
+        /// <summary>
+        /// 从文件激活处启动时携带的文件路径
+        /// </summary>
+        internal static string InitialFileName { get; private set; }
+
         internal static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
 
         [STAThread]
+        [DynamicWindowsRuntimeCast(typeof(FileActivatedEventArgs))]
         internal static void Main()
         {
             ComWrappersSupport.InitializeComWrappers();
@@ -39,6 +46,18 @@ namespace GetStoreAppInstaller
             // 初始化应用启动参数
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             AppActivationArguments = AppInstance.GetCurrent().GetActivatedEventArgs();
+
+            // 文件激活参数必须在 XAML 启动前读取，在窗口加载阶段读取会重入尚未完成的激活调用并导致进程 fail-fast
+            if (AppActivationArguments.Kind is ExtendedActivationKind.File)
+            {
+                FileActivatedEventArgs fileActivatedEventArgs = AppActivationArguments.Data as FileActivatedEventArgs;
+
+                // 只解析读取到的第一个文件
+                if (fileActivatedEventArgs.Files.Count > 0)
+                {
+                    InitialFileName = fileActivatedEventArgs.Files[0].Path;
+                }
+            }
 
             if (AppActivationArguments.Kind is ExtendedActivationKind.Launch)
             {

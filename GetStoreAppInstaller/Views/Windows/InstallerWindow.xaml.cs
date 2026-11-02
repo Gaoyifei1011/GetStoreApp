@@ -1187,13 +1187,7 @@ namespace GetStoreAppInstaller.Views.Windows
             // 从文件处启动
             else if (Program.AppActivationArguments.Kind is ExtendedActivationKind.File)
             {
-                FileActivatedEventArgs fileActivatedEventArgs = Program.AppActivationArguments.Data as FileActivatedEventArgs;
-
-                // 只解析读取到的第一个文件
-                if (fileActivatedEventArgs.Files.Count > 0)
-                {
-                    fileName = fileActivatedEventArgs.Files[0].Path;
-                }
+                fileName = Program.InitialFileName;
             }
             // 从共享目标处启动
             else if (Program.AppActivationArguments.Kind is ExtendedActivationKind.ShareTarget)
