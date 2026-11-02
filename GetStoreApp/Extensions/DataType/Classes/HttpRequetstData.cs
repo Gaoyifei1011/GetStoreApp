@@ -1,9 +1,9 @@
-﻿namespace GetStoreApp.Models
+﻿namespace GetStoreApp.Extensions.DataType.Classes
 {
     /// <summary>
-    /// 网页请求数据模型
+    /// 网页请求数据
     /// </summary>
-    internal sealed class RequestModel
+    internal sealed class HttpRequetstData
     {
         /// <summary>
         /// 网页请求返回的ID值

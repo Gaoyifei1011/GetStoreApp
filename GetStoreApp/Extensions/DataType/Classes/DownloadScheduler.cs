@@ -1,11 +1,11 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 
-namespace GetStoreApp.Models
+namespace GetStoreApp.Extensions.DataType.Classes
 {
     /// <summary>
-    /// 下载调度服务数据模型
+    /// 下载调度服务数据
     /// </summary>
-    internal sealed class DownloadSchedulerModel
+    internal sealed class DownloadScheduler
     {
         /// <summary>
         /// 任务下载时创建的下载唯一标识符
