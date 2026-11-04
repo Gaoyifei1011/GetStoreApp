@@ -84,9 +84,8 @@
                 </Grid>
             </Grid>
 
-            <!--  TODO：未来迁移到 TableView  -->
             <!--  选择栏  -->
-            <ListView
+            <GridView
                 Margin="0,10,0,0"
                 IsItemClickEnabled="True"
                 ItemClick="{x:Bind OnItemClicked}"
@@ -94,21 +93,21 @@
                 SelectionMode="None"
                 TabIndex="1">
 
-                <ListView.Resources>
+                <GridView.Resources>
                     <CollectionViewSource
                         x:Name="HomeCollectionViewSource"
                         IsSourceGrouped="True"
                         ItemsPath="HomeItemList"
                         Source="{x:Bind HomeGroupList}" />
-                </ListView.Resources>
+                </GridView.Resources>
 
-                <ListView.GroupStyle>
+                <GridView.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.HeaderContainerStyle>
-                            <Style TargetType="ListViewHeaderItem">
+                            <Style TargetType="GridViewHeaderItem">
                                 <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
-                                <Setter Property="FontSize" Value="{ThemeResource ListViewHeaderItemThemeFontSize}" />
-                                <Setter Property="Background" Value="{ThemeResource ListViewHeaderItemBackground}" />
+                                <Setter Property="FontSize" Value="{ThemeResource GridViewHeaderItemThemeFontSize}" />
+                                <Setter Property="Background" Value="{ThemeResource GridViewHeaderItemBackground}" />
                                 <Setter Property="Padding" Value="0" />
                                 <Setter Property="Margin" Value="0" />
                                 <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -117,7 +116,7 @@
                                 <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
                                 <Setter Property="Template">
                                     <Setter.Value>
-                                        <ControlTemplate TargetType="ListViewHeaderItem">
+                                        <ControlTemplate TargetType="GridViewHeaderItem">
                                             <StackPanel
                                                 Background="{TemplateBinding Background}"
                                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -147,10 +146,10 @@
                             </DataTemplate>
                         </GroupStyle.HeaderTemplate>
                     </GroupStyle>
-                </ListView.GroupStyle>
+                </GridView.GroupStyle>
 
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
+                <GridView.ItemContainerStyle>
+                    <Style TargetType="GridViewItem">
                         <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
                         <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
                         <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
@@ -167,18 +166,18 @@
                         <Setter Property="Padding" Value="8,5,8,6" />
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                         <Setter Property="VerticalContentAlignment" Value="Center" />
-                        <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}" />
-                        <Setter Property="MinHeight" Value="{ThemeResource ListViewItemMinHeight}" />
+                        <Setter Property="MinWidth" Value="{ThemeResource GridViewItemMinWidth}" />
+                        <Setter Property="MinHeight" Value="{ThemeResource GridViewItemMinHeight}" />
                         <Setter Property="AllowDrop" Value="False" />
                         <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
                         <Setter Property="FocusVisualMargin" Value="-3" />
-                        <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource ListViewItemFocusVisualPrimaryBrush}" />
+                        <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource GridViewItemFocusVisualPrimaryBrush}" />
                         <Setter Property="FocusVisualPrimaryThickness" Value="2" />
-                        <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource ListViewItemFocusVisualSecondaryBrush}" />
+                        <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource GridViewItemFocusVisualSecondaryBrush}" />
                         <Setter Property="FocusVisualSecondaryThickness" Value="1" />
                         <Setter Property="Template">
                             <Setter.Value>
-                                <ControlTemplate TargetType="ListViewItem">
+                                <ControlTemplate TargetType="GridViewItem">
                                     <ContentPresenter
                                         x:Name="ContentPresenter"
                                         Padding="{TemplateBinding Padding}"
@@ -251,19 +250,13 @@
                             </Setter.Value>
                         </Setter>
                     </Style>
-                </ListView.ItemContainerStyle>
+                </GridView.ItemContainerStyle>
 
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsWrapGrid Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-
-                <ListView.ItemContainerTransitions>
+                <GridView.ItemContainerTransitions>
                     <TransitionCollection />
-                </ListView.ItemContainerTransitions>
+                </GridView.ItemContainerTransitions>
 
-                <ListView.ItemTemplate>
+                <GridView.ItemTemplate>
                     <DataTemplate x:DataType="model:HomeItemModel">
                         <Grid Width="280" Height="75">
                             <Grid HorizontalAlignment="Stretch">
@@ -314,8 +307,8 @@
                             </Grid>
                         </Grid>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </GridView.ItemTemplate>
+            </GridView>
         </StackPanel>
     </ScrollViewer>
 </Page>
