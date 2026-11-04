@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:converter="using:GetStoreAppInstaller.Helpers.Converters"
     xmlns:customcontrol="using:GetStoreAppInstaller.Views.CustomControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -2232,32 +2233,33 @@
                                             </Grid>
                                         </Expander.Header>
 
-                                        <ListView
+                                        <GridView
                                             Margin="16,2,10,2"
                                             ItemsSource="{x:Bind CapabilitiesCollection}"
                                             SelectionMode="None">
 
-                                            <ListView.ItemContainerStyle>
-                                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                            <GridView.ItemContainerStyle>
+                                                <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
                                                     <Setter Property="Background" Value="Transparent" />
                                                     <Setter Property="Margin" Value="0" />
                                                     <Setter Property="MinHeight" Value="0" />
                                                     <Setter Property="Padding" Value="0" />
                                                 </Style>
-                                            </ListView.ItemContainerStyle>
+                                            </GridView.ItemContainerStyle>
 
-                                            <ListView.ItemsPanel>
+                                            <GridView.ItemsPanel>
                                                 <ItemsPanelTemplate>
-                                                    <ItemsWrapGrid Orientation="Horizontal" />
+                                                    <controls:LayoutPanel>
+                                                        <controls:LayoutPanel.Layout>
+                                                            <ColumnMajorUniformToLargestGridLayout MaxColumns="9999" />
+                                                        </controls:LayoutPanel.Layout>
+                                                    </controls:LayoutPanel>
                                                 </ItemsPanelTemplate>
-                                            </ListView.ItemsPanel>
+                                            </GridView.ItemsPanel>
 
-                                            <ListView.ItemTemplate>
+                                            <GridView.ItemTemplate>
                                                 <DataTemplate x:DataType="model:CapabilityModel">
-                                                    <Grid
-                                                        Width="220"
-                                                        Height="30"
-                                                        HorizontalAlignment="Left">
+                                                    <Grid Height="30" HorizontalAlignment="Left">
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="Auto" />
                                                             <ColumnDefinition Width="*" />
@@ -2290,8 +2292,8 @@
                                                         </TextBlock>
                                                     </Grid>
                                                 </DataTemplate>
-                                            </ListView.ItemTemplate>
-                                        </ListView>
+                                            </GridView.ItemTemplate>
+                                        </GridView>
                                     </Expander>
 
                                     <!--  应用包应用信息  -->
@@ -2646,31 +2648,32 @@
                                             </Grid>
                                         </Expander.Header>
 
-                                        <ListView
+                                        <GridView
                                             Margin="16,2,10,2"
                                             ItemsSource="{x:Bind LanguageCollection}"
                                             SelectionMode="None">
 
-                                            <ListView.ItemContainerStyle>
-                                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                            <GridView.ItemContainerStyle>
+                                                <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
                                                     <Setter Property="Margin" Value="0,0,2,0" />
                                                     <Setter Property="MinHeight" Value="0" />
                                                     <Setter Property="Padding" Value="0,0,0,0" />
                                                 </Style>
-                                            </ListView.ItemContainerStyle>
+                                            </GridView.ItemContainerStyle>
 
-                                            <ListView.ItemsPanel>
+                                            <GridView.ItemsPanel>
                                                 <ItemsPanelTemplate>
-                                                    <ItemsWrapGrid Orientation="Horizontal" />
+                                                    <controls:LayoutPanel>
+                                                        <controls:LayoutPanel.Layout>
+                                                            <ColumnMajorUniformToLargestGridLayout MaxColumns="9999" />
+                                                        </controls:LayoutPanel.Layout>
+                                                    </controls:LayoutPanel>
                                                 </ItemsPanelTemplate>
-                                            </ListView.ItemsPanel>
+                                            </GridView.ItemsPanel>
 
-                                            <ListView.ItemTemplate>
+                                            <GridView.ItemTemplate>
                                                 <DataTemplate x:DataType="globalization:CultureInfo">
-                                                    <Grid
-                                                        Width="220"
-                                                        Height="30"
-                                                        HorizontalAlignment="Left">
+                                                    <Grid Height="30" HorizontalAlignment="Left">
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="Auto" />
                                                             <ColumnDefinition Width="*" />
@@ -2704,8 +2707,8 @@
                                                         </TextBlock>
                                                     </Grid>
                                                 </DataTemplate>
-                                            </ListView.ItemTemplate>
-                                        </ListView>
+                                            </GridView.ItemTemplate>
+                                        </GridView>
                                     </Expander>
                                 </StackPanel>
                             </Border>
