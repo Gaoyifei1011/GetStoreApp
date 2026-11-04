@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.Views.Pages.WinGetAppsVersionInfoPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:datatemplate="using:GetStoreApp.Views.DataTemplates"
@@ -276,40 +277,39 @@
                             Margin="2,10"
                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(TagCollection.Count), Mode=OneWay}" />
 
-                        <!--  TODO：未来迁移到 TableView  -->
-                        <ListView
+                        <GridView
                             Grid.Row="5"
                             ItemsSource="{x:Bind TagCollection}"
                             SelectionMode="None"
+                            Style="{StaticResource HeaderGridViewAdaptiveColumnsStyle}"
                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(TagCollection.Count), Mode=OneWay}">
 
-                            <ListView.ItemContainerStyle>
-                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                            <GridView.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
                                     <Setter Property="Background" Value="Transparent" />
                                     <Setter Property="Margin" Value="0" />
                                     <Setter Property="MinHeight" Value="0" />
                                     <Setter Property="Padding" Value="0" />
                                 </Style>
-                            </ListView.ItemContainerStyle>
+                            </GridView.ItemContainerStyle>
 
-                            <ListView.ItemsPanel>
+                            <GridView.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <ItemsWrapGrid Orientation="Horizontal" />
+                                    <controls:WrapPanel Orientation="Horizontal" />
                                 </ItemsPanelTemplate>
-                            </ListView.ItemsPanel>
+                            </GridView.ItemsPanel>
 
-                            <ListView.ItemContainerTransitions>
+                            <GridView.ItemContainerTransitions>
                                 <TransitionCollection />
-                            </ListView.ItemContainerTransitions>
+                            </GridView.ItemContainerTransitions>
 
-                            <ListView.Header>
-                                <TextBlock Margin="0,0,0,5" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Tag')}" />
-                            </ListView.Header>
+                            <GridView.Header>
+                                <TextBlock Margin="0,0,0,8" Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGetAppsVersionInfo/Tag')}" />
+                            </GridView.Header>
 
-                            <ListView.ItemTemplate>
+                            <GridView.ItemTemplate>
                                 <DataTemplate x:DataType="x:String">
                                     <Grid
-                                        Width="110"
                                         Margin="0,0,8,8"
                                         BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
                                         BorderThickness="1"
@@ -322,19 +322,17 @@
                                             Text="{x:Bind}"
                                             TextAlignment="Center"
                                             TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap"
-                                            ToolTipService.ToolTip="{x:Bind}" />
+                                            TextWrapping="NoWrap" />
                                     </Grid>
                                 </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                            </GridView.ItemTemplate>
+                        </GridView>
 
                         <MenuFlyoutSeparator
                             Grid.Row="6"
                             Margin="2,10"
                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DocumentationCollection.Count), Mode=OneWay}" />
 
-                        <!--  TODO：未来迁移到 TableView  -->
                         <ListView
                             Grid.Row="7"
                             ItemsSource="{x:Bind DocumentationCollection}"
@@ -350,12 +348,6 @@
                                 </Style>
                             </ListView.ItemContainerStyle>
 
-                            <ListView.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <ItemsWrapGrid Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ListView.ItemsPanel>
-
                             <ListView.ItemContainerTransitions>
                                 <TransitionCollection />
                             </ListView.ItemContainerTransitions>
@@ -369,7 +361,7 @@
                                     <TextBlock
                                         Margin="0,0,10,0"
                                         Padding="0,8"
-                                        HorizontalAlignment="Center"
+                                        HorizontalAlignment="Left"
                                         TextTrimming="CharacterEllipsis"
                                         TextWrapping="NoWrap">
 

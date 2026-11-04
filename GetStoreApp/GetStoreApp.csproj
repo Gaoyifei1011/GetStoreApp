@@ -350,6 +350,7 @@
     <None Remove="Styles\ComboBox.xaml" />
     <None Remove="Styles\CommandBar.xaml" />
     <None Remove="Styles\ContentDialog.xaml" />
+    <None Remove="Styles\GridView.xaml" />
     <None Remove="Styles\ListView.xaml" />
     <None Remove="Styles\NavigationView.xaml" />
     <None Remove="Styles\RadioButtons.xaml" />
@@ -422,6 +423,7 @@
     <Page Update="Styles\ComboBox.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\CommandBar.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\ContentDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\GridView.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\ListView.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\NavigationView.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\RadioButtons.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
