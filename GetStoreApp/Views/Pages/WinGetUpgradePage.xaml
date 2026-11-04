@@ -164,7 +164,7 @@
         </CommandBar>
 
         <Grid Grid.Row="1">
-            <!--  可更新应用状态显示栏  -->
+            <!--  可更新应用状态显示  -->
             <Grid
                 Margin="30,0,30,60"
                 HorizontalAlignment="Center"

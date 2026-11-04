@@ -287,7 +287,7 @@
         </CommandBar>
 
         <Grid Grid.Row="1">
-            <!--  已安装应用状态显示栏  -->
+            <!--  已安装应用状态显示  -->
             <Grid
                 Margin="30,0,30,60"
                 HorizontalAlignment="Center"
