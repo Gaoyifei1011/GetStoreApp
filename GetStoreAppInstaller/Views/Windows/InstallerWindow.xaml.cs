@@ -27,7 +27,6 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.Windows.ApplicationModel.DynamicDependency;
 using Microsoft.Windows.ApplicationModel.Resources;
-using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications.Builder;
 using Microsoft.Windows.Management.Deployment;
 using Microsoft.Windows.Storage.Pickers;
@@ -42,10 +41,8 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.ApplicationModel.DataTransfer.ShareTarget;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
@@ -1158,7 +1155,7 @@ namespace GetStoreAppInstaller.Views.Windows
         /// <summary>
         /// 主页面初始化完成后触发的事件
         /// </summary>
-        [DynamicWindowsRuntimeCast(typeof(FileActivatedEventArgs)), DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(ShareTargetActivatedEventArgs))]
+        [DynamicWindowsRuntimeCast(typeof(FrameworkElement))]
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
             // 设置标题栏主题
@@ -1166,47 +1163,7 @@ namespace GetStoreAppInstaller.Views.Windows
             AppWindow.Resize(new(Convert.ToInt32(800 * contentIsland.RasterizationScale), Convert.ToInt32(560 * contentIsland.RasterizationScale)));
             IsParseEmpty = true;
             CanDragFile = true;
-            fileName = string.Empty;
-
-            // 正常启动
-            if (Program.AppActivationArguments.Kind is ExtendedActivationKind.Launch)
-            {
-                string[] argumentsArray = Environment.GetCommandLineArgs();
-                string executableFileName = Path.GetFileName(Environment.ProcessPath);
-
-                if (argumentsArray.Length > 0 && string.Equals(Path.GetExtension(argumentsArray[0]), ".dll", StringComparison.OrdinalIgnoreCase))
-                {
-                    argumentsArray[0] = argumentsArray[0].Replace(".dll", ".exe");
-                }
-
-                if (argumentsArray.Length >= 2 && argumentsArray[0].Contains(executableFileName))
-                {
-                    fileName = argumentsArray[1];
-                }
-            }
-            // 从文件处启动
-            else if (Program.AppActivationArguments.Kind is ExtendedActivationKind.File)
-            {
-                FileActivatedEventArgs fileActivatedEventArgs = Program.AppActivationArguments.Data as FileActivatedEventArgs;
-
-                // 只解析读取到的第一个文件
-                if (fileActivatedEventArgs.Files.Count > 0)
-                {
-                    fileName = fileActivatedEventArgs.Files[0].Path;
-                }
-            }
-            // 从共享目标处启动
-            else if (Program.AppActivationArguments.Kind is ExtendedActivationKind.ShareTarget)
-            {
-                ShareTargetActivatedEventArgs shareTargetActivatedEventArgs = Program.AppActivationArguments.Data as ShareTargetActivatedEventArgs;
-                ShareOperation shareOperation = shareTargetActivatedEventArgs.ShareOperation;
-                shareOperation.ReportCompleted();
-
-                if (shareOperation.Data.Contains(StandardDataFormats.StorageItems) && await shareOperation.Data.GetStorageItemsAsync() is IReadOnlyList<IStorageItem> sharedFilesList && sharedFilesList.Count > 0)
-                {
-                    fileName = sharedFilesList[0].Path;
-                }
-            }
+            fileName = Program.FileName;
 
             if (!string.IsNullOrEmpty(fileName))
             {

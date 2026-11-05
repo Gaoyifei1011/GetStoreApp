@@ -1,14 +1,19 @@
 ﻿using GetStoreAppInstaller.Helpers.Root;
 using GetStoreAppInstaller.Services.Root;
 using GetStoreAppInstaller.Services.Settings;
-using GetStoreAppInstaller.Views.Windows;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
+using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
+using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.ApplicationModel.DataTransfer.ShareTarget;
 using Windows.Foundation.Diagnostics;
+using Windows.Storage;
 using WinRT;
 
 // 抑制 CA1806 警告
@@ -21,11 +26,11 @@ namespace GetStoreAppInstaller
     /// </summary>
     internal class Program
     {
-        internal static AppActivationArguments AppActivationArguments { get; private set; }
+        internal static string FileName { get; private set; }
 
         internal static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
 
-        [STAThread]
+        [STAThread, DynamicWindowsRuntimeCast(typeof(FileActivatedEventArgs)), DynamicWindowsRuntimeCast(typeof(FrameworkElement)), DynamicWindowsRuntimeCast(typeof(ShareTargetActivatedEventArgs))]
         internal static void Main()
         {
             ComWrappersSupport.InitializeComWrappers();
@@ -38,21 +43,50 @@ namespace GetStoreAppInstaller
 
             // 初始化应用启动参数
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-            AppActivationArguments = AppInstance.GetCurrent().GetActivatedEventArgs();
+            AppActivationArguments appActivationArguments = AppInstance.GetCurrent().GetActivatedEventArgs();
 
-            if (AppActivationArguments.Kind is ExtendedActivationKind.Launch)
+            if (appActivationArguments.Kind is ExtendedActivationKind.Launch)
             {
                 if (RuntimeHelper.IsElevated)
                 {
                     string[] argumentsArray = Environment.GetCommandLineArgs();
+                    string executableFileName = Path.GetFileName(Environment.ProcessPath);
 
                     if (argumentsArray.Length > 0 && string.Equals(Path.GetExtension(argumentsArray[0]), ".dll", StringComparison.OrdinalIgnoreCase))
                     {
                         argumentsArray[0] = argumentsArray[0].Replace(".dll", ".exe");
                     }
+
+                    if (argumentsArray.Length >= 2 && argumentsArray[0].Contains(executableFileName))
+                    {
+                        FileName = argumentsArray[1];
+                    }
                 }
             }
-            else if (AppActivationArguments.Kind is ExtendedActivationKind.ToastNotification)
+            // 从文件处启动
+            else if (appActivationArguments.Kind is ExtendedActivationKind.File)
+            {
+                FileActivatedEventArgs fileActivatedEventArgs = appActivationArguments.Data as FileActivatedEventArgs;
+
+                // 只解析读取到的第一个文件
+                if (fileActivatedEventArgs.Files.Count > 0)
+                {
+                    FileName = fileActivatedEventArgs.Files[0].Path;
+                }
+            }
+            // 从共享目标处启动
+            else if (appActivationArguments.Kind is ExtendedActivationKind.ShareTarget)
+            {
+                ShareTargetActivatedEventArgs shareTargetActivatedEventArgs = appActivationArguments.Data as ShareTargetActivatedEventArgs;
+                ShareOperation shareOperation = shareTargetActivatedEventArgs.ShareOperation;
+                shareOperation.ReportCompleted();
+
+                if (shareOperation.Data.Contains(StandardDataFormats.StorageItems) && shareOperation.Data.GetStorageItemsAsync().GetResults() is IReadOnlyList<IStorageItem> sharedFilesList && sharedFilesList.Count > 0)
+                {
+                    FileName = sharedFilesList[0].Path;
+                }
+            }
+            else if (appActivationArguments.Kind is ExtendedActivationKind.ToastNotification)
             {
                 return;
             }
