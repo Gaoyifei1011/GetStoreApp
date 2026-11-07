@@ -403,33 +403,29 @@
 
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="text:ContentLinkInfo">
-                            <StackPanel
-                                Padding="0,0"
-                                HorizontalAlignment="Left"
-                                Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="0,8,20,8"
-                                    HorizontalAlignment="Center"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                            <TextBlock
+                                MaxWidth="320"
+                                Margin="0,8,20,8"
+                                HorizontalAlignment="Center"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
 
-                                    <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
-                                        <Run Text="{x:Bind DisplayText}" />
-                                    </Hyperlink>
+                                <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
+                                    <Run Text="{x:Bind DisplayText}" />
+                                </Hyperlink>
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip>
-                                            <StackPanel>
-                                                <TextBlock>
-                                                    <Run Text="{x:Bind DisplayText}" />
-                                                    <LineBreak />
-                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ReferenceToolTip')}" />
-                                                </TextBlock>
-                                            </StackPanel>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
-                            </StackPanel>
+                                <ToolTipService.ToolTip>
+                                    <ToolTip>
+                                        <StackPanel>
+                                            <TextBlock>
+                                                <Run Text="{x:Bind DisplayText}" />
+                                                <LineBreak />
+                                                <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ReferenceToolTip')}" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>
@@ -494,30 +490,29 @@
 
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="text:ContentLinkInfo">
-                                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                                    <TextBlock
-                                        Margin="0,8,20,8"
-                                        HorizontalAlignment="Left"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
+                                <TextBlock
+                                    MaxWidth="150"
+                                    Margin="0,8,20,8"
+                                    HorizontalAlignment="Left"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
 
-                                        <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
-                                            <Run Text="{x:Bind DisplayText}" />
-                                        </Hyperlink>
+                                    <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind DisplayText}" />
+                                    </Hyperlink>
 
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip>
-                                                <StackPanel>
-                                                    <TextBlock>
-                                                        <Run Text="{x:Bind DisplayText}" />
-                                                        <LineBreak />
-                                                        <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ThanksToolTip')}" />
-                                                    </TextBlock>
-                                                </StackPanel>
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-                                </StackPanel>
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip>
+                                            <StackPanel>
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind DisplayText}" />
+                                                    <LineBreak />
+                                                    <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsAbout/ThanksToolTip')}" />
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>

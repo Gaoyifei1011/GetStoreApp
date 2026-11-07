@@ -2235,6 +2235,7 @@
 
                                         <GridView
                                             Margin="16,2,10,2"
+                                            Padding="0"
                                             ItemsSource="{x:Bind CapabilitiesCollection}"
                                             SelectionMode="None">
 
@@ -2261,6 +2262,7 @@
                                                 <DataTemplate x:DataType="model:CapabilityModel">
                                                     <Grid
                                                         Height="30"
+                                                        MaxWidth="220"
                                                         Margin="0,0,12,0"
                                                         HorizontalAlignment="Left">
 
@@ -2654,6 +2656,7 @@
 
                                         <GridView
                                             Margin="16,2,10,2"
+                                            Padding="0"
                                             ItemsSource="{x:Bind LanguageCollection}"
                                             SelectionMode="None">
 
@@ -2679,6 +2682,7 @@
                                                 <DataTemplate x:DataType="globalization:CultureInfo">
                                                     <Grid
                                                         Height="30"
+                                                        MaxWidth="220"
                                                         Margin="0,0,12,0"
                                                         HorizontalAlignment="Left">
 

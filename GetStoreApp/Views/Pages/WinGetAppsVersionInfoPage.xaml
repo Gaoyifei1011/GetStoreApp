@@ -279,6 +279,7 @@
 
                         <GridView
                             Grid.Row="5"
+                            Padding="0"
                             ItemsSource="{x:Bind TagCollection}"
                             SelectionMode="None"
                             Style="{StaticResource HeaderGridViewAdaptiveColumnsStyle}"

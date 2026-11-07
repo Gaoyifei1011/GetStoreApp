@@ -66,7 +66,6 @@
 
                         <TextBlock FontSize="36" FontWeight="SemiBold">
                             <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('Home/GetStoreApp')}" />
-                            <Run Text="" />
                         </TextBlock>
 
                         <Rectangle
@@ -87,6 +86,7 @@
             <!--  选择栏  -->
             <GridView
                 Margin="0,10,0,0"
+                Padding="0"
                 IsItemClickEnabled="True"
                 ItemClick="{x:Bind OnItemClicked}"
                 ItemsSource="{x:Bind HomeCollectionViewSource.View, Mode=OneWay}"
