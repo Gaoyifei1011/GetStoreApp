@@ -229,6 +229,7 @@ namespace Microsoft.UI.Xaml.Controls
             return this == other;
         }
 
+        [DynamicWindowsRuntimeCast(typeof(WrapPanel))]
         public override bool Equals(object obj)
         {
             if (obj is WrapPanel wrapPanel)

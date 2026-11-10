@@ -261,8 +261,8 @@
                                                     IsTextSelectionEnabled="True"
                                                     TextWrapping="Wrap">
 
-                                                    <Hyperlink NavigateUri="{x:Bind UriContent, Mode=OneWay}" UnderlineStyle="None">
-                                                        <Run Text="{x:Bind UriContent, Mode=OneWay}" />
+                                                    <Hyperlink NavigateUri="{x:Bind UriContent}" UnderlineStyle="None">
+                                                        <Run Text="{x:Bind UriContent}" />
                                                     </Hyperlink>
                                                 </TextBlock>
                                             </Grid>

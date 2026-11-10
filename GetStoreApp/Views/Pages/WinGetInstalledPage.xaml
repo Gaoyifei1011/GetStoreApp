@@ -62,10 +62,7 @@
                     </AppBarButton.Icon>
 
                     <AppBarButton.Flyout>
-                        <Flyout
-                            x:Name="WinGetInstalledFlyout"
-                            Placement="Bottom"
-                            ShouldConstrainToRootBounds="False">
+                        <Flyout x:Name="WinGetInstalledFlyout" Placement="Bottom">
 
                             <Flyout.FlyoutPresenterStyle>
                                 <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
