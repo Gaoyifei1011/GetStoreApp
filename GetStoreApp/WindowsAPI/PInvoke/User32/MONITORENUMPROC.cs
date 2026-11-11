@@ -19,5 +19,5 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
     /// <param name="dwData">EnumDisplayMonitors 直接传递给枚举函数的应用程序定义数据。 此参数通常命名为 dwData。</param>
     /// <returns>若要继续枚举，请返回 TRUE。若要停止枚举，请返回 FALSE。</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    internal delegate nint MONITORENUMPROC(nint hmonitor, nint hdc, nint rect, nint data);
+    internal delegate int MONITORENUMPROC(nint hmonitor, nint hdc, nint rect, nint data);
 }

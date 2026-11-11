@@ -167,7 +167,7 @@ namespace GetStoreApp.Services.Root
         {
             List<RECT> monitorList = [];
 
-            nint MonitorEnumProc(nint hMonitor, nint hdc, nint lprcMonitor, nint dwData)
+            int MonitorEnumProc(nint hMonitor, nint hdc, nint lprcMonitor, nint dwData)
             {
                 monitorList.Add((*(RECT*)lprcMonitor));
                 return 1;
