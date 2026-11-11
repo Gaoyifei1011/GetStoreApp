@@ -7,8 +7,8 @@ using Windows.Foundation.Metadata;
 using WinRT;
 using WinRT.Interop;
 
-// 抑制 IDE0130 警告
-#pragma warning disable IDE0130
+// 抑制 IDE1006，IDE0130 警告
+#pragma warning disable IDE1006,IDE0130
 
 namespace Microsoft.UI.Xaml.Controls
 {

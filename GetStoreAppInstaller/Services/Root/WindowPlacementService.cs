@@ -154,10 +154,10 @@ namespace GetStoreAppInstaller.Services.Root
         {
             List<RECT> monitorList = [];
 
-            bool MonitorEnumProc(nint hMonitor, nint hdc, nint lprcMonitor, nint dwData)
+            nint MonitorEnumProc(nint hMonitor, nint hdc, nint lprcMonitor, nint dwData)
             {
                 monitorList.Add((*(RECT*)lprcMonitor));
-                return true;
+                return 1;
             }
 
             User32Library.EnumDisplayMonitors(nint.Zero, nint.Zero, MonitorEnumProc, 0);

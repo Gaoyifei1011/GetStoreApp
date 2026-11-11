@@ -27,7 +27,7 @@
     <RootNamespace>GetStoreAppWebView</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <SelfContained>true</SelfContained>
-    <TargetFramework>net10.0-windows10.0.28000.0</TargetFramework>
+    <TargetFramework>net11.0-windows10.0.28000.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <UseWindowsSDKPreview>true</UseWindowsSDKPreview>
