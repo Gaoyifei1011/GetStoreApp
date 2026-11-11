@@ -10,7 +10,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
@@ -57,9 +56,9 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private async void OnCopyLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is string storeAppLink && !string.IsNullOrEmpty(storeAppLink))
+            if (args.Parameter is Uri storeAppLink)
             {
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(storeAppLink);
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(storeAppLink.AbsoluteUri);
                 await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
             }
         }
@@ -69,9 +68,9 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private void OnOpenLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is string appLink && !string.IsNullOrEmpty(appLink))
+            if (args.Parameter is Uri storeAppLink)
             {
-                OpenLink(appLink);
+                OpenLink(storeAppLink);
             }
         }
 
@@ -130,9 +129,9 @@ namespace GetStoreApp.Views.UserControls
         /// <summary>
         /// 打开链接
         /// </summary>
-        private void OpenLink(string appLink)
+        private void OpenLink(Uri appLink)
         {
-            if (string.IsNullOrEmpty(appLink))
+            if (appLink is null)
             {
                 return;
             }
@@ -145,12 +144,12 @@ namespace GetStoreApp.Views.UserControls
                     {
                         await Launcher.LaunchUriAsync(new("getstoreappwebview:"), new() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new()
                             {
-                                {"AppLink", appLink },
+                                {"AppLink", appLink.AbsoluteUri },
                             });
                     }
                     else if (Equals(AppLinkOpenModeService.AppLinkOpenMode, AppLinkOpenModeService.AppLinkOpenModeCollection[1]))
                     {
-                        await Launcher.LaunchUriAsync(new(appLink));
+                        await Launcher.LaunchUriAsync(appLink);
                     }
                 }
                 catch (Exception e)

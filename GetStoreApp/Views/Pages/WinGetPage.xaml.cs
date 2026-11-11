@@ -443,8 +443,8 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     packageOperation.PackageDownloadProgressState = packageDownloadProgress.State;
                                     packageOperation.PackageOperationProgress = Math.Round(packageDownloadProgress.DownloadProgress * 100, 2);
-                                    packageOperation.DownloadedFileSize = Convert.ToString(VolumeSizeHelper.ConvertVolumeSizeToString(packageDownloadProgress.BytesDownloaded));
-                                    packageOperation.TotalFileSize = Convert.ToString(VolumeSizeHelper.ConvertVolumeSizeToString(packageDownloadProgress.BytesRequired));
+                                    packageOperation.DownloadedFileSize = packageDownloadProgress.BytesDownloaded;
+                                    packageOperation.TotalFileSize = packageDownloadProgress.BytesRequired;
                                 }
                                 catch (Exception e)
                                 {
@@ -501,8 +501,8 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     packageOperation.PackageInstallProgressState = installProgress.State;
                                     packageOperation.PackageOperationProgress = Math.Round(installProgress.DownloadProgress * 100, 2);
-                                    packageOperation.DownloadedFileSize = Convert.ToString(VolumeSizeHelper.ConvertVolumeSizeToString(installProgress.BytesDownloaded));
-                                    packageOperation.TotalFileSize = Convert.ToString(VolumeSizeHelper.ConvertVolumeSizeToString(installProgress.BytesRequired));
+                                    packageOperation.DownloadedFileSize = installProgress.BytesDownloaded;
+                                    packageOperation.TotalFileSize = installProgress.BytesRequired;
                                 }
                                 catch (Exception e)
                                 {

@@ -410,8 +410,7 @@ namespace GetStoreApp.Views.Dialogs
                             PackageVolumePath = packageVolume.PackageStorePath,
                             PackageVolumeUsedPercentage = usedPercentage,
                             WinRTPackageVolume = packageVolume,
-                            IsAvailableSpaceWarning = usedPercentage > 90,
-                            IsAvailableSpaceError = usedPercentage > 95,
+                            AvailableSpaceKind = usedPercentage > 95 ? AvailableSpaceKind.Error : usedPercentage > 90 ? AvailableSpaceKind.Warning : AvailableSpaceKind.Normal
                         });
                     }
                 }

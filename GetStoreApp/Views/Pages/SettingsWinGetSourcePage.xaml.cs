@@ -422,7 +422,6 @@ namespace GetStoreApp.Views.Pages
                         AuthenticationAccount = string.IsNullOrEmpty(packageCatalogInformation.AuthenticationAccount) ? NoneString : packageCatalogInformation.AuthenticationAccount,
                         PackageCatalogBackgroundUpdateInterval = Convert.ToString(packageCatalogInformation.PackageCatalogBackgroundUpdateInterval),
                         IsInternal = true,
-                        PredefinedPackageCatalog = predefinedPackageCatalog
                     };
 
                     winGetSourceInternalList.Add(winGetSource);

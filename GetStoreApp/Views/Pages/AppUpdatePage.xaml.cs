@@ -652,8 +652,7 @@ namespace GetStoreApp.Views.Pages
                                                      appInstallStatus.InstallState is AppInstallState.RestoringData ||
                                                      appInstallStatus.InstallState is AppInstallState.Installing,
                                         PackageFamilyName = string.IsNullOrEmpty(packageItem.Id.FamilyName) ? NotAvailableString : packageItem.Id.FamilyName,
-                                        PercentComplete = appInstallStatus.PercentComplete,
-                                        ProductId = upgradableAppItem.ProductId
+                                        PercentComplete = appInstallStatus.PercentComplete
                                     });
                                     break;
                                 }

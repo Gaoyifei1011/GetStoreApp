@@ -109,7 +109,7 @@ namespace GetStoreApp.Views.Dialogs
                 {
                     foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
                     {
-                        if (Equals(traceCleanupItem.InternalName, cleanKind))
+                        if (Equals(traceCleanupItem.CleanKind, cleanKind))
                         {
                             traceCleanupItem.IsCleanFailed = !cleanResult;
                             break;
@@ -135,28 +135,28 @@ namespace GetStoreApp.Views.Dialogs
             {
                 IsCleanFailed = false,
                 DisplayName = HistoryRecordString,
-                InternalName = CleanKind.History,
+                CleanKind = CleanKind.History,
                 CleanFailedText = HistoryCleanErrorString
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
                 IsCleanFailed = false,
                 DisplayName = ActionCenterString,
-                InternalName = CleanKind.ActionCenter,
+                CleanKind = CleanKind.ActionCenter,
                 CleanFailedText = ActionCenterErrorString
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
                 IsCleanFailed = false,
                 DisplayName = DownloadRecordString,
-                InternalName = CleanKind.Download,
+                CleanKind = CleanKind.Download,
                 CleanFailedText = DownloadCleanErrorString
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
                 IsCleanFailed = false,
                 DisplayName = LocalFileString,
-                InternalName = CleanKind.LocalFile,
+                CleanKind = CleanKind.LocalFile,
                 CleanFailedText = LocalFileCleanErrorString
             });
         }
@@ -201,7 +201,7 @@ namespace GetStoreApp.Views.Dialogs
 
                 foreach (TraceCleanupModel traceCleanupItem in selectedItemsCollection)
                 {
-                    selectedCleanList.Add(traceCleanupItem.InternalName);
+                    selectedCleanList.Add(traceCleanupItem.CleanKind);
                 }
 
                 foreach (CleanKind cleanArgs in selectedCleanList)

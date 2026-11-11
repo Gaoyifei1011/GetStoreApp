@@ -1,4 +1,5 @@
-﻿using Microsoft.Windows.Management.Deployment;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using Microsoft.Windows.Management.Deployment;
 using System.ComponentModel;
 
 namespace GetStoreApp.Models
@@ -66,14 +67,11 @@ namespace GetStoreApp.Models
         internal Windows.Management.Deployment.PackageVolume WinRTPackageVolume { get; set; }
 
         /// <summary>
-        /// 存储卷可用空间警告（可用空间在 5% - 10%）
+        /// 可用空间类型
+        /// 警告（可用空间在 5% - 10%）
+        /// 不可用（可用空间在 0% - 5%）
         /// </summary>
-        internal bool IsAvailableSpaceWarning { get; set; }
-
-        /// <summary>
-        /// 存储空间是否不可用（可用空间在 0% - 5%）
-        /// </summary>
-        internal bool IsAvailableSpaceError { get; set; }
+        internal AvailableSpaceKind AvailableSpaceKind { get; set; }
 
         /// <summary>
         /// 是否为默认卷（字符串）

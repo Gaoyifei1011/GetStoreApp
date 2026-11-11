@@ -163,7 +163,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is CompletedModel completed)
             {
-                if (completed.IsInstalling)
+                if (completed.InstallStateResultKind is InstallStateResultKind.Installing)
                 {
                     await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.InstallingNotify));
                 }
@@ -216,9 +216,9 @@ namespace GetStoreApp.Views.Pages
                     try
                     {
                         // 标记安装状态
-                        completed.IsInstalling = true;
+                        completed.InstallStateResultKind = InstallStateResultKind.Installing;
                         completed.InstallProgressValue = 0;
-                        completed.InstallStateString = PrepareInstallString;
+                        completed.InstallStateInformation = PrepareInstallString;
                         (bool result, PackageDeploymentResult packageDeploymentResult, Exception exception)? installResult = await InstallAppAsync(installAppsKind, completed);
 
                         if (installResult.HasValue && installResult.Value.result && installResult.Value.packageDeploymentResult is not null)
@@ -227,34 +227,30 @@ namespace GetStoreApp.Views.Pages
                             if (installResult.Value.packageDeploymentResult.Status is PackageDeploymentStatus.CompletedSuccess)
                             {
                                 completed.InstallProgressValue = 100;
-                                completed.IsInstallWaiting = false;
-                                completed.InstallFailed = false;
-                                completed.InstallStateString = InstallSuccessfullyString;
+                                completed.InstallStateResultKind = InstallStateResultKind.Successfully;
+                                completed.InstallStateInformation = InstallSuccessfullyString;
                                 ShowInstallAppsResultNotification(completed.FileName, installResult.Value.result, installResult.Value.packageDeploymentResult, installResult.Value.exception);
                             }
                             // 安装失败
                             else if (installResult.Value.packageDeploymentResult.Status is PackageDeploymentStatus.CompletedFailure)
                             {
                                 completed.InstallProgressValue = 100;
-                                completed.IsInstallWaiting = false;
-                                completed.InstallFailed = true;
-                                completed.InstallStateString = InstallFailedString;
+                                completed.InstallStateResultKind = InstallStateResultKind.Failed;
+                                completed.InstallStateInformation = InstallFailedString;
                                 ShowInstallAppsResultNotification(completed.FileName, installResult.Value.result, installResult.Value.packageDeploymentResult, installResult.Value.exception);
                             }
                         }
                         else
                         {
                             completed.InstallProgressValue = 100;
-                            completed.IsInstallWaiting = false;
-                            completed.InstallFailed = true;
-                            completed.InstallStateString = InstallFailedString;
+                            completed.InstallStateResultKind = InstallStateResultKind.Failed;
+                            completed.InstallStateInformation = InstallFailedString;
                             ShowInstallAppsResultNotification(completed.FileName, installResult.Value.result, installResult.Value.packageDeploymentResult, installResult.Value.exception);
                         }
 
                         // 恢复原来的安装信息显示（并延缓当前安装信息显示时间0.5秒）
                         await Task.Delay(500);
-                        completed.IsInstalling = false;
-                        completed.InstallFailed = false;
+                        completed.InstallStateResultKind = InstallStateResultKind.None;
                     }
                     catch (Exception e)
                     {
@@ -391,7 +387,7 @@ namespace GetStoreApp.Views.Pages
             bool isInstalling = false;
             foreach (CompletedModel completedItem in selectedCompletedDataCollection)
             {
-                if (completedItem.IsInstalling)
+                if (completedItem.InstallStateResultKind is InstallStateResultKind.Installing)
                 {
                     isInstalling = true;
                     break;
@@ -592,18 +588,14 @@ namespace GetStoreApp.Views.Pages
             {
                 if (progress.Status is PackageDeploymentProgressStatus.Queued)
                 {
-                    completed.IsInstalling = true;
-                    completed.IsInstallWaiting = true;
-                    completed.InstallStateString = WaitInstallString;
-                    completed.InstallProgressValue = Convert.ToInt32(progress.Progress * 100);
-                    completed.InstallStateString = string.Format(InstallProgressString, progress.Progress * 100);
+                    completed.InstallStateResultKind = InstallStateResultKind.Waiting;
+                    completed.InstallStateInformation = WaitInstallString;
                 }
                 else if (progress.Status is PackageDeploymentProgressStatus.InProgress)
                 {
-                    completed.IsInstalling = true;
-                    completed.IsInstallWaiting = false;
+                    completed.InstallStateResultKind = InstallStateResultKind.Installing;
                     completed.InstallProgressValue = Convert.ToInt32(progress.Progress * 100);
-                    completed.InstallStateString = string.Format(InstallProgressString, progress.Progress * 100);
+                    completed.InstallStateInformation = string.Format(InstallProgressString, progress.Progress * 100);
                 }
             });
         }

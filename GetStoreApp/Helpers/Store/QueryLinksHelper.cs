@@ -69,7 +69,7 @@ namespace GetStoreApp.Helpers.Store
                 HttpClient httpClient = new();
                 httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                 httpClient.DefaultRequestHeaders.Referer = cookieUri;
-                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", cookieUri.AbsolutePath);
+                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", cookieUri.GetLeftPart(UriPartial.Authority));
 
                 HttpRequestResult httpRequestResult = await httpClient.TryPostAsync(cookieUri, httpStringContent);
                 httpClient.Dispose();
@@ -135,7 +135,7 @@ namespace GetStoreApp.Helpers.Store
                 HttpClient httpClient = new();
                 httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                 httpClient.DefaultRequestHeaders.Referer = categoryIDAPIUri;
-                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", categoryIDAPIUri.AbsolutePath);
+                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", categoryIDAPIUri.GetLeftPart(UriPartial.Authority));
 
                 HttpRequestResult httpRequestResult = await httpClient.TryGetAsync(categoryIDAPIUri);
                 httpClient.Dispose();
@@ -227,7 +227,7 @@ namespace GetStoreApp.Helpers.Store
                     HttpClient httpClient = new();
                     httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                     httpClient.DefaultRequestHeaders.Referer = fileListXmlUri;
-                    httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", fileListXmlUri.AbsolutePath);
+                    httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", fileListXmlUri.GetLeftPart(UriPartial.Authority));
 
                     HttpRequestResult httpRequestResult = await httpClient.TryPostAsync(fileListXmlUri, httpStringContent);
                     httpClient.Dispose();
@@ -387,7 +387,7 @@ namespace GetStoreApp.Helpers.Store
                     HttpClient httpClient = new();
                     httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                     httpClient.DefaultRequestHeaders.Referer = urlUri;
-                    httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", urlUri.AbsolutePath);
+                    httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", urlUri.GetLeftPart(UriPartial.Authority));
 
                     HttpRequestResult httpRequestResult = await httpClient.TryPostAsync(urlUri, httpStringContent);
                     httpClient.Dispose();
@@ -460,7 +460,7 @@ namespace GetStoreApp.Helpers.Store
                     HttpClient httpClient = new();
                     httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                     httpClient.DefaultRequestHeaders.Referer = urlUri;
-                    httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", urlUri.AbsolutePath);
+                    httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", urlUri.GetLeftPart(UriPartial.Authority));
 
                     HttpRequestResult httpRequestResult = await httpClient.TryGetAsync(urlUri);
                     httpClient.Dispose();
@@ -586,7 +586,7 @@ namespace GetStoreApp.Helpers.Store
                     HttpRequestMessage httpRequestMessage = new(HttpMethod.Head, urlUri);
                     httpRequestMessage.Headers.UserAgent.TryParseAdd(userAgent);
                     httpRequestMessage.Headers.Referer = urlUri;
-                    httpRequestMessage.Headers.TryAppendWithoutValidation("Origin", urlUri.AbsolutePath);
+                    httpRequestMessage.Headers.TryAppendWithoutValidation("Origin", urlUri.GetLeftPart(UriPartial.Authority));
 
                     HttpRequestResult httpRequestResult = await httpClient.TrySendRequestAsync(httpRequestMessage);
                     httpClient.Dispose();

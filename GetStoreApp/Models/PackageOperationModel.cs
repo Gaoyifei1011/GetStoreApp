@@ -66,13 +66,13 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 已下载文件的大小
         /// </summary>
-        internal string DownloadedFileSize
+        internal double DownloadedFileSize
         {
             get;
 
             set
             {
-                if (!string.Equals(field, value))
+                if (!Equals(field, value))
                 {
                     field = value;
                     PropertyChanged?.Invoke(this, new(nameof(DownloadedFileSize)));
@@ -83,7 +83,7 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 总文件大小
         /// </summary>
-        internal string TotalFileSize
+        internal double TotalFileSize
         {
             get;
 
@@ -145,6 +145,9 @@ namespace GetStoreApp.Models
             }
         }
 
+        /// <summary>
+        /// 应用包卸载状态
+        /// </summary>
         internal PackageUninstallProgressState PackageUninstallProgressState
         {
             get;
@@ -159,6 +162,9 @@ namespace GetStoreApp.Models
             }
         }
 
+        /// <summary>
+        /// 应用包修复状态
+        /// </summary>
         internal PackageRepairProgressState PackageRepairProgressState
         {
             get;
@@ -173,6 +179,9 @@ namespace GetStoreApp.Models
             }
         }
 
+        /// <summary>
+        /// 应用包操作失败内容
+        /// </summary>
         internal string PackageOperationFailedContent
         {
             get;

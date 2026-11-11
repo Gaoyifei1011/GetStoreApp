@@ -43,7 +43,7 @@ namespace GetStoreApp.Helpers.Converters
         /// </summary>
         internal static Visibility CheckPackageSignatureKindVisibility(PackageSignatureKind packageSignatureKind, PackageSignatureKind comparedPackageSignatureKind, bool needReverse)
         {
-            return needReverse ? Equals(packageSignatureKind, comparedPackageSignatureKind) ? Visibility.Visible : Visibility.Collapsed : Equals(packageSignatureKind, comparedPackageSignatureKind) ? Visibility.Collapsed : Visibility.Visible;
+            return needReverse ? Equals(packageSignatureKind, comparedPackageSignatureKind) ? Visibility.Collapsed : Visibility.Visible : Equals(packageSignatureKind, comparedPackageSignatureKind) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
@@ -55,19 +55,19 @@ namespace GetStoreApp.Helpers.Converters
         }
 
         /// <summary>
+        /// 检查安装应用任务状态
+        /// </summary>
+        internal static Visibility CheckInstallStateResultKindVisibility(InstallStateResultKind installStateResultKind, InstallStateResultKind comparedInstallStateResultKind)
+        {
+            return Equals(installStateResultKind, comparedInstallStateResultKind) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
         /// 检查文件是否正在下载中
         /// </summary>
         internal static Visibility CheckDownloadingStateVisibility(DownloadProgressState downloadProgressState)
         {
             return downloadProgressState is DownloadProgressState.Queued || downloadProgressState is DownloadProgressState.Downloading ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        /// <summary>
-        /// 检查 WinGet 应用是否是下载状态
-        /// </summary>
-        internal static bool IsPackageDownloading(PackageDownloadProgressState packageDownloadProgressState)
-        {
-            return packageDownloadProgressState is PackageDownloadProgressState.Queued;
         }
 
         /// <summary>

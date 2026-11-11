@@ -1,4 +1,6 @@
-﻿namespace GetStoreApp.Models
+﻿using System;
+
+namespace GetStoreApp.Models
 {
     /// <summary>
     /// 查询链接结果数据模型
@@ -18,6 +20,6 @@
         /// <summary>
         /// 应用链接
         /// </summary>
-        internal string StoreAppLink { get; set; }
+        internal Uri StoreAppLink { get; set; }
     }
 }

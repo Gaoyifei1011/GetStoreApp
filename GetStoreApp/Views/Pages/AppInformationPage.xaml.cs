@@ -162,7 +162,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!string.Equals(field, value))
+                if (!Equals(field, value))
                 {
                     field = value;
                     PropertyChanged?.Invoke(this, new(nameof(InstalledDate)));

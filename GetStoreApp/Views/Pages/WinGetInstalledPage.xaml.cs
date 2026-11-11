@@ -282,8 +282,8 @@ namespace GetStoreApp.Views.Pages
                     PackageOperationProgress = 0,
                     PackageUninstallProgressState = PackageUninstallProgressState.Queued,
                     PackageVersionId = null,
-                    DownloadedFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
-                    TotalFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
+                    DownloadedFileSize = 0,
+                    TotalFileSize = 0,
                     PackageUninstallProgress = null,
                     InstalledApps = installedApps,
                     UninstallOptions = uninstallOptions

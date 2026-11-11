@@ -130,7 +130,7 @@ namespace GetStoreApp.Services.Download
                 HttpClient httpClient = new();
                 httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                 httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
-                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
+                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.GetLeftPart(UriPartial.Authority));
 
                 HttpResponseMessage response = await httpClient.PostAsync(rpcServerLinkUri, httpStringContent);
                 return response.IsSuccessStatusCode;
@@ -186,7 +186,7 @@ namespace GetStoreApp.Services.Download
                         HttpClient httpClient = new();
                         httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                         httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
-                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
+                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.GetLeftPart(UriPartial.Authority));
 
                         HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
@@ -269,7 +269,7 @@ namespace GetStoreApp.Services.Download
                         HttpClient httpClient = new();
                         httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                         httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
-                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
+                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.GetLeftPart(UriPartial.Authority));
 
                         HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
@@ -353,7 +353,7 @@ namespace GetStoreApp.Services.Download
                         HttpClient httpClient = new();
                         httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                         httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
-                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
+                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.GetLeftPart(UriPartial.Authority));
 
                         HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
@@ -424,7 +424,7 @@ namespace GetStoreApp.Services.Download
                         HttpClient httpClient = new();
                         httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                         httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
-                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
+                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.GetLeftPart(UriPartial.Authority));
 
                         HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
@@ -519,7 +519,7 @@ namespace GetStoreApp.Services.Download
                         HttpClient httpClient = new();
                         httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                         httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
-                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
+                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.GetLeftPart(UriPartial.Authority));
 
                         HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
@@ -647,7 +647,7 @@ namespace GetStoreApp.Services.Download
                         HttpClient httpClient = new();
                         httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                         httpClient.DefaultRequestHeaders.Referer = rpcServerLinkUri;
-                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.AbsolutePath);
+                        httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.GetLeftPart(UriPartial.Authority));
 
                         await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
                     }

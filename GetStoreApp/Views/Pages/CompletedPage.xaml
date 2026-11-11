@@ -401,7 +401,7 @@
                                 <StackPanel
                                     Grid.Row="1"
                                     Margin="0,-3,0,0"
-                                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalling), Mode=OneWay}">
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckInstallStateResultKindVisibility(InstallStateResultKind, enum:InstallStateResultKind.None), Mode=OneWay}">
 
                                     <TextBlock
                                         HorizontalAlignment="Left"
@@ -426,10 +426,9 @@
                                 </StackPanel>
 
                                 <Grid
-                                    x:Name="InstallInfoGrid"
                                     Grid.Row="1"
-                                    x:Load="{x:Bind IsInstalling, Mode=OneWay}"
-                                    ColumnSpacing="10">
+                                    ColumnSpacing="10"
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckInstallStateResultKindVisibility(InstallStateResultKind, enum:InstallStateResultKind.Installing), Mode=OneWay}">
 
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -449,8 +448,8 @@
 
                                     <ProgressBar
                                         Grid.Column="1"
-                                        IsIndeterminate="{x:Bind IsInstallWaiting, Mode=OneWay}"
-                                        ShowError="{x:Bind InstallFailed, Mode=OneWay}"
+                                        IsIndeterminate="{x:Bind x:Object.Equals(InstallStateResultKind, enum:InstallStateResultKind.Waiting), Mode=OneWay}"
+                                        ShowError="{x:Bind x:Object.Equals(InstallStateResultKind, enum:InstallStateResultKind.Failed), Mode=OneWay}"
                                         Value="{x:Bind InstallProgressValue, Mode=OneWay}" />
 
                                     <TextBlock
@@ -460,9 +459,8 @@
                                         VerticalAlignment="Center"
                                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                         Style="{StaticResource CaptionTextBlockStyle}"
-                                        Text="{x:Bind InstallStateString, Mode=OneWay}"
-                                        TextAlignment="Left"
-                                        Visibility="{x:Bind IsInstalling, Mode=OneWay}" />
+                                        Text="{x:Bind InstallStateInformation, Mode=OneWay}"
+                                        TextAlignment="Left" />
                                 </Grid>
                             </Grid>
 
@@ -482,7 +480,7 @@
                                         Command="{StaticResource InstallCommand}"
                                         CommandParameter="{x:Bind}"
                                         CornerRadius="{StaticResource ControlCornerRadius}"
-                                        IsEnabled="{x:Bind IsInstalling.Equals(x:False), Mode=OneWay}"
+                                        IsEnabled="{x:Bind converter:ValueConverterHelper.IsAppNotInstalling(InstallStateResultKind), Mode=OneWay}"
                                         ToolTipService.ToolTip="{x:Bind rootservice:ResourceService.GetLocalized('Completed/Install')}">
 
                                         <FontIcon FontSize="14" Glyph="&#xE896;" />

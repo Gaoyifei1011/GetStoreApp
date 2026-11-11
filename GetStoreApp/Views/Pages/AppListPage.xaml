@@ -509,7 +509,7 @@
                                                 Command="{StaticResource OpenStoreCommand}"
                                                 CommandParameter="{x:Bind Package}"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/OpenStore')}"
-                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageSignatureKindVisibility(SignatureKind, applicationmodel:PackageSignatureKind.Store, x:True)}">
+                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageSignatureKindVisibility(SignatureKind, applicationmodel:PackageSignatureKind.Store, x:False)}">
 
                                                 <MenuFlyoutItem.Icon>
                                                     <FontIcon Glyph="&#xE719;" />
@@ -550,7 +550,7 @@
                                                 CommandParameter="{x:Bind}"
                                                 IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/Move')}"
-                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageSignatureKindVisibility(SignatureKind, applicationmodel:PackageSignatureKind.System, x:False)}">
+                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageSignatureKindVisibility(SignatureKind, applicationmodel:PackageSignatureKind.System, x:True)}">
 
                                                 <MenuFlyoutItem.Icon>
                                                     <FontIcon Glyph="&#xE8AB;" />
@@ -584,7 +584,7 @@
                                                 CommandParameter="{x:Bind}"
                                                 IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
                                                 Text="{x:Bind rootservice:ResourceService.GetLocalized('AppList/Uninstall')}"
-                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageSignatureKindVisibility(SignatureKind, applicationmodel:PackageSignatureKind.System, x:False)}">
+                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageSignatureKindVisibility(SignatureKind, applicationmodel:PackageSignatureKind.System, x:True)}">
 
                                                 <MenuFlyoutItem.Icon>
                                                     <FontIcon Glyph="&#xE74D;" />

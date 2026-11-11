@@ -370,7 +370,7 @@ namespace GetStoreApp.Views.Pages
                     HttpClient httpClient = new();
                     httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                     httpClient.DefaultRequestHeaders.Referer = checkUpdateLinkUri;
-                    httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", checkUpdateLinkUri.AbsolutePath);
+                    httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", checkUpdateLinkUri.GetLeftPart(UriPartial.Authority));
 
                     HttpRequestResult httpRequestResult = await httpClient.TryGetAsync(checkUpdateLinkUri);
                     httpClient.Dispose();

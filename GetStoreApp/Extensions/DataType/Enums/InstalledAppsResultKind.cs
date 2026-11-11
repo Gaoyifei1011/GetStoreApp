@@ -1,7 +1,7 @@
 ﻿namespace GetStoreApp.Extensions.DataType.Enums
 {
     /// <summary>
-    /// 安装应用结果类型
+    /// 已安装应用结果类型
     /// </summary>
     internal enum InstalledAppsResultKind
     {

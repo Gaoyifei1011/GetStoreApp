@@ -171,8 +171,8 @@
                                     Margin="0,2,0,2"
                                     Background="{ThemeResource SurfaceStrokeColorDefaultBrush}"
                                     CornerRadius="{StaticResource ControlCornerRadius}"
-                                    ShowError="{x:Bind IsAvailableSpaceError}"
-                                    ShowPaused="{x:Bind IsAvailableSpaceWarning}"
+                                    ShowError="{x:Bind x:Object.Equals(AvailableSpaceKind, enum:AvailableSpaceKind.Error)}"
+                                    ShowPaused="{x:Bind x:Object.Equals(AvailableSpaceKind, enum:AvailableSpaceKind.Warning)}"
                                     Value="{x:Bind PackageVolumeUsedPercentage}" />
 
                                 <TextBlock

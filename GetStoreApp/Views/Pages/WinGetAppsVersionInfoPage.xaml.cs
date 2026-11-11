@@ -664,8 +664,8 @@ namespace GetStoreApp.Views.Pages
                             PackageOperationProgress = 0,
                             PackageDownloadProgressState = PackageDownloadProgressState.Queued,
                             PackageVersionId = packageVersionId,
-                            DownloadedFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
-                            TotalFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
+                            DownloadedFileSize = 0,
+                            TotalFileSize = 0,
                             PackageDownloadProgress = null,
                             SearchApps = searchApps,
                          }]), true);
@@ -683,8 +683,8 @@ namespace GetStoreApp.Views.Pages
                             PackageOperationProgress = 0,
                             PackageInstallProgressState = PackageInstallProgressState.Queued,
                             PackageVersionId = packageVersionId,
-                            DownloadedFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
-                            TotalFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
+                            DownloadedFileSize = 0,
+                            TotalFileSize = 0,
                             PackageInstallProgress = null,
                             SearchApps = searchApps,
                         }]), true);
@@ -703,8 +703,8 @@ namespace GetStoreApp.Views.Pages
                             PackageOperationProgress = 0,
                             PackageRepairProgressState = PackageRepairProgressState.Queued,
                             PackageVersionId = packageVersionId,
-                            DownloadedFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
-                            TotalFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
+                            DownloadedFileSize = 0,
+                            TotalFileSize = 0,
                             PackageRepairProgress = null,
                             SearchApps = searchApps,
                         }]), true);
@@ -722,8 +722,8 @@ namespace GetStoreApp.Views.Pages
                             PackageOperationProgress = 0,
                             PackageInstallProgressState = PackageInstallProgressState.Queued,
                             PackageVersionId = packageVersionId,
-                            DownloadedFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
-                            TotalFileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0),
+                            DownloadedFileSize = 0,
+                            TotalFileSize = 0,
                             PackageInstallProgress = null,
                             UpgradableApps = upgradableApps,
                         }]), true);

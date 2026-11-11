@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using Microsoft.UI.Xaml;
 using System;
 
 namespace GetStoreApp.Helpers.Converters
@@ -14,6 +15,14 @@ namespace GetStoreApp.Helpers.Converters
         internal static double DownloadProgress(double finishedSize, double totalSize)
         {
             return totalSize is 0 ? 0 : Math.Round(finishedSize / totalSize * 100, 2);
+        }
+
+        /// <summary>
+        /// 检查应用是否处于未安装状态
+        /// </summary>
+        internal static bool IsAppNotInstalling(InstallStateResultKind installStateResultKind)
+        {
+            return installStateResultKind is not InstallStateResultKind.Installing;
         }
 
         /// <summary>

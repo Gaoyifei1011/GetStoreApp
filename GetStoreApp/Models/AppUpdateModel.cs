@@ -43,6 +43,9 @@ namespace GetStoreApp.Models
             }
         }
 
+        /// <summary>
+        /// 是否正在操作中
+        /// </summary>
         internal bool IsOperating
         {
             get;
@@ -89,6 +92,9 @@ namespace GetStoreApp.Models
             }
         }
 
+        /// <summary>
+        /// 安装子信息
+        /// </summary>
         internal string InstallSubInformation
         {
             get;
@@ -102,11 +108,6 @@ namespace GetStoreApp.Models
                 }
             }
         }
-
-        /// <summary>
-        /// 应用的产品 ID
-        /// </summary>
-        internal string ProductId { get; set; }
 
         /// <summary>
         /// 当前应用的安装状态

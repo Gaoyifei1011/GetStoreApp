@@ -31,9 +31,9 @@ namespace GetStoreApp.Models
         internal string DisplayName { get; set; }
 
         /// <summary>
-        /// 清理选项内部的名称
+        /// 清理类型
         /// </summary>
-        internal CleanKind InternalName { get; set; }
+        internal CleanKind CleanKind { get; set; }
 
         /// <summary>
         /// 清理失败时详细的错误文字信息

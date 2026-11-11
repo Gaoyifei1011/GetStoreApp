@@ -8,6 +8,7 @@
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models"
+    xmlns:roothelper="using:GetStoreApp.Helpers.Root"
     xmlns:rootservice="using:GetStoreApp.Services.Root"
     xmlns:system="using:System"
     NavigationCacheMode="Enabled"
@@ -439,7 +440,7 @@
                                                         HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
-                                                        Text="{x:Bind DownloadedFileSize, Mode=OneWay}"
+                                                        Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(DownloadedFileSize), Mode=OneWay}"
                                                         TextAlignment="Right"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressStateVisibility(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Downloading, x:False), Mode=OneWay}">
 
@@ -447,7 +448,7 @@
                                                             <ToolTip>
                                                                 <TextBlock>
                                                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadedFileSize')}" />
-                                                                    <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
+                                                                    <Run Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(DownloadedFileSize), Mode=OneWay}" />
                                                                 </TextBlock>
                                                             </ToolTip>
                                                         </ToolTipService.ToolTip>
@@ -467,14 +468,14 @@
                                                         HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
-                                                        Text="{x:Bind TotalFileSize, Mode=OneWay}"
+                                                        Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(TotalFileSize), Mode=OneWay}"
                                                         TextAlignment="Right">
 
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip>
                                                                 <TextBlock>
                                                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/TotalFileSize')}" />
-                                                                    <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
+                                                                    <Run Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(TotalFileSize), Mode=OneWay}" />
                                                                 </TextBlock>
                                                             </ToolTip>
                                                         </ToolTipService.ToolTip>
@@ -527,7 +528,7 @@
                                                     Grid.Column="1"
                                                     Margin="5,0,0,0"
                                                     VerticalAlignment="Center"
-                                                    IsIndeterminate="{x:Bind converter:ValueCheckConverterHelper.IsPackageDownloading(PackageDownloadProgressState), Mode=OneWay}"
+                                                    IsIndeterminate="{x:Bind x:Object.Equals(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Queued), Mode=OneWay}"
                                                     ShowError="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}"
                                                     ShowPaused="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Cancel), Mode=OneWay}"
                                                     Value="{x:Bind PackageOperationProgress, Mode=OneWay}" />
@@ -693,7 +694,7 @@
                                                         HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
-                                                        Text="{x:Bind DownloadedFileSize, Mode=OneWay}"
+                                                        Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(DownloadedFileSize), Mode=OneWay}"
                                                         TextAlignment="Right"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressStateVisibility(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}">
 
@@ -701,7 +702,7 @@
                                                             <ToolTip>
                                                                 <TextBlock>
                                                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadedFileSize')}" />
-                                                                    <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
+                                                                    <Run Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(DownloadedFileSize), Mode=OneWay}" />
                                                                 </TextBlock>
                                                             </ToolTip>
                                                         </ToolTipService.ToolTip>
@@ -722,14 +723,14 @@
                                                         HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
-                                                        Text="{x:Bind TotalFileSize, Mode=OneWay}"
+                                                        Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(TotalFileSize), Mode=OneWay}"
                                                         TextAlignment="Right">
 
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip>
                                                                 <TextBlock>
                                                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/TotalFileSize')}" />
-                                                                    <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
+                                                                    <Run Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(TotalFileSize), Mode=OneWay}" />
                                                                 </TextBlock>
                                                             </ToolTip>
                                                         </ToolTipService.ToolTip>
@@ -1311,7 +1312,7 @@
                                                         HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
-                                                        Text="{x:Bind DownloadedFileSize, Mode=OneWay}"
+                                                        Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(DownloadedFileSize), Mode=OneWay}"
                                                         TextAlignment="Right"
                                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressStateVisibility(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}">
 
@@ -1319,7 +1320,7 @@
                                                             <ToolTip>
                                                                 <TextBlock>
                                                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/DownloadedFileSize')}" />
-                                                                    <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
+                                                                    <Run Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(DownloadedFileSize), Mode=OneWay}" />
                                                                 </TextBlock>
                                                             </ToolTip>
                                                         </ToolTipService.ToolTip>
@@ -1339,14 +1340,14 @@
                                                         HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
-                                                        Text="{x:Bind TotalFileSize, Mode=OneWay}"
+                                                        Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(TotalFileSize), Mode=OneWay}"
                                                         TextAlignment="Right">
 
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip>
                                                                 <TextBlock>
                                                                     <Run Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/TotalFileSize')}" />
-                                                                    <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
+                                                                    <Run Text="{x:Bind roothelper:VolumeSizeHelper.ConvertVolumeSizeToString(TotalFileSize), Mode=OneWay}" />
                                                                 </TextBlock>
                                                             </ToolTip>
                                                         </ToolTipService.ToolTip>

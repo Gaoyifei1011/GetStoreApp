@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Classes;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,8 @@ namespace GetStoreApp.Helpers.Store
         [GeneratedRegex("""<i>(.*?)<\/i>""", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
         private static partial Regex CIDRegex { get; }
 
-        [GeneratedRegex("""<tr\sstyle=\\?"background-color:rgba\(\d{3},\s\d{3},\s\d{3},\s0.8\)\\?">\s{0,}<td>\s{0,}<a\shref=\\?"(.*?)\\?"\srel=\\?"noreferrer\\?">(.*?)<\/a>\s{0,}<\/td>\s{0,}<td\salign=\\?"center\\?">(.*?GMT)<\/td>\s{0,}<td\salign=\\?"center\\?">(.*?)<\/td>\s{0,}<td\salign=\\?"center\\?">(.*?)<\/td>\s{0,}<\/tr>""", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
+        // <tr\sstyle=\\?"background-color:rgba\(\d{3},\s\d{3},\s\d{3},\s0.8\)\\?"><td\sstyle="text-align:\sleft;"><a\shref=\\?"(.*?)\\?"\srel=\\?"noreferrer\\?">(.*?)<\/a>\s{0,}<\/td>\s{0,}<\/td><td\salign=\\?"center\\?">.*?\sGMT<\/td><td\salign=\\?"center\\?">(.*?)<\/td><td\salign=\\?"center">(.*?)<\/td><\/tr>
+        [GeneratedRegex("""<tr\sstyle=\\?"background-color:rgba\(\d{3},\s\d{3},\s\d{3},\s0.8\)\\?"><td\sstyle="text-align:\sleft;"><a\shref=\\?"(.*?)\\?"\srel=\\?"noreferrer\\?">(.*?)<\/a>\s{0,}<\/td>\s{0,}<\/td><td\salign=\\?"center\\?">.*?\sGMT<\/td><td\salign=\\?"center\\?">(.*?)<\/td><td\salign=\\?"center">(.*?)<\/td><\/tr>""", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
         private static partial Regex PackagedAppRegex { get; }
 
         [GeneratedRegex("""<a href="([\s\S]*?)" rel="noreferrer">([\s\S]*?)<\/a><\/td><td align="center">([\s\S]*?)<\/td><\/tr>""", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
@@ -75,15 +77,14 @@ namespace GetStoreApp.Helpers.Store
                 {
                     GroupCollection ResultDataListGroups = matchItem.Groups;
 
-                    if (ResultDataListGroups.Count is 6)
+                    if (ResultDataListGroups.Count is 5)
                     {
                         QueryLinksResultModel queryLinksResult = new()
                         {
                             FileLink = ResultDataListGroups[1].Value,
                             FileName = ResultDataListGroups[2].Value,
-                            FileLinkExpireTime = ResultDataListGroups[3].Value,
-                            FileSHA256 = ResultDataListGroups[4].Value,
-                            FileSize = ResultDataListGroups[5].Value
+                            FileSHA256 = ResultDataListGroups[3].Value,
+                            FileSize = ResultDataListGroups[4].Value
                         };
 
                         queryLinksResultList.Add(queryLinksResult);
@@ -131,9 +132,8 @@ namespace GetStoreApp.Helpers.Store
                         {
                             FileLink = ResultDataListGroups[1].Value,
                             FileName = ResultDataListGroups[2].Value,
-                            FileLinkExpireTime = string.Empty,
                             FileSHA256 = ResultDataListGroups[3].Value,
-                            FileSize = string.Empty
+                            FileSize = VolumeSizeHelper.ConvertVolumeSizeToString(0)
                         };
 
                         queryLinksResultList.Add(queryLinksResult);

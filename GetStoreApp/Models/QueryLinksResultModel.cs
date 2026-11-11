@@ -36,11 +36,6 @@ namespace GetStoreApp.Models
         internal string FileLink { get; set; }
 
         /// <summary>
-        /// 文件下载链接过期时间
-        /// </summary>
-        internal string FileLinkExpireTime { get; set; }
-
-        /// <summary>
         /// 文件SHA256值
         /// </summary>
         internal string FileSHA256 { get; set; }

@@ -133,8 +133,8 @@
                         Margin="0,2,0,2"
                         Background="{ThemeResource SurfaceStrokeColorDefaultBrush}"
                         CornerRadius="{StaticResource ControlCornerRadius}"
-                        ShowError="{x:Bind CurrentPackageVolume.IsAvailableSpaceError, Mode=OneWay}"
-                        ShowPaused="{x:Bind CurrentPackageVolume.IsAvailableSpaceWarning, Mode=OneWay}"
+                        ShowError="{x:Bind x:Object.Equals(CurrentPackageVolume.AvailableSpaceKind, enum:AvailableSpaceKind.Error)}"
+                        ShowPaused="{x:Bind x:Object.Equals(CurrentPackageVolume.AvailableSpaceKind, enum:AvailableSpaceKind.Warning)}"
                         Value="{x:Bind CurrentPackageVolume.PackageVolumeUsedPercentage, Mode=OneWay}" />
 
                     <TextBlock
@@ -252,8 +252,8 @@
                                     Margin="0,2,0,2"
                                     Background="{ThemeResource SurfaceStrokeColorDefaultBrush}"
                                     CornerRadius="{StaticResource ControlCornerRadius}"
-                                    ShowError="{x:Bind IsAvailableSpaceError}"
-                                    ShowPaused="{x:Bind IsAvailableSpaceWarning}"
+                                    ShowError="{x:Bind x:Object.Equals(AvailableSpaceKind, enum:AvailableSpaceKind.Error)}"
+                                    ShowPaused="{x:Bind x:Object.Equals(AvailableSpaceKind, enum:AvailableSpaceKind.Warning)}"
                                     Value="{x:Bind PackageVolumeUsedPercentage}" />
 
                                 <TextBlock

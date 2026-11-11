@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Classes;
-using Microsoft.Management.Deployment;
+using System;
 using System.ComponentModel;
 
 namespace GetStoreApp.Models
@@ -97,11 +97,6 @@ namespace GetStoreApp.Models
         /// 是否是内置源
         /// </summary>
         public bool IsInternal { get; set; }
-
-        /// <summary>
-        /// 预定义的数据源类型
-        /// </summary>
-        public PredefinedPackageCatalog? PredefinedPackageCatalog { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

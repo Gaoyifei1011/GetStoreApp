@@ -357,8 +357,7 @@ namespace GetStoreApp.Views.Pages
                                 MountPoint = packageVolume.MountPoint,
                                 PackageVolumeUsedPercentage = usedPercentage,
                                 PackageVolume = packageVolume,
-                                IsAvailableSpaceWarning = usedPercentage > 90,
-                                IsAvailableSpaceError = usedPercentage > 95,
+                                AvailableSpaceKind = usedPercentage > 95 ? AvailableSpaceKind.Error : usedPercentage > 90 ? AvailableSpaceKind.Warning : AvailableSpaceKind.Normal,
                                 DefaultVolume = isDefaultVolume ? YesString : NoString,
                                 IsDefaultVolume = isDefaultVolume,
                                 IsAppxInstallSupported = packageVolume.IsAppxInstallSupported ? YesString : NoString,
@@ -714,9 +713,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取包存储卷是否加载完成
         /// </summary>
-        private Visibility GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind packageVolumeResultKind, bool isReverse)
+        private Visibility GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind packageVolumeResultKind, bool needReverse)
         {
-            return isReverse ? packageVolumeResultKind is PackageVolumeResultKind.HasResult ? Visibility.Collapsed : Visibility.Visible : packageVolumeResultKind is PackageVolumeResultKind.HasResult ? Visibility.Visible : Visibility.Collapsed;
+            return needReverse ? packageVolumeResultKind is PackageVolumeResultKind.HasResult ? Visibility.Collapsed : Visibility.Visible : packageVolumeResultKind is PackageVolumeResultKind.HasResult ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

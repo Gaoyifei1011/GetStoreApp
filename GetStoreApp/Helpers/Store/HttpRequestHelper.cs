@@ -57,7 +57,7 @@ namespace GetStoreApp.Helpers.Store
                 HttpClient httpClient = new();
                 httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd(userAgent);
                 httpClient.DefaultRequestHeaders.Referer = apiUri;
-                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", apiUri.AbsolutePath);
+                httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", apiUri.GetLeftPart(UriPartial.Authority));
 
                 HttpRequestResult httpRequestResult = await httpClient.TryPostAsync(apiUri, httpStringContent);
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System.ComponentModel;
 
@@ -66,9 +67,9 @@ namespace GetStoreApp.Models
         internal double TotalSize { get; set; }
 
         /// <summary>
-        /// 标志是否处于正在安装状态
+        /// 安装应用结果类型
         /// </summary>
-        internal bool IsInstalling
+        internal InstallStateResultKind InstallStateResultKind
         {
             get;
 
@@ -77,7 +78,7 @@ namespace GetStoreApp.Models
                 if (!Equals(field, value))
                 {
                     field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsInstalling)));
+                    PropertyChanged?.Invoke(this, new(nameof(InstallStateResultKind)));
                 }
             }
         }
@@ -100,23 +101,9 @@ namespace GetStoreApp.Models
         }
 
         /// <summary>
-        /// 安装是否处于等待中
+        /// 应用安装状态信息
         /// </summary>
-        internal bool IsInstallWaiting
-        {
-            get;
-
-            set
-            {
-                if (!Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsInstallWaiting)));
-                }
-            }
-        }
-
-        internal string InstallStateString
+        internal string InstallStateInformation
         {
             get;
 
@@ -125,24 +112,7 @@ namespace GetStoreApp.Models
                 if (!string.Equals(field, value))
                 {
                     field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(InstallStateString)));
-                }
-            }
-        }
-
-        /// <summary>
-        /// 安装是否失败
-        /// </summary>
-        internal bool InstallFailed
-        {
-            get;
-
-            set
-            {
-                if (!Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(InstallFailed)));
+                    PropertyChanged?.Invoke(this, new(nameof(InstallStateInformation)));
                 }
             }
         }
