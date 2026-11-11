@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.WinGet;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
@@ -37,7 +36,6 @@ namespace GetStoreApp.Views.Pages
 
         private readonly string NotAvailableString = ResourceService.GetLocalized("WinGetUpgrade/NotAvailable");
         private readonly string UpgradableAppsCountInfoString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableAppsCountInfo");
-        private readonly string UpgradableAppsEmptyDescriptionString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableAppsEmptyDescription");
         private readonly string UpgradableAppsFailedString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableAppsFailed");
         private readonly string UpgradableCatalogReferenceFailedString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableCatalogReferenceFailed");
         private readonly string UpgradableFindAppsFailedString = ResourceService.GetLocalized("WinGetUpgrade/UpgradableFindAppsFailed");
@@ -296,14 +294,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     if (result && installResult.Status is InstallResultStatus.Ok)
                     {
-                        foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsCollection)
-                        {
-                            if (string.Equals(upgradableApps.AppID, upgradableAppsItem.AppID) && string.Equals(upgradableApps.AppCurrentVersion, upgradableAppsItem.AppCurrentVersion) && Equals(upgradableApps.AppNewestVersion, upgradableApps.AppNewestVersion))
-                            {
-                                UpgradableAppsCollection.Remove(upgradableApps);
-                                break;
-                            }
-                        }
+                        UpgradableAppsCollection.Remove(upgradableApps);
 
                         if (UpgradableAppsCollection.Count is 0)
                         {
@@ -318,14 +309,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     else
                     {
-                        foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsCollection)
-                        {
-                            if (string.Equals(upgradableApps.AppID, upgradableAppsItem.AppID) && string.Equals(upgradableApps.AppCurrentVersion, upgradableAppsItem.AppCurrentVersion) && Equals(upgradableApps.AppNewestVersion, upgradableApps.AppNewestVersion))
-                            {
-                                upgradableAppsItem.IsUpgrading = false;
-                                break;
-                            }
-                        }
+                        upgradableApps.IsUpgrading = false;
                     }
                 }
                 catch (Exception e)

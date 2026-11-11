@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.WinGet;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;

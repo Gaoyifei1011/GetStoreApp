@@ -445,15 +445,8 @@ namespace GetStoreApp.Views.Pages
                 {
                     if (result && uninstallResult.Status is UninstallResultStatus.Ok)
                     {
-                        foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
-                        {
-                            if (string.Equals(installedApps.AppID, installedAppsItem.AppID) && string.Equals(installedApps.AppVersion, installedAppsItem.AppVersion))
-                            {
-                                InstalledAppsList.Remove(installedAppsItem);
-                                InstalledAppsCollection.Remove(installedAppsItem);
-                                break;
-                            }
-                        }
+                        InstalledAppsList.Remove(installedApps);
+                        InstalledAppsCollection.Remove(installedApps);
 
                         if (InstalledAppsList.Count is 0)
                         {
@@ -467,14 +460,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     else
                     {
-                        foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
-                        {
-                            if (string.Equals(installedApps.AppID, installedAppsItem.AppID) && string.Equals(installedApps.AppVersion, installedAppsItem.AppVersion))
-                            {
-                                installedAppsItem.IsUninstalling = false;
-                                break;
-                            }
-                        }
+                        installedApps.IsUninstalling = false;
                     }
                 }
                 catch (Exception e)
