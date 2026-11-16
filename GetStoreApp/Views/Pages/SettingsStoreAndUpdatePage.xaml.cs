@@ -125,7 +125,7 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                if (!Equals(field, value))
+                if (!DateTimeOffset.Equals(field, value))
                 {
                     field = value;
                     PropertyChanged?.Invoke(this, new(nameof(AppUpdatePauseEndTime)));
