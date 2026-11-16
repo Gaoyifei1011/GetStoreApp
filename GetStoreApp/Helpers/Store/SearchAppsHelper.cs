@@ -118,7 +118,7 @@ namespace GetStoreApp.Helpers.Store
                                     if (string.Equals(searchResultsObject.GetNamedString("$type"), "Microsoft.Marketplace.Storefront.Contracts.V8.One.CardModel, Microsoft.Marketplace.Storefront.Contracts", StringComparison.OrdinalIgnoreCase))
                                     {
                                         string productId = searchResultsObject.GetNamedString("ProductId");
-                                        if (Uri.TryCreate(string.Format(storeLink, productId), new(), out Uri storeAppLink))
+                                        if (Uri.TryCreate(string.Format(storeLink, productId), UriKind.Absolute, out Uri storeAppLink))
                                         {
                                             string title = searchResultsObject.GetNamedString("Title");
                                             string publisherName = searchResultsObject.GetNamedString("PublisherName");

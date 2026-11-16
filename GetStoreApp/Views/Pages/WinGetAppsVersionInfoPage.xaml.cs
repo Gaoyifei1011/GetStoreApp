@@ -409,7 +409,7 @@ namespace GetStoreApp.Views.Pages
                         StringContent = packageVersionInfo.Version
                     });
                 }
-                if (!string.IsNullOrEmpty(catalogPackageMetadata.PackageUrl) && Uri.TryCreate(catalogPackageMetadata.PackageUrl, new(), out Uri packageLinkUri))
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.PackageUrl) && Uri.TryCreate(catalogPackageMetadata.PackageUrl, UriKind.Absolute, out Uri packageLinkUri))
                 {
                     WinGetAppInfoCollection.Add(new()
                     {
@@ -436,7 +436,7 @@ namespace GetStoreApp.Views.Pages
                         StringContent = catalogPackageMetadata.Publisher
                     });
                 }
-                if (!string.IsNullOrEmpty(catalogPackageMetadata.PublisherUrl) && Uri.TryCreate(catalogPackageMetadata.PublisherUrl, new(), out Uri publisherLinkUri))
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.PublisherUrl) && Uri.TryCreate(catalogPackageMetadata.PublisherUrl, UriKind.Absolute, out Uri publisherLinkUri))
                 {
                     WinGetAppInfoCollection.Add(new()
                     {
@@ -445,7 +445,7 @@ namespace GetStoreApp.Views.Pages
                         UriContent = publisherLinkUri
                     });
                 }
-                if (!string.IsNullOrEmpty(catalogPackageMetadata.PublisherSupportUrl) && Uri.TryCreate(catalogPackageMetadata.PublisherSupportUrl, new(), out Uri publisherSupportLinkUri))
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.PublisherSupportUrl) && Uri.TryCreate(catalogPackageMetadata.PublisherSupportUrl, UriKind.Absolute, out Uri publisherSupportLinkUri))
                 {
                     WinGetAppInfoCollection.Add(new()
                     {
@@ -479,7 +479,7 @@ namespace GetStoreApp.Views.Pages
                         StringContent = catalogPackageMetadata.Copyright
                     });
                 }
-                if (!string.IsNullOrEmpty(catalogPackageMetadata.CopyrightUrl) && Uri.TryCreate(catalogPackageMetadata.CopyrightUrl, new(), out Uri copyRightLinkUri))
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.CopyrightUrl) && Uri.TryCreate(catalogPackageMetadata.CopyrightUrl, UriKind.Absolute, out Uri copyRightLinkUri))
                 {
                     WinGetAppInfoCollection.Add(new()
                     {
@@ -497,7 +497,7 @@ namespace GetStoreApp.Views.Pages
                         StringContent = catalogPackageMetadata.License
                     });
                 }
-                if (!string.IsNullOrEmpty(catalogPackageMetadata.LicenseUrl) && Uri.TryCreate(catalogPackageMetadata.LicenseUrl, new(), out Uri licenseLinkUri))
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.LicenseUrl) && Uri.TryCreate(catalogPackageMetadata.LicenseUrl, UriKind.Absolute, out Uri licenseLinkUri))
                 {
                     WinGetAppInfoCollection.Add(new()
                     {
@@ -506,7 +506,7 @@ namespace GetStoreApp.Views.Pages
                         UriContent = licenseLinkUri
                     });
                 }
-                if (!string.IsNullOrEmpty(catalogPackageMetadata.PrivacyUrl) && Uri.TryCreate(catalogPackageMetadata.PrivacyUrl, new(), out Uri privacyLinkUri))
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.PrivacyUrl) && Uri.TryCreate(catalogPackageMetadata.PrivacyUrl, UriKind.Absolute, out Uri privacyLinkUri))
                 {
                     WinGetAppInfoCollection.Add(new()
                     {
@@ -515,7 +515,7 @@ namespace GetStoreApp.Views.Pages
                         UriContent = privacyLinkUri
                     });
                 }
-                if (!string.IsNullOrEmpty(catalogPackageMetadata.PurchaseUrl) && Uri.TryCreate(catalogPackageMetadata.PurchaseUrl, new(), out Uri purchaseLinkUri))
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.PurchaseUrl) && Uri.TryCreate(catalogPackageMetadata.PurchaseUrl, UriKind.Absolute, out Uri purchaseLinkUri))
                 {
                     WinGetAppInfoCollection.Add(new()
                     {
@@ -533,7 +533,7 @@ namespace GetStoreApp.Views.Pages
                         StringContent = catalogPackageMetadata.ReleaseNotes
                     });
                 }
-                if (!string.IsNullOrEmpty(catalogPackageMetadata.ReleaseNotesUrl) && Uri.TryCreate(catalogPackageMetadata.ReleaseNotesUrl, new(), out Uri releaseNotesLinkUri))
+                if (!string.IsNullOrEmpty(catalogPackageMetadata.ReleaseNotesUrl) && Uri.TryCreate(catalogPackageMetadata.ReleaseNotesUrl, UriKind.Absolute, out Uri releaseNotesLinkUri))
                 {
                     WinGetAppInfoCollection.Add(new()
                     {
@@ -553,7 +553,7 @@ namespace GetStoreApp.Views.Pages
                 for (int index = 0; index < catalogPackageMetadata.Documentations.Count; index++)
                 {
                     Documentation documentation = catalogPackageMetadata.Documentations[index];
-                    if (!string.IsNullOrEmpty(documentation.DocumentUrl) && Uri.TryCreate(documentation.DocumentUrl, new(), out Uri documentUrlUri))
+                    if (!string.IsNullOrEmpty(documentation.DocumentUrl) && Uri.TryCreate(documentation.DocumentUrl, UriKind.Absolute, out Uri documentUrlUri))
                     {
                         DocumentationCollection.Add(new() { DisplayText = documentation.DocumentLabel, Uri = documentUrlUri });
                     }
