@@ -40,9 +40,9 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 发送网页请求并获取结果
         /// </summary>
-        internal static async Task<HttpRequetstData> HttpRequestAsync(string content)
+        internal static async Task<HttpRequestData> HttpRequestAsync(string content)
         {
-            HttpRequetstData request = new();
+            HttpRequestData httpRequestData = new();
 
             try
             {
@@ -66,9 +66,9 @@ namespace GetStoreApp.Helpers.Store
                 // 请求成功
                 if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
                 {
-                    request.RequestId = 0;
-                    request.RequestStatusCode = Convert.ToString(httpRequestResult.ResponseMessage.StatusCode);
-                    request.RequestContent = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
+                    httpRequestData.RequestId = 0;
+                    httpRequestData.RequestStatusCode = Convert.ToString(httpRequestResult.ResponseMessage.StatusCode);
+                    httpRequestData.RequestContent = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                     Dictionary<string, string> responseDict = new()
                     {
@@ -81,10 +81,10 @@ namespace GetStoreApp.Helpers.Store
                 // 请求失败
                 else
                 {
-                    request.RequestId = 1;
-                    request.RequestStatusCode = string.Empty;
-                    request.RequestExceptionContent = httpRequestResult.ExtendedError.Message;
-                    request.RequestContent = string.Empty;
+                    httpRequestData.RequestId = 1;
+                    httpRequestData.RequestStatusCode = string.Empty;
+                    httpRequestData.RequestExceptionContent = httpRequestResult.ExtendedError.Message;
+                    httpRequestData.RequestContent = string.Empty;
                     LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(HtmlRequestHelper), nameof(HttpRequestAsync), 2, httpRequestResult.ExtendedError);
                 }
 
@@ -93,20 +93,20 @@ namespace GetStoreApp.Helpers.Store
             // 其他异常
             catch (Exception e)
             {
-                request.RequestId = 2;
-                request.RequestStatusCode = string.Empty;
-                request.RequestExceptionContent = e.Message;
-                request.RequestContent = string.Empty;
+                httpRequestData.RequestId = 2;
+                httpRequestData.RequestStatusCode = string.Empty;
+                httpRequestData.RequestExceptionContent = e.Message;
+                httpRequestData.RequestContent = string.Empty;
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(HtmlRequestHelper), nameof(HttpRequestAsync), 3, e);
             }
 
-            return request;
+            return httpRequestData;
         }
 
         /// <summary>
         /// 检查请求后的状态信息
         /// </summary>
-        internal static InfoBarSeverity CheckRequestState(HttpRequetstData httpRequestData)
+        internal static InfoBarSeverity CheckRequestState(HttpRequestData httpRequestData)
         {
             if (httpRequestData is null)
             {

@@ -953,7 +953,7 @@ namespace GetStoreApp.Views.UserControls
                     string generateContent = await HtmlRequestHelper.GenerateRequestContentAsync(typeInternalName, link, channelInternalName);
 
                     // 获取网页反馈回的原始数据
-                    HttpRequetstData httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
+                    HttpRequestData httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
 
                     // 检查服务器返回获取的状态
                     InfoBarSeverity requestState = HtmlRequestHelper.CheckRequestState(httpRequestData);

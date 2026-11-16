@@ -83,8 +83,8 @@ namespace GetStoreApp.Services.Download
                         doManager = (IDOManager)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.None);
                         doManager.CreateDownload(out IDODownload doDownload);
                         ComWrappers.TryGetComInstance(doDownload, out nint doDownloadPointer);
-                        Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new(-1), 0, 3, nint.Zero, 32);
-                        Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new(-1), 0, 3, nint.Zero, 32);
+                        Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, -1, 0, 3, nint.Zero, 32);
+                        Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, -1, 0, 3, nint.Zero, 32);
 
                         // 添加下载信息
                         ComVariant displayNameVariant = ComVariant.Create(displayName);

@@ -29,7 +29,7 @@ namespace GetStoreApp.Helpers.Store
         /// <summary>
         /// 初始化 HtmlParseService 类时添加 HtmlRequestHelper 生成的字符串数据
         /// </summary>
-        internal static void InitializeParseData(HttpRequetstData httpRequestData)
+        internal static void InitializeParseData(HttpRequestData httpRequestData)
         {
             if (httpRequestData is null)
             {

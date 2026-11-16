@@ -3,7 +3,7 @@
     /// <summary>
     /// 网页请求数据
     /// </summary>
-    internal sealed class HttpRequetstData
+    internal sealed class HttpRequestData
     {
         /// <summary>
         /// 网页请求返回的ID值

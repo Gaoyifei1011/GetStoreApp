@@ -197,7 +197,7 @@ namespace GetStoreApp.Helpers.Store
                             foreach (IJsonValue jsonValue in dataArray)
                             {
                                 JsonObject jsonObject = jsonValue.GetObject();
-                                if (Uri.TryCreate(string.Format(storeLink, jsonObject.GetNamedString("PackageIdentifier")), new(), out Uri storeAppLink))
+                                if (Uri.TryCreate(string.Format(storeLink, jsonObject.GetNamedString("PackageIdentifier")), UriKind.Absolute, out Uri storeAppLink))
                                 {
                                     searchAppsResultList.Add(new()
                                     {
