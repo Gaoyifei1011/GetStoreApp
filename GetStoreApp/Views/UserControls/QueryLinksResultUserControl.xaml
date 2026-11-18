@@ -199,7 +199,7 @@
 
                                 <AppBarButton Click="{x:Bind OnLearnMoreClicked}" Label="{x:Bind rootservice:ResourceService.GetLocalized('QueryLinksResult/LearnMore')}">
                                     <AppBarButton.Icon>
-                                        <FontIcon Glyph="&#xE890;" />
+                                        <FontIcon Glyph="&#xE8A7;" />
                                     </AppBarButton.Icon>
                                 </AppBarButton>
                             </CommandBar.PrimaryCommands>
