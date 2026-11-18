@@ -1039,15 +1039,15 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 获取加载下载已完成文件是否成功
+        /// 获取已完成下载文件是否加载完成
         /// </summary>
-        private Visibility GetCompletedSuccessfullyVisibility(CompletedResultKind completedResultKind, bool isReverse)
+        private Visibility GetCompletedHasResultVisibility(CompletedResultKind completedResultKind, bool isReverse)
         {
             return isReverse ? completedResultKind is CompletedResultKind.HasResult ? Visibility.Collapsed : Visibility.Visible : completedResultKind is CompletedResultKind.HasResult ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
-        /// 检查加载下载已完成文件是否成功
+        /// 检查已完成下载文件结果状态
         /// </summary>
         private Visibility CheckCompletedResultKindVisibility(CompletedResultKind completedResultKind, CompletedResultKind comparedCompletedResultKind)
         {

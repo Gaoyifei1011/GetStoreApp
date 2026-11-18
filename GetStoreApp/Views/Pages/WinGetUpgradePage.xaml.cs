@@ -635,15 +635,15 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 获取可更新应用是否成功
+        /// 获取可更新应用是否加载完成
         /// </summary>
-        private Visibility GetUpgradableAppsSuccessfullyVisibility(UpgradableAppsResultKind upgradableAppsResultKind, bool isReverse)
+        private Visibility GetUpgradableAppsHasResultVisibility(UpgradableAppsResultKind upgradableAppsResultKind, bool isReverse)
         {
             return isReverse ? upgradableAppsResultKind is UpgradableAppsResultKind.HasResult ? Visibility.Collapsed : Visibility.Visible : upgradableAppsResultKind is UpgradableAppsResultKind.HasResult ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
-        /// 检查可更新应用是否成功
+        /// 检查可更新应用结果状态
         /// </summary>
         private Visibility CheckUpgradableAppsResultKindVisibility(UpgradableAppsResultKind upgradableAppsResultKind, UpgradableAppsResultKind comparedSearchAppsResultKind)
         {

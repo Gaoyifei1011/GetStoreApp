@@ -145,7 +145,7 @@
                 Margin="30,0,30,60"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Visibility="{x:Bind GetAppUpdateSuccessfullyVisibility(AppUpdateResultKind, x:True), Mode=OneWay}">
+                Visibility="{x:Bind GetAppUpdateHasUpdateVisibility(AppUpdateResultKind, x:True), Mode=OneWay}">
 
                 <!--  未检查更新  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckAppUpdateResultKindVisibility(AppUpdateResultKind, enum:AppUpdateResultKind.NotCheckUpdate), Mode=OneWay}">
@@ -202,7 +202,7 @@
                 Padding="30,0,28,30"
                 ItemsSource="{x:Bind AppUpdateCollection}"
                 SelectionMode="None"
-                Visibility="{x:Bind GetAppUpdateSuccessfullyVisibility(AppUpdateResultKind, x:False), Mode=OneWay}">
+                Visibility="{x:Bind GetAppUpdateHasUpdateVisibility(AppUpdateResultKind, x:False), Mode=OneWay}">
 
                 <ListView.ItemContainerStyle>
                     <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">

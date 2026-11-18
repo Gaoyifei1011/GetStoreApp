@@ -36,7 +36,6 @@
 
     <Grid>
         <BreadcrumbBar
-            Grid.Row="0"
             Margin="30,18,30,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"

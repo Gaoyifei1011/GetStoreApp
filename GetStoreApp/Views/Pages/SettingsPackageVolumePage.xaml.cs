@@ -713,13 +713,13 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取包存储卷是否加载完成
         /// </summary>
-        private Visibility GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind packageVolumeResultKind, bool needReverse)
+        private Visibility GetPackageVolumeHasResultVisibility(PackageVolumeResultKind packageVolumeResultKind, bool needReverse)
         {
             return needReverse ? packageVolumeResultKind is PackageVolumeResultKind.HasResult ? Visibility.Collapsed : Visibility.Visible : packageVolumeResultKind is PackageVolumeResultKind.HasResult ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
-        /// 检查包存储卷是否加载成功
+        /// 检查包存储卷结果状态
         /// </summary>
         private Visibility CheckPackageVolumeResultKindVisibility(PackageVolumeResultKind packageVolumeResultKind, PackageVolumeResultKind comparedPackageVolumeResultKind, bool needReverse)
         {

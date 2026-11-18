@@ -886,9 +886,9 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 获取搜索应用是否成功
+        /// 获取已安装应用是否加载完成
         /// </summary>
-        private Visibility GetInstalledAppsSuccessfullyVisibility(InstalledAppsResultKind installedAppsResultKind, int count, bool isReverse)
+        private Visibility GetInstalledAppsHasResultVisibility(InstalledAppsResultKind installedAppsResultKind, int count, bool isReverse)
         {
             if (isReverse)
             {
@@ -923,7 +923,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 检查搜索应用是否成功
+        /// 检查已安装应用结果状态
         /// </summary>
         private Visibility CheckInstalledAppsResultKindVisibility(InstalledAppsResultKind installedAppsResultKind, InstalledAppsResultKind comparedInstalledAppsResultKind)
         {
@@ -931,7 +931,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 检查搜索应用是否失败或搜索结果为空
+        /// 检查已安装应用是否失败或搜索结果为空
         /// </summary>
         private Visibility GetInstalledAppsResultKindFailedOrEmptyVisibility(InstalledAppsResultKind installedAppsResultKind, int count)
         {

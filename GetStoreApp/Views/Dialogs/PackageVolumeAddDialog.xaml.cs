@@ -540,7 +540,7 @@ namespace GetStoreApp.Views.Dialogs
         }
 
         /// <summary>
-        /// 检查包可用存储卷是否加载成功
+        /// 检查包可用存储卷结果状态
         /// </summary>
         private Visibility CheckPackageVolumeResultKindVisibility(PackageVolumeResultKind packageVolumeResultKind, PackageVolumeResultKind comparedPackageVolumeResultKind, bool isReverse)
         {
@@ -548,9 +548,9 @@ namespace GetStoreApp.Views.Dialogs
         }
 
         /// <summary>
-        /// 获取包可用存储卷是否加载完成
+        /// 获取包可用存储卷是否加载完成或者正在操作中
         /// </summary>
-        private Visibility GetPackageVolumeSuccessfullyVisibility(PackageVolumeResultKind packageVolumeResultKind, bool isReverse)
+        private Visibility GetPackageVolumeHasResultVisibility(PackageVolumeResultKind packageVolumeResultKind, bool isReverse)
         {
             return isReverse ? packageVolumeResultKind is PackageVolumeResultKind.HasResult || packageVolumeResultKind is PackageVolumeResultKind.Operating ? Visibility.Collapsed : Visibility.Visible : packageVolumeResultKind is PackageVolumeResultKind.HasResult || packageVolumeResultKind is PackageVolumeResultKind.Operating ? Visibility.Visible : Visibility.Collapsed;
         }

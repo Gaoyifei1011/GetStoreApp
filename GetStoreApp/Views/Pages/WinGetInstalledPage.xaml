@@ -289,7 +289,7 @@
                 Margin="30,0,30,60"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Visibility="{x:Bind GetInstalledAppsSuccessfullyVisibility(InstalledAppsResultKind, InstalledAppsCollection.Count, x:True), Mode=OneWay}">
+                Visibility="{x:Bind GetInstalledAppsHasResultVisibility(InstalledAppsResultKind, InstalledAppsCollection.Count, x:True), Mode=OneWay}">
 
                 <!--  正在搜索中  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckInstalledAppsResultKindVisibility(InstalledAppsResultKind, enum:InstalledAppsResultKind.Querying), Mode=OneWay}">
@@ -361,7 +361,7 @@
                 Padding="30,0,28,30"
                 ItemsSource="{x:Bind InstalledAppsCollection, Mode=OneWay}"
                 SelectionMode="None"
-                Visibility="{x:Bind GetInstalledAppsSuccessfullyVisibility(InstalledAppsResultKind, InstalledAppsCollection.Count, x:False), Mode=OneWay}">
+                Visibility="{x:Bind GetInstalledAppsHasResultVisibility(InstalledAppsResultKind, InstalledAppsCollection.Count, x:False), Mode=OneWay}">
 
                 <ListView.ItemContainerStyle>
                     <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">

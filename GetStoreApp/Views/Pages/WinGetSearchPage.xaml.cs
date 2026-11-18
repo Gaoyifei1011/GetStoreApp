@@ -595,15 +595,15 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 获取搜索应用是否成功
+        /// 获取搜索应用是否加载完成
         /// </summary>
-        private Visibility GetSearchAppsSuccessfullyVisibility(SearchAppsResultKind searchAppsResultKind, bool isReverse)
+        private Visibility GetSearchAppsHasResultVisibility(SearchAppsResultKind searchAppsResultKind, bool isReverse)
         {
             return isReverse ? searchAppsResultKind is SearchAppsResultKind.HasResult ? Visibility.Collapsed : Visibility.Visible : searchAppsResultKind is SearchAppsResultKind.HasResult ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
-        /// 检查搜索应用是否成功
+        /// 检查搜索应用结果状态
         /// </summary>
         private Visibility CheckSearchAppsResultKindVisibility(SearchAppsResultKind searchAppsResultKind, SearchAppsResultKind comparedSearchAppsResultKind)
         {

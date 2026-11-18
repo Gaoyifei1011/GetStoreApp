@@ -169,7 +169,7 @@
                 Margin="30,0,30,60"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Visibility="{x:Bind GetUpgradableAppsSuccessfullyVisibility(UpgradableAppsResultKind, x:True), Mode=OneWay}">
+                Visibility="{x:Bind GetUpgradableAppsHasResultVisibility(UpgradableAppsResultKind, x:True), Mode=OneWay}">
 
                 <!--  未检查更新  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckUpgradableAppsResultKindVisibility(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.NotCheckUpdate), Mode=OneWay}">
@@ -264,7 +264,7 @@
                 Padding="30,0,28,30"
                 ItemsSource="{x:Bind UpgradableAppsCollection, Mode=OneWay}"
                 SelectionMode="None"
-                Visibility="{x:Bind GetUpgradableAppsSuccessfullyVisibility(UpgradableAppsResultKind, x:False), Mode=OneWay}">
+                Visibility="{x:Bind GetUpgradableAppsHasResultVisibility(UpgradableAppsResultKind, x:False), Mode=OneWay}">
 
                 <ListView.ItemContainerStyle>
                     <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">

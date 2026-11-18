@@ -1671,15 +1671,15 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 获取加载应用是否成功
+        /// 获取应用管理列表是否加载完成
         /// </summary>
-        private Visibility GetAppManagerSuccessfullyVisibility(AppManagerResultKind appManagerResultKind, bool isReverse)
+        private Visibility GetAppManagerHasAppsVisibility(AppManagerResultKind appManagerResultKind, bool isReverse)
         {
             return isReverse ? appManagerResultKind is AppManagerResultKind.HasApps ? Visibility.Collapsed : Visibility.Visible : appManagerResultKind is AppManagerResultKind.HasApps ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
-        /// 检查搜索应用是否成功
+        /// 检查应用管理列表结果状态
         /// </summary>
         private Visibility CheckAppManagerResultKindVisibility(AppManagerResultKind appManagerResultKind, AppManagerResultKind comparedAppManagerResultKind)
         {

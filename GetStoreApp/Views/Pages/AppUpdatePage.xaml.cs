@@ -691,15 +691,15 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 获取加载应用更新是否成功
+        /// 获取应用更新列表是否加载完成
         /// </summary>
-        private Visibility GetAppUpdateSuccessfullyVisibility(AppUpdateResultKind appUpdateResultKind, bool isReverse)
+        private Visibility GetAppUpdateHasUpdateVisibility(AppUpdateResultKind appUpdateResultKind, bool isReverse)
         {
             return isReverse ? appUpdateResultKind is AppUpdateResultKind.HasUpdate ? Visibility.Collapsed : Visibility.Visible : appUpdateResultKind is AppUpdateResultKind.HasUpdate ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
-        /// 检查搜索应用更新是否成功
+        /// 检查应用更新列表结果状态
         /// </summary>
         private Visibility CheckAppUpdateResultKindVisibility(AppUpdateResultKind appUpdateResultKind, AppUpdateResultKind comparedAppUpdateResultKind)
         {
