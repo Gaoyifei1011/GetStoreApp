@@ -2,8 +2,6 @@
     x:Class="GetStoreApp.MainApp"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
-    xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives"
     HighContrastAdjustment="None">
 
     <Application.Resources>
@@ -173,7 +171,7 @@
             </Style>
 
             <!--  更新命令栏浮出控件专用命令栏的默认控件模板样式  -->
-            <Style TargetType="primitives:CommandBarFlyoutCommandBar">
+            <Style TargetType="CommandBarFlyoutCommandBar">
                 <Setter Property="SystemBackdrop" Value="{StaticResource CommandBarFlyoutSystemBackdrop}" />
                 <Setter Property="Background" Value="{ThemeResource CommandBarFlyoutBackground}" />
                 <Setter Property="Foreground" Value="{ThemeResource CommandBarFlyoutForeground}" />
@@ -191,10 +189,10 @@
                 <Setter Property="IsDynamicOverflowEnabled" Value="True" />
                 <Setter Property="CommandBarOverflowPresenterStyle" Value="{StaticResource CommandBarFlyoutCommandBarOverflowPresenterStyle}" />
                 <Setter Property="CornerRadius" Value="{ThemeResource OverlayCornerRadius}" />
-                <Setter Property="primitives:CommandBarFlyoutCommandBarAutomationProperties.ControlType" Value="Menu" />
+                <Setter Property="CommandBarFlyoutCommandBarAutomationProperties.ControlType" Value="Menu" />
                 <Setter Property="Template">
                     <Setter.Value>
-                        <ControlTemplate TargetType="primitives:CommandBarFlyoutCommandBar">
+                        <ControlTemplate TargetType="CommandBarFlyoutCommandBar">
                             <Grid x:Name="LayoutRoot" CornerRadius="{TemplateBinding CornerRadius}">
                                 <Grid.Resources>
                                     <Visibility x:Key="AppBarButtonHasFlyoutChevronVisibility">Collapsed</Visibility>

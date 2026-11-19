@@ -174,7 +174,7 @@
                             AutomationProperties.AccessibilityView="Raw"
                             Foreground="{ThemeResource ComboBoxDropDownGlyphForeground}"
                             IsHitTestVisible="False">
-                            <animatedvisuals:AnimatedChevronDownSmallVisualSource xmlns:animatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals" />
+                            <animatedvisuals:AnimatedChevronDownSmallVisualSource />
                             <AnimatedIcon.FallbackIconSource>
                                 <FontIconSource
                                     FontFamily="{ThemeResource SymbolThemeFontFamily}"
