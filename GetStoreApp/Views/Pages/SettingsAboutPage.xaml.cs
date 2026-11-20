@@ -9,7 +9,6 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.Data.Json;
@@ -382,7 +381,7 @@ namespace GetStoreApp.Views.Pages
 
                         if (!string.IsNullOrEmpty(responseString))
                         {
-                            if (JsonObject.TryParse(responseString, out JsonObject responseStringObject) && new Version(responseStringObject.GetNamedString("tag_name")[1..]) is Version tagVersion)
+                            if (JsonObject.TryParse(responseString, out JsonObject responseStringObject) && responseStringObject.TryGetValue("tag_name", out IJsonValue tagNameJsonValue) && tagNameJsonValue.ValueType is JsonValueType.String && new Version(tagNameJsonValue.GetString()[1..]) is Version tagVersion)
                             {
                                 return InfoHelper.AppVersion >= tagVersion;
                             }

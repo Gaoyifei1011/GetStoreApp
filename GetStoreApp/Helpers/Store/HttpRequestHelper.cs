@@ -104,9 +104,9 @@ namespace GetStoreApp.Helpers.Store
         }
 
         /// <summary>
-        /// 检查请求后的状态信息
+        /// 获取请求后的状态信息
         /// </summary>
-        internal static InfoBarSeverity CheckRequestState(HttpRequestData httpRequestData)
+        internal static InfoBarSeverity GetRequestStateSeverity(HttpRequestData httpRequestData)
         {
             if (httpRequestData is null)
             {

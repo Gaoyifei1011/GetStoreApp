@@ -956,7 +956,7 @@ namespace GetStoreApp.Views.UserControls
                     HttpRequestData httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
 
                     // 检查服务器返回获取的状态
-                    InfoBarSeverity requestState = HtmlRequestHelper.CheckRequestState(httpRequestData);
+                    InfoBarSeverity requestState = HtmlRequestHelper.GetRequestStateSeverity(httpRequestData);
                     queryLinksResult.requestState = requestState;
 
                     if (requestState is InfoBarSeverity.Success)

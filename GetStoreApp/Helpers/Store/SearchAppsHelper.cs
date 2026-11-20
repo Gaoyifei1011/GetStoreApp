@@ -103,32 +103,40 @@ namespace GetStoreApp.Helpers.Store
                         LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchAppsHelper), nameof(StoreExactSearchAsync), 1, responseDict);
                         string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
-                        if (JsonArray.TryParse(responseString, out JsonArray responseStringArray) && responseStringArray.Count is 2)
+                        if (JsonArray.TryParse(responseString, out JsonArray responseStringArray) &&
+                            responseStringArray.Count is 2)
                         {
                             JsonObject jsonObject = responseStringArray.GetObjectAt(1);
-                            JsonObject payloadObject = jsonObject.GetNamedObject("Payload");
-
-                            if (string.Equals(payloadObject.GetNamedString("$type"), "Microsoft.Marketplace.Storefront.Contracts.V9.SearchResponse, Microsoft.Marketplace.Storefront.Contracts", StringComparison.OrdinalIgnoreCase))
+                            if (jsonObject.TryGetValue("Payload", out IJsonValue payloadJsonValue) &&
+                                payloadJsonValue.ValueType is JsonValueType.Object)
                             {
-                                JsonArray searchResultsArray = payloadObject.GetNamedArray("SearchResults");
-
-                                foreach (IJsonValue serarchResults in searchResultsArray)
+                                JsonObject payloadObject = payloadJsonValue.GetObject();
+                                if (payloadObject.TryGetValue("$type", out IJsonValue typeJsonValue) &&
+                                    string.Equals(typeJsonValue.GetString(), "Microsoft.Marketplace.Storefront.Contracts.V9.SearchResponse, Microsoft.Marketplace.Storefront.Contracts", StringComparison.OrdinalIgnoreCase) &&
+                                    payloadObject.TryGetValue("SearchResults", out IJsonValue searchResultsJsonValue) &&
+                                    searchResultsJsonValue.ValueType is JsonValueType.Array)
                                 {
-                                    JsonObject searchResultsObject = serarchResults.GetObject();
-                                    if (string.Equals(searchResultsObject.GetNamedString("$type"), "Microsoft.Marketplace.Storefront.Contracts.V8.One.CardModel, Microsoft.Marketplace.Storefront.Contracts", StringComparison.OrdinalIgnoreCase))
+                                    JsonArray searchResultsArray = searchResultsJsonValue.GetArray();
+                                    foreach (IJsonValue serarchResults in searchResultsArray)
                                     {
-                                        string productId = searchResultsObject.GetNamedString("ProductId");
-                                        if (Uri.TryCreate(string.Format(storeLink, productId), UriKind.Absolute, out Uri storeAppLink))
+                                        JsonObject searchResultsObject = serarchResults.GetObject();
+                                        if (searchResultsObject.TryGetValue("$type", out typeJsonValue) &&
+                                            typeJsonValue.ValueType is JsonValueType.String &&
+                                            string.Equals(typeJsonValue.GetString(), "Microsoft.Marketplace.Storefront.Contracts.V8.One.CardModel, Microsoft.Marketplace.Storefront.Contracts", StringComparison.OrdinalIgnoreCase))
                                         {
-                                            string title = searchResultsObject.GetNamedString("Title");
-                                            string publisherName = searchResultsObject.GetNamedString("PublisherName");
-
-                                            searchAppsResultList.Add(new()
+                                            string productId = searchResultsObject.TryGetValue("ProductId", out IJsonValue productIdJsonValue) && productIdJsonValue.ValueType is JsonValueType.String ? productIdJsonValue.GetString() : string.Empty;
+                                            if (Uri.TryCreate(string.Format(storeLink, productId), UriKind.Absolute, out Uri storeAppLink))
                                             {
-                                                StoreAppLink = storeAppLink,
-                                                StoreAppName = title,
-                                                StoreAppPublisher = publisherName
-                                            });
+                                                string title = searchResultsObject.TryGetValue("Title", out IJsonValue titleJsonValue) && titleJsonValue.ValueType is JsonValueType.String ? titleJsonValue.GetString() : string.Empty;
+                                                string publisherName = searchResultsObject.TryGetValue("PublisherName", out IJsonValue publisherNameJsonValue) && publisherNameJsonValue.ValueType is JsonValueType.String ? publisherNameJsonValue.GetString() : string.Empty;
+
+                                                searchAppsResultList.Add(new()
+                                                {
+                                                    StoreAppLink = storeAppLink,
+                                                    StoreAppName = title,
+                                                    StoreAppPublisher = publisherName
+                                                });
+                                            }
                                         }
                                     }
                                 }
@@ -191,19 +199,23 @@ namespace GetStoreApp.Helpers.Store
                         LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(SearchAppsHelper), nameof(ManifestSearchAsync), 1, responseDict);
                         string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
-                        if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
+                        if (JsonObject.TryParse(responseString, out JsonObject responseStringObject) &&
+                            responseStringObject.TryGetValue("Data", out IJsonValue dataJsonValue) &&
+                            dataJsonValue.ValueType is JsonValueType.Array)
                         {
-                            JsonArray dataArray = responseStringObject.GetNamedArray("Data");
+                            JsonArray dataArray = dataJsonValue.GetArray();
                             foreach (IJsonValue jsonValue in dataArray)
                             {
                                 JsonObject jsonObject = jsonValue.GetObject();
-                                if (Uri.TryCreate(string.Format(storeLink, jsonObject.GetNamedString("PackageIdentifier")), UriKind.Absolute, out Uri storeAppLink))
+                                if (jsonObject.TryGetValue("PackageIdentifier", out IJsonValue packageIdentifierJsonValue) &&
+                                    packageIdentifierJsonValue.ValueType is JsonValueType.String &&
+                                    Uri.TryCreate(string.Format(storeLink, packageIdentifierJsonValue.GetString()), UriKind.Absolute, out Uri storeAppLink))
                                 {
                                     searchAppsResultList.Add(new()
                                     {
                                         StoreAppLink = storeAppLink,
-                                        StoreAppName = jsonObject.GetNamedString("PackageName"),
-                                        StoreAppPublisher = jsonObject.GetNamedString("Publisher")
+                                        StoreAppName = jsonObject.TryGetValue("PackageName", out IJsonValue packageNameJsonValue) && packageNameJsonValue.ValueType is JsonValueType.String ? packageNameJsonValue.GetString() : string.Empty,
+                                        StoreAppPublisher = jsonObject.TryGetValue("Publisher", out IJsonValue publisherJsonValue) && publisherJsonValue.ValueType is JsonValueType.String ? publisherJsonValue.GetString() : string.Empty
                                     });
                                 }
                             }

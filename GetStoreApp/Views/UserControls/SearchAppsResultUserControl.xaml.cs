@@ -79,10 +79,10 @@ namespace GetStoreApp.Views.UserControls
         /// </summary>
         private void OnQueryLinksExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is string appLink)
+            if (args.Parameter is Uri storeAppLink)
             {
                 storePage.StoreControl = StoreControl.StoreSelector;
-                storePage.StoreSelector.QueryLinksText = appLink;
+                storePage.StoreSelector.QueryLinksText = storeAppLink.AbsoluteUri;
             }
         }
 
