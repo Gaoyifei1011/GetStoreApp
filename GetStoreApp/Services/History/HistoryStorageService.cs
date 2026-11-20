@@ -266,6 +266,7 @@ namespace GetStoreApp.Services.History
             {
                 compositeValue[CreateTimeStamp] = historyItem.CreateTimeStamp;
                 compositeValue[HistoryAppName] = historyItem.HistoryAppName;
+                queryLinksContainer.Values[historyItem.HistoryKey] = compositeValue;
             }
         }
 
@@ -278,6 +279,7 @@ namespace GetStoreApp.Services.History
             if (historyItem is not null && searchAppsContainer.Values.TryGetValue(historyItem.HistoryKey, out object compositeValueObj) && compositeValueObj is Windows.Storage.ApplicationDataCompositeValue compositeValue)
             {
                 compositeValue[CreateTimeStamp] = historyItem.CreateTimeStamp;
+                searchAppsContainer.Values[historyItem.HistoryKey] = compositeValue;
             }
         }
 
