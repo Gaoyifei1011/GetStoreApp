@@ -191,35 +191,41 @@ namespace GetStoreApp.Services.Download
                         HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
                         // 请求成功
-                        if (response.IsSuccessStatusCode && await response.Content.ReadAsStringAsync() is string responseContent && JsonObject.TryParse(responseContent, out JsonObject resultObject))
+                        if (response.IsSuccessStatusCode &&
+                            await response.Content.ReadAsStringAsync() is string responseContent &&
+                            JsonObject.TryParse(responseContent, out JsonObject resultObject) &&
+                            resultObject.TryGetValue("result", out IJsonValue resultJsonValue) &&
+                            resultJsonValue.ValueType is JsonValueType.String)
                         {
-                            string gid = resultObject.GetNamedString("result");
+                            string gid = resultJsonValue.GetString();
+                            if (!string.IsNullOrEmpty(gid))
+                            {
+                                Aria2SemaphoreSlim?.Wait();
 
-                            Aria2SemaphoreSlim?.Wait();
+                                try
+                                {
+                                    Aria2DownloadDict.TryAdd(gid, saveFilePath);
+                                }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
+                                finally
+                                {
+                                    Aria2SemaphoreSlim?.Release();
+                                }
 
-                            try
-                            {
-                                Aria2DownloadDict.TryAdd(gid, saveFilePath);
+                                DownloadProgress?.Invoke(new()
+                                {
+                                    DownloadID = gid,
+                                    DownloadProgressState = DownloadProgressState.Queued,
+                                    FileName = Path.GetFileName(saveFilePath),
+                                    FilePath = saveFilePath,
+                                    DownloadSpeed = 0,
+                                    CompletedSize = 0,
+                                    TotalSize = 0,
+                                });
                             }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                            finally
-                            {
-                                Aria2SemaphoreSlim?.Release();
-                            }
-
-                            DownloadProgress?.Invoke(new()
-                            {
-                                DownloadID = gid,
-                                DownloadProgressState = DownloadProgressState.Queued,
-                                FileName = Path.GetFileName(saveFilePath),
-                                FilePath = saveFilePath,
-                                DownloadSpeed = 0,
-                                CompletedSize = 0,
-                                TotalSize = 0,
-                            });
                         }
                     }
                 }
@@ -274,35 +280,41 @@ namespace GetStoreApp.Services.Download
                         HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
                         // 请求成功
-                        if (response.IsSuccessStatusCode && await response.Content.ReadAsStringAsync() is string responseContent && JsonObject.TryParse(responseContent, out JsonObject resultObject))
+                        if (response.IsSuccessStatusCode &&
+                            await response.Content.ReadAsStringAsync() is string responseContent &&
+                            JsonObject.TryParse(responseContent, out JsonObject resultObject) &&
+                            resultObject.TryGetValue("result", out IJsonValue resultJsonValue) &&
+                            resultJsonValue.ValueType is JsonValueType.String)
                         {
-                            string gid = resultObject.GetNamedString("result");
-
-                            Aria2SemaphoreSlim?.Wait();
-
-                            try
+                            string gid = resultJsonValue.GetString();
+                            if (!string.IsNullOrEmpty(gid))
                             {
-                                if (Aria2DownloadDict.TryGetValue(gid, out string saveFilePath))
+                                Aria2SemaphoreSlim?.Wait();
+
+                                try
                                 {
-                                    DownloadProgress?.Invoke(new()
+                                    if (Aria2DownloadDict.TryGetValue(gid, out string saveFilePath))
                                     {
-                                        DownloadID = gid,
-                                        DownloadProgressState = DownloadProgressState.Queued,
-                                        FileName = Path.GetFileName(saveFilePath),
-                                        FilePath = saveFilePath,
-                                        DownloadSpeed = 0,
-                                        CompletedSize = 0,
-                                        TotalSize = 0,
-                                    });
+                                        DownloadProgress?.Invoke(new()
+                                        {
+                                            DownloadID = gid,
+                                            DownloadProgressState = DownloadProgressState.Queued,
+                                            FileName = Path.GetFileName(saveFilePath),
+                                            FilePath = saveFilePath,
+                                            DownloadSpeed = 0,
+                                            CompletedSize = 0,
+                                            TotalSize = 0,
+                                        });
+                                    }
                                 }
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                            finally
-                            {
-                                Aria2SemaphoreSlim?.Release();
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
+                                finally
+                                {
+                                    Aria2SemaphoreSlim?.Release();
+                                }
                             }
                         }
                     }
@@ -358,22 +370,28 @@ namespace GetStoreApp.Services.Download
                         HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
                         // 请求成功
-                        if (response.IsSuccessStatusCode && await response.Content.ReadAsStringAsync() is string responseContent && JsonObject.TryParse(responseContent, out JsonObject resultObject))
+                        if (response.IsSuccessStatusCode &&
+                            await response.Content.ReadAsStringAsync() is string responseContent &&
+                            JsonObject.TryParse(responseContent, out JsonObject resultObject) &&
+                            resultObject.TryGetValue("result", out IJsonValue resultJsonValue) &&
+                            resultJsonValue.ValueType is JsonValueType.String)
                         {
-                            string gid = resultObject.GetNamedString("result");
-
-                            if (Aria2DownloadDict.TryGetValue(gid, out string saveFilePath))
+                            string gid = resultJsonValue.GetString();
+                            if (!string.IsNullOrEmpty(gid))
                             {
-                                DownloadProgress?.Invoke(new()
+                                if (Aria2DownloadDict.TryGetValue(gid, out string saveFilePath))
                                 {
-                                    DownloadID = gid,
-                                    DownloadProgressState = DownloadProgressState.Paused,
-                                    FileName = Path.GetFileName(saveFilePath),
-                                    FilePath = saveFilePath,
-                                    DownloadSpeed = 0,
-                                    CompletedSize = 0,
-                                    TotalSize = 0,
-                                });
+                                    DownloadProgress?.Invoke(new()
+                                    {
+                                        DownloadID = gid,
+                                        DownloadProgressState = DownloadProgressState.Paused,
+                                        FileName = Path.GetFileName(saveFilePath),
+                                        FilePath = saveFilePath,
+                                        DownloadSpeed = 0,
+                                        CompletedSize = 0,
+                                        TotalSize = 0,
+                                    });
+                                }
                             }
                         }
                     }
@@ -429,38 +447,44 @@ namespace GetStoreApp.Services.Download
                         HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
 
                         // 请求成功
-                        if (response.IsSuccessStatusCode && await response.Content.ReadAsStringAsync() is string responseContent && JsonObject.TryParse(responseContent, out JsonObject resultObject))
+                        if (response.IsSuccessStatusCode &&
+                            await response.Content.ReadAsStringAsync() is string responseContent &&
+                            JsonObject.TryParse(responseContent, out JsonObject resultObject) &&
+                            resultObject.TryGetValue("result", out IJsonValue resultJsonValue) &&
+                            resultJsonValue.ValueType is JsonValueType.String)
                         {
-                            string gid = resultObject.GetNamedString("result");
-
-                            Aria2SemaphoreSlim?.Wait();
-
-                            try
+                            string gid = resultJsonValue.GetString();
+                            if (!string.IsNullOrEmpty(gid))
                             {
-                                if (Aria2DownloadDict.TryGetValue(gid, out string saveFilePath))
+                                Aria2SemaphoreSlim?.Wait();
+
+                                try
                                 {
-                                    Aria2DownloadDict.Remove(gid);
-                                    DownloadProgress?.Invoke(new()
+                                    if (Aria2DownloadDict.TryGetValue(gid, out string saveFilePath))
                                     {
-                                        DownloadID = gid,
-                                        DownloadProgressState = DownloadProgressState.Deleted,
-                                        FileName = Path.GetFileName(saveFilePath),
-                                        FilePath = saveFilePath,
-                                        DownloadSpeed = 0,
-                                        CompletedSize = 0,
-                                        TotalSize = 0,
-                                    });
-                                }
+                                        Aria2DownloadDict.Remove(gid);
+                                        DownloadProgress?.Invoke(new()
+                                        {
+                                            DownloadID = gid,
+                                            DownloadProgressState = DownloadProgressState.Deleted,
+                                            FileName = Path.GetFileName(saveFilePath),
+                                            FilePath = saveFilePath,
+                                            DownloadSpeed = 0,
+                                            CompletedSize = 0,
+                                            TotalSize = 0,
+                                        });
+                                    }
 
-                                await RemoveResultAsync();
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                            finally
-                            {
-                                Aria2SemaphoreSlim?.Release();
+                                    await RemoveResultAsync();
+                                }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
+                                finally
+                                {
+                                    Aria2SemaphoreSlim?.Release();
+                                }
                             }
                         }
                     }
@@ -522,15 +546,20 @@ namespace GetStoreApp.Services.Download
                         httpClient.DefaultRequestHeaders.TryAppendWithoutValidation("Origin", rpcServerLinkUri.GetLeftPart(UriPartial.Authority));
 
                         HttpResponseMessage response = await httpClient.PostAsync(new(rpcServerLink), httpStringContent);
+                        isTellStatusSuccessfully = response.IsSuccessStatusCode;
 
                         // 请求成功
-                        if (response.IsSuccessStatusCode && await response.Content.ReadAsStringAsync() is string responseContent && JsonObject.TryParse(responseContent, out JsonObject resultObject))
+                        if (response.IsSuccessStatusCode &&
+                            await response.Content.ReadAsStringAsync() is string responseContent &&
+                            JsonObject.TryParse(responseContent, out JsonObject resultObject) &&
+                            resultObject.TryGetValue("result", out IJsonValue resultJsonValue) &&
+                            resultJsonValue.ValueType is JsonValueType.Object)
                         {
-                            JsonObject downloadResultObject = resultObject.GetNamedObject("result");
-                            string status = downloadResultObject.GetNamedString("status");
-                            completedSize = Convert.ToDouble(downloadResultObject.GetNamedString("completedLength"));
-                            totalSize = Convert.ToDouble(downloadResultObject.GetNamedString("totalLength"));
-                            downloadSpeed = Convert.ToDouble(downloadResultObject.GetNamedString("downloadSpeed"));
+                            JsonObject downloadResultObject = resultJsonValue.GetObject();
+                            string status = downloadResultObject.TryGetValue("status", out IJsonValue statusJsonValue) && statusJsonValue.ValueType is JsonValueType.String ? statusJsonValue.GetString() : string.Empty;
+                            completedSize = downloadResultObject.TryGetValue("completedLength", out IJsonValue completedLengthJsonValue) && completedLengthJsonValue.ValueType is JsonValueType.String ? Convert.ToDouble(completedLengthJsonValue.GetString()) : 0;
+                            totalSize = downloadResultObject.TryGetValue("totalLength", out IJsonValue totalLengthJsonValue) && totalLengthJsonValue.ValueType is JsonValueType.String ? Convert.ToDouble(totalLengthJsonValue.GetString()) : 0;
+                            downloadSpeed = downloadResultObject.TryGetValue("downloadSpeed", out IJsonValue downloadSpeedJsonValue) && downloadSpeedJsonValue.ValueType is JsonValueType.String ? Convert.ToDouble(downloadSpeedJsonValue.GetString()) : 0;
 
                             if (string.Equals(status, "active", StringComparison.OrdinalIgnoreCase))
                             {
