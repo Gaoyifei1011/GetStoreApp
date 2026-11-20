@@ -269,7 +269,6 @@
                 <!--  查询链接结果列表  -->
                 <Grid
                     Grid.Row="1"
-                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                     BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1,1,1,0"
                     CornerRadius="{StaticResource ControlCornerRadius}">
@@ -283,6 +282,7 @@
                         Grid.Row="0"
                         Height="50"
                         Padding="16,0"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                         BorderThickness="0,0,0,1">
 
