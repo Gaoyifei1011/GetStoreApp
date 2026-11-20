@@ -154,28 +154,32 @@ namespace GetStoreApp.Helpers.Store
                     LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppInformationAsync), 1, responseDict);
                     string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
-                    if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
+                    if (JsonObject.TryParse(responseString, out JsonObject responseStringObject) &&
+                        responseStringObject.TryGetValue("Payload", out IJsonValue payloadValue) &&
+                        payloadValue.ValueType is JsonValueType.Object)
                     {
-                        JsonObject payLoadObject = responseStringObject.GetNamedValue("Payload").GetObject();
-
-                        appInfo.Name = payLoadObject.GetNamedString("Title");
-                        appInfo.Publisher = payLoadObject.GetNamedString("PublisherName");
-                        appInfo.Description = payLoadObject.GetNamedString("Description");
-                        appInfo.CategoryID = string.Empty;
+                        JsonObject payLoadObject = payloadValue.GetObject();
+                        appInfo.Name = payLoadObject.TryGetValue("Title", out IJsonValue titleJsonValue) && titleJsonValue.ValueType is JsonValueType.String ? titleJsonValue.GetString() : string.Empty;
+                        appInfo.Publisher = payLoadObject.TryGetValue("PublisherName", out IJsonValue publisherNameJsonValue) && publisherNameJsonValue.ValueType is JsonValueType.String ? publisherNameJsonValue.GetString() : string.Empty;
+                        appInfo.Description = payLoadObject.TryGetValue("Description", out IJsonValue descriptionJsonValue) && descriptionJsonValue.ValueType is JsonValueType.String ? descriptionJsonValue.GetString() : string.Empty;
                         appInfo.ProductID = productId;
 
-                        JsonArray skusArray = payLoadObject.GetNamedArray("Skus");
-
-                        if (skusArray.Count > 0)
+                        if (payLoadObject.TryGetValue("Skus", out IJsonValue skusJsonValue) &&
+                            skusJsonValue.ValueType is JsonValueType.Array)
                         {
-                            appInfo.CategoryID = string.Empty;
-                            JsonObject jsonObject = skusArray[0].GetObject();
-                            if (jsonObject.TryGetValue("FulfillmentData", out IJsonValue jsonValue))
+                            JsonArray skusArray = skusJsonValue.GetArray();
+                            if (skusArray.Count > 0)
                             {
-                                string fulfillmentData = jsonValue.GetString();
-                                if (JsonObject.TryParse(fulfillmentData, out JsonObject fulfillmentDataObject))
+                                JsonObject jsonObject = skusArray.GetObjectAt(0);
+                                if (jsonObject.TryGetValue("FulfillmentData", out IJsonValue jsonValue) && jsonValue.ValueType is JsonValueType.String)
                                 {
-                                    appInfo.CategoryID = fulfillmentDataObject.GetNamedString("WuCategoryId");
+                                    string fulfillmentData = jsonValue.GetString();
+                                    if (JsonObject.TryParse(fulfillmentData, out JsonObject fulfillmentDataObject) &&
+                                        fulfillmentDataObject.TryGetValue("WuCategoryId", out IJsonValue wuCategordIdJsonValue) &&
+                                        wuCategordIdJsonValue.ValueType is JsonValueType.String)
+                                    {
+                                        appInfo.CategoryID = wuCategordIdJsonValue.GetString();
+                                    }
                                 }
                             }
                         }
@@ -478,76 +482,78 @@ namespace GetStoreApp.Helpers.Store
                         LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 1, responseDict);
                         string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
-                        if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
+                        if (JsonObject.TryParse(responseString, out JsonObject responseStringObject) &&
+                            responseStringObject.TryGetValue("Data", out IJsonValue dataJsonValue) &&
+                            dataJsonValue.ValueType is JsonValueType.Object)
                         {
-                            JsonObject dataObject = responseStringObject.GetNamedValue("Data").GetObject();
-                            JsonObject versionsObject = dataObject.GetNamedValue("Versions").GetArray()[0].GetObject();
-                            JsonArray installersArray = versionsObject.GetNamedValue("Installers").GetArray();
-
-                            Lock nonAppxPackagesLock = new();
-                            List<Task> taskList = [];
-
-                            foreach (IJsonValue installer in installersArray)
+                            JsonObject dataObject = dataJsonValue.GetObject();
+                            if (dataObject.TryGetValue("Versions", out IJsonValue versionsJsonValue) &&
+                                versionsJsonValue.ValueType is JsonValueType.Array)
                             {
-                                taskList.Add(Task.Run(async () =>
+                                JsonArray versionsArray = versionsJsonValue.GetArray();
+                                if (versionsArray.Count > 0 && versionsArray[0].ValueType is JsonValueType.Object)
                                 {
-                                    JsonObject installerObject = installer.GetObject();
+                                    JsonObject versionsObject = versionsArray[0].GetObject();
+                                    JsonObject defaultLocaleObject = versionsObject is not null && versionsObject.TryGetValue("DefaultLocale", out IJsonValue defaultLocaleJsonValue) && defaultLocaleJsonValue.ValueType is JsonValueType.Object ? defaultLocaleJsonValue.GetObject() : null;
+                                    JsonArray installersArray = versionsObject is not null && versionsObject.TryGetValue("Installers", out IJsonValue installersJsonValue) && installersJsonValue.ValueType is JsonValueType.Array ? installersJsonValue.GetArray() : null;
+                                    string packageName = defaultLocaleObject is not null && defaultLocaleObject.TryGetValue("PackageName", out IJsonValue packageNameJsonValue) && packageNameJsonValue.ValueType is JsonValueType.String ? packageNameJsonValue.GetString() : null;
+                                    string packageVersion = versionsObject is not null && versionsObject.TryGetValue("PackageVersion", out IJsonValue packageVersionJsonValue) && packageVersionJsonValue.ValueType is JsonValueType.String ? packageVersionJsonValue.GetString() : string.Empty;
 
-                                    string installerType = installerObject.GetNamedString("InstallerType");
-                                    string installerUrl = installerObject.GetNamedString("InstallerUrl");
-                                    string fileSize = await GetNonAppxPackageFileSizeAsync(installerUrl);
-                                    string fileSizeString = VolumeSizeHelper.ConvertVolumeSizeToString(double.TryParse(fileSize, out double size) ? size : 0);
+                                    Lock nonAppxPackagesLock = new();
+                                    List<Task> taskList = [];
 
-                                    if (string.IsNullOrEmpty(installerType) || installerUrl.ToLowerInvariant().EndsWith(".exe") || installerUrl.ToLowerInvariant().EndsWith(".msi"))
+                                    foreach (IJsonValue installer in installersArray)
                                     {
-                                        nonAppxPackagesLock.Enter();
-
-                                        try
+                                        taskList.Add(Task.Run(async () =>
                                         {
-                                            nonAppxPackagesList.Add(new()
+                                            if (installer.ValueType is JsonValueType.Object && installer.GetObject() is JsonObject installerObject)
                                             {
-                                                FileName = installerUrl[..installerUrl.LastIndexOf('.')][(installerUrl.LastIndexOf('/') + 1)..],
-                                                FileLink = installerUrl,
-                                                FileSize = fileSizeString
-                                            });
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                                        }
-                                        finally
-                                        {
-                                            nonAppxPackagesLock.Exit();
-                                        }
-                                    }
-                                    else
-                                    {
-                                        string name = installerUrl.Split('/')[^1];
+                                                string scope = installerObject.TryGetValue("Scope", out IJsonValue scopeJsonValue) && scopeJsonValue.ValueType is JsonValueType.String ? scopeJsonValue.GetString() : string.Empty;
+                                                string architecture = installerObject.TryGetValue("Architecture", out IJsonValue architectureJsonValue) && architectureJsonValue.ValueType is JsonValueType.String ? architectureJsonValue.GetString() : string.Empty;
+                                                string installerLocale = installerObject.TryGetValue("InstallerLocale", out IJsonValue installerLocaleJsonValue) && installerLocaleJsonValue.ValueType is JsonValueType.String ? installerLocaleJsonValue.GetString() : string.Empty;
+                                                string installerType = installerObject.TryGetValue("InstallerType", out IJsonValue installerTypeJsonValue) && installerTypeJsonValue.ValueType is JsonValueType.String ? installerTypeJsonValue.GetString() : string.Empty;
+                                                string installerUrl = installerObject.TryGetValue("InstallerUrl", out IJsonValue installerUrlJsonValue) && installerUrlJsonValue.ValueType is JsonValueType.String ? installerUrlJsonValue.GetString() : string.Empty;
+                                                string fileSize = await GetNonAppxPackageFileSizeAsync(installerUrl);
+                                                string fileSizeString = VolumeSizeHelper.ConvertVolumeSizeToString(double.TryParse(fileSize, out double size) ? size : 0);
 
-                                        nonAppxPackagesLock.Enter();
+                                                List<string> fileNameStringList = [];
+                                                if (!string.IsNullOrEmpty(packageName)) fileNameStringList.Add(packageName);
+                                                if (!string.IsNullOrEmpty(packageVersion)) fileNameStringList.Add(packageVersion);
+                                                if (!string.IsNullOrEmpty(scope)) fileNameStringList.Add(scope);
+                                                if (!string.IsNullOrEmpty(architecture)) fileNameStringList.Add(architecture);
+                                                if (!string.IsNullOrEmpty(installerLocale)) fileNameStringList.Add(installerLocale);
+                                                string fileNameString = string.Join('_', fileNameStringList);
+                                                string fileName = !string.IsNullOrEmpty(installerType) ? string.Format("{0}.{1}", fileNameString, installerType) : fileNameString;
 
-                                        try
-                                        {
-                                            nonAppxPackagesList.Add(new()
-                                            {
-                                                FileName = string.Format("{0} ({1}).{2}", name, installerObject.GetNamedString("InstallerLocale"), installerType),
-                                                FileLink = installerUrl,
-                                                FileSize = fileSizeString
-                                            });
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                                        }
-                                        finally
-                                        {
-                                            nonAppxPackagesLock.Exit();
-                                        }
+                                                if (!string.IsNullOrEmpty(installerUrl))
+                                                {
+                                                    nonAppxPackagesLock.Enter();
+
+                                                    try
+                                                    {
+                                                        nonAppxPackagesList.Add(new()
+                                                        {
+                                                            FileName = fileName,
+                                                            FileLink = installerUrl,
+                                                            FileSize = fileSizeString
+                                                        });
+                                                    }
+                                                    catch (Exception e)
+                                                    {
+                                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                    }
+                                                    finally
+                                                    {
+                                                        nonAppxPackagesLock.Exit();
+                                                    }
+                                                }
+                                            }
+                                        }));
                                     }
-                                }));
+
+                                    await Task.WhenAll(taskList);
+                                }
                             }
-
-                            await Task.WhenAll(taskList);
                         }
                     }
                     // 请求失败
