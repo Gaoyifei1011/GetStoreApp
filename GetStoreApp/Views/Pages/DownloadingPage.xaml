@@ -183,8 +183,8 @@
 
                 <StackPanel Spacing="20">
                     <Image
-                        Width="150"
-                        Height="150"
+                        Width="120"
+                        Height="120"
                         Source="ms-appx:///Assets/Image/DownloadDefault.png" />
 
                     <TextBlock

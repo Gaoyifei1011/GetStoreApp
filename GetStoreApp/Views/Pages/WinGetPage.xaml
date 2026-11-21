@@ -278,7 +278,19 @@
                         VerticalAlignment="Center"
                         Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(PackageOperationCollection.Count), Mode=OneWay}">
 
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Image
+                            Grid.Row="0"
+                            Width="120"
+                            Height="120"
+                            Source="ms-appx:///Assets/Image/NoTask.png" />
+
                         <TextBlock
+                            Grid.Row="1"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Text="{x:Bind rootservice:ResourceService.GetLocalized('WinGet/PackageOperationEmpty')}"

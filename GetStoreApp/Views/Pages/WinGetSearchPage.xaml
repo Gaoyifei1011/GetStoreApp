@@ -292,8 +292,8 @@
                 <!--  未搜索  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckSearchAppsResultKindVisibility(SearchAppsResultKind, enum:SearchAppsResultKind.NotSearch), Mode=OneWay}">
                     <Image
-                        Width="150"
-                        Height="150"
+                        Width="120"
+                        Height="120"
                         Source="ms-appx:///Assets/Image/WinGetSearchDefault.png" />
 
                     <TextBlock
@@ -310,8 +310,8 @@
                 <!--  正在搜索中  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckSearchAppsResultKindVisibility(SearchAppsResultKind, enum:SearchAppsResultKind.Searching), Mode=OneWay}">
                     <Image
-                        Width="150"
-                        Height="150"
+                        Width="120"
+                        Height="120"
                         Source="ms-appx:///Assets/Image/Search.png" />
 
                     <Grid ColumnSpacing="10">
@@ -342,8 +342,8 @@
                 <!--  搜索失败  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckSearchAppsResultKindVisibility(SearchAppsResultKind, enum:SearchAppsResultKind.Failed), Mode=OneWay}">
                     <Image
-                        Width="150"
-                        Height="150"
+                        Width="120"
+                        Height="120"
                         Source="ms-appx:///Assets/Image/Failed.png" />
 
                     <TextBlock

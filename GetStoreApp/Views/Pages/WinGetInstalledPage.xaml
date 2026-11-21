@@ -294,8 +294,8 @@
                 <!--  正在搜索中  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckInstalledAppsResultKindVisibility(InstalledAppsResultKind, enum:InstalledAppsResultKind.Querying), Mode=OneWay}">
                     <Image
-                        Width="150"
-                        Height="150"
+                        Width="120"
+                        Height="120"
                         Source="ms-appx:///Assets/Image/Search.png" />
 
                     <Grid ColumnSpacing="10">
@@ -325,8 +325,8 @@
 
                 <StackPanel Spacing="20" Visibility="{x:Bind GetInstalledAppsResultKindFailedOrEmptyVisibility(InstalledAppsResultKind, InstalledAppsCollection.Count), Mode=OneWay}">
                     <Image
-                        Width="150"
-                        Height="150"
+                        Width="120"
+                        Height="120"
                         Source="ms-appx:///Assets/Image/Failed.png" />
 
                     <!--  搜索失败  -->

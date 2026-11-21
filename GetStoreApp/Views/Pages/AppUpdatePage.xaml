@@ -150,8 +150,8 @@
                 <!--  未检查更新  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckAppUpdateResultKindVisibility(AppUpdateResultKind, enum:AppUpdateResultKind.NotCheckUpdate), Mode=OneWay}">
                     <Image
-                        Width="150"
-                        Height="150"
+                        Width="120"
+                        Height="120"
                         Source="ms-appx:///Assets/Image/NotCheckUpdate.png" />
 
                     <TextBlock
@@ -166,8 +166,8 @@
                 <!--  所有应用已经到最新版本  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckAppUpdateResultKindVisibility(AppUpdateResultKind, enum:AppUpdateResultKind.AllUptoDate), Mode=OneWay}">
                     <Image
-                        Width="150"
-                        Height="150"
+                        Width="120"
+                        Height="120"
                         Source="ms-appx:///Assets/Image/Successfully.png" />
 
                     <TextBlock
@@ -182,8 +182,8 @@
                 <!--  应用检查更新失败  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckAppUpdateResultKindVisibility(AppUpdateResultKind, enum:AppUpdateResultKind.UpdateFailed), Mode=OneWay}">
                     <Image
-                        Width="150"
-                        Height="150"
+                        Width="120"
+                        Height="120"
                         Source="ms-appx:///Assets/Image/Failed.png" />
 
                     <TextBlock

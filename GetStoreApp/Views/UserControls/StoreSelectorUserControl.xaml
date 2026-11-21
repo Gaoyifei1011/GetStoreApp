@@ -44,6 +44,7 @@
 
                 <TextBlock
                     Grid.Column="1"
+                    Margin="0,0,0,2"
                     VerticalAlignment="Center"
                     FontSize="22"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/QueryLinksDescription')}" />
@@ -68,6 +69,7 @@
 
                 <TextBlock
                     Grid.Column="1"
+                    Margin="0,0,0,2"
                     VerticalAlignment="Center"
                     FontSize="22"
                     Text="{x:Bind rootservice:ResourceService.GetLocalized('StoreSelector/SearchAppsDescription')}" />

@@ -102,8 +102,8 @@
                 <!--  正在加载中  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckSettingsWinGetSourceResultKindVisibility(SettingsWinGetSourceResultKind, enum:SettingsWinGetSourceResultKind.Loading), Mode=OneWay}">
                     <Image
-                        Width="150"
-                        Height="150"
+                        Width="120"
+                        Height="120"
                         Source="ms-appx:///Assets/Image/Search.png" />
 
                     <Grid ColumnSpacing="10">
@@ -134,8 +134,8 @@
                 <!--  WinGet 数据源配置列表为空  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckSettingsWinGetSourceResultKindVisibility(SettingsWinGetSourceResultKind, enum:SettingsWinGetSourceResultKind.Empty), Mode=OneWay}">
                     <Image
-                        Width="150"
-                        Height="150"
+                        Width="120"
+                        Height="120"
                         Source="ms-appx:///Assets/Image/Failed.png" />
 
                     <TextBlock

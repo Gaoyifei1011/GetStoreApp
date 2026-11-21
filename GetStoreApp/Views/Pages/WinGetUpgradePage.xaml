@@ -174,8 +174,8 @@
                 <!--  未检查更新  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckUpgradableAppsResultKindVisibility(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.NotCheckUpdate), Mode=OneWay}">
                     <Image
-                        Width="150"
-                        Height="150"
+                        Width="120"
+                        Height="120"
                         Source="ms-appx:///Assets/Image/WinGetUpgradeDefault.png" />
 
                     <TextBlock
@@ -192,8 +192,8 @@
                 <!--  正在检查更新中  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckUpgradableAppsResultKindVisibility(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.Querying), Mode=OneWay}">
                     <Image
-                        Width="150"
-                        Height="150"
+                        Width="120"
+                        Height="120"
                         Source="ms-appx:///Assets/Image/Search.png" />
 
                     <Grid ColumnSpacing="10">
@@ -224,8 +224,8 @@
                 <!--  检查更新失败  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckUpgradableAppsResultKindVisibility(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.AllUpdateToDate), Mode=OneWay}">
                     <Image
-                        Width="150"
-                        Height="150"
+                        Width="120"
+                        Height="120"
                         Source="ms-appx:///Assets/Image/Successfully.png" />
 
                     <TextBlock
@@ -242,8 +242,8 @@
                 <!--  检查更新失败  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckUpgradableAppsResultKindVisibility(UpgradableAppsResultKind, enum:UpgradableAppsResultKind.Failed), Mode=OneWay}">
                     <Image
-                        Width="150"
-                        Height="150"
+                        Width="120"
+                        Height="120"
                         Source="ms-appx:///Assets/Image/Failed.png" />
 
                     <TextBlock
