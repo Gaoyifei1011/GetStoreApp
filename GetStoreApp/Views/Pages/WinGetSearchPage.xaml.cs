@@ -162,6 +162,7 @@ namespace GetStoreApp.Views.Pages
                 SearchAppsResultKind = SearchAppsResultKind.NotSearch;
                 PackageMatchField = PackageMatchField.Name;
                 PackageFieldMatchOption = PackageFieldMatchOption.EqualsCaseInsensitive;
+                UpdateAnimatedVisualState(false);
             }
 
             if (args.Parameter is WinGetPage winGetPage && WinGetPageInstance is null)
@@ -283,6 +284,7 @@ namespace GetStoreApp.Views.Pages
             {
                 IsIncrease = increase;
                 SearchAppsResultKind = SearchAppsResultKind.Searching;
+                UpdateAnimatedVisualState(true);
                 List<SearchAppsModel> searchAppsList = [.. SearchAppsCollection];
                 SearchAppsCollection.Clear();
                 if (IsIncrease)
@@ -299,6 +301,7 @@ namespace GetStoreApp.Views.Pages
                     SearchAppsCollection.Add(searchAppsItem);
                 }
                 SearchAppsResultKind = SearchAppsResultKind.HasResult;
+                UpdateAnimatedVisualState(false);
             }
         }
 
@@ -368,12 +371,14 @@ namespace GetStoreApp.Views.Pages
         private async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
             SearchAppsResultKind = SearchAppsResultKind.Searching;
+            UpdateAnimatedVisualState(true);
             SearchAppsCollection.Clear();
 
             if (string.IsNullOrEmpty(cachedSearchText))
             {
                 SearchAppsResultKind = SearchAppsResultKind.Failed;
                 SearchFailedContent = SearchAppsEmptyDescriptionString;
+                UpdateAnimatedVisualState(false);
             }
             else
             {
@@ -403,6 +408,7 @@ namespace GetStoreApp.Views.Pages
             {
                 cachedSearchText = SearchText;
                 SearchAppsResultKind = SearchAppsResultKind.Searching;
+                UpdateAnimatedVisualState(true);
                 SearchAppsCollection.Clear();
                 await InitializeSearchAppsDataAsync();
             }
@@ -444,6 +450,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 SearchAppsResultKind = SearchAppsResultKind.Failed;
                                 SearchFailedContent = SearchAppsEmptyDescriptionString;
+                                UpdateAnimatedVisualState(false);
                             }
                             else
                             {
@@ -453,30 +460,35 @@ namespace GetStoreApp.Views.Pages
                                 }
 
                                 SearchAppsResultKind = SearchAppsResultKind.HasResult;
+                                UpdateAnimatedVisualState(false);
                             }
                         }
                         else
                         {
                             SearchAppsResultKind = SearchAppsResultKind.Failed;
                             SearchFailedContent = string.Format(SearchAppsFailedString, SearchFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", findPackagesResult.ExtendedErrorCode.HResult) : NotAvailableString);
+                            UpdateAnimatedVisualState(false);
                         }
                     }
                     else
                     {
                         SearchAppsResultKind = SearchAppsResultKind.Failed;
                         SearchFailedContent = string.Format(SearchAppsFailedString, SearchCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", findPackagesResult.ExtendedErrorCode.HResult) : NotAvailableString);
+                        UpdateAnimatedVisualState(false);
                     }
                 }
                 else
                 {
                     SearchAppsResultKind = SearchAppsResultKind.Failed;
                     SearchFailedContent = NotAvailableString;
+                    UpdateAnimatedVisualState(false);
                 }
             }
             else
             {
                 SearchAppsResultKind = SearchAppsResultKind.Failed;
                 SearchFailedContent = SearchNotSelectSourceString;
+                UpdateAnimatedVisualState(false);
             }
         }
 
@@ -592,6 +604,24 @@ namespace GetStoreApp.Views.Pages
             }
 
             return searchAppsResult;
+        }
+
+        /// <summary>
+        /// 更新动画播放器状态
+        /// </summary>
+        private void UpdateAnimatedVisualState(bool isSearching)
+        {
+            if (isSearching && !SearchingVisualPlayer.IsPlaying)
+            {
+                DispatcherQueue.TryEnqueue(async () =>
+                {
+                    await SearchingVisualPlayer.PlayAsync(0, 1, true);
+                });
+            }
+            else if (!isSearching && SearchingVisualPlayer.IsPlaying)
+            {
+                SearchingVisualPlayer.Stop();
+            }
         }
 
         /// <summary>

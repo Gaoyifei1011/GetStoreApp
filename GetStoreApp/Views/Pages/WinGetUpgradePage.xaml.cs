@@ -134,6 +134,7 @@ namespace GetStoreApp.Views.Pages
                 IsIncrease = true;
                 SelectedAppSortRuleKind = AppSortRuleKind.DisplayName;
                 UpgradableAppsResultKind = UpgradableAppsResultKind.NotCheckUpdate;
+                UpdateAnimatedVisualState(false);
             }
 
             if (args.Parameter is WinGetPage winGetPage && WinGetPageInstance is null)
@@ -300,11 +301,13 @@ namespace GetStoreApp.Views.Pages
                         {
                             UpgradableAppsResultKind = UpgradableAppsResultKind.AllUpdateToDate;
                             UpgradableFailedContent = string.Empty;
+                            UpdateAnimatedVisualState(false);
                         }
                         else
                         {
                             UpgradableAppsResultKind = UpgradableAppsResultKind.HasResult;
                             UpgradableFailedContent = string.Empty;
+                            UpdateAnimatedVisualState(false);
                         }
                     }
                     else
@@ -377,7 +380,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task InitializeUpgradableAppsDataAsync()
         {
-            UpgradableAppsResultKind = UpgradableAppsResultKind.Querying;
+            UpgradableAppsResultKind = UpgradableAppsResultKind.Loading;
+            UpdateAnimatedVisualState(true);
             UpgradableAppsCollection.Clear();
 
             PackageManager packageManager = await Task.Run(WinGetFactoryHelper.CreatePackageManager);
@@ -399,6 +403,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 UpgradableAppsResultKind = UpgradableAppsResultKind.AllUpdateToDate;
                                 UpgradableFailedContent = string.Empty;
+                                UpdateAnimatedVisualState(false);
                             }
                             else
                             {
@@ -409,30 +414,35 @@ namespace GetStoreApp.Views.Pages
 
                                 UpgradableAppsResultKind = UpgradableAppsResultKind.HasResult;
                                 UpgradableFailedContent = string.Empty;
+                                UpdateAnimatedVisualState(false);
                             }
                         }
                         else
                         {
                             UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
                             UpgradableFailedContent = string.Format(UpgradableAppsFailedString, UpgradableFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", findPackagesResult.ExtendedErrorCode.HResult) : NotAvailableString);
+                            UpdateAnimatedVisualState(false);
                         }
                     }
                     else
                     {
                         UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
                         UpgradableFailedContent = string.Format(UpgradableAppsFailedString, UpgradableCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", findPackagesResult.ExtendedErrorCode.HResult) : NotAvailableString);
+                        UpdateAnimatedVisualState(false);
                     }
                 }
                 else
                 {
                     UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
                     UpgradableFailedContent = NotAvailableString;
+                    UpdateAnimatedVisualState(false);
                 }
             }
             else
             {
                 UpgradableAppsResultKind = UpgradableAppsResultKind.Failed;
                 UpgradableFailedContent = UpgradableNotSelectSourceString;
+                UpdateAnimatedVisualState(false);
             }
         }
 
@@ -500,7 +510,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void InitializeMatchedUpgradableApps(AppSortRuleKind appSortRuleKind, bool isIncrease)
         {
-            UpgradableAppsResultKind = UpgradableAppsResultKind.Querying;
+            UpgradableAppsResultKind = UpgradableAppsResultKind.Loading;
+            UpdateAnimatedVisualState(true);
             List<UpgradableAppsModel> upgradableAppsList = [.. UpgradableAppsCollection];
             UpgradableAppsCollection.Clear();
             if (appSortRuleKind is AppSortRuleKind.DisplayName)
@@ -531,6 +542,7 @@ namespace GetStoreApp.Views.Pages
                 UpgradableAppsCollection.Add(upgradableAppsItem);
             }
             UpgradableAppsResultKind = UpgradableAppsResultKind.HasResult;
+            UpdateAnimatedVisualState(false);
         }
 
         /// <summary>
@@ -635,6 +647,24 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 更新动画播放器状态
+        /// </summary>
+        private void UpdateAnimatedVisualState(bool isLoading)
+        {
+            if (isLoading && !LoadingVisualPlayer.IsPlaying)
+            {
+                DispatcherQueue.TryEnqueue(async () =>
+                {
+                    await LoadingVisualPlayer.PlayAsync(0, 1, true);
+                });
+            }
+            else if (!isLoading && LoadingVisualPlayer.IsPlaying)
+            {
+                LoadingVisualPlayer.Stop();
+            }
+        }
+
+        /// <summary>
         /// 获取可更新应用是否加载完成
         /// </summary>
         private Visibility GetUpgradableAppsHasResultVisibility(UpgradableAppsResultKind upgradableAppsResultKind, bool isReverse)
@@ -656,7 +686,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool GetIsCheckingUpdate(UpgradableAppsResultKind upgradableAppsResultKind)
         {
-            return upgradableAppsResultKind is not UpgradableAppsResultKind.Querying;
+            return upgradableAppsResultKind is not UpgradableAppsResultKind.Loading;
         }
 
         #endregion 第七部分：数据操作与业务逻辑

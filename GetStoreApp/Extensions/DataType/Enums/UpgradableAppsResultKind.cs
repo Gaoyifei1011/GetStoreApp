@@ -6,7 +6,7 @@
     internal enum UpgradableAppsResultKind
     {
         NotCheckUpdate = 0,
-        Querying = 1,
+        Loading = 1,
         Failed = 2,
         HasResult = 3,
         AllUpdateToDate = 4

@@ -81,8 +81,8 @@
     <Content Include="Assets\Image\Failed.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Image\NoTask.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Image\NotCheckUpdate.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Image\PackageEmpty.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Image\QueryLinks.png" CopyToOutputDirectory="Always" />
-    <Content Include="Assets\Image\Search.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Image\SearchApps.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Image\Successfully.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Image\WinGetSearchDefault.png" CopyToOutputDirectory="Always" />
