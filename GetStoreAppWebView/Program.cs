@@ -2,7 +2,6 @@
 using GetStoreAppWebView.Helpers.Root;
 using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.Services.Settings;
-using GetStoreAppWebView.Views.Windows;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Threading.Tasks;

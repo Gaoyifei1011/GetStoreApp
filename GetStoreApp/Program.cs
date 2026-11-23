@@ -3,7 +3,6 @@ using GetStoreApp.Services.Download;
 using GetStoreApp.Services.History;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
-using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using Microsoft.Windows.AppLifecycle;
 using System;
