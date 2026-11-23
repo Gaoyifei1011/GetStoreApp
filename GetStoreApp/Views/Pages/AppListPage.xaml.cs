@@ -418,6 +418,7 @@ namespace GetStoreApp.Views.Pages
                         AppManagerCollection.Remove(package);
 
                         AppManagerResultKind = AppManagerCollection.Count is 0 ? AppManagerResultKind.EmptyApps : AppManagerResultKind.HasApps;
+                        UpdateAnimatedVisualState(false);
                         if (AppManagerList.Count is 0)
                         {
                             AppManagerFailedContent = PackageEmptyDescriptionString;
@@ -495,6 +496,7 @@ namespace GetStoreApp.Views.Pages
             if (!string.IsNullOrEmpty(SearchText) && AppManagerResultKind is not AppManagerResultKind.Loading)
             {
                 AppManagerResultKind = AppManagerResultKind.Loading;
+                UpdateAnimatedVisualState(true);
                 AppManagerCollection.Clear();
                 if (await GetFilterSortPackageCollectionAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is ReadOnlyCollection<PackageModel> filterSortPackageList)
                 {
@@ -512,6 +514,7 @@ namespace GetStoreApp.Views.Pages
             if (string.IsNullOrEmpty(SearchText) && AppManagerResultKind is not AppManagerResultKind.Loading)
             {
                 AppManagerResultKind = AppManagerResultKind.Loading;
+                UpdateAnimatedVisualState(true);
                 AppManagerCollection.Clear();
                 if (await GetFilterSortPackageCollectionAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is ReadOnlyCollection<PackageModel> filterSortPackageCollection)
                 {
@@ -530,6 +533,7 @@ namespace GetStoreApp.Views.Pages
             {
                 IsIncrease = increase;
                 AppManagerResultKind = AppManagerResultKind.Loading;
+                UpdateAnimatedVisualState(true);
                 AppManagerCollection.Clear();
                 if (await GetFilterSortPackageCollectionAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is ReadOnlyCollection<PackageModel> filterSortPackageCollection)
                 {
@@ -547,8 +551,8 @@ namespace GetStoreApp.Views.Pages
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && AppManagerResultKind is not AppManagerResultKind.Loading && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind)
             {
                 SelectedAppSortRuleKind = appSortRuleKind;
-
                 AppManagerResultKind = AppManagerResultKind.Loading;
+                UpdateAnimatedVisualState(true);
                 AppManagerCollection.Clear();
                 if (await GetFilterSortPackageCollectionAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is ReadOnlyCollection<PackageModel> filterSortPackageCollection)
                 {
@@ -617,6 +621,7 @@ namespace GetStoreApp.Views.Pages
             if (needToRefreshData && AppManagerResultKind is not AppManagerResultKind.Loading)
             {
                 AppManagerResultKind = AppManagerResultKind.Loading;
+                UpdateAnimatedVisualState(true);
                 AppManagerCollection.Clear();
                 if (await GetFilterSortPackageCollectionAsync(AppManagerList, IsAppFramework, IsStoreSignatureSelected, IsSystemSignatureSelected, IsEnterpriseSignatureSelected, IsDeveloperSignatureSelected, IsNoneSignatureSelected, SearchText, SelectedAppSortRuleKind, IsIncrease) is ReadOnlyCollection<PackageModel> filterSortPackageCollection)
                 {
@@ -683,6 +688,7 @@ namespace GetStoreApp.Views.Pages
             if (AppManagerResultKind is not AppManagerResultKind.Loading)
             {
                 AppManagerResultKind = AppManagerResultKind.Loading;
+                UpdateAnimatedVisualState(true);
                 AppManagerList.Clear();
                 AppManagerCollection.Clear();
 
@@ -1638,6 +1644,24 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 更新动画播放器状态
+        /// </summary>
+        private void UpdateAnimatedVisualState(bool isLoading)
+        {
+            if (isLoading && !LoadingVisualPlayer.IsPlaying)
+            {
+                DispatcherQueue.TryEnqueue(async () =>
+                {
+                    await LoadingVisualPlayer.PlayAsync(0, 1, true);
+                });
+            }
+            else if (!isLoading && LoadingVisualPlayer.IsPlaying)
+            {
+                LoadingVisualPlayer.Stop();
+            }
+        }
+
+        /// <summary>
         /// 更新过滤后的数据
         /// </summary>
         private void UpdateFilterPackageData(ReadOnlyCollection<PackageModel> filterSortPackageCollection)
@@ -1650,6 +1674,7 @@ namespace GetStoreApp.Views.Pages
                 }
 
                 AppManagerResultKind = AppManagerCollection.Count is 0 ? AppManagerResultKind.EmptyApps : AppManagerResultKind.HasApps;
+                UpdateAnimatedVisualState(false);
                 if (AppManagerList.Count is 0)
                 {
                     AppManagerFailedContent = PackageEmptyDescriptionString;
@@ -1667,6 +1692,7 @@ namespace GetStoreApp.Views.Pages
             {
                 AppManagerResultKind = AppManagerResultKind.EmptyApps;
                 AppManagerFailedContent = PackageEmptyDescriptionString;
+                UpdateAnimatedVisualState(false);
             }
         }
 

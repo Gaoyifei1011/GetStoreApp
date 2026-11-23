@@ -215,6 +215,7 @@ namespace GetStoreApp.Views.Pages
                         PackageVolumeResultKind = PackageVolumeResultKind.HasResult;
                         PackageVolumeFailedContent = string.Empty;
                     }
+                    UpdateAnimatedVisualState(false);
                 }
             }
         }
@@ -267,6 +268,7 @@ namespace GetStoreApp.Views.Pages
             if (PackageVolumeResultKind is not PackageVolumeResultKind.Loading)
             {
                 PackageVolumeResultKind = PackageVolumeResultKind.Loading;
+                UpdateAnimatedVisualState(true);
                 PackageVolumeCollection.Clear();
                 (bool result, ReadOnlyCollection<PackageVolumeModel> packageVolumeCollection, Exception exception) = await GetPackageVolumeAsync();
 
@@ -276,6 +278,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         PackageVolumeResultKind = PackageVolumeResultKind.Failed;
                         PackageVolumeFailedContent = PackageVolumeEmptyString;
+                        UpdateAnimatedVisualState(false);
                     }
                     else
                     {
@@ -286,12 +289,14 @@ namespace GetStoreApp.Views.Pages
 
                         PackageVolumeResultKind = PackageVolumeResultKind.HasResult;
                         PackageVolumeFailedContent = string.Empty;
+                        UpdateAnimatedVisualState(false);
                     }
                 }
                 else
                 {
                     PackageVolumeResultKind = PackageVolumeResultKind.Failed;
                     PackageVolumeFailedContent = string.Format(PackageVolumeFailedString, exception is not null ? exception.Message : NotAvailableString, exception is not null ? string.Format("0x{0:X8}", exception.HResult) : NotAvailableString);
+                    UpdateAnimatedVisualState(false);
                 }
             }
         }
@@ -479,6 +484,24 @@ namespace GetStoreApp.Views.Pages
                     return ValueTuple.Create<bool, PackageDeploymentResult, Exception>(false, null, e);
                 }
             });
+        }
+
+        /// <summary>
+        /// 更新动画播放器状态
+        /// </summary>
+        private void UpdateAnimatedVisualState(bool isLoading)
+        {
+            if (isLoading && !LoadingVisualPlayer.IsPlaying)
+            {
+                DispatcherQueue.TryEnqueue(async () =>
+                {
+                    await LoadingVisualPlayer.PlayAsync(0, 1, true);
+                });
+            }
+            else if (!isLoading && LoadingVisualPlayer.IsPlaying)
+            {
+                LoadingVisualPlayer.Stop();
+            }
         }
 
         /// <summary>

@@ -319,6 +319,7 @@ namespace GetStoreApp.Views.Pages
         private async Task InitializeWinGetSourceDataAsync()
         {
             SettingsWinGetSourceResultKind = SettingsWinGetSourceResultKind.Loading;
+            UpdateAnimatedVisualState(true);
             WinGetSourceGroupCollection.Clear();
 
             if (await GetWinGetSourceInternalCollectionAsync() is ReadOnlyCollection<WinGetSourceModel> winGetSourceInternalCollection && winGetSourceInternalCollection.Count > 0)
@@ -364,6 +365,7 @@ namespace GetStoreApp.Views.Pages
                 }
             }
             SettingsWinGetSourceResultKind = WinGetSourceGroupCollection.Count is 0 ? SettingsWinGetSourceResultKind.Empty : SettingsWinGetSourceResultKind.Successfully;
+            UpdateAnimatedVisualState(false);
         }
 
         /// <summary>
@@ -553,6 +555,24 @@ namespace GetStoreApp.Views.Pages
             {
                 WinGetConfigService.RemoveWinGetDataSourceName(KeyValuePair.Create(name, isInternal));
             });
+        }
+
+        /// <summary>
+        /// 更新动画播放器状态
+        /// </summary>
+        private void UpdateAnimatedVisualState(bool isLoading)
+        {
+            if (isLoading && !LoadingVisualPlayer.IsPlaying)
+            {
+                DispatcherQueue.TryEnqueue(async () =>
+                {
+                    await LoadingVisualPlayer.PlayAsync(0, 1, true);
+                });
+            }
+            else if (!isLoading && LoadingVisualPlayer.IsPlaying)
+            {
+                LoadingVisualPlayer.Stop();
+            }
         }
 
         /// <summary>

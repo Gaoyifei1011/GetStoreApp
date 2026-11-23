@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.Views.Pages.SettingsWinGetSourcePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:animation="using:GetStoreApp.Views.Animations"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
@@ -101,34 +102,23 @@
 
                 <!--  正在加载中  -->
                 <StackPanel Spacing="20" Visibility="{x:Bind CheckSettingsWinGetSourceResultKindVisibility(SettingsWinGetSourceResultKind, enum:SettingsWinGetSourceResultKind.Loading), Mode=OneWay}">
-                    <Image
+                    <AnimatedVisualPlayer
+                        x:Name="LoadingVisualPlayer"
                         Width="120"
-                        Height="120"
-                        Source="ms-appx:///Assets/Image/Search.png" />
+                        Height="120">
+                        <animation:AnimatedLoadingVisualSource />
+                    </AnimatedVisualPlayer>
 
-                    <Grid ColumnSpacing="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <ProgressRing
-                            Grid.Column="0"
-                            Width="30"
-                            Height="30"
-                            IsActive="True" />
-
-                        <TextBlock
-                            Grid.Column="1"
-                            MaxWidth="800"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="18"
-                            FontWeight="Medium"
-                            Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/LoadingWinGetSource')}"
-                            TextAlignment="Center"
-                            TextWrapping="Wrap" />
-                    </Grid>
+                    <TextBlock
+                        Grid.Column="1"
+                        MaxWidth="800"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="18"
+                        FontWeight="Medium"
+                        Text="{x:Bind rootservice:ResourceService.GetLocalized('SettingsWinGetSource/LoadingWinGetSource')}"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap" />
                 </StackPanel>
 
                 <!--  WinGet 数据源配置列表为空  -->

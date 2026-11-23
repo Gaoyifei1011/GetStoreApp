@@ -121,11 +121,13 @@ namespace GetStoreApp.Views.Pages
             {
                 isInitialized = true;
                 CompletedResultKind = CompletedResultKind.Loading;
+                UpdateAnimatedVisualState(true);
                 DownloadStorageService.DownloadStorageSemaphoreSlim?.Wait();
                 await InitializeDataAsync();
                 await MountDownloadEventAsync();
                 DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
                 CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.HasResult;
+                UpdateAnimatedVisualState(false);
             }
         }
 
@@ -420,6 +422,7 @@ namespace GetStoreApp.Views.Pages
 
                 await DeleteDownloaodFileAsync(selectedCompletedDataCollection, deleteFileDialog.DeleteFileSameTime);
                 CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.HasResult;
+                UpdateAnimatedVisualState(false);
             }
         }
 
@@ -548,6 +551,7 @@ namespace GetStoreApp.Views.Pages
                 });
 
                 CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.HasResult;
+                UpdateAnimatedVisualState(false);
             });
         }
 
@@ -568,6 +572,7 @@ namespace GetStoreApp.Views.Pages
                 }
 
                 CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.HasResult;
+                UpdateAnimatedVisualState(false);
             });
         }
 
@@ -1035,6 +1040,24 @@ namespace GetStoreApp.Views.Pages
             else
             {
                 return default;
+            }
+        }
+
+        /// <summary>
+        /// 更新动画播放器状态
+        /// </summary>
+        private void UpdateAnimatedVisualState(bool isLoading)
+        {
+            if (isLoading && !LoadingVisualPlayer.IsPlaying)
+            {
+                DispatcherQueue.TryEnqueue(async () =>
+                {
+                    await LoadingVisualPlayer.PlayAsync(0, 1, true);
+                });
+            }
+            else if (!isLoading && LoadingVisualPlayer.IsPlaying)
+            {
+                LoadingVisualPlayer.Stop();
             }
         }
 

@@ -406,7 +406,7 @@ namespace GetStoreApp.Views.Pages
                 WinGetInstalledFlyout.Hide();
             }
 
-            if (!string.IsNullOrEmpty(SearchText) && InstalledAppsResultKind is not InstalledAppsResultKind.Querying && InstalledAppsResultKind is not InstalledAppsResultKind.Failed)
+            if (!string.IsNullOrEmpty(SearchText) && InstalledAppsResultKind is not InstalledAppsResultKind.Loading && InstalledAppsResultKind is not InstalledAppsResultKind.Failed)
             {
                 InitializeMatchedInstalledApps(SelectedAppSortRuleKind, IsIncrease, SearchText);
             }
@@ -418,7 +418,7 @@ namespace GetStoreApp.Views.Pages
         private void OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             SearchText = sender.Text;
-            if (string.IsNullOrEmpty(SearchText) && InstalledAppsResultKind is not InstalledAppsResultKind.Querying && InstalledAppsResultKind is not InstalledAppsResultKind.Failed)
+            if (string.IsNullOrEmpty(SearchText) && InstalledAppsResultKind is not InstalledAppsResultKind.Loading && InstalledAppsResultKind is not InstalledAppsResultKind.Failed)
             {
                 InitializeMatchedInstalledApps(SelectedAppSortRuleKind, IsIncrease, SearchText);
             }
@@ -452,10 +452,12 @@ namespace GetStoreApp.Views.Pages
                         {
                             InstalledAppsResultKind = InstalledAppsResultKind.Failed;
                             InstalledFailedContent = InstalledAppsEmptyDescriptionString;
+                            UpdateAnimatedVisualState(false);
                         }
                         else
                         {
                             InstalledAppsResultKind = string.IsNullOrEmpty(SearchText) ? InstalledAppsResultKind.HasResult : InstalledAppsResultKind.SearchedHasResult;
+                            UpdateAnimatedVisualState(false);
                         }
                     }
                     else
@@ -624,7 +626,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async Task GetInstalledAppsDataAsync(AppSortRuleKind appSortRuleKind, bool isIncrease)
         {
-            InstalledAppsResultKind = InstalledAppsResultKind.Querying;
+            InstalledAppsResultKind = InstalledAppsResultKind.Loading;
+            UpdateAnimatedVisualState(true);
 
             InstalledAppsLock.Enter();
             try
@@ -651,7 +654,7 @@ namespace GetStoreApp.Views.Pages
             {
                 (ConnectResult connectResult, FindPackagesResult findPackagesResult, ReadOnlyCollection<InstalledAppsModel> upgradableAppsCollection) = await Task.Run(async () =>
                 {
-                    return await InstalledAppsAsync(packageCatalogReference, appSortRuleKind, isIncrease);
+                    return await GetInstalledAppsAsync(packageCatalogReference, appSortRuleKind, isIncrease);
                 });
 
                 if (connectResult is not null && findPackagesResult is not null)
@@ -664,6 +667,7 @@ namespace GetStoreApp.Views.Pages
                             {
                                 InstalledAppsResultKind = InstalledAppsResultKind.Failed;
                                 InstalledFailedContent = InstalledAppsEmptyDescriptionString;
+                                UpdateAnimatedVisualState(false);
                             }
                             else
                             {
@@ -700,18 +704,21 @@ namespace GetStoreApp.Views.Pages
                                 }
 
                                 InstalledAppsResultKind = string.IsNullOrEmpty(SearchText) ? InstalledAppsResultKind.HasResult : InstalledAppsResultKind.SearchedHasResult;
+                                UpdateAnimatedVisualState(false);
                             }
                         }
                         else
                         {
                             InstalledAppsResultKind = InstalledAppsResultKind.Failed;
                             InstalledFailedContent = string.Format(InstalledAppsFailedString, InstalledFindAppsFailedString, findPackagesResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", findPackagesResult.ExtendedErrorCode.HResult) : NotAvailableString);
+                            UpdateAnimatedVisualState(false);
                         }
                     }
                     else
                     {
                         InstalledAppsResultKind = InstalledAppsResultKind.Failed;
                         InstalledFailedContent = string.Format(InstalledAppsFailedString, InstalledCatalogReferenceFailedString, findPackagesResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", findPackagesResult.ExtendedErrorCode.HResult) : NotAvailableString);
+                        UpdateAnimatedVisualState(false);
                     }
                 }
             }
@@ -719,6 +726,7 @@ namespace GetStoreApp.Views.Pages
             {
                 InstalledAppsResultKind = InstalledAppsResultKind.Failed;
                 InstalledFailedContent = InstalledNotSelectSourceString;
+                UpdateAnimatedVisualState(false);
             }
         }
 
@@ -727,7 +735,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void InitializeMatchedInstalledApps(AppSortRuleKind appSortRuleKind, bool isIncrease, string searchText)
         {
-            InstalledAppsResultKind = InstalledAppsResultKind.Querying;
+            InstalledAppsResultKind = InstalledAppsResultKind.Loading;
+            UpdateAnimatedVisualState(true);
             InstalledAppsLock.Enter();
 
             try
@@ -783,12 +792,13 @@ namespace GetStoreApp.Views.Pages
                 InstalledAppsLock.Exit();
             }
             InstalledAppsResultKind = string.IsNullOrEmpty(searchText) ? InstalledAppsResultKind.HasResult : InstalledAppsResultKind.SearchedHasResult;
+            UpdateAnimatedVisualState(false);
         }
 
         /// <summary>
         /// 获取已安装应用
         /// </summary>
-        private async Task<(ConnectResult, FindPackagesResult, ReadOnlyCollection<InstalledAppsModel>)> InstalledAppsAsync(PackageCatalogReference packageCatalogReference, AppSortRuleKind appSortRuleKind, bool isIncrease)
+        private async Task<(ConnectResult, FindPackagesResult, ReadOnlyCollection<InstalledAppsModel>)> GetInstalledAppsAsync(PackageCatalogReference packageCatalogReference, AppSortRuleKind appSortRuleKind, bool isIncrease)
         {
             (ConnectResult connectResult, FindPackagesResult findPackagesResult, ReadOnlyCollection<InstalledAppsModel> installedAppsCollection) installedAppsResult = ValueTuple.Create<ConnectResult, FindPackagesResult, ReadOnlyCollection<InstalledAppsModel>>(null, null, null);
 
@@ -878,11 +888,29 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetInstalledPage), nameof(InstalledAppsAsync), 1, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetInstalledPage), nameof(GetInstalledAppsAsync), 1, e);
                 }
             }
 
             return installedAppsResult;
+        }
+
+        /// <summary>
+        /// 更新动画播放器状态
+        /// </summary>
+        private void UpdateAnimatedVisualState(bool isLoading)
+        {
+            if (isLoading && !LoadingVisualPlayer.IsPlaying)
+            {
+                DispatcherQueue.TryEnqueue(async () =>
+                {
+                    await LoadingVisualPlayer.PlayAsync(0, 1, true);
+                });
+            }
+            else if (!isLoading && LoadingVisualPlayer.IsPlaying)
+            {
+                LoadingVisualPlayer.Stop();
+            }
         }
 
         /// <summary>
@@ -944,7 +972,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool GetIsInstalling(InstalledAppsResultKind installedAppsResultKind)
         {
-            return installedAppsResultKind is not InstalledAppsResultKind.Querying;
+            return installedAppsResultKind is not InstalledAppsResultKind.Loading;
         }
 
         #endregion 第七部分：数据操作与业务逻辑

@@ -5,7 +5,7 @@
     /// </summary>
     internal enum InstalledAppsResultKind
     {
-        Querying = 0,
+        Loading = 0,
         Failed = 1,
         HasResult = 2,
         SearchedHasResult = 3
