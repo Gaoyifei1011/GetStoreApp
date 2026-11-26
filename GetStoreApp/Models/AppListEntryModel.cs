@@ -28,7 +28,12 @@ namespace GetStoreApp.Models
         internal AppListEntry AppListEntry { get; set; }
 
         /// <summary>
-        /// 包的全名
+        /// 包的系列名称
+        /// </summary>
+        internal string PackageFamilyName { get; set; }
+
+        /// <summary>
+        /// 包的全部名称
         /// </summary>
         internal string PackageFullName { get; set; }
     }

@@ -30,7 +30,7 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 应用管理信息页
     /// </summary>
-    internal sealed partial class AppInformationPage : Page, INotifyPropertyChanged
+    internal sealed partial class AppInformationPage : Page
     {
         #region 第一部分：常量、资源与状态字段
 
@@ -52,269 +52,20 @@ namespace GetStoreApp.Views.Pages
         private readonly string SignatureKindString = ResourceService.GetLocalized("AppInformation/SignatureKind");
         private readonly string VerifyIsOKString = ResourceService.GetLocalized("AppInformation/VerifyIsOK");
         private readonly string VersionString = ResourceService.GetLocalized("AppInformation/Version");
-        private AppInformation appInformation;
 
         #endregion 第一部分：常量、资源与状态字段
 
         #region 第二部分：属性、集合与事件
 
-        private string DisplayName
-        {
-            get;
+        private ObservableCollection<AppDetailInfoModel> BasicInformationCollection { get; } = [];
 
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(DisplayName)));
-                }
-            }
-        }
+        private ObservableCollection<AppDetailInfoModel> PublisherInformationCollection { get; } = [];
 
-        private string PackageFamilyName
-        {
-            get;
-
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(PackageFamilyName)));
-                }
-            }
-        }
-
-        private string PackageFullName
-        {
-            get;
-
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(PackageFullName)));
-                }
-            }
-        }
-
-        private string Description
-        {
-            get;
-
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(Description)));
-                }
-            }
-        }
-
-        private string PublisherDisplayName
-        {
-            get;
-
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(PublisherDisplayName)));
-                }
-            }
-        }
-
-        private string PublisherId
-        {
-            get;
-
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(PublisherId)));
-                }
-            }
-        }
-
-        private string Version
-        {
-            get;
-
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(Version)));
-                }
-            }
-        }
-
-        private string InstalledDate
-        {
-            get;
-
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(InstalledDate)));
-                }
-            }
-        }
-
-        private string Architecture
-        {
-            get;
-
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(Architecture)));
-                }
-            }
-        }
-
-        private string SignatureKind
-        {
-            get;
-
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(SignatureKind)));
-                }
-            }
-        }
-
-        private string ResourceId
-        {
-            get;
-
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(ResourceId)));
-                }
-            }
-        }
-
-        private string IsBundle
-        {
-            get;
-
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsBundle)));
-                }
-            }
-        }
-
-        private string IsDevelopmentMode
-        {
-            get;
-
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsDevelopmentMode)));
-                }
-            }
-        }
-
-        private string IsFramework
-        {
-            get;
-
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsFramework)));
-                }
-            }
-        }
-
-        private string IsOptional
-        {
-            get;
-
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsOptional)));
-                }
-            }
-        }
-
-        private string IsResourcePackage
-        {
-            get;
-
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsResourcePackage)));
-                }
-            }
-        }
-
-        private string IsStub
-        {
-            get;
-
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(IsStub)));
-                }
-            }
-        }
-
-        private string VerifyIsOK
-        {
-            get;
-
-            set
-            {
-                if (!string.Equals(field, value))
-                {
-                    field = value;
-                    PropertyChanged?.Invoke(this, new(nameof(VerifyIsOK)));
-                }
-            }
-        }
+        private ObservableCollection<AppDetailInfoModel> PackageInformationCollection { get; } = [];
 
         private ObservableCollection<AppListEntryModel> AppListEntryCollection { get; } = [];
 
-        private ObservableCollection<PackageModel> DependenciesCollection { get; } = [];
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        private ObservableCollection<PackageModel> DependencyCollection { get; } = [];
 
         #endregion 第二部分：属性、集合与事件
 
@@ -386,8 +137,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnPinToDesktopExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            bool isPinnedSuccessfully = await PinToDesktopAsync(PackageFamilyName);
-            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Desktop, isPinnedSuccessfully));
+            if (args.Parameter is AppListEntryModel appListEntry && !string.IsNullOrEmpty(appListEntry.PackageFamilyName))
+            {
+                bool isPinnedSuccessfully = await PinToDesktopAsync(appListEntry.PackageFamilyName);
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Desktop, isPinnedSuccessfully));
+            }
         }
 
         /// <summary>
@@ -422,7 +176,20 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnCopyClicked(object sender, RoutedEventArgs args)
         {
-            if (await GetAppInformationCopyStringAsync(this.appInformation) is string appInformation && !string.IsNullOrEmpty(appInformation))
+            List<AppDetailInfoModel> appDetailInfoList = [];
+            foreach (AppDetailInfoModel basicInformationItem in BasicInformationCollection)
+            {
+                appDetailInfoList.Add(basicInformationItem);
+            }
+            foreach (AppDetailInfoModel publisherInformationItem in PublisherInformationCollection)
+            {
+                appDetailInfoList.Add(publisherInformationItem);
+            }
+            foreach (AppDetailInfoModel packageInformation in PackageInformationCollection)
+            {
+                appDetailInfoList.Add(packageInformation);
+            }
+            if (await GetAppInformationCopyStringAsync(appDetailInfoList.AsReadOnly()) is string appInformation && !string.IsNullOrEmpty(appInformation))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(appInformation);
                 await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
@@ -443,36 +210,94 @@ namespace GetStoreApp.Views.Pages
                 return;
             }
 
-            appInformation = appInformationItem;
-            DisplayName = appInformation.DisplayName;
-            PackageFamilyName = appInformation.PackageFamilyName;
-            PackageFullName = appInformation.PackageFullName;
-            Description = appInformation.Description;
-            PublisherDisplayName = appInformation.PublisherDisplayName;
-            PublisherId = appInformation.PublisherId;
-            Version = appInformation.Version;
-            InstalledDate = appInformation.InstallDate;
-            Architecture = appInformation.Architecture;
-            SignatureKind = appInformation.SignatureKind;
-            ResourceId = appInformation.ResourceId;
-            IsBundle = appInformation.IsBundle;
-            IsDevelopmentMode = appInformation.IsDevelopmentMode;
-            IsFramework = appInformation.IsFramework;
-            IsOptional = appInformation.IsOptional;
-            IsResourcePackage = appInformation.IsResourcePackage;
-            IsStub = appInformation.IsStub;
-            VerifyIsOK = appInformation.VerifyIsOK;
+            BasicInformationCollection.Clear();
+            if (!string.IsNullOrEmpty(appInformationItem.DisplayName))
+            {
+                BasicInformationCollection.Add(new() { ClassName = AppDisplayNameString, Content = appInformationItem.DisplayName });
+            }
+            if (!string.IsNullOrEmpty(appInformationItem.PackageFamilyName))
+            {
+                BasicInformationCollection.Add(new() { ClassName = PackageFamilyNameString, Content = appInformationItem.PackageFamilyName });
+            }
+            if (!string.IsNullOrEmpty(appInformationItem.PackageFullName))
+            {
+                BasicInformationCollection.Add(new() { ClassName = PackageFullNameString, Content = appInformationItem.PackageFullName });
+            }
+            if (!string.IsNullOrEmpty(appInformationItem.Description))
+            {
+                BasicInformationCollection.Add(new() { ClassName = AppDescriptionString, Content = appInformationItem.Description });
+            }
+
+            PublisherInformationCollection.Clear();
+            if (!string.IsNullOrEmpty(appInformationItem.PublisherDisplayName))
+            {
+                PublisherInformationCollection.Add(new() { ClassName = PublisherDisplayNameString, Content = appInformationItem.PublisherDisplayName });
+            }
+            if (!string.IsNullOrEmpty(appInformationItem.PublisherId))
+            {
+                PublisherInformationCollection.Add(new() { ClassName = PublisherIdString, Content = appInformationItem.PublisherId });
+            }
+
+            PackageInformationCollection.Clear();
+            if (!string.IsNullOrEmpty(appInformationItem.Version))
+            {
+                PackageInformationCollection.Add(new() { ClassName = VersionString, Content = appInformationItem.Version });
+            }
+            if (!string.IsNullOrEmpty(appInformationItem.InstallDate))
+            {
+                PackageInformationCollection.Add(new() { ClassName = InstalledDateString, Content = appInformationItem.InstallDate });
+            }
+            if (!string.IsNullOrEmpty(appInformationItem.Architecture))
+            {
+                PackageInformationCollection.Add(new() { ClassName = ArchitectureString, Content = appInformationItem.Architecture });
+            }
+            if (!string.IsNullOrEmpty(appInformationItem.SignatureKind))
+            {
+                PackageInformationCollection.Add(new() { ClassName = SignatureKindString, Content = appInformationItem.SignatureKind });
+            }
+            if (!string.IsNullOrEmpty(appInformationItem.ResourceId))
+            {
+                PackageInformationCollection.Add(new() { ClassName = ResourceIdString, Content = appInformationItem.ResourceId });
+            }
+            if (!string.IsNullOrEmpty(appInformationItem.IsBundle))
+            {
+                PackageInformationCollection.Add(new() { ClassName = IsBundleString, Content = appInformationItem.IsBundle });
+            }
+            if (!string.IsNullOrEmpty(appInformationItem.IsDevelopmentMode))
+            {
+                PackageInformationCollection.Add(new() { ClassName = IsDevelopmentModeString, Content = appInformationItem.IsDevelopmentMode });
+            }
+            if (!string.IsNullOrEmpty(appInformationItem.IsFramework))
+            {
+                PackageInformationCollection.Add(new() { ClassName = IsFrameworkString, Content = appInformationItem.IsFramework });
+            }
+            if (!string.IsNullOrEmpty(appInformationItem.IsOptional))
+            {
+                PackageInformationCollection.Add(new() { ClassName = IsOptionalString, Content = appInformationItem.IsOptional });
+            }
+            if (!string.IsNullOrEmpty(appInformationItem.IsResourcePackage))
+            {
+                PackageInformationCollection.Add(new() { ClassName = IsResourcePackageString, Content = appInformationItem.IsResourcePackage });
+            }
+            if (!string.IsNullOrEmpty(appInformationItem.IsStub))
+            {
+                PackageInformationCollection.Add(new() { ClassName = IsStubString, Content = appInformationItem.IsStub });
+            }
+            if (!string.IsNullOrEmpty(appInformationItem.VerifyIsOK))
+            {
+                PackageInformationCollection.Add(new() { ClassName = VerifyIsOKString, Content = appInformationItem.VerifyIsOK });
+            }
 
             AppListEntryCollection.Clear();
-            foreach (AppListEntryModel appListEntry in appInformation.AppListEntryList)
+            foreach (AppListEntryModel appListEntry in appInformationItem.AppListEntryList)
             {
                 AppListEntryCollection.Add(appListEntry);
             }
 
-            DependenciesCollection.Clear();
-            foreach (PackageModel packageItem in appInformation.DependenciesList)
+            DependencyCollection.Clear();
+            foreach (PackageModel packageItem in appInformationItem.DependenciesList)
             {
-                DependenciesCollection.Add(packageItem);
+                DependencyCollection.Add(packageItem);
             }
         }
 
@@ -634,38 +459,17 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取应用信息要准备复制的字符串内容
         /// </summary>
-        private async Task<string> GetAppInformationCopyStringAsync(AppInformation appInformation)
+        private async Task<string> GetAppInformationCopyStringAsync(ReadOnlyCollection<AppDetailInfoModel> appDetailInfoCollection)
         {
-            if (appInformation is null)
-            {
-                return default;
-            }
-
             return await Task.Run(() =>
             {
                 try
                 {
-                    List<string> copyStringList =
-                    [
-                        string.Format("{0}:\t{1}", AppDisplayNameString, appInformation.DisplayName),
-                        string.Format("{0}:\t{1}", PackageFamilyNameString, appInformation.PackageFamilyName),
-                        string.Format("{0}:\t{1}", PackageFullNameString, appInformation.PackageFullName),
-                        string.Format("{0}:\t{1}", AppDescriptionString, appInformation.Description),
-                        string.Format("{0}:\t{1}", PublisherDisplayNameString, appInformation.PublisherDisplayName),
-                        string.Format("{0}:\t{1}", PublisherIdString, appInformation.PublisherId),
-                        string.Format("{0}:\t{1}", VersionString, appInformation.Version),
-                        string.Format("{0}:\t{1}", InstalledDateString, appInformation.InstallDate),
-                        string.Format("{0}:\t{1}", ArchitectureString, appInformation.Architecture),
-                        string.Format("{0}:\t{1}", SignatureKindString, appInformation.SignatureKind),
-                        string.Format("{0}:\t{1}", ResourceIdString, appInformation.ResourceId),
-                        string.Format("{0}:\t{1}", IsBundleString, appInformation.IsBundle),
-                        string.Format("{0}:\t{1}", IsDevelopmentModeString, appInformation.IsDevelopmentMode),
-                        string.Format("{0}:\t{1}", IsFrameworkString, appInformation.IsFramework),
-                        string.Format("{0}:\t{1}", IsOptionalString, appInformation.IsOptional),
-                        string.Format("{0}:\t{1}", IsResourcePackageString, appInformation.IsResourcePackage),
-                        string.Format("{0}:\t{1}", IsStubString, appInformation.IsStub),
-                        string.Format("{0}:\t{1}", VerifyIsOKString, appInformation.VerifyIsOK)
-                    ];
+                    List<string> copyStringList = [];
+                    foreach (AppDetailInfoModel appDetailInfoItem in appDetailInfoCollection)
+                    {
+                        copyStringList.Add(string.Format("{0}:\t{1}", appDetailInfoItem.ClassName, appDetailInfoItem.Content));
+                    }
                     return string.Join(Environment.NewLine, copyStringList);
                 }
                 catch (Exception e)

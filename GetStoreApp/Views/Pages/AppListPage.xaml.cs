@@ -1022,9 +1022,9 @@ namespace GetStoreApp.Views.Pages
                         appNotificationBuilder.AddText(MoveFailed2String);
                         appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                         {
-                                MoveFailed3String,
-                                string.Format(MoveFailed4String, deploymentResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", deploymentResult.ExtendedErrorCode.HResult) : NotAvailableString),
-                                string.Format(MoveFailed5String, deploymentResult.ErrorText)
+                            MoveFailed3String,
+                            string.Format(MoveFailed4String, deploymentResult.ExtendedErrorCode is not null ? string.Format("0x{0:X8}", deploymentResult.ExtendedErrorCode.HResult) : NotAvailableString),
+                            string.Format(MoveFailed5String, deploymentResult.ErrorText)
                         }));
                         AppNotificationButton openSettingsButton = new(OpenSettingsString);
                         openSettingsButton.Arguments.Add("action", "OpenSettings");
@@ -1279,44 +1279,40 @@ namespace GetStoreApp.Views.Pages
 
                 try
                 {
-                    appInformation.PackageFamilyName = string.IsNullOrEmpty(package.Package.Id.FamilyName) ? NotAvailableString : package.Package.Id.FamilyName;
+                    appInformation.PackageFamilyName = package.Package.Id.FamilyName;
                 }
                 catch (Exception e)
                 {
                     ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    appInformation.PackageFamilyName = NotAvailableString;
                 }
 
                 try
                 {
-                    appInformation.PackageFullName = string.IsNullOrEmpty(package.Package.Id.FullName) ? NotAvailableString : package.Package.Id.FullName;
+                    appInformation.PackageFullName = package.Package.Id.FullName;
                 }
                 catch (Exception e)
                 {
                     ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    appInformation.PackageFullName = NotAvailableString;
                 }
 
                 try
                 {
-                    appInformation.Description = string.IsNullOrEmpty(package.Package.Description) ? NotAvailableString : package.Package.Description;
+                    appInformation.Description = package.Package.Description;
                 }
                 catch (Exception e)
                 {
                     ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    appInformation.Description = NotAvailableString;
                 }
 
                 appInformation.PublisherDisplayName = package.PublisherDisplayName;
 
                 try
                 {
-                    appInformation.PublisherId = string.IsNullOrEmpty(package.Package.Id.PublisherId) ? NotAvailableString : package.Package.Id.PublisherId;
+                    appInformation.PublisherId = package.Package.Id.PublisherId;
                 }
                 catch (Exception e)
                 {
                     ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    appInformation.PublisherId = NotAvailableString;
                 }
 
                 appInformation.Version = package.Version;
@@ -1324,24 +1320,22 @@ namespace GetStoreApp.Views.Pages
 
                 try
                 {
-                    appInformation.Architecture = string.IsNullOrEmpty(Convert.ToString(package.Package.Id.Architecture)) ? NotAvailableString : Convert.ToString(package.Package.Id.Architecture);
+                    appInformation.Architecture = Convert.ToString(package.Package.Id.Architecture);
                 }
                 catch (Exception e)
                 {
                     ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    appInformation.Architecture = NotAvailableString;
                 }
 
                 appInformation.SignatureKind = ResourceService.GetLocalized(string.Format(SignatureString, Convert.ToString(package.SignatureKind)));
 
                 try
                 {
-                    appInformation.ResourceId = string.IsNullOrEmpty(package.Package.Id.ResourceId) ? NotAvailableString : package.Package.Id.ResourceId;
+                    appInformation.ResourceId = package.Package.Id.ResourceId;
                 }
                 catch (Exception e)
                 {
                     ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    appInformation.ResourceId = NotAvailableString;
                 }
 
                 try
@@ -1351,7 +1345,6 @@ namespace GetStoreApp.Views.Pages
                 catch (Exception e)
                 {
                     ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    appInformation.IsBundle = NotAvailableString;
                 }
 
                 try
@@ -1361,10 +1354,16 @@ namespace GetStoreApp.Views.Pages
                 catch (Exception e)
                 {
                     ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    appInformation.IsDevelopmentMode = NotAvailableString;
                 }
 
-                appInformation.IsFramework = package.IsFramework ? YesString : NoString;
+                try
+                {
+                    appInformation.IsFramework = package.IsFramework ? YesString : NoString;
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
 
                 try
                 {
@@ -1373,7 +1372,6 @@ namespace GetStoreApp.Views.Pages
                 catch (Exception e)
                 {
                     ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    appInformation.IsOptional = NotAvailableString;
                 }
 
                 try
@@ -1383,7 +1381,6 @@ namespace GetStoreApp.Views.Pages
                 catch (Exception e)
                 {
                     ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    appInformation.IsResourcePackage = NotAvailableString;
                 }
 
                 try
@@ -1393,7 +1390,6 @@ namespace GetStoreApp.Views.Pages
                 catch (Exception e)
                 {
                     ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    appInformation.IsStub = NotAvailableString;
                 }
 
                 try
@@ -1403,7 +1399,6 @@ namespace GetStoreApp.Views.Pages
                 catch (Exception e)
                 {
                     ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    appInformation.VerifyIsOK = NotAvailableString;
                 }
 
                 try
@@ -1414,18 +1409,14 @@ namespace GetStoreApp.Views.Pages
                         {
                             if (appListEntriesList[index] is AppListEntry appListEntry)
                             {
-                                string displayName = appListEntry.DisplayInfo.DisplayName;
-                                string description = appListEntry.DisplayInfo.Description;
-                                string appUserModelId = appListEntry.AppUserModelId;
-                                string packageFullName = package.Package.Id.FullName;
-
                                 appInformation.AppListEntryList.Add(new()
                                 {
                                     AppListEntry = appListEntry,
-                                    DisplayName = string.IsNullOrEmpty(displayName) ? NotAvailableString : displayName,
-                                    Description = string.IsNullOrEmpty(description) ? NotAvailableString : description,
-                                    AppUserModelId = string.IsNullOrEmpty(appUserModelId) ? NotAvailableString : appUserModelId,
-                                    PackageFullName = string.IsNullOrEmpty(packageFullName) ? NotAvailableString : packageFullName
+                                    DisplayName = appListEntry.DisplayInfo.DisplayName,
+                                    Description = appListEntry.DisplayInfo.Description,
+                                    AppUserModelId = appListEntry.AppUserModelId,
+                                    PackageFamilyName = package.Package.Id.FamilyName,
+                                    PackageFullName = package.Package.Id.FullName
                                 });
                             }
                         }
@@ -1446,15 +1437,13 @@ namespace GetStoreApp.Views.Pages
                             {
                                 if (dependencyList[index] is Package package)
                                 {
-                                    string displayName = package.DisplayName;
-                                    string publisherDisplayName = package.PublisherDisplayName;
                                     Version version = new(package.Id.Version.Major, package.Id.Version.Minor, package.Id.Version.Build, package.Id.Version.Revision);
 
                                     appInformation.DependenciesList.Add(new()
                                     {
                                         Package = package,
-                                        DisplayName = string.IsNullOrEmpty(displayName) ? NotAvailableString : displayName,
-                                        PublisherDisplayName = string.IsNullOrEmpty(publisherDisplayName) ? NotAvailableString : publisherDisplayName,
+                                        DisplayName = package.DisplayName,
+                                        PublisherDisplayName = package.PublisherDisplayName,
                                         Version = Convert.ToString(version),
                                     });
                                 }
