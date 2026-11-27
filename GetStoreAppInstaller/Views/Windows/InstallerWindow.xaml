@@ -211,10 +211,12 @@
                         <RowDefinition Height="Auto " />
                     </Grid.RowDefinitions>
 
-                    <ProgressRing
-                        Grid.Row="0"
-                        Width="60"
-                        Height="60" />
+                    <AnimatedVisualPlayer
+                        x:Name="LoadingVisualPlayer"
+                        Width="90"
+                        Height="90">
+                        <animation:AnimatedLoadingVisualSource />
+                    </AnimatedVisualPlayer>
 
                     <TextBlock
                         Grid.Row="1"

@@ -3206,6 +3206,7 @@ namespace GetStoreAppInstaller.Views.Windows
             ApplicationCollection.Clear();
             LanguageCollection.Clear();
             InstallDependencyCollection.Clear();
+            UpdateAnimatedVisualState(true);
         }
 
         /// <summary>
@@ -3331,6 +3332,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
             CanDragFile = true;
             IsLoadCompleted = true;
+            UpdateAnimatedVisualState(false);
         }
 
         /// <summary>
@@ -3482,6 +3484,24 @@ namespace GetStoreAppInstaller.Views.Windows
                     return ValueTuple.Create<bool, bool, PackageDeploymentResult, Exception>(false, false, null, null);
                 }
             });
+        }
+
+        /// <summary>
+        /// 更新动画播放器状态
+        /// </summary>
+        private void UpdateAnimatedVisualState(bool isLoading)
+        {
+            if (isLoading && !LoadingVisualPlayer.IsPlaying)
+            {
+                DispatcherQueue.TryEnqueue(async () =>
+                {
+                    await LoadingVisualPlayer.PlayAsync(0, 1, true);
+                });
+            }
+            else if (!isLoading && LoadingVisualPlayer.IsPlaying)
+            {
+                LoadingVisualPlayer.Stop();
+            }
         }
 
         /// <summary>
