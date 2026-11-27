@@ -106,6 +106,6 @@ namespace GetStoreApp.Extensions.DataType.Classes
         /// <summary>
         /// 应用依赖信息
         /// </summary>
-        internal List<PackageModel> DependenciesList { get; } = [];
+        internal List<PackageModel> DependencyList { get; } = [];
     }
 }

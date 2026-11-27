@@ -651,7 +651,7 @@ namespace GetStoreAppInstaller.Views.Windows
 
         private ObservableCollection<DependencyModel> DependencyCollection { get; } = [];
 
-        private ObservableCollection<CapabilityModel> CapabilitiesCollection { get; } = [];
+        private ObservableCollection<CapabilityModel> CapabilityCollection { get; } = [];
 
         private ObservableCollection<ApplicationModel> ApplicationCollection { get; } = [];
 
@@ -1063,9 +1063,9 @@ namespace GetStoreAppInstaller.Views.Windows
 
             try
             {
-                if (await args.DataView.GetStorageItemsAsync() is IReadOnlyList<IStorageItem> dragItemsList && dragItemsList.Count is 1)
+                if (await args.DataView.GetStorageItemsAsync() is IReadOnlyList<IStorageItem> dragItemList && dragItemList.Count is 1)
                 {
-                    string extensionName = Path.GetExtension(dragItemsList[0].Name);
+                    string extensionName = Path.GetExtension(dragItemList[0].Name);
 
                     if (string.Equals(extensionName, ".appx", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msix", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".appxbundle", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msixbundle", StringComparison.OrdinalIgnoreCase))
                     {
@@ -1771,7 +1771,7 @@ namespace GetStoreAppInstaller.Views.Windows
                     {
                         Task.Run(() =>
                         {
-                            List<string> filesList = [];
+                            List<string> fileList = [];
                             char[] dragFileCharArray = new char[260];
                             uint filesCount = Shell32Library.DragQueryFile(wParam, 0xffffffffu, null, 0);
 
@@ -1780,18 +1780,18 @@ namespace GetStoreAppInstaller.Views.Windows
                                 Array.Clear(dragFileCharArray, 0, dragFileCharArray.Length);
                                 if (Shell32Library.DragQueryFile(wParam, index, dragFileCharArray, (uint)dragFileCharArray.Length) > 0)
                                 {
-                                    filesList.Add(new string(dragFileCharArray).Replace("\0", string.Empty));
+                                    fileList.Add(new string(dragFileCharArray).Replace("\0", string.Empty));
                                 }
                             }
 
                             Shell32Library.DragQueryPoint(wParam, out PointInt32 point);
                             Shell32Library.DragFinish(wParam);
 
-                            if (filesList.Count > 0)
+                            if (fileList.Count > 0)
                             {
                                 DispatcherQueue.TryEnqueue(async () =>
                                 {
-                                    await DealElevatedDragDropAsync(filesList[0], CanDragFile);
+                                    await DealElevatedDragDropAsync(fileList[0], CanDragFile);
                                 });
                             }
                         });
@@ -1862,7 +1862,7 @@ namespace GetStoreAppInstaller.Views.Windows
                                 ManifestInformation manifestInformation = ParsePackageManifest(appxPackageReader, false, null);
 
                                 packageInformation.PackageFileType = PackageFileType.Package;
-                                packageInformation.CapabilitiesList.AddRange(manifestInformation.CapabilitiesList);
+                                packageInformation.CapabilityList.AddRange(manifestInformation.CapabilityList);
                                 packageInformation.ProcessorArchitecture = manifestInformation.ProcessorArchitecture;
                                 packageInformation.PackageFamilyName = manifestInformation.PackageFamilyName;
                                 packageInformation.PackageFullName = manifestInformation.PackageFullName;
@@ -1949,7 +1949,7 @@ namespace GetStoreAppInstaller.Views.Windows
                                                     ManifestInformation manifestInformation = ParsePackageManifest(appxPackageReader, true, packageInformation.LanguageList);
 
                                                     packageInformation.PackageFileType = PackageFileType.Package;
-                                                    packageInformation.CapabilitiesList.AddRange(manifestInformation.CapabilitiesList);
+                                                    packageInformation.CapabilityList.AddRange(manifestInformation.CapabilityList);
                                                     packageInformation.PackageFamilyName = manifestInformation.PackageFamilyName;
                                                     packageInformation.PackageFullName = manifestInformation.PackageFullName;
                                                     packageInformation.Version = manifestInformation.Version;
@@ -2350,7 +2350,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 if (appxPackageReader is not null && appxPackageReader.GetManifest(out IAppxManifestReader3 appxManifestReader) is 0)
                 {
                     // 获取应用包定义的功能列表
-                    manifestInformation.CapabilitiesList.AddRange(ParsePackageCapabilityCollection(appxManifestReader));
+                    manifestInformation.CapabilityList.AddRange(ParsePackageCapabilityCollection(appxManifestReader));
 
                     // 获取应用包定义的静态依赖项列表
                     manifestInformation.DependencyList.AddRange(ParsePackageDependencyCollection(appxManifestReader));
@@ -3202,7 +3202,7 @@ namespace GetStoreAppInstaller.Views.Windows
             InstallFailedInformation = string.Empty;
             TargetDeviceFamilyCollection.Clear();
             DependencyCollection.Clear();
-            CapabilitiesCollection.Clear();
+            CapabilityCollection.Clear();
             ApplicationCollection.Clear();
             LanguageCollection.Clear();
             InstallDependencyCollection.Clear();
@@ -3266,13 +3266,13 @@ namespace GetStoreAppInstaller.Views.Windows
                     }
                 }
 
-                if (packageInformation.CapabilitiesList is not null && packageInformation.CapabilitiesList.Count > 0)
+                if (packageInformation.CapabilityList is not null && packageInformation.CapabilityList.Count > 0)
                 {
-                    foreach (string capability in packageInformation.CapabilitiesList)
+                    foreach (string capability in packageInformation.CapabilityList)
                     {
                         if (CapabilityDict.TryGetValue(capability.ToLowerInvariant(), out string capabilityValue))
                         {
-                            CapabilitiesCollection.Add(new()
+                            CapabilityCollection.Add(new()
                             {
                                 CapabilityLocalizedName = capabilityValue,
                                 CapabilityName = capability
@@ -3280,7 +3280,7 @@ namespace GetStoreAppInstaller.Views.Windows
                         }
                         else
                         {
-                            CapabilitiesCollection.Add(new()
+                            CapabilityCollection.Add(new()
                             {
                                 CapabilityLocalizedName = capability,
                                 CapabilityName = capability

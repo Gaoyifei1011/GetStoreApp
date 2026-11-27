@@ -57,7 +57,7 @@ namespace GetStoreAppInstaller.Extensions.DataType.Classes
         /// <summary>
         /// 应用功能列表
         /// </summary>
-        internal List<string> CapabilitiesList { get; } = [];
+        internal List<string> CapabilityList { get; } = [];
 
         /// <summary>
         /// 依赖项列表

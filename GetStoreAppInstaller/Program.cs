@@ -81,9 +81,9 @@ namespace GetStoreAppInstaller
                 ShareOperation shareOperation = shareTargetActivatedEventArgs.ShareOperation;
                 shareOperation.ReportCompleted();
 
-                if (shareOperation.Data.Contains(StandardDataFormats.StorageItems) && shareOperation.Data.GetStorageItemsAsync().GetResults() is IReadOnlyList<IStorageItem> sharedFilesList && sharedFilesList.Count > 0)
+                if (shareOperation.Data.Contains(StandardDataFormats.StorageItems) && shareOperation.Data.GetStorageItemsAsync().GetResults() is IReadOnlyList<IStorageItem> sharedFileList && sharedFileList.Count > 0)
                 {
-                    FileName = sharedFilesList[0].Path;
+                    FileName = sharedFileList[0].Path;
                 }
             }
             else if (appActivationArguments.Kind is ExtendedActivationKind.ToastNotification)

@@ -880,9 +880,9 @@ namespace GetStoreApp.Views.UserControls
                         if (string.IsNullOrEmpty(appInfo.CategoryID))
                         {
                             queryLinksResult.isPackagedApp = false;
-                            if (await QueryLinksHelper.GetNonAppxPackagesAsync(productId) is ReadOnlyCollection<QueryLinksResultModel> nonAppxPackagesCollection && nonAppxPackagesCollection.Count > 0)
+                            if (await QueryLinksHelper.GetNonAppxPackagesAsync(productId) is ReadOnlyCollection<QueryLinksResultModel> nonAppxPackageCollection && nonAppxPackageCollection.Count > 0)
                             {
-                                queryLinksResultList.AddRange(nonAppxPackagesCollection);
+                                queryLinksResultList.AddRange(nonAppxPackageCollection);
                             }
                         }
                         // 解析商店应用数据
@@ -891,9 +891,9 @@ namespace GetStoreApp.Views.UserControls
                             queryLinksResult.isPackagedApp = true;
                             string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInfo.CategoryID, channelInternalName);
 
-                            if (!string.IsNullOrEmpty(fileListXml) && await QueryLinksHelper.GetAppxPackagesAsync(fileListXml, channelInternalName) is ReadOnlyCollection<QueryLinksResultModel> appxPackagesCollection && appxPackagesCollection.Count > 0)
+                            if (!string.IsNullOrEmpty(fileListXml) && await QueryLinksHelper.GetAppxPackagesAsync(fileListXml, channelInternalName) is ReadOnlyCollection<QueryLinksResultModel> appxPackageCollection && appxPackageCollection.Count > 0)
                             {
-                                foreach (QueryLinksResultModel appxPackage in appxPackagesCollection)
+                                foreach (QueryLinksResultModel appxPackage in appxPackageCollection)
                                 {
                                     bool isExisted = false;
                                     foreach (QueryLinksResultModel queryLinksResultItem in queryLinksResultList)

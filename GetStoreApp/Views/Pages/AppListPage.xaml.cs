@@ -1403,11 +1403,11 @@ namespace GetStoreApp.Views.Pages
 
                 try
                 {
-                    if (package.Package.GetAppListEntries() is IReadOnlyList<AppListEntry> appListEntriesList && appListEntriesList.Count > 0)
+                    if (package.Package.GetAppListEntries() is IReadOnlyList<AppListEntry> appListEntryList && appListEntryList.Count > 0)
                     {
-                        for (int index = 0; index < appListEntriesList.Count; index++)
+                        for (int index = 0; index < appListEntryList.Count; index++)
                         {
-                            if (appListEntriesList[index] is AppListEntry appListEntry)
+                            if (appListEntryList[index] is AppListEntry appListEntry)
                             {
                                 appInformation.AppListEntryList.Add(new()
                                 {
@@ -1439,7 +1439,7 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     Version version = new(package.Id.Version.Major, package.Id.Version.Minor, package.Id.Version.Build, package.Id.Version.Revision);
 
-                                    appInformation.DependenciesList.Add(new()
+                                    appInformation.DependencyList.Add(new()
                                     {
                                         Package = package,
                                         DisplayName = package.DisplayName,
@@ -1455,7 +1455,7 @@ namespace GetStoreApp.Views.Pages
                         }
                     }
 
-                    appInformation.DependenciesList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
+                    appInformation.DependencyList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
                 }
                 catch (Exception e)
                 {

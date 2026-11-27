@@ -295,7 +295,7 @@ namespace GetStoreApp.Views.Pages
             }
 
             DependencyCollection.Clear();
-            foreach (PackageModel packageItem in appInformationItem.DependenciesList)
+            foreach (PackageModel packageItem in appInformationItem.DependencyList)
             {
                 DependencyCollection.Add(packageItem);
             }

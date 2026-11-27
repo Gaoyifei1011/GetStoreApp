@@ -276,7 +276,7 @@ namespace GetStoreApp.Helpers.Store
         /// <returns>带解析后文件信息的列表</returns>
         internal static async Task<ReadOnlyCollection<QueryLinksResultModel>> GetAppxPackagesAsync(string fileListXml, string ring)
         {
-            List<QueryLinksResultModel> appxPackagesList = [];
+            List<QueryLinksResultModel> appxPackageList = [];
 
             if (!string.IsNullOrEmpty(fileListXml) && !string.IsNullOrEmpty(ring))
             {
@@ -334,7 +334,7 @@ namespace GetStoreApp.Helpers.Store
 
                                     try
                                     {
-                                        appxPackagesList.Add(new()
+                                        appxPackageList.Add(new()
                                         {
                                             FileName = fileName,
                                             FileLink = uri,
@@ -362,7 +362,7 @@ namespace GetStoreApp.Helpers.Store
                 }
             }
 
-            return appxPackagesList.AsReadOnly();
+            return appxPackageList.AsReadOnly();
         }
 
         /// <summary>

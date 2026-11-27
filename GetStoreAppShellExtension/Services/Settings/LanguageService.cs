@@ -17,14 +17,14 @@ namespace GetStoreAppShellExtension.Services.Settings
 
         internal static string AppLanguage { get; private set; }
 
-        private static IReadOnlyList<string> AppLanguagesList { get; } = ApplicationLanguages.ManifestLanguages;
+        private static IReadOnlyList<string> AppLanguageList { get; } = ApplicationLanguages.ManifestLanguages;
 
         /// <summary>
         /// 应用在初始化前获取设置存储的语言值，如果设置值为空，设定默认的应用语言值
         /// </summary>
         internal static void InitializeLanguage()
         {
-            foreach (string language in AppLanguagesList)
+            foreach (string language in AppLanguageList)
             {
                 if (string.Equals(language, "en-US", StringComparison.OrdinalIgnoreCase))
                 {
