@@ -183,7 +183,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnTraceCleanupClicked(object sender, RoutedEventArgs args)
         {
-            await MainWindow.Current.ShowDialogAsync(new TraceCleanupPromptDialog());
+            await MainWindow.Current.ShowDialogAsync(new TraceCleanupDialog());
         }
 
         /// <summary>

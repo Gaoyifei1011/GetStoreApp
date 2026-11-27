@@ -82,7 +82,8 @@
                 ItemsSource="{x:Bind StoreSelectorRadioList}"
                 MaxColumns="3"
                 SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}"
-                SelectionChanged="{x:Bind OnSelectionChanged}">
+                SelectionChanged="{x:Bind OnSelectionChanged}"
+                Style="{StaticResource HorizontalRadioButtonsStyle}">
 
                 <RadioButtons.Resources>
                     <Thickness x:Key="RadioButtonsTopHeaderMargin">0</Thickness>
@@ -97,7 +98,7 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
-                                <ContentPresenter Content="{x:Bind SelectorIcon}" FontSize="16" />
+                                <IconSourceElement IconSource="{x:Bind SelectorIcon}" />
                                 <TextBlock Grid.Column="1" Text="{x:Bind SelectorName}" />
                             </Grid>
                         </RadioButton>

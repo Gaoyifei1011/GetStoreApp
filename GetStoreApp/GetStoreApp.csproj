@@ -368,7 +368,7 @@
     <None Remove="Views\Dialogs\PackageVolumeInfoDialog.xaml" />
     <None Remove="Views\Dialogs\RebootDialog.xaml" />
     <None Remove="Views\Dialogs\RestartAppsDialog.xaml" />
-    <None Remove="Views\Dialogs\TraceCleanupPromptDialog.xaml" />
+    <None Remove="Views\Dialogs\TraceCleanupDialog.xaml" />
     <None Remove="Views\Dialogs\UpdateAppDialog.xaml" />
     <None Remove="Views\Dialogs\WinGetAppsVersionDialog.xaml" />
     <None Remove="Views\Dialogs\WinGetSourceEditDialog.xaml" />
@@ -441,7 +441,7 @@
     <Page Update="Views\Dialogs\PackageVolumeInfoDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\RebootDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\RestartAppsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Views\Dialogs\TraceCleanupPromptDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Dialogs\TraceCleanupDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\UpdateAppDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\WinGetAppsVersionDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\WinGetSourceEditDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

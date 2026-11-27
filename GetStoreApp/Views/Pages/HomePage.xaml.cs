@@ -65,7 +65,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     LaunchWebView();
                 }
-                else if (MainWindow.Current.GetSelectedItem(homeItem.NavigationPage, MainWindow.Current.NavigationViewItemMenuItemsCollection) is NavigationViewItemModel navigationViewItem)
+                else if (MainWindow.Current.GetSelectedItem(homeItem.NavigationPage, MainWindow.Current.NavigationViewItemMenuItemCollection) is NavigationViewItemModel navigationViewItem)
                 {
                     MainWindow.Current.NavigateTo(navigationViewItem.NavigationPage);
                 }

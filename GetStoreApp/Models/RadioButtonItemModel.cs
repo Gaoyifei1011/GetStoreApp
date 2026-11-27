@@ -10,7 +10,7 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 选择栏项图标
         /// </summary>
-        internal IconElement SelectorIcon { get; set; }
+        internal IconSource SelectorIcon { get; set; }
 
         /// <summary>
         /// 选择栏项名称

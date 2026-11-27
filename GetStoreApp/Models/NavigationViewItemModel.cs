@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 
@@ -34,10 +33,5 @@ namespace GetStoreApp.Models
         /// 导航类型
         /// </summary>
         internal Type NavigationPage { get; set; }
-
-        /// <summary>
-        /// 右键菜单显示状态
-        /// </summary>
-        internal Visibility ContextMenuVisibleState { get; set; }
     }
 }

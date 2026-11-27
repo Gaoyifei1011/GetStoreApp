@@ -605,12 +605,12 @@ namespace GetStoreApp.Views.UserControls
         {
             StoreSelectorRadioList.Add(new()
             {
-                SelectorIcon = new FontIcon() { Glyph = "\uE71B" },
+                SelectorIcon = new FontIconSource() { Glyph = "\uE71B", FontSize = 16 },
                 SelectorName = QueryLinksString
             });
             StoreSelectorRadioList.Add(new()
             {
-                SelectorIcon = new FontIcon() { Glyph = "\uE721" },
+                SelectorIcon = new FontIconSource() { Glyph = "\uE721", FontSize = 16 },
                 SelectorName = SearchAppsString
             });
             TypeList.Add(new()
@@ -880,7 +880,7 @@ namespace GetStoreApp.Views.UserControls
                         if (string.IsNullOrEmpty(appInfo.CategoryID))
                         {
                             queryLinksResult.isPackagedApp = false;
-                            if (await QueryLinksHelper.GetNonAppxPackagesAsync(productId) is ReadOnlyCollection<QueryLinksResultModel> nonAppxPackageCollection && nonAppxPackageCollection.Count > 0)
+                            if (await QueryLinksHelper.GetNonAppxPackageAsync(productId) is ReadOnlyCollection<QueryLinksResultModel> nonAppxPackageCollection && nonAppxPackageCollection.Count > 0)
                             {
                                 queryLinksResultList.AddRange(nonAppxPackageCollection);
                             }
@@ -891,7 +891,7 @@ namespace GetStoreApp.Views.UserControls
                             queryLinksResult.isPackagedApp = true;
                             string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInfo.CategoryID, channelInternalName);
 
-                            if (!string.IsNullOrEmpty(fileListXml) && await QueryLinksHelper.GetAppxPackagesAsync(fileListXml, channelInternalName) is ReadOnlyCollection<QueryLinksResultModel> appxPackageCollection && appxPackageCollection.Count > 0)
+                            if (!string.IsNullOrEmpty(fileListXml) && await QueryLinksHelper.GetAppxPackageAsync(fileListXml, channelInternalName) is ReadOnlyCollection<QueryLinksResultModel> appxPackageCollection && appxPackageCollection.Count > 0)
                             {
                                 foreach (QueryLinksResultModel appxPackage in appxPackageCollection)
                                 {

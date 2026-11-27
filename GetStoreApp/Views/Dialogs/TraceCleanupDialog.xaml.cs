@@ -17,7 +17,7 @@ namespace GetStoreApp.Views.Dialogs
     /// <summary>
     /// 痕迹清理对话框
     /// </summary>
-    internal sealed partial class TraceCleanupPromptDialog : ContentDialog, INotifyPropertyChanged
+    internal sealed partial class TraceCleanupDialog : ContentDialog, INotifyPropertyChanged
     {
         #region 第一部分：常量、资源与状态字段
 
@@ -70,7 +70,7 @@ namespace GetStoreApp.Views.Dialogs
 
         #region 第三部分：构造函数
 
-        internal TraceCleanupPromptDialog()
+        internal TraceCleanupDialog()
         {
             InitializeComponent();
             InitializeData();

@@ -154,7 +154,8 @@
                                         ItemsSource="{x:Bind PackageUninstallScopeRadioList}"
                                         MaxColumns="3"
                                         SelectedIndex="{x:Bind SelectedPackageUninstallScopeIndex, Mode=OneWay}"
-                                        SelectionChanged="{x:Bind OnPackageUninstallScopeSelectionChanged}">
+                                        SelectionChanged="{x:Bind OnPackageUninstallScopeSelectionChanged}"
+                                        Style="{StaticResource HorizontalRadioButtonsStyle}">
 
                                         <RadioButtons.ItemTemplate>
                                             <DataTemplate x:DataType="model:RadioButtonItemModel">

@@ -54,7 +54,7 @@ namespace GetStoreAppWebView
                 return;
             }
 
-            InitializeResourcesAsync().Wait();
+            InitializeResourceAsync().Wait();
 
             // 启动桌面程序
             XamlGeneratedProgram.XamlGeneratedMain();
@@ -71,7 +71,7 @@ namespace GetStoreAppWebView
         /// <summary>
         /// 加载应用程序所需的资源
         /// </summary>
-        private static async Task InitializeResourcesAsync()
+        private static async Task InitializeResourceAsync()
         {
             LanguageService.InitializeLanguage();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);

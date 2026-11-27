@@ -66,7 +66,7 @@ namespace GetStoreApp
                 return;
             }
 
-            InitializeResourcesAsync().Wait();
+            InitializeResourceAsync().Wait();
             DownloadSchedulerService.InitializeDownloadScheduler();
             DesktopLaunchService.InitializeLaunchAsync(appActivationArguments, false).Wait();
 
@@ -94,7 +94,7 @@ namespace GetStoreApp
         /// <summary>
         /// 加载应用程序所需的资源
         /// </summary>
-        private static async Task InitializeResourcesAsync()
+        private static async Task InitializeResourceAsync()
         {
             // 初始化应用资源，应用使用的语言信息和启动参数
             LanguageService.InitializeLanguage();

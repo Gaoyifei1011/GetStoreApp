@@ -165,9 +165,9 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        internal ObservableCollection<NavigationViewItemModel> NavigationViewItemMenuItemsCollection { get; } = [];
+        internal ObservableCollection<NavigationViewItemModel> NavigationViewItemMenuItemCollection { get; } = [];
 
-        private ObservableCollection<NavigationViewItemModel> NavigationViewItemFooterMenuItemsCollection { get; } = [];
+        private ObservableCollection<NavigationViewItemModel> NavigationViewItemFooterMenuItemCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -512,7 +512,7 @@ namespace GetStoreApp.Views.Windows
         {
             // 设置标题栏主题
             SetTitleBarTheme(AppWindow.TitleBar, (Content as FrameworkElement).ActualTheme);
-            SelectedItem = NavigationViewItemMenuItemsCollection[0];
+            SelectedItem = NavigationViewItemMenuItemCollection[0];
             NavigateTo(typeof(HomePage));
 
             // 初始化启动信息
@@ -543,14 +543,14 @@ namespace GetStoreApp.Views.Windows
                     }
 
                     Type currentPageType = GetCurrentPageType();
-                    NavigationViewItemModel selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemMenuItemsCollection);
+                    NavigationViewItemModel selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemMenuItemCollection);
                     if (selectedNavigationViewItem is not null)
                     {
                         SelectedItem = selectedNavigationViewItem;
                     }
                     else
                     {
-                        selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemFooterMenuItemsCollection);
+                        selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemFooterMenuItemCollection);
                         SelectedItem = selectedNavigationViewItem;
                     }
                 }
@@ -572,7 +572,7 @@ namespace GetStoreApp.Views.Windows
                 Type currentPageType = GetCurrentPageType();
 
                 // 切换到选中页面对应的项
-                NavigationViewItemModel selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemMenuItemsCollection);
+                NavigationViewItemModel selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemMenuItemCollection);
                 SelectedItem = null;
                 if (selectedNavigationViewItem is not null)
                 {
@@ -580,7 +580,7 @@ namespace GetStoreApp.Views.Windows
                 }
                 else
                 {
-                    selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemFooterMenuItemsCollection);
+                    selectedNavigationViewItem = GetSelectedItem(currentPageType, NavigationViewItemFooterMenuItemCollection);
                     SelectedItem = selectedNavigationViewItem;
                 }
 
@@ -1381,7 +1381,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void InitializeNavigationViewItemCollection()
         {
-            NavigationViewItemMenuItemsCollection.Add(new()
+            NavigationViewItemMenuItemCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Item,
                 NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Home.png") } },
@@ -1389,7 +1389,7 @@ namespace GetStoreApp.Views.Windows
                 NavigationTag = "Home",
                 NavigationPage = typeof(HomePage)
             });
-            NavigationViewItemMenuItemsCollection.Add(new()
+            NavigationViewItemMenuItemCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Seperator,
                 NavigationIcon = null,
@@ -1397,7 +1397,7 @@ namespace GetStoreApp.Views.Windows
                 NavigationTag = null,
                 NavigationPage = null
             });
-            NavigationViewItemMenuItemsCollection.Add(new()
+            NavigationViewItemMenuItemCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Item,
                 NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Store.png") } },
@@ -1405,7 +1405,7 @@ namespace GetStoreApp.Views.Windows
                 NavigationTag = "Store",
                 NavigationPage = typeof(StorePage)
             });
-            NavigationViewItemMenuItemsCollection.Add(new()
+            NavigationViewItemMenuItemCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Item,
                 NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/AppUpdate.png") } },
@@ -1413,7 +1413,7 @@ namespace GetStoreApp.Views.Windows
                 NavigationTag = "AppUpdate",
                 NavigationPage = typeof(AppUpdatePage)
             });
-            NavigationViewItemMenuItemsCollection.Add(new()
+            NavigationViewItemMenuItemCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Seperator,
                 NavigationIcon = null,
@@ -1421,7 +1421,7 @@ namespace GetStoreApp.Views.Windows
                 NavigationTag = null,
                 NavigationPage = null
             });
-            NavigationViewItemMenuItemsCollection.Add(new()
+            NavigationViewItemMenuItemCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Item,
                 NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/WinGet.png") } },
@@ -1429,7 +1429,7 @@ namespace GetStoreApp.Views.Windows
                 NavigationTag = "WinGet",
                 NavigationPage = typeof(WinGetPage)
             });
-            NavigationViewItemMenuItemsCollection.Add(new()
+            NavigationViewItemMenuItemCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Item,
                 NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/AppManager.png") } },
@@ -1437,7 +1437,7 @@ namespace GetStoreApp.Views.Windows
                 NavigationTag = "AppManager",
                 NavigationPage = typeof(AppManagerPage)
             });
-            NavigationViewItemMenuItemsCollection.Add(new()
+            NavigationViewItemMenuItemCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Seperator,
                 NavigationIcon = null,
@@ -1445,7 +1445,7 @@ namespace GetStoreApp.Views.Windows
                 NavigationTag = null,
                 NavigationPage = null
             });
-            NavigationViewItemMenuItemsCollection.Add(new()
+            NavigationViewItemMenuItemCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Item,
                 NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Download.png") } },
@@ -1453,7 +1453,7 @@ namespace GetStoreApp.Views.Windows
                 NavigationTag = "Download",
                 NavigationPage = typeof(DownloadPage)
             });
-            NavigationViewItemMenuItemsCollection.Add(new()
+            NavigationViewItemMenuItemCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Item,
                 NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Web.png") } },
@@ -1461,7 +1461,7 @@ namespace GetStoreApp.Views.Windows
                 NavigationTag = "Web",
                 NavigationPage = null
             });
-            NavigationViewItemFooterMenuItemsCollection.Add(new()
+            NavigationViewItemFooterMenuItemCollection.Add(new()
             {
                 NavigationViewItemKind = NavigationViewItemKind.Item,
                 NavigationIcon = new ImageIcon() { Source = new BitmapImage() { UriSource = new("ms-appx:///Assets/Icon/Control/Settings.png") } },

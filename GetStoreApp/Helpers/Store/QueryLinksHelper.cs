@@ -274,7 +274,7 @@ namespace GetStoreApp.Helpers.Store
         /// <param name="fileListXml">文件信息的字符串</param>
         /// <param name="ring">通道</param>
         /// <returns>带解析后文件信息的列表</returns>
-        internal static async Task<ReadOnlyCollection<QueryLinksResultModel>> GetAppxPackagesAsync(string fileListXml, string ring)
+        internal static async Task<ReadOnlyCollection<QueryLinksResultModel>> GetAppxPackageAsync(string fileListXml, string ring)
         {
             List<QueryLinksResultModel> appxPackageList = [];
 
@@ -358,7 +358,7 @@ namespace GetStoreApp.Helpers.Store
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxPackagesAsync), 1, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetAppxPackageAsync), 1, e);
                 }
             }
 
@@ -449,9 +449,9 @@ namespace GetStoreApp.Helpers.Store
         /// </summary>
         /// <param name="productId">产品 ID</param>
         /// <returns>带解析后文件信息的列表</returns>
-        internal static async Task<ReadOnlyCollection<QueryLinksResultModel>> GetNonAppxPackagesAsync(string productId)
+        internal static async Task<ReadOnlyCollection<QueryLinksResultModel>> GetNonAppxPackageAsync(string productId)
         {
-            List<QueryLinksResultModel> nonAppxPackagesList = [];
+            List<QueryLinksResultModel> nonAppxPackageList = [];
 
             if (!string.IsNullOrEmpty(productId))
             {
@@ -479,7 +479,7 @@ namespace GetStoreApp.Helpers.Store
                             { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : Convert.ToString(httpRequestResult.ResponseMessage.RequestMessage).Replace('\r', ' ').Replace('\n', ' ') }
                         };
 
-                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 1, responseDict);
+                        LogService.WriteLog(LoggingLevel.Information, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackageAsync), 1, responseDict);
                         string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
 
                         if (JsonObject.TryParse(responseString, out JsonObject responseStringObject) &&
@@ -531,7 +531,7 @@ namespace GetStoreApp.Helpers.Store
 
                                                     try
                                                     {
-                                                        nonAppxPackagesList.Add(new()
+                                                        nonAppxPackageList.Add(new()
                                                         {
                                                             FileName = fileName,
                                                             FileLink = installerUrl,
@@ -559,7 +559,7 @@ namespace GetStoreApp.Helpers.Store
                     // 请求失败
                     else
                     {
-                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 2, httpRequestResult.ExtendedError);
+                        LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackageAsync), 2, httpRequestResult.ExtendedError);
                     }
 
                     httpRequestResult.Dispose();
@@ -567,11 +567,11 @@ namespace GetStoreApp.Helpers.Store
                 // 其他异常
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackagesAsync), 3, e);
+                    LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(QueryLinksHelper), nameof(GetNonAppxPackageAsync), 3, e);
                 }
             }
 
-            return nonAppxPackagesList.AsReadOnly();
+            return nonAppxPackageList.AsReadOnly();
         }
 
         /// <summary>
