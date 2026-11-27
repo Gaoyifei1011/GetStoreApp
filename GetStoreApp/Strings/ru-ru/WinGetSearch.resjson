@@ -17,7 +17,7 @@
   "MatchFieldPackageFamilyName": "Имя семейства пакета",
   "MatchFieldProductCode": "Код продукта",
   "MatchFieldTag": "Тег",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "NotSearch": "Перейдите и получите приложения, которые вы хотите установить. Найденные вами приложения будут отображаться здесь",
   "OpenTempFolder": "Открыть папку загрузок",
   "OpenTempFolderToolTip": "Открыть локальный каталог, в который был временно скачан установочный пакет приложения",

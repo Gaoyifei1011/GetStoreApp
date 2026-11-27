@@ -212,7 +212,7 @@
   "Move": "移动",
   "No": "否",
   "None": "[无]",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "Open": "打开",
   "OpenAppCachedFolder": "打开应用缓存目录",
   "OpenAppInstalledFolder": "打开应用安装目录",

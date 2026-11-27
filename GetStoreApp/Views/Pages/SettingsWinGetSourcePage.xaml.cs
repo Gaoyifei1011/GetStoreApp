@@ -42,6 +42,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string NotAvailableString = ResourceService.GetLocalized("SettingsWinGetSource/NotAvailable");
         private readonly string PredefinedString = ResourceService.GetLocalized("SettingsWinGetSource/Predefined");
         private readonly string TrustedString = ResourceService.GetLocalized("SettingsWinGetSource/Trusted");
+        private readonly string UnknownString = ResourceService.GetLocalized("Unknown");
         private readonly string UserString = ResourceService.GetLocalized("SettingsWinGetSource/User");
         private readonly string WinGetDataSourceCountInfoString = ResourceService.GetLocalized("SettingsWinGetSource/WinGetDataSourceCountInfo");
         private readonly string WinGetDataSourceRemoveAccessDeniedString = ResourceService.GetLocalized("SettingsWinGetSource/WinGetDataSourceRemoveAccessDenied");
@@ -415,7 +416,7 @@ namespace GetStoreApp.Views.Pages
                         AuthenticationType = packageCatalogInformation.AuthenticationType switch
                         {
                             AuthenticationType.None => NoneString,
-                            AuthenticationType.Unknown => NotAvailableString,
+                            AuthenticationType.Unknown => UnknownString,
                             AuthenticationType.MicrosoftEntraId => MicrosoftEntraIdString,
                             AuthenticationType.MicrosoftEntraIdForAzureBlobStorage => MicrosoftEntraIdForAzureBlobStorageString,
                             _ => NotAvailableString
@@ -482,7 +483,7 @@ namespace GetStoreApp.Views.Pages
                             AuthenticationType = packageCatalogInformation.AuthenticationType switch
                             {
                                 AuthenticationType.None => NoneString,
-                                AuthenticationType.Unknown => NotAvailableString,
+                                AuthenticationType.Unknown => UnknownString,
                                 AuthenticationType.MicrosoftEntraId => MicrosoftEntraIdString,
                                 AuthenticationType.MicrosoftEntraIdForAzureBlobStorage => MicrosoftEntraIdForAzureBlobStorageString,
                                 _ => NotAvailableString

@@ -24,7 +24,7 @@
   "InstallSuccessfully1": "הקובץ {0} הותקן בהצלחה",
   "LoadingFile": "טוען קבצים, אנא המתן...",
   "MultiSelect": "בחירה מרובה",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "OpenFolder": "פתח תיקייה",
   "OpenFolderToolTip": "פתח את תיקיית ברירת המחדל להורדות",
   "PrepareInstall": "הכן התקנה",

@@ -20,7 +20,7 @@
   "MountPoint": "נקודת חיבור: ",
   "MountSuccessfully": "האזור {0} חובר בהצלחה",
   "No": "לא",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "Offline": "מצב לא מקוון: ",
   "PackageVolumeCountEmpty": "אין אזורי אחסון זמינים לחבילות",
   "PackageVolumeCountInfo": "יש {0} אזורי אחסון זמינים לחבילות",

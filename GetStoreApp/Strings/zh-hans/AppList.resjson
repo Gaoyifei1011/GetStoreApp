@@ -15,7 +15,7 @@
   "MoveFailed5": "错误信息：{0}",
   "MoveSuccessfully": "{0}应用移动成功",
   "No": "否",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "OpenApp": "打开应用",
   "OpenCacheFolder": "打开缓存目录",
   "OpenFolder": "打开目录",

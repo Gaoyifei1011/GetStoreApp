@@ -17,7 +17,7 @@
   "InsiderProgramToolTip": "Нажмите, чтобы изменить программу участников для текущего пользователя",
   "Installing": "Установка... {0}%",
   "InstallingSubInformation": "Размер приложения {0}, скачано {1}",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "NotCheckUpdate": "Нажмите «Проверить обновления», чтобы посмотреть статус приложений текущего пользователя",
   "OpenStore": "Открыть магазин",
   "OpenStoreToolTip": "Нажмите, чтобы открыть Microsoft Store",

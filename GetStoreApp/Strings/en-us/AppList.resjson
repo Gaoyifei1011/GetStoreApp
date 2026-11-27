@@ -15,7 +15,7 @@
   "MoveFailed5": "Error message:{0}",
   "MoveSuccessfully": "{0} app move successfully",
   "No": "No",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "OpenApp": "Open app",
   "OpenCacheFolder": "Open cache folder",
   "OpenFolder": "Open folder",

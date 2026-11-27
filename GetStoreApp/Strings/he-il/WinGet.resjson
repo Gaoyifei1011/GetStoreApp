@@ -17,7 +17,7 @@
   "InstallQueued": "ממתין להתקנה",
   "InstallVersion": "גרסת התקנה:",
   "LearnWinGet": "למד על חבילת WinGet",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "OpenPackageFolder": "פתח תיקיית חבילת יישום",
   "PackageDownloadFailedContent1": "הורדת היישום נכשלה",
   "PackageDownloadFailedContent2": "סיבת השגיאה: {0}",

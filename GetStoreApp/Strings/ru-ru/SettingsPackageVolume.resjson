@@ -20,7 +20,7 @@
   "MountPoint": "Точка подключения: ",
   "MountSuccessfully": "Том {0} успешно подключен",
   "No": "Нет",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "Offline": "Автономное состояние: ",
   "PackageVolumeCountEmpty": "Нет доступных томов пакета",
   "PackageVolumeCountInfo": "Доступных томов пакета: {0}",

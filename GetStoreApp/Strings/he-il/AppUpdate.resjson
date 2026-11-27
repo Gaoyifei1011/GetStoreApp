@@ -17,7 +17,7 @@
   "InsiderProgramToolTip": "לחץ כדי לשנות את תוכנית ה-Insider של המשתמש הנוכחי",
   "Installing": "מתקין, {0}% הושלמו",
   "InstallingSubInformation": "גודל היישום {0}, הורדו {1}",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "NotCheckUpdate": "לחץ על 'בדוק עדכונים' כדי לראות את מצב היישומים של המשתמש הנוכחי",
   "OpenStore": "פתח חנות",
   "OpenStoreToolTip": "לחץ כדי לפתוח את חנות Microsoft",

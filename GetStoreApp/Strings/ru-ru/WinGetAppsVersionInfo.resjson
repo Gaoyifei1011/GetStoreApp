@@ -14,7 +14,7 @@
   "LoadingInformation": "Загрузка информации...",
   "Locale": "Локализация: ",
   "NoSpecificLocale": "Нет определенной локализации",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "PackageLink": "Ссылка на пакет: ",
   "PrivacyLink": "Ссылка на политику конфиденциальности: ",
   "Publisher": "Издатель:",

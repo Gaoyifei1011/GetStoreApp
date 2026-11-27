@@ -9,7 +9,7 @@
   "DataSourceSettings": "Data source settings",
   "DataSourceSettingsToolTip": "Set and modify the enabled state of the WinGet data source",
   "LoadingUpgradableApps": "Please wait while loading the list of upgradable applications...",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "NotCheckUpdate": "Click Check for updates to see the updatable status of your installed apps",
   "OpenTempFolder": "Open download folder",
   "OpenTempFolderToolTip": "Open the local directory where the app installation package was temporarily downloaded",

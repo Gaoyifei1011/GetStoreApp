@@ -20,7 +20,7 @@
   "MountPoint": "挂载点：",
   "MountSuccessfully": "{0}存储卷挂载成功",
   "No": "否",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "Offline": "脱机状态：",
   "PackageVolumeCountEmpty": "没有可用的存储卷",
   "PackageVolumeCountInfo": "共有{0}个可用的存储卷",

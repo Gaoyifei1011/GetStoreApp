@@ -17,7 +17,7 @@
   "MatchFieldPackageFamilyName": "שם משפחת חבילה",
   "MatchFieldProductCode": "קוד מוצר",
   "MatchFieldTag": "תגית",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "NotSearch": "לכו למצוא את היישומים שברצונכם להתקין. היישומים שתחפשו יופיעו כאן",
   "OpenTempFolder": "פתח תיקיית הורדות זמנית",
   "OpenTempFolderToolTip": "פתח את התיקייה המקומית שאליה הורדו באופן זמני חבילות ההתקנה של היישומים",

@@ -2150,14 +2150,7 @@ namespace GetStoreAppInstaller.Views.Windows
                                     dependencyInformation.DependencyVersion = new(versionNode.InnerText);
                                 }
 
-                                if (packageNode.Attributes.GetNamedItem("ProcessorArchitecture") is IXmlNode processorArchitectureNode)
-                                {
-                                    dependencyInformation.ProcessorArchitecture = processorArchitectureNode.InnerText;
-                                }
-                                else
-                                {
-                                    dependencyInformation.ProcessorArchitecture = NotAvailableString;
-                                }
+                                dependencyInformation.ProcessorArchitecture = packageNode.Attributes.GetNamedItem("ProcessorArchitecture") is IXmlNode processorArchitectureNode ? processorArchitectureNode.InnerText : NotAvailableString;
 
                                 if (packageNode.Attributes.GetNamedItem("Uri") is IXmlNode uriNode)
                                 {

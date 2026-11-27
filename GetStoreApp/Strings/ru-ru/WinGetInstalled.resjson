@@ -18,7 +18,7 @@
   "InstalledFindAppsFailed": "Не удалось найти приложения",
   "InstalledNotSelectSource": "Источник данных не выбран, выберите источник данных в настройках",
   "LoadingInstalledApps": "Подождите, загружается список установленных приложений...",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "PackageUninstallMode": "Режим удаления",
   "PackageUninstallModeDefault": "По умолчанию",
   "PackageUninstallModeInteractive": "Интерактивный",

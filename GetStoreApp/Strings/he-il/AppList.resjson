@@ -15,7 +15,7 @@
   "MoveFailed5": "הודעת שגיאה: {0}",
   "MoveSuccessfully": "האפליקציה {0} הועברה בהצלחה",
   "No": "לא",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "OpenApp": "פתח יישום",
   "OpenCacheFolder": "פתח תיקיית מטמון",
   "OpenFolder": "פתח תיקייה",

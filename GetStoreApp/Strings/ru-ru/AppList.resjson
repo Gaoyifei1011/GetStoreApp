@@ -15,7 +15,7 @@
   "MoveFailed5": "Сообщение об ошибке: {0}",
   "MoveSuccessfully": "Приложение {0} успешно перемещено",
   "No": "Нет",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "OpenApp": "Открыть приложение",
   "OpenCacheFolder": "Открыть папку кэша",
   "OpenFolder": "Открыть папку",

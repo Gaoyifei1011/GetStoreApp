@@ -68,7 +68,7 @@
   "LocalFile": "Locally created files",
   "LocalFileCleanError": "An error occurred during the clearing of the locally created file. Check the access permission of the locally created file",
   "No": "No",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "OK": "OK",
   "OpenDownloadPage": "Open download page",
   "PackageVolumeAdd": "Add volume",

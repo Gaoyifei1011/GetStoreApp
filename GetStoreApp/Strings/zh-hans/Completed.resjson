@@ -24,7 +24,7 @@
   "InstallSuccessfully1": "文件 {0} 已成功安装",
   "LoadingFile": "正在加载文件中，请稍候...",
   "MultiSelect": "多选",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "OpenFolder": "打开文件夹",
   "OpenFolderToolTip": "打开默认下载的文件夹",
   "PrepareInstall": "准备安装",

@@ -24,7 +24,7 @@
   "InstallSuccessfully1": "File {0} was successfully installed",
   "LoadingFile": "Loading files, please wait...",
   "MultiSelect": "Multi-select",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "OpenFolder": "Open folder",
   "OpenFolderToolTip": "Open the folder for default downloads",
   "PrepareInstall": "Prepare install",

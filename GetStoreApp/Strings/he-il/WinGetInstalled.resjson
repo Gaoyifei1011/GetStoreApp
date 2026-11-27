@@ -18,7 +18,7 @@
   "InstalledFindAppsFailed": "חיפוש יישומים נכשל",
   "InstalledNotSelectSource": "לא נבחר מקור נתונים, אנא בחר מקור נתונים בהגדרות",
   "LoadingInstalledApps": "טוען רשימת יישומים מותקנים, אנא המתן...",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "PackageUninstallMode": "מצב הסרה",
   "PackageUninstallModeDefault": "ברירת מחדל",
   "PackageUninstallModeInteractive": "אינטראקטיבי",

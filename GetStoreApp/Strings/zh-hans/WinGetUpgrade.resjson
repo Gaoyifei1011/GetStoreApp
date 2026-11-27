@@ -10,7 +10,7 @@
   "DataSourceSettingsToolTip": "设置并修改 WinGet 数据源的启用状态",
   "LoadingUpgradableApps": "正在加载可更新应用列表，请稍候...",
   "NotCheckUpdate": "点击检查更新查看已安装应用的可更新情况",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "OpenTempFolder": "打开下载目录",
   "OpenTempFolderToolTip": "打开临时下载应用安装包的本地目录",
   "Sort": "排序",

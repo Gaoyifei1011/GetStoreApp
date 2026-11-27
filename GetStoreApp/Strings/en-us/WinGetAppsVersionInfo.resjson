@@ -14,7 +14,7 @@
   "LoadingInformation": "Loading information...",
   "Locale": "Locale: ",
   "NoSpecificLocale": "No specific locale",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "PackageLink": "Package link: ",
   "PrivacyLink": "Privacy link: ",
   "Publisher": "Publisher:",

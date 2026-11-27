@@ -18,7 +18,7 @@
   "MatchFieldProductCode": "产品代码",
   "MatchFieldTag": "标签",
   "NotSearch": "快去获取想要安装的应用吧，您搜索到的应用将会显示在此处",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "OpenTempFolder": "打开下载目录",
   "OpenTempFolderToolTip": "打开临时下载应用安装包的本地目录",
   "PackageFieldMatchOption": "搜索过滤选项",

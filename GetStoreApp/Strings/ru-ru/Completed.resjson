@@ -24,7 +24,7 @@
   "InstallSuccessfully1": "Файл {0} успешно установлен",
   "LoadingFile": "Загрузка файлов, подождите...",
   "MultiSelect": "Множественный выбор",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "OpenFolder": "Открыть папку",
   "OpenFolderToolTip": "Открыть папку для скачиваний по умолчанию",
   "PrepareInstall": "Подготовка к установке",

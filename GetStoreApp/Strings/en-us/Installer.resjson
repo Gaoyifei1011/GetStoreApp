@@ -212,7 +212,7 @@
   "Move": "Move",
   "No": "No",
   "None": "[None]",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "Open": "Open",
   "OpenAppCachedFolder": "Open app cache directory",
   "OpenAppInstalledFolder": "Open app installation directory",

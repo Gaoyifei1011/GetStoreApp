@@ -212,7 +212,7 @@
   "Move": "Переместить",
   "No": "Нет",
   "None": "[Нет]",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "Open": "Открыть",
   "OpenAppCachedFolder": "Открыть каталог кэша приложения",
   "OpenAppInstalledFolder": "Открыть каталог установки приложения",

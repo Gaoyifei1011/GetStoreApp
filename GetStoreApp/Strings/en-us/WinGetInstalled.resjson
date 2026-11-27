@@ -18,7 +18,7 @@
   "InstalledFindAppsFailed": "Find apps failed",
   "InstalledNotSelectSource": "No data source is selected, please select a data source in the settings",
   "LoadingInstalledApps": "Please wait while loading the list of installed applications...",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "PackageUninstallMode": "Uninstall mode",
   "PackageUninstallModeDefault": "Default",
   "PackageUninstallModeInteractive": "Interactive",

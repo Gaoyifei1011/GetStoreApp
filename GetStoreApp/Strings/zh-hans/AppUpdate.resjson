@@ -17,7 +17,7 @@
   "InsiderProgramToolTip": "单击修改当前用户的预览体验计划",
   "Installing": "正在安装，已完成{0}%",
   "InstallingSubInformation": "应用大小{0}，已下载{1}",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "NotCheckUpdate": "单击检查更新来查看当前用户应用的情况",
   "OpenStore": "打开商店",
   "OpenStoreToolTip": "单击打开微软商店",

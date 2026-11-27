@@ -17,7 +17,7 @@
   "InstallQueued": "Ожидание установки",
   "InstallVersion": "Версия установки: ",
   "LearnWinGet": "Узнать о WinGet",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "OpenPackageFolder": "Открыть папку пакета",
   "PackageDownloadFailedContent1": "Не удалось скачать приложение",
   "PackageDownloadFailedContent2": "Причина ошибки: {0}",

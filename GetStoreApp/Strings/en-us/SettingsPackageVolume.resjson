@@ -20,7 +20,7 @@
   "MountPoint": "Mount point: ",
   "MountSuccessfully": "{0} volume mount successfully",
   "No": "No",
-  "NotAvailable": "N/A",
+  "NotAvailable": "[N/A]",
   "Offline": "Offline state: ",
   "PackageVolumeCountEmpty": "There are no available package volumes",
   "PackageVolumeCountInfo": "There are {0} available package volumes",
