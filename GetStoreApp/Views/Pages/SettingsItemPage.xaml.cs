@@ -70,7 +70,7 @@ namespace GetStoreApp.Views.Pages
 
         internal ReadOnlyCollection<Type> PageCollection { get; } = [typeof(SettingsGeneralPage), typeof(SettingsStoreAndUpdatePage), typeof(SettingsWinGetPage), typeof(SettingsDownloadPage), typeof(SettingsAppInstallPage), typeof(SettingsAdvancedPage), typeof(SettingsAboutPage)];
 
-        private List<string> SettingsItemTabList { get; } = [];
+        private List<string> SettingsTabList { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -150,7 +150,7 @@ namespace GetStoreApp.Views.Pages
                 SelectedIndex = tabView.SelectedIndex;
             }
 
-            if (SelectedIndex >= 0 && SelectedIndex < SettingsItemTabList.Count)
+            if (SelectedIndex >= 0 && SelectedIndex < SettingsTabList.Count)
             {
                 int index = SelectedIndex;
                 Type currentPage = GetCurrentPageType();
@@ -217,7 +217,7 @@ namespace GetStoreApp.Views.Pages
                 }
             }
 
-            if (index >= 0 && index < SettingsItemTabList.Count)
+            if (index >= 0 && index < SettingsTabList.Count)
             {
                 SelectedIndex = index;
             }
@@ -239,7 +239,7 @@ namespace GetStoreApp.Views.Pages
                 }
             }
 
-            if (index >= 0 && index < SettingsItemTabList.Count)
+            if (index >= 0 && index < SettingsTabList.Count)
             {
                 SelectedIndex = index;
             }
@@ -324,13 +324,13 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void InitializeData()
         {
-            SettingsItemTabList.Add(GeneralString);
-            SettingsItemTabList.Add(StoreAndUpdateString);
-            SettingsItemTabList.Add(WinGetString);
-            SettingsItemTabList.Add(DownloadString);
-            SettingsItemTabList.Add(AppInstallerString);
-            SettingsItemTabList.Add(AdvancedString);
-            SettingsItemTabList.Add(AboutString);
+            SettingsTabList.Add(GeneralString);
+            SettingsTabList.Add(StoreAndUpdateString);
+            SettingsTabList.Add(WinGetString);
+            SettingsTabList.Add(DownloadString);
+            SettingsTabList.Add(AppInstallerString);
+            SettingsTabList.Add(AdvancedString);
+            SettingsTabList.Add(AboutString);
         }
 
         private async Task RunAsAdministartorAsync()
