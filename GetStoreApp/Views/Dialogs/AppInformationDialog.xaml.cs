@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
@@ -103,12 +104,12 @@ namespace GetStoreApp.Views.Dialogs
         private async void OnCopyAppInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             ContentDialogButtonClickDeferral contentDialogButtonClickDeferral = args.GetDeferral();
-            string appInformation = await GetAppInformationCopyStringListAsync([.. AppInformationCollection]);
+            string appInformation = await GetAppInformationCopyStringListAsync(new(AppInformationCollection));
             contentDialogButtonClickDeferral.Complete();
             if (!string.IsNullOrEmpty(appInformation))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(appInformation);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard, copyResult));
             }
         }
 

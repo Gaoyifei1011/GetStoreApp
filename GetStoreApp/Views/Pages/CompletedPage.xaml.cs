@@ -147,12 +147,12 @@ namespace GetStoreApp.Views.Pages
                     if (await GetStorageFileListAsync([completed.FilePath]) is ReadOnlyCollection<StorageFile> fileCollection && fileCollection.Count > 0)
                     {
                         bool copyResult = CopyPasteHelper.CopyFileToClipBoard(fileCollection);
-                        await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                        await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard, copyResult));
                     }
                 }
                 catch (Exception e)
                 {
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.ShareFailed, false, 1));
+                    await MainWindow.Current.ShowNotificationAsync(new(OperationKind.ShareFailed, false, 1));
                     LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnCopyEexeuteReqeusted), 1, e);
                 }
             }
@@ -167,7 +167,7 @@ namespace GetStoreApp.Views.Pages
             {
                 if (completed.InstallStateResultKind is InstallStateResultKind.Installing)
                 {
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.InstallingNotify));
+                    await MainWindow.Current.ShowNotificationAsync(new(OperationKind.InstallingNotify));
                 }
                 else
                 {
@@ -194,7 +194,7 @@ namespace GetStoreApp.Views.Pages
             }
             else
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.FileLost));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.FileLost));
             }
         }
 
@@ -263,7 +263,7 @@ namespace GetStoreApp.Views.Pages
             }
             else
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.FileLost));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.FileLost));
             }
         }
 
@@ -296,14 +296,14 @@ namespace GetStoreApp.Views.Pages
                     }
                     catch (Exception e)
                     {
-                        await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.ShareFailed, false, 1));
+                        await MainWindow.Current.ShowNotificationAsync(new(OperationKind.ShareFailed, false, 1));
                         LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShowShareUIExecuteRequested), 1, e);
                     }
                 }
             }
             else
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.FileLost));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.FileLost));
             }
         }
 
@@ -363,7 +363,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectReverseClicked(object sender, RoutedEventArgs args)
         {
-            ReadOnlyCollection<ItemIndexRange> selectedRangeCollection = [.. CompletedListView.SelectedRanges];
+            ReadOnlyCollection<ItemIndexRange> selectedRangeCollection = new List<ItemIndexRange>(CompletedListView.SelectedRanges).AsReadOnly();
             CompletedListView.SelectAll();
             foreach (ItemIndexRange itemIndexRange in selectedRangeCollection)
             {
@@ -381,7 +381,7 @@ namespace GetStoreApp.Views.Pages
             // 没有选中任何内容时显示空提示对话框
             if (selectedCompletedDataCollection is null || selectedCompletedDataCollection.Count is 0)
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.SelectEmpty));
                 return;
             }
 
@@ -397,7 +397,7 @@ namespace GetStoreApp.Views.Pages
             }
             if (isInstalling)
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.InstallingNotify));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.InstallingNotify));
                 return;
             }
 
@@ -436,7 +436,7 @@ namespace GetStoreApp.Views.Pages
             // 没有选中任何内容时显示空提示对话框
             if (selectedCompletedDataCollection is null || selectedCompletedDataCollection.Count is 0)
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.SelectEmpty));
                 return;
             }
             else
@@ -456,7 +456,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.ShareFailed, true, selectedCompletedDataCollection.Count));
+                    await MainWindow.Current.ShowNotificationAsync(new(OperationKind.ShareFailed, true, selectedCompletedDataCollection.Count));
                     LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(CompletedPage), nameof(OnShowShareUIClicked), 2, e);
                 }
             }
@@ -472,7 +472,7 @@ namespace GetStoreApp.Views.Pages
             // 没有选中任何内容时显示空提示对话框
             if (selectedCompletedDataCollection is null || selectedCompletedDataCollection.Count is 0)
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.SelectEmpty));
                 return;
             }
             else
@@ -486,7 +486,7 @@ namespace GetStoreApp.Views.Pages
                 if (await GetStorageFileListAsync(selectedFileList) is ReadOnlyCollection<StorageFile> selectedStorageFileCollection && selectedCompletedDataCollection.Count > 0)
                 {
                     bool copyResult = CopyPasteHelper.CopyFileToClipBoard(selectedStorageFileCollection);
-                    await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                    await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard, copyResult));
                 }
             }
         }

@@ -427,7 +427,7 @@ namespace GetStoreApp.Views.Pages
             if (!string.IsNullOrEmpty(downloadArguments))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(downloadArguments);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard,copyResult));
             }
         }
 
@@ -530,7 +530,7 @@ namespace GetStoreApp.Views.Pages
                             catch (Exception e)
                             {
                                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetAppsVersionOptionsPage), nameof(OnChangePackageDownloadPathClicked), 1, e);
-                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.FolderPicker));
+                                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.FolderPicker));
                             }
 
                             break;
@@ -560,7 +560,7 @@ namespace GetStoreApp.Views.Pages
             if (!string.IsNullOrEmpty(installArguments))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(installArguments);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard,copyResult));
             }
         }
 
@@ -665,7 +665,7 @@ namespace GetStoreApp.Views.Pages
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(WinGetAppsVersionOptionsPage), nameof(OnChangePackageInstallPathClicked), 1, e);
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.FolderPicker));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.FolderPicker));
             }
         }
 
@@ -719,7 +719,7 @@ namespace GetStoreApp.Views.Pages
             if (!string.IsNullOrEmpty(repairArguments))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(repairArguments);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard,copyResult));
             }
         }
 
@@ -781,7 +781,7 @@ namespace GetStoreApp.Views.Pages
             if (!string.IsNullOrEmpty(upgradeArguments))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(upgradeArguments);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard,copyResult));
             }
         }
 

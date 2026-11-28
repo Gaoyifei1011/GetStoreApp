@@ -5,7 +5,6 @@ using GetStoreApp.Models;
 using GetStoreApp.Services.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
-using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
@@ -136,7 +135,7 @@ namespace GetStoreApp.Views.UserControls
                     bool isDownloadSuccessfully = await CreateDownloadTaskAsync(queryLinksResult.FileName, queryLinksResult.FileLink, downloadFolder);
 
                     // 显示下载任务创建状态消息
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
+                    await MainWindow.Current.ShowNotificationAsync(new(OperationKind.DownloadCreate, isDownloadSuccessfully));
                 }
             }
         }
@@ -160,7 +159,7 @@ namespace GetStoreApp.Views.UserControls
             if (args.Parameter is string fileLink && !string.IsNullOrEmpty(fileLink))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(fileLink);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard, copyResult));
             }
         }
 
@@ -175,7 +174,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!string.IsNullOrEmpty(copyInformation))
                 {
                     bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyInformation);
-                    await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                    await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard, copyResult));
                 }
             }
         }
@@ -201,7 +200,7 @@ namespace GetStoreApp.Views.UserControls
             if (!string.IsNullOrEmpty(appInformation))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(appInformation);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard, copyResult));
             }
         }
 
@@ -289,7 +288,7 @@ namespace GetStoreApp.Views.UserControls
 
             try
             {
-                ReadOnlyCollection<ItemIndexRange> selectedRangeCollection = [.. QueryLinksResultListView.SelectedRanges];
+                ReadOnlyCollection<ItemIndexRange> selectedRangeCollection = new List<ItemIndexRange>(QueryLinksResultListView.SelectedRanges).AsReadOnly();
                 QueryLinksResultListView.SelectAll();
                 foreach (ItemIndexRange itemIndexRange in selectedRangeCollection)
                 {
@@ -316,7 +315,7 @@ namespace GetStoreApp.Views.UserControls
             // 内容为空时显示空提示对话框
             if (selectedQueryLinksResultCollection is null || selectedQueryLinksResultCollection.Count is 0)
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.SelectEmpty));
                 return;
             }
             else
@@ -334,7 +333,7 @@ namespace GetStoreApp.Views.UserControls
                 });
 
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(queryLinksResultCopyString);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard, copyResult));
             }
         }
 
@@ -348,7 +347,7 @@ namespace GetStoreApp.Views.UserControls
             // 内容为空时显示空提示对话框
             if (selectedQueryLinksResultCollection is null || selectedQueryLinksResultCollection.Count is 0)
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.SelectEmpty));
                 return;
             }
             else
@@ -357,7 +356,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!string.IsNullOrEmpty(queryLinksResultCopyString))
                 {
                     bool copyResult = CopyPasteHelper.CopyTextToClipBoard(queryLinksResultCopyString);
-                    await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                    await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard, copyResult));
                 }
             }
         }
@@ -397,7 +396,7 @@ namespace GetStoreApp.Views.UserControls
                 // 内容为空时显示空提示对话框
                 if (selectedQueryLinksResultCollection is null && selectedQueryLinksResultCollection.Count is 0)
                 {
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
+                    await MainWindow.Current.ShowNotificationAsync(new(OperationKind.SelectEmpty));
                     return;
                 }
                 else
@@ -406,7 +405,7 @@ namespace GetStoreApp.Views.UserControls
                     bool isDownloadSuccessfully = await CreateDownloadTaskAsync(downloadFolder, selectedQueryLinksResultCollection);
 
                     // 显示下载任务创建成功消息
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
+                    await MainWindow.Current.ShowNotificationAsync(new(OperationKind.DownloadCreate, isDownloadSuccessfully));
                 }
             }
         }

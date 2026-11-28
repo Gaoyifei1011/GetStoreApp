@@ -200,7 +200,7 @@ namespace GetStoreApp.Views.Pages
         private async void OnClearClicked(object sender, RoutedEventArgs args)
         {
             bool result = await LogService.ClearLogAsync();
-            await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.LogClean, result));
+            await MainWindow.Current.ShowNotificationAsync(new(OperationKind.LogClean, result));
         }
 
         /// <summary>

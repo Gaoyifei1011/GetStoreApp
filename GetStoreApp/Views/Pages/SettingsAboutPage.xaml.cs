@@ -130,7 +130,7 @@ namespace GetStoreApp.Views.Pages
                                             operationBarItem.IsCheckingUpdate = false;
                                             DispatcherQueue.TryEnqueue(async () =>
                                             {
-                                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, Convert.ToInt32(isNewest)));
+                                                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CheckUpdate, Convert.ToInt32(isNewest)));
                                             });
                                         }
                                         catch (Exception e)
@@ -139,7 +139,7 @@ namespace GetStoreApp.Views.Pages
                                             operationBarItem.IsCheckingUpdate = false;
                                             DispatcherQueue.TryEnqueue(async () =>
                                             {
-                                                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, 2));
+                                                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CheckUpdate, 2));
                                             });
                                         }
 
@@ -152,13 +152,13 @@ namespace GetStoreApp.Views.Pages
                                     {
                                         bool? isNewest = await CheckCurrentAppIsNewestVersionAsync(RuntimeHelper.IsStoreVersion);
                                         operationBarItem.IsCheckingUpdate = false;
-                                        await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, isNewest is not null && isNewest.HasValue ? Convert.ToInt32(isNewest.Value) : 2));
+                                        await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CheckUpdate, isNewest is not null && isNewest.HasValue ? Convert.ToInt32(isNewest.Value) : 2));
                                     }
                                 }
                                 else
                                 {
                                     operationBarItem.IsCheckingUpdate = false;
-                                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.CheckUpdate, 2));
+                                    await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CheckUpdate, 2));
                                 }
                             }
                             break;

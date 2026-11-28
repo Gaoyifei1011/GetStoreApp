@@ -370,7 +370,7 @@ namespace GetStoreApp.Views.Pages
                 AppUpdatePauseEndTime = await GetAppUpdatePauseEndTimeAsync();
                 if (!RuntimeHelper.IsElevated)
                 {
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.NotElevated));
+                    await MainWindow.Current.ShowNotificationAsync(new(OperationKind.NotElevated));
                 }
             }
         }
@@ -387,7 +387,7 @@ namespace GetStoreApp.Views.Pages
                 AppUpdatePauseEndTime = await GetAppUpdatePauseEndTimeAsync();
                 if (!RuntimeHelper.IsElevated)
                 {
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.NotElevated));
+                    await MainWindow.Current.ShowNotificationAsync(new(OperationKind.NotElevated));
                 }
             }
         }

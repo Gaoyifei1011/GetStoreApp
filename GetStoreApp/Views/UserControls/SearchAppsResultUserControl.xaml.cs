@@ -59,7 +59,7 @@ namespace GetStoreApp.Views.UserControls
             if (args.Parameter is Uri storeAppLink)
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(storeAppLink.AbsoluteUri);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard,copyResult));
             }
         }
 

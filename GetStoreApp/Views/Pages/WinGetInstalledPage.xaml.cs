@@ -229,7 +229,7 @@ namespace GetStoreApp.Views.Pages
                 if (!string.IsNullOrEmpty(uninstallArguments))
                 {
                     bool copyResult = CopyPasteHelper.CopyTextToClipBoard(uninstallArguments);
-                    await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                    await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard,copyResult));
                 }
             }
         }

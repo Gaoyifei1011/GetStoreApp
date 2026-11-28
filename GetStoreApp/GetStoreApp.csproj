@@ -372,7 +372,6 @@
     <None Remove="Views\Dialogs\UpdateAppDialog.xaml" />
     <None Remove="Views\Dialogs\WinGetAppsVersionDialog.xaml" />
     <None Remove="Views\Dialogs\WinGetSourceEditDialog.xaml" />
-    <None Remove="Views\NotificationTips\CopyPasteMainNotificationTip.xaml" />
     <None Remove="Views\NotificationTips\OperationResultNotificationTip.xaml" />
     <None Remove="Views\Pages\AppInformationPage.xaml" />
     <None Remove="Views\Pages\AppListPage.xaml" />
@@ -445,7 +444,6 @@
     <Page Update="Views\Dialogs\UpdateAppDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\WinGetAppsVersionDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\WinGetSourceEditDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Views\NotificationTips\CopyPasteMainNotificationTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\NotificationTips\OperationResultNotificationTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppInformationPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppListPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

@@ -192,7 +192,7 @@ namespace GetStoreApp.Views.Pages
             if (!string.IsNullOrEmpty(copyInformation))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyInformation);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard,copyResult));
             }
         }
 

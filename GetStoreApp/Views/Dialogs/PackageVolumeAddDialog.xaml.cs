@@ -231,12 +231,12 @@ namespace GetStoreApp.Views.Dialogs
                 catch (Exception e)
                 {
                     LogService.WriteLog(LoggingLevel.Error, nameof(GetStoreApp), nameof(PackageVolumeAddDialog), nameof(OnSelectFolderClicked), 1, e);
-                    await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.FolderPicker));
+                    await MainWindow.Current.ShowNotificationAsync(new(OperationKind.FolderPicker));
                 }
             }
             else
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectPackageVolumeEmpty));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.SelectPackageVolumeEmpty));
             }
         }
 
@@ -312,7 +312,7 @@ namespace GetStoreApp.Views.Dialogs
                     // 显示选择的文件夹为空的通知
                     DispatcherQueue.TryEnqueue(async () =>
                     {
-                        await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectFolderEmpty));
+                        await MainWindow.Current.ShowNotificationAsync(new(OperationKind.SelectFolderEmpty));
                     });
                     PackageVolumeResultKind = PackageVolumeResultKind.HasResult;
                 }

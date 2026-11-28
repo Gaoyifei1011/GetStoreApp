@@ -1074,21 +1074,21 @@ namespace GetStoreApp.Views.Windows
         /// 使用教学提示显示应用内通知
         /// </summary>
         [DynamicWindowsRuntimeCast(typeof(Grid))]
-        internal async Task ShowNotificationAsync(TeachingTip teachingTip, int duration = 2000)
+        internal async Task ShowNotificationAsync(OperationResultNotificationTip operationResultNotificationTip, int duration = 2000)
         {
             try
             {
-                if (teachingTip is not null && MainPage.Content is Grid grid)
+                if (operationResultNotificationTip is not null && operationResultNotificationTip.IsInitialized && MainPage.Content is Grid grid)
                 {
-                    grid.Children.Add(teachingTip);
+                    grid.Children.Add(operationResultNotificationTip);
 
-                    teachingTip.IsOpen = true;
+                    operationResultNotificationTip.IsOpen = true;
                     await Task.Delay(duration);
-                    teachingTip.IsOpen = false;
+                    operationResultNotificationTip.IsOpen = false;
 
                     // 应用内通知关闭动画显示耗费 300 ms
                     await Task.Delay(300);
-                    grid.Children.Remove(teachingTip);
+                    grid.Children.Remove(operationResultNotificationTip);
                 }
             }
             catch (Exception e)

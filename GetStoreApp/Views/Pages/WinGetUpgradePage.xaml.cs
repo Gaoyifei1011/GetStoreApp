@@ -512,7 +512,7 @@ namespace GetStoreApp.Views.Pages
         {
             UpgradableAppsResultKind = UpgradableAppsResultKind.Loading;
             UpdateAnimatedVisualState(true);
-            List<UpgradableAppsModel> upgradableAppsList = [.. UpgradableAppsCollection];
+            List<UpgradableAppsModel> upgradableAppsList = [with(UpgradableAppsCollection)];
             UpgradableAppsCollection.Clear();
             if (appSortRuleKind is AppSortRuleKind.DisplayName)
             {

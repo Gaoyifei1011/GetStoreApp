@@ -140,7 +140,7 @@ namespace GetStoreApp.Views.Pages
             if (args.Parameter is AppListEntryModel appListEntry && !string.IsNullOrEmpty(appListEntry.PackageFamilyName))
             {
                 bool isPinnedSuccessfully = await PinToDesktopAsync(appListEntry.PackageFamilyName);
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.Desktop, isPinnedSuccessfully));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.Desktop, isPinnedSuccessfully));
             }
         }
 
@@ -152,7 +152,7 @@ namespace GetStoreApp.Views.Pages
             if (args.Parameter is AppListEntryModel appListEntry)
             {
                 bool isPinnedSuccessfully = await PinToStartScreenAsync(appListEntry);
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.StartScreen, isPinnedSuccessfully));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.StartScreen, isPinnedSuccessfully));
             }
         }
 
@@ -192,7 +192,7 @@ namespace GetStoreApp.Views.Pages
             if (await GetAppInformationCopyStringAsync(appDetailInfoList.AsReadOnly()) is string appInformation && !string.IsNullOrEmpty(appInformation))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(appInformation);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard,copyResult));
             }
         }
 

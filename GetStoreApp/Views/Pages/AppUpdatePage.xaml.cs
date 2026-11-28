@@ -301,7 +301,7 @@ namespace GetStoreApp.Views.Pages
             }
             else
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.NotElevated));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.NotElevated));
             }
         }
 

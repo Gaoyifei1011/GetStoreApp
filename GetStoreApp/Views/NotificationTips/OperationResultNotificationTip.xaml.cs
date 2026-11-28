@@ -15,6 +15,8 @@ namespace GetStoreApp.Views.NotificationTips
     {
         #region 第一部分：属性、集合与事件
 
+        internal bool IsInitialized { get; private set; }
+
         private bool IsSuccessOperation
         {
             get;
@@ -52,64 +54,124 @@ namespace GetStoreApp.Views.NotificationTips
         internal OperationResultNotificationTip(OperationKind operationKind)
         {
             InitializeComponent();
-
-            if (operationKind is OperationKind.FileLost)
-            {
-                IsSuccessOperation = false;
-                OperationContent = ResourceService.GetLocalized("NotificationTip/FileLost");
-            }
-            else if (operationKind is OperationKind.FolderPicker)
-            {
-                IsSuccessOperation = false;
-                OperationContent = ResourceService.GetLocalized("NotificationTip/FolderPickerFailed");
-            }
-            else if (operationKind is OperationKind.InstallingNotify)
-            {
-                IsSuccessOperation = false;
-                OperationContent = ResourceService.GetLocalized("NotificationTip/InstallingNotify");
-            }
-            else if (operationKind is OperationKind.LanguageChange)
-            {
-                IsSuccessOperation = true;
-                OperationContent = ResourceService.GetLocalized("NotificationTip/LanguageChange");
-            }
-            else if (operationKind is OperationKind.NotElevated)
-            {
-                IsSuccessOperation = false;
-                OperationContent = ResourceService.GetLocalized("NotificationTip/NotElevated");
-            }
-            else if (operationKind is OperationKind.SelectEmpty)
-            {
-                IsSuccessOperation = false;
-                OperationContent = ResourceService.GetLocalized("NotificationTip/SelectEmpty");
-            }
-            else if (operationKind is OperationKind.SelectFolderEmpty)
-            {
-                IsSuccessOperation = false;
-                OperationContent = ResourceService.GetLocalized("NotificationTip/SelectFolderEmpty");
-            }
-            else if (operationKind is OperationKind.SelectPackageVolumeEmpty)
-            {
-                IsSuccessOperation = false;
-                OperationContent = ResourceService.GetLocalized("NotificationTip/SelectPackageVolumeEmpty");
-            }
-            else if (operationKind is OperationKind.SourceNameEmpty)
-            {
-                IsSuccessOperation = false;
-                OperationContent = ResourceService.GetLocalized("NotificationTip/SourceNameEmpty");
-            }
-            else if (operationKind is OperationKind.SourceUriEmpty)
-            {
-                IsSuccessOperation = false;
-                OperationContent = ResourceService.GetLocalized("NotificationTip/SourceUriEmpty");
-            }
+            InitializeOperationResultNotification(operationKind);
         }
 
         internal OperationResultNotificationTip(OperationKind operationKind, bool operationResult)
         {
             InitializeComponent();
+            InitializeOperationResultNotification(operationKind, operationResult);
+        }
 
-            if (operationKind is OperationKind.Desktop)
+        internal OperationResultNotificationTip(OperationKind operationKind, bool isMultiSelected, int count)
+        {
+            InitializeComponent();
+            InitializeOperationResultNotification(operationKind, isMultiSelected, count);
+        }
+
+        internal OperationResultNotificationTip(OperationKind operationKind, int statusKind)
+        {
+            InitializeComponent();
+            InitializeOperationResultNotification(operationKind, statusKind);
+        }
+
+        internal OperationResultNotificationTip(OperationKind operationKind, bool operationResult, string reason)
+        {
+            InitializeComponent();
+            InitializeOperationResultNotification(operationKind, operationResult, reason);
+        }
+
+        #endregion 第二部分：构造函数
+
+        #region 第三部分：数据操作与业务逻辑
+
+        /// <summary>
+        /// 初始化操作完成后应用内通知
+        /// </summary>
+        private void InitializeOperationResultNotification(OperationKind operationKind)
+        {
+            if (operationKind is OperationKind.FileLost)
+            {
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("NotificationTip/FileLost");
+                IsInitialized = true;
+            }
+            else if (operationKind is OperationKind.FolderPicker)
+            {
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("NotificationTip/FolderPickerFailed");
+                IsInitialized = true;
+            }
+            else if (operationKind is OperationKind.InstallingNotify)
+            {
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("NotificationTip/InstallingNotify");
+                IsInitialized = true;
+            }
+            else if (operationKind is OperationKind.LanguageChange)
+            {
+                IsSuccessOperation = true;
+                OperationContent = ResourceService.GetLocalized("NotificationTip/LanguageChange");
+                IsInitialized = true;
+            }
+            else if (operationKind is OperationKind.NotElevated)
+            {
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("NotificationTip/NotElevated");
+                IsInitialized = true;
+            }
+            else if (operationKind is OperationKind.SelectEmpty)
+            {
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("NotificationTip/SelectEmpty");
+                IsInitialized = true;
+            }
+            else if (operationKind is OperationKind.SelectFolderEmpty)
+            {
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("NotificationTip/SelectFolderEmpty");
+                IsInitialized = true;
+            }
+            else if (operationKind is OperationKind.SelectPackageVolumeEmpty)
+            {
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("NotificationTip/SelectPackageVolumeEmpty");
+                IsInitialized = true;
+            }
+            else if (operationKind is OperationKind.SourceNameEmpty)
+            {
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("NotificationTip/SourceNameEmpty");
+                IsInitialized = true;
+            }
+            else if (operationKind is OperationKind.SourceUriEmpty)
+            {
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("NotificationTip/SourceUriEmpty");
+                IsInitialized = true;
+            }
+        }
+
+        /// <summary>
+        /// 初始化操作完成后应用内通知
+        /// </summary>
+        private void InitializeOperationResultNotification(OperationKind operationKind, bool operationResult)
+        {
+            if (operationKind is OperationKind.CopyToClipboard)
+            {
+                if (operationResult)
+                {
+                    IsSuccessOperation = true;
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/CopyToClipboardSuccessfully");
+                }
+                else
+                {
+                    IsSuccessOperation = false;
+                    OperationContent = ResourceService.GetLocalized("NotificationTip/CopyToClipboardFailed");
+                }
+                IsInitialized = true;
+            }
+            else if (operationKind is OperationKind.Desktop)
             {
                 if (operationResult)
                 {
@@ -121,6 +183,7 @@ namespace GetStoreApp.Views.NotificationTips
                     IsSuccessOperation = false;
                     OperationContent = ResourceService.GetLocalized("NotificationTip/DesktopShortcutFailed");
                 }
+                IsInitialized = true;
             }
             else if (operationKind is OperationKind.DownloadCreate)
             {
@@ -134,6 +197,7 @@ namespace GetStoreApp.Views.NotificationTips
                     IsSuccessOperation = false;
                     OperationContent = ResourceService.GetLocalized("NotificationTip/DownloadCreateFailed");
                 }
+                IsInitialized = true;
             }
             else if (operationKind is OperationKind.LogClean)
             {
@@ -147,6 +211,7 @@ namespace GetStoreApp.Views.NotificationTips
                     IsSuccessOperation = false;
                     OperationContent = ResourceService.GetLocalized("NotificationTip/LogCleanFailed");
                 }
+                IsInitialized = true;
             }
             else if (operationKind is OperationKind.StartScreen)
             {
@@ -160,6 +225,7 @@ namespace GetStoreApp.Views.NotificationTips
                     IsSuccessOperation = false;
                     OperationContent = ResourceService.GetLocalized("NotificationTip/StartScreenFailed");
                 }
+                IsInitialized = true;
             }
             else if (operationKind is OperationKind.Taskbar)
             {
@@ -173,6 +239,7 @@ namespace GetStoreApp.Views.NotificationTips
                     IsSuccessOperation = false;
                     OperationContent = ResourceService.GetLocalized("NotificationTip/TaskbarFailed");
                 }
+                IsInitialized = true;
             }
             else if (operationKind is OperationKind.TerminateProcess)
             {
@@ -186,13 +253,15 @@ namespace GetStoreApp.Views.NotificationTips
                     IsSuccessOperation = false;
                     OperationContent = ResourceService.GetLocalized("NotificationTip/TerminateFailed");
                 }
+                IsInitialized = true;
             }
         }
 
-        internal OperationResultNotificationTip(OperationKind operationKind, bool isMultiSelected, int count)
+        /// <summary>
+        /// 初始化操作完成后应用内通知
+        /// </summary>
+        private void InitializeOperationResultNotification(OperationKind operationKind, bool isMultiSelected, int count)
         {
-            InitializeComponent();
-
             if (operationKind is OperationKind.ShareFailed)
             {
                 if (isMultiSelected)
@@ -205,13 +274,15 @@ namespace GetStoreApp.Views.NotificationTips
                     IsSuccessOperation = false;
                     OperationContent = ResourceService.GetLocalized("NotificationTip/ShareFailed");
                 }
+                IsInitialized = true;
             }
         }
 
-        internal OperationResultNotificationTip(OperationKind operationKind, int statusKind)
+        /// <summary>
+        /// 初始化操作完成后应用内通知
+        /// </summary>
+        private void InitializeOperationResultNotification(OperationKind operationKind, int statusKind)
         {
-            InitializeComponent();
-
             if (operationKind is OperationKind.CheckUpdate)
             {
                 if (statusKind is 0)
@@ -229,14 +300,16 @@ namespace GetStoreApp.Views.NotificationTips
                     IsSuccessOperation = false;
                     OperationContent = ResourceService.GetLocalized("NotificationTip/UpdateCheckFailed");
                 }
+                IsInitialized = true;
             }
         }
 
-        internal OperationResultNotificationTip(OperationKind operationKind, bool operationResult, string reason)
+        /// <summary>
+        /// 初始化操作完成后应用内通知
+        /// </summary>
+        private void InitializeOperationResultNotification(OperationKind operationKind, bool operationResult, string reason)
         {
-            InitializeComponent();
-
-            if (operationKind is OperationKind.WinGetSource)
+            if (operationKind is OperationKind.WinGetSource && !string.IsNullOrEmpty(reason))
             {
                 if (operationResult)
                 {
@@ -248,9 +321,10 @@ namespace GetStoreApp.Views.NotificationTips
                     IsSuccessOperation = false;
                     OperationContent = reason;
                 }
+                IsInitialized = true;
             }
         }
 
-        #endregion 第二部分：构造函数
+        #endregion 第三部分：数据操作与业务逻辑
     }
 }

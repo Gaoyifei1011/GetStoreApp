@@ -193,7 +193,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectReverseClicked(object sender, RoutedEventArgs args)
         {
-            ReadOnlyCollection<ItemIndexRange> selectedRangeCollection = [.. DownloadingListView.SelectedRanges];
+            ReadOnlyCollection<ItemIndexRange> selectedRangeCollection = new List<ItemIndexRange>(DownloadingListView.SelectedRanges).AsReadOnly();
             DownloadingListView.SelectAll();
             foreach (ItemIndexRange itemIndexRange in selectedRangeCollection)
             {
@@ -225,12 +225,12 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
         {
-            ReadOnlyCollection<DownloadingModel> selectedDownloadingCollection = GetSelectedDownloadingCollection([.. DownloadingCollection]);
+            ReadOnlyCollection<DownloadingModel> selectedDownloadingCollection = GetSelectedDownloadingCollection(new(DownloadingCollection));
 
             // 没有选中任何内容时显示空提示对话框
             if (selectedDownloadingCollection is null || selectedDownloadingCollection.Count is 0)
             {
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.SelectEmpty));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.SelectEmpty));
                 return;
             }
 

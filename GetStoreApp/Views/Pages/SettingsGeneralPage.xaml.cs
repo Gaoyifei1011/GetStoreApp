@@ -315,7 +315,7 @@ namespace GetStoreApp.Views.Pages
                         break;
                     }
                 }
-                await MainWindow.Current.ShowNotificationAsync(new OperationResultNotificationTip(OperationKind.LanguageChange));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.LanguageChange));
             }
         }
 

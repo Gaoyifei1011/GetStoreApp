@@ -272,7 +272,7 @@ namespace GetStoreApp.Views.UserControls
                 if (!string.IsNullOrEmpty(copyHistory))
                 {
                     bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyHistory);
-                    await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                    await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard,copyResult));
                 }
             }
         }
@@ -1074,7 +1074,7 @@ namespace GetStoreApp.Views.UserControls
                 // 计算时间戳
                 long timeStamp = Convert.ToInt64((DateTimeOffset.UtcNow - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
                 string historyKey = HashAlgorithmHelper.GenerateHistoryKey(TypeList[selectedType].InternalName, ChannelList[selectedChannel].InternalName, link);
-                List<HistoryModel> historyList = [.. QueryLinksHistoryCollection];
+                List<HistoryModel> historyList = [with(QueryLinksHistoryCollection)];
                 int index = historyList.FindIndex(item => string.Equals(item.HistoryKey, historyKey, StringComparison.OrdinalIgnoreCase));
 
                 // 不存在直接添加
@@ -1138,7 +1138,7 @@ namespace GetStoreApp.Views.UserControls
                 // 计算时间戳
                 long timeStamp = Convert.ToInt64((DateTimeOffset.UtcNow - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
                 string historyKey = HashAlgorithmHelper.GenerateHistoryKey(inputContent);
-                List<HistoryModel> historyList = [.. SearchAppsHistoryCollection];
+                List<HistoryModel> historyList = [with(SearchAppsHistoryCollection)];
                 int index = historyList.FindIndex(item => string.Equals(item.HistoryKey, historyKey, StringComparison.OrdinalIgnoreCase));
 
                 // 不存在直接添加

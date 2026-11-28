@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.NotificationTips;
@@ -105,7 +106,7 @@ namespace GetStoreApp.Views.Dialogs
             if (!string.IsNullOrEmpty(fileInformation))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(fileInformation);
-                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
+                await MainWindow.Current.ShowNotificationAsync(new(OperationKind.CopyToClipboard, copyResult));
             }
         }
 

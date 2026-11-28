@@ -1318,7 +1318,7 @@ namespace GetStoreAppInstaller.Views.Windows
                 InstallProgressValue = 0;
                 InstallStateString = PrepareInstallString;
 
-                (bool result, bool isCanceled, PackageDeploymentResult packageDeploymentResult, Exception exception) = await InstallPackageAsync(PackageName, PackageFamilyName, [.. InstallDependencyCollection]);
+                (bool result, bool isCanceled, PackageDeploymentResult packageDeploymentResult, Exception exception) = await InstallPackageAsync(PackageName, PackageFamilyName, new(InstallDependencyCollection));
 
                 IsCancelInstall = true;
                 if (result)

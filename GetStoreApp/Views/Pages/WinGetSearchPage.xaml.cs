@@ -285,7 +285,7 @@ namespace GetStoreApp.Views.Pages
                 IsIncrease = increase;
                 SearchAppsResultKind = SearchAppsResultKind.Searching;
                 UpdateAnimatedVisualState(true);
-                List<SearchAppsModel> searchAppsList = [.. SearchAppsCollection];
+                List<SearchAppsModel> searchAppsList = [with(SearchAppsCollection)];
                 SearchAppsCollection.Clear();
                 if (IsIncrease)
                 {
